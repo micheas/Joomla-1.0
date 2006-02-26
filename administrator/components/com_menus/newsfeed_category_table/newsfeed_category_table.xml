@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<mosinstall type="menu" version="1.0.0">
+	<name>Table - Newsfeed Category</name>
+	<group>Component</group>
+	<author>Joomla! Project</author>
+	<creationDate>July 2004</creationDate>
+	<copyright>(C) 2005 Open Source Matters. All rights reserved.</copyright>
+	<license>http://www.gnu.org/copyleft/gpl.html GNU/GPL</license>
+	<authorEmail>admin@joomla.org</authorEmail>
+	<authorUrl>www.joomla.org</authorUrl>
+	<version>1.0.0</version>
+	<description>Shows a Table view of Newsfeed items for a particular Category</description>
+	<params>
+		<param name="menu_image" type="imagelist" directory="/images" hide_default="1" default="" label="Menu Image" description="A small image to be placed to the left or right of your menu item, images must be in /images" />
+		<param name="pageclass_sfx" type="text" default="" label="Page Class Suffix" description="A suffix to be applied to the css classes of the page, this allows individual page styling" />
+		<param name="back_button" type="list" default="" label="Back Button" description="Show/Hide a Back Button, that returns you to the previously view page">
+			<option value="">Use Global</option>
+			<option value="0">Hide</option>
+			<option value="1">Show</option>
+		</param>
+		<param name="page_title" type="radio" default="1" label="Page Title" description="Show/Hide the pages Title">
+			<option value="0">Hide</option>
+			<option value="1">Show</option>
+		</param>
+		<param name="header" type="text" size="30" default="" label="Page Title" description="Text to display at the top of the page. If left blank, the Menu name will be used instead" />
+		<param name="@spacer" type="spacer" default="" label="" description="" />
+		<param name="headings" type="radio" default="1" label="Table Headings" description="Show/Hide the Table Headings">
+			<option value="0">Hide</option>
+			<option value="1">Show</option>
+		</param>
+		<param name="name" type="radio" default="1" label="Name Column" description="Show/Hide the Name column">
+			<option value="0">Hide</option>
+			<option value="1">Show</option>
+		</param>
+		<param name="articles" type="radio" default="1" label="Articles Column" description="Show/Hide the Articles column">
+			<option value="0">Hide</option>
+			<option value="1">Show</option>
+		</param>
+		<param name="link" type="radio" default="0" label="Link Column" description="Show/Hide the Link column">
+			<option value="0">Hide</option>
+			<option value="1">Show</option>
+		</param>
+		<param name="@spacer" type="spacer" default="" label="" description="" />
+		<param name="other_cat" type="radio" default="1" label="Other Categories" description="When viewing a Category, Show/Hide the list of other Categories">
+			<option value="0">Hide</option>
+			<option value="1">Show</option>
+		</param>
+		<param name="cat_description" type="radio" default="1" label="Category Description" description="Show/Hide the Description for the list of other catgeories">
+			<option value="0">Hide</option>
+			<option value="1">Show</option>
+		</param>
+		<param name="cat_items" type="radio" default="1" label="# Category Items" description="Show/Hide the number of items in each category">
+			<option value="0">Hide</option>
+			<option value="1">Show</option>
+		</param>
+	</params>
+</mosinstall>

@@ -45,6 +45,7 @@ Legend:
  # Fixed artf3681 : invalid markup in com_content showCategories() 
  # Fixed artf3688 : Hardcoded text in contact.html.php 
  # Fixed artf3664 : Image links gets preceeded by "Live Site" URL after v1.0.8 upgrade 
+ # Fixed artf3703 : configuration.php-dist has a typo 
  # Fixed [topic,41404.0.html] : configuration.php-dist missing `;`
 
 

@@ -890,7 +890,7 @@ class mosMainFrame {
 	* the users details.
 	*/
 	function login( $username=null,$passwd=null, $remember=null ) {
-		global $acl, $_VERSION;
+		global $acl, $_VERSION, $my;
 		
 		// if no username and password passed from function, then function is being called from login module/component
 		if (!$username || !$passwd) {

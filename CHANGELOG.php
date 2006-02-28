@@ -41,6 +41,7 @@ Legend:
 
 28-Feb-2006 Rey Gigataras
  # Fixed artf3655 : Login module error
+ # Fixed [topic,41404.0.html] : configuration.php-dist missing `;`
 
 
 ---------------- 1.0.8 Stable Released -- [25-Feb-2006 04:00 UTC] ------------------

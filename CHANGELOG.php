@@ -42,6 +42,7 @@ Legend:
 28-Feb-2006 Rey Gigataras
  # Fixed artf3655 : Login module error
  # Fixed artf3668 : mosemailcloak bug with mailto:
+ # Fixed artf3681 : invalid markup in com_content showCategories() 
  # Fixed [topic,41404.0.html] : configuration.php-dist missing `;`
 
 

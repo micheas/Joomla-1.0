@@ -117,36 +117,38 @@ class HTML_content {
 		<?php
 		foreach ( $other_categories as $row ) {
 			if ( $catid != $row->id ) {
-				if ( $row->access <= $gid ) {
-					$link = sefRelToAbs( 'index.php?option=com_content&amp;task=category&amp;sectionid='. $id .'&amp;id='. $row->id .'&amp;Itemid='. $Itemid );
-					?>
-					<li>
-					<a href="<?php echo $link; ?>" class="category">
-					<?php echo $row->name;?>
-					</a>
-					<?php
-					if ( $params->get( 'cat_items' ) ) {
+				?>
+				<li>
+					<?php				
+					if ( $row->access <= $gid ) {
+						$link = sefRelToAbs( 'index.php?option=com_content&amp;task=category&amp;sectionid='. $id .'&amp;id='. $row->id .'&amp;Itemid='. $Itemid );
 						?>
-						&nbsp;<i>( <?php echo $row->numitems; echo _CHECKED_IN_ITEMS;?> )</i>
+						<a href="<?php echo $link; ?>" class="category">
+							<?php echo $row->name;?></a>
+						<?php
+						if ( $params->get( 'cat_items' ) ) {
+							?>
+							&nbsp;<i>( <?php echo $row->numitems; echo _CHECKED_IN_ITEMS;?> )</i>
+							<?php
+						}
+						
+						// Writes Category Description
+						if ( $params->get( 'cat_description' ) && $row->description ) {
+							?>
+							<br />
+							<?php
+							echo $row->description;
+						}
+					} else {
+						echo $row->name; 
+						?>
+						<a href="<?php echo sefRelToAbs( 'index.php?option=com_registration&amp;task=register' ); ?>">
+							( <?php echo _E_REGISTERED; ?> )</a>
 						<?php
 					}
-					// Writes Category Description
-					if ( $params->get( 'cat_description' ) && $row->description ) {
-						echo "<br />";
-						echo $row->description;
-					}
 					?>
-					</li>
+				</li>
 				<?php
-				} else {
-					?>
-					<li>
-					<?php echo $row->name; ?>
-					<a href="<?php echo sefRelToAbs( 'index.php?option=com_registration&amp;task=register' ); ?>">
-					( <?php echo _E_REGISTERED; ?> )
-					</a>
-					<?php
-				}
 			}
 		}
 		?>

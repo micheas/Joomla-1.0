@@ -43,6 +43,7 @@ Legend:
  # Fixed artf3655 : Login module error
  # Fixed artf3668 : mosemailcloak bug with mailto:
  # Fixed artf3681 : invalid markup in com_content showCategories() 
+ # Fixed artf3688 : Hardcoded text in contact.html.php 
  # Fixed [topic,41404.0.html] : configuration.php-dist missing `;`
 
 

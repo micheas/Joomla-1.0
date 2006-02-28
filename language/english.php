@@ -158,6 +158,7 @@ DEFINE('_CONTACT_ADDRESS','Address: ');
 DEFINE('_CONTACT_MISC','Information: ');
 DEFINE('_CONTACT_SEL','Select Contact:');
 DEFINE('_CONTACT_NONE','There are no Contact Details listed.');
+DEFINE('_CONTACT_ONE_EMAIL','You cannot enter more than one email address.');
 DEFINE('_EMAIL_A_COPY','Email a copy of this message to your own address');
 DEFINE('_CONTACT_DOWNLOAD_AS','Download information as a');
 DEFINE('_VCARD','VCard');

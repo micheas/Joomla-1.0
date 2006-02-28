@@ -50,7 +50,7 @@ function botMosSef_replacer( &$matches ) {
 	global $mosConfig_live_site;
 
 	// disable bot from being applied to mailto tags
-	if (strpos($matches[1],'mailto:')) {
+	if ( strpos($matches[1],'mailto:') !== false ) {
 		return 'href="'. $matches[1] .'"';
 	}
 	

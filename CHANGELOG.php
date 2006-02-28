@@ -44,6 +44,7 @@ Legend:
  # Fixed artf3668 : mosemailcloak bug with mailto:
  # Fixed artf3681 : invalid markup in com_content showCategories() 
  # Fixed artf3688 : Hardcoded text in contact.html.php 
+ # Fixed artf3664 : Image links gets preceeded by "Live Site" URL after v1.0.8 upgrade 
  # Fixed [topic,41404.0.html] : configuration.php-dist missing `;`
 
 

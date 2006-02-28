@@ -23,13 +23,20 @@ $_MAMBOTS->registerFunction( 'onPrepareContent', 'botMosSef' );
 * <code><a href="...relative link..."></code>
 */
 function botMosSef( $published, &$row, &$params, $page=0 ) {
-	// simple performance check to determine whether bot should process further
-	if ( strpos( $row->text, 'href="' ) === false ) {
-		return true;
-	}
+	global $mosConfig_sef;
 	
 	// check whether mambot has been unpublished
 	if ( !$published ) {
+		return true;
+	}
+	
+	// check whether SEF is off
+	if ( !$mosConfig_sef ) {
+		return true;
+	}
+	
+	// simple performance check to determine whether bot should process further
+	if ( strpos( $row->text, 'href="' ) === false ) {
 		return true;
 	}
 	
@@ -41,6 +48,7 @@ function botMosSef( $published, &$row, &$params, $page=0 ) {
 
 	return true;
 }
+
 /**
 * Replaces the matched tags
 * @param array An array of matches (see preg_match_all)
@@ -48,28 +56,35 @@ function botMosSef( $published, &$row, &$params, $page=0 ) {
 */
 function botMosSef_replacer( &$matches ) {
 	global $mosConfig_live_site;
-
+	
+	// original text that might be replaced
+	$original = 'href="'. $matches[1] .'"';
+	
 	// disable bot from being applied to mailto tags
-	if ( strpos($matches[1],'mailto:') !== false ) {
-		return 'href="'. $matches[1] .'"';
+	if ( strpos( $matches[1], 'mailto:' ) !== false ) {
+		return $original;
 	}
 	
-	if ( substr($matches[1],0,1) == '#' ) {
-		// anchor
-		$temp 		= split('index.php', $_SERVER['REQUEST_URI']);
-		$link 		= sefRelToAbs( 'index.php' . @$temp[1] );
-		$replace 	= 'href="'. $link . $matches[1] .'"';
+	if ( strpos( $matches[1], 'index.php?' ) !== false ) {
+		if ( substr($matches[1],0,1) == '#' ) {
+			// anchor
+			$temp 		= split('index.php', $_SERVER['REQUEST_URI']);
+			$link 		= sefRelToAbs( 'index.php' . @$temp[1] );
+			$replace 	= 'href="'. $link . $matches[1] .'"';
+		} else {
+			$link 		= sefRelToAbs( $matches[1] );
+			$replace 	= 'href="'. $link .'"';
+		}
+		
+		// needed to stop site url being added to external site links
+		$count = explode( 'http://', $replace );
+		if ( count( $count ) > 2 || strpos( $replace, 'https://' ) !== false ) {
+			$replace = str_replace( $mosConfig_live_site .'/', '', $replace );
+		}
+	
+		return $replace;
 	} else {
-		$link 		= sefRelToAbs( $matches[1] );
-		$replace 	= 'href="'. $link .'"';
+		return $original;
 	}
-
-	// needed to stop site url to external site links
-	$count = explode( 'http://', $replace );
-	if ( count( $count ) > 2 ) {
-		$replace = str_replace( $mosConfig_live_site .'/', '', $replace );
-	}
-	
-	return $replace;
 }
 ?>

@@ -87,6 +87,18 @@ if ($database->getErrorNum()) {
 $database->debug( $mosConfig_debug );
 $acl = new gacl_api();
 
+// platform neurtral url handling 
+if ( isset( $_SERVER['REQUEST_URI'] ) ) {
+	$request_uri = $_SERVER['REQUEST_URI'];
+} else {
+	$request_uri = $_SERVER['SCRIPT_NAME'];	
+	// Append the query string if it exists and isn't null
+	if ( isset( $_SERVER['QUERY_STRING'] ) && !empty( $_SERVER['QUERY_STRING'] ) ) {
+		$request_uri .= '?' . $_SERVER['QUERY_STRING']; 
+	}
+}
+$_SERVER['REQUEST_URI'] = $request_uri;
+
 /**
  * @package Joomla
  * @abstract

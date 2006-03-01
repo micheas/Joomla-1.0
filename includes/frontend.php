@@ -18,19 +18,34 @@ defined( '_VALID_MOS' ) or die( 'Restricted access' );
 function mosMainBody() {
 	// message passed via the url
 	$mosmsg = mosGetParam( $_REQUEST, 'mosmsg', '' );
-	if (!get_magic_quotes_gpc()) {
-		$mosmsg = addslashes( $mosmsg );
-	}
 
 	$popMessages = false;
+	
+	// Browser Check
+	$browserCheck = 0;
+	if ( isset( $_SERVER['HTTP_USER_AGENT'] ) ) {
+		$browserCheck = 1;
+	}
+	
+	// Session Check
+	$sessionCheck = 0;
+	// Session Cookie `name`
+	$sessionCookieName 	= mosMainFrame::sessionCookieName();		
+	// Get Session Cookie `value`
+	$sessioncookie 		= mosGetParam( $_COOKIE, $sessionCookieName, null );				
+	if ( (strlen($sessioncookie) == 32 || $sessioncookie == '-') ) {
+		$sessionCheck = 1;
+	}
 
-	if ($mosmsg && !$popMessages) {
+	// mosmsg outputed within html
+	if ($mosmsg && !$popMessages && $browserCheck && $sessionCheck) {
 		echo "\n<div class=\"message\">$mosmsg</div>";
 	}
 
 	echo $GLOBALS['_MOS_OPTION']['buffer'];
 
-	if ($mosmsg && $popMessages) {
+	// mosmsg outputed in JS Popup
+	if ($mosmsg && $popMessages && $browserCheck && $sessionCheck) {
 		echo "\n<script language=\"javascript\">alert('$mosmsg');</script>";
 	}
 }

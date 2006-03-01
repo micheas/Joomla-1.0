@@ -39,11 +39,21 @@ Legend:
 ------------------------------------------------------------------------------------
 
 
+This Release Contains following Security Fixes
+
+Low Level Threat
+ * Harden mosmsg
+
+
 01-Mar-2006 Rey Gigataras
+ * SECURITY [ Low Level ]: Harden mosmsg
+ 
  # Fixed artf3656 : contact-component, dropdown
 
+---
 
-28-Feb-2006 Rey Gigataras
+
+228-Feb-2006 Rey Gigataras
  # Fixed artf3655 : Login module error
  # Fixed artf3668 : mosemailcloak bug with mailto:
  # Fixed artf3681 : invalid markup in com_content showCategories() 

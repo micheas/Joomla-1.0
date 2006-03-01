@@ -230,7 +230,7 @@ function contactpage( $contact_id ) {
 
 		$list = array();
 		foreach ( $checks as $check ) {
-			if ( $check->catid == $contact->catid && $check->cat_access > $my->gid ) {
+			if ( $check->catid == $contact->catid && $check->cat_access >= $my->gid ) {
 				$list[] = $check;
 			}
 		}		

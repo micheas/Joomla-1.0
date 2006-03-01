@@ -39,6 +39,10 @@ Legend:
 ------------------------------------------------------------------------------------
 
 
+01-Mar-2006 Rey Gigataras
+ # Fixed artf3656 : contact-component, dropdown
+
+
 28-Feb-2006 Rey Gigataras
  # Fixed artf3655 : Login module error
  # Fixed artf3668 : mosemailcloak bug with mailto:

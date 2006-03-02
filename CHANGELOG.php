@@ -50,6 +50,7 @@ Low Level Threat
 
 02-Mar-2006 Rey Gigataras
  # Fixed artf3728 : Error if change the "Syndicate" name in db table "jos_components"
+ # Fixed artf3731 : mod_newsflash shows errors when no items are available
 
 
 01-Mar-2006 Rey Gigataras

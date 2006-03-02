@@ -197,7 +197,8 @@ function mosShowHead() {
 	// support for Firefox Live Bookmarks ability for site syndication
 	$query = "SELECT a.*"
 	. "\n FROM #__components AS a"
-	. "\n WHERE a.name = 'Syndicate'"
+	. "\n WHERE a.admin_menu_link LIKE( '%option=com_syndicate%' )"
+	. "\n AND a.option = 'com_syndicate'"
 	;
 	$database->setQuery( $query );
 	$database->loadObject( $row );

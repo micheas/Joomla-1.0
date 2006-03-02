@@ -45,12 +45,17 @@ Low Level Threat
  * Harden mosmsg
 
 
+---
+
+
+02-Mar-2006 Rey Gigataras
+ # Fixed artf3728 : Error if change the "Syndicate" name in db table "jos_components"
+
+
 01-Mar-2006 Rey Gigataras
  * SECURITY [ Low Level ]: Harden mosmsg
  
  # Fixed artf3656 : contact-component, dropdown
-
----
 
 
 228-Feb-2006 Rey Gigataras

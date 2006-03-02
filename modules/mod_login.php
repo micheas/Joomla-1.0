@@ -21,7 +21,7 @@ if ( strpos($url, 'http:') !== 0 && strpos($url, 'https:') !== 0 ) {
 	$url = mosGetParam( $_SERVER, 'HTTP_HOST', null ) . $url;
 
 	// check if link is https://
-	if ( isset( $_SERVER['HTTPS'] ) && $_SERVER['HTTPS'] ) {
+	if ( isset( $_SERVER['HTTPS'] ) && ( !empty( $_SERVER['HTTPS'] ) && $_SERVER['HTTPS'] != 'off' ) ) {
 		$return = 'https://'. $url;
 	} else {
 	// normal http:// link

@@ -74,7 +74,7 @@ class HTML_content {
 				<?php
 			}
 			// New Content Icon
-			if ( $access->canEdit || $access->canEditOwn ) {
+			if ( ( $access->canEdit || $access->canEditOwn ) && count( $other_categories ) > 0 ) {
 				$link = sefRelToAbs( 'index.php?option=com_content&amp;task=new&amp;sectionid='. $id .'&amp;Itemid='. $Itemid );
 				?>
 				<a href="<?php echo $link; ?>">

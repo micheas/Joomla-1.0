@@ -37,6 +37,11 @@ function mosMainBody() {
 		$sessionCheck = 1;
 	}
 
+	// limit mosmsg to 150 characters
+	if ( strlen( $mosmsg ) > 150 ) {
+		$mosmsg = substr( $mosmsg, 0, 150 );
+	}
+	
 	// mosmsg outputed within html
 	if ($mosmsg && !$popMessages && $browserCheck && $sessionCheck) {
 		echo "\n<div class=\"message\">$mosmsg</div>";

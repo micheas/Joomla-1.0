@@ -16,10 +16,17 @@ defined( '_VALID_MOS' ) or die( 'Restricted access' );
 
 $mosmsg = trim( strip_tags( mosGetParam( $_REQUEST, 'mosmsg', '' ) ) );
 
-if ($mosmsg) {
-	if (!get_magic_quotes_gpc()) {
-		$mosmsg = addslashes( $mosmsg );
-	}
+// Browser Check
+$browserCheck = 0;
+if ( isset( $_SERVER['HTTP_USER_AGENT'] ) ) {
+	$browserCheck = 1;
+}
+
+if ($mosmsg && $browserCheck ) {	
+	// limit mosmsg to 200 characters
+	if ( strlen( $mosmsg ) > 200 ) {
+		$mosmsg = substr( $mosmsg, 0, 200 );
+	}	
 	?>
 	<div class="message">
 		<?php echo $mosmsg; ?>

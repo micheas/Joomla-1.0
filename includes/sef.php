@@ -403,7 +403,8 @@ function sefRelToAbs( $string ) {
 				eregi("^(https?:[\/]+[^\/]+)(.*$)", $mosConfig_live_site, $live_site_parts);
 				
 				$string = $live_site_parts[1] . $string;
-			} else {
+			// check that url does not contain `http`, `https` or `ftp` at start of string
+			} else if ( !( strpos( $string, 'http' ) === 0 ) && !( strpos( $string, 'https' ) === 0 ) && !( strpos( $string, 'ftp' ) === 0 ) ) {
 				// URI doesn't start with a "/" so relative to the page (live-site):
 				$string = $mosConfig_live_site .'/'. $string;
 			}

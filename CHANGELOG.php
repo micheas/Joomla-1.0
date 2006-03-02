@@ -54,6 +54,7 @@ Low Level Threat
  # Fixed artf3733 : Site (frontend): url to the site is added to the entered link in a content item. 
  # Fixed artf3696 : Typo Site Mambot: Edit [ TinyMCE WYSIWYG Editor ] 
  # Fixed artf3658 : "New" Content Link/Image Showing With No Categories Present
+ # Fixed artf3697 : sefreltoabs error with links to other sites
 
 
 01-Mar-2006 Rey Gigataras

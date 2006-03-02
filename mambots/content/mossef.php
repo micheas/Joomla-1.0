@@ -65,7 +65,8 @@ function botMosSef_replacer( &$matches ) {
 		return $original;
 	}
 	
-	if ( strpos( $matches[1], 'index.php?' ) !== false ) {
+	// will only process links containing 'index.php?option
+	if ( strpos( $matches[1], 'index.php?option' ) !== false ) {
 		if ( substr($matches[1],0,1) == '#' ) {
 			// anchor
 			$temp 		= split('index.php', $_SERVER['REQUEST_URI']);
@@ -78,7 +79,7 @@ function botMosSef_replacer( &$matches ) {
 		
 		// needed to stop site url being added to external site links
 		$count = explode( 'http://', $replace );
-		if ( count( $count ) > 2 || strpos( $replace, 'https://' ) !== false ) {
+		if ( count( $count ) > 2 || strpos( $replace, 'https://' ) !== false || strpos( $replace, 'ftp://' ) !== false ) {
 			$replace = str_replace( $mosConfig_live_site .'/', '', $replace );
 		}
 	

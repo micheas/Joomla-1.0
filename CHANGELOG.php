@@ -51,6 +51,7 @@ Low Level Threat
 02-Mar-2006 Rey Gigataras
  # Fixed artf3728 : Error if change the "Syndicate" name in db table "jos_components"
  # Fixed artf3731 : mod_newsflash shows errors when no items are available
+ # Fixed artf3733 : Site (frontend): url to the site is added to the entered link in a content item. 
 
 
 01-Mar-2006 Rey Gigataras

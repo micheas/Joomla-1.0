@@ -18,6 +18,12 @@ defined( '_VALID_MOS' ) or die( 'Restricted access' );
 $url = mosGetParam( $_SERVER, 'REQUEST_URI', null );
 // if return link does not contain https:// & http:// and to url
 if ( strpos($url, 'http:') !== 0 && strpos($url, 'https:') !== 0 ) {
+	// check to see if url has a starting slash
+	if (strpos($url, '/') !== 0) {
+		// adding starting slash to url
+		$url = '/'. $url;
+	}
+	
 	$url = mosGetParam( $_SERVER, 'HTTP_HOST', null ) . $url;
 
 	// check if link is https://

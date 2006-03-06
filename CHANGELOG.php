@@ -52,8 +52,8 @@ Low Level Threat
  # Fixed artf3756 : mossef bot rewrites javascript:void(0) in href
  # Fixed artf3745 : includes/joomla.php on line 790 setSessionGarbageClean
  # Fixed [topic,41619.0.html] : mosimage caption problem
+ # Fixed [topic,42023.0.html] : sample data error with Link - Static Content CID value
  
-
 
 02-Mar-2006 Rey Gigataras
  # Fixed artf3728 : Error if change the "Syndicate" name in db table "jos_components"

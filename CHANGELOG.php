@@ -48,6 +48,10 @@ Low Level Threat
 ---
 
 
+06-Mar-2006 Rey Gigataras
+ # Fixed [topic,41619.0.html] : mosimage caption problem
+
+
 02-Mar-2006 Rey Gigataras
  # Fixed artf3728 : Error if change the "Syndicate" name in db table "jos_components"
  # Fixed artf3731 : mod_newsflash shows errors when no items are available

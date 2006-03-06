@@ -40,7 +40,7 @@ if ( mosCountModules( 'right' ) and ( empty( $_REQUEST['task'] ) || $_REQUEST['t
 }
 ?>
 <meta http-equiv="Content-Type" content="text/html; <?php echo _ISO; ?>" />
-<link href="<?php echo $mosConfig_live_site;?>/templates/rhuk_solarflare_ii/css/template_css.css" rel="stylesheet" type="text/css"/>
+<link href="<?php echo $mosConfig_live_site;?>/templates/rhuk_solarflare_ii/css/template_css.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
 
@@ -93,11 +93,11 @@ if ( mosCountModules( 'right' ) and ( empty( $_REQUEST['task'] ) || $_REQUEST['t
 						<tr>
 								<td>
 									<div id="banner_inner">
-									<img src="<?php echo $mosConfig_live_site;?>/templates/rhuk_solarflare_ii/images/advertisement.png" alt="advertisement.png, 0 kB" title="advertisement" border="0" height="8" width="468"/><br />
+									<img src="<?php echo $mosConfig_live_site;?>/templates/rhuk_solarflare_ii/images/advertisement.png" alt="advertisement.png, 0 kB" title="advertisement" border="0" height="8" width="468" /><br />
 			  					<?php mosLoadModules( 'banner', -1 ); ?><br />
 									</div>
 									<div id="poweredby_inner">
-										<img src="<?php echo $mosConfig_live_site;?>/templates/rhuk_solarflare_ii/images/powered_by.png" alt="powered_by.png, 1 kB" title="powered_by" border="0" height="68" width="165"/><br />
+										<img src="<?php echo $mosConfig_live_site;?>/templates/rhuk_solarflare_ii/images/powered_by.png" alt="powered_by.png, 1 kB" title="powered_by" border="0" height="68" width="165" /><br />
 									</div>
 								</td>
 							</tr>
@@ -127,7 +127,7 @@ if ( mosCountModules( 'right' ) and ( empty( $_REQUEST['task'] ) || $_REQUEST['t
 				  					if ( $colspan == 3) {
 										 ?>
 											<td width="2">
-												<img src="<?php echo $mosConfig_live_site;?>/templates/rhuk_solarflare_ii/images/spacer.png" alt="" title="spacer" border="0" height="10" width="2"/>
+												<img src="<?php echo $mosConfig_live_site;?>/templates/rhuk_solarflare_ii/images/spacer.png" alt="" title="spacer" border="0" height="10" width="2" />
 											</td>
 										<?php
 										}
@@ -144,7 +144,7 @@ if ( mosCountModules( 'right' ) and ( empty( $_REQUEST['task'] ) || $_REQUEST['t
 									</tr>
 									<tr>
 										<td colspan="<?php echo $colspan; ?>">
-											<img src="<?php echo $mosConfig_live_site;?>/templates/rhuk_solarflare_ii/images/spacer.png" alt="" title="spacer" border="0" height="2" width="100"/><br />
+											<img src="<?php echo $mosConfig_live_site;?>/templates/rhuk_solarflare_ii/images/spacer.png" alt="" title="spacer" border="0" height="2" width="100" /><br />
 										</td>
 									</tr>
 									<?php

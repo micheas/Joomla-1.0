@@ -23,8 +23,8 @@ if ((mosCountModules( 'user1' )) && (mosCountModules( 'user2' ))) {
 }
 ?>
 <meta http-equiv="Content-Type" content="text/html; <?php echo _ISO; ?>" />
-<link href="<?php echo $mosConfig_live_site; ?>/templates/madeyourweb/css/template_css.css" rel="stylesheet" type="text/css"/>
-<link href="<?php echo $mosConfig_live_site; ?>/templates/madeyourweb/css/css_color_green.css" rel="stylesheet" type="text/css"/>
+<link href="<?php echo $mosConfig_live_site; ?>/templates/madeyourweb/css/template_css.css" rel="stylesheet" type="text/css" />
+<link href="<?php echo $mosConfig_live_site; ?>/templates/madeyourweb/css/css_color_green.css" rel="stylesheet" type="text/css" />
 </head>
 
 <body>

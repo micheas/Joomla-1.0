@@ -63,7 +63,7 @@ if ( $my->id ) {
 		$name = $my->username;
 	}	
 	?>
-	<form action="<?php echo sefRelToAbs( 'index.php?option=logout' ); ?>" method="post" name="login">
+	<form action="<?php echo sefRelToAbs( 'index.php?option=logout' ); ?>" method="post" name="logout">	
 	<?php
 	if ( $greeting ) {
 		echo _HI;
@@ -71,10 +71,12 @@ if ( $my->id ) {
 	}
 	?>
 	<br />
+	
 	<div align="center">
 		<input type="submit" name="Submit" class="button" value="<?php echo _BUTTON_LOGOUT; ?>" />
 	</div>
 
+	<input type="hidden" name="option" value="logout" />
 	<input type="hidden" name="op2" value="logout" />
 	<input type="hidden" name="lang" value="<?php echo $mosConfig_lang; ?>" />
 	<input type="hidden" name="return" value="<?php echo sefRelToAbs( $logout ); ?>" />
@@ -89,6 +91,7 @@ if ( $my->id ) {
 	<?php
 	echo $pretext;
 	?>
+	
 	<table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">
 	<tr>
 		<td>
@@ -109,14 +112,13 @@ if ( $my->id ) {
 				<?php echo _REMEMBER_ME; ?>
 			</label>
 			<br />
-			<input type="hidden" name="option" value="login" />
 			<input type="submit" name="Submit" class="button" value="<?php echo _BUTTON_LOGIN; ?>" />
 		</td>
 	</tr>
 	<tr>
 		<td>
-		<a href="<?php echo sefRelToAbs( 'index.php?option=com_registration&amp;task=lostPassword' ); ?>">
-			<?php echo _LOST_PASSWORD; ?></a>
+			<a href="<?php echo sefRelToAbs( 'index.php?option=com_registration&amp;task=lostPassword' ); ?>">
+				<?php echo _LOST_PASSWORD; ?></a>
 		</td>
 	</tr>
 	<?php
@@ -137,6 +139,7 @@ if ( $my->id ) {
 	echo $posttext;
 	?>
 
+	<input type="hidden" name="option" value="login" />
 	<input type="hidden" name="op2" value="login" />
 	<input type="hidden" name="lang" value="<?php echo $mosConfig_lang; ?>" />
 	<input type="hidden" name="return" value="<?php echo sefRelToAbs( $login ); ?>" />

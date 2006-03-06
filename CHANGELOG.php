@@ -49,6 +49,7 @@ Low Level Threat
 
 
 06-Mar-2006 Rey Gigataras
+ # Fixed artf3756 : mossef bot rewrites javascript:void(0) in href
  # Fixed [topic,41619.0.html] : mosimage caption problem
 
 

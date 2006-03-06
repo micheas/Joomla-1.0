@@ -65,6 +65,11 @@ function botMosSef_replacer( &$matches ) {
 		return $original;
 	}
 	
+	// disable bot from being applied to javascript tags
+	if ( strpos( $matches[1], 'javascript:' ) !== false ) {
+		return $original;
+	}
+	
 	// will only process links containing 'index.php?option
 	if ( strpos( $matches[1], 'index.php?option' ) !== false ) {
 		if ( substr($matches[1],0,1) == '#' ) {

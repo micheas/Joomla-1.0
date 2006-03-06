@@ -799,7 +799,7 @@ class mosMainFrame {
 			define( '_JOS_GARBAGECLEAN', 1 );
 			
 			$garbage_timeout = $this->getCfg('session_life_admin') + 600;
-			ini_set('session.gc_maxlifetime', $garbage_timeout);
+			@ini_set('session.gc_maxlifetime', $garbage_timeout);
 		}
 	}
 	

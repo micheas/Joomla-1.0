@@ -202,7 +202,7 @@ class HTML_modules {
 	* @param object Parameters
 	*/
 	function editModule( &$row, &$orders2, &$lists, &$params, $option ) {
-		global $mosConfig_live_site;
+		global $mosConfig_live_site, $mosConfig_cachepath, $my;
 
 		$row->titleA = '';
 		if ( $row->id ) {
@@ -347,6 +347,29 @@ class HTML_modules {
 					</td>
 				</tr>
 				</table>
+				
+				<?php
+				if ($row->module == "") {
+					?>
+					<table class="adminform">
+					<tr>
+						<td>
+							<table align="center">
+							<?php
+							$visible = 0;
+							// check to hide certain paths if not super admin
+							if ( $my->gid == 25 ) {
+								$visible = 1;
+							}
+							mosHTML::writableCell( $mosConfig_cachepath, 0, '<strong>Cache Directory</strong> ', $visible );
+							?>
+							</table>
+						</td>
+					</tr>
+					</table>
+					<?php
+				}
+				?>				
 			</td>
 			<td width="40%" >
 				<table width="100%" class="adminform">

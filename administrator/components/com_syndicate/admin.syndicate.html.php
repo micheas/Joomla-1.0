@@ -22,7 +22,7 @@ defined( '_VALID_MOS' ) or die( 'Restricted access' );
 class HTML_syndicate {
 
 	function settings( $option, &$params, $id ) {
-		global $mosConfig_live_site;
+		global $mosConfig_live_site, $mosConfig_cachepath, $my;
 		?>
 		<div id="overDiv" style="position:absolute; visibility:hidden; z-index:10000;"></div>
 		<form action="index2.php" method="post" name="adminForm">
@@ -45,6 +45,23 @@ class HTML_syndicate {
 			<?php
 			echo $params->render();
 			?>
+			</td>
+		</tr>
+		</table>
+		
+		<table class="adminform">
+		<tr>
+			<td>
+				<table align="center">
+				<?php
+				$visible = 0;
+				// check to hide certain paths if not super admin
+				if ( $my->gid == 25 ) {
+					$visible = 1;
+				}
+				mosHTML::writableCell( $mosConfig_cachepath, 0, '<strong>Cache Directory</strong> ', $visible );
+				?>
+				</table>
 			</td>
 		</tr>
 		</table>

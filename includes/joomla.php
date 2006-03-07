@@ -1793,12 +1793,24 @@ class mosHTML {
 		return $obj;
 	}
 
-  function writableCell( $folder ) {
-
+  function writableCell( $folder, $relative=1, $text='', $visible=1 ) {
+	$writeable 		= '<b><font color="green">Writeable</font></b>';
+	$unwriteable 	= '<b><font color="red">Unwriteable</font></b>';
+	
   	echo '<tr>';
-  	echo '<td class="item">' . $folder . '/</td>';
+  	echo '<td class="item">';
+	echo $text;
+	if ( $visible ) {
+		echo $folder . '/';
+	}
+	echo '</td>';
   	echo '<td align="left">';
-  	echo is_writable( "../$folder" ) ? '<b><font color="green">Writeable</font></b>' : '<b><font color="red">Unwriteable</font></b>' . '</td>';
+	if ( $relative ) {
+		echo is_writable( "../$folder" ) 	? $writeable : $unwriteable;
+	} else {
+		echo is_writable( "$folder" ) 		? $writeable : $unwriteable;
+	}
+	echo '</td>';
   	echo '</tr>';
   }
 

@@ -48,6 +48,10 @@ Low Level Threat
 ---
 
 
+08-Mar-2006 Rey Gigataras
+ + Show whether Cache directory is writable where it is used - com_newsfeeds, com_syndicate, custom modules
+
+
 06-Mar-2006 Rey Gigataras
  # Fixed artf3756 : mossef bot rewrites javascript:void(0) in href
  # Fixed artf3745 : includes/joomla.php on line 790 setSessionGarbageClean

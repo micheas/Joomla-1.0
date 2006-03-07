@@ -60,10 +60,10 @@ class HTML_admin_misc {
 	}
 
 	function system_info( $version ) {
-		global $mosConfig_absolute_path, $database;
-		//$tab = mosGetParam( $_REQUEST, 'tab', 'tab1' );
-		$width = 400;	// width of 100%
-		$tabs = new mosTabs(0);
+		global $mosConfig_absolute_path, $database, $mosConfig_cachepath, $my;
+
+		$width 	= 400;	// width of 100%
+		$tabs 	= new mosTabs(0);
 		?>
 
 		<table class="adminheading">
@@ -334,11 +334,12 @@ class HTML_admin_misc {
 				<td>
 					<strong>For all Joomla! functions and features to work ALL of the following directories should be writeable:</strong>
 					<?php
+					$sp = ini_get('session.save_path');
+										
 					mosHTML::writableCell( 'administrator/backups' );
 					mosHTML::writableCell( 'administrator/components' );
 					mosHTML::writableCell( 'administrator/modules' );
 					mosHTML::writableCell( 'administrator/templates' );
-					mosHTML::writableCell( 'cache' );
 					mosHTML::writableCell( 'components' );
 					mosHTML::writableCell( 'images' );
 					mosHTML::writableCell( 'images/banners' );
@@ -351,8 +352,10 @@ class HTML_admin_misc {
 					mosHTML::writableCell( 'mambots/search' );
 					mosHTML::writableCell( 'media' );
 					mosHTML::writableCell( 'modules' );
-					mosHTML::writableCell( 'templates' );				
-					?>
+					mosHTML::writableCell( 'templates' );
+					mosHTML::writableCell( $mosConfig_cachepath, 0, '<strong>Cache Directory</strong> ' );
+					mosHTML::writableCell( $sp, 0, '<strong>Session Directory</strong> ' );
+					?>					
 				</td>
 			</tr>
 			</table>

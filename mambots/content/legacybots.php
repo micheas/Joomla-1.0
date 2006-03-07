@@ -36,7 +36,7 @@ function botLegacyBots( $published, &$row, &$params, $page=0 ) {
 	$bots = mosReadDirectory( "$mosConfig_absolute_path/mambots", "\.php$" );
 	sort( $bots );
 	foreach ($bots as $bot) {
-		require "mambots/$bot";
+		require $mosConfig_absolute_path ."/mambots/$bot";
 	}
 }
 ?>

@@ -708,11 +708,11 @@ class mosMainFrame {
 	* Deperciated 1.1
 	*/
 	function initSessionAdmin($option) {	
-		global $_VERSION;
+		global $_VERSION, $mosConfig_absolute_path;
 		
 		// logout check
 		if ($option == 'logout') {
-			require 'logout.php';
+			require $mosConfig_absolute_path .'/administrator/logout.php';
 			exit();
 		}
 		
@@ -3292,7 +3292,9 @@ function mosObjectToArray($p_obj) {
 * Checks the user agent string against known browsers
 */
 function mosGetBrowser( $agent ) {
-	require( 'includes/agent_browser.php' );
+	global $mosConfig_absolute_path;
+	
+	require( $mosConfig_absolute_path .'/includes/agent_browser.php' );
 
 	if (preg_match( "/msie[\/\sa-z]*([\d\.]*)/i", $agent, $m )
 	&& !preg_match( "/webtv/i", $agent )
@@ -3330,7 +3332,9 @@ function mosGetBrowser( $agent ) {
 * Checks the user agent string against known operating systems
 */
 function mosGetOS( $agent ) {
-	require( "includes/agent_os.php" );
+	global $mosConfig_absolute_path;
+	
+	require( $mosConfig_absolute_path .'/includes/agent_os.php' );
 
 	foreach ($osSearchOrder as $key) {
 		if (preg_match( "/$key/i", $agent )) {
@@ -5217,8 +5221,10 @@ function mosSendAdminMail( $adminName, $adminEmail, $email, $type, $title, $auth
 * Includes pathway file
 */
 function mosPathWay() {
+	global $mosConfig_absolute_path;
+	
 	$Itemid = mosGetParam($_REQUEST,'Itemid','');
-	require $GLOBALS['mosConfig_absolute_path'] . '/includes/pathway.php';
+	require $mosConfig_absolute_path . '/includes/pathway.php';
 }
 
 /**

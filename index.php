@@ -28,13 +28,13 @@ require_once( 'includes/joomla.php' );
 //Installation sub folder check, removed for work with SVN
 if (file_exists( 'installation/index.php' )) {
 	define( '_INSTALL_CHECK', 1 );
-	include ('offline.php');
+	include ( $mosConfig_absolute_path .'/offline.php');
 	exit();
 }
 */
 // displays offline/maintanance page or bar
 if ($mosConfig_offline == 1) {
-	require( 'offline.php' );
+	require( $mosConfig_absolute_path .'/offline.php' );
 }
 
 // load system bot group
@@ -43,12 +43,12 @@ $_MAMBOTS->loadBotGroup( 'system' );
 // trigger the onStart events
 $_MAMBOTS->trigger( 'onStart' );
 
-if (file_exists( 'components/com_sef/sef.php' )) {
-	require_once( 'components/com_sef/sef.php' );
+if (file_exists( $mosConfig_absolute_path .'/components/com_sef/sef.php' )) {
+	require_once( $mosConfig_absolute_path .'/components/com_sef/sef.php' );
 } else {
-	require_once( 'includes/sef.php' );
+	require_once( $mosConfig_absolute_path .'/includes/sef.php' );
 }
-require_once( 'includes/frontend.php' );
+require_once( $mosConfig_absolute_path .'/includes/frontend.php' );
 
 // retrieve some expected url (or form) arguments
 $option = trim( strtolower( mosGetParam( $_REQUEST, 'option' ) ) );
@@ -131,7 +131,7 @@ if ($option == 'search') {
 if ($mosConfig_lang=='') {
 	$mosConfig_lang = 'english';
 }
-include_once( 'language/' . $mosConfig_lang . '.php' );
+include_once( $mosConfig_absolute_path .'/language/' . $mosConfig_lang . '.php' );
 
 // frontend login & logout controls
 $return = mosGetParam( $_REQUEST, 'return', NULL );
@@ -228,14 +228,14 @@ header( 'Pragma: no-cache' );
 
 // display the offline alert if an admin is logged in
 if (defined( '_ADMIN_OFFLINE' )) {
-	include( 'offlinebar.php' );
+	include( $mosConfig_absolute_path .'/offlinebar.php' );
 }
 
 // loads template file
-if ( !file_exists( 'templates/'. $cur_template .'/index.php' ) ) {
+if ( !file_exists( $mosConfig_absolute_path .'/templates/'. $cur_template .'/index.php' ) ) {
 	echo _TEMPLATE_WARN . $cur_template;
 } else {
-	require_once( 'templates/'. $cur_template .'/index.php' );
+	require_once( $mosConfig_absolute_path .'/templates/'. $cur_template .'/index.php' );
 	echo "<!-- ".time()." -->";
 }
 

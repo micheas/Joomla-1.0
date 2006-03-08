@@ -57,6 +57,7 @@ Low Level Threat
  # Fixed [topic,41466.0.html] : NullDate AND '0000-00-00 00:00:00'
  
  ^ Global define of _CURRENT_SERVER_TIME
+ ^ sef.php optimization
 
 
 07-Mar-2006 Rey Gigataras

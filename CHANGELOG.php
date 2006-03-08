@@ -53,6 +53,7 @@ Low Level Threat
  # Fixed artf3748 : Archive - Access Denied
  # Fixed artf3592 : Archive Pagination Problem
  # Fixed [topic,41627.0.html] : "Undefined variable: filter"
+ # Fixed [topic,43315.0.html] : Static text in content.php
 
 
 07-Mar-2006 Rey Gigataras

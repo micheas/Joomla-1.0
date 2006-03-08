@@ -135,7 +135,7 @@ function findKeyItem( $gid, $access, $pop, $option, $now ) {
 	if ($id > 0) {
 		showItem( $id, $gid, $access, $pop, $option, $now );
 	} else {
-		echo 'Key not found';
+		echo _KEY_NOT_FOUND;
 	}
 }
 

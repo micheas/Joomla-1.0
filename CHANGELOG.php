@@ -52,6 +52,7 @@ Low Level Threat
  # Fixed artf3847 : A mistake in joomla_admin template
  # Fixed artf3748 : Archive - Access Denied
  # Fixed artf3592 : Archive Pagination Problem
+ # Fixed [topic,41627.0.html] : "Undefined variable: filter"
 
 
 07-Mar-2006 Rey Gigataras

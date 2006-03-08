@@ -432,7 +432,8 @@ function showCategory( $id, $gid, &$access, $sectionid, $limit, $selected, $limi
 
 	// get the total number of published items in the category
 	// filter functionality
-	$and = '';
+	$and 	= null;
+	$filter = null;
 	if ( $params->get( 'filter' ) ) {
 		$filter = mosGetParam( $_POST, 'filter', '' );
 		

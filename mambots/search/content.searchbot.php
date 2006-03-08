@@ -27,7 +27,6 @@ $_MAMBOTS->registerFunction( 'onSearch', 'botSearchContent' );
 */
 function botSearchContent( $text, $phrase='', $ordering='' ) {
 	global $my, $database;
-	global $mosConfig_offset;
 
 	// load mambot params info
 	$query = "SELECT params"
@@ -43,7 +42,7 @@ function botSearchContent( $text, $phrase='', $ordering='' ) {
 	$limit 		= $botParams->def( 'search_limit', 50 );
 
 	$nullDate 	= $database->getNullDate();
-	$now 		= date( 'Y-m-d H:i:s', time()+$mosConfig_offset*60*60 );
+	$now 		= _CURRENT_SERVER_TIME;
 	
 	$text = trim( $text );
 	if ($text == '') {

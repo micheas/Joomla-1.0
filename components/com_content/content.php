@@ -24,7 +24,7 @@ $limit 		= intval( mosGetParam( $_REQUEST, 'limit', '' ) );
 $order 		= mosGetParam( $_REQUEST, 'order', '' );
 $limitstart = intval( mosGetParam( $_REQUEST, 'limitstart', 0 ) );
 
-$now = date( 'Y-m-d H:i:s', time() );
+$now 		= _CURRENT_SERVER_TIME;
 
 // Editor usertype check
 $access = new stdClass();

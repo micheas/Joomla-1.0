@@ -14,10 +14,8 @@
 // no direct access
 defined( '_VALID_MOS' ) or die( 'Restricted access' );
 
-global $mosConfig_offset;
-
 $count 	= intval( $params->def( 'count', 10 ) );
-$now 	= date( 'Y-m-d H:i:s', time() + $mosConfig_offset * 60 * 60 );
+$now 	= _CURRENT_SERVER_TIME;
 
 $query = "SELECT MONTH( created ) AS created_month, created, id, sectionid, title, YEAR(created) AS created_year"
 . "\n FROM #__content"

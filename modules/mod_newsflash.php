@@ -49,7 +49,7 @@ $access->canEdit 	= 0;
 $access->canEditOwn = 0;
 $access->canPublish = 0;
 
-$now 				= date( 'Y-m-d H:i:s', time() + $mosConfig_offset * 60 * 60 );
+$now 				= _CURRENT_SERVER_TIME;
 $noauth 			= !$mainframe->getCfg( 'shownoauth' );
 $nullDate 			= $database->getNullDate();
 

@@ -92,7 +92,8 @@ function pollAddVote( $uid ) {
 
 	$database->query();
 
-	$now = date( 'Y-m-d G:i:s' );
+	$now = _CURRENT_SERVER_TIME;
+	
 	$query = "INSERT INTO #__poll_date"
 	. "\n SET date = '$now', vote_id = $voteid, poll_id = $poll->id"
 	;

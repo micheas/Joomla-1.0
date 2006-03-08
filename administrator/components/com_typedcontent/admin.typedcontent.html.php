@@ -97,7 +97,7 @@ class HTML_typedcontent {
 		for ($i=0, $n=count( $rows ); $i < $n; $i++) {
 			$row = &$rows[$i];
 
-			$now = date( 'Y-m-d H:i:s' );
+			$now = _CURRENT_SERVER_TIME;
 			if ( $now <= $row->publish_up && $row->state == "1" ) {
 				$img = 'publish_y.png';
 				$alt = 'Published';

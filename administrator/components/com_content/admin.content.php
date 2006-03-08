@@ -190,7 +190,9 @@ function viewContent( $sectionid, $option ) {
 
 	// get the total number of records
 	$query = "SELECT COUNT(*)"
-	. "\n FROM ( #__content AS c, #__categories AS cc, #__sections AS s )"
+	. "\n FROM #__content AS c"
+	. "\n LEFT JOIN #__categories AS cc ON cc.id = c.catid"
+	. "\n LEFT JOIN #__sections AS s ON s.id = c.sectionid"
 	. ( count( $where ) ? "\n WHERE " . implode( ' AND ', $where ) : "" )
 	;
 	$database->setQuery( $query );
@@ -199,7 +201,9 @@ function viewContent( $sectionid, $option ) {
 	$pageNav = new mosPageNav( $total, $limitstart, $limit );
 
 	$query = "SELECT c.*, g.name AS groupname, cc.name, u.name AS editor, f.content_id AS frontpage, s.title AS section_name, v.name AS author"
-	. "\n FROM ( #__content AS c, #__categories AS cc, #__sections AS s )"
+	. "\n FROM #__content AS c"
+	. "\n LEFT JOIN #__categories AS cc ON cc.id = c.catid"
+	. "\n LEFT JOIN #__sections AS s ON s.id = c.sectionid"
 	. "\n LEFT JOIN #__groups AS g ON g.id = c.access"
 	. "\n LEFT JOIN #__users AS u ON u.id = c.checked_out"
 	. "\n LEFT JOIN #__users AS v ON v.id = c.created_by"
@@ -300,7 +304,9 @@ function viewArchive( $sectionid, $option ) {
 
 	// get the total number of records
 	$query = "SELECT COUNT(*)"
-	. "FROM ( #__content AS c, #__categories AS cc, #__sections AS s )"
+	. "\n FROM #__content AS c"
+	. "\n LEFT JOIN #__categories AS cc ON cc.id = c.catid"
+	. "\n LEFT JOIN #__sections AS s ON s.id = c.sectionid"
 	. ( count( $where ) ? "\n WHERE " . implode( ' AND ', $where ) : '' )
 	;
 	$database->setQuery( $query );
@@ -310,7 +316,9 @@ function viewArchive( $sectionid, $option ) {
 	$pageNav = new mosPageNav( $total, $limitstart, $limit  );
 
 	$query = "SELECT c.*, g.name AS groupname, cc.name, v.name AS author"
-	. "\n FROM ( #__content AS c, #__categories AS cc, #__sections AS s )"
+	. "\n FROM #__content AS c"
+	. "\n LEFT JOIN #__categories AS cc ON cc.id = c.catid"
+	. "\n LEFT JOIN #__sections AS s ON s.id = c.sectionid"
 	. "\n LEFT JOIN #__groups AS g ON g.id = c.access"
 	. "\n LEFT JOIN #__users AS v ON v.id = c.created_by"
 	. ( count( $where ) ? "\n WHERE " . implode( ' AND ', $where ) : '' )

@@ -36,7 +36,7 @@ switch ( $task ) {
 */
 function feedFrontpage( $showFeed ) {
 	global $database, $mainframe;
-	global $mosConfig_live_site, $mosConfig_offset, $mosConfig_absolute_path, $mosConfig_cachepath;
+	global $mosConfig_live_site, $mosConfig_cachepath;
 
 	$nullDate = $database->getNullDate();
 	// pull id of syndication component
@@ -70,7 +70,7 @@ function feedFrontpage( $showFeed ) {
 		}			
 	}
 	
-	$now 	= date( 'Y-m-d H:i:s', time() + $mosConfig_offset * 60 * 60 );
+	$now 	= _CURRENT_SERVER_TIME;
 	$iso 	= split( '=', _ISO );
 
 	// parameter intilization

@@ -15,10 +15,10 @@ global $mosConfig_offset;
 /// no direct access
 defined( '_VALID_MOS' ) or die( 'Restricted access' );
 
-$count 	= intval( $params->get( 'count', 20 ) );
-$access = !$mainframe->getCfg( 'shownoauth' );
-$now 	= date( 'Y-m-d H:i:s', time() + $mosConfig_offset * 60 * 60 );
-$nullDate = $database->getNullDate();
+$count 		= intval( $params->get( 'count', 20 ) );
+$access 	= !$mainframe->getCfg( 'shownoauth' );
+$now 		= _CURRENT_SERVER_TIME;
+$nullDate 	= $database->getNullDate();
 
 $query = "SELECT a.id AS id, a.title AS title, COUNT(b.id) as cnt"
 . "\n FROM #__sections as a"

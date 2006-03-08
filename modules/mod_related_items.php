@@ -16,13 +16,12 @@ defined( '_VALID_MOS' ) or die( 'Restricted access' );
 
 global $mosConfig_offset;
 
-$option = mosGetParam( $_REQUEST, 'option' );
-$task 	= mosGetParam( $_REQUEST, 'task' );
-$id 	= intval( mosGetParam( $_REQUEST, 'id', null ) );
+$option 	= mosGetParam( $_REQUEST, 'option' );
+$task 		= mosGetParam( $_REQUEST, 'task' );
+$id 		= intval( mosGetParam( $_REQUEST, 'id', null ) );
 
-$now 	= date( 'Y-m-d H:i:s', time() );
-
-$nullDate = $database->getNullDate();
+$now 		= _CURRENT_SERVER_TIME;
+$nullDate 	= $database->getNullDate();
 
 if ($option == 'com_content' && $task == 'view' && $id) {
 	// select the meta keywords from the item

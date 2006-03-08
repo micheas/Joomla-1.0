@@ -99,6 +99,10 @@ if ( isset( $_SERVER['REQUEST_URI'] ) ) {
 }
 $_SERVER['REQUEST_URI'] = $request_uri;
 
+// current server time
+$now = date( 'Y-m-d H:i:s', time() );
+DEFINE( '_CURRENT_SERVER_TIME', $now );
+
 /**
  * @package Joomla
  * @abstract
@@ -405,6 +409,9 @@ class mosMainFrame {
 
 		//set the admin check
 		$this->_isAdmin 		= (boolean) $isAdmin;
+		
+		$now = date( 'Y-m-d H:i:s', time() );
+		$this->set( 'now', $now );
 	}
 
 	/**

@@ -35,7 +35,7 @@ if ($mosConfig_sef) {
 		foreach($url_array as $key=>$value) {
 			if ( !strcasecmp(substr($value,0,5),'lang,') ) {
 				$temp = explode(',', $value);
-				if (isset($temp[0]) && $temp[0]!='' && isset($temp[1]) && $temp[1]!='') {
+				if (isset($temp[0]) && $temp[0] != '' && isset($temp[1]) && $temp[1] != '') {
 					$_GET['lang'] 		= $temp[1];
 					$_REQUEST['lang'] 	= $temp[1];
 					$lang 				= $temp[1];
@@ -44,7 +44,34 @@ if ($mosConfig_sef) {
 			}
 		}
 
-		if (isset($url_array[$pos+6]) && $url_array[$pos+6]!='') {
+		if (isset($url_array[$pos+7]) && $url_array[$pos+7] != '' && ( in_array('archivecategory', $url_array) || in_array('archivesection', $url_array) ) ) {
+		// $option/$task/$sectionid/$Itemid/$limit/$limitstart/year/month
+			$task 					= $url_array[$pos+1];
+			$sectionid				= $url_array[$pos+2];
+			$Itemid 				= $url_array[$pos+3];
+			$limit 					= $url_array[$pos+4];
+			$limitstart 			= $url_array[$pos+5];
+			$year 					= $url_array[$pos+6];
+			$month 					= $url_array[$pos+7];
+
+			// pass data onto global variables
+			$_GET['task'] 			= $task;
+			$_REQUEST['task'] 		= $task;
+			$_GET['id'] 			= $sectionid;
+			$_REQUEST['id'] 		= $sectionid;
+			$_GET['Itemid'] 		= $Itemid;
+			$_REQUEST['Itemid'] 	= $Itemid;
+			$_GET['limit'] 			= $limit;
+			$_REQUEST['limit'] 		= $limit;
+			$_GET['limitstart'] 	= $limitstart;
+			$_REQUEST['limitstart'] = $limitstart;
+			$_GET['year'] 			= $year;
+			$_REQUEST['year'] 		= $year;
+			$_GET['month'] 			= $month;
+			$_REQUEST['month'] 		= $month;
+
+			$QUERY_STRING = "option=com_content&task=$task&sectionid=$sectionid&Itemid=$Itemid&limit=$limit&limitstart=$limitstart&year=$year&month=$month";			
+		} else if (isset($url_array[$pos+6]) && $url_array[$pos+6] != '') {
 		// $option/$task/$sectionid/$id/$Itemid/$limit/$limitstart
 			$task 					= $url_array[$pos+1];
 			$sectionid				= $url_array[$pos+2];
@@ -68,7 +95,7 @@ if ($mosConfig_sef) {
 			$_REQUEST['limitstart'] = $limitstart;
 
 			$QUERY_STRING = "option=com_content&task=$task&sectionid=$sectionid&id=$id&Itemid=$Itemid&limit=$limit&limitstart=$limitstart";
-		} else if (isset($url_array[$pos+5]) && $url_array[$pos+5]!='') {
+		} else if (isset($url_array[$pos+5]) && $url_array[$pos+5] != '') {
 		// $option/$task/$id/$Itemid/$limit/$limitstart
 			$task 					= $url_array[$pos+1];
 			$id 					= $url_array[$pos+2];
@@ -89,8 +116,8 @@ if ($mosConfig_sef) {
 			$_REQUEST['limitstart'] = $limitstart;
 
 			$QUERY_STRING = "option=com_content&task=$task&id=$id&Itemid=$Itemid&limit=$limit&limitstart=$limitstart";
-		} else if (isset($url_array[$pos+4]) && $url_array[$pos+4]!='' && ( in_array('archivecategory', $url_array) || in_array('archivesection', $url_array) )) {
-			// $option/$task/$Itemid/$year/$month/$module
+		} else if (isset($url_array[$pos+4]) && $url_array[$pos+4] != '' && ( in_array('archivecategory', $url_array) || in_array('archivesection', $url_array) )) {
+		// $option/$task/$year/$month/$module
 			$task 					= $url_array[$pos+1];
 			$year 					= $url_array[$pos+2];
 			$month 					= $url_array[$pos+3];
@@ -107,7 +134,7 @@ if ($mosConfig_sef) {
 			$_REQUEST['module']		= $module;
 			
 			$QUERY_STRING = "option=com_content&task=$task&year=$year&month=$month&module=$module";
-		} else if (!(isset($url_array[$pos+5]) && $url_array[$pos+5]!='') && isset($url_array[$pos+4]) && $url_array[$pos+4]!='') {
+		} else if (!(isset($url_array[$pos+5]) && $url_array[$pos+5] != '') && isset($url_array[$pos+4]) && $url_array[$pos+4] != '') {
 		// $option/$task/$sectionid/$id/$Itemid
 			$task 					= $url_array[$pos+1];
 			$sectionid 				= $url_array[$pos+2];
@@ -125,7 +152,7 @@ if ($mosConfig_sef) {
 			$_REQUEST['Itemid'] 	= $Itemid;
 
 			$QUERY_STRING = "option=com_content&task=$task&sectionid=$sectionid&id=$id&Itemid=$Itemid";
-		} else if (!(isset($url_array[$pos+4]) && $url_array[$pos+4]!='') && (isset($url_array[$pos+3]) && $url_array[$pos+3]!='')) {
+		} else if (!(isset($url_array[$pos+4]) && $url_array[$pos+4] != '') && (isset($url_array[$pos+3]) && $url_array[$pos+3] != '')) {
 		// $option/$task/$id/$Itemid
 			$task 					= $url_array[$pos+1];
 			$id 					= $url_array[$pos+2];
@@ -140,7 +167,7 @@ if ($mosConfig_sef) {
 			$_REQUEST['Itemid'] 	= $Itemid;
 
 			$QUERY_STRING = "option=com_content&task=$task&id=$id&Itemid=$Itemid";
-		} else if (!(isset($url_array[$pos+3]) && $url_array[$pos+3]!='') && (isset($url_array[$pos+2]) && $url_array[$pos+2]!='')) {
+		} else if (!(isset($url_array[$pos+3]) && $url_array[$pos+3] != '') && (isset($url_array[$pos+2]) && $url_array[$pos+2] != '')) {
 		// $option/$task/$id
 			$task 					= $url_array[$pos+1];
 			$id 					= $url_array[$pos+2];
@@ -152,7 +179,7 @@ if ($mosConfig_sef) {
 			$_REQUEST['id'] 		= $id;
 
 			$QUERY_STRING = "option=com_content&task=$task&id=$id";
-		} else if (!(isset($url_array[$pos+2]) && $url_array[$pos+2]!='') && (isset($url_array[$pos+1]) && $url_array[$pos+1]!='')) {
+		} else if (!(isset($url_array[$pos+2]) && $url_array[$pos+2] != '') && (isset($url_array[$pos+1]) && $url_array[$pos+1] != '')) {
 		// $option/$task
 			$task = $url_array[$pos+1];
 

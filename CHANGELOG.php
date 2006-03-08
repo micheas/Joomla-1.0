@@ -49,9 +49,14 @@ Low Level Threat
 
 
 08-Mar-2006 Rey Gigataras
+ # Fixed artf3847 : A mistake in joomla_admin template
+ # Fixed artf3748 : Archive - Access Denied
+ # Fixed artf3592 : Archive Pagination Problem
+
+
+07-Mar-2006 Rey Gigataras
  + Show whether Cache directory is writable where it is used - com_newsfeeds, com_syndicate, custom modules
  
- # Fixed artf3847 : A mere mistake in joomla_admin template
  # Fixed artf3818 : Path error for agent_browser.php in joomla.php
  # Fixed ensure all require and include calls are using absolute paths
 

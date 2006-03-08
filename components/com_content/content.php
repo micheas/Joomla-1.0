@@ -563,7 +563,9 @@ function showBlogSection( $id=0, $gid, &$access, $pop, $now=NULL ) {
 		$id		= $params->def( 'sectionid', 0 );
 	}
 
-	$where 		= _where( 1, $access, $noauth, $gid, $id, $now );
+	$where 	= _where( 1, $access, $noauth, $gid, $id, $now );
+	
+	$where 	= ( count( $where ) ? "\n WHERE ". implode( "\n AND ", $where ) : '' );
 
 	// Ordering control
 	$orderby_sec 	= $params->def( 'orderby_sec', 'rdate' );
@@ -582,7 +584,7 @@ function showBlogSection( $id=0, $gid, &$access, $pop, $now=NULL ) {
 	. "\n LEFT JOIN #__content_rating AS v ON a.id = v.content_id"
 	. "\n LEFT JOIN #__sections AS s ON a.sectionid = s.id"
 	. "\n LEFT JOIN #__groups AS g ON a.access = g.id"
-	. ( count( $where ) ? "\n WHERE ".implode( "\n AND ", $where ) : '' )
+	. $where
 	. "\n AND s.access <= $gid"
 	. "\n AND cc.access <= $gid"
 	. "\n AND s.published = 1"
@@ -645,7 +647,9 @@ function showBlogCategory( $id=0, $gid, &$access, $pop, $now ) {
 		$id 		= $params->def( 'categoryid', 0 );
 	}
 
-	$where		= _where( 2, $access, $noauth, $gid, $id, $now );
+	$where	= _where( 2, $access, $noauth, $gid, $id, $now );
+	
+	$where 	= ( count( $where ) ? "\n WHERE ". implode( "\n AND ", $where ) : '' );
 
 	// Ordering control
 	$orderby_sec 	= $params->def( 'orderby_sec', 'rdate' );
@@ -664,7 +668,7 @@ function showBlogCategory( $id=0, $gid, &$access, $pop, $now ) {
 	. "\n LEFT JOIN #__content_rating AS v ON a.id = v.content_id"
 	. "\n LEFT JOIN #__sections AS s ON a.sectionid = s.id"
 	. "\n LEFT JOIN #__groups AS g ON a.access = g.id"
-	. ( count( $where ) ? "\n WHERE ".implode( "\n AND ", $where ) : '' )
+	. $where
 	. "\n AND s.access <= $gid"
 	. "\n AND cc.access <= $gid"
 	. "\n AND s.published = 1"
@@ -723,7 +727,7 @@ function showArchiveSection( $id=NULL, $gid, &$access, $pop, $option ) {
 	global $database, $mainframe;
 	global $Itemid;
 
-	$check = ( $id ? $id : 0 );
+	$secID 	= ( $id ? $id : 0 );
 	
 	$noauth = !$mainframe->getCfg( 'shownoauth' );
 
@@ -754,6 +758,8 @@ function showArchiveSection( $id=NULL, $gid, &$access, $pop, $option ) {
 	// used in query
 	$where = _where( -1, $access, $noauth, $gid, $id, NULL, $year, $month );
 
+	$where = ( count( $where ) ? "\n WHERE ". implode( "\n AND ", $where ) : '' );
+	
 	// checks to see if 'All Sections' options used
 	if ( $id == 0 ) {
 		$check = '';
@@ -782,7 +788,7 @@ function showArchiveSection( $id=NULL, $gid, &$access, $pop, $option ) {
 	. "\n LEFT JOIN #__content_rating AS v ON a.id = v.content_id"
 	. "\n LEFT JOIN #__sections AS s ON a.sectionid = s.id"
 	. "\n LEFT JOIN #__groups AS g ON a.access = g.id"
-	. ( count( $where ) ? "\n WHERE ". implode( "\n AND ", $where ) : '')
+	. $where
 	. "\n AND s.access <= $gid"
 	. "\n AND cc.access <= $gid"
 	. "\n AND s.published = 1"
@@ -795,7 +801,7 @@ function showArchiveSection( $id=NULL, $gid, &$access, $pop, $option ) {
 	// check whether section is published
 	if (!count($rows)) {
 		$secCheck = new mosSection( $database );
-		$secCheck->load( $check );
+		$secCheck->load( $secID );
 		
 		/*
 		* check whether section is published
@@ -840,7 +846,7 @@ function showArchiveCategory( $id=0, $gid, &$access, $pop, $option, $now ) {
 	global $Itemid;
 
 	// needed for check whether section & category is published
-	$check = ( $id ? $id : 0 );
+	$catID 	= ( $id ? $id : 0 );
 	
 	// Parameters
 	$noauth = !$mainframe->getCfg( 'shownoauth' );
@@ -874,6 +880,8 @@ function showArchiveCategory( $id=0, $gid, &$access, $pop, $option, $now ) {
 	// used in query
 	$where = _where( -2, $access, $noauth, $gid, $id, NULL, $year, $month );
 
+	$where = ( count( $where ) ? "\n WHERE ". implode( "\n AND ", $where ) : '' );
+
 	// query to determine if there are any archived entries for the category
 	$query = "SELECT a.id"
 	. "\n FROM #__content as a"
@@ -884,7 +892,6 @@ function showArchiveCategory( $id=0, $gid, &$access, $pop, $option, $now ) {
 	$items = $database->loadObjectList();
 	$archives = count( $items );
 
-	//$query = "SELECT a.*, ROUND( v.rating_sum / v.rating_count ) AS rating, v.rating_count, u.name AS author, u.usertype, s.name AS section, g.name AS groups"
 	$query = "SELECT a.id, a.title, a.title_alias, a.introtext, a.sectionid, a.state, a.catid, a.created, a.created_by, a.created_by_alias, a.modified, a.modified_by,"
 	. "\n a.checked_out, a.checked_out_time, a.publish_up, a.publish_down, a.images, a.urls, a.ordering, a.metakey, a.metadesc, a.access,"
 	. "\n CHAR_LENGTH( a.fulltext ) AS readmore,"
@@ -895,7 +902,7 @@ function showArchiveCategory( $id=0, $gid, &$access, $pop, $option, $now ) {
 	. "\n LEFT JOIN #__content_rating AS v ON a.id = v.content_id"
 	. "\n LEFT JOIN #__sections AS s ON a.sectionid = s.id"
 	. "\n LEFT JOIN #__groups AS g ON a.access = g.id"
-	. ( count( $where ) ? "\n WHERE ". implode( "\n AND ", $where ) : '' )
+	. $where
 	. "\n AND s.access <= $gid"
 	. "\n AND cc.access <= $gid"
 	. "\n AND s.published = 1"
@@ -908,7 +915,7 @@ function showArchiveCategory( $id=0, $gid, &$access, $pop, $option, $now ) {
 	// check whether section & category is published
 	if (!count($rows)) {
 		$catCheck = new mosCategory( $database );
-		$catCheck->load( $check );
+		$catCheck->load( $catID );
 		
 		/*
 		* check whether category is published
@@ -953,7 +960,8 @@ function showArchiveCategory( $id=0, $gid, &$access, $pop, $option, $now ) {
 
 	if ( !$archives ) {
 		// if no archives for category, hides search and outputs empty message
-		echo '<br /><div align="center">'. _CATEGORY_ARCHIVE_EMPTY .'</div>';
+		echo '<br />';
+		echo '<div align="center">'. _CATEGORY_ARCHIVE_EMPTY .'</div>';
 	} else {
 		// if coming from the Archive Module, the Archive Dropdown selector is not shown
 		if ( $id ) {

@@ -201,7 +201,8 @@ function edit( $uid, $option ) {
 	$row = new mosContent( $database );
 	$row->load( $uid );
 
-	$lists = array();
+	$lists 		= array();
+	$nullDate 	= $database->getNullDate();
 
 	if ($uid) {
 		// fail if checked out not by 'me'
@@ -218,10 +219,9 @@ function edit( $uid, $option ) {
 		}
 		
 		$row->created 		= mosFormatDate( $row->created, '%Y-%m-%d %H:%M:%S' );
-		$row->modified 		= $row->modified == '0000-00-00 00:00:00' ? '' : mosFormatDate( $row->modified, '%Y-%m-%d %H:%M:%S' );
+		$row->modified 		= $row->modified == $nullDate ? '' : mosFormatDate( $row->modified, '%Y-%m-%d %H:%M:%S' );
 		$row->publish_up 	= mosFormatDate( $row->publish_up, '%Y-%m-%d %H:%M:%S' );
 		
-		$nullDate = $database->getNullDate();
 		if (trim( $row->publish_down ) == $nullDate) {
 			$row->publish_down = "Never";
 		}
@@ -258,7 +258,7 @@ function edit( $uid, $option ) {
 		$row->sectionid 	= 0;
 		$row->catid 		= 0;
 		$row->creator 		= '';
-		$row->modified 		= '0000-00-00 00:00:00';
+		$row->modified 		= $nullDate;
 		$row->modifier 		= '';
 		$row->ordering 		= 0;
 		$menus = array();

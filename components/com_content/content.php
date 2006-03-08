@@ -1530,7 +1530,7 @@ function editItem( $uid, $gid, &$access, $sectionid=0, $task, $Itemid ){
 
 	if ( $uid ) {
 		$row->checkout( $my->id );
-		if (trim( $row->publish_down ) == '0000-00-00 00:00:00') {
+		if (trim( $row->publish_down ) == $nullDate) {
 			$row->publish_down = 'Never';
 		}
 		if (trim( $row->images )) {

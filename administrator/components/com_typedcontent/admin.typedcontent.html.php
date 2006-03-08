@@ -241,13 +241,16 @@ class HTML_typedcontent {
 	}
 
 	function edit( &$row, &$images, &$lists, &$params, $option, &$menus ) {
-		//mosMakeHtmlSafe( $row );
-		$create_date = null;
-		if ( $row->created != '0000-00-00 00:00:00' ) {
+		global $database;
+		
+		$create_date 	= null;
+		$mod_date 		= null;
+		$nullDate 		= $database->getNullDate();
+		
+		if ( $row->created != $nullDate ) {
 			$create_date 	= mosFormatDate( $row->created, '%A, %d %B %Y %H:%M', '0' );
 		}
-		$mod_date = null;
-		if ( $row->modified != '0000-00-00 00:00:00' ) {
+		if ( $row->modified != $nullDate ) {
 			$mod_date 		= mosFormatDate( $row->modified, '%A, %d %B %Y %H:%M', '0' );
 		}
 		

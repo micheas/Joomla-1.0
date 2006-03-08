@@ -375,6 +375,8 @@ function editContent( $uid=0, $sectionid=0, $option ) {
 	global $mosConfig_absolute_path, $mosConfig_live_site, $mosConfig_offset;
 
 	$redirect = mosGetParam( $_POST, 'redirect', '' );
+	$nullDate = $database->getNullDate();
+	
 	if ( !$redirect ) {
 		$redirect = $sectionid;
 	}
@@ -404,11 +406,10 @@ function editContent( $uid=0, $sectionid=0, $option ) {
 		}
 
  		$row->created 		= mosFormatDate( $row->created, '%Y-%m-%d %H:%M:%S' );
-		$row->modified 		= $row->modified == '0000-00-00 00:00:00' ? '' : mosFormatDate( $row->modified, '%Y-%m-%d %H:%M:%S' );
+		$row->modified 		= $row->modified == $nullDate ? '' : mosFormatDate( $row->modified, '%Y-%m-%d %H:%M:%S' );
 		$row->publish_up 	= mosFormatDate( $row->publish_up, '%Y-%m-%d %H:%M:%S' );
 
-		$nullDate = $database->getNullDate();
-  		if (trim( $row->publish_down ) == $nullDate) {
+ 		if (trim( $row->publish_down ) == $nullDate) {
 			$row->publish_down = 'Never';
 		}
 
@@ -462,7 +463,7 @@ function editContent( $uid=0, $sectionid=0, $option ) {
 		$row->publish_up 	= date( 'Y-m-d H:i:s', time() + ( $mosConfig_offset * 60 * 60 ) );
 		$row->publish_down 	= 'Never';
 		$row->creator 		= '';
-		$row->modified 		= '0000-00-00 00:00:00';
+		$row->modified 		= $nullDate;
 		$row->modifier 		= '';
 		$row->frontpage 	= 0;
 		$menus = array();

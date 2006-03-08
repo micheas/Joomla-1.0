@@ -54,6 +54,7 @@ Low Level Threat
  # Fixed artf3592 : Archive Pagination Problem
  # Fixed [topic,41627.0.html] : "Undefined variable: filter"
  # Fixed [topic,43315.0.html] : Static text in content.php
+ # Fixed [topic,41466.0.html] : NullDate AND '0000-00-00 00:00:00'
  
  ^ Global define of _CURRENT_SERVER_TIME
 

@@ -496,10 +496,10 @@ DEFINE('_FEED_LINK','Feed Link');
 /** whos_online.php */
 DEFINE('_WE_HAVE', 'We have ');
 DEFINE('_AND', ' and ');
-DEFINE('_GUEST_COUNT','$guest_array guest');
-DEFINE('_GUESTS_COUNT','$guest_array guests');
-DEFINE('_MEMBER_COUNT','$user_array member');
-DEFINE('_MEMBERS_COUNT','$user_array members');
+DEFINE('_GUEST_COUNT','%s guest');
+DEFINE('_GUESTS_COUNT','%s guests');
+DEFINE('_MEMBER_COUNT','%s member');
+DEFINE('_MEMBERS_COUNT','%s members');
 DEFINE('_ONLINE',' online');
 DEFINE('_NONE','No Users Online');
 

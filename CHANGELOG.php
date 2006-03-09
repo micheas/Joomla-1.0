@@ -49,6 +49,7 @@ Low Level Threat
 
 
 09-Mar-2006 Rey Gigataras
+ # Fixed artf3863 : mod_whosonline double ONLINE
  # Fixed [topic,44644.0.html] : Miss spelled Position as Postition
 
 

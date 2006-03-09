@@ -44,10 +44,9 @@ class mosPageNav {
 		$limits[] = mosHTML::makeOption( "50" );
 
 		// build the html select list
-		$link = sefRelToAbs($link.'&amp;limit=\' + this.options[selectedIndex].value + \'&amp;limitstart='.$this->limitstart);
-		return mosHTML::selectList( $limits, 'limit',
-		'class="inputbox" size="1" onchange="document.location.href=\''.$link.'\';"',
-		'value', 'text', $this->limit );
+		$link = $link ."&amp;limit=' + this.options[selectedIndex].value + '&amp;limitstart=". $this->limitstart;
+		$link = sefRelToAbs( $link );
+		return mosHTML::selectList( $limits, 'limit', 'class="inputbox" size="1" onchange="document.location.href=\''. $link .'\';"', 'value', 'text', $this->limit );
 	}
 	/**
 	* Writes the html limit # input box

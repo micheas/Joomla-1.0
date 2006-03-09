@@ -48,6 +48,10 @@ Low Level Threat
 ---
 
 
+09-Mar-2006 Rey Gigataras
+ # Fixed [topic,44644.0.html] : Miss spelled Position as Postition
+
+
 08-Mar-2006 Rey Gigataras
  # Fixed artf3847 : A mistake in joomla_admin template
  # Fixed artf3748 : Archive - Access Denied

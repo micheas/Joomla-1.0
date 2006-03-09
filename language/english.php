@@ -153,7 +153,7 @@ DEFINE('_CONTACT_MOBILE','Mobile: ');
 DEFINE('_CONTACT_FAX','Fax: ');
 DEFINE('_CONTACT_EMAIL','Email: ');
 DEFINE('_CONTACT_NAME','Name: ');
-DEFINE('_CONTACT_POSITION','Postition: ');
+DEFINE('_CONTACT_POSITION','Position: ');
 DEFINE('_CONTACT_ADDRESS','Address: ');
 DEFINE('_CONTACT_MISC','Information: ');
 DEFINE('_CONTACT_SEL','Select Contact:');

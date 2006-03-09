@@ -51,6 +51,7 @@ Low Level Threat
 09-Mar-2006 Rey Gigataras
  # Fixed artf3863 : mod_whosonline double ONLINE
  # Fixed [topic,44644.0.html] : Miss spelled Position as Postition
+ # Fixed [topic,41593.0.html] : Table - content section - filter works only for the first page
 
 
 08-Mar-2006 Rey Gigataras

@@ -355,11 +355,13 @@ function showCategory( $id, $gid, &$access, $sectionid, $limit, $selected, $limi
 		$params = new mosParameters( '' );
 	}
 
+	$lists['order_value'] = '';
 	if ( $selected ) {
-		$orderby = $selected;
+		$orderby 				= $selected;
+		$lists['order_value'] 	= $selected;
 	} else {
-		$orderby = $params->get( 'orderby', 'rdate' );
-		$selected = $orderby;
+		$orderby 				= $params->get( 'orderby', 'rdate' );
+		$selected 				= $orderby;
 	}
 
 	$params->set( 'type', 				'category' );
@@ -435,7 +437,7 @@ function showCategory( $id, $gid, &$access, $sectionid, $limit, $selected, $limi
 	$and 	= null;
 	$filter = null;
 	if ( $params->get( 'filter' ) ) {
-		$filter = mosGetParam( $_POST, 'filter', '' );
+		$filter = mosGetParam( $_REQUEST, 'filter', '' );
 		
 		if ( $filter ) {
 			// clean filter variable
@@ -530,8 +532,8 @@ function showCategory( $id, $gid, &$access, $sectionid, $limit, $selected, $limi
 		$params->set( 'order_select', 0 );
 	}
 
-	$lists['task'] = 'category';
-	$lists['filter'] = $filter;
+	$lists['task'] 			= 'category';
+	$lists['filter'] 		= $filter;
 
 	// Dynamic Page Title
 	$mainframe->SetPageTitle( $pagetitle );

@@ -200,8 +200,18 @@ class HTML_content {
 							?>
 							<td align="right" width="100%" nowrap="nowrap">
 							<?php
+							$order = '';
+							if ( $lists['order_value'] ) {
+								$order = '&amp;order='. $lists['order_value'];
+							}
+							$filter = '';
+							if ( $lists['filter'] ) {
+								$filter = '&amp;filter='. $lists['filter'];
+							}
+
+							$link = 'index.php?option=com_content&amp;task=category&amp;sectionid='. $sectionid .'&amp;id='. $catid .'&amp;Itemid='. $Itemid . $order . $filter;
+							
 							echo '&nbsp;&nbsp;&nbsp;'. _PN_DISPLAY_NR .'&nbsp;';
-							$link = 'index.php?option=com_content&amp;task=category&amp;sectionid='. $sectionid .'&amp;id='. $catid .'&amp;Itemid='. $Itemid;
 							echo $pageNav->getLimitBox( $link );
 							?>
 							</td>
@@ -318,7 +328,16 @@ class HTML_content {
 			<tr>
 				<td align="center" colspan="4" class="sectiontablefooter<?php echo $params->get( 'pageclass_sfx' ); ?>">
 				<?php
-				$link = 'index.php?option=com_content&amp;task=category&amp;sectionid='. $sectionid .'&amp;id='. $catid .'&amp;Itemid='. $Itemid;
+				$order = '';
+				if ( $lists['order_value'] ) {
+					$order = '&amp;order='. $lists['order_value'];
+				}
+				$filter = '';
+				if ( $lists['filter'] ) {
+					$filter = '&amp;filter='. $lists['filter'];
+				}
+
+				$link = 'index.php?option=com_content&amp;task=category&amp;sectionid='. $sectionid .'&amp;id='. $catid .'&amp;Itemid='. $Itemid . $order . $filter;
 				echo $pageNav->writePagesLinks( $link );
 				?>
 				</td>

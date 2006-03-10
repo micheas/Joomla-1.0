@@ -49,6 +49,8 @@ Low Level Threat
 
 
 10-Mar-2006 Rey Gigataras
+ # Fixed artf3885 : Remove the last hardcoded texts
+
  ^ Ensure showPathway is only called once
 
 

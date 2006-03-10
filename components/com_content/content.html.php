@@ -1175,7 +1175,7 @@ class HTML_content {
 					</tr>
 					<tr>
 						<td align="right">
-						Caption:
+						<?php echo _E_CAPTION; ?>:
 						</td>
 						<td>
 						<input class="text_area" type="text" name="_caption" value="" size="30" />
@@ -1183,7 +1183,7 @@ class HTML_content {
 					</tr>
 					<tr>
 						<td align="right">
-						Caption Position:
+						<?php echo _E_CAPTION_POSITION; ?>:
 						</td>
 						<td>
 						<?php echo $lists['_caption_position']; ?>
@@ -1191,7 +1191,7 @@ class HTML_content {
 					</tr>
 					<tr>
 						<td align="right">
-						Caption Align:
+						<?php echo _E_CAPTION_ALIGN; ?>:
 						</td>
 						<td>
 						<?php echo $lists['_caption_align']; ?>
@@ -1199,14 +1199,15 @@ class HTML_content {
 					</tr>
 					<tr>
 						<td align="right">
-						Caption Width:
+						<?php echo _E_CAPTION_WIDTH; ?>:
 						</td>
 						<td>
 						<input class="text_area" type="text" name="_width" value="" size="5" maxlength="5" />
 						</td>
 					</tr>
 					<tr>
-						<td align="right"></td>
+						<td align="right">
+						</td>
 						<td>
 						<input class="button" type="button" value="<?php echo _E_APPLY; ?>" onclick="applyImageProps()" />
 						</td>
@@ -1216,12 +1217,12 @@ class HTML_content {
 			</tr>
 			<tr>
 				<td>
-					<img name="view_imagefiles" src="<?php echo $mosConfig_live_site;?>/images/M_images/blank.png" width="50" alt="No Image" />
+					<img name="view_imagefiles" src="<?php echo $mosConfig_live_site;?>/images/M_images/blank.png" width="50" alt="<?php echo _E_NO_IMAGE; ?>" />
 				</td>
 				<td width="2%">
 				</td>
 				<td>
-					<img name="view_imagelist" src="<?php echo $mosConfig_live_site;?>/images/M_images/blank.png" width="50" alt="No Image" />
+					<img name="view_imagelist" src="<?php echo $mosConfig_live_site;?>/images/M_images/blank.png" width="50" alt="<?php echo _E_NO_IMAGE; ?>" />
 				</td>
 				<td>
 				</td>

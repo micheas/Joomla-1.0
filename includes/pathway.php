@@ -313,5 +313,10 @@ function showPathway( $Itemid ) {
 }
 
 // code placed in a function to prevent messing up global variables
-showPathway( $Itemid );
+if (!defined( '_JOS_PATHWAY' )) {
+	// ensure that functions are declared only once
+	define( '_JOS_PATHWAY', 1 );
+	
+	showPathway( $Itemid );
+}
 ?>

@@ -5231,7 +5231,7 @@ function mosPathWay() {
 	global $mosConfig_absolute_path;
 	
 	$Itemid = mosGetParam($_REQUEST,'Itemid','');
-	require $mosConfig_absolute_path . '/includes/pathway.php';
+	require_once ( $mosConfig_absolute_path . '/includes/pathway.php' );
 }
 
 /**

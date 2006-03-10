@@ -50,6 +50,7 @@ Low Level Threat
 
 10-Mar-2006 Rey Gigataras
  # Fixed artf3885 : Remove the last hardcoded texts
+ # Fixed artf3713 : Joomla still doesn't work with SQL mode enabled
 
  ^ Ensure showPathway is only called once
 

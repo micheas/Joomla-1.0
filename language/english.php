@@ -507,6 +507,9 @@ DEFINE('_MEMBERS_COUNT','%s members');
 DEFINE('_ONLINE',' online');
 DEFINE('_NONE','No Users Online');
 
+/** modules/mod_random_image */
+DEFINE('_NO_IMAGES','No Images');
+
 /** modules/mod_stats.php */
 DEFINE('_TIME_STAT','Time');
 DEFINE('_MEMBERS_STAT','Members');

@@ -49,6 +49,7 @@ Low Level Threat
 
 11-Mar-2006 Rey Gigataras
  # Fixed artf3873 : Invalid Itemid for com_content Category Link
+ # Fixed [topic,45343.0.html] : Random image default behavoir
 
 
 10-Mar-2006 Rey Gigataras

@@ -259,7 +259,6 @@ DEFINE('_E_CANCEL','Cancel');
 DEFINE('_E_REGISTERED','Registered Users Only');
 DEFINE('_E_ITEM_INFO','Item Information');
 DEFINE('_E_ITEM_SAVED','Item successfully saved.');
-DEFINE('_E_NO_IMAGE','No Image');
 DEFINE('_ITEM_PREVIOUS','&lt; Prev');
 DEFINE('_ITEM_NEXT','Next &gt;');
 DEFINE('_KEY_NOT_FOUND','Key not found');

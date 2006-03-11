@@ -62,11 +62,12 @@ if (isset( $_POST['submit'] )) {
 	}
 
 	$my = null;
-	$query = "SELECT *"
-	. "\n FROM #__users"
-	. "\n WHERE username = '$usrname'"
-	. "\n AND password = '$pass'"
-	. "\n AND block = 0"
+	$query = "SELECT u.*, m.*"
+	. "\n FROM #__users AS u"
+	. "\n LEFT JOIN #__messages_cfg AS m ON u.id = m.user_id AND m.cfg_name = 'auto_purge'"
+	. "\n WHERE u.username = '$usrname'"
+	. "\n AND u.password = '$pass'"
+	. "\n AND u.block = 0"
 	;
 	$database->setQuery( $query );
 	$database->loadObject( $my );
@@ -104,6 +105,30 @@ if (isset( $_POST['submit'] )) {
 		$_SESSION['session_userstate'] 	= array();
 
 		session_write_close();
+				
+		// check if auto_purge value set
+		if ( $my->cfg_name == 'auto_purge' ) {
+			$purge 	= $my->cfg_value;
+		} else {
+		// if no value set, default is 7 days
+			$purge 	= 7;
+		}
+		// calculation of past date
+		$past = date( 'Y-m-d H:i:s', time() - $purge * 60 * 60 * 24 );
+		
+		// if purge value is not 0, then allow purging of old messages
+		if ($purge != 0) {
+		// purge old messages at day set in message configuration
+			$query = "DELETE FROM #__messages"
+			. "\n WHERE date_time < '$past'"
+			. "\n AND user_id_to = $my->id"
+			;
+			$database->setQuery( $query );
+			if (!$database->query()) {
+				echo $database->stderr();
+			}	
+		}		
+		
 		/** cannot using mosredirect as this stuffs up the cookie in IIS */
 		echo "<script>document.location.href='index2.php';</script>\n";
 		exit();

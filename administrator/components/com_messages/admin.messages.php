@@ -72,10 +72,21 @@ function editConfig( $option ) {
 	$database->setQuery( $query );
 	$data = $database->loadObjectList( 'cfg_name' );
 
+	// initialize values if they do not exist
+	if (!isset($data['lock']->cfg_value)) {
+		$data['lock']->cfg_value 		= 0;
+	}
+	if (!isset($data['mail_on_new']->cfg_value)) {
+		$data['mail_on_new']->cfg_value = 0;
+	}
+	if (!isset($data['auto_purge']->cfg_value)) {
+		$data['auto_purge']->cfg_value 	= 7;
+	}
+	
 	$vars 					= array();
-	$vars['lock'] 			= mosHTML::yesnoSelectList( "vars[lock]", 'class="inputbox" size="1"', @$data['lock']->cfg_value );
-	$vars['mail_on_new'] 	= mosHTML::yesnoSelectList( "vars[mail_on_new]", 'class="inputbox" size="1"', @$data['mail_on_new']->cfg_value );
-	$vars['auto_purge'] 	= isset($data['auto_purge']->cfg_value) ? $data['auto_purge']->cfg_value : 7;
+	$vars['lock'] 			= mosHTML::yesnoSelectList( "vars[lock]", 'class="inputbox" size="1"', $data['lock']->cfg_value );
+	$vars['mail_on_new'] 	= mosHTML::yesnoSelectList( "vars[mail_on_new]", 'class="inputbox" size="1"', $data['mail_on_new']->cfg_value );
+	$vars['auto_purge'] 	= $data['auto_purge']->cfg_value;
 
 	HTML_messages::editConfig( $vars, $option );
 

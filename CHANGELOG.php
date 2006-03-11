@@ -47,6 +47,9 @@ Low Level Threat
 
 ---
 
+11-Mar-2006 Rey Gigataras
+ # Fixed artf3873 : Invalid Itemid for com_content Category Link
+
 
 10-Mar-2006 Rey Gigataras
  # Fixed artf3885 : Remove the last hardcoded texts

@@ -1417,51 +1417,53 @@ function show( $row, $params, $gid, &$access, $pop, $option, $ItemidCount=NULL )
 	$params->def( 'item_title', 	1 );
 	$params->def( 'url', 			1 );
 
-	// loads the link for Section name
-	if ( $params->get( 'section_link' ) ) {
-		$query = "SELECT a.id"
-		. "\n FROM #__menu AS a"
-		. "\n WHERE a.componentid = ". $row->sectionid.""
-		;
-		$database->setQuery( $query );
-		$_Itemid = $database->loadResult();
-
-		if ( $_Itemid ) {
-			$_Itemid = '&amp;Itemid='. $_Itemid;
+	// query to determine Itemid of Section and Category links
+	$query = "SELECT id, componentid, type"
+	. "\n FROM #__menu"
+	. "\n WHERE published = 1"
+	. "\n AND type IN ( 'content_section', 'content_category' )"
+	. "\n AND ( componentid = $row->sectionid OR componentid = $row->catid )"
+	. "\n ORDER BY type DESC, ordering"
+	;
+	$database->setQuery( $query );
+	$menuLinks = $database->loadObjectList();
+	
+	if (count($menuLinks)) {
+		foreach($menuLinks as $menuLink) {
+			// find Itemid of section link
+			if ($menuLink->type == 'content_section' && $menuLink->componentid == $row->sectionid && !isset($menuLink_sec)) {
+				$menuLink_sec = $menuLink;
+			}
+			// find Itemid of category link
+			if ($menuLink->type == 'content_category' && $menuLink->componentid == $row->catid && !isset($menuLink_cat)) {
+				$menuLink_cat = $menuLink;
+			}
 		}
+	}
 
+	// loads the link for Section name
+	if ( $params->get( 'section_link' ) || $params->get( 'category_link' ) ) {
+		$_Itemid = '';
+		// use Itemid for section found in query
+		if (isset($menuLink_sec)) {
+			$_Itemid = '&amp;Itemid='. $menuLink_sec->id;
+		}
 		$link 			= sefRelToAbs( 'index.php?option=com_content&amp;task=section&amp;id='. $row->sectionid . $_Itemid );
 		$row->section 	= '<a href="'. $link .'">'. $row->section .'</a>';
 	}
 
 	// loads the link for Category name
-	if ( $params->get( 'category_link' ) ) {
-		$query = "SELECT a.id"
-		. "\n FROM #__menu AS a"
-		. "\n WHERE a.componentid = $row->catid"
-		;
-		$database->setQuery( $query );
-		$_Itemid = $database->loadResult();
-
-		if ( $_Itemid ) {
-			$_Itemid = '&amp;Itemid='. $_Itemid;
+	if ( $params->get( 'category_link' ) && $row->catid ) {
+		$_Itemid = '';
+		// use Itemid for category found in query
+		if (isset($menuLink_cat)) {
+			$_Itemid = '&amp;Itemid='. $menuLink_cat->id;
+		} else if (isset($menuLink_sec)) {
+		// use Itemid for section found in query
+			$_Itemid = '&amp;Itemid='. $menuLink_sec->id;
 		}
-
 		$link 			= sefRelToAbs( 'index.php?option=com_content&amp;task=category&amp;sectionid='. $row->sectionid .'&amp;id='. $row->catid . $_Itemid );
 		$row->category 	= '<a href="'. $link .'">'. $row->category .'</a>';
-	}
-
-	// loads current template for the pop-up window
-	$template = '';
-	if ( $pop ) {
-		$params->set( 'popup', 1 );
-		$query = "SELECT template"
-		. "\n FROM #__templates_menu"
-		. "\n WHERE client_id = 0"
-		. "\n AND menuid = 0"
-		;
-		$database->setQuery( $query );
-		$template = $database->loadResult();
 	}
 
 	// show/hides the intro text

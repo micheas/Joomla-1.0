@@ -221,6 +221,7 @@ DEFINE('_E_IMAGES','Images');
 DEFINE('_E_GALLERY_IMAGES','Gallery Images');
 DEFINE('_E_CONTENT_IMAGES','Content Images');
 DEFINE('_E_EDIT_IMAGE','Edit Image');
+DEFINE('_E_NO_IMAGE','No Image');
 DEFINE('_E_INSERT','Insert');
 DEFINE('_E_UP','Up');
 DEFINE('_E_DOWN','Down');

@@ -126,7 +126,7 @@ function listContacts( $option, $catid ) {
 			$rows = $database->loadObjectList();
 
 			// current category info
-			$query = "SELECT name, description, image, image_position"
+			$query = "SELECT id, name, description, image, image_position"
 			. "\n FROM #__categories"
 			. "\n WHERE id = $catid"
 			. "\n AND published = 1"

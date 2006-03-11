@@ -45,17 +45,16 @@ Low Level Threat
  * Harden mosmsg
 
 
----
+11-Mar-2006 Alex Kempkens
+ # Fixed some queries missing primary key for translations (contact, newsfeed)
 
 11-Mar-2006 Rey Gigataras
  # Fixed artf3873 : Invalid Itemid for com_content Category Link
  # Fixed [topic,45343.0.html] : Random image default behavoir
 
-
 10-Mar-2006 Rey Gigataras
  # Fixed artf3885 : Remove the last hardcoded texts
  # Fixed artf3713 : Joomla still doesn't work with SQL mode enabled
-
  ^ Ensure showPathway is only called once
 
 

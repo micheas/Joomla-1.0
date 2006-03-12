@@ -193,7 +193,8 @@ function showSearches( $option, $task, $showResults=null ) {
 
 	$_MAMBOTS->loadBotGroup( 'search' );
 
-	for ($i=0, $n = count($rows); $i < $n; $i++) {
+	$total = count($rows);
+	for ($i=0, $n = $total; $i < $n; $i++) {
 		// determine if number of results for search item should be calculated
 		// by default it is `off` as it is highly query intensive
 		if ( $showResults ) {

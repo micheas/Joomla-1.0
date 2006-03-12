@@ -3888,6 +3888,8 @@ class mosMambotHandler {
 	var $_content_mambots	= null;
 	/** @var array An array of the content mambot params */
 	var $_content_mambot_params	= array();
+	/** @var array An array of the content mambot params */
+	var $_search_mambot_params	= array();
 
 	/**
 	* Constructor

@@ -26,16 +26,25 @@ $_MAMBOTS->registerFunction( 'onSearch', 'botSearchSections' );
 * @param string ordering option, newest|oldest|popular|alpha|category
 */
 function botSearchSections( $text, $phrase='', $ordering='' ) {
-	global $database, $my;
+	global $database, $my, $_MAMBOTS;
 	
-	// load mambot params info
-	$query = "SELECT params"
-	. "\n FROM #__mambots"
-	. "\n WHERE element = 'sections.searchbot'"
-	. "\n AND folder = 'search'"
-	;
-	$database->setQuery( $query );
-	$database->loadObject($mambot);
+	// check if param query has previously been processed
+	if ( !isset($_MAMBOTS->_search_mambot_params['sections']) ) {
+		// load mambot params info
+		$query = "SELECT params"
+		. "\n FROM #__mambots"
+		. "\n WHERE element = 'sections.searchbot'"
+		. "\n AND folder = 'search'"
+		;
+		$database->setQuery( $query );
+		$database->loadObject($mambot);		
+		
+		// save query to class variable
+		$_MAMBOTS->_search_mambot_params['sections'] = $mambot;
+	}
+	
+	// pull query data from class variable
+	$mambot = $_MAMBOTS->_search_mambot_params['sections'];	
 	
 	$botParams = new mosParameters( $mambot->params );
 	

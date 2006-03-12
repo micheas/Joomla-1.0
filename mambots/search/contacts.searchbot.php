@@ -26,17 +26,26 @@ $_MAMBOTS->registerFunction( 'onSearch', 'botSearchContacts' );
 * @param string ordering option, newest|oldest|popular|alpha|category
 */
 function botSearchContacts( $text, $phrase='', $ordering='' ) {
-	global $database, $my;
-
-	// load mambot params info
-	$query = "SELECT params"
-	. "\n FROM #__mambots"
-	. "\n WHERE element = 'contacts.searchbot'"
-	. "\n AND folder = 'search'"
-	;
-	$database->setQuery( $query );
-	$database->loadObject($mambot);
+	global $database, $my, $_MAMBOTS;
 	
+	// check if param query has previously been processed
+	if ( !isset($_MAMBOTS->_search_mambot_params['contacts']) ) {
+		// load mambot params info
+		$query = "SELECT params"
+		. "\n FROM #__mambots"
+		. "\n WHERE element = 'contacts.searchbot'"
+		. "\n AND folder = 'search'"
+		;
+		$database->setQuery( $query );
+		$database->loadObject($mambot);		
+		
+		// save query to class variable
+		$_MAMBOTS->_search_mambot_params['contacts'] = $mambot;
+	}
+	
+	// pull query data from class variable
+	$mambot = $_MAMBOTS->_search_mambot_params['contacts'];	
+
 	$botParams = new mosParameters( $mambot->params );
 	
 	$limit = $botParams->def( 'search_limit', 50 );

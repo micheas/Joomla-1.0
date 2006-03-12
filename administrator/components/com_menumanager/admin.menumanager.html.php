@@ -161,6 +161,12 @@ class HTML_menumanager {
 					form.menutype.focus();
 					return;
 				}
+				var r = new RegExp("[\']", "i");
+				if ( r.exec(form.menutype.value) ) {
+					alert( 'The menu name cannot contain a \'' );
+					form.menutype.focus();
+					return;
+				}
 				<?php
 				if ( $new ) {
 					?>

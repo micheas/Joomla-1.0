@@ -49,6 +49,7 @@ Low Level Threat
  # Fixed [topic,44117.0.html] : com_menumanager can not handle simple quotes (')
 
  ^ PERFORMANCE : com_statistics `Search Engine Text` page, results returned off by default as highly query intensive and can cause site lockup
+ ^ `Page Hits` into `Content` sub-menu
 
 
 11-Mar-2006 Alex Kempkens

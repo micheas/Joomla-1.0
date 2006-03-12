@@ -170,8 +170,8 @@ function frontpage( $gid, &$access, $pop, $now ) {
 	. "\n LEFT JOIN #__groups AS g ON a.access = g.id"
 	. "\n WHERE a.state = 1"
 	. ( $noauth ? "\n AND a.access <= $my->gid AND cc.access <= $my->gid AND s.access <= $my->gid" : '' )
-	. "\n AND ( publish_up = '$nullDate' OR publish_up <= '$now'  )"
-	. "\n AND ( publish_down = '$nullDate' OR publish_down >= '$now' )"
+	. "\n AND ( a.publish_up = '$nullDate' OR a.publish_up <= '$now'  )"
+	. "\n AND ( a.publish_down = '$nullDate' OR a.publish_down >= '$now' )"
 	. "\n AND s.published = 1"
 	. "\n AND cc.published = 1"
 	. "\n ORDER BY $order_pri $order_sec"
@@ -1237,8 +1237,8 @@ function showItem( $uid, $gid, &$access, $pop, $option, $now ) {
 		$xwhere = '';
 	} else {
 		$xwhere = " AND ( a.state = 1 OR a.state = -1 )"
-		. "\n AND ( publish_up = '$nullDate' OR publish_up <= '$now' )"
-		. "\n AND ( publish_down = '$nullDate' OR publish_down >= '$now' )"
+		. "\n AND ( a.publish_up = '$nullDate' OR a.publish_up <= '$now' )"
+		. "\n AND ( a.publish_down = '$nullDate' OR a.publish_down >= '$now' )"
 		;
 	}
 

@@ -49,6 +49,7 @@ function botSearchContent( $text, $phrase='', $ordering='' ) {
 	$botParams = new mosParameters( $mambot->params );
 	
 	$limit 		= $botParams->def( 'search_limit', 50 );
+	$nonmenu	= $botParams->def( 'nonmenu', 1 );
 
 	$nullDate 	= $database->getNullDate();
 	$now 		= _CURRENT_SERVER_TIME;
@@ -130,8 +131,8 @@ function botSearchContent( $text, $phrase='', $ordering='' ) {
 	. "\n AND a.access <= $my->gid"
 	. "\n AND b.access <= $my->gid"
 	. "\n AND u.access <= $my->gid"
-	. "\n AND ( publish_up = '$nullDate' OR publish_up <= '$now' )"
-	. "\n AND ( publish_down = '$nullDate' OR publish_down >= '$now' )"
+	. "\n AND ( a.publish_up = '$nullDate' OR a.publish_up <= '$now' )"
+	. "\n AND ( a.publish_down = '$nullDate' OR a.publish_down >= '$now' )"
 	. "\n GROUP BY a.id"
 	. "\n ORDER BY $order"
 	;
@@ -142,15 +143,16 @@ function botSearchContent( $text, $phrase='', $ordering='' ) {
 	$query = "SELECT a.title AS title, a.created AS created,"
 	. "\n a.introtext AS text,"
 	. "\n CONCAT( 'index.php?option=com_content&task=view&id=', a.id, '&Itemid=', m.id ) AS href,"
-	. "\n '2' as browsernav, 'Menu' AS section"
+	. "\n '2' as browsernav, '". _STATIC_CONTENT ."' AS section,"
+	. "\n a.id"
 	. "\n FROM #__content AS a"
 	. "\n LEFT JOIN #__menu AS m ON m.componentid = a.id"
 	. "\n WHERE ($where)"
 	. "\n AND a.state = 1"
 	. "\n AND a.access <= $my->gid"
 	. "\n AND m.type = 'content_typed'"
-	. "\n AND ( publish_up = '$nullDate' OR publish_up <= '$now' )"
-	. "\n AND ( publish_down = '$nullDate' OR publish_down >= '$now' )"
+	. "\n AND ( a.publish_up = '$nullDate' OR a.publish_up <= '$now' )"
+	. "\n AND ( a.publish_down = '$nullDate' OR a.publish_down >= '$now' )"
 	. "\n ORDER BY ". ($morder ? $morder : $order)
 	;
 	$database->setQuery( $query, 0, $limit );
@@ -173,13 +175,46 @@ function botSearchContent( $text, $phrase='', $ordering='' ) {
 	. "\n AND a.access <= $my->gid"
 	. "\n AND b.access <= $my->gid"
 	. "\n AND u.access <= $my->gid"
-	. "\n AND ( publish_up = '$nullDate' OR publish_up <= '$now' )"
-	. "\n AND ( publish_down = '$nullDate' OR publish_down >= '$now' )"
+	. "\n AND ( a.publish_up = '$nullDate' OR a.publish_up <= '$now' )"
+	. "\n AND ( a.publish_down = '$nullDate' OR a.publish_down >= '$now' )"
 	. "\n ORDER BY $order"
 	;
 	$database->setQuery( $query, 0, $limit );
 	$list3 = $database->loadObjectList();
 	
-	return array_merge( $list, $list2, $list3 );
+	// check if search of nonmenu linked static content is allowed
+	if ($nonmenu) {
+		// collect ids of static content items linked to menu items
+		// so they can be removed from query that follows
+		$ids = null;
+		if(count($list2)) {
+			foreach($list2 as $static) {
+				$ids[] = $static->id;
+			}
+			$ids = implode( '\',\'', $ids );
+		}
+	
+		// search static content not connected to a menu
+		$query = "SELECT a.title AS title, a.created AS created,"
+		. "\n a.introtext AS text,"
+		. "\n CONCAT( 'index.php?option=com_content&task=view&id=', a.id ) AS href,"
+		. "\n '2' as browsernav, '". _STATIC_CONTENT ."' AS section,"
+		. "\n a.id"
+		. "\n FROM #__content AS a"
+		. "\n WHERE ($where)"
+		. "\n AND a.id NOT IN ( '$ids' )"
+		. "\n AND a.state = 1"
+		. "\n AND a.access <= $my->gid"
+		. "\n AND ( a.publish_up = '$nullDate' OR a.publish_up <= '$now' )"
+		. "\n AND ( a.publish_down = '$nullDate' OR a.publish_down >= '$now' )"
+		. "\n ORDER BY $order"
+		;
+		$database->setQuery( $query, 0, $limit );
+		$list4 = $database->loadObjectList();
+	} else {
+		$list4 = array();
+	}	
+
+	return array_merge( $list, $list2, $list3, $list4 );
 }
 ?>

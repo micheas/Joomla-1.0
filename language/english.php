@@ -75,6 +75,8 @@ DEFINE('_CMN_REQUIRED','Required');
 
 DEFINE('_CMN_CONTINUE','Continue');
 
+DEFINE('_STATIC_CONTENT','Static Content');
+
 DEFINE('_CMN_NEW_ITEM_LAST','New items default to the last place. Ordering can be changed after this item is saved.');
 DEFINE('_CMN_NEW_ITEM_FIRST','New items default to the first place. Ordering can be changed after this item is saved.');
 DEFINE('_LOGIN_INCOMPLETE','Please complete the username and password fields.');

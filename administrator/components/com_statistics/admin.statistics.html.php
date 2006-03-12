@@ -222,27 +222,64 @@ class HTML_statistics {
 		<?php
 	}
 
-	function showSearches( &$rows, $pageNav, $option, $task ) {
+	function showSearches( &$rows, $pageNav, $option, $task, $showResults ) {
 		global $mainframe;
+		
+		mosCommonHTML::loadOverlib();
 		?>
 		<form action="index2.php" method="post" name="adminForm">
+		
 		<table cellpadding="4" cellspacing="0" border="0" width="100%" class="adminheading">
-			<tr>
-				<th width="100%" class="searchtext">
+		<tr>
+			<th class="searchtext">
 				Search Engine Text :
 				<span class="componentheading">logging is :
-				<?php echo $mainframe->getCfg( 'enable_log_searches' ) ? '<b><font color="green">Enabled</font></b>' : '<b><font color="red">Disabled</font></b>' ?>
+					<?php echo $mainframe->getCfg( 'enable_log_searches' ) ? '<b><font color="green">Enabled</font></b>' : '<b><font color="red">Disabled</font></b>' ?>
 				</span>
-				</th>
-			</tr>
+			</th>
+			<td align="right">
+				<?php
+				if ( !$showResults ) {
+					echo mosWarning('Activating this can dramatically slow and even lock your site as it is a highly query intensive operation');
+				}
+				?>
+			</td>
+			<td align="right">
+				<?php
+				if ( $showResults ) {
+					?>
+					<input name="search_results" type="button" class="button" value="Hide Search Results" onclick="submitbutton('searches');">
+					<?php
+				} else {
+					?>
+					<input name="search_results" type="button" class="button" value="Show Search Results" onclick="submitbutton('searchesresults');">
+					<?php
+				}
+				?>
+			</td>
+		</tr>
 		</table>
 
 		<table class="adminlist">
 		<tr>
-			<th style="text-align:right">#</th>
-			<th class="title">Search Text</th>
-			<th nowrap="nowrap">Times Requested</th>
-			<th nowrap="nowrap">Results Returned</th>
+			<th style="text-align:right" width="10">
+				#
+			</th>
+			<th class="title">
+				Search Text
+			</th>
+			<th nowrap="nowrap">
+				Times Requested
+			</th>
+			<?php
+			if ( $showResults ) {
+				?>
+				<th nowrap="nowrap">
+					Results Returned
+				</th>
+				<?php
+			}
+			?>
 		</tr>
 		<?php
 		$k = 0;
@@ -251,22 +288,35 @@ class HTML_statistics {
 			?>
 			<tr class="row<?php echo $k;?>">
 				<td align="right">
-				<?php echo $i+1+$pageNav->limitstart; ?>
+					<?php echo $i+1+$pageNav->limitstart; ?>
 				</td>
-				<td align="left"><?php echo $row->search_term;?></td>
-				<td align="center"><?php echo $row->hits; ?></td>
-				<td align="center"><?php echo $row->returns; ?></td>
+				<td align="left">
+					<?php echo $row->search_term;?>
+				</td>
+				<td align="center">
+					<?php echo $row->hits; ?>
+				</td>
+				<?php
+				if ( $showResults ) {
+					?>
+					<td align="center">
+						<?php echo $row->returns; ?>
+					</td>
+					<?php
+				}
+				?>
 			</tr>
 			<?php
 			$k = 1 - $k;
 		}
 		?>
-	</table>
-	<?php echo $pageNav->getListFooter(); ?>
-  	<input type="hidden" name="option" value="<?php echo $option;?>" />
-  	<input type="hidden" name="task" value="<?php echo $task;?>" />
-	</form>
-	<?php
+		</table>
+		<?php echo $pageNav->getListFooter(); ?>
+		
+	  	<input type="hidden" name="option" value="<?php echo $option;?>" />
+	  	<input type="hidden" name="task" value="<?php echo $task;?>" />
+		</form>
+		<?php
 	}
 }
 ?>

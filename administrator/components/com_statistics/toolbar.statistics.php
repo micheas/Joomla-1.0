@@ -18,8 +18,8 @@ defined( '_VALID_MOS' ) or die( 'Restricted access' );
 require_once( $mainframe->getPath( 'toolbar_html' ) );
 
 switch ($task) {
-
-	case "searches":
+	case 'searches':
+	case 'searchesresults':
 		TOOLBAR_statistics::_SEARCHES();
 		break;
 

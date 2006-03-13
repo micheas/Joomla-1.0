@@ -915,7 +915,6 @@ class mosMainFrame {
 		if (!$username || !$passwd) {
 			$username 	= strval( mosGetParam( $_POST, 'username', '' ) );
 			$passwd 	= mosGetParam( $_POST, 'passwd', '' );
-			$passwd 	= md5( $passwd );
 			$bypost 	= 1;
 		}
 
@@ -934,11 +933,13 @@ class mosMainFrame {
 				. "\n AND MD5( CONCAT( password , '$harden' ) ) = '$passwd'"
 				;
 			} else {
+				$username 	= md5( $username );
+				$passwd 	= md5( $passwd );
 			// query used for normal login
 				$query = "SELECT *"
 				. "\n FROM #__users"
 				. "\n WHERE block != 1"
-				. "\n AND username = '$username'"
+				. "\n AND MD5( username ) = '$username'"
 				. "\n AND password = '$passwd'"
 				;
 			}

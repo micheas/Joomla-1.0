@@ -142,8 +142,8 @@ function findKeyItem( $gid, $access, $pop, $option, $now ) {
 function frontpage( $gid, &$access, $pop, $now ) {
 	global $database, $mainframe, $my, $Itemid;
 
-	$nullDate = $database->getNullDate();
-	$noauth = !$mainframe->getCfg( 'shownoauth' );
+	$nullDate 	= $database->getNullDate();
+	$noauth 	= !$mainframe->getCfg( 'shownoauth' );
 
 	// Parameters
 	$menu = new mosMenu( $database );
@@ -156,24 +156,24 @@ function frontpage( $gid, &$access, $pop, $now ) {
 	$order_sec = _orderby_sec( $orderby_sec );
 	$order_pri = _orderby_pri( $orderby_pri );
 
+	$voting = votingQuery();
+	
+	$where 	= _where( 1, $access, $noauth, $gid, 0, $now );	
+	$where 	= ( count( $where ) ? "\n WHERE ". implode( "\n AND ", $where ) : '' );
+	
 	// query records
 	$query = "SELECT a.id, a.title, a.title_alias, a.introtext, a.sectionid, a.state, a.catid, a.created, a.created_by, a.created_by_alias, a.modified, a.modified_by,"
 	. "\n a.checked_out, a.checked_out_time, a.publish_up, a.publish_down, a.images, a.urls, a.ordering, a.metakey, a.metadesc, a.access, a.hits,"
-	. "\n CHAR_LENGTH( a.fulltext ) AS readmore,"
-	. "\n ROUND( v.rating_sum / v.rating_count ) AS rating, v.rating_count, u.name AS author, u.usertype, s.name AS section, cc.name AS category, g.name AS groups"
+	. "\n CHAR_LENGTH( a.fulltext ) AS readmore, u.name AS author, u.usertype, s.name AS section, cc.name AS category, g.name AS groups"
+	. $voting['select']
 	. "\n FROM #__content AS a"
 	. "\n INNER JOIN #__content_frontpage AS f ON f.content_id = a.id"
 	. "\n INNER JOIN #__categories AS cc ON cc.id = a.catid"
 	. "\n INNER JOIN #__sections AS s ON s.id = a.sectionid"
 	. "\n LEFT JOIN #__users AS u ON u.id = a.created_by"
-	. "\n LEFT JOIN #__content_rating AS v ON a.id = v.content_id"
 	. "\n LEFT JOIN #__groups AS g ON a.access = g.id"
-	. "\n WHERE a.state = 1"
-	. ( $noauth ? "\n AND a.access <= $my->gid AND cc.access <= $my->gid AND s.access <= $my->gid" : '' )
-	. "\n AND ( a.publish_up = '$nullDate' OR a.publish_up <= '$now'  )"
-	. "\n AND ( a.publish_down = '$nullDate' OR a.publish_down >= '$now' )"
-	. "\n AND s.published = 1"
-	. "\n AND cc.published = 1"
+	. $voting['join']
+	. $where
 	. "\n ORDER BY $order_pri $order_sec"
 	;
 	$database->setQuery( $query );
@@ -566,8 +566,7 @@ function showBlogSection( $id=0, $gid, &$access, $pop, $now=NULL ) {
 		$id		= $params->def( 'sectionid', 0 );
 	}
 
-	$where 	= _where( 1, $access, $noauth, $gid, $id, $now );
-	
+	$where 	= _where( 1, $access, $noauth, $gid, $id, $now );	
 	$where 	= ( count( $where ) ? "\n WHERE ". implode( "\n AND ", $where ) : '' );
 
 	// Ordering control
@@ -576,22 +575,20 @@ function showBlogSection( $id=0, $gid, &$access, $pop, $now=NULL ) {
 	$order_sec 		= _orderby_sec( $orderby_sec );
 	$order_pri 		= _orderby_pri( $orderby_pri );
 
+	$voting = votingQuery();
+	
 	// Main data query
 	$query = "SELECT a.id, a.title, a.title_alias, a.introtext, a.sectionid, a.state, a.catid, a.created, a.created_by, a.created_by_alias, a.modified, a.modified_by,"
 	. "\n a.checked_out, a.checked_out_time, a.publish_up, a.publish_down, a.images, a.urls, a.ordering, a.metakey, a.metadesc, a.access,"
-	. "\n CHAR_LENGTH( a.fulltext ) AS readmore,"
-	. "\n ROUND( v.rating_sum / v.rating_count ) AS rating, v.rating_count, u.name AS author, u.usertype, s.name AS section, cc.name AS category, g.name AS groups"
+	. "\n CHAR_LENGTH( a.fulltext ) AS readmore, u.name AS author, u.usertype, s.name AS section, cc.name AS category, g.name AS groups"
+	. $voting['select']
 	. "\n FROM #__content AS a"
 	. "\n INNER JOIN #__categories AS cc ON cc.id = a.catid"
 	. "\n LEFT JOIN #__users AS u ON u.id = a.created_by"
-	. "\n LEFT JOIN #__content_rating AS v ON a.id = v.content_id"
 	. "\n LEFT JOIN #__sections AS s ON a.sectionid = s.id"
 	. "\n LEFT JOIN #__groups AS g ON a.access = g.id"
+	. $voting['join']
 	. $where
-	. "\n AND s.access <= $gid"
-	. "\n AND cc.access <= $gid"
-	. "\n AND s.published = 1"
-	. "\n AND cc.published = 1"
 	. "\n ORDER BY $order_pri $order_sec"
 	;
 	$database->setQuery( $query );
@@ -650,8 +647,7 @@ function showBlogCategory( $id=0, $gid, &$access, $pop, $now ) {
 		$id 		= $params->def( 'categoryid', 0 );
 	}
 
-	$where	= _where( 2, $access, $noauth, $gid, $id, $now );
-	
+	$where	= _where( 2, $access, $noauth, $gid, $id, $now );	
 	$where 	= ( count( $where ) ? "\n WHERE ". implode( "\n AND ", $where ) : '' );
 
 	// Ordering control
@@ -660,22 +656,20 @@ function showBlogCategory( $id=0, $gid, &$access, $pop, $now ) {
 	$order_sec 		= _orderby_sec( $orderby_sec );
 	$order_pri 		= _orderby_pri( $orderby_pri );
 
+	$voting = votingQuery();
+	
 	// Main data query
 	$query = "SELECT a.id, a.title, a.title_alias, a.introtext, a.sectionid, a.state, a.catid, a.created, a.created_by, a.created_by_alias, a.modified, a.modified_by,"
 	. "\n a.checked_out, a.checked_out_time, a.publish_up, a.publish_down, a.images, a.urls, a.ordering, a.metakey, a.metadesc, a.access,"
-	. "\n CHAR_LENGTH( a.fulltext ) AS readmore, s.published AS sec_pub,  cc.published AS sec_pub,"
-	. "\n ROUND( v.rating_sum / v.rating_count ) AS rating, v.rating_count, u.name AS author, u.usertype, s.name AS section, cc.name AS category, g.name AS groups"
+	. "\n CHAR_LENGTH( a.fulltext ) AS readmore, s.published AS sec_pub,  cc.published AS sec_pub, u.name AS author, u.usertype, s.name AS section, cc.name AS category, g.name AS groups"
+	. $voting['select']
 	. "\n FROM #__content AS a"
 	. "\n LEFT JOIN #__categories AS cc ON cc.id = a.catid"
 	. "\n LEFT JOIN #__users AS u ON u.id = a.created_by"
-	. "\n LEFT JOIN #__content_rating AS v ON a.id = v.content_id"
 	. "\n LEFT JOIN #__sections AS s ON a.sectionid = s.id"
 	. "\n LEFT JOIN #__groups AS g ON a.access = g.id"
+	. $voting['join']
 	. $where
-	. "\n AND s.access <= $gid"
-	. "\n AND cc.access <= $gid"
-	. "\n AND s.published = 1"
-	. "\n AND cc.published = 1"
 	. "\n ORDER BY $order_pri $order_sec"
 	;
 	$database->setQuery( $query );
@@ -760,7 +754,6 @@ function showArchiveSection( $id=NULL, $gid, &$access, $pop, $option ) {
 
 	// used in query
 	$where = _where( -1, $access, $noauth, $gid, $id, NULL, $year, $month );
-
 	$where = ( count( $where ) ? "\n WHERE ". implode( "\n AND ", $where ) : '' );
 	
 	// checks to see if 'All Sections' options used
@@ -779,23 +772,20 @@ function showArchiveSection( $id=NULL, $gid, &$access, $pop, $option ) {
 	$items = $database->loadObjectList();
 	$archives = count( $items );
 
+	$voting = votingQuery();
+	
 	// Main Query
-	//$query = "SELECT a.*, ROUND(v.rating_sum/v.rating_count) AS rating, v.rating_count, u.name AS author, u.usertype, cc.name AS category, g.name AS groups"
 	$query = "SELECT a.id, a.title, a.title_alias, a.introtext, a.sectionid, a.state, a.catid, a.created, a.created_by, a.created_by_alias, a.modified, a.modified_by,"
 	. "\n a.checked_out, a.checked_out_time, a.publish_up, a.publish_down, a.images, a.urls, a.ordering, a.metakey, a.metadesc, a.access,"
-	. "\n CHAR_LENGTH( a.fulltext ) AS readmore,"
-	. "\n ROUND( v.rating_sum / v.rating_count ) AS rating, v.rating_count, u.name AS author, u.usertype, s.name AS section, cc.name AS category, g.name AS groups"
+	. "\n CHAR_LENGTH( a.fulltext ) AS readmore, u.name AS author, u.usertype, s.name AS section, cc.name AS category, g.name AS groups"
+	. $voting['select']
 	. "\n FROM #__content AS a"
 	. "\n INNER JOIN #__categories AS cc ON cc.id = a.catid"
 	. "\n LEFT JOIN #__users AS u ON u.id = a.created_by"
-	. "\n LEFT JOIN #__content_rating AS v ON a.id = v.content_id"
 	. "\n LEFT JOIN #__sections AS s ON a.sectionid = s.id"
 	. "\n LEFT JOIN #__groups AS g ON a.access = g.id"
+	. $voting['join']
 	. $where
-	. "\n AND s.access <= $gid"
-	. "\n AND cc.access <= $gid"
-	. "\n AND s.published = 1"
-	. "\n AND cc.published = 1"
 	. "\n ORDER BY $order_pri $order_sec"
 	;
 	$database->setQuery( $query );
@@ -848,11 +838,12 @@ function showArchiveCategory( $id=0, $gid, &$access, $pop, $option, $now ) {
 	global $database, $mainframe;
 	global $Itemid;
 
+	$noauth = !$mainframe->getCfg( 'shownoauth' );
+	
 	// needed for check whether section & category is published
 	$catID 	= ( $id ? $id : 0 );
 	
 	// Parameters
-	$noauth = !$mainframe->getCfg( 'shownoauth' );
 	$year 	= mosGetParam( $_REQUEST, 'year', 	date( 'Y' ) );
 	$month 	= mosGetParam( $_REQUEST, 'month', 	date( 'm' ) );
 	$module = mosGetParam( $_REQUEST, 'module', '' );
@@ -877,12 +868,11 @@ function showArchiveCategory( $id=0, $gid, &$access, $pop, $option, $now ) {
 	$params->set( 'month', $month );
 
 	// Ordering control
-	$orderby_sec = $params->def( 'orderby', 'rdate' );
-	$order_sec = _orderby_sec( $orderby_sec );
+	$orderby_sec 	= $params->def( 'orderby', 'rdate' );
+	$order_sec 		= _orderby_sec( $orderby_sec );
 
 	// used in query
 	$where = _where( -2, $access, $noauth, $gid, $id, NULL, $year, $month );
-
 	$where = ( count( $where ) ? "\n WHERE ". implode( "\n AND ", $where ) : '' );
 
 	// query to determine if there are any archived entries for the category
@@ -892,24 +882,23 @@ function showArchiveCategory( $id=0, $gid, &$access, $pop, $option, $now ) {
 	. $check
 	;
 	$database->setQuery( $query );
-	$items = $database->loadObjectList();
-	$archives = count( $items );
+	$items 		= $database->loadObjectList();
+	$archives 	= count( $items );
 
+	$voting = votingQuery();
+	
+	// main query
 	$query = "SELECT a.id, a.title, a.title_alias, a.introtext, a.sectionid, a.state, a.catid, a.created, a.created_by, a.created_by_alias, a.modified, a.modified_by,"
 	. "\n a.checked_out, a.checked_out_time, a.publish_up, a.publish_down, a.images, a.urls, a.ordering, a.metakey, a.metadesc, a.access,"
-	. "\n CHAR_LENGTH( a.fulltext ) AS readmore,"
-	. "\n ROUND( v.rating_sum / v.rating_count ) AS rating, v.rating_count, u.name AS author, u.usertype, s.name AS section, cc.name AS category, g.name AS groups"
+	. "\n CHAR_LENGTH( a.fulltext ) AS readmore, u.name AS author, u.usertype, s.name AS section, cc.name AS category, g.name AS groups"
+	. $voting['select']
 	. "\n FROM #__content AS a"
 	. "\n INNER JOIN #__categories AS cc ON cc.id = a.catid"
 	. "\n LEFT JOIN #__users AS u ON u.id = a.created_by"
-	. "\n LEFT JOIN #__content_rating AS v ON a.id = v.content_id"
 	. "\n LEFT JOIN #__sections AS s ON a.sectionid = s.id"
 	. "\n LEFT JOIN #__groups AS g ON a.access = g.id"
+	. $voting['join']
 	. $where
-	. "\n AND s.access <= $gid"
-	. "\n AND cc.access <= $gid"
-	. "\n AND s.published = 1"
-	. "\n AND cc.published = 1"
 	. "\n ORDER BY $order_sec"
 	;
 	$database->setQuery( $query );
@@ -1232,7 +1221,8 @@ function showItem( $uid, $gid, &$access, $pop, $option, $now ) {
 	global $database, $mainframe, $Itemid;
 	global $mosConfig_MetaTitle, $mosConfig_MetaAuthor;
 
-	$nullDate = $database->getNullDate();
+	$nullDate 	= $database->getNullDate();
+	
 	if ( $access->canEdit ) {
 		$xwhere = '';
 	} else {
@@ -1242,14 +1232,18 @@ function showItem( $uid, $gid, &$access, $pop, $option, $now ) {
 		;
 	}
 
-	$query = "SELECT a.*, ROUND(v.rating_sum/v.rating_count) AS rating, v.rating_count, u.name AS author, u.usertype, cc.name AS category, s.name AS section, g.name AS groups,"
+	$voting = votingQuery();
+	
+	// main query
+	$query = "SELECT a.*, u.name AS author, u.usertype, cc.name AS category, s.name AS section, g.name AS groups,"
 	. "\n s.published AS sec_pub, cc.published AS cat_pub, s.access AS sec_access, cc.access AS cat_access"
+	. $voting['select']
 	. "\n FROM #__content AS a"
 	. "\n LEFT JOIN #__categories AS cc ON cc.id = a.catid"
 	. "\n LEFT JOIN #__sections AS s ON s.id = cc.section AND s.scope = 'content'"
 	. "\n LEFT JOIN #__users AS u ON u.id = a.created_by"
-	. "\n LEFT JOIN #__content_rating AS v ON a.id = v.content_id"
 	. "\n LEFT JOIN #__groups AS g ON a.access = g.id"
+	. $voting['join']
 	. "\n WHERE a.id = $uid"
 	. $xwhere
 	. "\n AND a.access <= $gid"
@@ -2076,20 +2070,19 @@ function _orderby_sec( $orderby ) {
 * @param int 0 = Archives, 1 = Section, 2 = Category
 */
 function _where( $type=1, &$access, &$noauth, $gid, $id, $now=NULL, $year=NULL, $month=NULL ) {
-	global $database;
-
-	$nullDate = $database->getNullDate();
-	$where = array();
+	global $database, $mainframe;
+	
+	$noauth		= !$mainframe->getCfg( 'shownoauth' );
+	$nullDate 	= $database->getNullDate();
+	$now		= _CURRENT_SERVER_TIME;
+	$where 		= array();
 
 	// normal
 	if ( $type > 0) {
-		$where[] = "a.state = '1'";
+		$where[] = "a.state = 1";
 		if ( !$access->canEdit ) {
 			$where[] = "( a.publish_up = '$nullDate' OR a.publish_up <= '$now' )";
 			$where[] = "( a.publish_down = '$nullDate' OR a.publish_down >= '$now' )";
-		}
-		if ( $noauth ) {
-			$where[] = "a.access <= $gid";
 		}
 		if ( $id > 0 ) {
 			if ( $type == 1 ) {
@@ -2102,15 +2095,12 @@ function _where( $type=1, &$access, &$noauth, $gid, $id, $now=NULL, $year=NULL, 
 
 	// archive
 	if ( $type < 0 ) {
-		$where[] = "a.state='-1'";
+		$where[] = "a.state = -1";
 		if ( $year ) {
 			$where[] = "YEAR( a.created ) = '$year'";
 		}
 		if ( $month ) {
 			$where[] = "MONTH( a.created ) = '$month'";
-		}
-		if ( $noauth ) {
-			$where[] = "a.access <= $gid";
 		}
 		if ( $id > 0 ) {
 			if ( $type == -1 ) {
@@ -2120,7 +2110,34 @@ function _where( $type=1, &$access, &$noauth, $gid, $id, $now=NULL, $year=NULL, 
 			}
 		}
 	}
-
+	
+	$where[] = "s.published = 1";
+	$where[] = "cc.published = 1";
+	if ( $noauth ) {
+		$where[] = "a.access <= $gid";
+		$where[] = "s.access <= $gid";
+		$where[] = "cc.access <= $gid";
+	}
+	
 	return $where;
+}
+
+function votingQuery() {
+	global $mainframe;
+	
+	$voting	= $mainframe->getCfg( 'vote' );
+
+	if ( $voting ) {
+		// calculate voting count
+		$select = "\n , ROUND( v.rating_sum / v.rating_count ) AS rating, v.rating_count"; 
+		$join	= "\n LEFT JOIN #__content_rating AS v ON a.id = v.content_id";
+	} else {
+		$select	= ''; 
+		$join	= '';
+	}
+	
+	$results = array( 'select' => $select, 'join' => $join );
+	
+	return $results;
 }
 ?>

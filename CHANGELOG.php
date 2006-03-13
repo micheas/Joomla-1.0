@@ -45,6 +45,10 @@ Low Level Threat
  * Harden mosmsg
 
 
+13-Mar-2006 Rey Gigataras
+ ^ PERFORMANCE : com_content only add call to jos_content_rating where voting option activated
+
+
 12-Mar-2006 Rey Gigataras
  # Fixed [topic,44117.0.html] : com_menumanager can not handle simple quotes (')
  # Fixed [topic,34821.0.html] : Allow search on static contents not linked to a menu

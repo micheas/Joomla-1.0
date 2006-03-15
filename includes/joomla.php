@@ -3347,29 +3347,31 @@ class mosSession extends mosDBTable {
 	 * @return string
 	 */
 	function generateId() {
-		$failsafe = 20;
-		$randnum = 0;
+		$failsafe 	= 20;
+		$randnum 	= 0;
+		
 		while ($failsafe--) {
-			$randnum = md5( uniqid( microtime(), 1 ) );
-			if ($randnum != "") {
-				$cryptrandnum = md5( $randnum );
+			$randnum 		= md5( uniqid( microtime(), 1 ) );
+			$new_session_id = mosMainFrame::sessionCookieValue( $randnum );
+			
+			if ($randnum != '') {
 				$query = "SELECT $this->_tbl_key"
 				. "\n FROM $this->_tbl"
-				. "\n WHERE $this->_tbl_key = MD5( '$randnum' )"
+				. "\n WHERE $this->_tbl_key = '$new_session_id'"
 				;
 				$this->_db->setQuery( $query );
 				if(!$result = $this->_db->query()) {
 					die( $this->_db->stderr( true ));
-					// todo: handle gracefully
 				}
+				
 				if ($this->_db->getNumRows($result) == 0) {
 					break;
 				}
 			}
 		}
 		
-		$this->_session_cookie = $randnum;		
-		$this->session_id = mosMainFrame::sessionCookieValue( $randnum );
+		$this->_session_cookie 	= $randnum;			
+		$this->session_id 		= $new_session_id;
 	}
 
 	/**

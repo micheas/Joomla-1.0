@@ -48,6 +48,7 @@ Low Level Threat
 15-Mar-2006 Rey Gigataras
  # Fixed artf3927 : Typo in Installer Screen
  # Fixed artf3940 : single quotes/apostrophes (') 
+ # Fixed [topic,46202.0.html] : Problem found in Session id function 
  
 
 13-Mar-2006 Rey Gigataras

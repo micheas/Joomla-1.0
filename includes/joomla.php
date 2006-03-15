@@ -1392,11 +1392,8 @@ class mosMainFrame {
 	function getItemid( $id, $typed=1, $link=1, $bs=1, $bc=1, $gbs=1 ) {
 		global $Itemid;
 		
-		$bs 	= $this->get( '_BlogSectionCount' );
-		$bc 	= $this->get( '_BlogCategoryCount' );
-		$gbs 	= $this->get( '_GlobalBlogSectionCount' );
-
 		$_Itemid = '';
+		
 		if ($_Itemid == '' && $typed) {
 			$exists = 0;
 			foreach( $this->get( '_ContentTyped', array() ) as $key => $value ) {
@@ -1505,62 +1502,6 @@ class mosMainFrame {
 					}
 				}			
 
-				/*
-				// Search in sections
-				$query = "SELECT m.id "
-				. "\n FROM #__content AS i"
-				. "\n LEFT JOIN #__sections AS s ON i.sectionid = s.id"
-				. "\n LEFT JOIN #__menu AS m ON m.componentid = s.id "
-				. "\n WHERE m.type = 'content_section'"
-				. "\n AND m.published = 1"
-				. "\n AND i.id = $id"
-				;
-				$this->_db->setQuery( $query );
-				// pull existing query storage into temp variable
-				$ContentSection 		= $this->get( '_ContentSection', array() );
-				// add query result to temp array storage
-				$ContentSection[$id] 	= $this->_db->loadResult();	
-				// save temp array to main array storage
-				$this->set( '_ContentSection', $ContentSection );
-				
-				$_Itemid = $ContentSection[$id];				
-				*/
-				/*
-				// query amalgamated for Content Section and Content Blog Section to save query calls
-				$query = "SELECT ms.id AS sid, ms.type AS stype, mc.id AS cid, mc.type AS ctype, i.id as sectionid, i.id as catid"
-				. "\n FROM #__content AS i"
-				. "\n LEFT JOIN #__sections AS s ON i.sectionid = s.id"
-				. "\n LEFT JOIN #__menu AS ms ON ms.componentid = s.id "
-				. "\n LEFT JOIN #__categories AS c ON i.catid = c.id"
-				. "\n LEFT JOIN #__menu AS mc ON mc.componentid = c.id "
-				. "\n WHERE ms.published = 1"
-				. "\n AND ( ms.type = 'content_section' OR ms.type = 'content_blog_section' OR mc.type = 'content_blog_category' OR mc.type = 'content_category' )"
-				. "\n AND i.id = $id"
-				. "\n ORDER BY ms.type DESC, mc.type DESC, ms.id, mc.id"
-				;
-				$this->_db->setQuery( $query );
-				$links = $this->_db->loadObjectList();
-				print_r($links);
-				if (count($links)) {
-					foreach($links as $link) {
-						if ($link->stype == 'content_section' && $link->sectionid == $id && !isset($content_section)) {
-							$content_section = $link->sid;
-						}
-						
-						if ($link->stype == 'content_blog_section' && $link->sectionid == $id && !isset($content_blog_section)) {
-							$content_blog_section = $link->sid;
-						}						
-						
-						if ($link->stype == 'content_blog_category' && $link->catid == $id && !isset($content_blog_category)) {
-							$content_blog_category = $link->cid;
-						}	
-						
-						if ($link->stype == 'content_category' && $link->catid == $id && !isset($content_category)) {
-							$content_category = $link->cid;
-						}	
-					}
-				}
-				*/
 				if (!isset($content_section)) {
 					$content_section = null;
 				}
@@ -1576,7 +1517,7 @@ class mosMainFrame {
 			}
 		}
 
-		if ($_Itemid == '' && $bs) {
+		if ($_Itemid == '') {
 			$exists = 0;
 			foreach( $this->get( '_ContentBlogSection', array() ) as $key => $value ) {
 				// check if id has been tested before, if it is pull from class variable store
@@ -1588,27 +1529,6 @@ class mosMainFrame {
 			}
 			// if id hasnt been checked before initaite query
 			if ( !$exists ) {
-				/*
-				// Search in specific blog section
-				$query = "SELECT m.id "
-				. "\n FROM #__content AS i"
-				. "\n LEFT JOIN #__sections AS s ON i.sectionid = s.id"
-				. "\n LEFT JOIN #__menu AS m ON m.componentid = s.id "
-				. "\n WHERE m.type = 'content_blog_section'"
-				. "\n AND m.published = 1"
-				. "\n AND i.id = $id"
-				;
-				$this->_db->setQuery( $query );
-				// pull existing query storage into temp variable
-				$ContentBlogSection 		= $this->get( '_ContentBlogSection', array() );
-				// add query result to temp array storage
-				$ContentBlogSection[$id] 	= $this->_db->loadResult();	
-				// save temp array to main array storage
-				$this->set( '_ContentBlogSection', $ContentBlogSection );
-				
-				$_Itemid = $ContentBlogSection[$id];				
-				*/		
-						
 				if (!isset($content_blog_section)) {
 					$content_blog_section = null;
 				}
@@ -1624,7 +1544,7 @@ class mosMainFrame {
 			}
 		}
 
-		if ($_Itemid == '' && $bc) {
+		if ($_Itemid == '') {
 			$exists = 0;
 			foreach( $this->get( '_ContentBlogCategory', array() ) as $key => $value ) {
 				// check if id has been tested before, if it is pull from class variable store
@@ -1636,18 +1556,6 @@ class mosMainFrame {
 			}
 			// if id hasnt been checked before initaite query
 			if ( !$exists ) {
-				/*
-				// Search in specific blog category
-				$query = "SELECT m.id "
-				. "\n FROM #__content AS i"
-				. "\n LEFT JOIN #__categories AS c ON i.catid = c.id"
-				. "\n LEFT JOIN #__menu AS m ON m.componentid = c.id "
-				. "\n WHERE m.type = 'content_blog_category'"
-				. "\n AND m.published = 1"
-				. "\n AND i.id = $id"
-				;
-				$this->_db->setQuery( $query );
-				*/
 				if (!isset($content_blog_category)) {
 					$content_blog_category = null;
 				}
@@ -1663,7 +1571,7 @@ class mosMainFrame {
 			}
 		}
 
-		if ($_Itemid == '' && $gbs) {
+		if ($_Itemid == '') {
 			// ensure that query is only called once		
 			if ( !$this->get( '_GlobalBlogSection' ) && !defined( '_JOS_GBS' ) ) {					
 				define( '_JOS_GBS', 1 );
@@ -1694,18 +1602,6 @@ class mosMainFrame {
 			}
 			// if id hasnt been checked before initaite query
 			if ( !$exists ) {
-				/*
-				// Search in categories
-				$query = "SELECT m.id "
-				. "\n FROM #__content AS i"
-				. "\n LEFT JOIN #__categories AS cc ON i.catid = cc.id"
-				. "\n LEFT JOIN #__menu AS m ON m.componentid = cc.id "
-				. "\n WHERE m.type = 'content_category'"
-				. "\n AND m.published = 1"
-				. "\n AND i.id = $id"
-				;
-				$this->_db->setQuery( $query );
-				*/
 				if (!isset($content_category)) {
 					$content_category = null;
 				}
@@ -1736,16 +1632,7 @@ class mosMainFrame {
 		// ensure that query is only called once		
 		if ( !$this->get( '_BlogSectionCount' ) && !defined( '_JOS_BSC' ) ) {		
 			define( '_JOS_BSC', 1 );
-			/*
-			$query = "SELECT COUNT( id )"
-			."\n FROM #__menu "
-			."\n WHERE type = 'content_blog_section'"
-			."\n AND published = 1"
-			;
-			$this->_db->setQuery( $query );
-			// saves query result to variable
-			$this->set( '_BlogSectionCount', $this->_db->loadResult() );
-			*/
+			
 			$this->set( '_BlogSectionCount', 1 );
 		}
 		
@@ -1760,14 +1647,7 @@ class mosMainFrame {
 		if ( !$this->get( '_BlogCategoryCount' )&& !defined( '_JOS_BCC' ) ) {
 			define( '_JOS_BCC', 1 );
 			
-			$query = "SELECT COUNT( id )"
-			."\n FROM #__menu "
-			. "\n WHERE type = 'content_blog_category'"
-			. "\n AND published = 1"
-			;
-			$this->_db->setQuery( $query );
-			// saves query result to variable
-			$this->set( '_BlogCategoryCount', $this->_db->loadResult() );
+			$this->set( '_BlogCategoryCount', 1 );
 		}
 		
 		return $this->get( '_BlogCategoryCount' );
@@ -1781,15 +1661,7 @@ class mosMainFrame {
 		if ( !$this->get( '_GlobalBlogSectionCount' ) && !defined( '_JOS_GBSC' ) ) {		
 			define( '_JOS_GBSC', 1 );
 			
-			$query = "SELECT COUNT( id )"
-			."\n FROM #__menu "
-			."\n WHERE type = 'content_blog_section'"
-			."\n AND published = 1"
-			."\n AND componentid = 0"
-			;
-			$this->_db->setQuery( $query );
-			// saves query result to variable
-			$this->set( '_GlobalBlogSectionCount', $this->_db->loadResult() );
+			$this->set( '_GlobalBlogSectionCount', 1 );
 		}
 		
 		return $this->get( '_GlobalBlogSectionCount' );

@@ -91,7 +91,7 @@ function feedFrontpage( $showFeed ) {
 		$info[ 'image' ]		= $mosConfig_live_site .'/images/M_images/'. $info[ 'image_file' ];
 	}
 	$info[ 'image_alt' ] 		= $params->def( 'image_alt', 'Powered by Joomla!' );
-	$info[ 'limit_text' ] 		= $params->def( 'limit_text', 1 );
+	$info[ 'limit_text' ] 		= $params->def( 'limit_text', 0 );
 	$info[ 'text_length' ] 		= $params->def( 'text_length', 20 );
 	// get feed type from url
 	$info[ 'feed' ] 			= mosGetParam( $_GET, 'feed', 'RSS2.0' );
@@ -196,25 +196,24 @@ function feedFrontpage( $showFeed ) {
 			break;
 	}
 
-	$join 		= "\n INNER JOIN #__content_frontpage AS f ON f.content_id = a.id";
-	$and 		= '';
-
 	// query of frontpage content items
 	$query = "SELECT a.*, u.name AS author, u.usertype, UNIX_TIMESTAMP( a.created ) AS created_ts, cat.title AS cat_title, sec.title AS section_title"
 	. "\n FROM #__content AS a"
-	. $join
+	. "\n INNER JOIN #__content_frontpage AS f ON f.content_id = a.id"
 	. "\n LEFT JOIN #__users AS u ON u.id = a.created_by"	
 	. "\n LEFT JOIN #__categories AS cat ON cat.id = a.catid"
 	. "\n LEFT JOIN #__sections AS sec ON sec.id = a.sectionid"
 	. "\n WHERE a.state = 1"
-	. $and
+	. "\n AND cat.published = 1"
+	. "\n AND sec.published = 1"
 	. "\n AND a.access = 0"
-	. "\n AND ( publish_up = '$nullDate' OR publish_up <= '$now' )"
-	. "\n AND ( publish_down = '$nullDate' OR publish_down >= '$now' )"
+	. "\n AND cat.access = 0"
+	. "\n AND sec.access = 0"
+	. "\n AND ( a.publish_up = '$nullDate' OR a.publish_up <= '$now' )"
+	. "\n AND ( a.publish_down = '$nullDate' OR a.publish_down >= '$now' )"
 	. "\n ORDER BY $orderby"
-	. ( $info[ 'count' ] ? "\n LIMIT ". $info[ 'count' ] : '' )
 	;
-	$database->setQuery( $query );
+	$database->setQuery( $query, 0, $info[ 'count' ] );
 	$rows = $database->loadObjectList();
 
 	foreach ( $rows as $row ) {
@@ -224,7 +223,12 @@ function feedFrontpage( $showFeed ) {
 
 		// url link to article
 		// & used instead of &amp; as this is converted by feed creator
-		$item_link = 'index.php?option=com_content&task=view&id='. $row->id .'&Itemid='. $mainframe->getItemid( $row->id );
+		$itemid = $mainframe->getItemid( $row->id );
+		if ($itemid) {
+			$itemid = '&Itemid='. $itemid;
+		}
+		
+		$item_link = 'index.php?option=com_content&task=view&id='. $row->id . $itemid;
 		$item_link = sefRelToAbs( $item_link );
 
 

@@ -17,6 +17,9 @@ defined( '_VALID_MOS' ) or die( 'Restricted access' );
 
 require_once( $mainframe->getPath( 'front_html' ) );
 
+// page title
+$mainframe->setPageTitle( _SEARCH_TITLE );
+
 switch ( $task ) {
 	default:
 		viewSearch();

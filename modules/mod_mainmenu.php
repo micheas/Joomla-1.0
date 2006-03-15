@@ -68,6 +68,8 @@ if (!defined( '_MOS_MAINMENU_MODULE' )) {
 		if ($level > 0) {
 			$menuclass = 'sublevel'. $params->get( 'class_sfx');
 		}
+		
+		$mitem->name = stripslashes( ampReplace($mitem->name) );
 
 		switch ($mitem->browserNav) {
 			// cases are slightly different

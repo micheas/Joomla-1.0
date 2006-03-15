@@ -44,8 +44,10 @@ This Release Contains following Security Fixes
 Low Level Threat
  * Harden mosmsg
 
+
 15-Mar-2006 Rey Gigataras
  # Fixed artf3927 : Typo in Installer Screen
+ # Fixed artf3940 : single quotes/apostrophes (') 
  
 
 13-Mar-2006 Rey Gigataras

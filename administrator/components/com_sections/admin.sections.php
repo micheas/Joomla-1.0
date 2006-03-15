@@ -641,10 +641,12 @@ function menuLink( $id ) {
 	$section->bind( $_POST );
 	$section->checkin();
 
-	$menu 		= mosGetParam( $_POST, 'menuselect', '' );
-	$name 		= mosGetParam( $_POST, 'link_name', '' );
-	$type 		= mosGetParam( $_POST, 'link_type', '' );
+	$menu 	= mosGetParam( $_POST, 'menuselect', '' );
+	$name 	= mosGetParam( $_POST, 'link_name', '' );
+	$type 	= mosGetParam( $_POST, 'link_type', '' );
 
+	$name	= stripslashes( ampReplace($name) );
+	
 	switch ( $type ) {
 		case 'content_section':
 			$link 		= 'index.php?option=com_content&task=section&id='. $id;

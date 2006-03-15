@@ -487,6 +487,7 @@ class mosMainFrame {
 	function setPageTitle( $title=null ) {
 		if (@$GLOBALS['mosConfig_pagetitles']) {
 			$title = trim( htmlspecialchars( $title ) );
+			$title = stripslashes($title);
 			$this->_head['title'] = $title ? $GLOBALS['mosConfig_sitename'] . ' - '. $title : $GLOBALS['mosConfig_sitename'];
 		}
 	}

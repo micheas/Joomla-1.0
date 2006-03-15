@@ -130,7 +130,7 @@ class modules_html {
 		
 		$rssDoc = new xml_domit_rss_document();
 		$rssDoc->useCacheLite(true, $LitePath, $cacheDir, 3600);
-		$rssDoc->useHTTPClient(true); 
+		//$rssDoc->useHTTPClient(true); 
 		$success = $rssDoc->loadRSS( $rssurl );
 
 		if ( $success )	{		

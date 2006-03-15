@@ -243,6 +243,8 @@ class HTML_typedcontent {
 	function edit( &$row, &$images, &$lists, &$params, $option, &$menus ) {
 		global $database;
 		
+		mosMakeHtmlSafe( $row );
+		
 		$create_date 	= null;
 		$mod_date 		= null;
 		$nullDate 		= $database->getNullDate();

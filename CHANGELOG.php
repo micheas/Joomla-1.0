@@ -45,6 +45,10 @@ Low Level Threat
  * Harden mosmsg
 
 
+16-Mar-2006 Rey Gigataras
+ # Fixed artf3913 : artf3809: Error with < AND > in tinymce - static content manager
+
+
 15-Mar-2006 Rey Gigataras
  # Fixed artf3927 : Typo in Installer Screen
  # Fixed artf3940 : single quotes/apostrophes (') 
@@ -128,7 +132,7 @@ Low Level Threat
  # Fixed artf3656 : contact-component, dropdown
 
 
-228-Feb-2006 Rey Gigataras
+28-Feb-2006 Rey Gigataras
  # Fixed artf3655 : Login module error
  # Fixed artf3668 : mosemailcloak bug with mailto:
  # Fixed artf3681 : invalid markup in com_content showCategories() 

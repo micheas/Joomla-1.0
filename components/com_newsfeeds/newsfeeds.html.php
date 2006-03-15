@@ -240,7 +240,7 @@ class HTML_newsfeed {
 		// full RSS parser used to access image information
 		$rssDoc = new xml_domit_rss_document();
 		$rssDoc->useCacheLite( true, $LitePath, $cacheDir, $newsfeed->cache_time );
-		$rssDoc->useHTTPClient(true); 
+		//$rssDoc->useHTTPClient(true); 
 		$success = $rssDoc->loadRSS( $newsfeed->link );
 		
 		if ( $success ) {

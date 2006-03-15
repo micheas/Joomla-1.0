@@ -44,6 +44,9 @@ This Release Contains following Security Fixes
 Low Level Threat
  * Harden mosmsg
 
+15-Mar-2006 Rey Gigataras
+ # Fixed artf3927 : Typo in Installer Screen
+ 
 
 13-Mar-2006 Rey Gigataras
  ^ PERFORMANCE : com_content only add call to jos_content_rating where voting option activated

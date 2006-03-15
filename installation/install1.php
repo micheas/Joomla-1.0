@@ -148,7 +148,7 @@ function check() {
 			  				<input class="inputbox" type="text" name="DBpassword" value="<?php echo "$DBpassword"; ?>" />
 			  			</td>
 			  			<td>
-			  				<em>For site security using a password for the mysql account in mandatory</em>
+			  				<em>For site security using a password for the mysql account is mandatory</em>
 			  			</td>
 					</tr>
   		  			<tr>

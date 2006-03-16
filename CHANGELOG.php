@@ -47,6 +47,7 @@ Low Level Threat
 
 16-Mar-2006 Rey Gigataras
  # Fixed artf3913 : artf3809: Error with < AND > in tinymce - static content manager
+ # Fixed : checked out lock icon visible for same user
 
 
 15-Mar-2006 Rey Gigataras

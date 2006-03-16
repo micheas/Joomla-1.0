@@ -140,11 +140,7 @@ class HTML_typedcontent {
 
 			$link = 'index2.php?option=com_typedcontent&task=edit&hidemainmenu=1&id='. $row->id;
 
-			if ( $row->checked_out ) {
-				$checked	 		= mosCommonHTML::checkedOut( $row );
-			} else {
-				$checked	 		= mosHTML::idBox( $i, $row->id, ($row->checked_out && $row->checked_out != $my->id ) );
-			}
+			$checked 	= mosCommonHTML::CheckedOutProcessing( $row, $i );
 
 			if ( $acl->acl_check( 'administration', 'manage', 'users', $my->usertype, 'components', 'com_users' ) ) {
 				if ( $row->created_by_alias ) {

@@ -23,7 +23,8 @@ class HTML_config {
 
 	function showconfig( &$row, &$lists, $option) {
 		global $mosConfig_absolute_path, $mosConfig_live_site, $mosConfig_session_type;
-		$tabs = new mosTabs(1);
+		
+		$tabs = new mosTabs(0);
 		?>
 		<script type="text/javascript">
 		<!--
@@ -99,7 +100,7 @@ class HTML_config {
 			var form = document.adminForm;
 			
 			// do field validation
-			if (form.config_session_type.value != <?php echo $mosConfig_session_type; ?> ){
+			if (form.config_session_type.value != <?php echo $row->config_session_type; ?> ){
 				if ( confirm('Are you sure you wish to change the `Session Authentication Method`? \n\n This will cause all existing frontend sessions to be deleted \n\n') ) {
 					submitform( pressbutton );
 				} else {

@@ -1236,7 +1236,8 @@ function showItem( $uid, $gid, &$access, $pop, $option, $now ) {
 	
 	// main query
 	$query = "SELECT a.*, u.name AS author, u.usertype, cc.name AS category, s.name AS section, g.name AS groups,"
-	. "\n s.published AS sec_pub, cc.published AS cat_pub, s.access AS sec_access, cc.access AS cat_access"
+	. "\n s.published AS sec_pub, cc.published AS cat_pub, s.access AS sec_access, cc.access AS cat_access,"
+	. "\n s.id AS sec_id, cc.id as cat_id"
 	. $voting['select']
 	. "\n FROM #__content AS a"
 	. "\n LEFT JOIN #__categories AS cc ON cc.id = a.catid"

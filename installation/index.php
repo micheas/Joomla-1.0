@@ -243,6 +243,7 @@ writableCell( 'mambots/content' );
 writableCell( 'mambots/editors' );
 writableCell( 'mambots/editors-xtd' );
 writableCell( 'mambots/search' );
+writableCell( 'mambots/system' );
 writableCell( 'media' );
 writableCell( 'modules' );
 writableCell( 'templates' );

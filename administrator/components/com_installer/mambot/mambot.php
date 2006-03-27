@@ -31,7 +31,7 @@ writableCell( 'language' );
 writableCell( 'mambots' );
 writableCell( 'mambots/content' );
 writableCell( 'mambots/search' );
-?>
+writableCell( 'mambots/system' );?>
 </table>
 <?php
 showInstalledMambots( $option );

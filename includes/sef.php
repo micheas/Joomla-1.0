@@ -353,7 +353,7 @@ function sefRelToAbs( $string ) {
 
 	//multilingual code url support
 	if( $mosConfig_mbf_content && $string!='index.php' && !eregi("^(([^:/?#]+):)",$string) && !strcasecmp(substr($string,0,9),'index.php') && !eregi('lang=', $string) ) {
-		$string .= '&lang='. $iso_client_lang;
+		$string .= '&amp;lang='. $iso_client_lang;
 	}
 
 	// SEF URL Handling

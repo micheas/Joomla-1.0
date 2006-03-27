@@ -44,6 +44,9 @@ This Release Contains following Security Fixes
 Low Level Threat
  * Harden mosmsg
 
+24-Mar-2006 Alex Kempkens
+ + Check for mambot/system directory in installer and installation dialogs
+ # artf4066	content sections not being translated
 
 16-Mar-2006 Rey Gigataras
  # Fixed artf3913 : artf3809: Error with < AND > in tinymce - static content manager

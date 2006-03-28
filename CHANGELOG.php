@@ -44,6 +44,10 @@ This Release Contains following Security Fixes
 Low Level Threat
  * Harden mosmsg
 
+27-Mar-2006 Alex Kempkens
+ # corrcted searchbot; finding dynamic content while searching for static
+ # updated core-SEF support for new multilingual_content config var
+ 
 24-Mar-2006 Alex Kempkens
  + Check for mambot/system directory in installer and installation dialogs
  # artf4066	content sections not being translated

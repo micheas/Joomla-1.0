@@ -205,6 +205,7 @@ function botSearchContent( $text, $phrase='', $ordering='' ) {
 		. "\n AND a.id NOT IN ( '$ids' )"
 		. "\n AND a.state = 1"
 		. "\n AND a.access <= $my->gid"
+		. "\n AND a.sectionid = 0"
 		. "\n AND ( a.publish_up = '$nullDate' OR a.publish_up <= '$now' )"
 		. "\n AND ( a.publish_down = '$nullDate' OR a.publish_down >= '$now' )"
 		. "\n ORDER BY $order"

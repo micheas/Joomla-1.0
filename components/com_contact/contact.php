@@ -466,7 +466,7 @@ function sendmail( $con_id, $option ) {
 		// test to ensure that only one email address is entered
 		$check = explode( '@', $email );
 		if ( strpos( $email, ';' ) || strpos( $email, ',' ) || strpos( $email, ' ' ) || count( $check ) > 2 ) {
-			mosErrorAlert( 'You cannot enter more than one email address' );
+			mosErrorAlert( _CONTACT_MORE_THAN );
 		}
 		
 		if ( !$email || !$text || ( is_email( $email ) == false ) ) {

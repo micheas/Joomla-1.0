@@ -141,6 +141,7 @@ DEFINE('_CONTACT_HEADER_EMAIL','Email');
 DEFINE('_CONTACT_HEADER_PHONE','Phone');
 DEFINE('_CONTACT_HEADER_FAX','Fax');
 DEFINE('_CONTACTS_DESC','The Contact list for this Website.');
+DEFINE('_CONTACT_MORE_THAN','You cannot enter more than one email address.');
 
 /** classes/html/contact.php */
 DEFINE('_CONTACT_TITLE','Contact');

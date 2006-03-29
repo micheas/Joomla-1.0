@@ -46,11 +46,14 @@ Low Level Threat
 
 
 29-Mar-2006 Rey Gigataras
+ # Fixed artf4028 : url to the site is added to the entered link in a menu item (SEF disabled)
  # Fixed artf4102 : mosimage.php - Erroneous right alignment of images
  # Fixed artf4131 : com_contact displays non-localized message
  
  ^ Upgrade to TinyMCE 2.0.5.1
  ^ Upgrade to TinyMCE compressor 1.0.8
+ ^ TinyMCE remove `Help` tab in help popup
+ ^ TinyMCE 'word wrap' by default for html source mode
 
 
 27-Mar-2006 Alex Kempkens

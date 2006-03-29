@@ -614,11 +614,10 @@ function saveContent( $sectionid, $task ) {
 	if ($row->id) {
 		$row->modified 		= date( 'Y-m-d H:i:s' );
 		$row->modified_by 	= $my->id;
-		$row->created 		= $row->created ? mosFormatDate( $row->created, '%Y-%m-%d %H:%M:%S', -$mosConfig_offset ) : date( 'Y-m-d H:i:s' );
-		$row->created_by 	= $row->created_by ? $row->created_by : $my->id;
+		$row->created 		= mosFormatDate( $row->created, '%Y-%m-%d %H:%M:%S', -$mosConfig_offset );
 	} else {
-		$row->created 		= $row->created ? mosFormatDate( $row->created, '%Y-%m-%d %H:%M:%S', -$mosConfig_offset ) : date( 'Y-m-d H:i:s' );
-		$row->created_by 	= $row->created_by ? $row->created_by : $my->id;
+		$row->created 		= date( 'Y-m-d H:i:s' );
+		$row->created_by 	= $my->id;
 	}
 
 	if (strlen(trim( $row->publish_up )) <= 10) {

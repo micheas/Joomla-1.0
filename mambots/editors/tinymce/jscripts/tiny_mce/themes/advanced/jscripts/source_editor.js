@@ -17,6 +17,8 @@ function onLoadInit() {
 
 	document.forms[0].htmlSource.value = fixContent(tinyMCE.getContent(tinyMCE.getWindowArg('editor_id')));
 	resizeInputs();
+	
+	setWrap('soft');
 }
 
 function setWrap(val) {

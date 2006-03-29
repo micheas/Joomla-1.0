@@ -46,6 +46,7 @@ Low Level Threat
 
 
 29-Mar-2006 Rey Gigataras
+ # Fixed artf4133 : Blog - Content Section Archive
  # Fixed artf4093 : No parameter tool tip when ' is used in module.xml
  # Fixed artf4028 : url to the site is added to the entered link in a menu item (SEF disabled)
  # Fixed artf4102 : mosimage.php - Erroneous right alignment of images

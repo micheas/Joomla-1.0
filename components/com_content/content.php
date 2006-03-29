@@ -792,10 +792,10 @@ function showArchiveSection( $id=NULL, $gid, &$access, $pop, $option ) {
 	$rows = $database->loadObjectList();
 
 	// check whether section is published
-	if (!count($rows)) {
+	if (!count($rows) && $secID != 0) {
 		$secCheck = new mosSection( $database );
 		$secCheck->load( $secID );
-		
+
 		/*
 		* check whether section is published
 		*/
@@ -809,7 +809,7 @@ function showArchiveSection( $id=NULL, $gid, &$access, $pop, $option ) {
 		if ($secCheck->access > $gid) {
 			mosNotAuth();
 			return;
-		}			
+		}		
 	}
 	
 	// initiate form

@@ -281,7 +281,7 @@ class mosParameters {
 		if ($result[0] == '@spacer') {
 			$result[0] = '';
 		} else {
-			$result[0] = mosToolTip( addslashes( $description ), $result[0], '', '', $result[0], '#', 0 );
+			$result[0] = mosToolTip( addslashes( $description ), addslashes( $result[0] ), '', '', $result[0], '#', 0 );
 		}
 		$type = $param->getAttribute( 'type' );
 

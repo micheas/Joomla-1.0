@@ -46,6 +46,7 @@ Low Level Threat
 
 
 29-Mar-2006 Rey Gigataras
+ # Fixed artf4102 : mosimage.php - Erroneous right alignment of images
  # Fixed artf4131 : com_contact displays non-localized message
 
 

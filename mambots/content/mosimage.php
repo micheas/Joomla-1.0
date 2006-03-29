@@ -194,6 +194,7 @@ function processImages ( &$row, &$params, &$introCount ) {
 				$padding 		= '';
 				$float			= '';
 				$border_width 	= '';
+				$style			= '';
 				if ( $params->def( 'margin' ) ) {
 					$margin 		= ' margin: '. $params->def( 'margin' ).'px;';
 				}				

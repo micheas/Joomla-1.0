@@ -48,6 +48,9 @@ Low Level Threat
 29-Mar-2006 Rey Gigataras
  # Fixed artf4102 : mosimage.php - Erroneous right alignment of images
  # Fixed artf4131 : com_contact displays non-localized message
+ 
+ ^ Upgrade to TinyMCE 2.0.5.1
+ ^ Upgrade to TinyMCE compressor 1.0.8
 
 
 27-Mar-2006 Alex Kempkens

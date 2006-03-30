@@ -79,6 +79,7 @@ function botGeshi_replacer( &$matches ) {
 	$text = str_replace( "\t", '  ', $text );
 
 	$geshi = new GeSHi( $text, $lang, dirname( __FILE__ ) . '/geshi/geshi' );
+	//$geshi->set_encoding('iso-8859-1');  # Fixes bug with htmlentities() warning
 	if ($lines == 'true') {
 		$geshi->enable_line_numbers( GESHI_NORMAL_LINE_NUMBERS );
 	}

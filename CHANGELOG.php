@@ -45,6 +45,10 @@ Low Level Threat
  * Harden mosmsg
 
 
+30-Mar-2006 Rey Gigataras
+ ^ Upgrade to Geshi 1.0.7.8
+
+
 29-Mar-2006 Rey Gigataras
  # Fixed artf4133 : Blog - Content Section Archive
  # Fixed artf4093 : No parameter tool tip when ' is used in module.xml

@@ -490,7 +490,7 @@ function sendmail( $con_id, $option ) {
 			mosMail( $mosConfig_mailfrom, $mosConfig_fromname, $email, $copy_subject, $copy_text );
 		}
 		
-		$link = 'index.php?option=com_contact&task=view&contact_id='. $contact[0]->id .'&Itemid='. $Itemid;
+		$link = sefRelToAbs( 'index.php?option=com_contact&task=view&contact_id='. $contact[0]->id .'&Itemid='. $Itemid );
 
 		mosRedirect( $link, _THANK_MESSAGE );
 	}

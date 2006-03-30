@@ -43,9 +43,12 @@ This Release Contains following Security Fixes
 
 Low Level Threat
  * Harden mosmsg
+ * Breadcrumbs title visibility
 
 
 30-Mar-2006 Rey Gigataras
+ * SECURITY [ Low Level ]: artf3702 : breadcrumbs: information gathering possible by simple urlhacks
+
  # Fixed [topic,47932.0.html] : 1.0.8 com_contact - incorrect URL?
 
  ^ Upgrade to Geshi 1.0.7.8

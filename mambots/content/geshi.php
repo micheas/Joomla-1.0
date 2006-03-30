@@ -68,18 +68,11 @@ function botGeshi_replacer( &$matches ) {
 	$text = str_replace('&lt;', '<', $text);
 	$text = str_replace('&gt;', '>', $text);
 
-/*
-	// Replace 2 spaces with "&nbsp; " so non-tabbed code indents without making huge long lines.
-	$text = str_replace("  ", "&nbsp; ", $text);
-	// now Replace 2 spaces with " &nbsp;" to catch odd #s of spaces.
-	$text = str_replace("  ", " &nbsp;", $text);
-*/
 	// Replace tabs with "&nbsp; &nbsp;" so tabbed code indents sorta right without making huge long lines.
 	//$text = str_replace("\t", "&nbsp; &nbsp;", $text);
 	$text = str_replace( "\t", '  ', $text );
 
 	$geshi = new GeSHi( $text, $lang, dirname( __FILE__ ) . '/geshi/geshi' );
-	//$geshi->set_encoding('iso-8859-1');  # Fixes bug with htmlentities() warning
 	if ($lines == 'true') {
 		$geshi->enable_line_numbers( GESHI_NORMAL_LINE_NUMBERS );
 	}

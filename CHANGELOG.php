@@ -43,7 +43,11 @@ This Release Contains following Security Fixes
 
 Low Level Threat
  * Harden mosmsg
- * Breadcrumbs title visibility
+ * Breadcrumbs title visibility even when access restricted
+
+
+31-Mar-2006 Rey Gigataras
+ # Fixed [topic,46614.0.html] : mod_templatechooser not working when templates name has dashes
 
 
 30-Mar-2006 Rey Gigataras

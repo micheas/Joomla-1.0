@@ -1118,7 +1118,7 @@ class mosMainFrame {
 			$jos_change_template 	= mosGetParam( $_REQUEST, 'jos_change_template', $jos_user_template );
 			if ($jos_change_template) {
 				// clean template name
-				$jos_change_template = preg_replace( '#\W#', '', $jos_change_template );
+				$jos_change_template = preg_replace( '#\W\p{Pd}#', '', $jos_change_template );
 				if ( strlen( $jos_change_template ) >= 40 ) {
 					$jos_change_template = substr($jos_change_template, 0 , 39);
 				}

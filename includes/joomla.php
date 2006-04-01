@@ -1619,8 +1619,10 @@ class mosMainFrame {
 		}
 
 		if ( $_Itemid != '' ) {
+		// if Itemid value discovered by queries, return this value
 			return $_Itemid;
-		} else {
+		} else if ( $Itemid != 99999999 && $Itemid === 0 ) { 
+		// if queries do not return Itemid value, return Itemid of page - if it is not 99999999
 			return $Itemid;
 		}
 	}
@@ -2566,9 +2568,6 @@ class mosUser extends mosDBTable {
 	function check() {
 		global $mosConfig_uniquemail;
 
-		// filter malicious code
-		//$this->filter();
-
 		// Validate user information
 		if (trim( $this->name ) == '') {
 			$this->_error = _REGWARN_NAME;
@@ -2580,6 +2579,18 @@ class mosUser extends mosDBTable {
 			return false;
 		}
 
+		// check that username is not greater than 25 characters
+		$username = $this->username;
+		if ( strlen($username) > 25 ) {
+			$this->username = substr( $username, 0, 25 ); 
+		}
+		
+		// check that password is not greater than 50 characters
+		$password = $this->password;
+		if ( strlen($password) > 50 ) {
+			$this->password = substr( $password, 0, 50 ); 
+		}
+		
 		if (eregi( "[\<|\>|\"|\'|\%|\;|\(|\)|\&|\+|\-]", $this->username) || strlen( $this->username ) < 3) {
 			$this->_error = sprintf( _VALID_AZ09, _PROMPT_UNAME, 2 );
 			return false;

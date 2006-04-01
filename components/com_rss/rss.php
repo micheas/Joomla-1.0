@@ -223,14 +223,14 @@ function feedFrontpage( $showFeed ) {
 
 		// url link to article
 		// & used instead of &amp; as this is converted by feed creator
-		$itemid = $mainframe->getItemid( $row->id );
+		$_Itemid	= '';
+		$itemid 	= $mainframe->getItemid( $row->id );
 		if ($itemid) {
-			$itemid = '&Itemid='. $itemid;
+			$_Itemid = '&Itemid='. $itemid;
 		}
 		
-		$item_link = 'index.php?option=com_content&task=view&id='. $row->id . $itemid;
+		$item_link = 'index.php?option=com_content&task=view&id='. $row->id . $_Itemid;
 		$item_link = sefRelToAbs( $item_link );
-
 
 		// removes all formating from the intro text for the description text
 		$item_description = $row->introtext;

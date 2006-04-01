@@ -46,6 +46,10 @@ Low Level Threat
  * Breadcrumbs title visibility even when access restricted
 
 
+01-Apr-2006 Rey Gigataras
+ # Fixed [topic,48908.0.html] : Duplicate usernames / Length Checking
+
+
 31-Mar-2006 Rey Gigataras
  # Fixed [topic,46614.0.html] : mod_templatechooser not working when templates name has dashes
 

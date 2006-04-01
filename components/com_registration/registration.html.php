@@ -105,7 +105,7 @@ class HTML_registration {
 				<?php echo _REGISTER_NAME; ?> *
 			</td>
 		  	<td>
-		  		<input type="text" name="name" size="40" value="" class="inputbox" />
+		  		<input type="text" name="name" size="40" value="" class="inputbox" maxlength="50" />
 		  	</td>
 		</tr>
 		<tr>
@@ -113,14 +113,14 @@ class HTML_registration {
 				<?php echo _REGISTER_UNAME; ?> *
 			</td>
 			<td>
-				<input type="text" name="username" size="40" value="" class="inputbox" />
+				<input type="text" name="username" size="40" value="" class="inputbox" maxlength="25" />
 			</td>
 		<tr>
 			<td>
 				<?php echo _REGISTER_EMAIL; ?> *
 			</td>
 			<td>
-				<input type="text" name="email" size="40" value="" class="inputbox" />
+				<input type="text" name="email" size="40" value="" class="inputbox" maxlength="100" />
 			</td>
 		</tr>
 		<tr>

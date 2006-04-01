@@ -312,7 +312,7 @@ class InputFilter
 			 */
 			$postTag		= substr($postTag, ($tagLength +2));
 			$tagOpen_start	= strpos($postTag, '<');
-			print "T: $preTag\n";
+			//print "T: $preTag\n";
 		}
 
 		/*

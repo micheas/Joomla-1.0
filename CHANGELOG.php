@@ -47,6 +47,7 @@ Low Level Threat
 
 
 01-Apr-2006 Rey Gigataras
+ # Fixed [topic,50547.0.html] : Print statement left in class.inputfilter.php
  # Fixed [topic,48908.0.html] : Duplicate usernames / Length Checking
 
 

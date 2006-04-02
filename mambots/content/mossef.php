@@ -59,12 +59,12 @@ function botMosSef_replacer( &$matches ) {
 	
 	// original text that might be replaced
 	$original = 'href="'. $matches[1] .'"';
-	
+
 	// disable bot from being applied to mailto tags
 	if ( strpos( $matches[1], 'mailto:' ) !== false ) {
 		return $original;
 	}
-	
+
 	// disable bot from being applied to javascript tags
 	if ( strpos( $matches[1], 'javascript:' ) !== false ) {
 		return $original;
@@ -72,22 +72,17 @@ function botMosSef_replacer( &$matches ) {
 	
 	// will only process links containing 'index.php?option
 	if ( strpos( $matches[1], 'index.php?option' ) !== false ) {
-		if ( substr($matches[1],0,1) == '#' ) {
-			// anchor
-			$temp 		= split('index.php', $_SERVER['REQUEST_URI']);
-			$link 		= sefRelToAbs( 'index.php' . @$temp[1] );
-			$replace 	= 'href="'. $link . $matches[1] .'"';
-		} else {
-			$link 		= sefRelToAbs( $matches[1] );
-			$replace 	= 'href="'. $link .'"';
-		}
+		// check if url match is a absolute link
+		if (strpos( $matches[1], $mosConfig_live_site ) === 0 ) {
+			$matches[1] = str_replace( $mosConfig_live_site .'/', '', $matches[1] );
+		}		
+
+		// convert url to SEF link
+		$link 		= sefRelToAbs( $matches[1] );
 		
-		// needed to stop site url being added to external site links
-		$count = explode( 'http://', $replace );
-		if ( count( $count ) > 2 || strpos( $replace, 'https://' ) !== false || strpos( $replace, 'ftp://' ) !== false ) {
-			$replace = str_replace( $mosConfig_live_site .'/', '', $replace );
-		}
-	
+		// reconstruct html output
+		$replace 	= 'href="'. $link .'"';
+		
 		return $replace;
 	} else {
 		return $original;

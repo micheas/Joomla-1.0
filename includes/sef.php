@@ -415,7 +415,7 @@ function sefRelToAbs( $string ) {
 				// Itemid 
 				if ( isset( $parts['Itemid'] ) ) {
 					//only add Itemid value if it does not correspond with the 'unassigned' Itemid value
-					if ( $parts['Itemid'] != 99999999 ) {
+					if ( $parts['Itemid'] != 99999999 && $parts['Itemid'] != 0 ) {
 						$sefstring .= $parts['Itemid'].'/';					
 					}
 				}
@@ -483,7 +483,7 @@ function sefRelToAbs( $string ) {
 		if ( !(strpos( $string, $mosConfig_live_site ) === 0) ) {
 			// if URI starts with a "/", means URL is at the root of the host...
 			if (strncmp($string, '/', 1) == 0) {
-				// splits http(s)://xx.xx/yy/zz..." into [1]="htpp(s)://xx.xx" and [2]="/yy/zz...":
+				// splits http(s)://xx.xx/yy/zz..." into [1]="http(s)://xx.xx" and [2]="/yy/zz...":
 				$live_site_parts = array();
 				eregi("^(https?:[\/]+[^\/]+)(.*$)", $mosConfig_live_site, $live_site_parts);
 				

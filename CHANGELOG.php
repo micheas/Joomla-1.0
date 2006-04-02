@@ -48,6 +48,7 @@ Low Level Threat
 
 02-Apr-2006 Rey Gigataras
  # Fixed artf3575 : Correction needed in stylesheet
+ # Fixed artf4089 : Problem with domit, extended characters and PHP 5.0.2
 
 
 01-Apr-2006 Rey Gigataras

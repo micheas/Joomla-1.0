@@ -1721,9 +1721,14 @@ class DOMIT_Lite_Parser {
 		//create instance of expat parser (should be included in php distro)
 		if (version_compare(phpversion(), '5.0', '<=')) {
 			$parser = xml_parser_create('');
-		}
-		else {
-			$parser = xml_parser_create();
+		} else {
+			// special handling for encoding support
+			if (defined( '_ISO' )) {
+				$iso = explode( '=', _ISO );
+				$parser = xml_parser_create($iso[1]);
+			} else {
+				$parser = xml_parser_create();
+			}
 		}
 
 		//set handlers for SAX events

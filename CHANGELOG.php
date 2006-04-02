@@ -46,6 +46,10 @@ Low Level Threat
  * Breadcrumbs title visibility even when access restricted
 
 
+02-Apr-2006 Rey Gigataras
+ # Fixed artf3575 : Correction needed in stylesheet
+
+
 01-Apr-2006 Rey Gigataras
  # Fixed [topic,50547.0.html] : Print statement left in class.inputfilter.php
  # Fixed [topic,48908.0.html] : Duplicate usernames / Length Checking

@@ -29,7 +29,8 @@ body {
 
 #buttons_inner {
 	border: 1px solid #cccccc;
-	height: 21px;
+	height: 21px !important;
+	height: 23px;
 }
 
 #pathway_text {

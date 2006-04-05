@@ -254,6 +254,7 @@ function saveModule( $option, $client, $task ) {
 		echo "<script> alert('".$row->getError()."'); window.history.go(-1); </script>\n";
 		exit();
 	}
+	
 	$row->checkin();
 	if ($client == 'admin') {
 		$where = "client_id=1";

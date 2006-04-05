@@ -46,6 +46,10 @@ Low Level Threat
  * Breadcrumbs title visibility even when access restricted
 
 
+05-Apr-2006 Rey Gigataras
+ # Fixed artf4010 : When creating new module. Two modules are created when clicking save
+
+
 02-Apr-2006 Rey Gigataras
  # Fixed artf3575 : Correction needed in stylesheet
  # Fixed artf4089 : Problem with domit, extended characters and PHP 5.0.2

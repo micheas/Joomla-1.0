@@ -219,7 +219,6 @@ class HTML_modules {
 				<?php if ($row->module == "") {
 					getEditorContents( 'editor1', 'content' );
 				}?>
-				submitform(pressbutton);
 			}
 			submitform(pressbutton);
 		}
@@ -259,7 +258,7 @@ class HTML_modules {
 					<th colspan="2">
 					Details
 					</th>
-				<tr>
+				</tr>
 				<tr>
 					<td width="100" align="left">
 					Title:
@@ -340,7 +339,7 @@ class HTML_modules {
 					<th >
 					Parameters
 					</th>
-				<tr>
+				</tr>
 				<tr>
 					<td>
 					<?php echo $params->render();?>
@@ -377,7 +376,7 @@ class HTML_modules {
 					<th>
 					Pages / Items
 					</th>
-				<tr>
+				</tr>
 				<tr>
 					<td>
 					Menu Item Link(s):
@@ -398,7 +397,7 @@ class HTML_modules {
 							<th colspan="2">
 							Custom Output
 							</th>
-						<tr>
+						</tr>
 						<tr>
 							<td valign="top" align="left">
 							Content:

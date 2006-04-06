@@ -46,6 +46,10 @@ Low Level Threat
  * Breadcrumbs title visibility even when access restricted
 
 
+06-Apr-2006 Rey Gigataras
+ # Fixed artf4282 : Extra Empty Menu Span Tags
+
+
 05-Apr-2006 Rey Gigataras
  # Fixed artf4010 : When creating new module. Two modules are created when clicking save
 

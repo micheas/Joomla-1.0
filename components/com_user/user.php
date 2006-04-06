@@ -102,6 +102,20 @@ function userEdit( $option, $uid, $submitvalue) {
 	global $database, $mainframe;
 	global $mosConfig_absolute_path;
 
+	// security check to see if link exists in a menu
+	$link = 'index.php?option=com_user&task=UserDetails';
+	$query = "SELECT id"
+	. "\n FROM #__menu"
+	. "\n WHERE link LIKE '%$link%'"
+	. "\n AND published = 1"
+	;
+	$database->setQuery( $query );
+	$exists = $database->loadResult();
+	if ( !$exists ) {						
+		mosNotAuth();
+		return;
+	}		
+	
 	require_once( $mosConfig_absolute_path .'/administrator/components/com_users/users.class.php' );
 
 	if ($uid == 0) {
@@ -186,6 +200,20 @@ function CheckIn( $userid, $access, $option ){
 		return;
 	}
 
+	// security check to see if link exists in a menu
+	$link = 'index.php?option=com_user&task=CheckIn';
+	$query = "SELECT id"
+	. "\n FROM #__menu"
+	. "\n WHERE link LIKE '%$link%'"
+	. "\n AND published = 1"
+	;
+	$database->setQuery( $query );
+	$exists = $database->loadResult();
+	if ( !$exists ) {						
+		mosNotAuth();
+		return;
+	}		
+	
 	$lt = mysql_list_tables($mosConfig_db);
 	$k = 0;
 	echo "<table cellpadding=\"0\" cellspacing=\"0\" border=\"0\">";

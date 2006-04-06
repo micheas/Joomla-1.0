@@ -44,9 +44,18 @@ This Release Contains following Security Fixes
 Low Level Threat
  * Harden mosmsg
  * Breadcrumbs title visibility even when access restricted
+ * 'Edit Your Details' page now needs a published menu item to be accessible
+ * 'Check-In My Items' page now needs a published menu item to be accessible
+ * 'Submit News' page now needs a published menu item to be accessible
+ * 'Submit Weblink' page now needs a published menu item to be accessible
 
 
 06-Apr-2006 Rey Gigataras
+ * SECURITY [ Low Level ]: check for menu item added to 'Edit Your Details' page
+ * SECURITY [ Low Level ]: check for menu item added to 'Check-In My Items' page
+ * SECURITY [ Low Level ]: check for menu item added to 'Submit News' page
+ * SECURITY [ Low Level ]: check for menu item added to 'Submit Weblink' page
+ 
  # Fixed artf4282 : Extra Empty Menu Span Tags
 
 

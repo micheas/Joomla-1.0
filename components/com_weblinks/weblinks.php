@@ -225,7 +225,21 @@ function editWebLink( $id, $option ) {
 		mosNotAuth();
 		return;
 	}
-
+		
+	// security check to see if link exists in a menu
+	$link = 'index.php?option=com_weblinks&task=new';
+	$query = "SELECT id"
+	. "\n FROM #__menu"
+	. "\n WHERE link LIKE '%$link%'"
+	. "\n AND published = 1"
+	;
+	$database->setQuery( $query );
+	$exists = $database->loadResult();
+	if ( !$exists ) {						
+		mosNotAuth();
+		return;
+	}		
+	
 	$row = new mosWeblink( $database );
 	// load the row from the db table
 	$row->load( $id );

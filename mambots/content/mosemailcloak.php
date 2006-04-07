@@ -53,13 +53,16 @@ function botMosEmailCloak( $published, &$row, &$params, $page=0 ) {
  	$botParams 	= new mosParameters( $mambot->params );
  	$mode		= $botParams->def( 'mode', 1 );
 
+	// any@email.address.com
  	$search_email		= "([[:alnum:]_\.\-]+)(\@[[:alnum:]\.\-]+\.+)([[:alnum:]\.\-]+)";
+	// any@email.address.com?subject=anyText
 	$search_email_msg   = "([[:alnum:]_\.\-]+)(\@[[:alnum:]\.\-]+\.+)([[:alnum:]\.\-]+)([[:alnum:][:space:][:punct:]][^\"<>]+)";
+	// anyText
  	$search_text 		= "([[:alnum:][:space:][:punct:]][^<>]+)";
 
 	// search for derivativs of link code <a href="mailto:email@amail.com">email@amail.com</a>
-	$searchlink	= "(<a [[:alnum:] _\"\'=\@\.\-]*href=[\"\']mailto:". $search_email ."[\"\'][[:alnum:] _\"\'=\@\.\-]*>)". $search_email ."</a>";
-	while( eregi( $searchlink, $row->text, $regs ) ) {
+	$pattern = botMosEmailCloak_searchPattern( $search_email, $search_email );
+	while( eregi( $pattern, $row->text, $regs ) ) {		
 		$mail 		= $regs[2] . $regs[3] . $regs[4];
 		$mail_text 	= $regs[5] . $regs[6] . $regs[7];
 
@@ -75,8 +78,8 @@ function botMosEmailCloak( $published, &$row, &$params, $page=0 ) {
 	}
 
 	// search for derivativs of link code <a href="mailto:email@amail.com">anytext</a>
-	$searchlink	= "(<a [[:alnum:] _\"\'=\@\.\-]*href=[\"\']mailto:". $search_email ."[\"\'][[:alnum:] _\"\'=\@\.\-]*)>". $search_text ."</a>";
-	while( eregi( $searchlink, $row->text, $regs ) ) {
+	$pattern = botMosEmailCloak_searchPattern( $search_email, $search_text );
+	while( eregi( $pattern, $row->text, $regs ) ) {		
 		$mail 		= $regs[2] . $regs[3] . $regs[4];
 		$mail_text 	= $regs[5];
 
@@ -87,9 +90,8 @@ function botMosEmailCloak( $published, &$row, &$params, $page=0 ) {
 	}
 
 	// search for derivativs of link code <a href="mailto:email@amail.com?subject=Text">email@amail.com</a>
-	$searchlink		= "(<a [[:alnum:] _\"\'=\@\.\-]*href=[\"\']mailto:". $search_email_msg ."[\"\'][[:alnum:] _\"\'=\@\.\-]*)>". $search_email ."</a>";
-	while( eregi( $searchlink, $row->text, $regs ) ) {
-		
+	$pattern = botMosEmailCloak_searchPattern( $search_email_msg, $search_email );
+	while( eregi( $pattern, $row->text, $regs ) ) {		
 		$mail		= $regs[2] . $regs[3] . $regs[4] . $regs[5];
 		$mail_text	= $regs[6] . $regs[7]. $regs[8];
 
@@ -106,9 +108,8 @@ function botMosEmailCloak( $published, &$row, &$params, $page=0 ) {
 	}
 	
 	// search for derivativs of link code <a href="mailto:email@amail.com?subject=Text">anytext</a>
-	$searchlink		= "(<a [[:alnum:] _\"\'=\@\.\-]*href=[\"\']mailto:". $search_email_msg ."[\"\'][[:alnum:] _\"\'=\@\.\-]*)>". $search_text ."</a>";
-	while( eregi( $searchlink, $row->text, $regs ) ) {
-		
+	$pattern = botMosEmailCloak_searchPattern( $search_email_msg, $search_text );
+	while( eregi( $pattern, $row->text, $regs ) ) {		
 		$mail		= $regs[2] . $regs[3] . $regs[4] . $regs[5];
 		$mail_text	= $regs[6];
 		
@@ -127,5 +128,12 @@ function botMosEmailCloak( $published, &$row, &$params, $page=0 ) {
 		// replace the found address with the js cloacked email
 		$row->text = str_replace( $regs[0], $replacement, $row->text );
 	}
+}
+
+function botMosEmailCloak_searchPattern ( $link, $text ) {	
+	// <a href="mailto:anyLink">anyText</a>
+	$pattern = "(<a [[:alnum:] _\"\'=\@\.\-]*href=[\"\']mailto:". $link	."[\"\'][[:alnum:] _\"\'=\@\.\-]*)>". $text ."</a>";
+	
+	return $pattern;
 }
 ?>

@@ -50,6 +50,10 @@ Low Level Threat
  * 'Submit Weblink' page now needs a published menu item to be accessible
 
 
+07-Apr-2006 Rey Gigataras
+ # Fixed artf4294 : InputFilter failed escaping string
+
+
 06-Apr-2006 Rey Gigataras
  * SECURITY [ Low Level ]: check for menu item added to 'Edit Your Details' page
  * SECURITY [ Low Level ]: check for menu item added to 'Check-In My Items' page

@@ -426,19 +426,28 @@ class HTML_content {
 			$mainframe->setPageTitle( $row->title .' '. $row->page_title );
 		}
 
-		// determines the link and link text of the readmore button
-		if (($params->get( 'readmore' ) && @$row->readmore ) || $params->get( 'link_titles' )) {
+		// determines the link and `link text` of the readmore button
+		if ($params->get( 'readmore' ) || $params->get( 'link_titles' )) {
 			if ( $params->get( 'intro_only' ) ) {
 				// checks if the item is a public or registered/special item
 				if ( $row->access <= $gid ) {
 					if ($task != 'view') {
 						$_Itemid = $mainframe->getItemid( $row->id, 0, 0, $ItemidCount['bs'], $ItemidCount['bc'], $ItemidCount['gbs'] );
 					}
-					$link_on 	= sefRelToAbs("index.php?option=com_content&amp;task=view&amp;id=".$row->id."&amp;Itemid=".$_Itemid);
-					$link_text 	= _READ_MORE;
+					
+					$link_on 	= sefRelToAbs('index.php?option=com_content&amp;task=view&amp;id='.$row->id.'&amp;Itemid='.$_Itemid);
+					
+					if (@$row->readmore) {
+					// text for the readmore link
+						$link_text 	= _READ_MORE;
+					}
 				} else {
-					$link_on 	= sefRelToAbs("index.php?option=com_registration&amp;task=register");
-					$link_text 	= _READ_MORE_REGISTER;
+					$link_on 	= sefRelToAbs('index.php?option=com_registration&amp;task=register');
+					
+					if (@$row->readmore) {
+					// text for the readmore link if accessible only if registered
+						$link_text 	= _READ_MORE_REGISTER;
+					}
 				}
 			}
 		}

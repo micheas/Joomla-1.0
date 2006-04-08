@@ -51,6 +51,7 @@ Low Level Threat
 
 
 08-Apr-2006 Rey Gigataras
+ # Fixed artf4302 : 'Read more' link is always displayed if 'Linked Titles' option enabled
  # Fixed artf4304 : Bugs in search.html.php
  # Fixed : Content Popup page behaviour
 

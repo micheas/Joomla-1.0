@@ -2076,9 +2076,8 @@ class mosHTML {
 		if ( $params->get( 'back_button' ) && !$params->get( 'popup' ) && !$hide_js) {
 			?>
 			<div class="back_button">
-			<a href='javascript:history.go(-1)'>
-			<?php echo _BACK; ?>
-			</a>
+				<a href='javascript:history.go(-1)'>
+					<?php echo _BACK; ?></a>
 			</div>
 			<?php
 		}

@@ -52,6 +52,7 @@ Low Level Threat
 
 08-Apr-2006 Rey Gigataras
  # Fixed artf4304 : Bugs in search.html.php
+ # Fixed : Content Popup page behaviour
 
 
 07-Apr-2006 Rey Gigataras

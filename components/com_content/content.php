@@ -1412,6 +1412,11 @@ function show( $row, $params, $gid, &$access, $pop, $option, $ItemidCount=NULL )
 	$params->def( 'item_title', 	1 );
 	$params->def( 'url', 			1 );
 
+	// if a popup item (e.g. print page) set popup param to correct value
+	if ( $pop ) {
+		$params->set( 'popup', 1 );
+	}
+	
 	if ( $params->get( 'section_link' ) || $params->get( 'category_link' ) ) {
 		// loads the link for Section name
 		if ( $params->get( 'section_link' ) || $params->get( 'category_link' ) ) {

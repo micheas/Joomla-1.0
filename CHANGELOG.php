@@ -50,6 +50,10 @@ Low Level Threat
  * 'Submit Weblink' page now needs a published menu item to be accessible
 
 
+08-Apr-2006 Rey Gigataras
+ # Fixed artf4304 : Bugs in search.html.php
+
+
 07-Apr-2006 Rey Gigataras
  # Fixed artf4294 : InputFilter failed escaping string
  # Fixed artf4050 : mod_mainmenu.php not setting id=active_menu

@@ -195,6 +195,10 @@ function viewSearch() {
 		$total 		= $totalRows;
 		$limit		= mosGetParam( $_GET, 'limit', $mosConfig_list_limit );
 		$limitstart = mosGetParam( $_GET, 'limitstart', 0 );
+		
+		// prepares searchword for proper display in url
+		$searchword_clean = urlencode(stripslashes($searchword_clean));
+		
 		if ( $n ) {
 		// html output
 			require_once( $GLOBALS['mosConfig_absolute_path'] . '/includes/pageNavigation.php' );
@@ -207,7 +211,7 @@ function viewSearch() {
 		}
 
 		// html output
-		search_html::conclusion( $totalRows, $searchword_clean, $pageNav );
+		search_html::conclusion( $searchword_clean, $pageNav );
 	}
 
 	// displays back button

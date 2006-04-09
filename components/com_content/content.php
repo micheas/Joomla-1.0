@@ -24,8 +24,6 @@ $limit 		= intval( mosGetParam( $_REQUEST, 'limit', '' ) );
 $order 		= mosGetParam( $_REQUEST, 'order', '' );
 $limitstart = intval( mosGetParam( $_REQUEST, 'limitstart', 0 ) );
 
-$now 		= _CURRENT_SERVER_TIME;
-
 // Editor usertype check
 $access = new stdClass();
 $access->canEdit 	= $acl->acl_check( 'action', 'edit', 'users', $my->usertype, 'content', 'all' );
@@ -37,34 +35,34 @@ $cache =& mosCache::getCache( 'com_content' );
 
 // loads function for frontpage component
 if ( $option == 'com_frontpage' ) {
-	$cache->call( 'frontpage', $gid, $access, $pop, $now, $limit, $limitstart );
+	$cache->call( 'frontpage', $gid, $access, $pop, 0, $limit, $limitstart );
 	return;
 }
 
 switch ( strtolower( $task ) ) {
 	case 'findkey':
-		findKeyItem( $gid, $access, $pop, $option, $now );
+		findKeyItem( $gid, $access, $pop, $option, 0 );
 		break;
 
 	case 'view':
-		showItem( $id, $gid, $access, $pop, $option, $now );
+		showItem( $id, $gid, $access, $pop, $option, 0 );
 		break;
 
 	case 'section':
-		$cache->call( 'showSection', $id, $gid, $access, $now );
+		$cache->call( 'showSection', $id, $gid, $access, 0 );
 		break;
 
 	case 'category':
-		$cache->call( 'showCategory', $id, $gid, $access, $sectionid, $limit, $order, $limitstart, $now );
+		$cache->call( 'showCategory', $id, $gid, $access, $sectionid, $limit, $order, $limitstart, 0 );
 		break;
 
 	case 'blogsection':
-		$cache->call('showBlogSection', $id, $gid, $access, $pop, $now, $limit, $limitstart );
+		$cache->call('showBlogSection', $id, $gid, $access, $pop, 0, $limit, $limitstart );
 		break;
 
 	case 'blogcategorymulti':
 	case 'blogcategory':
-		$cache->call( 'showBlogCategory', $id, $gid, $access, $pop, $now, $limit, $limitstart );
+		$cache->call( 'showBlogCategory', $id, $gid, $access, $pop, 0, $limit, $limitstart );
 		break;
 
 	case 'archivesection':
@@ -72,7 +70,7 @@ switch ( strtolower( $task ) ) {
 		break;
 
 	case 'archivecategory':
-		showArchiveCategory( $id, $gid, $access, $pop, $option, $now );
+		showArchiveCategory( $id, $gid, $access, $pop, $option, 0 );
 		break;
 
 	case 'edit':
@@ -107,7 +105,6 @@ switch ( strtolower( $task ) ) {
 		break;
 
 	default:
-		//$cache->call('showBlogSection', 0, $gid, $access, $pop, $now );
 		header("HTTP/1.0 404 Not Found");
 		echo _NOT_EXIST;
 		break;
@@ -123,6 +120,7 @@ switch ( strtolower( $task ) ) {
  */
 function findKeyItem( $gid, $access, $pop, $option, $now ) {
 	global $database;
+	
 	$keyref = mosGetParam( $_REQUEST, 'keyref', '' );
 	$keyref = $database->getEscaped( $keyref );
 
@@ -133,7 +131,7 @@ function findKeyItem( $gid, $access, $pop, $option, $now ) {
 	$database->setQuery( $query );
 	$id = $database->loadResult();
 	if ($id > 0) {
-		showItem( $id, $gid, $access, $pop, $option, $now );
+		showItem( $id, $gid, $access, $pop, $option, 0 );
 	} else {
 		echo _KEY_NOT_FOUND;
 	}
@@ -142,6 +140,7 @@ function findKeyItem( $gid, $access, $pop, $option, $now ) {
 function frontpage( $gid, &$access, $pop, $now ) {
 	global $database, $mainframe, $my, $Itemid;
 
+	$now 		= _CURRENT_SERVER_TIME;
 	$nullDate 	= $database->getNullDate();
 	$noauth 	= !$mainframe->getCfg( 'shownoauth' );
 
@@ -207,6 +206,7 @@ function showSection( $id, $gid, &$access, $now ) {
 		return;
 	}	
 
+	$now 		= _CURRENT_SERVER_TIME;	
 	$nullDate 	= $database->getNullDate();
 	$noauth 	= !$mainframe->getCfg( 'shownoauth' );
 
@@ -341,8 +341,9 @@ function showCategory( $id, $gid, &$access, $sectionid, $limit, $selected, $limi
 		return;
 	}	
 
-	$nullDate = $database->getNullDate();
-	$noauth = !$mainframe->getCfg( 'shownoauth' );
+	$now 		= _CURRENT_SERVER_TIME;	
+	$nullDate 	= $database->getNullDate();
+	$noauth 	= !$mainframe->getCfg( 'shownoauth' );
 
 	// Paramters
 	$params = new stdClass();
@@ -546,8 +547,9 @@ function showBlogSection( $id=0, $gid, &$access, $pop, $now=NULL ) {
 	global $database, $mainframe, $Itemid;
 	
 	// needed for check whether section is published
-	$check = ( $id ? $id : 0 );
+	$check 	= ( $id ? $id : 0 );
 	
+	$now 	= _CURRENT_SERVER_TIME;
 	$noauth = !$mainframe->getCfg( 'shownoauth' );
 
 	// Parameters
@@ -626,6 +628,7 @@ function showBlogSection( $id=0, $gid, &$access, $pop, $now=NULL ) {
 function showBlogCategory( $id=0, $gid, &$access, $pop, $now ) {
 	global $database, $mainframe, $Itemid;
 
+	$now 	= _CURRENT_SERVER_TIME;	
 	$noauth = !$mainframe->getCfg( 'shownoauth' );
 
 	// needed for check whether section & category is published
@@ -838,6 +841,7 @@ function showArchiveCategory( $id=0, $gid, &$access, $pop, $option, $now ) {
 	global $database, $mainframe;
 	global $Itemid;
 
+	$now 	= _CURRENT_SERVER_TIME;
 	$noauth = !$mainframe->getCfg( 'shownoauth' );
 	
 	// needed for check whether section & category is published
@@ -995,9 +999,9 @@ function BlogOutput ( &$rows, &$params, $gid, &$access, $pop, &$menu, $archive=N
 	// needed for back button for page
 	$back 				= $params->get( 'back_button', $mainframe->getCfg( 'back_button' ) );
 	// needed to disable back button for item
-	$params->set( 'back_button', 0 );
-	$params->def( 'pageclass_sfx', '' );
-	$params->set( 'intro_only', 1 );
+	$params->set( 'back_button', 	0 );
+	$params->def( 'pageclass_sfx', 	'' );
+	$params->set( 'intro_only', 	1 );
 
 	$total = count( $rows );
 
@@ -1121,20 +1125,7 @@ function BlogOutput ( &$rows, &$params, $gid, &$access, $pop, &$menu, $archive=N
 
 				echo '</td>';
 
-//				if ( !( ( $z + 1 ) % $columns ) || $columns == 1 ) {
-//					echo '</tr>';
-//				}
-//
-//				$i++;
-//			}
-//
-//			// this is required to output a final closing </tr> tag when the number of items does not fully
-//			// fill the last row of output - a blank column is left
-//			if ( $intro % $columns ) {
-//				echo '</tr>';
-//			}
-				
-                $i++;
+				$i++;
 
                 // this is required to output a closing </tr> tag if one of the 3 conditions are met
                 // 1. No of intro story output = number of columns
@@ -1221,6 +1212,7 @@ function showItem( $uid, $gid, &$access, $pop, $option, $now ) {
 	global $database, $mainframe, $Itemid;
 	global $mosConfig_MetaTitle, $mosConfig_MetaAuthor;
 
+	$now 		= _CURRENT_SERVER_TIME;
 	$nullDate 	= $database->getNullDate();
 	
 	if ( $access->canEdit ) {
@@ -1531,6 +1523,10 @@ function show( $row, $params, $gid, &$access, $pop, $option, $ItemidCount=NULL )
 		$obj->hit( $row->id );
 	}
 
+	// needed for caching purposes to stop different cachefiles being created for same item
+	// does not affect anything else as hits data not outputted
+	$row->hits = 0;
+	
 	$cache->call( 'HTML_content::show', $row, $params, $access, $page, $option, $ItemidCount );
 }
 

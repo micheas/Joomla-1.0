@@ -57,12 +57,14 @@ switch ( strtolower( $task ) ) {
 		break;
 
 	case 'blogsection':
-		$cache->call('showBlogSection', $id, $gid, $access, $pop, 0, $limit, $limitstart );
+		// Itemid is a dummy value to cater for caching
+		$cache->call('showBlogSection', $id, $gid, $access, $pop, $Itemid, $limit, $limitstart );
 		break;
 
 	case 'blogcategorymulti':
 	case 'blogcategory':
-		$cache->call( 'showBlogCategory', $id, $gid, $access, $pop, 0, $limit, $limitstart );
+		// Itemid is a dummy value to cater for caching
+		$cache->call( 'showBlogCategory', $id, $gid, $access, $pop, $Itemid, $limit, $limitstart );
 		break;
 
 	case 'archivesection':

@@ -55,6 +55,7 @@ Low Level Threat
  # Fixed : cache support for `Blog - Content Section Archive` & `Blog - Content Category Archive`
  # Fixed : SEF.php incorrect handling of `mailto` & `javascript` links
  # Fixed : $shownoauth default value in `configuration.php-dist`
+ # Fixed : `live_bookmarks` not being disbaled properly by security check;
 
 
 08-Apr-2006 Rey Gigataras

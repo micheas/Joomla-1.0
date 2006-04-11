@@ -217,8 +217,25 @@ function mosShowHead() {
 		// xhtml check
 		$link_file = ampReplace( $link_file );
 
+		// security chcek
+		$check = $params->def( 'check', 1 );
+		if($check) {
+			// test if rssfeed module is published
+			// if not disable access
+			$query = "SELECT m.id"
+			. "\n FROM #__modules AS m"
+			. "\n WHERE m.module = 'mod_rssfeed'"
+			. "\n AND m.published = 1"
+			;
+			$database->setQuery( $query );
+			$check = $database->loadResultArray();
+			if(empty($check)) {
+				$show = 0;
+			}			
+		}			
 		// outputs link tag for page
 		if ($show) {
+			// test if security check is enbled
 			?>
 			<link rel="alternate" type="application/rss+xml" title="<?php echo $mosConfig_sitename; ?>" href="<?php echo $link_file; ?>" />
 			<?php

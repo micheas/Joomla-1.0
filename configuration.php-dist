@@ -9,6 +9,8 @@
 * See COPYRIGHT.php for copyright notices and details.
 *
 * -------------------------------------------------------------------------
+* THIS SHOULD ONLY BE USED AS A LAST RESORT WHEN THE WEB INSTALLER FAILS
+*
 * If you are installing Joomla manually i.e. not using the web installer
 * then rename this file to configuration.php e.g.
 *
@@ -36,7 +38,7 @@ $mosConfig_lang = 'english';				// Site language
 $mosConfig_absolute_path = '/path/to/joomla/install';	// No trailing slash
 $mosConfig_live_site = 'http://your_joomla_site.com';	// No trailing slash
 $mosConfig_sitename = 'Joomla';				// Name of Joomla site
-$mosConfig_shownoauth = '1';				// Display links & categories users don't have access to
+$mosConfig_shownoauth = '0';				// Display links & categories users don't have access to
 $mosConfig_useractivation = '1';			// Send new registration passwords via e-mail
 $mosConfig_uniquemail = '1';				// Require unique email adress for each user
 $mosConfig_offline_message = 'This site is down for maintenance.<br /> Please check back again soon.';

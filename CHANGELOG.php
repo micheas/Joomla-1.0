@@ -54,6 +54,7 @@ Low Level Threat
  # Fixed artf4340 : Itemid on menu - multiple links to same content
  # Fixed : cache support for `Blog - Content Section Archive` & `Blog - Content Category Archive`
  # Fixed : SEF.php incorrect handling of `mailto` & `javascript` links
+ # Fixed : $shownoauth default value in `configuration.php-dist`
 
 
 08-Apr-2006 Rey Gigataras

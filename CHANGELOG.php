@@ -51,6 +51,7 @@ Low Level Threat
 
 
 11-Apr-2006 Rey Gigataras
+ # Fixed artf4340 : Itemid on menu - multiple links to same content
  # Fixed : cache support for `Blog - Content Section Archive` & `Blog - Content Category Archive`
  # Fixed : SEF.php incorrect handling of `mailto` & `javascript` links
 

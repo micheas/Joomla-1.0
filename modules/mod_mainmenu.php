@@ -29,11 +29,6 @@ if (!defined( '_MOS_MAINMENU_MODULE' )) {
 			case 'separator':
 			case 'component_item_link':
 				break;
-			
-			case 'content_item_link':
-				$temp = split("&task=view&id=", $mitem->link);
-				$mitem->link .= '&Itemid='. $mainframe->getItemid($temp[1]);
-				break;
 				
 			case 'url':
 				if ( eregi( 'index.php\?', $mitem->link ) ) {
@@ -43,6 +38,15 @@ if (!defined( '_MOS_MAINMENU_MODULE' )) {
 				}
 				break;
 				
+			case 'content_item_link':
+				if ( $params->get( 'unique_itemid' ) ) {
+					$mitem->link .= '&Itemid='. $mitem->id;
+				} else {
+					$temp = split("&task=view&id=", $mitem->link);
+					$mitem->link .= '&Itemid='. $mainframe->getItemid($temp[1]);
+				}
+				break;
+
 			case 'content_typed':
 			default:
 				$mitem->link .= '&Itemid='. $mitem->id;
@@ -383,7 +387,8 @@ $params->def('indent_image5', 		'indent5.png');
 $params->def('indent_image6', 		'indent.png');
 $params->def('spacer', 				'');
 $params->def('end_spacer', 			'');
-$params->def( 'full_active_id', 	0 );
+$params->def('full_active_id', 		0);
+$params->def('unique_itemid', 		0);
 
 switch ( $params->get( 'menu_style', 'vert_indent' ) ) {
 	case 'list_flat':

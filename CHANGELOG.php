@@ -50,6 +50,10 @@ Low Level Threat
  * 'Submit Weblink' page now needs a published menu item to be accessible
 
 
+11-Apr-2006 Rey Gigataras
+ # Fixed : cache support for `Blog - Content Section Archive` & `Blog - Content Category Archive`
+
+
 08-Apr-2006 Rey Gigataras
  # Fixed [topic,45136.0] : stop Cache system from creating large amount of Cache files
  # Fixed artf4302 : 'Read more' link is always displayed if 'Linked Titles' option enabled

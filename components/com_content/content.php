@@ -68,11 +68,13 @@ switch ( strtolower( $task ) ) {
 		break;
 
 	case 'archivesection':
-		showArchiveSection( $id, $gid, $access, $pop, $option );
+		// Itemid is a dummy value to cater for caching
+		$cache->call( 'showArchiveSection', $id, $gid, $access, $pop, $option, $Itemid );
 		break;
 
 	case 'archivecategory':
-		showArchiveCategory( $id, $gid, $access, $pop, $option, 0 );
+		// Itemid is a dummy value to cater for caching
+		$cache->call( 'showArchiveCategory', $id, $gid, $access, $pop, $option, $Itemid );
 		break;
 
 	case 'edit':

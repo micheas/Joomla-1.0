@@ -56,6 +56,7 @@ Low Level Threat
  # Fixed : SEF.php incorrect handling of `mailto` & `javascript` links
  # Fixed : $shownoauth default value in `configuration.php-dist`
  # Fixed : `live_bookmarks` not being disbaled properly by security check;
+ # Fixed : admin `contact` and `weblink` ordering 
 
 
 08-Apr-2006 Rey Gigataras

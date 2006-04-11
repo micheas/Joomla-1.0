@@ -286,7 +286,9 @@ function orderWeblinks( $uid, $inc, $option ) {
 	global $database;
 	$row = new mosWeblink( $database );
 	$row->load( $uid );
+	$row->updateOrder();
 	$row->move( $inc, "published >= 0" );
+	$row->updateOrder();
 
 	mosRedirect( "index2.php?option=$option" );
 }

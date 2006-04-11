@@ -302,7 +302,9 @@ function orderContacts( $uid, $inc, $option ) {
 
 	$row = new mosContact( $database );
 	$row->load( $uid );
+	$row->updateOrder();
 	$row->move( $inc, "published >= 0" );
+	$row->updateOrder();
 
 	mosRedirect( "index2.php?option=$option" );
 }

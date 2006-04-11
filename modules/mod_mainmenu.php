@@ -80,13 +80,12 @@ if (!defined( '_MOS_MAINMENU_MODULE' )) {
 				}
 			}
 		}
-		
+
 		// replace & with amp; for xhtml compliance
 		$mitem->link = ampReplace( $mitem->link );
 
-		if ( strcasecmp( substr( $mitem->link,0,4 ), 'http' ) ) {
-			$mitem->link = sefRelToAbs( $mitem->link );
-		}
+		// run through SEF convertor
+		$mitem->link = sefRelToAbs( $mitem->link );
 
 		$menuclass = 'mainlevel'. $params->get( 'class_sfx' );
 		if ($level > 0) {

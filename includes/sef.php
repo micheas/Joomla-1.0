@@ -480,7 +480,7 @@ function sefRelToAbs( $string ) {
 	} else {
 	// Handling for when SEF is not activated
 		// Relative link handling
-		if ( !(strpos( $string, $mosConfig_live_site ) === 0) ) {
+		if ( (strpos( $string, $mosConfig_live_site ) !== 0) ) {
 			// if URI starts with a "/", means URL is at the root of the host...
 			if (strncmp($string, '/', 1) == 0) {
 				// splits http(s)://xx.xx/yy/zz..." into [1]="http(s)://xx.xx" and [2]="/yy/zz...":
@@ -488,8 +488,8 @@ function sefRelToAbs( $string ) {
 				eregi("^(https?:[\/]+[^\/]+)(.*$)", $mosConfig_live_site, $live_site_parts);
 				
 				$string = $live_site_parts[1] . $string;
-			// check that url does not contain `http`, `https` or `ftp` at start of string
-			} else if ( ( strpos( $string, 'http' ) !== 0 ) && ( strpos( $string, 'https' ) !== 0 ) && ( strpos( $string, 'ftp' ) !== 0 ) && ( strpos( $string, 'file' ) !== 0 ) ) {
+			// check that url does not contain `http`, `https`, `ftp`, `mailto` or `javascript` at start of string
+			} else if ( ( strpos( $string, 'http' ) !== 0 ) && ( strpos( $string, 'https' ) !== 0 ) && ( strpos( $string, 'ftp' ) !== 0 ) && ( strpos( $string, 'file' ) !== 0 ) && ( strpos( $string, 'mailto' ) !== 0 ) && ( strpos( $string, 'javascript' ) !== 0 ) ) {
 				// URI doesn't start with a "/" so relative to the page (live-site):
 				$string = $mosConfig_live_site .'/'. $string;
 			}

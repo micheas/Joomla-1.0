@@ -52,6 +52,7 @@ Low Level Threat
 
 11-Apr-2006 Rey Gigataras
  # Fixed : cache support for `Blog - Content Section Archive` & `Blog - Content Category Archive`
+ # Fixed : SEF.php incorrect handling of `mailto` & `javascript` links
 
 
 08-Apr-2006 Rey Gigataras

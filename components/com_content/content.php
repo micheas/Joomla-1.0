@@ -602,7 +602,7 @@ function showBlogSection( $id=0, $gid, &$access, $pop, $now=NULL ) {
 	}
 
 	// check whether section is published
-	if (!count($rows)) {
+	if (!count($rows) && $check) {
 		$secCheck = new mosSection( $database );
 		$secCheck->load( $check );
 		
@@ -679,7 +679,7 @@ function showBlogCategory( $id=0, $gid, &$access, $pop, $now ) {
 	$rows = $database->loadObjectList();
 
 	// check whether section & category is published
-	if (!count($rows)) {
+	if (!count($rows) && $check) {
 		$catCheck = new mosCategory( $database );
 		$catCheck->load( $check );
 		

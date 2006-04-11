@@ -909,7 +909,7 @@ function showArchiveCategory( $id=0, $gid, &$access, $pop, $option, $now ) {
 	$rows = $database->loadObjectList();
 	
 	// check whether section & category is published
-	if (!count($rows)) {
+	if (!count($rows) && $catID != 0) {
 		$catCheck = new mosCategory( $database );
 		$catCheck->load( $catID );
 		

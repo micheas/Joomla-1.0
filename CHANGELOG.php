@@ -50,6 +50,10 @@ Low Level Threat
  * 'Submit Weblink' page now needs a published menu item to be accessible
 
 
+12-Apr-2006 Rey Gigataras
+ # Fixed : `body` parameter for mailto tags
+
+
 11-Apr-2006 Rey Gigataras
  # Fixed artf4340 : Itemid on menu - multiple links to same content
  # Fixed : cache support for `Blog - Content Section Archive` & `Blog - Content Category Archive`

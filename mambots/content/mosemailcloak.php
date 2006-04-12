@@ -89,11 +89,13 @@ function botMosEmailCloak( $published, &$row, &$params, $page=0 ) {
 		$row->text 	= str_replace( $regs[0], $replacement, $row->text );
 	}
 
-	// search for derivativs of link code <a href="mailto:email@amail.com?subject=Text">email@amail.com</a>
+	// search for derivativs of link code <a href="mailto:email@amail.com?subject=Text&body=Text">email@amail.com</a>
 	$pattern = botMosEmailCloak_searchPattern( $search_email_msg, $search_email );
 	while( eregi( $pattern, $row->text, $regs ) ) {		
 		$mail		= $regs[2] . $regs[3] . $regs[4] . $regs[5];
 		$mail_text	= $regs[6] . $regs[7]. $regs[8];
+		//needed for handling of Body parameter
+		$mail 		= str_replace( '&amp;', '&', $mail );
 
 		// check to see if mail text is different from mail addy
 		if ( $mail_text ) {
@@ -101,20 +103,21 @@ function botMosEmailCloak( $published, &$row, &$params, $page=0 ) {
 		} else {
 			$replacement = mosHTML::emailCloaking( $mail, $mode );
 		}
-		
 
 		// replace the found address with the js cloacked email
 		$row->text     = str_replace( $regs[0], $replacement, $row->text );
 	}
 	
-	// search for derivativs of link code <a href="mailto:email@amail.com?subject=Text">anytext</a>
+	// search for derivativs of link code <a href="mailto:email@amail.com?subject=Text&body=Text">anytext</a>
 	$pattern = botMosEmailCloak_searchPattern( $search_email_msg, $search_text );
 	while( eregi( $pattern, $row->text, $regs ) ) {		
 		$mail		= $regs[2] . $regs[3] . $regs[4] . $regs[5];
 		$mail_text	= $regs[6];
-		
+		//needed for handling of Body parameter
+		$mail 		= str_replace( '&amp;', '&', $mail );
+
 		$replacement = mosHTML::emailCloaking( $mail, $mode, $mail_text, 0 );
-		
+
 		// replace the found address with the js cloacked email
 		$row->text     = str_replace( $regs[0], $replacement, $row->text );
 	}

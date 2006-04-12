@@ -51,6 +51,7 @@ Low Level Threat
 
 
 12-Apr-2006 Rey Gigataras
+ # Fixed artf4346 : $mainframe->login($username,$pwd) compatibility broken
  # Fixed : `body` parameter for mailto tags
 
 

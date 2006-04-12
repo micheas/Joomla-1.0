@@ -910,13 +910,22 @@ class mosMainFrame {
 	* the users details.
 	*/
 	function login( $username=null,$passwd=null, $remember=null ) {
-		global $acl, $_VERSION, $my;
+		global $acl, $_VERSION;
+		
+		$bypost = 0;
+		$core	= 0;
 		
 		// if no username and password passed from function, then function is being called from login module/component
 		if (!$username || !$passwd) {
 			$username 	= strval( mosGetParam( $_POST, 'username', '' ) );
 			$passwd 	= mosGetParam( $_POST, 'passwd', '' );
+			$core 		= mosGetParam( $_POST, 'core', 0 );
+			$passwd 	= md5( $passwd );
+			
 			$bypost 	= 1;
+			if ($core) {
+				$username 	= md5( $username );
+			}
 		}
 
 		if (!$username || !$passwd) {
@@ -933,14 +942,20 @@ class mosMainFrame {
 				. "\n AND MD5( CONCAT( username , '$harden' ) ) = '$username'"
 				. "\n AND MD5( CONCAT( password , '$harden' ) ) = '$passwd'"
 				;
-			} else {
-				$username 	= md5( $username );
-				$passwd 	= md5( $passwd );
-			// query used for normal login
+			} else if ( $bypost && $core && strlen($username) == 32 && strlen($passwd) == 32 ) {
+			// query used for login via core login module
 				$query = "SELECT *"
 				. "\n FROM #__users"
 				. "\n WHERE block != 1"
 				. "\n AND MD5( username ) = '$username'"
+				. "\n AND password = '$passwd'"
+				;
+			} else {
+			// backward compat login
+				$query = "SELECT *"
+				. "\n FROM #__users"
+				. "\n WHERE block != 1"
+				. "\n AND username = '$username'"
 				. "\n AND password = '$passwd'"
 				;
 			}

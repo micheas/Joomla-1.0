@@ -153,6 +153,7 @@ if ( $my->id ) {
 
 	<input type="hidden" name="option" value="login" />
 	<input type="hidden" name="op2" value="login" />
+	<input type="hidden" name="core" value="1" />
 	<input type="hidden" name="lang" value="<?php echo $mosConfig_lang; ?>" />
 	<input type="hidden" name="return" value="<?php echo sefRelToAbs( $login ); ?>" />
 	<input type="hidden" name="message" value="<?php echo $message_login; ?>" />

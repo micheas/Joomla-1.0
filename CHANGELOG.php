@@ -50,6 +50,10 @@ Low Level Threat
  * 'Submit Weblink' page now needs a published menu item to be accessible
 
 
+14-Apr-2006 Rey Gigataras
+ # Fixed artf4400 : Search: Itemid in mod_search also finds trashed Itemid's
+
+
 12-Apr-2006 Rey Gigataras
  # Fixed artf4346 : $mainframe->login($username,$pwd) compatibility broken
  # Fixed : `body` parameter for mailto tags

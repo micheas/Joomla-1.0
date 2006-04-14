@@ -57,6 +57,7 @@ if ( $set_Itemid ) {
 	$query = "SELECT id"
 	. "\n FROM #__menu"
 	. "\n WHERE link = 'index.php?option=com_search'"
+	. "\n AND published = 1"
 	;
 	$database->setQuery( $query );
 	$rows = $database->loadObjectList();

@@ -50,7 +50,7 @@ function viewSearch() {
 	$gid = $my->gid;
 
 	// Adds parameter handling
-	if( $Itemid > 0 ) {
+	if( $Itemid > 0 && $Itemid != 99999999 ) {
 		$menu = new mosMenu( $database );
 		$menu->load( $Itemid );
 		$params = new mosParameters( $menu->params );

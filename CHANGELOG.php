@@ -52,6 +52,7 @@ Low Level Threat
 
 14-Apr-2006 Rey Gigataras
  # Fixed artf4400 : Search: Itemid in mod_search also finds trashed Itemid's
+ # Fixed artf4399 : Search title in com_search is never from language file
 
 
 12-Apr-2006 Rey Gigataras

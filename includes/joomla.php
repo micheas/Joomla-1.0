@@ -4422,15 +4422,16 @@ class mosAdminMenus {
 	function Images( $name, &$active, $javascript=NULL, $directory=NULL ) {
 		global $mosConfig_absolute_path;
 
-		if ( !$javascript ) {
-			$javascript = "onchange=\"javascript:if (document.forms[0].image.options[selectedIndex].value!='') {document.imagelib.src='../images/stories/' + document.forms[0].image.options[selectedIndex].value} else {document.imagelib.src='../images/blank.png'}\"";
-		}
 		if ( !$directory ) {
 			$directory = '/images/stories';
 		}
-
+		
+		if ( !$javascript ) {
+			$javascript = "onchange=\"javascript:if (document.forms[0].image.options[selectedIndex].value!='') {document.imagelib.src='..$directory/' + document.forms[0].image.options[selectedIndex].value} else {document.imagelib.src='../images/blank.png'}\"";
+		}
+		
 		$imageFiles = mosReadDirectory( $mosConfig_absolute_path . $directory );
-		$images = array(  mosHTML::makeOption( '', '- Select Image -' ) );
+		$images 	= array(  mosHTML::makeOption( '', '- Select Image -' ) );
 		foreach ( $imageFiles as $file ) {
 			if ( eregi( "bmp|gif|jpg|png", $file ) ) {
 				$images[] = mosHTML::makeOption( $file );

@@ -52,6 +52,7 @@ Low Level Threat
 
 16-Apr-2006 Rey Gigataras
  # Fixed artf4424 : gethostbyaddr(): Address is not a valid IPv4 or IPv6 address
+ # Fixed artf4407 : Image preview doesn't work with custom directory
 
 
 14-Apr-2006 Rey Gigataras

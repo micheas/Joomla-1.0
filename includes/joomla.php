@@ -678,19 +678,23 @@ class mosMainFrame {
 				setcookie( $sessionCookieName, '-', false, '/' );				
 			} else {
 			// otherwise, sessioncookie was found, but set to test val or the session expired, prepare for session registration and register the session
-				$session->guest 	= 1;
-				$session->username 	= '';
-				$session->time 		= time();
-				$session->gid 		= 0;
-				// Generate Session Cookie `value`
-				$session->generateId();
-
-				if (!$session->insert()) {
-					die( $session->getError() );
-				}
-				
-				// create Session Tracking Cookie set to expire on session end
-				setcookie( $sessionCookieName, $session->getCookie(), false, '/' );
+				$url = mosGetParam( $_SERVER, 'REQUEST_URI', null );
+				// stop sessions being created for requests to syndicated feeds
+				if ( strpos( $url, 'option=com_rss' ) === false && strpos( $url, 'feed=' ) === false ) {
+					$session->guest 	= 1;
+					$session->username 	= '';
+					$session->time 		= time();
+					$session->gid 		= 0;
+					// Generate Session Cookie `value`
+					$session->generateId();
+					
+					if (!$session->insert()) {
+						die( $session->getError() );
+					}
+					
+					// create Session Tracking Cookie set to expire on session end
+					setcookie( $sessionCookieName, $session->getCookie(), false, '/' );
+				}				
 			}
 
 			// Cookie used by Remember me functionality
@@ -919,13 +923,9 @@ class mosMainFrame {
 		if (!$username || !$passwd) {
 			$username 	= strval( mosGetParam( $_POST, 'username', '' ) );
 			$passwd 	= mosGetParam( $_POST, 'passwd', '' );
-			$core 		= mosGetParam( $_POST, 'core', 0 );
 			$passwd 	= md5( $passwd );
 			
 			$bypost 	= 1;
-			if ($core) {
-				$username 	= md5( $username );
-			}
 		}
 
 		if (!$username || !$passwd) {
@@ -941,14 +941,6 @@ class mosMainFrame {
 				. "\n WHERE block != 1"
 				. "\n AND MD5( CONCAT( username , '$harden' ) ) = '$username'"
 				. "\n AND MD5( CONCAT( password , '$harden' ) ) = '$passwd'"
-				;
-			} else if ( $bypost && $core && strlen($username) == 32 && strlen($passwd) == 32 ) {
-			// query used for login via core login module
-				$query = "SELECT *"
-				. "\n FROM #__users"
-				. "\n WHERE block != 1"
-				. "\n AND MD5( username ) = '$username'"
-				. "\n AND password = '$passwd'"
 				;
 			} else {
 			// backward compat login

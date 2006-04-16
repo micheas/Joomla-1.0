@@ -14,18 +14,6 @@
 // no direct access
 defined( '_VALID_MOS' ) or die( 'Restricted access' );
 
-// platform neurtral url handling 
-if ( isset( $_SERVER['REQUEST_URI'] ) ) {
-	$request_uri = $_SERVER['REQUEST_URI'];
-} else {
-	$request_uri = $_SERVER['SCRIPT_NAME'];	
-	// Append the query string if it exists and isn't null
-	if ( isset( $_SERVER['QUERY_STRING'] ) && !empty( $_SERVER['QUERY_STRING'] ) ) {
-		$request_uri .= '?' . $_SERVER['QUERY_STRING']; 
-	}
-}
-$_SERVER['REQUEST_URI'] = $request_uri;
-
 // url of current page that user will be returned to after login
 $url = mosGetParam( $_SERVER, 'REQUEST_URI', null );
 // if return link does not contain https:// & http:// and to url
@@ -153,7 +141,6 @@ if ( $my->id ) {
 
 	<input type="hidden" name="option" value="login" />
 	<input type="hidden" name="op2" value="login" />
-	<input type="hidden" name="core" value="1" />
 	<input type="hidden" name="lang" value="<?php echo $mosConfig_lang; ?>" />
 	<input type="hidden" name="return" value="<?php echo sefRelToAbs( $login ); ?>" />
 	<input type="hidden" name="message" value="<?php echo $message_login; ?>" />

@@ -1310,7 +1310,7 @@ class mosMainFrame {
 
 			if (phpversion() <= "4.2.1") {
 				$agent = getenv( "HTTP_USER_AGENT" );
-				$domain = gethostbyaddr( getenv( "REMOTE_ADDR" ) );
+				$domain = @gethostbyaddr( getenv( "REMOTE_ADDR" ) );
 			} else {
 				if ( isset($_SERVER['HTTP_USER_AGENT']) ) {
 					$agent = $_SERVER['HTTP_USER_AGENT'];
@@ -1318,7 +1318,7 @@ class mosMainFrame {
 					$agent = 'Unknown';
 				}
 
-				$domain = gethostbyaddr( $_SERVER['REMOTE_ADDR'] );
+				$domain = @gethostbyaddr( $_SERVER['REMOTE_ADDR'] );
 			}
 
 			$browser = mosGetBrowser( $agent );

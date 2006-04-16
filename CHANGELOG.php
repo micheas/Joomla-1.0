@@ -50,6 +50,10 @@ Low Level Threat
  * 'Submit Weblink' page now needs a published menu item to be accessible
 
 
+16-Apr-2006 Rey Gigataras
+ # Fixed artf4424 : gethostbyaddr(): Address is not a valid IPv4 or IPv6 address
+
+
 14-Apr-2006 Rey Gigataras
  # Fixed artf4400 : Search: Itemid in mod_search also finds trashed Itemid's
  # Fixed artf4399 : Search title in com_search is never from language file

@@ -79,7 +79,7 @@ $query = "SELECT a.id, a.introtext, a.fulltext , a.images, a.attribs, a.title, a
 ."\n AND s.published = 1"
 ."\n ORDER BY a.ordering"
 ;
-$database->setQuery( $query, $items );
+$database->setQuery( $query, 0, $items );
 $rows = $database->loadObjectList();
 
 $numrows = count( $rows );

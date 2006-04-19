@@ -22,7 +22,7 @@ if (!defined( '_JOS_POLL_MODULE' )) {
 	 * @param int The current menu item
 	 * @param string CSS suffix
 	 */
-	function show_poll_vote_form( $Itemid, $moduleclass_sfx ) {
+	function show_poll_vote_form( $Itemid, &$params ) {
 		global $database;
 
 		$query = "SELECT p.id, p.title"
@@ -54,7 +54,7 @@ if (!defined( '_JOS_POLL_MODULE' )) {
 					return;
 				}
 				
-				poll_vote_form_html( $poll, $options, $Itemid, $moduleclass_sfx );
+				poll_vote_form_html( $poll, $options, $Itemid, &$params );
 			}
 		}
 	}
@@ -65,11 +65,46 @@ if (!defined( '_JOS_POLL_MODULE' )) {
 	 * @param int The current menu item
 	 * @param string CSS suffix
 	 */
-	function poll_vote_form_html( &$poll, &$options, $Itemid, $moduleclass_sfx ) {		
-		$tabclass_arr 	= array( 'sectiontableentry2', 'sectiontableentry1' );
-		$tabcnt 		= 0;
+	function poll_vote_form_html( &$poll, &$options, $Itemid, $params ) {		
+		$tabclass_arr 		= array( 'sectiontableentry2', 'sectiontableentry1' );
+		$tabcnt 			= 0;
+		$moduleclass_sfx 	= $params->get('moduleclass_sfx');		
+
+		$sessionCookieName 	= mosMainFrame::sessionCookieName();
+		$sessioncookie 		= mosGetParam( $_REQUEST, $sessionCookieName, 'z' );
+		
+		$cookiename 		= "voted$poll->id";
+		$voted 				= mosGetParam( $_COOKIE, $cookiename, 'z' );
 		?>
-		<form name="form2" method="post" action="<?php echo sefRelToAbs("index.php?option=com_poll&amp;Itemid=$Itemid"); ?>">
+		<script language="javascript" type="text/javascript">
+		<!--
+		function submitbutton() {
+			var form 		= document.pollxtd;			
+			var radio		= form.voteid;
+			var radioLength = radio.length;
+			var check 		= 0;
+
+			if ( '<?php echo $voted; ?>' != 'z' ) {
+				alert('<?php echo _ALREADY_VOTE; ?>');
+				return;
+			}
+			if ( '<?php echo $sessioncookie; ?>' == 'z' ) {
+				alert('<?php echo _ALERT_ENABLED; ?>');
+				return;
+			}
+			for(var i = 0; i < radioLength; i++) {
+				if(radio[i].checked) {
+					form.submit();
+					check = 1;					
+				}
+			}		
+			if (check == 0) {
+				alert('<?php echo _NO_SELECTION; ?>');
+			}
+		}		
+		//-->
+		</script>		
+		<form name="pollxtd" method="post" action="<?php echo sefRelToAbs("index.php?option=com_poll&amp;Itemid=$Itemid"); ?>">
 		
 		<table width="95%" border="0" cellspacing="0" cellpadding="1" align="center" class="poll<?php echo $moduleclass_sfx; ?>">
 		<thead>
@@ -108,7 +143,7 @@ if (!defined( '_JOS_POLL_MODULE' )) {
 		<tr>
 			<td>
 				<div align="center">
-					<input type="submit" name="task_button" class="button" value="<?php echo _BUTTON_VOTE; ?>" />
+					<input type="button" onclick="submitbutton();" name="task_button" class="button" value="<?php echo _BUTTON_VOTE; ?>" />
 					&nbsp;
 					<input type="button" name="option" class="button" value="<?php echo _BUTTON_RESULTS; ?>" onclick="document.location.href='<?php echo sefRelToAbs("index.php?option=com_poll&amp;task=results&amp;id=$poll->id"); ?>';" />
 				</div>
@@ -123,5 +158,5 @@ if (!defined( '_JOS_POLL_MODULE' )) {
 	}
 }
 
-show_poll_vote_form( $Itemid, $moduleclass_sfx );
+show_poll_vote_form( $Itemid, $params );
 ?>

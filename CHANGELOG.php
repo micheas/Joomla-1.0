@@ -50,6 +50,10 @@ Low Level Threat
  * 'Submit Weblink' page now needs a published menu item to be accessible
 
 
+18-Apr-2006 Rey Gigataras
+ + Javascript checks to mod_poll
+ 
+
 16-Apr-2006 Rey Gigataras
  # Fixed artf4424 : gethostbyaddr(): Address is not a valid IPv4 or IPv6 address
  # Fixed artf4407 : Image preview doesn't work with custom directory

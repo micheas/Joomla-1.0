@@ -197,7 +197,7 @@ class patErrorManager
 		}
 
 		// build error object
-		$error			=&	new	$class( $level, $code, $msg, $info );
+		$error			= new $class( $level, $code, $msg, $info );
 
 		// see what to do with this kind of error
 		$handling	=	patErrorManager::getErrorHandling( $level );
@@ -691,7 +691,8 @@ class patErrorManager
     function &handleErrorCallback( &$error, $options )
     {
 		$opt	=	$options['options'];
-		return call_user_func( $opt, $error );
+		$result =	call_user_func( $opt, $error );
+		return $result;
     }
 }
 ?>

@@ -149,14 +149,14 @@ function pollresult( $uid ) {
 			$last_vote = mosFormatDate( $dates[0]->maxdate, _DATE_FORMAT_LC2 );
 		}
 		
-		$query = "SELECT a.id, a.text, count( DISTINCT b.id ) AS hits, count( DISTINCT b.id )/COUNT( DISTINCT a.id )*100.0 AS percent"
+		$query = "SELECT a.id, a.text, a.hits, b.voters"
 		. "\n FROM #__poll_data AS a"
-		. "\n LEFT JOIN #__poll_date AS b ON b.vote_id = a.id"
+		. "\n INNER JOIN #__polls AS b ON b.id = a.pollid"
 		. "\n WHERE a.pollid = $poll->id"
 		. "\n AND a.text != ''"
-		. "\n GROUP BY a.id"
-		. "\n ORDER BY a.id"
+		. "\n AND b.published = 1"
 		;
+
 		$database->setQuery( $query );
 		$votes = $database->loadObjectList();		
 	}

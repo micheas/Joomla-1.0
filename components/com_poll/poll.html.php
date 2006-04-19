@@ -66,9 +66,11 @@ class poll_html {
 					$j=0;
 					$data_arr["text"]=null;
 					$data_arr["hits"]=null;
+$data_arr['voters']=null;
 					foreach ($votes as $vote) {
 						$data_arr["text"][$j]=trim($vote->text);
 						$data_arr["hits"][$j]=$vote->hits;
+                                                $data_arr["voters"][$j]=$vote->voters;
 						$j++;
 					}
 					?>
@@ -111,7 +113,6 @@ class poll_html {
 				$maxval = $hits;
 			}
 		}
-		$sumval = array_sum( $data_arr["hits"] );
 		?>
 		<br />
 		<table class="pollstableborder" cellspacing="0" cellpadding="0" border="0">
@@ -125,6 +126,7 @@ class poll_html {
 		for ($i=0, $n=count($data_arr["text"]); $i < $n; $i++) {
 			$text = &$data_arr["text"][$i];
 			$hits = &$data_arr["hits"][$i];
+			$sumval = &$data_arr['voters'][$i];
 			if ($maxval > 0 && $sumval > 0) {
 				$width = ceil( $hits*$polls_graphwidth/$maxval );
 				$percent = round( 100*$hits/$sumval, 1 );

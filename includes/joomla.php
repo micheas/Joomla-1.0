@@ -2524,6 +2524,12 @@ class mosMenu extends mosDBTable {
 	function mosMenu( &$db ) {
 		$this->mosDBTable( '#__menu', 'id', $db );
 	}
+
+	function check() {
+		$this->id = (int) $this->id;
+		$this->params = (string) trim( $this->params . ' ' );
+		return true;
+	}
 }
 
 /**

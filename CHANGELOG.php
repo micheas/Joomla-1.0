@@ -50,9 +50,15 @@ Low Level Threat
  * 'Submit Weblink' page now needs a published menu item to be accessible
 
 
+20-Apr-2006 Andrew Eddie
+ # Fixed slow query in com_polls
+ # Fixed return address errors in patErrorManager
+ # Fixed MySQL 5 error when saving menu items
+
+
 18-Apr-2006 Rey Gigataras
  + Javascript checks to mod_poll
- 
+
 
 16-Apr-2006 Rey Gigataras
  # Fixed artf4424 : gethostbyaddr(): Address is not a valid IPv4 or IPv6 address

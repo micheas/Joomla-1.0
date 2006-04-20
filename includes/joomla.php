@@ -719,7 +719,7 @@ class mosMainFrame {
 	* Added as of 1.0.8
 	* Deperciated 1.1
 	*/
-	function initSessionAdmin($option) {	
+	function initSessionAdmin($option, $task) {	
 		global $_VERSION, $mosConfig_absolute_path;
 		
 		// logout check
@@ -728,7 +728,7 @@ class mosMainFrame {
 			exit();
 		}
 		
-		$site			= $this->getCfg( 'live_site' );
+		$site = $this->getCfg( 'live_site' );
 		
 		// check if session name corresponds to correct format
 		if ( session_name() != md5( $site ) ) {
@@ -746,15 +746,35 @@ class mosMainFrame {
 
 		$session_id 	= mosGetParam( $_SESSION, 'session_id', '' );
 		$logintime 		= mosGetParam( $_SESSION, 'session_logintime', '' );
-		
-		// set garbage cleaning timeout
-		$this->setSessionGarbageClean();
-		
-		// check against db record of session
+
+		// check to see if session id corresponds with correct format
 		if ( $session_id == md5( $my->id . $my->username . $my->usertype . $logintime ) ) {
-			// check to see if site is a production site
-			// allows multiple logins with same user for a demo site
-			if ( $_VERSION->SITE ) {
+			// if task action is to `save` or `apply` complete action before do session checks.
+			if ($task != 'save' && $task != 'apply') {
+				// purge expired admin sessions only		
+				$past = time() - $this->getCfg( 'session_life_admin' );
+				$query = "DELETE FROM #__session"
+				. "\n WHERE time < '$past'"
+				. "\n AND guest = 1"
+				. "\n AND gid = 0"
+				. "\n AND userid <> 0"
+				;
+				$this->_db->setQuery( $query );
+				$this->_db->query();	
+				
+				// update session timestamp
+				$current_time = time();
+				$query = "UPDATE #__session"
+				. "\n SET time = '$current_time'"
+				. "\n WHERE session_id = '$session_id'"
+				;
+				$this->_db->setQuery( $query );
+				$this->_db->query();
+				
+				// set garbage cleaning timeout
+				$this->setSessionGarbageClean();
+				
+				// check against db record of session
 				$query = "SELECT COUNT( session_id )"
 				. "\n FROM #__session"
 				. "\n WHERE session_id = '$session_id'"
@@ -764,37 +784,17 @@ class mosMainFrame {
 				$this->_db->setQuery( $query );
 				$count = $this->_db->loadResult();
 				
-				// if no entry in session table that corresponds disallow login
+				// if no entry in session table that corresponds boot from admin area
 				if ( $count == 0 ) {
-					echo "<script>document.location.href='index.php'</script>\n";
+					echo "<script>document.location.href='index.php?mosmsg=Admin Session expired'</script>\n";
 					exit();
 				}
 			}
 		} else {
-		// session id does not correspond to required session format
-			echo "<script>document.location.href='$site/administrator/index.php'</script>\n";
+			// session id does not correspond to required session format
+			echo "<script>document.location.href='index.php?mosmsg=Incorrect Session ID'</script>\n";
 			exit();
 		}
-		
-		// update session timestamp
-		$current_time = time();
-		$query = "UPDATE #__session"
-		. "\n SET time = '$current_time'"
-		. "\n WHERE session_id = '$session_id'"
-		;
-		$this->_db->setQuery( $query );
-		$this->_db->query();
-		
-		// purge expired admin sessions only		
-		$past = time() - $this->getCfg( 'session_life_admin' );
-		$query = "DELETE FROM #__session"
-		. "\n WHERE time < '$past'"
-		. "\n AND guest = 1"
-		. "\n AND gid = 0"
-		. "\n AND userid <> 0"
-		;
-		$this->_db->setQuery( $query );
-		$this->_db->query();	
 
 		return $my;
 	}

@@ -93,8 +93,24 @@ if (isset( $_POST['submit'] )) {
 		$database->setQuery( $query );
 		if (!$database->query()) {
 			echo $database->stderr();
-		}
+		}		
 
+		// check if site designated as a production site 
+		// for a demo site allow multiple logins with same user account
+		if ( $_VERSION->SITE ) {
+			// delete other open sessions for same account
+			$query = "DELETE FROM #__session"
+			. "\n WHERE userid = $my->id"
+			. "\n AND username = '$my->username'"
+			. "\n AND usertype = '$my->usertype'"
+			. "\n AND session_id != '$session_id'"
+			;
+			$database->setQuery( $query );
+			if (!$database->query()) {
+				echo $database->stderr();
+			}	
+		}
+		
 		$_SESSION['session_id'] 		= $session_id;
 		$_SESSION['session_user_id'] 	= $my->id;
 		$_SESSION['session_username'] 	= $my->username;

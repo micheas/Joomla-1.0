@@ -50,6 +50,12 @@ Low Level Threat
  * 'Submit Weblink' page now needs a published menu item to be accessible
 
 
+20-Apr-2006 Rey Gigataras
+ * SECURITY [ Low Level ]: Allow only one session per user account in Admin Backend
+ 
+ + Allow `save` and `apply` actions to be completed before logging out expired sessions
+
+
 20-Apr-2006 Andrew Eddie
  # Fixed slow query in com_polls
  # Fixed return address errors in patErrorManager

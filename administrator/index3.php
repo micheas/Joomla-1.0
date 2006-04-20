@@ -30,15 +30,15 @@ session_name( md5( $mosConfig_live_site ) );
 session_start();
 
 $option 	= trim( strtolower( mosGetParam( $_REQUEST, 'option', '' ) ) );
+$task		= mosGetParam( $_REQUEST, 'task', '' );
 
 // mainframe is an API workhorse, lots of 'core' interaction routines
 $mainframe 	= new mosMainFrame( $database, $option, '..', true );
 
 // admin session handling
-$my 		= $mainframe->initSessionAdmin( $option );
+$my 		= $mainframe->initSessionAdmin( $option, $task );
 
 // initialise some common request directives
-$task		= mosGetParam( $_REQUEST, 'task', '' );
 $act		= strtolower( mosGetParam( $_REQUEST, 'act', '' ) );
 $section	= mosGetParam( $_REQUEST, 'section', '' );
 $mosmsg		= strip_tags( mosGetParam( $_REQUEST, 'mosmsg', '' ) );
@@ -95,4 +95,6 @@ if ($path = $mainframe->getPath( 'admin' )) {
 </html>
 <?php
 doGzip();
+
+
 ?>

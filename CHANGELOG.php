@@ -57,7 +57,7 @@ Low Level Threat
 
 
 18-Apr-2006 Rey Gigataras
- + Javascript checks to mod_poll
+ + Javascript validation checks to mod_poll
 
 
 16-Apr-2006 Rey Gigataras

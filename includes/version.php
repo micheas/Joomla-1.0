@@ -29,7 +29,7 @@ class joomlaVersion {
 	/** @var string Codename */
 	var $CODENAME 	= 'Sunshine';
 	/** @var string Date */
-	var $RELDATE 	= '**-Mar-2006';
+	var $RELDATE 	= '**-April-2006';
 	/** @var string Time */
 	var $RELTIME 	= '**:**';
 	/** @var string Timezone */

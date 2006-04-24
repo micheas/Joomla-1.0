@@ -50,6 +50,10 @@ Low Level Threat
  * 'Submit Weblink' page now needs a published menu item to be accessible
 
 
+24-Apr-2006 Rey Gigataras
+ # Fixed artf4503 : Hardcoded text in page navigation
+
+
 20-Apr-2006 Rey Gigataras
  * SECURITY [ Low Level ]: Allow only one session per user account in Admin Backend
  

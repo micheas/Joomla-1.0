@@ -429,22 +429,27 @@ function removeUsers( $cid, $option ) {
  			} else if ( ( $this_group == 'administrator' ) && ( $my->gid == 24 ) ){
  				$msg = "You cannot delete another `Administrator` only `Super Administrators` have this power";
 			} else {
-				// count number of active super admins
-				$query = "SELECT COUNT( id )"
-				. "\n FROM #__users"
-				. "\n WHERE gid = 25"
-				. "\n AND block = 0"
-				;
-				$database->setQuery( $query );
-				$count = $database->loadResult();
+				if ( $obj->gid == 25 ) {
+					// count number of active super admins
+					$query = "SELECT COUNT( id )"
+					. "\n FROM #__users"
+					. "\n WHERE gid = 25"
+					. "\n AND block = 0"
+					;
+					$database->setQuery( $query );
+					$count = $database->loadResult();
+				}
 				
-				if ( $count <= 1 ) {
+				if ( $count <= 1 && $obj->gid == 25 ) {
 				// cannot delete Super Admin where it is the only one that exists
 					$msg = "You cannot delete this Super Administrator as it is the only active Super Administrator for your site";
 				} else {
 				// delete user
 					$obj->delete( $id );
 					$msg = $obj->getError();
+					
+				// delete user acounts active sessions
+					logoutUser( $id, 'com_users' );
 				}
 			}
 		}

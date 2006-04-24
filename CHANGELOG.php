@@ -52,6 +52,7 @@ Low Level Threat
 
 24-Apr-2006 Rey Gigataras
  # Fixed artf4503 : Hardcoded text in page navigation
+ # Fixed artf4473 : Bad char in search
 
 
 20-Apr-2006 Rey Gigataras

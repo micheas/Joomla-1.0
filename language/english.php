@@ -388,7 +388,7 @@ DEFINE('_SENDING_PASSWORD','Your password will be sent to the above e-mail addre
 DEFINE('_SEARCH_TITLE','Search');
 DEFINE('_PROMPT_KEYWORD','Search Keyword');
 DEFINE('_SEARCH_MATCHES','returned %d matches');
-DEFINE('_CONCLUSION','Total $totalRows results found.  Search for <b>$searchword</b> with');
+DEFINE('_CONCLUSION','Total $totalRows results found.  Search for [ <b>$searchword</b> ] with');
 DEFINE('_NOKEYWORD','No results were found');
 DEFINE('_IGNOREKEYWORD','One or more common words were ignored in the search');
 DEFINE('_SEARCH_ANYWORDS','Any words');

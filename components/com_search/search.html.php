@@ -103,11 +103,12 @@ class search_html {
 
 		$c 			= count ($rows);
 		$image 		= mosAdminMenus::ImageCheck( 'google.png', '/images/M_images/', NULL, NULL, 'Google', 'Google', 1 );
-
+		$searchword = urldecode( $searchword );
+		
 				// number of matches found
 				echo '<br/>';
 				eval ('echo "'._CONCLUSION.'";');
-				
+
 				?>
 				<a href="http://www.google.com/search?q=<?php echo $searchword; ?>" target="_blank">
 					<?php echo $image; ?></a>

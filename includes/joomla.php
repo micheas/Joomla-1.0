@@ -2534,7 +2534,7 @@ class mosMenu extends mosDBTable {
 	function load( $id=null ) {
 		parent::load( $id );
 		
-		$this->name = htmlspecialchars( $this->name );
+		$this->name = htmlspecialchars( $this->name, ENT_QUOTES );
 	}
 }
 

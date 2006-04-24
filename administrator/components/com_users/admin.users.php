@@ -213,7 +213,7 @@ function editUser( $uid='0', $option='users' ) {
 	}
 
 	$my_group = strtolower( $acl->get_group_name( $row->gid, 'ARO' ) );
-	if ( $my_group == 'super administrator' ) {
+	if ( $my_group == 'super administrator' && $my->gid != 25 ) {
 		$lists['gid'] = '<input type="hidden" name="gid" value="'. $my->gid .'" /><strong>Super Administrator</strong>';
 	} else if ( $my->gid == 24 && $row->gid == 24 ) {
 		$lists['gid'] = '<input type="hidden" name="gid" value="'. $my->gid .'" /><strong>Administrator</strong>';
@@ -283,6 +283,23 @@ function saveUser( $option, $task ) {
 			$row->password = null;
 		} else {
 			$row->password = md5( $row->password );
+		}
+		
+		// check if group has been changed for a Super Admin
+		if ( $row->gid != $my->gid && $my->gid == 25 ) {
+			// count number of active super admins
+			$query = "SELECT COUNT( id )"
+			. "\n FROM #__users"
+			. "\n WHERE gid = 25"
+			. "\n AND block = 0"
+			;
+			$database->setQuery( $query );
+			$count = $database->loadResult();
+			
+			if ( $count <= 1 ) {
+				echo "<script> alert('You cannot change this users Group as it is the only active Super Administrator for your site'); window.history.go(-1); </script>\n";
+				exit();
+			}
 		}
 	}
 
@@ -405,15 +422,30 @@ function removeUsers( $cid, $option ) {
 			// check for a super admin ... can't delete them
 			$groups 	= $acl->get_object_groups( 'users', $id, 'ARO' );
 			$this_group = strtolower( $acl->get_group_name( $groups[0], 'ARO' ) );
-			if ( $this_group == 'super administrator' ) {
+			if ( $this_group == 'super administrator' && $my->gid != 25 ) {
 				$msg = "You cannot delete a Super Administrator";
  			} else if ( $id == $my->id ){
  				$msg = "You cannot delete Yourself!";
  			} else if ( ( $this_group == 'administrator' ) && ( $my->gid == 24 ) ){
  				$msg = "You cannot delete another `Administrator` only `Super Administrators` have this power";
 			} else {
-				$obj->delete( $id );
-				$msg = $obj->getError();
+				// count number of active super admins
+				$query = "SELECT COUNT( id )"
+				. "\n FROM #__users"
+				. "\n WHERE gid = 25"
+				. "\n AND block = 0"
+				;
+				$database->setQuery( $query );
+				$count = $database->loadResult();
+				
+				if ( $count <= 1 ) {
+				// cannot delete Super Admin where it is the only one that exists
+					$msg = "You cannot delete this Super Administrator as it is the only active Super Administrator for your site";
+				} else {
+				// delete user
+					$obj->delete( $id );
+					$msg = $obj->getError();
+				}
 			}
 		}
 	}

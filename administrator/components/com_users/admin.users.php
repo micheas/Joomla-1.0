@@ -285,8 +285,11 @@ function saveUser( $option, $task ) {
 			$row->password = md5( $row->password );
 		}
 		
-		// check if group has been changed for a Super Admin
-		if ( $row->gid != $my->gid && $my->gid == 25 ) {
+		$original = new mosUser( $database );
+		$original->load( $row->id );
+
+		// if group has been changed and where original group was a Super Admin
+		if ( $row->gid != $original->gid && $original->gid == 25 ) {						
 			// count number of active super admins
 			$query = "SELECT COUNT( id )"
 			. "\n FROM #__users"
@@ -297,6 +300,7 @@ function saveUser( $option, $task ) {
 			$count = $database->loadResult();
 			
 			if ( $count <= 1 ) {
+				// disallow change if only one Super Admin exists
 				echo "<script> alert('You cannot change this users Group as it is the only active Super Administrator for your site'); window.history.go(-1); </script>\n";
 				exit();
 			}
@@ -386,6 +390,14 @@ function saveUser( $option, $task ) {
 		mosMail( $adminEmail, $adminName, $row->email, $subject, $message );
 	}
 
+	if (!$isNew) {
+		// if group has been changed
+		if ( $original->gid != $row->gid ) {
+			// delete user acounts active sessions
+			logoutUser( $row->id, 'com_users' );
+		}
+	}
+	
 	switch ( $task ) {
 		case 'apply':
 			$msg = 'Successfully Saved changes to User: '. $row->name;
@@ -429,6 +441,8 @@ function removeUsers( $cid, $option ) {
  			} else if ( ( $this_group == 'administrator' ) && ( $my->gid == 24 ) ){
  				$msg = "You cannot delete another `Administrator` only `Super Administrators` have this power";
 			} else {
+				$obj->load( $id );
+				$count = 2;
 				if ( $obj->gid == 25 ) {
 					// count number of active super admins
 					$query = "SELECT COUNT( id )"
@@ -444,11 +458,11 @@ function removeUsers( $cid, $option ) {
 				// cannot delete Super Admin where it is the only one that exists
 					$msg = "You cannot delete this Super Administrator as it is the only active Super Administrator for your site";
 				} else {
-				// delete user
+					// delete user
 					$obj->delete( $id );
 					$msg = $obj->getError();
 					
-				// delete user acounts active sessions
+					// delete user acounts active sessions
 					logoutUser( $id, 'com_users' );
 				}
 			}
@@ -483,6 +497,14 @@ function changeUserBlock( $cid=null, $block=1, $option ) {
 	if (!$database->query()) {
 		echo "<script> alert('".$database->getErrorMsg()."'); window.history.go(-1); </script>\n";
 		exit();
+	}
+	
+	// if action is to block a user
+	if ( $block == 1 ) {
+		foreach( $cid as $id ) {
+		// delete user acounts active sessions
+			logoutUser( $id, 'com_users' );
+		}
 	}
 
 	mosRedirect( 'index2.php?option='. $option );

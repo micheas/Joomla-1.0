@@ -55,6 +55,7 @@ Low Level Threat
  # Fixed artf4473 : Bad char in search
  # Fixed artf4499 : Editing Quotated Menu Item
  # Fixed artf4472 : Creating New User system message only sends to superusers
+ # Fixed artf3699 : logged in user session are not affected by changes of user account
  # Fixed : Unable to 'Delete' `Super Administrator` - with check to ensure at least one active `Super Administrator` still exists
  # Fixed : Unable to 'change' group of `Administrator` & `Super Administrator` - with check to ensure at least one active `Super Administrator` still exists
 

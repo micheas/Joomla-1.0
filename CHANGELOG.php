@@ -48,14 +48,16 @@ Low Level Threat
  * 'Check-In My Items' page now needs a published menu item to be accessible
  * 'Submit News' page now needs a published menu item to be accessible
  * 'Submit Weblink' page now needs a published menu item to be accessible
+ * Changes to access level of user account will kill any active session for that user
 
 
 24-Apr-2006 Rey Gigataras
+ * SECURITY [ Low Level ]: logged in user session are not affected by changes of user account
+
  # Fixed artf4503 : Hardcoded text in page navigation
  # Fixed artf4473 : Bad char in search
  # Fixed artf4499 : Editing Quotated Menu Item
  # Fixed artf4472 : Creating New User system message only sends to superusers
- # Fixed artf3699 : logged in user session are not affected by changes of user account
  # Fixed : Unable to 'Delete' `Super Administrator` - with check to ensure at least one active `Super Administrator` still exists
  # Fixed : Unable to 'change' group of `Administrator` & `Super Administrator` - with check to ensure at least one active `Super Administrator` still exists
 

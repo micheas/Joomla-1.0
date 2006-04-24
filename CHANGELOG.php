@@ -54,6 +54,7 @@ Low Level Threat
  # Fixed artf4503 : Hardcoded text in page navigation
  # Fixed artf4473 : Bad char in search
  # Fixed artf4499 : Editing Quotated Menu Item
+ # Fixed artf4472 : Creating New User system message only sends to superusers
 
 
 20-Apr-2006 Rey Gigataras

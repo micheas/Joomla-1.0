@@ -215,6 +215,7 @@ if ($path = $mainframe->getPath( 'front' )) {
 	header("HTTP/1.0 404 Not Found");
 	echo _NOT_EXIST;
 }
+
 $_MOS_OPTION['buffer'] = ob_get_contents();
 ob_end_clean();
 

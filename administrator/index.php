@@ -97,7 +97,7 @@ if (isset( $_POST['submit'] )) {
 
 		// check if site designated as a production site 
 		// for a demo site allow multiple logins with same user account
-		if ( $_VERSION->SITE ) {
+		if ( $_VERSION->SITE == 1 ) {
 			// delete other open sessions for same account
 			$query = "DELETE FROM #__session"
 			. "\n WHERE userid = $my->id"

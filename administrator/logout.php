@@ -18,7 +18,7 @@ global $database, $_VERSION;
 
 // check to see if site is a production site
 // allows multiple logins with same user for a demo site
-if ( $_VERSION->SITE ) {
+if ( $_VERSION->SITE == 1 ) {
 	// update db user last visit record corresponding to currently logged in user
 	if ( isset( $_SESSION['session_user_id'] ) && $_SESSION['session_user_id'] != '' ) {
 		$currentDate = date( "Y-m-d\TH:i:s" );

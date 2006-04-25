@@ -556,6 +556,7 @@ function editContent( $uid=0, $sectionid=0, $option ) {
 	;
 	$lists['ordering'] = mosAdminMenus::SpecificOrdering( $row, $uid, $query, 1 );
 
+	// pull param column from category info
 	$query = "SELECT params"
 	. "\n FROM #__categories"
 	. "\n WHERE id = $row->catid"
@@ -608,7 +609,6 @@ function editContent( $uid=0, $sectionid=0, $option ) {
 	$pos[] = mosHTML::makeOption( 'bottom', _CMN_BOTTOM );
 	$pos[] = mosHTML::makeOption( 'top', _CMN_TOP );
 	$lists['_caption_position'] = mosHTML::selectList( $pos, '_caption_position', 'class="inputbox" size="1"', 'value', 'text' );
-
 
 	// get params definitions
 	$params = new mosParameters( $row->attribs, $mainframe->getPath( 'com_xml', 'com_content' ), 'component' );

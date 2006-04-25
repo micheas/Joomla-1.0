@@ -1643,17 +1643,40 @@ function editItem( $uid, $gid, &$access, $sectionid=0, $task, $Itemid ){
 		$row->frontpage 	= 0;
 	}
 
+	// pull param column from category info
+	$query = "SELECT params"
+	. "\n FROM #__categories"
+	. "\n WHERE id = $row->catid"
+	;
+	$database->setQuery( $query );
+	$selected_folders = $database->loadResult();	
+	
+	if ( trim( $selected_folders ) ) {
+		$temps = explode( ',', $selected_folders );
+		foreach( $temps as $temp ) {
+			$folders[] 	= mosHTML::makeOption( $temp, $temp );
+		}
+	} else {
+		$folders[] = mosHTML::makeOption( '*1*' );
+	}	
+	
 	// calls function to read image from directory
 	$pathA 		= $mosConfig_absolute_path .'/images/stories';
 	$pathL 		= $mosConfig_live_site .'/images/stories';
 	$images 	= array();
-	$folders 	= array();
-	$folders[] 	= mosHTML::makeOption( '/' );
-	mosAdminMenus::ReadImages( $pathA, '/', $folders, $images );
+
+	if ( $folders[0]->value == '*1*' ) {
+		$folders 	= array();
+		$folders[] 	= mosHTML::makeOption( '/' );
+		mosAdminMenus::ReadImages( $pathA, '/', $folders, $images );
+	} else {
+		mosAdminMenus::ReadImagesX( $folders, $images );
+	}	
+
 	// list of folders in images/stories/
 	$lists['folders'] 		= mosAdminMenus::GetImageFolders( $folders, $pathL );
 	// list of images in specfic folder in images/stories/
-	$lists['imagefiles']	= mosAdminMenus::GetImages( $images, $pathL );
+	$lists['imagefiles']	= mosAdminMenus::GetImages( $images, $pathL, $folders );
 	// list of saved images
 	$lists['imagelist'] 	= mosAdminMenus::GetSavedImages( $row, $pathL );
 

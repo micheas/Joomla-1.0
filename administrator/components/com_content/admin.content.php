@@ -569,7 +569,7 @@ function editContent( $uid=0, $sectionid=0, $option ) {
 			$folders[] 	= mosHTML::makeOption( $temp, $temp );
 		}
 	} else {
-		$folders[] = mosHTML::makeOption( '*0*' );
+		$folders[] = mosHTML::makeOption( '*1*' );
 	}	
 
 	// calls function to read image from directory

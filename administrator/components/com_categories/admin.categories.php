@@ -24,6 +24,8 @@ if (!is_array( $cid )) {
 	$cid = array(0);
 }
 
+define( 'COM_IMAGE_BASE', $mosConfig_absolute_path . DIRECTORY_SEPARATOR . 'images' . DIRECTORY_SEPARATOR . 'stories' );
+
 switch ($task) {
 	case 'new':
 		editCategory( 0, $section );
@@ -308,8 +310,8 @@ function editCategory( $uid=0, $section='' ) {
 				break;
 		}
 		
+		// content
 		if ( $row->section > 0 ) {
-			// content
 			$query = "SELECT *"
 			. "\n FROM #__menu"
 			. "\n WHERE componentid = ". $row->id
@@ -335,6 +337,15 @@ function editCategory( $uid=0, $section='' ) {
 				}
 			}
 			$lists['links']	= 1;
+			
+			if ( trim( $row->params ) ) {
+				$temps = explode( ',', $row->params );
+				foreach( $temps as $temp ) {
+					$selected_folders[] = mosHTML::makeOption( $temp, $temp );
+				}
+			} else {
+				$selected_folders[] = mosHTML::makeOption( '*1*' );
+			}			
 		} else {
 			$query = "SELECT *"
 			. "\n FROM #__menu"
@@ -352,9 +363,14 @@ function editCategory( $uid=0, $section='' ) {
 		}	
 	} else {
 		// new record
-		$row->section 	= $section;
-		$row->published = 1;
-		$menus 			= NULL;
+		$row->section 		= $section;
+		$row->published 	= 1;		
+		$menus 				= NULL;
+		
+		// content
+		if ( $row->section == 'content' ) {
+			$selected_folders[]	= mosHTML::makeOption( '*1*' );
+		}
 	}
 
 	// make order list
@@ -405,7 +421,7 @@ function editCategory( $uid=0, $section='' ) {
 		$types[] = mosHTML::makeOption( 'content_blog_category', 'Content Category Blog' );
 		$types[] = mosHTML::makeOption( 'content_archive_category', 'Content Category Archive Blog' );
 	} // if
-	$lists['link_type'] 		= mosHTML::selectList( $types, 'link_type', 'class="inputbox" size="1"', 'value', 'text' );;
+	$lists['link_type'] 		= mosHTML::selectList( $types, 'link_type', 'class="inputbox" size="1"', 'value', 'text' );
 
 	// build the html select list for ordering
 	$query = "SELECT ordering AS value, title AS text"
@@ -427,6 +443,23 @@ function editCategory( $uid=0, $section='' ) {
 	// build the html select list for menu selection
 	$lists['menuselect']		= mosAdminMenus::MenuSelect( );
 
+	// content
+	if ( $row->section > 0 || $row->section == 'content' ) {
+		// list of folders in images/stories/
+		$imgFiles 	= recursive_listdir( COM_IMAGE_BASE );
+		$len 		= strlen( COM_IMAGE_BASE );
+		
+		$folders[] 	= mosHTML::makeOption( '*1*', 'All'  );
+		$folders[] 	= mosHTML::makeOption( '*0*', 'None' );
+		$folders[] 	= mosHTML::makeOption( '*#*', '---------------------' );
+		$folders[] 	= mosHTML::makeOption( '/' );
+		foreach ($imgFiles as $file) {
+			$folders[] = mosHTML::makeOption( substr( $file, $len ) );
+		}
+		
+		$lists['folders'] = mosHTML::selectList( $folders, 'folders[]', 'class="inputbox" size="17" multiple="multiple"', 'value', 'text', $selected_folders );
+	}
+	
  	categories_html::edit( $row, $lists, $redirect, $menus );
 }
 
@@ -443,12 +476,33 @@ function saveCategory( $task ) {
 	$oldtitle 	= mosGetParam( $_POST, 'oldtitle', null );
 
 	$row = new mosCategory( $database );
-	if (!$row->bind( $_POST )) {
+	if (!$row->bind( $_POST, 'folders' )) {
 		echo "<script> alert('".$row->getError()."'); window.history.go(-1); </script>\n";
 		exit();
 	}
-	$row->title = addslashes( $row->title );
-	$row->name	= addslashes( $row->name );
+	$row->title 	= addslashes( $row->title );
+	$row->name		= addslashes( $row->name );
+	
+	// content
+	if ( $row->section > 0 ) {
+		$folders 		= mosGetParam( $_POST, 'folders', array() );
+		$folders 		= implode( ',', $folders );
+			
+		if ( strpos( $folders, '*1*' ) !== false  ) {
+			$folders 	= '*1*';
+		} else if ( strpos( $folders, '*0*' ) !== false ) {
+			$folders	= '*0*';
+		} else if ( strpos( $folders, ',*#*' ) !== false ) {
+			$folders 	= str_replace( ',*#*', '', $folders );
+		} else if ( strpos( $folders, '*#*,' ) !== false ) {
+			$folders 	= str_replace( '*#*,', '', $folders );
+		} else if ( strpos( $folders, '*#*' ) !== false ) {
+			$folders 	= str_replace( '*#*', '', $folders );
+		} 
+		
+		$row->params	= $folders;
+	}
+	
 	if (!$row->check()) {
 		echo "<script> alert('".$row->getError()."'); window.history.go(-1); </script>\n";
 		exit();
@@ -458,6 +512,7 @@ function saveCategory( $task ) {
 		echo "<script> alert('".$row->getError()."'); window.history.go(-1); </script>\n";
 		exit();
 	}
+	
 	$row->checkin();
 	$row->updateOrder( "section = '$row->section'" );
 
@@ -982,4 +1037,22 @@ function saveOrder( &$cid, $section ) {
 	$msg 	= 'New ordering saved';
 	mosRedirect( 'index2.php?option=com_categories&section='. $section, $msg );
 } // saveOrder
+
+function recursive_listdir( $base ) {
+	static $filelist = array();
+	static $dirlist = array();
+	
+	if(is_dir($base)) {
+		$dh = opendir($base);
+		while (false !== ($dir = readdir($dh))) {
+			if (is_dir($base .'/'. $dir) && $dir !== '.' && $dir !== '..' && strtolower($dir) !== 'cvs' && strtolower($dir) !== '.svn') {
+				$subbase = $base .'/'. $dir;
+				$dirlist[] = $subbase;
+				$subdirlist = recursive_listdir($subbase);
+			}
+		}
+		closedir($dh);
+	}
+	return $dirlist;
+}
 ?>

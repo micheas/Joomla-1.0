@@ -345,7 +345,7 @@ class HTML_typedcontent {
 					<th colspan="3">
 					Item Details
 					</th>
-				<tr>
+				</tr>
 				<tr>
 					<td align="left">
 					Title:
@@ -383,7 +383,7 @@ class HTML_typedcontent {
 					<th colspan="2">
 					Publishing Info
 					</th>
-				<tr>
+				</tr>
 				<tr>
 					<td valign="top" align="right" width="120">
 					State:
@@ -554,13 +554,11 @@ class HTML_typedcontent {
 					<td colspan="2">
 						<table width="100%">
 						<tr>
-							<td width="48%">
+							<td width="48%" valign="top">
 								<div align="center">
 									Gallery Images:
 									<br />
 									<?php echo $lists['imagefiles'];?>
-									<br />
-									Sub-folder: <?php echo $lists['folders'];?>
 								</div>
 							</td>
 							<td width="2%">
@@ -580,6 +578,7 @@ class HTML_typedcontent {
 							</td>
 						</tr>
 						</table>
+						Sub-folder: <?php echo $lists['folders'];?>
 					</td>
 				</tr>
 				<tr valign="top">
@@ -682,7 +681,7 @@ class HTML_typedcontent {
 					<th colspan="2">
 					Parameter Control
 					</th>
-				<tr>
+				</tr>
 				<tr>
 					<td>
 					<?php echo $params->render();?>
@@ -698,7 +697,7 @@ class HTML_typedcontent {
 					<th colspan="2">
 					Meta Data
 					</th>
-				<tr>
+				</tr>
 				<tr>
 					<td align="left">
 					Description:<br />
@@ -721,13 +720,13 @@ class HTML_typedcontent {
 					<th colspan="2">
 					Link to Menu
 					</th>
-				<tr>
+				</tr>
 				<tr>
 					<td colspan="2">
 					This will create a 'Link - Static Content' in the menu you select
 					<br /><br />
 					</td>
-				<tr>
+				</tr>
 				<tr>
 					<td valign="top" width="90px">
 					Select a Menu
@@ -735,7 +734,7 @@ class HTML_typedcontent {
 					<td>
 					<?php echo $lists['menuselect']; ?>
 					</td>
-				<tr>
+				</tr>
 				<tr>
 					<td valign="top" width="90px">
 					Menu Item Name
@@ -743,14 +742,14 @@ class HTML_typedcontent {
 					<td>
 					<input type="text" name="link_name" class="inputbox" value="" size="30" />
 					</td>
-				<tr>
+				</tr>
 				<tr>
 					<td>
 					</td>
 					<td>
 					<input name="menu_link" type="button" class="button" value="Link to Menu" onClick="submitbutton('menulink');" />
 					</td>
-				<tr>
+				</tr>
 				<tr>
 					<th colspan="2">
 					Existing Menu Links

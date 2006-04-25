@@ -4642,21 +4642,79 @@ class mosAdminMenus {
 			}
 		}
 	}
+	
+	/**
+	* Internal function to recursive scan the media manager directories
+	* @param string Path to scan
+	* @param string root path of this folder
+	* @param array  Value array of all existing folders
+	* @param array  Value array of all existing images
+	*/
+	function ReadImagesX( &$folders, &$images ) {
+		global $mosConfig_absolute_path;
+		
+		if ( $folders[0]->value != '*0*' ) {	
+			foreach ( $folders as $folder ) {
+				$imagePath 	= $mosConfig_absolute_path .'/images/stories' . $folder->value;
+				$imgFiles 	= mosReadDirectory( $imagePath );
+				$folderPath = $folder->value .'/';
+				
+				foreach ($imgFiles as $file) {
+					$ff 	= $folderPath . $file;
+					$i_f 	= $imagePath .'/'. $file;
+					
+					if ( eregi( "bmp|gif|jpg|png", $file ) && is_file( $i_f ) ) {
+						// leading / we don't need
+						$imageFile = substr( $ff, 1 );
+						$images[$folderPath][] = mosHTML::makeOption( $imageFile, $file );
+					}
+				}
+			}
+		} else {
+			$folders 	= array();
+			$folders[] 	= mosHTML::makeOption( 'None' );
+		}
+	}
 
-	function GetImageFolders( &$folders, $path ) {
-		$javascript 	= "onchange=\"changeDynaList( 'imagefiles', folderimages, document.adminForm.folders.options[document.adminForm.folders.selectedIndex].value, 0, 0);  previewImage( 'imagefiles', 'view_imagefiles', '$path/' );\"";
+	function GetImageFolders( &$temps, $path ) {
+		if ( $temps[0]->value != 'None' ) {
+			foreach( $temps as $temp ) {
+				if ( substr( $temp->value, -1, 1 ) != '/' ) { 
+					$temp = $temp->value .'/';
+					$folders[] 	= mosHTML::makeOption( $temp, $temp );
+				} else {
+					$temp = $temp->value;
+					$folders[] 	= mosHTML::makeOption( $temp, $temp );
+				}
+			}
+		} else {
+			$folders[] 	= mosHTML::makeOption( 'None Selected' );
+		}
+		
+		//$javascript 	= "onchange=\"changeDynaList( 'imagefiles', folderimages, document.adminForm.folders.options[document.adminForm.folders.selectedIndex].value, 0, 0);  previewImage( 'imagefiles', 'view_imagefiles', '$path' );\"";
+		$javascript 	= "onchange=\"changeDynaList( 'imagefiles', folderimages, document.adminForm.folders.options[document.adminForm.folders.selectedIndex].value, 0, 0);\"";
 		$getfolders 	= mosHTML::selectList( $folders, 'folders', 'class="inputbox" size="1" '. $javascript, 'value', 'text', '/' );
+		
 		return $getfolders;
 	}
 
-	function GetImages( &$images, $path ) {
-		if ( !isset($images['/'] ) ) {
-			$images['/'][] = mosHTML::makeOption( '' );
+	function GetImages( &$images, $path, $base='/' ) {
+		if ( count($base) > 0 ) {
+			if ( $base[0]->value != '/' ) {
+				$base = $base[0]->value .'/';
+			} else {
+				$base = $base[0]->value;
+			}
+		} else {
+			$base = '/';
+		}
+		if ( !isset($images[$base] ) ) {
+			$images[$base][] = mosHTML::makeOption( '' );
 		}
 
-		//$javascript	= "onchange=\"previewImage( 'imagefiles', 'view_imagefiles', '$path/' )\" onfocus=\"previewImage( 'imagefiles', 'view_imagefiles', '$path/' )\"";
-		$javascript	= "onchange=\"previewImage( 'imagefiles', 'view_imagefiles', '$path/' )\"";
-		$getimages	= mosHTML::selectList( $images['/'], 'imagefiles', 'class="inputbox" size="10" multiple="multiple" '. $javascript , 'value', 'text', null );
+		$javascript	= "onchange=\"previewImage( 'imagefiles', 'view_imagefiles', '$path/' )\" onfocus=\"previewImage( 'imagefiles', 'view_imagefiles', '$path/' )\"";
+		//$javascript	= "onchange=\"previewImage( 'imagefiles', 'view_imagefiles', '$path/' )\"";
+		$getimages	= mosHTML::selectList( $images[$base], 'imagefiles', 'class="inputbox" size="10" multiple="multiple" '. $javascript , 'value', 'text', null );
 
 		return $getimages;
 	}

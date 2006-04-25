@@ -570,7 +570,7 @@ class HTML_content {
 							<th colspan="4">
 							Item Details
 							</th>
-						<tr>
+						</tr>
 						<tr>
 							<td>
 							Title:
@@ -630,7 +630,7 @@ class HTML_content {
 					<th colspan="2">
 					Publishing Info
 					</th>
-				<tr>
+				</tr>
 				<tr>
 					<td valign="top" align="right" width="120">
 					Show on Frontpage:
@@ -652,8 +652,9 @@ class HTML_content {
 					Access Level:
 					</td>
 					<td>
-					<?php echo $lists['access']; ?> </td>
-					</tr>
+					<?php echo $lists['access']; ?> 
+					</td>
+				</tr>
 				<tr>
 					<td valign="top" align="right">
 					Author Alias:
@@ -667,12 +668,14 @@ class HTML_content {
 					Change Creator:
 					</td>
 					<td>
-					<?php echo $lists['created_by']; ?> </td>
+					<?php echo $lists['created_by']; ?> 
+					</td>
 				</tr>
 				<tr>
 					<td valign="top" align="right">Ordering:</td>
 					<td>
-					<?php echo $lists['ordering']; ?> </td>
+					<?php echo $lists['ordering']; ?> 
+					</td>
 				</tr>
 				<tr>
 					<td valign="top" align="right">
@@ -804,13 +807,11 @@ class HTML_content {
 					<td colspan="2">
 						<table width="100%">
 						<tr>
-							<td width="48%">
+							<td width="48%" valign="top">
 								<div align="center">
 									Gallery Images:
 									<br />
 									<?php echo $lists['imagefiles'];?>
-									<br />
-									Sub-folder: <?php echo $lists['folders'];?>
 								</div>
 							</td>
 							<td width="2%">
@@ -830,6 +831,7 @@ class HTML_content {
 							</td>
 						</tr>
 						</table>
+						Sub-folder: <?php echo $lists['folders'];?>
 					</td>
 				</tr>
 				<tr valign="top">
@@ -932,7 +934,7 @@ class HTML_content {
 					<th colspan="2">
 					Parameter Control
 					</th>
-				<tr>
+				</tr>
 				<tr>
 					<td>
 					* These Parameters only control what you see when you click to view an item fully *
@@ -954,7 +956,7 @@ class HTML_content {
 					<th colspan="2">
 					Meta Data
 					</th>
-				<tr>
+				</tr>
 				<tr>
 					<td>
 					Description:
@@ -984,13 +986,13 @@ class HTML_content {
 					<th colspan="2">
 					Link to Menu
 					</th>
-				<tr>
+				</tr>
 				<tr>
 					<td colspan="2">
 					This will create a 'Link - Content Item' in the menu you select
 					<br /><br />
 					</td>
-				<tr>
+				</tr>
 				<tr>
 					<td valign="top" width="90px">
 					Select a Menu
@@ -998,7 +1000,7 @@ class HTML_content {
 					<td>
 					<?php echo $lists['menuselect']; ?>
 					</td>
-				<tr>
+				</tr>
 				<tr>
 					<td valign="top" width="90px">
 					Menu Item Name
@@ -1006,14 +1008,14 @@ class HTML_content {
 					<td>
 					<input type="text" name="link_name" class="inputbox" value="" size="30" />
 					</td>
-				<tr>
+				</tr>
 				<tr>
 					<td>
 					</td>
 					<td>
 					<input name="menu_link" type="button" class="button" value="Link to Menu" onClick="submitbutton('menulink');" />
 					</td>
-				<tr>
+				</tr>
 				<tr>
 					<th colspan="2">
 					Existing Menu Links

@@ -51,6 +51,10 @@ Low Level Threat
  * Changes to access level of user account will kill any active session for that user
 
 
+25-Apr-2006 Rey Gigataras
+ ^ PERFORMANCE : MOSimage array affects edit page load time
+
+
 24-Apr-2006 Rey Gigataras
  * SECURITY [ Low Level ]: logged in user session are not affected by changes of user account
 

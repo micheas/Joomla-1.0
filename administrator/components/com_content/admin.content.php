@@ -563,6 +563,10 @@ function editContent( $uid=0, $sectionid=0, $option ) {
 	$database->setQuery( $query );
 	$selected_folders = $database->loadResult();	
 
+	if ( !$selected_folders ) {
+		$selected_folders = '*2*';
+	}
+	
 	// check if images utilizes settings from section		
 	if ( strpos( $selected_folders, '*2*' ) !== false ) {
 		unset( $selected_folders );

@@ -1651,6 +1651,22 @@ function editItem( $uid, $gid, &$access, $sectionid=0, $task, $Itemid ){
 	$database->setQuery( $query );
 	$selected_folders = $database->loadResult();	
 	
+	if ( !$selected_folders ) {
+		$selected_folders = '*2*';
+	}
+	
+	// check if images utilizes settings from section		
+	if ( strpos( $selected_folders, '*2*' ) !== false ) {
+		unset( $selected_folders );
+		// load param column from section info
+		$query = "SELECT params"
+		. "\n FROM #__sections"
+		. "\n WHERE id = $row->sectionid"
+		;
+		$database->setQuery( $query );
+		$selected_folders = $database->loadResult();			
+	}
+	
 	if ( trim( $selected_folders ) ) {
 		$temps = explode( ',', $selected_folders );
 		foreach( $temps as $temp ) {

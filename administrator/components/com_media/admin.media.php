@@ -220,8 +220,8 @@ function recursive_listdir( $base ) {
 	if(is_dir($base)) {
 		$dh = opendir($base);
 		while (false !== ($dir = readdir($dh))) {
-			if (is_dir($base ."/". $dir) && $dir !== '.' && $dir !== '..' && strtolower($dir) !== 'cvs' && strtolower($dir) !== '.svn') {
-				$subbase = $base ."/". $dir;
+			if (is_dir($base .'/'. $dir) && $dir !== '.' && $dir !== '..' && strtolower($dir) !== 'cvs' && strtolower($dir) !== '.svn') {
+				$subbase = $base .'/'. $dir;
 				$dirlist[] = $subbase;
 				$subdirlist = recursive_listdir($subbase);
 			}
@@ -278,19 +278,18 @@ function listImages($listdir) {
 
 		while (false !== ($entry = $d->read())) {
 			$img_file = $entry;
-			if(is_file( COM_MEDIA_BASE .$listdir.'/'.$img_file) && substr($entry,0,1) != '.' && strtolower($entry) !== 'index.html') {
+			if(is_file( COM_MEDIA_BASE .$listdir.'/'.$img_file) && substr($entry,0,1) != '.' && strtolower($entry) !== 'index.html' ) {
 				if (eregi( $allowable, $img_file )) {
-					$image_info = @getimagesize( COM_MEDIA_BASE ."/".$listdir.'/'.$img_file);
-					$file_details['file'] = COM_MEDIA_BASE . $listdir."/".$img_file;
-					$file_details['img_info'] = $image_info;
-					$file_details['size'] = filesize( COM_MEDIA_BASE .$listdir."/".$img_file);
-					$images[$entry] = $file_details;
+					$image_info 				= @getimagesize( COM_MEDIA_BASE ."/".$listdir.'/'.$img_file);
+					$file_details['file'] 		= COM_MEDIA_BASE . $listdir."/".$img_file;
+					$file_details['img_info'] 	= $image_info;
+					$file_details['size'] 		= filesize( COM_MEDIA_BASE .$listdir."/".$img_file);
+					$images[$entry] 			= $file_details;
 				} else {
 					// file is document
-					$file_details['size'] = filesize( COM_MEDIA_BASE .$listdir."/".$img_file);
-					$file_details['file'] = COM_MEDIA_BASE .$listdir."/".$img_file;
-					//$docs[$entry] = $img_file;
-					$docs[$entry] = $file_details;
+					$file_details['size'] 	= filesize( COM_MEDIA_BASE .$listdir."/".$img_file);
+					$file_details['file'] 	= COM_MEDIA_BASE .$listdir."/".$img_file;
+					$docs[$entry] 			= $file_details;
 				}
 			} else if(is_dir( COM_MEDIA_BASE .'/'.$listdir.'/'.$img_file) && substr($entry,0,1) != '.' && strtolower($entry) !== 'cvs') {
 				$folders[$entry] = $img_file;
@@ -317,13 +316,12 @@ function listImages($listdir) {
 
 			for($i=0; $i<count($docs); $i++) {
 				$doc_name = key($docs);
-				$iconfile= $GLOBALS['mosConfig_absolute_path']."/administrator/components/com_media/images/".substr($doc_name,-3)."_16.png";
+				$iconfile= $GLOBALS['mosConfig_absolute_path'].'/administrator/components/com_media/images/'.substr($doc_name,-3).'_16.png';
 				if (file_exists($iconfile))	{
-					$icon = "components/com_media/images/".(substr($doc_name,-3))."_16.png"	;
+					$icon = 'components/com_media/images/'.(substr($doc_name,-3)).'_16.png'	;
 				} else {
-					$icon = "components/com_media/images/con_info.png";
+					$icon = 'components/com_media/images/con_info.png';
 				}
-				//HTML_Media::show_doc($docs[$doc_name], $listdir, $icon);
 				HTML_Media::show_doc($doc_name, $docs[$doc_name]['size'],$listdir, $icon);
 				next($docs);
 			}
@@ -344,21 +342,15 @@ function listImages($listdir) {
 }
 
 function rm_all_dir($dir) {
-	//$dir = dir_name($dir);
-	//echo "OPEN:".$dir.'<Br>';
 	if(is_dir($dir)) {
 		$d = @dir($dir);
 
 		while ( false !== ( $entry = $d->read() ) ) {
-			//echo "#".$entry.'<br>';
 			if($entry != '.' && $entry != '..') {
 				$node = $dir.'/'.$entry;
-				//echo "NODE:".$node;
 				if(is_file($node)) {
-					//echo " - is file<br>";
 					unlink($node);
 				} else if(is_dir($node)) {
-					//echo " -	is Dir<br>";
 					rm_all_dir($node);
 				}
 			}
@@ -367,6 +359,5 @@ function rm_all_dir($dir) {
 
 		rmdir($dir);
 	}
-	//echo "RM: $dir <br>";
 }
 ?>

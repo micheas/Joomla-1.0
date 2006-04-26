@@ -214,9 +214,33 @@ class HTML_Media {
 			$img_dimensions = 'width="'. $info[0] .'" height="'. $info[1] .'"';
 		}
 		
-		$overlib = 'Width: '. $info[0].'px<br/>Height: '.$info[1] .'px';
-		$overlib .= '<br/>Filesize: '. $filesize;
-		$overlib .= '<br/><br/> *Click to Enlarge*';
+		$overlib = '<table>';
+		$overlib .= '<tr>';
+		$overlib .= '<td>';
+		$overlib .= 'Width:';
+		$overlib .= '</td>';
+		$overlib .= '<td>';
+		$overlib .= $info[0].' px';
+		$overlib .= '</td>';
+		$overlib .= '</tr>';
+		$overlib .= '<tr>';
+		$overlib .= '<td>';
+		$overlib .= 'Height:';
+		$overlib .= '</td>';
+		$overlib .= '<td>';
+		$overlib .= $info[1] .' px';
+		$overlib .= '</td>';
+		$overlib .= '</tr>';
+		$overlib .= '<tr>';
+		$overlib .= '<td>';
+		$overlib .= 'Filesize:';
+		$overlib .= '</td>';
+		$overlib .= '<td>';
+		$overlib .= $filesize;
+		$overlib .= '</td>';
+		$overlib .= '</tr>';
+		$overlib .= '</table>';
+		$overlib .= '<br/> *Click to Enlarge*';
 		$overlib .= '<br/> *Click for Image Code*';
 		?>
 		<div style="float:left; padding: 5px">
@@ -244,17 +268,36 @@ class HTML_Media {
 	}
 
 	function show_dir( $path, $dir, $listdir ) {
-		$num_files = HTML_Media::num_files( COM_MEDIA_BASE . $listdir . $path );
+		$count = HTML_Media::num_files( COM_MEDIA_BASE . $listdir . $path );
+		
+		$num_files 	= $count[0];
+		$num_dir 	= $count[1];
 
-		// Fix for Bug [0000577]
-		if ($listdir=='/') {
-			$listdir='';
+		if ($listdir == '/') {
+			$listdir = '';
 		}
 
 		$link = 'index3.php?option=com_media&amp;task=list&amp;listdir='. $listdir . $path;
 		
-		$overlib = 'Files '. $num_files;
-		$overlib .= '<br/><br/> *Click to Open*';
+		$overlib = '<table>';
+		$overlib .= '<tr>';
+		$overlib .= '<td>';
+		$overlib .= 'Files:';
+		$overlib .= '</td>';
+		$overlib .= '<td>';
+		$overlib .= $num_files;
+		$overlib .= '</td>';
+		$overlib .= '</tr>';
+		$overlib .= '<tr>';
+		$overlib .= '<td>';
+		$overlib .= 'Folders:';
+		$overlib .= '</td>';
+		$overlib .= '<td>';
+		$overlib .= $num_dir;
+		$overlib .= '</td>';
+		$overlib .= '</tr>';
+		$overlib .= '</table>';
+		$overlib .= '<br/> *Click to Open*';
 		?>
 		<div style="float:left; padding: 5px">
 			<div class="imgTotal" onmouseover="return overlib( '<?php echo $overlib; ?>', CAPTION, '<?php echo $dir; ?>', BELOW, RIGHT, WIDTH, 150 );" onmouseout="return nd();">
@@ -314,7 +357,6 @@ class HTML_Media {
 	}
 
 	function imageResize($width, $height, $target) {
-
 		//takes the larger size of the width and height and applies the
 		//formula accordingly...this is so this script will work
 		//dynamically with any size image
@@ -337,21 +379,25 @@ class HTML_Media {
 	}
 
 	function num_files($dir) {
-		$total = 0;
+		$total_file 	= 0;
+		$total_dir 		= 0;
 
 		if(is_dir($dir)) {
-
 			$d = dir($dir);
-			while (false !== ($entry = $d->read())) {
-				
-				if(substr($entry,0,1) != '.') {
-					$total++;
+			
+			while ( false !== ($entry = $d->read()) ) {
+				if ( substr($entry,0,1) != '.' && is_file($dir . DIRECTORY_SEPARATOR . $entry) && strpos( $entry, '.html' ) === false && strpos( $entry, '.php' ) === false ) {
+					$total_file++;
+				}
+				if ( substr($entry,0,1) != '.' && is_dir($dir . DIRECTORY_SEPARATOR . $entry) ) {
+					$total_dir++;
 				}
 			}
+			
 			$d->close();
 		}
 		
-		return $total - 1;
+		return array( $total_file, $total_dir );
 	}
 
 

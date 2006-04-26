@@ -30,7 +30,7 @@ class HTML_content {
 
 		mosCommonHTML::loadOverlib();
 		?>
-		<form action="index2.php" method="post" name="adminForm">
+		<form action="index2.php?option=com_content" method="post" name="adminForm">
 
 		<table class="adminheading">
 		<tr>

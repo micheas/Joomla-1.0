@@ -210,9 +210,8 @@ function viewContent( $sectionid, $option ) {
 	. "\n LEFT JOIN #__content_frontpage AS f ON f.content_id = c.id"
 	. ( count( $where ) ? "\nWHERE " . implode( ' AND ', $where ) : '' )
 	. $order
-	. "\n LIMIT $pageNav->limitstart, $pageNav->limit"
 	;
-	$database->setQuery( $query );
+	$database->setQuery( $query, $pageNav->limitstart, $pageNav->limit );
 	$rows = $database->loadObjectList();
 
 	if ($database->getErrorNum()) {

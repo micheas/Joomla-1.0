@@ -53,7 +53,7 @@ class HTML_trash {
 			}
 		}
 		</script>
-		<form action="index2.php" method="post" name="adminForm">
+		<form action="index2.php?option=com_trash" method="post" name="adminForm">
 		<table class="adminheading">
 		<tr>
 			<th class="trash">Trash Manager</th>
@@ -207,7 +207,7 @@ class HTML_trash {
 		$tabs->endPane();
 		?>
 
-		<input type="hidden" name="option" value="<?php echo $option;?>" />
+		<input type="hidden" name="option" value="com_trash" />
 		<input type="hidden" name="task" value="" />
 		<input type="hidden" name="boxchecked" value="0" />
 		</form>

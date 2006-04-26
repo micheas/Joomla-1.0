@@ -177,7 +177,7 @@ function viewSearch() {
 			
 			if ( strpos( $rows[$i]->href, 'http' ) == false ) {
 				$url = parse_url( $rows[$i]->href );
-				parse_str( $url['query'], $link );
+				parse_str( @$url['query'], $link );
 				
 				// determines Itemid for Content items where itemid has not been included
 				if ( @$link['task'] == 'view' && isset($link['id']) && !isset($link['Itemid']) ) {

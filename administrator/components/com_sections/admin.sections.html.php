@@ -418,6 +418,19 @@ class sections_html {
 					<?php
 				}
 				?>
+				<br />
+				<table class="adminform">
+				<tr>
+					<th colspan="2">
+					MOSImage Directories
+					</th>
+					<tr>
+					<tr>
+					<td colspan="2">
+					<?php echo $lists['folders']; ?>
+					</td>
+				<tr>	
+				</table>		
 			</td>
 		</tr>
 		</table>

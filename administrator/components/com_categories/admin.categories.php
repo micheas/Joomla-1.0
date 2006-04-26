@@ -17,14 +17,14 @@ defined( '_VALID_MOS' ) or die( 'Restricted access' );
 
 require_once( $mainframe->getPath( 'admin_html' ) );
 
+define( 'COM_IMAGE_BASE', $mosConfig_absolute_path . DIRECTORY_SEPARATOR . 'images' . DIRECTORY_SEPARATOR . 'stories' );
+
 // get parameters from the URL or submitted form
 $section 	= mosGetParam( $_REQUEST, 'section', 'content' );
 $cid 		= mosGetParam( $_REQUEST, 'cid', array(0) );
 if (!is_array( $cid )) {
 	$cid = array(0);
 }
-
-define( 'COM_IMAGE_BASE', $mosConfig_absolute_path . DIRECTORY_SEPARATOR . 'images' . DIRECTORY_SEPARATOR . 'stories' );
 
 switch ($task) {
 	case 'new':
@@ -338,13 +338,14 @@ function editCategory( $uid=0, $section='' ) {
 			}
 			$lists['links']	= 1;
 			
+			// handling for MOSImage directories
 			if ( trim( $row->params ) ) {
 				$temps = explode( ',', $row->params );
 				foreach( $temps as $temp ) {
 					$selected_folders[] = mosHTML::makeOption( $temp, $temp );
 				}
 			} else {
-				$selected_folders[] = mosHTML::makeOption( '*1*' );
+				$selected_folders[] = mosHTML::makeOption( '*2*' );
 			}			
 		} else {
 			$query = "SELECT *"
@@ -367,9 +368,9 @@ function editCategory( $uid=0, $section='' ) {
 		$row->published 	= 1;		
 		$menus 				= NULL;
 		
-		// content
+		// handling for MOSImage directories
 		if ( $row->section == 'content' ) {
-			$selected_folders[]	= mosHTML::makeOption( '*1*' );
+			$selected_folders[]	= mosHTML::makeOption( '*2*' );
 		}
 	}
 
@@ -443,12 +444,14 @@ function editCategory( $uid=0, $section='' ) {
 	// build the html select list for menu selection
 	$lists['menuselect']		= mosAdminMenus::MenuSelect( );
 
-	// content
+	// handling for MOSImage directories
 	if ( $row->section > 0 || $row->section == 'content' ) {
 		// list of folders in images/stories/
 		$imgFiles 	= recursive_listdir( COM_IMAGE_BASE );
 		$len 		= strlen( COM_IMAGE_BASE );
 		
+		$folders[] 	= mosHTML::makeOption( '*2*', 'Use Section settings'  );
+		$folders[] 	= mosHTML::makeOption( '*#*', '---------------------' );
 		$folders[] 	= mosHTML::makeOption( '*1*', 'All'  );
 		$folders[] 	= mosHTML::makeOption( '*0*', 'None' );
 		$folders[] 	= mosHTML::makeOption( '*#*', '---------------------' );
@@ -483,12 +486,14 @@ function saveCategory( $task ) {
 	$row->title 	= addslashes( $row->title );
 	$row->name		= addslashes( $row->name );
 	
-	// content
+	// handling for MOSImage directories
 	if ( $row->section > 0 ) {
 		$folders 		= mosGetParam( $_POST, 'folders', array() );
 		$folders 		= implode( ',', $folders );
 			
-		if ( strpos( $folders, '*1*' ) !== false  ) {
+		if ( strpos( $folders, '*2*' ) !== false  ) {
+			$folders 	= '*2*';
+		} else if ( strpos( $folders, '*1*' ) !== false  ) {
 			$folders 	= '*1*';
 		} else if ( strpos( $folders, '*0*' ) !== false ) {
 			$folders	= '*0*';

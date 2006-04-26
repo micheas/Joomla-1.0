@@ -17,6 +17,8 @@ defined( '_VALID_MOS' ) or die( 'Restricted access' );
 
 require_once( $mainframe->getPath( 'admin_html' ) );
 
+define( 'COM_IMAGE_BASE', $mosConfig_absolute_path . DIRECTORY_SEPARATOR . 'images' . DIRECTORY_SEPARATOR . 'stories' );
+
 // get parameters from the URL or submitted form
 $scope 		= mosGetParam( $_REQUEST, 'scope', '' );
 $cid 		= mosGetParam( $_REQUEST, 'cid', array(0) );
@@ -226,10 +228,23 @@ function editSection( $uid=0, $scope='', $option ) {
 		} else {
 			$menus = array();
 		}
+		
+		// handling for MOSImage directories
+		if ( trim( $row->params ) ) {
+			$temps = explode( ',', $row->params );
+			foreach( $temps as $temp ) {
+				$selected_folders[] = mosHTML::makeOption( $temp, $temp );
+			}
+		} else {
+			$selected_folders[] = mosHTML::makeOption( '*1*' );
+		}			
 	} else {
 		$row->scope 		= $scope;
 		$row->published 	= 1;
-		$menus 			= array();
+		$menus 				= array();
+		
+		// handling for MOSImage directories
+		$selected_folders[]	= mosHTML::makeOption( '*1*' );
 	}
 
 	// build the html select list for section types
@@ -258,6 +273,21 @@ function editSection( $uid=0, $scope='', $option ) {
 	// build the html select list for menu selection
 	$lists['menuselect']		= mosAdminMenus::MenuSelect( );
 
+	// list of folders in images/stories/
+	$imgFiles 	= recursive_listdir( COM_IMAGE_BASE );
+	$len 		= strlen( COM_IMAGE_BASE );
+	
+	// handling for MOSImage directories
+	$folders[] 	= mosHTML::makeOption( '*1*', 'All'  );
+	$folders[] 	= mosHTML::makeOption( '*0*', 'None' );
+	$folders[] 	= mosHTML::makeOption( '*#*', '---------------------' );
+	$folders[] 	= mosHTML::makeOption( '/' );
+	foreach ($imgFiles as $file) {
+		$folders[] = mosHTML::makeOption( substr( $file, $len ) );
+	}
+	
+	$lists['folders'] = mosHTML::selectList( $folders, 'folders[]', 'class="inputbox" size="17" multiple="multiple"', 'value', 'text', $selected_folders );
+	
 	sections_html::edit( $row, $option, $lists, $menus );
 }
 
@@ -294,6 +324,22 @@ function saveSection( $option, $scope, $task ) {
 		}
 	}
 
+	// handling for MOSImage directories
+	$folders 		= mosGetParam( $_POST, 'folders', array() );
+	$folders 		= implode( ',', $folders );	
+	if ( strpos( $folders, '*1*' ) !== false  ) {
+		$folders 	= '*1*';
+	} else if ( strpos( $folders, '*0*' ) !== false ) {
+		$folders	= '*0*';
+	} else if ( strpos( $folders, ',*#*' ) !== false ) {
+		$folders 	= str_replace( ',*#*', '', $folders );
+	} else if ( strpos( $folders, '*#*,' ) !== false ) {
+		$folders 	= str_replace( '*#*,', '', $folders );
+	} else if ( strpos( $folders, '*#*' ) !== false ) {
+		$folders 	= str_replace( '*#*', '', $folders );
+	} 	
+	$row->params	= $folders;
+	
 	if (!$row->store()) {
 		echo "<script> alert('".$row->getError()."'); window.history.go(-1); </script>\n";
 		exit();
@@ -730,4 +776,22 @@ function saveOrder( &$cid ) {
 	$msg 	= 'New ordering saved';
 	mosRedirect( 'index2.php?option=com_sections&scope=content', $msg );
 } // saveOrder
+
+function recursive_listdir( $base ) {
+	static $filelist = array();
+	static $dirlist = array();
+	
+	if(is_dir($base)) {
+		$dh = opendir($base);
+		while (false !== ($dir = readdir($dh))) {
+			if (is_dir($base .'/'. $dir) && $dir !== '.' && $dir !== '..' && strtolower($dir) !== 'cvs' && strtolower($dir) !== '.svn') {
+				$subbase = $base .'/'. $dir;
+				$dirlist[] = $subbase;
+				$subdirlist = recursive_listdir($subbase);
+			}
+		}
+		closedir($dh);
+	}
+	return $dirlist;
+}
 ?>

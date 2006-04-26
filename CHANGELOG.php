@@ -54,6 +54,7 @@ Low Level Threat
 
 
 26-Apr-2006 Rey Gigataras
+ # Fixed artf3912 : Pear's cache lite and safe_mode
  # Fixed artf3711 : mosemailcloak generates invalid XHTML
 
 

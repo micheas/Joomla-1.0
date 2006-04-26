@@ -465,10 +465,13 @@ class Cache_Lite
 	* @param int $code error code
 	* @access public
 	*/
-	function raiseError($msg, $code)
-	{
-		include_once('PEAR.php');
-		PEAR::raiseError($msg, $code, $this->_pearErrorMode);
+	function raiseError($msg, $code) {
+		$path = dirname( __FILE__ ) . DIRECTORY_SEPARATOR .'includes'. DIRECTORY_SEPARATOR .'PEAR'. DIRECTORY_SEPARATOR .'PEAR.php';
+		
+		if ( file_exists( $path ) ) {			
+			include_once( $path );
+			PEAR::raiseError($msg, $code, $this->_pearErrorMode);
+		}
 	}
 
 	// --- Private methods ---

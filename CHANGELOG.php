@@ -57,6 +57,7 @@ Low Level Threat
  # Fixed artf3912 : Pear's cache lite and safe_mode
  # Fixed artf3711 : mosemailcloak generates invalid XHTML
  # Fixed artf3251 : Wrong file count in Media Manager
+ # Fixed artf3196 : com_media does not properly manage file names with simple quotes (')
 
 
 25-Apr-2006 Rey Gigataras

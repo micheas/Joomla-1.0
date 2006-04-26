@@ -94,11 +94,10 @@ switch ($task) {
  */
 function delete_file( $listdir ) {
 	$delFile = makeSafe( mosGetParam( $_REQUEST, 'delFile', '' ) );
-	$fullPath = COM_MEDIA_BASE . $listdir . DIRECTORY_SEPARATOR . $delFile;
+	$fullPath = COM_MEDIA_BASE . $listdir . DIRECTORY_SEPARATOR . stripslashes( $delFile );
 
 	if (file_exists( $fullPath )) {
 		unlink( $fullPath );
-	} else {
 	}
 }
 
@@ -167,48 +166,49 @@ function upload() {
 function do_upload($file, $dest_dir) {
 	global $clearUploads;
 
-		if (file_exists($dest_dir.$file['name'])) {
-			mosRedirect( "index2.php?option=com_media&listdir=".$_POST['dirPath'], "Upload FAILED.File allready exists" );
+	if (file_exists($dest_dir.$file['name'])) {
+		mosRedirect( "index2.php?option=com_media&listdir=".$_POST['dirPath'], "Upload FAILED.File allready exists" );
+	}
+	
+	$format = substr( $file['name'], -3 );
+
+	$allowable = array (
+		'bmp',
+		'csv',
+		'doc',
+		'epg',
+		'gif',
+		'ico',
+		'jpg',
+		'odg',
+		'odp',
+		'ods',
+		'odt',
+		'pdf',
+		'png',
+		'ppt',
+		'swf',
+		'txt',
+		'xcf',
+		'xls'
+	);
+
+    $noMatch = 0;
+	foreach( $allowable as $ext ) {
+		if ( strcasecmp( $format, $ext ) == 0 ) {
+			$noMatch = 1;
 		}
+	}
+    if(!$noMatch){
+		mosRedirect( "index2.php?option=com_media&listdir=".$_POST['dirPath'], 'This file type is not supported' );
+    }
 
-		$format = substr( $file['name'], -3 );
-
-		$allowable = array (
-			'bmp',
-			'csv',
-			'doc',
-			'epg',
-			'gif',
-			'ico',
-			'jpg',
-			'odg',
-			'odp',
-			'ods',
-			'odt',
-			'pdf',
-			'png',
-			'ppt',
-			'swf',
-			'txt',
-			'xcf',
-			'xls'
-		);
-
-        $noMatch = 0;
-		foreach( $allowable as $ext ) {
-			if ( strcasecmp( $format, $ext ) == 0 ) $noMatch = 1;
-		}
-        if(!$noMatch){
-			mosRedirect( "index2.php?option=com_media&listdir=".$_POST['dirPath'], 'This file type is not supported' );
-        }
-
-		if (!move_uploaded_file($file['tmp_name'], $dest_dir.strtolower($file['name']))){
-			mosRedirect( "index2.php?option=com_media&listdir=".$_POST['dirPath'], "Upload FAILED" );
-			}
-		else {
-			mosChmod($dest_dir.strtolower($file['name']));
-			mosRedirect( "index2.php?option=com_media&listdir=".$_POST['dirPath'], "Upload complete" );
-		}
+	if (!move_uploaded_file($file['tmp_name'], $dest_dir.strtolower($file['name']))){
+		mosRedirect( "index2.php?option=com_media&listdir=".$_POST['dirPath'], "Upload FAILED" );
+	} else {
+		mosChmod($dest_dir.strtolower($file['name']));
+		mosRedirect( "index2.php?option=com_media&listdir=".$_POST['dirPath'], "Upload complete" );
+	}
 
 	$clearUploads = true;
 }

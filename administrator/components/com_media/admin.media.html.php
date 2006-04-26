@@ -200,10 +200,7 @@ class HTML_Media {
 	}
 
 	function show_image($img, $file, $info, $size, $listdir) {
-		global $mosConfig_live_site;
-
 		$img_file 		= basename($img);
-		$img_url 		= COM_MEDIA_BASEURL . $listdir . '/' . $img_file;
 		$img_url_link 	= COM_MEDIA_BASEURL . $listdir . '/' . rawurlencode( $img_file );
 
 		$filesize 		= HTML_Media::parse_size( $size );
@@ -244,22 +241,22 @@ class HTML_Media {
 		$overlib .= '<br/> *Click for Image Code*';
 		?>
 		<div style="float:left; padding: 5px">
-			<div class="imgTotal"  onmouseover="return overlib( '<?php echo $overlib; ?>', CAPTION, '<?php echo $file; ?>', BELOW, LEFT, WIDTH, 150 );" onmouseout="return nd();">
+			<div class="imgTotal"  onmouseover="return overlib( '<?php echo $overlib; ?>', CAPTION, '<?php echo addslashes( $file ); ?>', BELOW, LEFT, WIDTH, 150 );" onmouseout="return nd();">
 				<div align="center" class="imgBorder">
 					<a href="#" onclick="javascript: window.open( '<?php echo $img_url_link; ?>', 'win1', 'status=no,toolbar=no,scrollbars=yes,titlebar=no,menubar=no,resizable=yes,width=<?php echo $info[0] * 1.5;?>,height=<?php echo $info[1] * 1.5;?>,directories=no,location=no,left=120,top=80'); window.top.document.forms[0].imagecode.value = '<img src=&quot;<?php echo $img_url_link;?>&quot; align=&quot;left&quot; hspace=&quot;6&quot; alt=&quot;Image&quot; />';" style="display: block; width: 100%; height: 100%">
 						<div class="image">
-							<img src="<?php echo $img_url; ?>" <?php echo $img_dimensions; ?> alt="<?php echo $file; ?> - <?php echo $filesize; ?>" border="0" />
+							<img src="<?php echo $img_url_link; ?>" <?php echo $img_dimensions; ?> alt="<?php echo $file; ?> - <?php echo $filesize; ?>" border="0" />
 						</div></a>
 				</div>
 			</div>
 			<div class="imginfoBorder">
 				<small>
-					<?php echo $file; ?>
+					<?php echo htmlspecialchars( $file, ENT_QUOTES ); ?>
 				</small>
 				<div class="buttonOut">
 					<a href="index2.php?option=com_media&amp;task=delete&amp;delFile=<?php echo $file; ?>&amp;listdir=<?php echo $listdir; ?>" target="_top" onclick="return deleteImage('<?php echo $file; ?>');" title="Delete Item">
 						<img src="components/com_media/images/edit_trash.gif" width="15" height="15" border="0" alt="Delete" /></a>
-					<a href="#" onclick="javascript:window.top.document.forms[0].imagecode.value = '<img src=&quot;<?php echo $img_url;?>&quot; align=&quot;left&quot; hspace=&quot;6&quot; alt=&quot;Image&quot; />';" title="Image Code">
+					<a href="#" onclick="javascript:window.top.document.forms[0].imagecode.value = '<img src=&quot;<?php echo $img_url_link;?>&quot; align=&quot;left&quot; hspace=&quot;6&quot; alt=&quot;Image&quot; />';" title="Image Code">
 						<img src="components/com_media/images/edit_pencil.gif" width="15" height="15" border="0" alt="Code" /></a>
 				</div>					
 			</div>

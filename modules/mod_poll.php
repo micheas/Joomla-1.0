@@ -54,7 +54,7 @@ if (!defined( '_JOS_POLL_MODULE' )) {
 					return;
 				}
 				
-				poll_vote_form_html( $poll, $options, $Itemid, &$params );
+				poll_vote_form_html( $poll, $options, $Itemid, $params );
 			}
 		}
 	}
@@ -65,7 +65,7 @@ if (!defined( '_JOS_POLL_MODULE' )) {
 	 * @param int The current menu item
 	 * @param string CSS suffix
 	 */
-	function poll_vote_form_html( &$poll, &$options, $Itemid, $params ) {		
+	function poll_vote_form_html( &$poll, &$options, $Itemid, &$params ) {		
 		$tabclass_arr 		= array( 'sectiontableentry2', 'sectiontableentry1' );
 		$tabcnt 			= 0;
 		$moduleclass_sfx 	= $params->get('moduleclass_sfx');		

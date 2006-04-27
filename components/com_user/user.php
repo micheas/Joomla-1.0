@@ -24,7 +24,11 @@ require_once ( $mainframe->getPath( 'front_html' ) );
 
 switch( $task ) {
 	case 'saveUpload':
-		saveUpload( $mosConfig_dbprefix, $uid, $option, $userfile, $userfile_name, $type, $existingImage );
+		if ( $_VERSION->RESTRICT == 0 ) {
+			saveUpload( $mosConfig_dbprefix, $uid, $option, $userfile, $userfile_name, $type, $existingImage );
+		} else {
+			mosRedirect( 'index.php?mosmsg=Functionality Restricted' );
+		}
 		break;
 
 	case 'UserDetails':
@@ -32,7 +36,11 @@ switch( $task ) {
 		break;
 
 	case 'saveUserEdit':
-		userSave( $option, $my->id );
+		if ( $_VERSION->RESTRICT == 0 ) {
+			userSave( $option, $my->id );
+		} else {
+			mosRedirect( 'index.php?mosmsg=Functionality Restricted' );
+		}
 		break;
 
 	case 'CheckIn':

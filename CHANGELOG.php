@@ -54,6 +54,8 @@ Low Level Threat
 
 
 27-Apr-2006 Rey Gigataras
+ + Support for restricting ability to access certain functionality for demo sites
+
  # Fixed artf4527 : incorrect style in function botNoEditorEditorArea
  # Fixed [topic,57926] : mod_poll.php Warning 
  

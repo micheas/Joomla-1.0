@@ -44,7 +44,11 @@ switch ($task) {
 
 	case 'save':
 	case 'apply':
- 		saveUser( $option, $task );
+		if ( $_VERSION->RESTRICT == 0 ) {
+			saveUser( $option, $task );
+		} else {
+			mosRedirect( 'index2.php?mosmsg=Functionality Restricted' );
+		}
 		break;
 
 	case 'remove':
@@ -52,7 +56,11 @@ switch ($task) {
 		break;
 
 	case 'block':
-		changeUserBlock( $cid, 1, $option );
+		if ( $_VERSION->RESTRICT == 0 ) {
+			changeUserBlock( $cid, 1, $option );
+		} else {
+			mosRedirect( 'index2.php?mosmsg=Functionality Restricted' );
+		}
 		break;
 
 	case 'unblock':

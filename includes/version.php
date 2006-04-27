@@ -40,6 +40,8 @@ class joomlaVersion {
 	var $URL 		= '<a href="http://www.joomla.org">Joomla!</a> is Free Software released under the GNU/GPL License.';
 	/** @var string Whether site is a production = 1 or demo site = 0 */
 	var $SITE 		= 1;
+	/** @var string Whether site has restricted functionality mostly used for demo sites: 0 is default */
+	var $RESTRICT	= 0;
 
 	
 	/**

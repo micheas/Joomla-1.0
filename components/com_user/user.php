@@ -24,10 +24,11 @@ require_once ( $mainframe->getPath( 'front_html' ) );
 
 switch( $task ) {
 	case 'saveUpload':
-		if ( $_VERSION->RESTRICT == 0 ) {
-			saveUpload( $mosConfig_dbprefix, $uid, $option, $userfile, $userfile_name, $type, $existingImage );
-		} else {
+		// check to see if functionality restricted for use as demo site
+		if ( $_VERSION->RESTRICT == 1 ) {
 			mosRedirect( 'index.php?mosmsg=Functionality Restricted' );
+		} else {
+			saveUpload( $mosConfig_dbprefix, $uid, $option, $userfile, $userfile_name, $type, $existingImage );
 		}
 		break;
 
@@ -36,10 +37,11 @@ switch( $task ) {
 		break;
 
 	case 'saveUserEdit':
-		if ( $_VERSION->RESTRICT == 0 ) {
-			userSave( $option, $my->id );
-		} else {
+		// check to see if functionality restricted for use as demo site
+		if ( $_VERSION->RESTRICT == 1 ) {
 			mosRedirect( 'index.php?mosmsg=Functionality Restricted' );
+		} else {
+			userSave( $option, $my->id );
 		}
 		break;
 

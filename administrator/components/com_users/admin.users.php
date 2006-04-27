@@ -44,10 +44,11 @@ switch ($task) {
 
 	case 'save':
 	case 'apply':
-		if ( $_VERSION->RESTRICT == 0 ) {
-			saveUser( $option, $task );
-		} else {
+		// check to see if functionality restricted for use as demo site
+		if ( $_VERSION->RESTRICT == 1 ) {
 			mosRedirect( 'index2.php?mosmsg=Functionality Restricted' );
+		} else {
+			saveUser( $option, $task );
 		}
 		break;
 
@@ -56,10 +57,11 @@ switch ($task) {
 		break;
 
 	case 'block':
-		if ( $_VERSION->RESTRICT == 0 ) {
-			changeUserBlock( $cid, 1, $option );
-		} else {
+		// check to see if functionality restricted for use as demo site
+		if ( $_VERSION->RESTRICT == 1 ) {
 			mosRedirect( 'index2.php?mosmsg=Functionality Restricted' );
+		} else {
+			changeUserBlock( $cid, 1, $option );
 		}
 		break;
 

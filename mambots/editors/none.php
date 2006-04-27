@@ -74,9 +74,12 @@ function botNoEditorEditorArea( $name, $content, $hiddenField, $width, $height, 
 		}
 	}
 	$buttons = implode( "", $buttons );
-
+	
+	$width  = $width . 'px';
+	$height = $height . 'px';
+	
 	return <<<EOD
-<textarea name="$hiddenField" id="$hiddenField" cols="$col" rows="$row" style="width:$width;height:$height;">$content</textarea>
+<textarea name="$hiddenField" id="$hiddenField" cols="$col" rows="$row" style="width: $width; height: $height;">$content</textarea>
 <br />$buttons
 EOD;
 }

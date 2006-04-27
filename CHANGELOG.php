@@ -53,6 +53,10 @@ Low Level Threat
 ---
 
 
+27-Apr-2006 Rey Gigataras
+ # Fixed artf4527 : incorrect style in function botNoEditorEditorArea
+
+
 26-Apr-2006 Rey Gigataras
  # Fixed artf3912 : Pear's cache lite and safe_mode
  # Fixed artf3711 : mosemailcloak generates invalid XHTML

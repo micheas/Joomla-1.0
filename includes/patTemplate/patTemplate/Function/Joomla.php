@@ -11,8 +11,7 @@
 * See COPYRIGHT.php for copyright notices and details.
 */
 
-class patTemplate_Function_Joomla extends patTemplate_Function
-{
+class patTemplate_Function_Joomla extends patTemplate_Function {
    /**
 	* name of the function
 	* @access	private
@@ -28,23 +27,23 @@ class patTemplate_Function_Joomla extends patTemplate_Function
 	* @param	string	content of the tag
 	* @return	string	content to insert into the template
 	*/
-	function call( $params, $content )
-	{
+	// Not really sure if any of this actually works
+	function call( $params, $content ) {
 		if( !isset( $params['macro'] ) ) {
             return false;
 		}
 
         $macro = strtolower( $params['macro'] );
-		$page =& $GLOBALS['mainframe']->getPage();
+		//$page =& $GLOBALS['mainframe']->getPage();
 
         switch ($macro) {
 
         	case 'initeditor':
-        		return initEditor( true );
+        		return initEditor();
         		break;
 
         	case 'mainbody':
-        		return $page->showMainBody();
+        		//return $page->showMainBody();
         		break;
 
         	case 'loadcomponent':
@@ -52,42 +51,43 @@ class patTemplate_Function_Joomla extends patTemplate_Function
 				if( !isset( $params['component'] ) ) {
 		            return false;
 				} else {
-					return $page->showComponent( $params['component'] );
+					//return $page->showComponent( $params['component'] );
 				}
         		break;
 
 			case 'hasmodules':
 				$position = mosGetParam( $params, 'position', '' );
-
+				/*
 				if ($page->countModules( $position ) > 0) {
 					return $content;
 				} else {
 					return false;
 				}
+				*/
         		break;
 
          	case 'loadmodule':
-				$name = mosGetParam( $params, 'name', '' );
-				$style = mosGetParam( $params, 'style', 0 );
+				$name 	= mosGetParam( $params, 'name', '' );
+				$style 	= mosGetParam( $params, 'style', 0 );
 				ob_start();
-				$page->showModule( $name, $style );
-				$html = ob_get_contents();
+				//$page->showModule( $name, $style );
+				$html 	= ob_get_contents();
 				ob_end_clean();
 				return $html;
         		break;
 
         	case 'loadmodules':
-				$position = mosGetParam( $params, 'position', '' );
-				$style = mosGetParam( $params, 'style', 0 );
+				$position 	= mosGetParam( $params, 'position', '' );
+				$style 		= mosGetParam( $params, 'style', 0 );
 				ob_start();
-				$page->showModules( $position, $style );
+				//$page->showModules( $position, $style );
 				$html = ob_get_contents();
 				ob_end_clean();
 				return $html;
         		break;
 
 	       	case 'showhead':
-        		return $page->showHead();
+        		//return $page->showHead();
         		break;
 
         	case 'pathway':

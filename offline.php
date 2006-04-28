@@ -17,8 +17,6 @@ defined( '_VALID_MOS' ) or die( 'Restricted access' );
 global $database;
 global $mosConfig_live_site, $mosConfig_lang;
 
-@include_once ('language/' . $mosConfig_lang . '.php' );
-
 $adminOffline = false;
 
 if (!defined( '_INSTALL_CHECK' )) {
@@ -55,6 +53,7 @@ if (!defined( '_INSTALL_CHECK' )) {
 }
 
 if (!defined( '_ADMIN_OFFLINE' ) || defined( '_INSTALL_CHECK' )) {
+	@include_once ('language/' . $mosConfig_lang . '.php' );
 	$cur_template = 'rhuk_solarflare_ii';
 	
 	// needed to seperate the ISO number from the language file constant _ISO

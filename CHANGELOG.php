@@ -50,8 +50,15 @@ Low Level Threat
  * 'Submit Weblink' page now needs a published menu item to be accessible
  * Changes to access level of user account will kill any active session for that user
 
+--
+
+09-May-2006 Rey Gigataras
+ # Fixed artf4577 : saveUser in com_user has incorrect escaping for password
+
+
 28-Apr-2006 Alex Kempkens
  # Fixed artf : Language loading incorrect in offline mode (related to Joom!Fish language changes)
+ 
  
 27-Apr-2006 Rey Gigataras
  + Support for restricting ability to access certain functionality for demo sites

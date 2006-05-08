@@ -152,26 +152,29 @@ function userSave( $option, $uid) {
 		mosNotAuth();
 		return;
 	}
+	
 	$row = new mosUser( $database );
-	$row->load( $user_id );
-	$row->orig_password = $row->password;
+	$row->load( $user_id );	
+	
+	$orig_password = $row->password;
 
-	if (!$row->bind( $_POST, "gid usertype" )) {
+	if (!$row->bind( $_POST, 'gid usertype' )) {
 		echo "<script> alert('".$row->getError()."'); window.history.go(-1); </script>\n";
 		exit();
 	}
+	
 	mosMakeHtmlSafe($row);
 
-	if(isset($_POST["password"]) && $_POST["password"] != "") {
-		if(isset($_POST["verifyPass"]) && ($_POST["verifyPass"] == $_POST["password"])) {
-			$row->password = md5($_POST["password"]);
+	if (isset($_POST['password']) && $_POST['password'] != '') {
+		if (isset($_POST['verifyPass']) && ($_POST['verifyPass'] == $_POST['password'])) {
+			$row->password = md5( $row->password );
 		} else {
 			echo "<script> alert(\""._PASS_MATCH."\"); window.history.go(-1); </script>\n";
 			exit();
 		}
 	} else {
 		// Restore 'original password'
-		$row->password = $row->orig_password;
+		$row->password = $orig_password;
 	}
 
 	// save params
@@ -189,15 +192,12 @@ function userSave( $option, $uid) {
 		exit();
 	}
 
-	unset($row->orig_password); // prevent DB error!!
-
 	if (!$row->store()) {
 		echo "<script> alert('".$row->getError()."'); window.history.go(-1); </script>\n";
 		exit();
 	}
 
-	$link = $_SERVER['HTTP_REFERER'];
-	mosRedirect( $link, _USER_DETAILS_SAVE );
+	mosRedirect( 'index.php', _USER_DETAILS_SAVE );
 }
 
 function CheckIn( $userid, $access, $option ){

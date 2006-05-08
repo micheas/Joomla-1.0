@@ -88,7 +88,7 @@ function sendNewPass( $option ) {
 		die("SQL error" . $database->stderr(true));
 	}
 
-	mosRedirect( "index.php?option=com_registration&mosmsg="._NEWPASS_SENT );
+	mosRedirect( 'index.php?option=com_registration&mosmsg='. _NEWPASS_SENT );
 }
 
 function registerForm( $option, $useractivation ) {

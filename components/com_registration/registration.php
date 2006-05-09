@@ -211,8 +211,14 @@ function saveRegistration( $option ) {
 }
 
 function activate( $option ) {
-	global $database;
+	global $database, $my;
 	global $mosConfig_useractivation, $mosConfig_allowUserRegistration;
+
+	if($my->id) {
+		// They're already logged in, so redirect them to the home page
+		mosRedirect( 'index.php' );
+	}
+		
 
 	if ($mosConfig_allowUserRegistration == '0' || $mosConfig_useractivation == '0') {
 		mosNotAuth();

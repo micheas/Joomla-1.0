@@ -52,6 +52,9 @@ Low Level Threat
 
 --
 
+10-May-2006 Sam Moffatt
+ # Fixed issue with login directly after activation causing error, now redirects to index.php
+
 09-May-2006 Rey Gigataras
  # Fixed artf4577 : saveUser in com_user has incorrect escaping for password
 

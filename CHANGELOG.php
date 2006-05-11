@@ -56,6 +56,7 @@ Low Level Threat
  # Fixed artf4614 : Warning in mosCreateGUID
  # Fixed artf4619 : task=category shows unpublished items
  # Fixed artf4621 : Media manager with long filenames = no button
+ # Fixed [topic,59258] : bug when editing user profile
 
 
 10-May-2006 Sam Moffatt

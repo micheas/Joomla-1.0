@@ -720,7 +720,7 @@ class mosMainFrame {
 	* Deperciated 1.1
 	*/
 	function initSessionAdmin($option, $task) {	
-		global $_VERSION, $mosConfig_absolute_path;
+		global $mosConfig_absolute_path;
 		
 		// logout check
 		if ($option == 'logout') {

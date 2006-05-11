@@ -143,7 +143,7 @@ function userEdit( $option, $uid, $submitvalue) {
 }
 
 function userSave( $option, $uid) {
-	global $database, $Itemid;
+	global $database, $my;
 
 	$user_id = intval( mosGetParam( $_POST, 'id', 0 ));
 
@@ -157,6 +157,7 @@ function userSave( $option, $uid) {
 	$row->load( $user_id );	
 	
 	$orig_password = $row->password;
+	$orig_username = $row->username;
 
 	if (!$row->bind( $_POST, 'gid usertype' )) {
 		echo "<script> alert('".$row->getError()."'); window.history.go(-1); </script>\n";
@@ -195,6 +196,20 @@ function userSave( $option, $uid) {
 	if (!$row->store()) {
 		echo "<script> alert('".$row->getError()."'); window.history.go(-1); </script>\n";
 		exit();
+	}
+	
+	// check if username has been changed
+	if ( $orig_username != $row->username ) {
+		// change username value in session table
+		$query = "UPDATE #__session"
+		. "\n SET username = '$row->username'"
+		. "\n WHERE username = '$orig_username'"
+		. "\n AND userid = $my->id"
+		. "\n AND gid = $my->gid"
+		. "\n AND guest = 0"
+		;
+		$database->setQuery( $query );
+		$database->query();		
 	}
 
 	mosRedirect( 'index.php', _USER_DETAILS_SAVE );

@@ -40,14 +40,14 @@ if ( strpos($url, 'http:') !== 0 && strpos($url, 'https:') !== 0 ) {
 $return 				= str_replace( '&', '&amp;', $return );
 
 $registration_enabled 	= $mainframe->getCfg( 'allowUserRegistration' );
-$message_login 			= $params->def( 'login_message', 0 );
-$message_logout 		= $params->def( 'logout_message', 0 );
+$message_login 			= $params->def( 'login_message', 	0 );
+$message_logout 		= $params->def( 'logout_message', 	0 );
+$login 					= $params->def( 'login', 			$return );
+$logout 				= $params->def( 'logout', 			$return );
+$name 					= $params->def( 'name', 			1 );
+$greeting 				= $params->def( 'greeting', 		1 );
 $pretext 				= $params->get( 'pretext' );
 $posttext 				= $params->get( 'posttext' );
-$login 					= $params->def( 'login', $return );
-$logout 				= $params->def( 'logout', $return );
-$name 					= $params->def( 'name', 1 );
-$greeting 				= $params->def( 'greeting', 1 );
 
 if ( $my->id ) {
 // Logout output

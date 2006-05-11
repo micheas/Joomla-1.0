@@ -2205,14 +2205,14 @@ function _where( $type=1, &$access, &$noauth, $gid, $id, $now=NULL, $year=NULL, 
 	$now			= _CURRENT_SERVER_TIME;
 	$where 			= array();
 	$unpublished 	= 0;
-	
+
 	if ( isset($params) ) {
 	// param controls whether unpublished items visible to publishers and above
 		$unpublished = $params->def( 'unpublished', 0 );
 	}
-	
+
 	// normal
-	if ( $type > 0) {
+	if ( $type > 0) {		
 		if ( isset($params) && $unpublished ) {
 		// shows unpublished items for publishers and above
 			if ( $access->canEdit ) {
@@ -2223,12 +2223,12 @@ function _where( $type=1, &$access, &$noauth, $gid, $id, $now=NULL, $year=NULL, 
 				$where[] = "( a.publish_down = '$nullDate' OR a.publish_down >= '$now' )";
 			}
 		} else {
-		// unpublished items NOT shown for publishers and above
+		// unpublished items NOT shown for publishers and above		
 			$where[] = "a.state = 1";
-			if ( !$access->canEdit ) {
+			//if ( !$access->canEdit ) {
 				$where[] = "( a.publish_up = '$nullDate' OR a.publish_up <= '$now' )";
 				$where[] = "( a.publish_down = '$nullDate' OR a.publish_down >= '$now' )";
-			}
+			//}
 		}	
 
 		// add query checks for category or section ids		

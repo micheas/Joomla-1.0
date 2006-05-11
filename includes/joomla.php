@@ -3566,7 +3566,7 @@ function mosWarning($warning, $title='Joomla! Warning') {
 
 function mosCreateGUID(){
 	srand((double)microtime()*1000000);
-	$r = rand ;
+	$r = rand();
 	$u = uniqid(getmypid() . $r . (double)microtime()*1000000,1);
 	$m = md5 ($u);
 	return($m);

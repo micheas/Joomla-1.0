@@ -2197,7 +2197,7 @@ function _orderby_sec( $orderby ) {
 /*
 * @param int 0 = Archives, 1 = Section, 2 = Category
 */
-function _where( $type=1, &$access, &$noauth, $gid, $id, $now=NULL, $year=NULL, $month=NULL, &$params=NULL ) {
+function _where( $type=1, &$access, &$noauth, $gid, $id, $now=NULL, $year=NULL, $month=NULL, $params=NULL ) {
 	global $database, $mainframe;
 	
 	$noauth			= !$mainframe->getCfg( 'shownoauth' );

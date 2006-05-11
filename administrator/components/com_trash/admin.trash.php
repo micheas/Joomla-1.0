@@ -249,6 +249,11 @@ function restoreTrash( $cid, $option ) {
 		. "\n SET state = $state, ordering = $ordering"
 		. "\n WHERE id IN ( $cids )"
 		;
+		$database->setQuery( $query );
+		if ( !$database->query() ) {
+			echo "<script> alert('".$database->getErrorMsg()."'); window.history.go(-1); </script>\n";
+			exit();
+		}					
 	} else if ( $type == 'menu' ) {
 		sort( $cid );
 
@@ -283,15 +288,15 @@ function restoreTrash( $cid, $option ) {
 				. "\n WHERE id = $id"
 				;
 			}	
+			
+			$database->setQuery( $query );
+			if ( !$database->query() ) {
+				echo "<script> alert('".$database->getErrorMsg()."'); window.history.go(-1); </script>\n";
+				exit();
+			}	
 		}
-	}
+	}	
 	
-	$database->setQuery( $query );
-	if ( !$database->query() ) {
-		echo "<script> alert('".$database->getErrorMsg()."'); window.history.go(-1); </script>\n";
-		exit();
-	}		
-
 	$msg = $total. " Item(s) successfully Restored";
 	mosRedirect( "index2.php?option=$option&mosmsg=". $msg ."" );
 }

@@ -59,6 +59,7 @@ Low Level Threat
  # Fixed artf4613 : Sub Menu Item deletion Security Bug 
  # Fixed artf4613 : Restoring menu items without a valid parent
  # Fixed [topic,59258] : bug when editing user profile
+ # Fixed [topic,61190] : Menu Item Inconsistency
 
 
 10-May-2006 Sam Moffatt

@@ -57,6 +57,7 @@ Low Level Threat
  # Fixed artf4619 : task=category shows unpublished items
  # Fixed artf4621 : Media manager with long filenames = no button
  # Fixed artf4613 : Sub Menu Item deletion Security Bug 
+ # Fixed artf4613 : Restoring menu items without a valid parent
  # Fixed [topic,59258] : bug when editing user profile
 
 

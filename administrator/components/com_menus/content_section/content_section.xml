@@ -115,5 +115,10 @@
 			<option value="author">Author</option>
 			<option value="hits">Hits</option>
 		</param>
+		<param name="@spacer" type="spacer" default="" label="" description="" />
+ 		<param name="unpublished" type="radio" default="1" label="Unpublished Items" description="Show/Hide unpublished items for `Publisher` user group and above">
+ 			<option value="0">Hide</option>
+ 			<option value="1">Show</option>
+ 		</param>
 	</params>
 </mosinstall>

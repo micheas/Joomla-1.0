@@ -161,7 +161,7 @@ function frontpage( $gid, &$access, $pop, $now ) {
 
 	$voting = votingQuery();
 	
-	$where 	= _where( 1, $access, $noauth, $gid, 0, $now );	
+	$where 	= _where( 1, $access, $noauth, $gid, 0, $now, NULL, NULL, $params );	
 	$where 	= ( count( $where ) ? "\n WHERE ". implode( "\n AND ", $where ) : '' );
 	
 	// query records
@@ -239,13 +239,21 @@ function showSection( $id, $gid, &$access, $now ) {
 	$params->def( 'cat_description', 	1 );
 	$params->def( 'back_button', 		$mainframe->getCfg( 'back_button' ) );
 	$params->def( 'pageclass_sfx', 		'' );
-
+	// param controls whether unpublished items visible to publishers and above
+	$params->def( 'unpublished', 		1 );
+		
 	// Ordering control
 	$orderby = _orderby_sec( $orderby );
 
 	if ( $access->canEdit ) {
 		$xwhere = '';
-		$xwhere2 = "\n AND b.state >= 0";
+		if ( $params->get( 'unpublished' ) ) {
+		// shows unpublished items for publishers and above
+			$xwhere2 = "\n AND b.state >= 0";
+		} else {
+		// unpublished items NOT shown for publishers and above
+			$xwhere2 = "\n AND b.state = 1";
+		}
 	} else {
 		$xwhere = "\n AND a.published = 1";
 		$xwhere2 = "\n AND b.state = 1"
@@ -390,6 +398,8 @@ function showCategory( $id, $gid, &$access, $sectionid, $limit, $selected, $limi
 	$params->def( 'order_select', 		1 );
 	$params->def( 'filter', 			1 );
 	$params->def( 'filter_type', 		'title' );
+	// param controls whether unpublished items visible to publishers and above
+	$params->def( 'unpublished', 		1 );
 
 	// Ordering control
 	$orderby = _orderby_sec( $orderby );
@@ -400,12 +410,18 @@ function showCategory( $id, $gid, &$access, $sectionid, $limit, $selected, $limi
 
 	if ( $access->canEdit ) {
 		$xwhere = '';
-		$xwhere2 = "\n AND b.state >= 0";
+		if ( $params->get( 'unpublished' ) ) {
+		// shows unpublished items for publishers and above
+			$xwhere2 = "\n AND b.state >= 0";
+		} else {
+		// unpublished items NOT shown for publishers and above
+			$xwhere2 = "\n AND b.state = 1";
+		}
 	} else {
 		$xwhere = "\n AND c.published = 1";
 		$xwhere2 = "\n AND b.state = 1"
-		. "\n AND ( publish_up = '$nullDate' OR publish_up <= '$now' )"
-		. "\n AND ( publish_down = '$nullDate' OR publish_down >= '$now' )"
+		. "\n AND ( b.publish_up = '$nullDate' OR b.publish_up <= '$now' )"
+		. "\n AND ( b.publish_down = '$nullDate' OR b.publish_down >= '$now' )"
 		;
 	}
 
@@ -414,7 +430,7 @@ function showCategory( $id, $gid, &$access, $sectionid, $limit, $selected, $limi
 		$menu = new mosMenu( $database );
 		$menu->load( $Itemid );
 		$pagetitle = $menu->name;
-	} // if
+	} 
 
 	// show/hide empty categories
 	$empty = '';
@@ -465,7 +481,13 @@ function showCategory( $id, $gid, &$access, $sectionid, $limit, $selected, $limi
 	}
 
 	if ( $access->canEdit ) {
-		$xwhere = "\n AND a.state >= 0";
+		if ( $params->get( 'unpublished' ) ) {
+			// shows unpublished items for publishers and above
+			$xwhere = "\n AND a.state >= 0";
+		} else {
+			// unpublished items NOT shown for publishers and above
+			$xwhere = "\n AND a.state = 1";
+		}
 	} else {
 		$xwhere = "\n AND a.state = 1"
 		. "\n AND ( publish_up = '$nullDate' OR publish_up <= '$now' )"
@@ -504,9 +526,8 @@ function showCategory( $id, $gid, &$access, $sectionid, $limit, $selected, $limi
 	. "\n AND $category->access <= $gid"
 	. $and
 	. "\n ORDER BY $orderby"
-	. "\n LIMIT $limitstart, $limit"
 	;
-	$database->setQuery( $query );
+	$database->setQuery( $query, $limitstart, $limit );
 	$items = $database->loadObjectList();
 
 	$check = 0;
@@ -572,7 +593,7 @@ function showBlogSection( $id=0, $gid, &$access, $pop, $now=NULL ) {
 		$id		= $params->def( 'sectionid', 0 );
 	}
 
-	$where 	= _where( 1, $access, $noauth, $gid, $id, $now );	
+	$where 	= _where( 1, $access, $noauth, $gid, $id, $now, NULL, NULL, $params );	
 	$where 	= ( count( $where ) ? "\n WHERE ". implode( "\n AND ", $where ) : '' );
 
 	// Ordering control
@@ -654,7 +675,7 @@ function showBlogCategory( $id=0, $gid, &$access, $pop, $now ) {
 		$id 		= $params->def( 'categoryid', 0 );
 	}
 
-	$where	= _where( 2, $access, $noauth, $gid, $id, $now );	
+	$where	= _where( 2, $access, $noauth, $gid, $id, $now, NULL, NULL, $params );	
 	$where 	= ( count( $where ) ? "\n WHERE ". implode( "\n AND ", $where ) : '' );
 
 	// Ordering control
@@ -2176,21 +2197,41 @@ function _orderby_sec( $orderby ) {
 /*
 * @param int 0 = Archives, 1 = Section, 2 = Category
 */
-function _where( $type=1, &$access, &$noauth, $gid, $id, $now=NULL, $year=NULL, $month=NULL ) {
+function _where( $type=1, &$access, &$noauth, $gid, $id, $now=NULL, $year=NULL, $month=NULL, &$params=NULL ) {
 	global $database, $mainframe;
 	
-	$noauth		= !$mainframe->getCfg( 'shownoauth' );
-	$nullDate 	= $database->getNullDate();
-	$now		= _CURRENT_SERVER_TIME;
-	$where 		= array();
-
+	$noauth			= !$mainframe->getCfg( 'shownoauth' );
+	$nullDate 		= $database->getNullDate();
+	$now			= _CURRENT_SERVER_TIME;
+	$where 			= array();
+	$unpublished 	= 0;
+	
+	if ( isset($params) ) {
+	// param controls whether unpublished items visible to publishers and above
+		$unpublished = $params->def( 'unpublished', 0 );
+	}
+	
 	// normal
 	if ( $type > 0) {
-		$where[] = "a.state = 1";
-		if ( !$access->canEdit ) {
-			$where[] = "( a.publish_up = '$nullDate' OR a.publish_up <= '$now' )";
-			$where[] = "( a.publish_down = '$nullDate' OR a.publish_down >= '$now' )";
-		}
+		if ( isset($params) && $unpublished ) {
+		// shows unpublished items for publishers and above
+			if ( $access->canEdit ) {
+				$where[] = "a.state >= 0";
+			} else {
+				$where[] = "a.state = 1";
+				$where[] = "( a.publish_up = '$nullDate' OR a.publish_up <= '$now' )";
+				$where[] = "( a.publish_down = '$nullDate' OR a.publish_down >= '$now' )";
+			}
+		} else {
+		// unpublished items NOT shown for publishers and above
+			$where[] = "a.state = 1";
+			if ( !$access->canEdit ) {
+				$where[] = "( a.publish_up = '$nullDate' OR a.publish_up <= '$now' )";
+				$where[] = "( a.publish_down = '$nullDate' OR a.publish_down >= '$now' )";
+			}
+		}	
+
+		// add query checks for category or section ids		
 		if ( $id > 0 ) {
 			if ( $type == 1 ) {
 				$where[] = "a.sectionid IN ( $id ) ";

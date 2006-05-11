@@ -54,6 +54,7 @@ Low Level Threat
 
 11-May-2006 Rey Gigataras
  # Fixed artf4614 : Warning in mosCreateGUID
+ # Fixed artf4619 : task=category shows unpublished items
 
 
 10-May-2006 Sam Moffatt

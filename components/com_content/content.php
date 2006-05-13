@@ -1032,16 +1032,11 @@ function BlogOutput ( &$rows, &$params, $gid, &$access, $pop, &$menu, $archive=N
 
 	// pagination support
 	$limitstart = intval( mosGetParam( $_REQUEST, 'limitstart', 0 ) );
-	$limit = $intro + $leading + $links;
+	$limit 		= $intro + $leading + $links;
 	if ( $total <= $limit ) {
 		$limitstart = 0;
 	}
 	$i = $limitstart;
-
-	// needed to reduce queries used by getItemid
-	$ItemidCount['bs'] 		= $mainframe->getBlogSectionCount();
-	$ItemidCount['bc'] 		= $mainframe->getBlogCategoryCount();
-	$ItemidCount['gbs'] 	= $mainframe->getGlobalBlogSectionCount();
 
 	// used to display section/catagory description text and images
 	// currently not supported in Archives
@@ -1114,7 +1109,7 @@ function BlogOutput ( &$rows, &$params, $gid, &$access, $pop, &$menu, $archive=N
 					break;
 				}
 				echo '<div>';
-				show( $rows[$i], $params, $gid, $access, $pop, $option, $ItemidCount );
+				show( $rows[$i], $params, $gid, $access, $pop );
 				echo '</div>';
 				$i++;
 			}
@@ -1141,7 +1136,7 @@ function BlogOutput ( &$rows, &$params, $gid, &$access, $pop, &$menu, $archive=N
 
 				// outputs either intro or only a link
 				if ( $z < $intro ) {
-					show( $rows[$i], $params, $gid, $access, $pop, $option, $ItemidCount );
+					show( $rows[$i], $params, $gid, $access, $pop );
 				} else {
 					echo '</td>';
 					echo '</tr>';
@@ -1176,7 +1171,7 @@ function BlogOutput ( &$rows, &$params, $gid, &$access, $pop, &$menu, $archive=N
 			echo '<tr>';
 			echo '<td valign="top">';
 			echo '<div class="blog_more'. $params->get( 'pageclass_sfx' ) .'">';
-			HTML_content::showLinks( $rows, $links, $total, $i, 1, $ItemidCount );
+			HTML_content::showLinks( $rows, $links, $total, $i, 1 );
 			echo '</div>';
 			echo '</td>';
 			echo '</tr>';
@@ -1187,25 +1182,37 @@ function BlogOutput ( &$rows, &$params, $gid, &$access, $pop, &$menu, $archive=N
 			if ( ( $pagination == 2 ) && ( $total <= $limit ) ) {
 				// not visible when they is no 'other' pages to display
 			} else {
+				require_once( $GLOBALS['mosConfig_absolute_path'] . '/includes/pageNavigation.php' );
 				// get the total number of records
 				$limitstart = $limitstart ? $limitstart : 0;
-				require_once( $GLOBALS['mosConfig_absolute_path'] . '/includes/pageNavigation.php' );
-				$pageNav = new mosPageNav( $total, $limitstart, $limit );
-				if ( $option == 'com_frontpage' ) {
-					$link = 'index.php?option=com_frontpage&amp;Itemid='. $Itemid;
-				} else if ( $archive ) {
-					$year = $params->get( 'year' );
-					$month = $params->get( 'month' );
-					$link = 'index.php?option=com_content&amp;task='. $task .'&amp;id='. $id .'&amp;Itemid='. $Itemid.'&amp;year='. $year .'&amp;month='. $month;
+				$pageNav 	= new mosPageNav( $total, $limitstart, $limit );
+				
+				if ( $Itemid && $Itemid != 99999999 ) {
+					// where Itemid value is returned, do not add Itemid to url
+					$Itemid_link = '&amp;Itemid='. $_Itemid;
 				} else {
-					$link = 'index.php?option=com_content&amp;task='. $task .'&amp;id='. $id .'&amp;Itemid='. $Itemid;
+					// where Itemid value is NOT returned, do not add Itemid to url
+					$Itemid_link = '';
+				}	
+				
+				if ( $option == 'com_frontpage' ) {
+					$link 	= 'index.php?option=com_frontpage'. $Itemid_link;
+				} else if ( $archive ) {
+					$year 	= $params->get( 'year' );
+					$month 	= $params->get( 'month' );
+					
+					$link 	= 'index.php?option=com_content&amp;task='. $task .'&amp;id='. $id . $Itemid_link .'&amp;year='. $year .'&amp;month='. $month;
+				} else {
+					$link 	= 'index.php?option=com_content&amp;task='. $task .'&amp;id='. $id . $Itemid_link;
 				}
+				
 				echo '<tr>';
 				echo '<td valign="top" align="center">';
 				echo $pageNav->writePagesLinks( $link );
 				echo '<br /><br />';
 				echo '</td>';
 				echo '</tr>';
+				
 				if ( $pagination_results ) {
 					echo '<tr>';
 					echo '<td valign="top" align="center">';
@@ -1229,11 +1236,12 @@ function BlogOutput ( &$rows, &$params, $gid, &$access, $pop, &$menu, $archive=N
 
 	// Back Button
 	$params->set( 'back_button', $back );
+	
 	mosHTML::BackButton ( $params );
 }
 
 
-function showItem( $uid, $gid, &$access, $pop, $option, $now ) {
+function showItem( $uid, $gid, &$access, $pop, $option='com_content', $now ) {
 	global $database, $mainframe, $Itemid;
 	global $mosConfig_MetaTitle, $mosConfig_MetaAuthor;
 
@@ -1370,7 +1378,7 @@ function showItem( $uid, $gid, &$access, $pop, $option, $now ) {
 			$mainframe->addMetaTag( 'author' , $row->author );
 		}
 
-		show( $row, $params, $gid, $access, $pop, $option );
+		show( $row, $params, $gid, $access, $pop );
 	} else {
 		mosNotAuth();
 		return;
@@ -1378,8 +1386,8 @@ function showItem( $uid, $gid, &$access, $pop, $option, $now ) {
 }
 
 
-function show( $row, $params, $gid, &$access, $pop, $option, $ItemidCount=NULL ) {
-	global $database, $mainframe, $Itemid;
+function show( $row, $params, $gid, &$access, $pop, $option='com_content', $ItemidCount=NULL ) {
+	global $database, $mainframe;
 	global $cache;
 
 	$noauth = !$mainframe->getCfg( 'shownoauth' );
@@ -1552,7 +1560,7 @@ function show( $row, $params, $gid, &$access, $pop, $option, $ItemidCount=NULL )
 	// does not affect anything else as hits data not outputted
 	$row->hits = 0;
 	
-	$cache->call( 'HTML_content::show', $row, $params, $access, $page, $option, $ItemidCount );
+	$cache->call( 'HTML_content::show', $row, $params, $access, $page );
 }
 
 

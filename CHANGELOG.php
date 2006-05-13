@@ -53,6 +53,7 @@ Low Level Threat
 --
 
 13-May-2006 Rey Gigataras
+ # Fixed artf4555 : Slight Bug in registration system
  # Fixed artf4641 : Module sites with one template - modules should not show up - itemid issue
  # Fixed : `Itemid=99999999` appearing in next & prev navigation links
  # Fixed : `Itemid=` appearing in `Blog` links items

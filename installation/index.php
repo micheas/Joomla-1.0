@@ -33,6 +33,8 @@ function writableCell( $folder ) {
 	echo '</tr>';
 }
 
+$sp = ini_get( 'session.save_path' );
+
 echo "<?xml version=\"1.0\" encoding=\"iso-8859-1\"?".">";
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -138,9 +140,13 @@ correctly.
 	<td class="item">
 	Session save path
 	</td>
-	<td align="left">
-	<b><?php echo (($sp=ini_get('session.save_path'))?$sp:'Not set'); ?></b>,
+	<td align="left" valign="top">
 	<?php echo is_writable( $sp ) ? '<b><font color="green">Writeable</font></b>' : '<b><font color="red">Unwriteable</font></b>';?>
+	</td>
+</tr>
+<tr>
+	<td class="item" colspan="2">
+	<b><?php echo $sp ? $sp : 'Not set'; ?></b>
 	</td>
 </tr>
 </table>

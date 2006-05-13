@@ -23,6 +23,7 @@ DEFINE('_LANGUAGE','en');
 DEFINE('_NOT_AUTH','You are not authorized to view this resource.');
 DEFINE('_DO_LOGIN','You need to login.');
 DEFINE('_VALID_AZ09',"Please enter a valid %s.  No spaces, more than %d characters and contain 0-9,a-z,A-Z");
+DEFINE('_VALID_AZ09_USER',"Please enter a valid %s.  More than %d characters and contain 0-9,a-z,A-Z");
 DEFINE('_CMN_YES','Yes');
 DEFINE('_CMN_NO','No');
 DEFINE('_CMN_SHOW','Show');

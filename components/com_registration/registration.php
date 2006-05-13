@@ -30,7 +30,7 @@ switch( $task ) {
 		break;
 
 	case 'saveRegistration':
-		saveRegistration( $option );
+		saveRegistration();
 		break;
 
 	case 'activate':
@@ -104,12 +104,12 @@ function registerForm( $option, $useractivation ) {
 	HTML_registration::registerForm($option, $useractivation);
 }
 
-function saveRegistration( $option ) {
+function saveRegistration() {
 	global $database, $acl;
 	global $mosConfig_sitename, $mosConfig_live_site, $mosConfig_useractivation, $mosConfig_allowUserRegistration;
 	global $mosConfig_mailfrom, $mosConfig_fromname, $mosConfig_mailfrom, $mosConfig_fromname;
 
-	if ($mosConfig_allowUserRegistration=='0') {
+	if ( $mosConfig_allowUserRegistration == 0 ) {
 		mosNotAuth();
 		return;
 	}
@@ -126,7 +126,7 @@ function saveRegistration( $option ) {
 	$row->usertype 	= '';
 	$row->gid 		= $acl->get_group_id( 'Registered', 'ARO' );
 
-	if ($mosConfig_useractivation == '1') {
+	if ( $mosConfig_useractivation == 1 ) {
 		$row->activation = md5( mosMakePassword() );
 		$row->block = '1';
 	}
@@ -138,7 +138,7 @@ function saveRegistration( $option ) {
 
 	$pwd 				= $row->password;
 	$row->password 		= md5( $row->password );
-	$row->registerDate 	= date('Y-m-d H:i:s');
+	$row->registerDate 	= date( 'Y-m-d H:i:s' );
 
 	if (!$row->store()) {
 		echo "<script> alert('".html_entity_decode($row->getError())."'); window.history.go(-1); </script>\n";
@@ -152,7 +152,8 @@ function saveRegistration( $option ) {
 
 	$subject 	= sprintf (_SEND_SUB, $name, $mosConfig_sitename);
 	$subject 	= html_entity_decode($subject, ENT_QUOTES);
-	if ($mosConfig_useractivation=="1"){
+	
+	if ($mosConfig_useractivation == 1){
 		$message = sprintf (_USEND_MSG_ACTIVATE, $name, $mosConfig_sitename, $mosConfig_live_site."/index.php?option=com_registration&task=activate&activation=".$row->activation, $mosConfig_live_site, $username, $pwd);
 	} else {
 		$message = sprintf (_USEND_MSG, $name, $mosConfig_sitename, $mosConfig_live_site);

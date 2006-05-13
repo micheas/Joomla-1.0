@@ -120,7 +120,7 @@ class HTML_users {
 				</a>
 				</td>
 				<td nowrap="nowrap">
-				<?php echo mosFormatDate( $row->lastvisitDate, "%Y-%m-%d %H:%M:%S" ); ?>
+				<?php echo mosFormatDate( $row->lastvisitDate, _CURRENT_SERVER_TIME_FORMAT ); ?>
 				</td>
 				<td>
 				<?php echo $row->id; ?>

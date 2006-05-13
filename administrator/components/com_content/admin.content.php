@@ -404,9 +404,10 @@ function editContent( $uid=0, $sectionid=0, $option ) {
 			$row->images = array();
 		}
 
- 		$row->created 		= mosFormatDate( $row->created, '%Y-%m-%d %H:%M:%S' );
-		$row->modified 		= $row->modified == $nullDate ? '' : mosFormatDate( $row->modified, '%Y-%m-%d %H:%M:%S' );
-		$row->publish_up 	= mosFormatDate( $row->publish_up, '%Y-%m-%d %H:%M:%S' );
+ 		$row->created 		= mosFormatDate( $row->created, _CURRENT_SERVER_TIME_FORMAT );
+		$row->modified 		= $row->modified == $nullDate ? '' : mosFormatDate( $row->modified, _CURRENT_SERVER_TIME_FORMAT );
+		$row->publish_up 	= mosFormatDate( $row->publish_up, _CURRENT_SERVER_TIME_FORMAT );
+		$row->publish_down 	= mosFormatDate( $row->publish_down, _CURRENT_SERVER_TIME_FORMAT );
 
  		if (trim( $row->publish_down ) == $nullDate) {
 			$row->publish_down = 'Never';
@@ -640,6 +641,7 @@ function saveContent( $sectionid, $task ) {
 
 	$menu 		= mosGetParam( $_POST, 'menu', 'mainmenu' );
 	$menuid		= mosGetParam( $_POST, 'menuid', 0 );
+	$nullDate 	= $database->getNullDate();
 
 	$row = new mosContent( $database );
 	if (!$row->bind( $_POST )) {
@@ -650,7 +652,7 @@ function saveContent( $sectionid, $task ) {
 	if ($row->id) {
 		$row->modified 		= date( 'Y-m-d H:i:s' );
 		$row->modified_by 	= $my->id;
-		$row->created 		= mosFormatDate( $row->created, '%Y-%m-%d %H:%M:%S', -$mosConfig_offset );
+		$row->created 		= mosFormatDate( $row->created, _CURRENT_SERVER_TIME_FORMAT, -$mosConfig_offset );
 	} else {
 		$row->created 		= date( 'Y-m-d H:i:s' );
 		$row->created_by 	= $my->id;
@@ -659,11 +661,12 @@ function saveContent( $sectionid, $task ) {
 	if (strlen(trim( $row->publish_up )) <= 10) {
 		$row->publish_up .= ' 00:00:00';
  	}
-	$row->publish_up = mosFormatDate($row->publish_up, '%Y-%m-%d %H:%M:%S', -$mosConfig_offset );
+	$row->publish_up = mosFormatDate( $row->publish_up, _CURRENT_SERVER_TIME_FORMAT, -$mosConfig_offset );
 
-	$nullDate = $database->getNullDate();
-	if (trim( $row->publish_down ) == "Never") {
+	if (trim( $row->publish_down ) == 'Never') {
 		$row->publish_down = $nullDate;
+	} else {
+		$row->publish_down = mosFormatDate( $row->publish_down, _CURRENT_SERVER_TIME_FORMAT, -$mosConfig_offset );
 	}
 
 	$row->state = mosGetParam( $_REQUEST, 'published', 0 );

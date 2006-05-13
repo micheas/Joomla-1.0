@@ -102,6 +102,7 @@ $_SERVER['REQUEST_URI'] = $request_uri;
 // current server time
 $now = date( 'Y-m-d H:i', time() );
 DEFINE( '_CURRENT_SERVER_TIME', $now );
+DEFINE( '_CURRENT_SERVER_TIME_FORMAT', '%Y-%m-%d %H:%M:%S' );
 
 /**
  * @package Joomla

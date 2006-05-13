@@ -49,10 +49,13 @@ Low Level Threat
  * 'Submit News' page now needs a published menu item to be accessible
  * 'Submit Weblink' page now needs a published menu item to be accessible
  * Changes to access level of user account will kill any active session for that user
+ * Hardening of backend `User Manager` to stop 'Adminstrators' from being able to create 'Super Administrator' users
 
 --
 
 13-May-2006 Rey Gigataras
+ * SECURITY [ Low Level ]: artf4529 : User with access to administration area can easly create super administrator.
+ 
  # Fixed artf4555 : Slight Bug in registration system
  # Fixed artf4641 : Module sites with one template - modules should not show up - itemid issue
  # Fixed : `Itemid=99999999` appearing in next & prev navigation links

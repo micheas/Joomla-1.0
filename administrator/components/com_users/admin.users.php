@@ -48,7 +48,7 @@ switch ($task) {
 		if ( $_VERSION->RESTRICT == 1 ) {
 			mosRedirect( 'index2.php?mosmsg=Functionality Restricted' );
 		} else {
-			saveUser( $option, $task );
+			saveUser( $task );
 		}
 		break;
 
@@ -262,11 +262,14 @@ function editUser( $uid='0', $option='users' ) {
 	HTML_users::edituser( $row, $contact, $lists, $option, $uid, $params );
 }
 
-function saveUser( $option, $task ) {
+function saveUser( $task ) {
 	global $database, $my;
 	global $mosConfig_live_site, $mosConfig_mailfrom, $mosConfig_fromname, $mosConfig_sitename;
 
 	$row = new mosUser( $database );
+	
+	$original_gid = $row->gid;
+	
 	if (!$row->bind( $_POST )) {
 		echo "<script> alert('".$row->getError()."'); window.history.go(-1); </script>\n";
 		exit();
@@ -295,11 +298,8 @@ function saveUser( $option, $task ) {
 			$row->password = md5( $row->password );
 		}
 		
-		$original = new mosUser( $database );
-		$original->load( $row->id );
-
 		// if group has been changed and where original group was a Super Admin
-		if ( $row->gid != $original->gid && $original->gid == 25 ) {						
+		if ( $row->gid != $original_gid && $original_gid == 25 ) {						
 			// count number of active super admins
 			$query = "SELECT COUNT( id )"
 			. "\n FROM #__users"
@@ -317,6 +317,13 @@ function saveUser( $option, $task ) {
 		}
 	}
 
+	// if user is made a Super Admin group and user is NOT a Super Admin		
+	if ( $row->gid == 25 && $my->gid != 25 ) {
+		// disallow creation of Super Admin by non Super Admin users
+		echo "<script> alert('You cannot create a user with this user Group level,  only Super Administrators have this ability'); window.history.go(-1); </script>\n";
+		exit();
+	}
+	
 	// save usertype to usetype column
 	$query = "SELECT name"
 	. "\n FROM #__core_acl_aro_groups"
@@ -473,7 +480,7 @@ function removeUsers( $cid, $option ) {
 					$msg = $obj->getError();
 					
 					// delete user acounts active sessions
-					logoutUser( $id, 'com_users' );
+					logoutUser( $id, 'com_users', 'remove' );
 				}
 			}
 		}
@@ -513,7 +520,7 @@ function changeUserBlock( $cid=null, $block=1, $option ) {
 	if ( $block == 1 ) {
 		foreach( $cid as $id ) {
 		// delete user acounts active sessions
-			logoutUser( $id, 'com_users' );
+			logoutUser( $id, 'com_users', 'block' );
 		}
 	}
 
@@ -565,6 +572,11 @@ function logoutUser( $cid=null, $option, $task ) {
 			mosRedirect( 'index2.php', $database->getErrorMsg() );
 			break;
 
+		case 'remove':
+		case 'block':
+			return;
+			break;
+		
 		default:
 			mosRedirect( 'index2.php?option='. $option, $database->getErrorMsg() );
 			break;

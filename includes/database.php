@@ -814,9 +814,9 @@ class mosDBTable {
 			return false;
 		}
 		//Note: Prior to PHP 4.2.0, Uninitialized class variables will not be reported by get_class_vars().
-		$class_vars = get_class_vars(get_class($this));
+		$class_vars = $this->getPublicProperties();
 		foreach ($class_vars as $name => $value) {
-			if (($name != $k) and ($name != "_db") and ($name != "_tbl") and ($name != "_tbl_key")) {
+			if ($name != $k) {
 				$this->$name = $value;
 			}
 		}

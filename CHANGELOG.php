@@ -52,9 +52,11 @@ Low Level Threat
 
 --
 
+13-May-2006 Andrew Eddie
+ # Fixed artf3302 : PatTemplate custom Functions getpage() undefined
+
 12-May-2006 Rey Gigataras
  # Fixed [topic,60970] : Finish Publishing Time not working as expected
-
 
 11-May-2006 Rey Gigataras
  # Fixed artf4614 : Warning in mosCreateGUID

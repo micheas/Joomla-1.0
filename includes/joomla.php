@@ -5220,9 +5220,9 @@ class mosCommonHTML {
 		if (!defined( '_JOS_FEED_ENCODING' )) {
 		// determine encoding of feed
 			$feed 			= $rssDoc->toNormalizedString(true);
-			$feed 			= substr( $feed, 0, 100 );
+			$feed 			= strtolower( substr( $feed, 0, 150 ) );
 			$feedEncoding 	= strpos( $feed, 'encoding=&quot;utf-8&quot;' );
-			
+
 			if ( $feedEncoding !== false ) {
 			// utf-8 feed
 				$utf8 = 1;

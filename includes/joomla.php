@@ -914,11 +914,10 @@ class mosMainFrame {
 	* table. A successful validation updates the current session record with
 	* the users details.
 	*/
-	function login( $username=null,$passwd=null, $remember=null ) {
+	function login( $username=null,$passwd=null, $remember=0 ) {
 		global $acl, $_VERSION;
 		
 		$bypost = 0;
-		$core	= 0;
 		
 		// if no username and password passed from function, then function is being called from login module/component
 		if (!$username || !$passwd) {
@@ -944,7 +943,6 @@ class mosMainFrame {
 				. "\n AND MD5( CONCAT( password , '$harden' ) ) = '$passwd'"
 				;
 			} else {
-			// backward compat login
 				$query = "SELECT *"
 				. "\n FROM #__users"
 				. "\n WHERE block != 1"
@@ -996,6 +994,7 @@ class mosMainFrame {
 				
 				// update user visit data
 				$currentDate = date("Y-m-d\TH:i:s");
+				
 				$query = "UPDATE #__users"
 				. "\n SET lastvisitDate = '$currentDate'"
 				. "\n WHERE id = $session->userid"
@@ -1016,7 +1015,7 @@ class mosMainFrame {
 				}
 				mosCache::cleanCache();
 			} else {
-				if (isset($bypost)) {
+				if ( $bypost ) {
 					mosErrorAlert(_LOGIN_INCORRECT);
 				} else {
 					$this->logout();

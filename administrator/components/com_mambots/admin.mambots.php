@@ -25,7 +25,6 @@ require_once( $mainframe->getPath( 'admin_html' ) );
 
 $client = mosGetParam( $_REQUEST, 'client', '' );
 $cid 	= mosGetParam( $_POST, 'cid', array(0) );
-$id 	= intval( mosGetParam( $_REQUEST, 'id', 0 ) );
 if (!is_array( $cid )) {
 	$cid = array(0);
 }

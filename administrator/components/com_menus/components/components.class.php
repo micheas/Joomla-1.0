@@ -74,7 +74,7 @@ class components_menu {
 		// build published button option
 		$lists['published'] 	= mosAdminMenus::Published( $menu );
 		// build the url link output
-		$lists['link'] 		= mosAdminMenus::Link( $menu, $uid );
+		$lists['link'] 			= mosAdminMenus::Link( $menu, $uid );
 
 		// get params definitions
 		$params = new mosParameters( $menu->params, $mainframe->getPath( 'com_xml', $row->option ), 'component' );

@@ -23,9 +23,8 @@ if (!($acl->acl_check( 'administration', 'edit', 'users', $my->usertype, 'module
 require_once( $mainframe->getPath( 'admin_html' ) );
 
 $client 	= mosGetParam( $_REQUEST, 'client', '' );
-$cid 		= mosGetParam( $_POST, 'cid', array(0) );
-$id 		= intval( mosGetParam( $_REQUEST, 'id', 0 ) );
 $moduleid 	= mosGetParam( $_REQUEST, 'moduleid', null );
+$cid 		= mosGetParam( $_POST, 'cid', array(0) );
 if ($cid[0] == 0 && isset($moduleid) ) {
 	$cid[0] = $moduleid;
 }

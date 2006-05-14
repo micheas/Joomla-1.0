@@ -22,14 +22,12 @@ if (!($acl->acl_check( 'administration', 'edit', 'users', $my->usertype, 'compon
 
 require_once( $mainframe->getPath( 'admin_html' ) );
 
-
 switch ($task) {
-
 	case 'save':
 		saveSyndicate( $option );
 		break;
 
-  case 'cancel':
+  	case 'cancel':
 		cancelSyndicate( );
 		break;
 

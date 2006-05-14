@@ -18,7 +18,6 @@ defined( '_VALID_MOS' ) or die( 'Restricted access' );
 require_once( $mainframe->getPath( 'admin_html' ) );
 
 $sectionid 	= intval( mosGetParam( $_REQUEST, 'sectionid', 0 ) );
-$id 		= intval( mosGetParam( $_REQUEST, 'id', '' ) );
 $cid 		= mosGetParam( $_POST, 'cid', array(0) );
 if (!is_array( $cid )) {
 	$cid = array(0);

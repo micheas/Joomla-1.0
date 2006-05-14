@@ -17,22 +17,18 @@ defined( '_VALID_MOS' ) or die( 'Restricted access' );
 
 require_once( $mainframe->getPath( 'admin_html' ) );
 
-$id 		= intval( mosGetParam( $_REQUEST, 'id', 0 ) );
+$path 		= $mosConfig_absolute_path .'/administrator/components/com_menus/';
+
+$menutype 	= strval( mosGetParam( $_REQUEST, 'menutype', 'mainmenu' ) );
 $type 		= mosGetParam( $_REQUEST, 'type', false );
-$menutype 	= mosGetParam( $_REQUEST, 'menutype', 'mainmenu' );
-$task 		= mosGetParam( $_REQUEST, 'task', '' );
 $access 	= mosGetParam( $_POST, 'access', '' );
 $utaccess	= mosGetParam( $_POST, 'utaccess', '' );
 $ItemName	= mosGetParam( $_POST, 'ItemName', '' );
 $menu 		= mosGetParam( $_POST, 'menu', '' );
 $cid 		= mosGetParam( $_POST, 'cid', array(0) );
-
-$path 		= $mosConfig_absolute_path .'/administrator/components/com_menus/';
-
 if (!is_array( $cid )) {
 	$cid = array(0);
 }
-
 
 switch ($task) {
 	case 'new':
@@ -61,20 +57,11 @@ switch ($task) {
 
 	case 'publish':
 	case 'unpublish':
-		if ($msg = publishMenuSection( $cid, ($task == 'publish') )) {
-			// proceed no further if the menu item can't be published
-			mosRedirect( 'index2.php?option=com_menus&menutype='. $menutype .'&mosmsg= '.$msg );
-		} else {
-			mosRedirect( 'index2.php?option=com_menus&menutype='. $menutype );
-		}
+		publishMenuSection( $cid, ($task == 'publish'), $menutype );
 		break;
 
 	case 'remove':
-		if ($msg = TrashMenusection( $cid, $menutype )) {
-			mosRedirect( 'index2.php?option=com_menus&menutype='. $menutype .'&mosmsg= '.$msg );
-		} else {
-			mosRedirect( 'index2.php?option=com_menus&menutype='. $menutype );
-		}
+		TrashMenusection( $cid, $menutype );
 		break;
 
 	case 'cancel':
@@ -413,7 +400,7 @@ function saveMenu( $option, $task='save' ) {
 * @param array An array of id numbers
 * @param integer 0 if unpublishing, 1 if publishing
 */
-function publishMenuSection( $cid=null, $publish=1 ) {
+function publishMenuSection( $cid=null, $publish=1, $menutype ) {
 	global $database, $mosConfig_absolute_path;
 
 	if (!is_array( $cid ) || count( $cid ) < 1) {
@@ -440,7 +427,8 @@ function publishMenuSection( $cid=null, $publish=1 ) {
 			require_once( $mosConfig_absolute_path . '/administrator/components/com_menus/' . $type . '/' . $type . '.menu.php' );
 		}
 	}
-	return null;
+	
+	mosRedirect( 'index2.php?option=com_menus&menutype='. $menutype );
 }
 
 /**
@@ -487,8 +475,8 @@ function TrashMenuSection( $cid=NULL, $menutype='mainmenu' ) {
 
 	$total = count( $cid );
 
-	$msg = $total ." Item(s) sent to the Trash";
-	return $msg;
+	$msg = $total .' Item(s) sent to the Trash';	
+	mosRedirect( 'index2.php?option=com_menus&menutype='. $menutype, $msg );
 }
 
 /**
@@ -792,26 +780,27 @@ function saveOrder( &$cid, $menutype ) {
 				if ($cond[1]==$condition) {
 					$found = true;
 					break;
-				} // if
+				} 
 			if (!$found) $conditions[] = array($row->id, $condition);
-		} // for
-	} // for
+		} 
+	} 
 
 	// execute updateOrder for each group
 	foreach ( $conditions as $cond ) {
 		$row->load( $cond[0] );
 		$row->updateOrder( $cond[1] );
-	} // foreach
+	} 
 
 	$msg 	= 'New ordering saved';
 	mosRedirect( 'index2.php?option=com_menus&menutype='. $menutype, $msg );
-} // saveOrder
+} 
 
 /**
 * Returns list of child items for a given set of ids from menu items supplied
 *
 */
-function josMenuChildrenRecurse( $mitems, $parents, $list, $maxlevel=99, $level=0 ) {
+function josMenuChildrenRecurse( $mitems, $parents, $list, $maxlevel=20, $level=0 ) {
+
 	// check to reduce recursive processing
 	if ( $level <= $maxlevel && count( $parents ) ) {
 		$children = array();

@@ -16,7 +16,6 @@
 defined( '_VALID_MOS' ) or die( 'Restricted access' );
 
 $bid = intval( mosGetParam( $_REQUEST, 'bid', 0 ) );
-$task = mosGetParam( $_REQUEST, 'task' ,'' );
 
 switch($task) {
 	case 'click':

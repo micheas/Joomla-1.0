@@ -23,7 +23,6 @@ if (!$acl->acl_check( 'administration', 'manage', 'users', $my->usertype, 'compo
 require_once( $mainframe->getPath( 'admin_html' ) );
 
 $menu 		= mosGetParam( $_GET, 'menu', '' );
-$task 		= mosGetParam( $_REQUEST, 'task', array(0) );
 $type 		= mosGetParam( $_POST, 'type', '' );
 $cid 		= mosGetParam( $_POST, 'cid', '' );
 

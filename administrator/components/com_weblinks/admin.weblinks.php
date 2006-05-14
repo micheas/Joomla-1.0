@@ -25,7 +25,6 @@ require_once( $mainframe->getPath( 'admin_html' ) );
 require_once( $mainframe->getPath( 'class' ) );
 
 $cid 	= mosGetParam( $_POST, 'cid', array(0) );
-$id 	= intval( mosGetParam( $_GET, 'id', 0 ) );
 
 switch ($task) {
 	case 'new':

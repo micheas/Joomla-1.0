@@ -21,8 +21,8 @@ define( 'COM_IMAGE_BASE', $mosConfig_absolute_path . DIRECTORY_SEPARATOR . 'imag
 
 // get parameters from the URL or submitted form
 $scope 		= mosGetParam( $_REQUEST, 'scope', '' );
-$cid 		= mosGetParam( $_REQUEST, 'cid', array(0) );
 $section 	= mosGetParam( $_REQUEST, 'scope', '' );
+$cid 		= mosGetParam( $_REQUEST, 'cid', array(0) );
 if (!is_array( $cid )) {
 	$cid = array(0);
 }

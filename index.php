@@ -204,8 +204,9 @@ require_once( $mosConfig_absolute_path . '/editor/editor.php' );
 
 ob_start();
 if ($path = $mainframe->getPath( 'front' )) {
-	$task 	= mosGetParam( $_REQUEST, 'task', '' );
+	$task 	= strtolower( strval( mosGetParam( $_REQUEST, 'task', '' ) ) );
 	$ret 	= mosMenuCheck( $Itemid, $option, $task, $gid );
+	
 	if ($ret) {
 		require_once( $path );
 	} else {

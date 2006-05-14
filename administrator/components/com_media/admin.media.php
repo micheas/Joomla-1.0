@@ -22,7 +22,6 @@ if (!($acl->acl_check( 'administration', 'edit', 'users', $my->usertype, 'compon
 }
 
 require_once( $mainframe->getPath( 'admin_html' ) );
-//require_once( $mainframe->getPath( 'class' ) );
 
 /**
  * Makes file name safe to use

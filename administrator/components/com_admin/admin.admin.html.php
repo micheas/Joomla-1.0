@@ -385,7 +385,7 @@ class HTML_admin_misc {
 	 */
 	function help() {
 		global $mosConfig_live_site;
-		$helpurl 	= mosGetParam( $GLOBALS, 'mosConfig_helpurl', '' );
+		$helpurl 	= strval( mosGetParam( $GLOBALS, 'mosConfig_helpurl', '' ) );
 		
 		if ( $helpurl == 'http://help.mamboserver.com' ) {
 			$helpurl = 'http://help.joomla.org';

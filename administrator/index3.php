@@ -30,7 +30,7 @@ session_name( md5( $mosConfig_live_site ) );
 session_start();
 
 $option 	= trim( strtolower( mosGetParam( $_REQUEST, 'option', '' ) ) );
-$task		= mosGetParam( $_REQUEST, 'task', '' );
+$task		= strval( mosGetParam( $_REQUEST, 'task', '' ) );
 
 // mainframe is an API workhorse, lots of 'core' interaction routines
 $mainframe 	= new mosMainFrame( $database, $option, '..', true );
@@ -43,6 +43,7 @@ $act		= strtolower( mosGetParam( $_REQUEST, 'act', '' ) );
 $section	= mosGetParam( $_REQUEST, 'section', '' );
 $mosmsg		= strip_tags( mosGetParam( $_REQUEST, 'mosmsg', '' ) );
 $no_html	= strtolower( mosGetParam( $_REQUEST, 'no_html', '' ) );
+$id         = intval( mosGetParam( $_REQUEST, 'id', 0 ) );
 
 // start the html output
 if ($no_html) {

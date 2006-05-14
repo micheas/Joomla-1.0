@@ -23,8 +23,8 @@ if (!($acl->acl_check( 'administration', 'manage', 'users', $my->usertype, 'comp
 require_once( $mainframe->getPath( 'admin_html' ) );
 require_once( $mainframe->getPath( 'class', 'com_frontpage' ) );
 
-$cid = mosGetParam( $_POST, 'cid', array(0) );
 $mid = mosGetParam( $_POST, 'mid', array(0) );
+$cid = mosGetParam( $_POST, 'cid', array(0) );
 if ( !is_array( $cid ) ) {
 	$cid = array(0);
 }

@@ -21,7 +21,6 @@ $id			= intval( mosGetParam( $_REQUEST, 'id', 0 ) );
 $sectionid 	= intval( mosGetParam( $_REQUEST, 'sectionid', 0 ) );
 $pop 		= intval( mosGetParam( $_REQUEST, 'pop', 0 ) );
 $limit 		= intval( mosGetParam( $_REQUEST, 'limit', '' ) );
-$order 		= mosGetParam( $_REQUEST, 'order', '' );
 $limitstart = intval( mosGetParam( $_REQUEST, 'limitstart', 0 ) );
 
 // Editor usertype check
@@ -39,7 +38,7 @@ if ( $option == 'com_frontpage' ) {
 	return;
 }
 
-switch ( strtolower( $task ) ) {
+switch ( $task ) {
 	case 'findkey':
 		findKeyItem( $gid, $access, $pop, $option, 0 );
 		break;
@@ -53,7 +52,7 @@ switch ( strtolower( $task ) ) {
 		break;
 
 	case 'category':
-		$cache->call( 'showCategory', $id, $gid, $access, $sectionid, $limit, $order, $limitstart, 0 );
+		$cache->call( 'showCategory', $id, $gid, $access, $sectionid, $limit, NULL, $limitstart, 0 );
 		break;
 
 	case 'blogsection':
@@ -316,6 +315,8 @@ function showSection( $id, $gid, &$access, $now ) {
 */
 function showCategory( $id, $gid, &$access, $sectionid, $limit, $selected, $limitstart, $now  ) {
 	global $database, $mainframe, $Itemid, $mosConfig_list_limit;
+	
+	$selected = strval( mosGetParam( $_REQUEST, 'order', '' ) );
 
 	$category = new mosCategory( $database );
 	$category->load( $id );

@@ -16,8 +16,6 @@ defined( '_VALID_MOS' ) or die( 'Restricted access' );
 
 global $mosConfig_offset;
 
-$option 	= mosGetParam( $_REQUEST, 'option' );
-$task 		= mosGetParam( $_REQUEST, 'task' );
 $id 		= intval( mosGetParam( $_REQUEST, 'id', null ) );
 
 $now 		= _CURRENT_SERVER_TIME;

@@ -22,10 +22,10 @@ require_once( $mainframe->getPath( 'class' ) );
 $mainframe->setPageTitle( _CONTACT_TITLE );
 
 //Load Vars
-$op			= mosGetParam( $_REQUEST, 'op' );
-$con_id 	= (int) mosGetParam( $_REQUEST ,'con_id', 0 );
-$contact_id = (int) mosGetParam( $_REQUEST ,'contact_id', 0 );
-$catid 		= (int) mosGetParam( $_REQUEST ,'catid', 0 );
+$op			= strval( mosGetParam( $_REQUEST, 'op', '' ) );
+$con_id 	= intval( mosGetParam( $_REQUEST ,'con_id', 0 ) );
+$contact_id = intval( mosGetParam( $_REQUEST ,'contact_id', 0 ) );
+$catid 		= intval( mosGetParam( $_REQUEST ,'catid', 0 ) );
 
 switch( $task ) {
 	case 'view':

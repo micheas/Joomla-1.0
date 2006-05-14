@@ -2999,6 +2999,7 @@ function mosErrorAlert( $text, $action='window.history.go(-1);', $mode=1 ) {
 }
 
 function mosTreeRecurse( $id, $indent, $list, &$children, $maxlevel=9999, $level=0, $type=1 ) {
+
 	if (@$children[$id] && $level <= $maxlevel) {
 		foreach ($children[$id] as $v) {
 			$id = $v->id;
@@ -3020,6 +3021,7 @@ function mosTreeRecurse( $id, $indent, $list, &$children, $maxlevel=9999, $level
 			$list[$id] = $v;
 			$list[$id]->treename = "$indent$txt";
 			$list[$id]->children = count( @$children[$id] );
+
 			$list = mosTreeRecurse( $id, $indent . $spacer, $list, $children, $maxlevel, $level+1, $type );
 		}
 	}
@@ -4181,7 +4183,7 @@ class mosAdminMenus {
 		}
 
 		// second pass - get an indent list of the items
-		$list = mosTreeRecurse( 0, '', array(), $children, 9999, 0, 0 );
+		$list = mosTreeRecurse( 0, '', array(), $children, 20, 0, 0 );
 			
 		// assemble menu items to the array
 		$mitems 	= array();
@@ -4264,7 +4266,7 @@ class mosAdminMenus {
 			$children[$pt] = $list;
 		}
 		// second pass - get an indent list of the items
-		$list = mosTreeRecurse( intval( $mitems[0]->parent ), '', array(), $children, 9999, 0, 0 );
+		$list = mosTreeRecurse( intval( $mitems[0]->parent ), '', array(), $children, 20, 0, 0 );
 
 		// Code that adds menu name to Display of Page(s)
 		$text_count = "0";

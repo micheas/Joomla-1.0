@@ -22,9 +22,7 @@ if (!$acl->acl_check( 'administration', 'manage', 'users', $my->usertype, 'compo
 require_once( $mainframe->getPath( 'admin_html' ) );
 require_once( $mainframe->getPath( 'class' ) );
 
-$task 	= mosGetParam( $_REQUEST, 'task' );
 $cid 	= mosGetParam( $_REQUEST, 'cid', array( 0 ) );
-$id 	= intval( mosGetParam( $_REQUEST, 'id', 0 ) );
 if (!is_array( $cid )) {
 	$cid = array ( 0 );
 }

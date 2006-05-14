@@ -25,7 +25,6 @@ $polls_maxcolors 	= 5;
 $polls_barcolor 	= 0;
 
 $id 	= intval( mosGetParam( $_REQUEST, 'id', 0 ) );
-$task 	= mosGetParam( $_REQUEST, 'task', '' );
 
 switch ($task) {
 	case 'vote':

@@ -20,14 +20,11 @@ if (!$acl->acl_check( 'administration', 'config', 'users', $my->usertype )) {
 	mosRedirect( 'index2.php', _NOT_AUTH );
 }
 
-
 require_once( $mainframe->getPath( 'admin_html' ) );
 // XML library
 require_once( "$mosConfig_absolute_path/includes/domit/xml_domit_lite_include.php" );
 
-$task 	= trim( strtolower( mosGetParam( $_REQUEST, 'task', '' ) ) );
 $cid 	= mosGetParam( $_REQUEST, 'cid', array(0) );
-
 if (!is_array( $cid )) {
 	$cid = array(0);
 }

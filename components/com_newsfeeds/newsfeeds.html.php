@@ -240,13 +240,9 @@ class HTML_newsfeed {
 		// full RSS parser used to access image information
 		$rssDoc = new xml_domit_rss_document();
 		$rssDoc->useCacheLite( true, $LitePath, $cacheDir, $newsfeed->cache_time );
-		//$rssDoc->useHTTPClient(true); 
 		$success = $rssDoc->loadRSS( $newsfeed->link );
 		
 		if ( $success ) {
-			// special handling for feed encoding
-			$encoding = mosCommonHTML::newsfeedEncoding( $rssDoc );
-			
 			$totalChannels = $rssDoc->getChannelCount();
 	
 			for ( $i = 0; $i < $totalChannels; $i++ ) {
@@ -271,9 +267,7 @@ class HTML_newsfeed {
 					}
 				}
 				$feed_title = $currChannel->getTitle();
-				$feed_title = $encoding( $feed_title );
-				$feed_title = html_entity_decode($feed_title);
-				$feed_title = str_replace('&apos;', "'", $feed_title);
+				$feed_title = mosCommonHTML::newsfeedEncoding( $rssDoc, $feed_title );
 				?>
 				<tr>
 					<td class="contentheading<?php echo $params->get( 'pageclass_sfx' ); ?>">
@@ -285,9 +279,7 @@ class HTML_newsfeed {
 				// feed description
 				if ( $descrip && $params->get( 'feed_descr' ) ) {
 					$feed_descrip = $currChannel->getDescription();
-					$feed_descrip = $encoding( $feed_descrip );
-					$feed_descrip = html_entity_decode($feed_descrip);
-					$feed_descrip = str_replace('&apos;', "'", $feed_descrip);
+					$feed_descrip = mosCommonHTML::newsfeedEncoding( $rssDoc, $feed_descrip );
 					?>
 					<tr>
 						<td>
@@ -324,9 +316,7 @@ class HTML_newsfeed {
 							$currItem =& $currChannel->getItem($j);
 							
 							$item_title = $currItem->getTitle();
-							$item_title = $encoding( $item_title );
-							$item_title = html_entity_decode($item_title);
-							$item_title = str_replace('&apos;', "'", $item_title);
+							$item_title = mosCommonHTML::newsfeedEncoding( $rssDoc, $item_title );
 							?>
 							<li>
 								<?php							
@@ -360,9 +350,7 @@ class HTML_newsfeed {
 								// item description
 								if ( $params->get( 'item_descr' ) ) {
 									$text = $currItem->getDescription();
-									$text = $encoding( $text );
-									$text = html_entity_decode($text);
-									$text = str_replace('&apos;', "'", $text);
+									$text = mosCommonHTML::newsfeedEncoding( $rssDoc, $text );
 
 									$num 	= $params->get( 'word_count' );
 		

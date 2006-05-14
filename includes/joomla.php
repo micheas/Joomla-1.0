@@ -5216,45 +5216,88 @@ class mosCommonHTML {
 	* Added 1.0.8
 	* Static Function
 	*/	
-	function newsfeedEncoding( $rssDoc ) {	
-		// test if PHP 5
-		if ( phpversion() >= 5 ) {		
-			// test if page is utf-8
-			if ( strpos(_ISO,'utf')!== false || strpos(_ISO,'UTF') !== false ) {
-				$encoding = 'html_entity_decode';
+	function newsfeedEncoding( $rssDoc, $text ) {		
+		if (!defined( '_JOS_FEED_ENCODING' )) {
+		// determine encoding of feed
+			$feed 			= $rssDoc->toNormalizedString(true);
+			$feed 			= substr( $feed, 0, 100 );
+			$feedEncoding 	= strpos( $feed, 'encoding=&quot;utf-8&quot;' );
+			
+			if ( $feedEncoding !== false ) {
+			// utf-8 feed
+				$utf8 = 1;
 			} else {
 			// non utf-8 page
-				$encoding = 'utf8_decode';
+				$utf8 = 0;
 			}
-		} else {
-		// handling for PHP 4
-			// determine encoding of feed
-			$text 		= $rssDoc->toNormalizedString(true);
-			$text 		= substr( $text, 0, 100 );
-			$utf8 		= strpos( $text, 'encoding=&quot;utf-8&quot;' );
 			
-			// test if feed is utf-8
-			if ( $utf8 !== false ) {
-				// test if page is utf-8
-				if ( strpos(_ISO,'utf')!== false || strpos(_ISO,'UTF') !== false ) {
+			define( '_JOS_FEED_ENCODING', $utf8 );
+		}
+		
+		if (!defined( '_JOS_SITE_ENCODING' )) {
+		// determine encoding of page
+			if ( strpos( strtolower( _ISO ), 'utf' ) !== false ) {
+			// utf-8 page
+				$utf8 = 1;
+			} else {
+			// non utf-8 page
+				$utf8 = 0;
+			}
+			
+			define( '_JOS_SITE_ENCODING', $utf8 );
+
+		}
+
+		if ( phpversion() >= 5 ) {		
+		// handling for PHP 5
+			if ( _JOS_FEED_ENCODING ) {
+			// handling for utf-8 feed
+				if ( _JOS_SITE_ENCODING ) {
+				// utf-8 page
 					$encoding = 'html_entity_decode';
 				} else {
-					// non utf-8 page
+				// non utf-8 page
 					$encoding = 'utf8_decode';
 				}
 			} else {
 			// handling for non utf-8 feed
-				// test if page is utf-8
-				if ( strpos(_ISO,'utf') !== false || strpos(_ISO,'UTF') !== false ) {
-					$encoding = 'utf8_encode';
+				if ( _JOS_SITE_ENCODING ) {
+					// utf-8 page
+					$encoding = '';
 				} else {
 					// non utf-8 page
+					$encoding = 'utf8_decode';
+				}
+			}
+		} else {
+		// handling for PHP 4
+			if ( _JOS_FEED_ENCODING ) {
+			// handling for utf-8 feed
+				if ( _JOS_SITE_ENCODING ) {
+				// utf-8 page
+					$encoding = '';
+				} else {
+				// non utf-8 page
+					$encoding = 'utf8_decode';
+				}
+			} else {
+			// handling for non utf-8 feed
+				if ( _JOS_SITE_ENCODING ) {
+				// utf-8 page
+					$encoding = 'utf8_encode';
+				} else {
+				// non utf-8 page
 					$encoding = 'html_entity_decode';
 				}
 			}								
 		}
 		
-		return $encoding;
+		if ( $encoding ) {
+			$text = $encoding( $text );
+		}
+		$text = str_replace('&apos;', "'", $text);
+		
+		return $text;
 	}
 }
 

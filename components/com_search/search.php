@@ -160,19 +160,20 @@ function viewSearch() {
 		$totalRows = count( $rows );
 
 		for ($i=0; $i < $totalRows; $i++) {
-			$row = &$rows[$i]->text;
+			$text = &$rows[$i]->text;
+			
 			if ($phrase == 'exact') {
-				$searchwords = array($searchword);
-				$needle = $searchword;
+				$searchwords 	= array($searchword);
+				$needle 		= $searchword;
 			} else {
-				$searchwords = explode(' ', $searchword);
-				$needle = $searchwords[0];
+				$searchwords 	= explode(' ', $searchword);
+				$needle 		= $searchwords[0];
 			}
-
-			$row = mosPrepareSearchContent( $row, 200, $needle );
+			
+			$text = mosPrepareSearchContent( $text, 200, $needle );
 	
 		  	foreach ($searchwords as $hlword) {
-				$row = preg_replace( '/' . preg_quote( $hlword, '/' ) . '/i', '<span class="highlight">\0</span>', $row ); 
+				$text = preg_replace( '/' . preg_quote( $hlword, '/' ) . '/i', '<span class="highlight">\0</span>', $text ); 
 			}
 			
 			if ( strpos( $rows[$i]->href, 'http' ) == false ) {

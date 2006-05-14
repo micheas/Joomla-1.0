@@ -5395,13 +5395,17 @@ function ampReplace( $text ) {
 */
 function mosPrepareSearchContent( $text, $length=200, $searchword ) {
 	// strips tags won't remove the actual jscript
-	$text = preg_replace( "'<script[^>]*>.*?</script>'si", "", $text );
+	$text = preg_replace( "'<script[^>]*>.*?</script>'si", "", $text );	
 	$text = preg_replace( '/{.+?}/', '', $text);
+	
 	//$text = preg_replace( '/<a\s+.*?href="([^"]+)"[^>]*>([^<]+)<\/a>/is','\2', $text );
+	
 	// replace line breaking tags with whitespace
 	$text = preg_replace( "'<(br[^/>]*?/|hr[^/>]*?/|/(div|h[1-6]|li|p|td))>'si", ' ', $text );
+	
+	$text = mosSmartSubstr( strip_tags( $text ), $length, $searchword ); 
 
-	return mosSmartSubstr( strip_tags( $text ), $length, $searchword );
+	return $text;
 }
 
 /**

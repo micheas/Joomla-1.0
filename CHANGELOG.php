@@ -53,6 +53,10 @@ Low Level Threat
 
 --
 
+14-May-2006 Rey Gigataras
+ ^ Upgrade to TinyMCE 2.0.6.1
+
+
 13-May-2006 Rey Gigataras
  * SECURITY [ Low Level ]: artf4529 : User with access to administration area can easly create super administrator.
  

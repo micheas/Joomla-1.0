@@ -1627,14 +1627,21 @@ function editItem( $uid, $gid, &$access, $sectionid=0, $task, $Itemid ){
 
 	if ( $uid ) {
 		$row->checkout( $my->id );
-		if (trim( $row->publish_down ) == $nullDate) {
-			$row->publish_down = 'Never';
-		}
+		
 		if (trim( $row->images )) {
 			$row->images = explode( "\n", $row->images );
 		} else {
 			$row->images = array();
 		}
+		
+		$row->created 		= mosFormatDate( $row->created, _CURRENT_SERVER_TIME_FORMAT );
+		$row->modified 		= $row->modified == $nullDate ? '' : mosFormatDate( $row->modified, _CURRENT_SERVER_TIME_FORMAT );
+		$row->publish_up 	= mosFormatDate( $row->publish_up, _CURRENT_SERVER_TIME_FORMAT );
+		
+		if (trim( $row->publish_down ) == $nullDate || trim( $row->publish_down ) == '' || trim( $row->publish_down ) == '-' ) {
+			$row->publish_down = 'Never';
+		}
+		$row->publish_down 	= mosFormatDate( $row->publish_down, _CURRENT_SERVER_TIME_FORMAT );
 		
 		$query = "SELECT name"
 		. "\n FROM #__users"

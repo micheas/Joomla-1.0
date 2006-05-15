@@ -374,7 +374,7 @@ function editContent( $uid=0, $sectionid=0, $option ) {
 
 	$redirect = strval( mosGetParam( $_POST, 'redirect', '' ) );
 	$nullDate = $database->getNullDate();
-	
+
 	if ( !$redirect ) {
 		$redirect = $sectionid;
 	}
@@ -397,6 +397,7 @@ function editContent( $uid=0, $sectionid=0, $option ) {
 
 	if ($uid) {
 		$row->checkout( $my->id );
+		
 		if (trim( $row->images )) {
 			$row->images = explode( "\n", $row->images );
 		} else {
@@ -406,11 +407,11 @@ function editContent( $uid=0, $sectionid=0, $option ) {
  		$row->created 		= mosFormatDate( $row->created, _CURRENT_SERVER_TIME_FORMAT );
 		$row->modified 		= $row->modified == $nullDate ? '' : mosFormatDate( $row->modified, _CURRENT_SERVER_TIME_FORMAT );
 		$row->publish_up 	= mosFormatDate( $row->publish_up, _CURRENT_SERVER_TIME_FORMAT );
-		$row->publish_down 	= mosFormatDate( $row->publish_down, _CURRENT_SERVER_TIME_FORMAT );
 
- 		if (trim( $row->publish_down ) == $nullDate) {
+ 		if (trim( $row->publish_down ) == $nullDate || trim( $row->publish_down ) == '' || trim( $row->publish_down ) == '-' ) {
 			$row->publish_down = 'Never';
 		}
+		$row->publish_down 	= mosFormatDate( $row->publish_down, _CURRENT_SERVER_TIME_FORMAT );
 
 		$query = "SELECT name"
 		. "\n FROM #__users"

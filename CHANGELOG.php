@@ -39,6 +39,8 @@ Legend:
 ------------------------------------------------------------------------------------
 
 
+---------------- 1.0.9 Beta Released -- [15-May-2006 12:00 UTC] ------------------
+
 This Release Contains following Security Fixes
 
 Low Level Threat
@@ -58,6 +60,8 @@ Low Level Threat
  * SECURITY [ Low Level ]: add ability to selectively disable certain types of syndicated feeds
  
  ^ Upgrade to TinyMCE 2.0.6.1
+ 
+ # Fixed [topic,61897] : Changing any parameter for logged user returns to login screen
 
 
 13-May-2006 Rey Gigataras

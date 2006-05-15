@@ -266,8 +266,6 @@ function saveUser( $task ) {
 
 	$row = new mosUser( $database );
 	
-	$original_gid = $row->gid;
-	
 	if (!$row->bind( $_POST )) {
 		echo "<script> alert('".$row->getError()."'); window.history.go(-1); </script>\n";
 		exit();
@@ -288,6 +286,9 @@ function saveUser( $task ) {
 		}
 		$row->registerDate = date( 'Y-m-d H:i:s' );
 	} else {
+		$original = new mosUser( $database );
+		$original->load( $row->id );
+		
 		// existing user stuff
 		if ($row->password == '') {
 			// password set to null if empty
@@ -297,7 +298,7 @@ function saveUser( $task ) {
 		}
 		
 		// if group has been changed and where original group was a Super Admin
-		if ( $row->gid != $original_gid && $original_gid == 25 ) {						
+		if ( $row->gid != $original->gid && $original->gid == 25 ) {						
 			// count number of active super admins
 			$query = "SELECT COUNT( id )"
 			. "\n FROM #__users"
@@ -316,7 +317,7 @@ function saveUser( $task ) {
 	}
 
 	// if user is made a Super Admin group and user is NOT a Super Admin		
-	if ( $row->gid == 25 && $my->gid != 25 ) {
+	if ( $row->gid == 25 && $original->gid != 25 ) {
 		// disallow creation of Super Admin by non Super Admin users
 		echo "<script> alert('You cannot create a user with this user Group level,  only Super Administrators have this ability'); window.history.go(-1); </script>\n";
 		exit();
@@ -402,6 +403,7 @@ function saveUser( $task ) {
 			$adminName 	= $admin->name;
 			$adminEmail = $admin->email;
 		}
+		
 		mosMail( $adminEmail, $adminName, $row->email, $subject, $message );
 	}
 
@@ -409,7 +411,7 @@ function saveUser( $task ) {
 		// if group has been changed
 		if ( $original->gid != $row->gid ) {
 			// delete user acounts active sessions
-			logoutUser( $row->id, 'com_users' );
+			logoutUser( $row->id, 'com_users', 'change' );
 		}
 	}
 	
@@ -572,6 +574,7 @@ function logoutUser( $cid=null, $option, $task ) {
 
 		case 'remove':
 		case 'block':
+		case 'change':
 			return;
 			break;
 		

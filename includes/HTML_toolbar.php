@@ -281,7 +281,7 @@ class mosToolBar {
 	* @param string An override for the task
 	* @param string An override for the alt text
 	*/
-	function apply( $task='apply', $alt='Apply' ) {
+	function apply( $task='apply', $alt=_CMN_APPLY ) {
 		$image = mosAdminMenus::ImageCheck( 'apply_f2.png', '/images/', NULL, NULL, $alt, $task, 1 );
 		?>
 		<td>

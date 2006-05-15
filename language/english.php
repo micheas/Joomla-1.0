@@ -32,6 +32,7 @@ DEFINE('_CMN_HIDE','Hide');
 DEFINE('_CMN_NAME','Name');
 DEFINE('_CMN_DESCRIPTION','Description');
 DEFINE('_CMN_SAVE','Save');
+DEFINE('_CMN_APPLY','Apply');
 DEFINE('_CMN_CANCEL','Cancel');
 DEFINE('_CMN_PRINT','Print');
 DEFINE('_CMN_PDF','PDF');

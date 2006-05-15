@@ -56,6 +56,10 @@ Low Level Threat
 
 --
 
+15-May-2006 Rey Gigataras
+ # Fixed [topic,61926] : Frontend static language text
+
+
 14-May-2006 Rey Gigataras
  * SECURITY [ Low Level ]: add ability to selectively disable certain types of syndicated feeds
  

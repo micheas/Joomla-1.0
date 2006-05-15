@@ -185,7 +185,7 @@ function mosShowHead() {
 
 	$mainframe->appendMetaTag( 'description', $mosConfig_MetaDesc );
 	$mainframe->appendMetaTag( 'keywords', $mosConfig_MetaKeys );
-	$mainframe->addMetaTag( 'Generator', $_VERSION->PRODUCT . " - " . $_VERSION->COPYRIGHT);
+	$mainframe->addMetaTag( 'Generator', $_VERSION->PRODUCT . ' - ' . $_VERSION->COPYRIGHT);
 	$mainframe->addMetaTag( 'robots', 'index, follow' );
 
 	echo $mainframe->getHead();
@@ -194,7 +194,6 @@ function mosShowHead() {
 		echo "<base href=\"$mosConfig_live_site/\" />\r\n";
 	}
 
-	// support for Firefox Live Bookmarks ability for site syndication
 	$query = "SELECT a.*"
 	. "\n FROM #__components AS a"
 	. "\n WHERE a.admin_menu_link LIKE( '%option=com_syndicate%' )"
@@ -202,11 +201,14 @@ function mosShowHead() {
 	;
 	$database->setQuery( $query );
 	$database->loadObject( $row );
-
+	
 	// get params definitions
-	$params = new mosParameters( $row->params, $mainframe->getPath( 'com_xml', $row->option ), 'component' );
+	$syndicateParams = new mosParameters( $row->params, $mainframe->getPath( 'com_xml', $row->option ), 'component' );
+	
+	// needed to reduce query
+	$GLOBALS['syndicateParams'] = $syndicateParams;
 
-	$live_bookmark = $params->get( 'live_bookmark', 0 );
+	$live_bookmark = $syndicateParams->get( 'live_bookmark', 0 );
 
 	// support for Live Bookmarks ability for site syndication
 	if ($live_bookmark) {

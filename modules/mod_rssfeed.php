@@ -48,6 +48,40 @@ $cur_template 		= $mainframe->getTemplate();
 $t_path 			= $mosConfig_live_site .'/templates/'. $cur_template .'/images/';
 $d_path				= $mosConfig_live_site .'/images/M_images/';
 
+// needed to reduce query
+if ( isset( $GLOBALS['syndicateParams'] ) ) {
+// load value stored in GLOBALS
+	$syndicateParams = $GLOBALS['syndicateParams'];
+} else {
+// query to oull syndication component params
+	$query = "SELECT a.*"
+	. "\n FROM #__components AS a"
+	. "\n WHERE a.admin_menu_link LIKE( '%option=com_syndicate%' )"
+	. "\n AND a.option = 'com_syndicate'"
+	;
+	$database->setQuery( $query );
+	$database->loadObject( $row );
+	
+	// get params definitions
+	$syndicateParams = new mosParameters( $row->params, $mainframe->getPath( 'com_xml', $row->option ), 'component' );
+}
+
+// check for disabling/enabling of selected feed types
+if ( !$syndicateParams->get( 'rss091', 1 ) ) {
+	$rss091 = 0;
+}
+if ( !$syndicateParams->get( 'rss10', 1 ) ) {
+	$rss10 = 0;
+}
+if ( !$syndicateParams->get( 'rss20', 1 ) ) {
+	$rss20 = 0;
+}
+if ( !$syndicateParams->get( 'atom03', 1 ) ) {
+	$atom03 = 0;
+}
+if ( !$syndicateParams->get( 'opml', 1 ) ) {
+	$opml = 0;
+}
 ?>
 <div class="syndicate<?php echo $moduleclass_sfx;?>">
 	<?php

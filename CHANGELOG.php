@@ -50,10 +50,13 @@ Low Level Threat
  * 'Submit Weblink' page now needs a published menu item to be accessible
  * Changes to access level of user account will kill any active session for that user
  * Hardening of backend `User Manager` to stop 'Adminstrators' from being able to create 'Super Administrator' users
+ * Add ability to selectively disable certain types of syndicated feeds
 
 --
 
 14-May-2006 Rey Gigataras
+ * SECURITY [ Low Level ]: add ability to selectively disable certain types of syndicated feeds
+ 
  ^ Upgrade to TinyMCE 2.0.6.1
 
 

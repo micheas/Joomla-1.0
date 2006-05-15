@@ -213,7 +213,7 @@ if ($path = $mainframe->getPath( 'front' )) {
 		mosNotAuth();
 	}
 } else {
-	header("HTTP/1.0 404 Not Found");
+	header( 'HTTP/1.0 404 Not Found' );
 	echo _NOT_EXIST;
 }
 
@@ -238,7 +238,7 @@ if ( !file_exists( $mosConfig_absolute_path .'/templates/'. $cur_template .'/ind
 	echo _TEMPLATE_WARN . $cur_template;
 } else {
 	require_once( $mosConfig_absolute_path .'/templates/'. $cur_template .'/index.php' );
-	echo "<!-- ".time()." -->";
+	echo '<!-- '. time() .' -->';
 }
 
 // displays queries performed for page
@@ -248,6 +248,7 @@ if ($mosConfig_debug) {
  	foreach ($database->_log as $k=>$sql) {
  		echo $k+1 . "\n" . $sql . '<hr />';
 	}
+	echo '</pre>';
 }
 
 doGzip();

@@ -33,6 +33,27 @@
 		</param>
 		<param name="text_length" type="text" size="4" default="20" label="Text Length" description="The word length of the article text - 0 will show no text" />
 		<param name="@spacer" type="spacer" default="" label="" description="" />
+		<param name="rss091" type="radio" default="1" label="RSS 0.91" description="Enable/Disable RSS 0.91 feed syndication">
+			<option value="0">Disable</option>
+			<option value="1">Enable</option>
+		</param>
+		<param name="rss10" type="radio" default="1" label="RSS 1.0" description="Enable/Disable RSS 1.0 feed syndication">
+			<option value="0">Disable</option>
+			<option value="1">Enable</option>
+		</param>
+		<param name="rss20" type="radio" default="1" label="RSS 2.0" description="Enable/Disable RSS 2.0 feed syndication">
+			<option value="0">Disable</option>
+			<option value="1">Enable</option>
+		</param>
+		<param name="atom03" type="radio" default="1" label="ATOM 0.3" description="Enable/Disable ATOM 0.3 feed syndication">
+			<option value="0">Disable</option>
+			<option value="1">Enable</option>
+		</param>
+		<param name="opml" type="radio" default="1" label="OPML" description="Enable/Disable OPML feed syndication">
+			<option value="0">Disable</option>
+			<option value="1">Enable</option>
+		</param>
+		<param name="@spacer" type="spacer" default="" label="" description="" />
 		<param name="orderby" type="list" default="front" label="Order" description="Order that the items will be displayed">
 			<option value="front">Default</option>
 			<option value="front">Frontpage Ordering</option>

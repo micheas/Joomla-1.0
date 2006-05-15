@@ -113,14 +113,43 @@ function feedFrontpage( $showFeed ) {
 		$info[ 'file' ] = strtolower( str_replace( '.', '', $info[ 'feed' ] ) );
 		
 		// security check to limit arbitrary file creation.
+		// and to allow disabling/enabling of selected feed types
 		switch ( $info[ 'file' ] ) {
 			case 'rss091':			
-			case 'rss10':			
-			case 'rss20':			
-			case 'atom03':			
-			case 'opml':			
-				$filename = $info[ 'file' ] .'.xml';
+				if ( !$params->get( 'rss091', 1 ) ) {
+					echo _NOT_AUTH;
+					return;
+				}
 				break;
+
+			case 'rss10':			
+				if ( !$params->get( 'rss10', 1 ) ) {
+					echo _NOT_AUTH;
+					return;
+				}
+				break;
+			
+			case 'rss20':			
+				if ( !$params->get( 'rss20', 1 ) ) {
+					echo _NOT_AUTH;
+					return;
+				}
+				break;
+			
+			case 'atom03':			
+				if ( !$params->get( 'atom03', 1 ) ) {
+					echo _NOT_AUTH;
+					return;
+				}
+				break;
+			
+			case 'opml':			
+				if ( !$params->get( 'opml', 1 ) ) {
+					echo _NOT_AUTH;
+					return;
+				}
+				break;
+			
 			
 			default:
 				echo _NOT_AUTH;
@@ -128,6 +157,8 @@ function feedFrontpage( $showFeed ) {
 				break;			
 		}
 	}
+	$filename = $info[ 'file' ] .'.xml';
+	
 	// security check to stop server path disclosure
 	if ( strstr( $filename, '/' ) ) { 
 		echo _NOT_AUTH;
@@ -135,6 +166,11 @@ function feedFrontpage( $showFeed ) {
 	}
 	$info[ 'file' ] = $mosConfig_cachepath .'/'. $filename;
 
+	// check if specific feed type is enabled
+	if ( $params->get( 'rss091', 1 ) ) {
+		
+	}
+	
 	// load feed creator class
 	$rss 	= new UniversalFeedCreator();
 	// load image creator class

@@ -1191,7 +1191,7 @@ function BlogOutput ( &$rows, &$params, $gid, &$access, $pop, &$menu, $archive=N
 				
 				if ( $Itemid && $Itemid != 99999999 ) {
 					// where Itemid value is returned, do not add Itemid to url
-					$Itemid_link = '&amp;Itemid='. $_Itemid;
+					$Itemid_link = '&amp;Itemid='. $Itemid;
 				} else {
 					// where Itemid value is NOT returned, do not add Itemid to url
 					$Itemid_link = '';

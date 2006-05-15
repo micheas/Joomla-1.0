@@ -207,10 +207,10 @@ class HTML_users {
 					</th>
 				</tr>
 				<tr>
-					<td width="100">
+					<td width="130">
 					Name:
 					</td>
-					<td width="85%">
+					<td>
 					<input type="text" name="name" class="inputbox" size="40" value="<?php echo $row->name; ?>" maxlength="50" />
 					</td>
 				</tr>

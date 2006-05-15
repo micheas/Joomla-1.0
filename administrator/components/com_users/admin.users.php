@@ -317,9 +317,9 @@ function saveUser( $task ) {
 	}
 
 	// if user is made a Super Admin group and user is NOT a Super Admin		
-	if ( $row->gid == 25 && $original->gid != 25 ) {
+	if ( $row->gid == 25 && $my->gid != 25 ) {
 		// disallow creation of Super Admin by non Super Admin users
-		echo "<script> alert('You cannot create a user with this user Group level,  only Super Administrators have this ability'); window.history.go(-1); </script>\n";
+		echo "<script> alert('You cannot create a user with this user Group level, only Super Administrators have this ability'); window.history.go(-1); </script>\n";
 		exit();
 	}
 	

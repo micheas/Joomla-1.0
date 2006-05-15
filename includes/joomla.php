@@ -750,7 +750,7 @@ class mosMainFrame {
 
 		// check to see if session id corresponds with correct format
 		if ( $session_id == md5( $my->id . $my->username . $my->usertype . $logintime ) ) {
-			// if task action is to `save` or `apply` complete action before do session checks.
+			// if task action is to `save` or `apply` complete action before doing session checks.
 			if ($task != 'save' && $task != 'apply') {
 				// purge expired admin sessions only		
 				$past = time() - $this->getCfg( 'session_life_admin' );

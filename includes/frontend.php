@@ -209,6 +209,33 @@ function mosShowHead() {
 	$GLOBALS['syndicateParams'] = $syndicateParams;
 
 	$live_bookmark = $syndicateParams->get( 'live_bookmark', 0 );
+	
+	// and to allow disabling/enabling of selected feed types
+	switch ( $live_bookmark ) {
+		case 'RSS0.91':			
+			if ( !$syndicateParams->get( 'rss091', 1 ) ) {
+				$live_bookmark = 0;
+			}
+			break;
+		
+		case 'RSS1.0':			
+			if ( !$syndicateParams->get( 'rss10', 1 ) ) {
+				$live_bookmark = 0;
+			}
+			break;
+		
+		case 'RSS2.0':			
+			if ( !$syndicateParams->get( 'rss20', 1 ) ) {
+				$live_bookmark = 0;
+			}
+			break;
+		
+		case 'ATOM0.3':			
+			if ( !$syndicateParams->get( 'atom03', 1 ) ) {
+				$live_bookmark = 0;
+			}
+			break;
+	}
 
 	// support for Live Bookmarks ability for site syndication
 	if ($live_bookmark) {
@@ -220,7 +247,7 @@ function mosShowHead() {
 		$link_file = ampReplace( $link_file );
 
 		// security chcek
-		$check = $params->def( 'check', 1 );
+		$check = $syndicateParams->def( 'check', 1 );
 		if($check) {
 			// test if rssfeed module is published
 			// if not disable access

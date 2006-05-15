@@ -61,6 +61,7 @@ Low Level Threat
  # Fixed [topic,61971] : E-mail cloaking broken, TinyMCE `mce_href` problem
  # Fixed : Frontend Content editing does not display correct publishing date/time 
  # Fixed : Frontend Content editing incorrect handling of 'Never' in `Finish Publishing`
+ # Fixed : Incorrect date/time values on `Content Items Manager` and `Static Content Manager` pages
 
 
 14-May-2006 Rey Gigataras

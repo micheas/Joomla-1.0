@@ -26,7 +26,7 @@ class HTML_content {
 	* @param array An array of content objects
 	*/
 	function showContent( &$rows, $section, &$lists, $search, $pageNav, $all=NULL, $redirect ) {
-		global $my, $acl, $database;
+		global $my, $acl, $database, $mosConfig_offset;
 
 		mosCommonHTML::loadOverlib();
 		?>
@@ -132,37 +132,45 @@ class HTML_content {
 
 			$link 	= 'index2.php?option=com_content&sectionid='. $redirect .'&task=edit&hidemainmenu=1&id='. $row->id;
 
-			$row->sect_link = 'index2.php?option=com_sections&task=editA&hidemainmenu=1&id='. $row->sectionid;
-			$row->cat_link 	= 'index2.php?option=com_categories&task=editA&hidemainmenu=1&id='. $row->catid;
+			$row->sect_link 	= 'index2.php?option=com_sections&task=editA&hidemainmenu=1&id='. $row->sectionid;
+			$row->cat_link 		= 'index2.php?option=com_categories&task=editA&hidemainmenu=1&id='. $row->catid;
 
 			$now = _CURRENT_SERVER_TIME;
-			if ( $now <= $row->publish_up && $row->state == "1" ) {
+			if ( $now <= $row->publish_up && $row->state == 1 ) {
+			// Published
 				$img = 'publish_y.png';
 				$alt = 'Published';
-			} else if ( ( $now <= $row->publish_down || $row->publish_down == $nullDate ) && $row->state == "1" ) {
+			} else if ( ( $now <= $row->publish_down || $row->publish_down == $nullDate ) && $row->state == 1 ) {
+			// Pending
 				$img = 'publish_g.png';
 				$alt = 'Published';
-			} else if ( $now > $row->publish_down && $row->state == "1" ) {
+			} else if ( $now > $row->publish_down && $row->state == 1 ) {
+			// Expired
 				$img = 'publish_r.png';
 				$alt = 'Expired';
-			} elseif ( $row->state == "0" ) {
-				$img = "publish_x.png";
+			} elseif ( $row->state == 0 ) {
+			// Unpublished
+				$img = 'publish_x.png';
 				$alt = 'Unpublished';
 			}
-			$times = '';
-			if (isset($row->publish_up)) {
-				if ($row->publish_up == $nullDate) {
-					$times .= "<tr><td>Start: Always</td></tr>";
-				} else {
-					$times .= "<tr><td>Start: $row->publish_up</td></tr>";
-				}
+			
+			// correct times to include server offset info
+			$row->publish_up 	= mosFormatDate( $row->publish_up, _CURRENT_SERVER_TIME_FORMAT );			
+			if (trim( $row->publish_down ) == $nullDate || trim( $row->publish_down ) == '' || trim( $row->publish_down ) == '-' ) {
+				$row->publish_down = 'Never';
 			}
-			if (isset($row->publish_down)) {
-				if ($row->publish_down == $nullDate) {
-					$times .= "<tr><td>Finish: No Expiry</td></tr>";
-				} else {
-					$times .= "<tr><td>Finish: $row->publish_down</td></tr>";
-				}
+			$row->publish_down 	= mosFormatDate( $row->publish_down, _CURRENT_SERVER_TIME_FORMAT );		
+
+			$times = '';
+			if ($row->publish_up == $nullDate) {
+				$times .= "<tr><td>Start: Always</td></tr>";
+			} else {
+				$times .= "<tr><td>Start: $row->publish_up</td></tr>";
+			}
+			if ($row->publish_down == $nullDate || $row->publish_down = 'Never') {
+				$times .= "<tr><td>Finish: No Expiry</td></tr>";
+			} else {
+				$times .= "<tr><td>Finish: $row->publish_down</td></tr>";
 			}
 
 			if ( $acl->acl_check( 'administration', 'manage', 'users', $my->usertype, 'components', 'com_users' ) ) {

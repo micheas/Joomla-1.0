@@ -90,7 +90,7 @@ class content_typed_menu {
 		// build published button option
 		$lists['published'] 	= mosAdminMenus::Published( $menu );
 		// build the url link output
-		$lists['link'] 		= mosAdminMenus::Link( $menu, $uid );
+		$lists['link'] 			= mosAdminMenus::Link( $menu, $uid );
 
 		// get params definitions
 		$params = new mosParameters( $menu->params, $mainframe->getPath( 'menu_xml', $menu->type ), 'menu' );
@@ -103,7 +103,7 @@ class content_typed_menu {
 
 		$menu = new mosMenu( $database );
 		$menu->bind( $_POST );
-		$menuid = mosGetParam( $_POST, 'menuid', 0 );
+		$menuid = intval( mosGetParam( $_POST, 'menuid', 0 ) );
 		if ( $menuid ) {
 			$menu->id = $menuid;
 		}

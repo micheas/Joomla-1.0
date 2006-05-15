@@ -20,7 +20,7 @@ require_once( $mainframe->getPath( 'admin_html' ) );
 define( 'COM_IMAGE_BASE', $mosConfig_absolute_path . DIRECTORY_SEPARATOR . 'images' . DIRECTORY_SEPARATOR . 'stories' );
 
 // get parameters from the URL or submitted form
-$section 	= mosGetParam( $_REQUEST, 'section', 'content' );
+$section 	= strval( mosGetParam( $_REQUEST, 'section', 'content' ) );
 $cid 		= mosGetParam( $_REQUEST, 'cid', array(0) );
 if (!is_array( $cid )) {
 	$cid = array(0);
@@ -257,8 +257,8 @@ function showCategories( $section, $option ) {
 function editCategory( $uid=0, $section='' ) {
 	global $database, $my;
 
-	$type 		= mosGetParam( $_REQUEST, 'type', '' );
-	$redirect 	= mosGetParam( $_REQUEST, 'section', 'content' );	
+	$type 		= strval( mosGetParam( $_REQUEST, 'type', '' ) );
+	$redirect 	= strval( mosGetParam( $_REQUEST, 'section', 'content' ) );	
 	
 	// check for existance of any sections
 	$query = "SELECT COUNT( id )"
@@ -473,10 +473,10 @@ function editCategory( $uid=0, $section='' ) {
 function saveCategory( $task ) {
 	global $database;
 
-	$menu 		= mosGetParam( $_POST, 'menu', 'mainmenu' );
-	$menuid		= mosGetParam( $_POST, 'menuid', 0 );
-	$redirect 	= mosGetParam( $_POST, 'redirect', '' );
-	$oldtitle 	= mosGetParam( $_POST, 'oldtitle', null );
+	$menu 		= strval( mosGetParam( $_POST, 'menu', 'mainmenu' ) );
+	$menuid		= intval( mosGetParam( $_POST, 'menuid', 0 ) );
+	$redirect 	= strval( mosGetParam( $_POST, 'redirect', '' ) );
+	$oldtitle 	= strval( mosGetParam( $_POST, 'oldtitle', null ) );
 
 	$row = new mosCategory( $database );
 	if (!$row->bind( $_POST, 'folders' )) {
@@ -692,7 +692,7 @@ function publishCategories( $section, $categoryid=null, $cid=null, $publish=1 ) 
 function cancelCategory() {
 	global $database;
 
-	$redirect = mosGetParam( $_POST, 'redirect', '' );
+	$redirect = strval( mosGetParam( $_POST, 'redirect', '' ) );
 
 	$row = new mosCategory( $database );
 	$row->bind( $_POST );
@@ -768,7 +768,7 @@ function moveCategorySelect( $option, $cid, $sectionOld ) {
 function moveCategorySave( $cid, $sectionOld ) {
 	global $database;
 
-	$sectionMove = mosGetParam( $_REQUEST, 'sectionmove', '' );
+	$sectionMove = strval( mosGetParam( $_REQUEST, 'sectionmove', '' ) );
 
 	$cids = implode( ',', $cid );
 	$total = count( $cid );
@@ -851,7 +851,7 @@ function copyCategorySelect( $option, $cid, $sectionOld ) {
 function copyCategorySave( $cid, $sectionOld ) {
 	global $database;
 
-	$sectionMove 	= mosGetParam( $_REQUEST, 'sectionmove', '' );
+	$sectionMove 	= strval( mosGetParam( $_REQUEST, 'sectionmove', '' ) );
 	$contentid 		= mosGetParam( $_REQUEST, 'item', '' );
 	$total 			= count( $contentid  );
 
@@ -936,11 +936,11 @@ function menuLink( $id ) {
 	$category->bind( $_POST );
 	$category->checkin();
 
-	$redirect	= mosGetParam( $_POST, 'redirect', '' );
-	$menu 		= mosGetParam( $_POST, 'menuselect', '' );
-	$name 		= mosGetParam( $_POST, 'link_name', '' );
+	$redirect	= strval( mosGetParam( $_POST, 'redirect', '' ) );
+	$menu 		= strval( mosGetParam( $_POST, 'menuselect', '' ) );
+	$name 		= strval( mosGetParam( $_POST, 'link_name', '' ) );
 	$sectionid	= mosGetParam( $_POST, 'sectionid', '' );
-	$type 		= mosGetParam( $_POST, 'link_type', '' );
+	$type 		= strval( mosGetParam( $_POST, 'link_type', '' ) );
 
 	$name		= stripslashes( ampReplace($name) );
 	

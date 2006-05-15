@@ -69,7 +69,7 @@ function viewSearch() {
 	// html output
 	search_html::openhtml( $params );
 
-	$searchword = mosGetParam( $_REQUEST, 'searchword', '' );
+	$searchword = strtolower( strval( mosGetParam( $_REQUEST, 'searchword', '' ) ) );
 	$searchword = $database->getEscaped( trim( $searchword ) );
 	
 	// limit searchword to 20 characters
@@ -93,11 +93,11 @@ function viewSearch() {
 	$orders[] = mosHTML::makeOption( 'popular', _SEARCH_POPULAR );
 	$orders[] = mosHTML::makeOption( 'alpha', _SEARCH_ALPHABETICAL );
 	$orders[] = mosHTML::makeOption( 'category', _SEARCH_CATEGORY );
-	$ordering = mosGetParam( $_REQUEST, 'ordering', 'newest');
+	$ordering = strtolower( strval( mosGetParam( $_REQUEST, 'ordering', 'newest') ) );
 	$lists = array();
 	$lists['ordering'] = mosHTML::selectList( $orders, 'ordering', 'id="search_ordering" class="inputbox"', 'value', 'text', $ordering );
 
-	$searchphrase = mosGetParam( $_REQUEST, 'searchphrase', 'any' );
+	$searchphrase = strtolower( strval( mosGetParam( $_REQUEST, 'searchphrase', 'any' ) ) );
 	$searchphrases = array();
 
 	$phrase = new stdClass();
@@ -145,8 +145,8 @@ function viewSearch() {
 		search_html::searchintro( $searchword_clean, $params );
 
 		mosLogSearch( $searchword );
-		$phrase 	= mosGetParam( $_REQUEST, 'searchphrase', '' );
-		$ordering 	= mosGetParam( $_REQUEST, 'ordering', '' );
+		$phrase 	= strval( mosGetParam( $_REQUEST, 'searchphrase', '' ) );
+		$ordering 	= strval( mosGetParam( $_REQUEST, 'ordering', '' ) );
 
 		$_MAMBOTS->loadBotGroup( 'search' );
 		$results 	= $_MAMBOTS->trigger( 'onSearch', array( $searchword, $phrase, $ordering ) );
@@ -194,8 +194,8 @@ function viewSearch() {
 		$mainframe->setPageTitle( _SEARCH_TITLE );
 
 		$total 		= $totalRows;
-		$limit		= mosGetParam( $_GET, 'limit', $mosConfig_list_limit );
-		$limitstart = mosGetParam( $_GET, 'limitstart', 0 );
+		$limit		= intval( mosGetParam( $_GET, 'limit', $mosConfig_list_limit ) );
+		$limitstart = intval( mosGetParam( $_GET, 'limitstart', 0 ) );
 		
 		// prepares searchword for proper display in url
 		$searchword_clean = urlencode(stripslashes($searchword_clean));

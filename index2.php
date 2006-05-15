@@ -37,7 +37,7 @@ if (file_exists( $mosConfig_absolute_path .'/components/com_sef/sef.php' )) {
 require_once( $mosConfig_absolute_path .'/includes/frontend.php' );
 
 // retrieve some expected url (or form) arguments
-$option 	= strtolower( mosGetParam( $_REQUEST, 'option' ) );
+$option 	= strtolower( strval( mosGetParam( $_REQUEST, 'option' ) ) );
 $Itemid 	= intval( mosGetParam( $_REQUEST, 'Itemid', 0 ) );
 $no_html 	= intval( mosGetParam( $_REQUEST, 'no_html', 0 ) );
 $act 		= mosGetParam( $_REQUEST, 'act', '' );

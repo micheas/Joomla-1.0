@@ -278,7 +278,7 @@ function contactpage( $contact_id ) {
 		}
 
 		// loads current template for the pop-up window
-		$pop = mosGetParam( $_REQUEST, 'pop', 0 );
+		$pop = intval( mosGetParam( $_REQUEST, 'pop', 0 ) );
 		if ( $pop ) {
 			$params->set( 'popup', 1 );
 			$params->set( 'back_button', 0 );
@@ -409,11 +409,11 @@ function sendmail( $con_id, $option ) {
 
 	if (count( $contact ) > 0) {
 		$default 	= $mosConfig_sitename.' '. _ENQUIRY;
-		$email 		= mosGetParam( $_POST, 'email', 		'' );
-		$text 		= mosGetParam( $_POST, 'text', 			'' );
-		$name 		= mosGetParam( $_POST, 'name', 			'' );
-		$subject 	= mosGetParam( $_POST, 'subject', 		$default );
-		$email_copy = mosGetParam( $_POST, 'email_copy', 	0 );
+		$email 		= strval( mosGetParam( $_POST, 'email', 		'' ) );
+		$text 		= strval( mosGetParam( $_POST, 'text', 			'' ) );
+		$name 		= strval( mosGetParam( $_POST, 'name', 			'' ) );
+		$subject 	= strval( mosGetParam( $_POST, 'subject', 		$default ) );
+		$email_copy = strval( mosGetParam( $_POST, 'email_copy', 	0 ) );
 
 		$menu = new mosMenu( $database );
 		$menu->load( $Itemid );

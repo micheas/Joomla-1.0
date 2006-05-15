@@ -299,9 +299,9 @@ function editSection( $uid=0, $scope='', $option ) {
 function saveSection( $option, $scope, $task ) {
 	global $database;
 
-	$menu 		= mosGetParam( $_POST, 'menu', 'mainmenu' );
-	$menuid		= mosGetParam( $_POST, 'menuid', 0 );
-	$oldtitle 	= mosGetParam( $_POST, 'oldtitle', null );
+	$menu 		= strval( mosGetParam( $_POST, 'menu', 'mainmenu' ) );
+	$menuid		= intval( mosGetParam( $_POST, 'menuid', 0 ) );
+	$oldtitle 	= strval( mosGetParam( $_POST, 'oldtitle', null ) );
 
 	$row = new mosSection( $database );
 	if (!$row->bind( $_POST )) {
@@ -569,7 +569,7 @@ function copySectionSelect( $option, $cid, $section ) {
 function copySectionSave( $sectionid ) {
 	global $database;
 
-	$title 		= mosGetParam( $_REQUEST, 'title', '' );
+	$title 		= strval( mosGetParam( $_REQUEST, 'title', '' ) );
 	$contentid 	= mosGetParam( $_REQUEST, 'content', '' );
 	$categoryid = mosGetParam( $_REQUEST, 'category', '' );
 
@@ -687,9 +687,9 @@ function menuLink( $id ) {
 	$section->bind( $_POST );
 	$section->checkin();
 
-	$menu 	= mosGetParam( $_POST, 'menuselect', '' );
-	$name 	= mosGetParam( $_POST, 'link_name', '' );
-	$type 	= mosGetParam( $_POST, 'link_type', '' );
+	$menu 	= strval( mosGetParam( $_POST, 'menuselect', '' ) );
+	$name 	= strval( mosGetParam( $_POST, 'link_name', '' ) );
+	$type 	= strval( mosGetParam( $_POST, 'link_type', '' ) );
 
 	$name	= stripslashes( ampReplace($name) );
 	

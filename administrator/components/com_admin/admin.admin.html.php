@@ -393,8 +393,8 @@ class HTML_admin_misc {
 		
 		$fullhelpurl = $helpurl . '/index2.php?option=com_content&amp;task=findkey&pop=1&keyref=';
 
-		$helpsearch = mosGetParam( $_REQUEST, 'helpsearch', '' );
-		$page 		= mosGetParam( $_REQUEST, 'page', 'joomla.whatsnew100.html' );
+		$helpsearch = strval( mosGetParam( $_REQUEST, 'helpsearch', '' ) );
+		$page 		= strval( mosGetParam( $_REQUEST, 'page', 'joomla.whatsnew100.html' ) );
 		$toc 		= getHelpToc( $helpsearch );
 		if (!eregi( '\.html$', $page )) {
 			$page .= '.xml';
@@ -563,7 +563,7 @@ class HTML_admin_misc {
  */
 function getHelpTOC( $helpsearch ) {
 	global $mosConfig_absolute_path;
-	$helpurl = mosGetParam( $GLOBALS, 'mosConfig_helpurl', '' );
+	$helpurl = strval( mosGetParam( $GLOBALS, 'mosConfig_helpurl', '' ) );
 
 	$files = mosReadDirectory( $mosConfig_absolute_path . '/help/', '\.xml$|\.html$' );
 

@@ -22,7 +22,7 @@ if (!($acl->acl_check( 'administration', 'edit', 'users', $my->usertype, 'module
 
 require_once( $mainframe->getPath( 'admin_html' ) );
 
-$client 	= mosGetParam( $_REQUEST, 'client', '' );
+$client 	= strval( mosGetParam( $_REQUEST, 'client', '' ) );
 $moduleid 	= mosGetParam( $_REQUEST, 'moduleid', null );
 $cid 		= mosGetParam( $_POST, 'cid', array(0) );
 if ($cid[0] == 0 && isset($moduleid) ) {
@@ -577,7 +577,7 @@ function cancelModule( $option, $client ) {
 function orderModule( $uid, $inc, $option ) {
 	global $database;
 
-	$client = mosGetParam( $_POST, 'client', '' );
+	$client = strval( mosGetParam( $_POST, 'client', '' ) );
 
 	$row = new mosModule( $database );
 	$row->load( $uid );

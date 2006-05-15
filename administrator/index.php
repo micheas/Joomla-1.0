@@ -30,7 +30,7 @@ if (file_exists( '../installation/index.php' )) {
 	exit();
 }
 */
-$option = mosGetParam( $_REQUEST, 'option', NULL );
+$option = strtolower( strval( mosGetParam( $_REQUEST, 'option', NULL ) ) );
 
 // mainframe is an API workhorse, lots of 'core' interaction routines
 $mainframe = new mosMainFrame( $database, $option, '..', true );

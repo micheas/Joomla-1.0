@@ -110,7 +110,7 @@ function mosLoadAdminModule( $name, $params=NULL ) {
 	global $mosConfig_absolute_path, $mosConfig_live_site;
 	global $database, $acl, $my, $mainframe, $option;
 
-	$task = mosGetParam( $_REQUEST, 'task', '' );
+	$task = strtolower( strval( mosGetParam( $_REQUEST, 'task', '' ) ) );
 	// legacy support for $act
 	$act = mosGetParam( $_REQUEST, 'act', '' );
 

@@ -33,11 +33,7 @@ switch ($task) {
 		break;
 
 	case 'reply':
-		newMessage(
-			$option,
-			mosGetParam( $_REQUEST, 'userid', 0 ),
-			mosGetParam( $_REQUEST, 'subject', '' )
-		);
+		newMessage( $option );
 		break;
 
 	case 'save':
@@ -113,9 +109,12 @@ function saveConfig( $option ) {
 	mosRedirect( "index2.php?option=$option" );
 }
 
-function newMessage( $option, $user, $subject ) {
-	global $database, $mainframe, $my, $acl;
-
+function newMessage( $option ) {
+	global $database, $acl;
+	
+	$user 		= intval( mosGetParam( $_REQUEST, 'userid', 0 ) );
+	$subject 	= strval( mosGetParam( $_REQUEST, 'subject', '' ) );
+	
 	// get available backend user groups
 	$gid 	= $acl->get_group_id( 'Public Backend', 'ARO' );
 	$gids 	= $acl->get_group_children( $gid, 'ARO', 'RECURSE' );
@@ -123,6 +122,7 @@ function newMessage( $option, $user, $subject ) {
 
 	// get list of usernames
 	$recipients = array( mosHTML::makeOption( '0', '- Select User -' ) );
+	
 	$query = "SELECT id AS value, username AS text FROM #__users"
 	. "\n WHERE gid IN ( $gids )"
 	. "\n ORDER BY name"
@@ -130,15 +130,8 @@ function newMessage( $option, $user, $subject ) {
 	$database->setQuery( $query );
 	$recipients = array_merge( $recipients, $database->loadObjectList() );
 
-	$recipientslist =
-		mosHTML::selectList(
-			$recipients,
-			'user_id_to',
-			'class="inputbox" size="1"',
-			'value',
-			'text',
-			$user
-		);
+	$recipientslist = mosHTML::selectList( $recipients, 'user_id_to', 'class="inputbox" size="1"', 'value', 'text', $user );
+		
 	HTML_messages::newMessage($option, $recipientslist, $subject );
 }
 

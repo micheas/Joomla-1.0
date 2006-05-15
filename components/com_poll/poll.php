@@ -66,7 +66,7 @@ function pollAddVote( $uid ) {
 		return;
 	}
 
-	$voteid = mosGetParam( $_POST, 'voteid', 0 );
+	$voteid = intval( mosGetParam( $_POST, 'voteid', 0 ) );
 	if (!$voteid) {
 		echo "<h3>"._NO_SELECTION."</h3>";
 		echo '<input class="button" type="button" value="'. _CMN_CONTINUE .'" onClick="window.history.go(-1);">';

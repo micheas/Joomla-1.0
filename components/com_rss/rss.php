@@ -94,7 +94,7 @@ function feedFrontpage( $showFeed ) {
 	$info[ 'limit_text' ] 		= $params->def( 'limit_text', 0 );
 	$info[ 'text_length' ] 		= $params->def( 'text_length', 20 );
 	// get feed type from url
-	$info[ 'feed' ] 			= mosGetParam( $_GET, 'feed', 'RSS2.0' );
+	$info[ 'feed' ] 			= strval( mosGetParam( $_GET, 'feed', 'RSS2.0' ) );
 	// live bookmarks
 	$info[ 'live_bookmark' ]	= $params->def( 'live_bookmark', '' );
 	$info[ 'bookmark_file' ]	= $params->def( 'bookmark_file', '' );

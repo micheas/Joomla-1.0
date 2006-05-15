@@ -22,7 +22,7 @@ switch ($task) {
 	case 'edit':
 		$cid = mosGetParam( $_POST, 'cid', 0 );
 		if ( !is_array( $cid ) ){
-			$mid = mosGetParam( $_POST, 'id', 0 );;
+			$mid = intval( mosGetParam( $_POST, 'id', 0 ) );
 		} else {
 			$mid = $cid[0];
 		}

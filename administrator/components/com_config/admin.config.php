@@ -336,7 +336,7 @@ function saveconfig( $task ) {
 
 	$fname = $mosConfig_absolute_path . '/configuration.php';
 
-	$enable_write 	= mosGetParam($_POST,'enable_write',0);
+	$enable_write 	= intval( mosGetParam( $_POST, 'enable_write', 0 ) );
 	$oldperms 		= fileperms($fname);
 	if ( $enable_write ) {
 		@chmod( $fname, $oldperms | 0222);

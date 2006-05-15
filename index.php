@@ -51,7 +51,7 @@ if (file_exists( $mosConfig_absolute_path .'/components/com_sef/sef.php' )) {
 require_once( $mosConfig_absolute_path .'/includes/frontend.php' );
 
 // retrieve some expected url (or form) arguments
-$option = trim( strtolower( mosGetParam( $_REQUEST, 'option' ) ) );
+$option = strval( strtolower( mosGetParam( $_REQUEST, 'option' ) ) );
 $Itemid = intval( mosGetParam( $_REQUEST, 'Itemid', null ) );
 
 if ($option == '') {
@@ -134,8 +134,8 @@ if ($mosConfig_lang=='') {
 include_once( $mosConfig_absolute_path .'/language/' . $mosConfig_lang . '.php' );
 
 // frontend login & logout controls
-$return = mosGetParam( $_REQUEST, 'return', NULL );
-$message = mosGetParam( $_POST, 'message', 0 );
+$return 	= strval( mosGetParam( $_REQUEST, 'return', NULL ) );
+$message 	= intval( mosGetParam( $_POST, 'message', 0 ) );
 if ($option == 'login') {
 	$mainframe->login();
 

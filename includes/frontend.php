@@ -17,7 +17,7 @@ defined( '_VALID_MOS' ) or die( 'Restricted access' );
 */
 function mosMainBody() {
 	// message passed via the url
-	$mosmsg = mosGetParam( $_REQUEST, 'mosmsg', '' );
+	$mosmsg = strval( mosGetParam( $_REQUEST, 'mosmsg', '' ) );
 
 	$popMessages = false;
 	
@@ -93,7 +93,7 @@ function &initModules() {
 function mosCountModules( $position='left' ) {
 	global $database, $my, $Itemid;
 
-	$tp = mosGetParam( $_GET, 'tp', 0 );
+	$tp = intval( mosGetParam( $_GET, 'tp', 0 ) );
 	if ($tp) {
 		return 1;
 	}
@@ -112,7 +112,7 @@ function mosCountModules( $position='left' ) {
 function mosLoadModules( $position='left', $style=0 ) {
 	global $mosConfig_gzip, $mosConfig_absolute_path, $database, $my, $Itemid, $mosConfig_caching;
 
-	$tp = mosGetParam( $_GET, 'tp', 0 );
+	$tp = intval( mosGetParam( $_GET, 'tp', 0 ) );
 	if ($tp) {
 		echo '<div style="height:50px;background-color:#eee;margin:2px;padding:10px;border:1px solid #f00;color:#700;">';
 		echo $position;
@@ -175,7 +175,7 @@ function mosShowHead() {
 	global $database, $option, $my, $mainframe, $_VERSION;
 	global $mosConfig_MetaDesc, $mosConfig_MetaKeys, $mosConfig_live_site, $mosConfig_sef, $mosConfig_absolute_path, $mosConfig_sitename, $mosConfig_favicon;
 
-	$task = mosGetParam( $_REQUEST, 'task', '' );
+	$task = strtolower( strval( mosGetParam( $_REQUEST, 'task', '' ) ) );
 
 	if ($my->id || $mainframe->get( 'joomlaJavascript' )) {
 		?>

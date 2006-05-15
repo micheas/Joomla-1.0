@@ -69,7 +69,7 @@ class TOOLBAR_menus {
 			$cid = mosGetParam( $_POST, 'cid', array(0) );
 			$id = $cid[0];
 		}
-		$menutype 	= mosGetParam( $_REQUEST, 'menutype', 'mainmenu' );
+		$menutype 	= strval( mosGetParam( $_REQUEST, 'menutype', 'mainmenu' ) );
 
 		mosMenuBar::startTable();
 		if ( !$id ) {

@@ -21,7 +21,7 @@ function botVoting( &$row, &$params, $page=0 ) {
 
 	$id 	= $row->id;
 	$option = 'com_content';
-	$task 	= mosGetParam( $_REQUEST, 'task', '' );
+	$task 	= strtolower( strval( mosGetParam( $_REQUEST, 'task', '' ) ) );
 
 	$html = '';
 	if ($params->get( 'rating' ) && !$params->get( 'popup' )){

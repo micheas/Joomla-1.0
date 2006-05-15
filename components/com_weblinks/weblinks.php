@@ -275,9 +275,8 @@ function cancelWebLink( $option ) {
 	$row = new mosWeblink( $database );
 	$row->id = intval( mosGetParam( $_POST, 'id', 0 ) );
 	$row->checkin();
-	$Itemid = mosGetParam( $_POST, 'Returnid', '' );
 
-	$referer = mosGetParam( $_POST, 'referer', '' );
+	$referer = strval( mosGetParam( $_POST, 'referer', '' ) );
 	mosRedirect( $referer );
 }
 

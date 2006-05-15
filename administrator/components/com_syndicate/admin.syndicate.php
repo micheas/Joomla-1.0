@@ -77,7 +77,7 @@ function saveSyndicate( $option ) {
 		$_POST['params'] = mosParameters::textareaHandling( $txt );
 	}
 
-	$id = mosGetParam( $_POST, 'id', '17' );
+	$id = intval( mosGetParam( $_POST, 'id', '17' ) );
 	$row = new mosComponent( $database );
 	$row->load( $id );
 

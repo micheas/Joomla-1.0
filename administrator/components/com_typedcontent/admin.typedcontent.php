@@ -306,8 +306,8 @@ function save( $option, $task ) {
 	global $database, $my, $mosConfig_offset;
 
 	$nullDate 	= $database->getNullDate();
-	$menu 		= mosGetParam( $_POST, 'menu', 'mainmenu' );
-	$menuid		= mosGetParam( $_POST, 'menuid', 0 );
+	$menu 		= strval( mosGetParam( $_POST, 'menu', 'mainmenu' ) );
+	$menuid		= intval( mosGetParam( $_POST, 'menuid', 0 ) );
 
 	$row = new mosContent( $database );
 	if (!$row->bind( $_POST )) {
@@ -336,7 +336,7 @@ function save( $option, $task ) {
 		$row->publish_down = mosFormatDate( $row->publish_down, _CURRENT_SERVER_TIME_FORMAT, -$mosConfig_offset );
 	}
 	
-	$row->state = mosGetParam( $_REQUEST, 'published', 0 );
+	$row->state = intval( mosGetParam( $_REQUEST, 'published', 0 ) );
 
 	// Save Parameters
 	$params = mosGetParam( $_POST, 'params', '' );
@@ -521,8 +521,8 @@ function cancel( $option ) {
 function menuLink( $option, $id ) {
 	global $database;
 
-	$menu 	= mosGetParam( $_POST, 'menuselect', '' );
-	$link 	= mosGetParam( $_POST, 'link_name', '' );
+	$menu 	= strval( mosGetParam( $_POST, 'menuselect', '' ) );
+	$link 	= strval( mosGetParam( $_POST, 'link_name', '' ) );
 
 	$link	= stripslashes( ampReplace($link) );
 	
@@ -558,7 +558,7 @@ function go2menu() {
 	$row->bind( $_POST );
 	$row->checkin();
 
-	$menu = mosGetParam( $_POST, 'menu', 'mainmenu' );
+	$menu = strval( mosGetParam( $_POST, 'menu', 'mainmenu' ) );
 
 	mosRedirect( 'index2.php?option=com_menus&menutype='. $menu );
 }
@@ -571,8 +571,8 @@ function go2menuitem() {
 	$row->bind( $_POST );
 	$row->checkin();
 
-	$menu 	= mosGetParam( $_POST, 'menu', 'mainmenu' );
-	$id		= mosGetParam( $_POST, 'menuid', 0 );
+	$menu 	= strval( mosGetParam( $_POST, 'menu', 'mainmenu' ) );
+	$id		= intval( mosGetParam( $_POST, 'menuid', 0 ) );
 
 	mosRedirect( 'index2.php?option=com_menus&menutype='. $menu .'&task=edit&hidemainmenu=1&id='. $id );
 }

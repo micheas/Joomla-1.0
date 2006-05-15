@@ -153,7 +153,7 @@ class content_item_link_menu {
 
 		$menu = new mosMenu( $database );
 		$menu->bind( $_POST );
-		$menuid = mosGetParam( $_POST, 'menuid', 0 );
+		$menuid = intval( mosGetParam( $_POST, 'menuid', 0 ) );
 		if ( $menuid ) {
 			$menu->id = $menuid;
 		}

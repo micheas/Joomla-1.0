@@ -214,8 +214,8 @@ function editLanguageSource( $p_lname, $option) {
 }
 
 function saveLanguageSource( $option ) {
-	$language = mosGetParam( $_POST, 'language', '' );
-	$filecontent = mosGetParam( $_POST, 'filecontent', '', _MOS_ALLOWHTML );
+	$language 		= mosGetParam( $_POST, 'language', '' );
+	$filecontent 	= mosGetParam( $_POST, 'filecontent', '', _MOS_ALLOWHTML );
 
 	if (!$language) {
 		mosRedirect( "index2.php?option=$option&mosmsg=Operation failed: No language specified." );

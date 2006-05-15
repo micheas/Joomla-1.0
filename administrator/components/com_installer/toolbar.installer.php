@@ -23,7 +23,7 @@ switch ($task){
 		break;
 
 	default:
-		$element = mosGetParam( $_REQUEST, 'element', '' );
+		$element = strval( mosGetParam( $_REQUEST, 'element', '' ) );
 		if ($element == 'component' || $element == 'module' || $element == 'mambot') {
 			TOOLBAR_installer::_DEFAULT2();
 		} else {

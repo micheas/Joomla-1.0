@@ -652,7 +652,7 @@ class mosMainFrame {
 		// Session Cookie `name`
 		$sessionCookieName 	= mosMainFrame::sessionCookieName();
 		// Get Session Cookie `value`
-		$sessioncookie 		= mosGetParam( $_COOKIE, $sessionCookieName, null );
+		$sessioncookie 		= strval( mosGetParam( $_COOKIE, $sessionCookieName, null ) );
 		
 		// Session ID / `value`
 		$sessionValueCheck 	= mosMainFrame::sessionCookieValue( $sessioncookie );
@@ -679,7 +679,7 @@ class mosMainFrame {
 				setcookie( $sessionCookieName, '-', false, '/' );				
 			} else {
 			// otherwise, sessioncookie was found, but set to test val or the session expired, prepare for session registration and register the session
-				$url = mosGetParam( $_SERVER, 'REQUEST_URI', null );
+				$url = strval( mosGetParam( $_SERVER, 'REQUEST_URI', null ) );
 				// stop sessions being created for requests to syndicated feeds
 				if ( strpos( $url, 'option=com_rss' ) === false && strpos( $url, 'feed=' ) === false ) {
 					$session->guest 	= 1;
@@ -699,7 +699,7 @@ class mosMainFrame {
 			}
 
 			// Cookie used by Remember me functionality
-			$remCookieValue	= mosGetParam( $_COOKIE, $remCookieName, null );
+			$remCookieValue	= strval( mosGetParam( $_COOKIE, $remCookieName, null ) );
 			
 			// test if cookie is correct length			
 			if ( strlen($remCookieValue) == 64 ) {
@@ -739,10 +739,10 @@ class mosMainFrame {
 
 		// restore some session variables
 		$my 			= new mosUser( $this->_db );
-		$my->id 		= mosGetParam( $_SESSION, 'session_user_id', '' );
-		$my->username 	= mosGetParam( $_SESSION, 'session_username', '' );
-		$my->usertype 	= mosGetParam( $_SESSION, 'session_usertype', '' );
-		$my->gid 		= mosGetParam( $_SESSION, 'session_gid', '' );
+		$my->id 		= intval( mosGetParam( $_SESSION, 'session_user_id', '' ) );
+		$my->username 	= strval( mosGetParam( $_SESSION, 'session_username', '' ) );
+		$my->usertype 	= strval( mosGetParam( $_SESSION, 'session_usertype', '' ) );
+		$my->gid 		= intval( mosGetParam( $_SESSION, 'session_gid', '' ) );
 		$my->params		= mosGetParam( $_SESSION, 'session_user_params', '' );
 
 		$session_id 	= mosGetParam( $_SESSION, 'session_id', '' );
@@ -922,7 +922,7 @@ class mosMainFrame {
 		// if no username and password passed from function, then function is being called from login module/component
 		if (!$username || !$passwd) {
 			$username 	= strval( mosGetParam( $_POST, 'username', '' ) );
-			$passwd 	= mosGetParam( $_POST, 'passwd', '' );
+			$passwd 	= strval( mosGetParam( $_POST, 'passwd', '' ) );
 			$passwd 	= md5( $passwd );
 			
 			$bypost 	= 1;
@@ -1005,7 +1005,7 @@ class mosMainFrame {
 				}
 
 				// set remember me cookie if selected
-				$remember = mosGetParam( $_POST, 'remember', '' );
+				$remember = strval( mosGetParam( $_POST, 'remember', '' ) );
 				if ( $remember == 'yes' ) {
 					// cookie lifetime of 365 days
 					$lifetime 		= time() + 365*24*60*60;
@@ -1121,8 +1121,8 @@ class mosMainFrame {
 			$cur_template = $this->_db->loadResult();
 
 			// TemplateChooser Start
-			$jos_user_template 		= mosGetParam( $_COOKIE, 'jos_user_template', '' );
-			$jos_change_template 	= mosGetParam( $_REQUEST, 'jos_change_template', $jos_user_template );
+			$jos_user_template 		= strval( mosGetParam( $_COOKIE, 'jos_user_template', '' ) );
+			$jos_change_template 	= strval( mosGetParam( $_REQUEST, 'jos_change_template', $jos_user_template ) );
 			if ($jos_change_template) {
 				// clean template name
 				$jos_change_template = preg_replace( '#\W#', '', $jos_change_template );
@@ -1298,7 +1298,7 @@ class mosMainFrame {
 			if (mosGetParam( $_COOKIE, 'mosvisitor', 0 )) {
 				return;
 			}
-			setcookie( "mosvisitor", "1" );
+			setcookie( 'mosvisitor', 1 );
 
 			if (phpversion() <= "4.2.1") {
 				$agent = getenv( "HTTP_USER_AGENT" );
@@ -5355,7 +5355,7 @@ function mosSendAdminMail( $adminName, $adminEmail, $email, $type, $title, $auth
 function mosPathWay() {
 	global $mosConfig_absolute_path;
 	
-	$Itemid = mosGetParam($_REQUEST,'Itemid','');
+	$Itemid = intval( mosGetParam( $_REQUEST, 'Itemid', '' ) );
 	require_once ( $mosConfig_absolute_path . '/includes/pathway.php' );
 }
 

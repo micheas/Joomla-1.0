@@ -277,8 +277,8 @@ function cancelNewsFeed( $option ) {
 function orderNewsFeed( $id, $inc, $option ) {
 	global $database;
 
-	$limit 		= mosGetParam( $_REQUEST, 'limit', 0 );
-	$limitstart = mosGetParam( $_REQUEST, 'limitstart', 0 );
+	$limit 		= intval( mosGetParam( $_REQUEST, 'limit', 0 ) );
+	$limitstart = intval( mosGetParam( $_REQUEST, 'limitstart', 0 ) );
 	$catid 		= intval( mosGetParam( $_REQUEST, 'catid', 0 ) );
 
 	$row = new mosNewsFeed( $database );

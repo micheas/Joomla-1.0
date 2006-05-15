@@ -41,7 +41,7 @@ switch ($task) {
 		break;
 
 	case 'editA':
-		$id = mosGetParam( $_REQUEST, 'id', 0 );
+		$id = intval( mosGetParam( $_REQUEST, 'id', 0 ) );
 
 		$query = "SELECT published"
 		. "\n FROM #__polls"

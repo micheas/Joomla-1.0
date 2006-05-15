@@ -254,7 +254,7 @@ class HTML_contact {
 		
 		$template 		= $mainframe->getTemplate();
 		$sitename 		= $mainframe->getCfg( 'sitename' );
-		$hide_js 		= mosGetParam($_REQUEST,'hide_js', 0 );
+		$hide_js 		= intval( mosGetParam($_REQUEST,'hide_js', 0 ) );
 				?>
 		<script language="JavaScript" type="text/javascript">
 		<!--

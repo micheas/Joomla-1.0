@@ -16,7 +16,7 @@ defined( '_VALID_MOS' ) or die( 'Restricted access' );
 
 global $mosConfig_offset;
 
-$id 		= intval( mosGetParam( $_REQUEST, 'id', null ) );
+$id 		= mosGetParam( $_REQUEST, 'id', null );
 
 $now 		= _CURRENT_SERVER_TIME;
 $nullDate 	= $database->getNullDate();

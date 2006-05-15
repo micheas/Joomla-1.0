@@ -372,7 +372,7 @@ function editContent( $uid=0, $sectionid=0, $option ) {
 	global $database, $my, $mainframe;
 	global $mosConfig_absolute_path, $mosConfig_live_site, $mosConfig_offset;
 
-	$redirect = mosGetParam( $_POST, 'redirect', '' );
+	$redirect = strval( mosGetParam( $_POST, 'redirect', '' ) );
 	$nullDate = $database->getNullDate();
 	
 	if ( !$redirect ) {
@@ -638,8 +638,8 @@ function editContent( $uid=0, $sectionid=0, $option ) {
 function saveContent( $sectionid, $task ) {
 	global $database, $my, $mainframe, $mosConfig_offset;
 
-	$menu 		= mosGetParam( $_POST, 'menu', 'mainmenu' );
-	$menuid		= mosGetParam( $_POST, 'menuid', 0 );
+	$menu 		= strval( mosGetParam( $_POST, 'menu', 'mainmenu' ) );
+	$menuid		= intval( mosGetParam( $_POST, 'menuid', 0 ) );
 	$nullDate 	= $database->getNullDate();
 
 	$row = new mosContent( $database );
@@ -668,7 +668,7 @@ function saveContent( $sectionid, $task ) {
 		$row->publish_down = mosFormatDate( $row->publish_down, _CURRENT_SERVER_TIME_FORMAT, -$mosConfig_offset );
 	}
 
-	$row->state = mosGetParam( $_REQUEST, 'published', 0 );
+	$row->state = intval( mosGetParam( $_REQUEST, 'published', 0 ) );
 
 	$params = mosGetParam( $_POST, 'params', '' );
 	if (is_array( $params )) {
@@ -707,7 +707,7 @@ function saveContent( $sectionid, $task ) {
 	require_once( $mainframe->getPath( 'class', 'com_frontpage' ) );
 	$fp = new mosFrontPage( $database );
 
-	if (mosGetParam( $_REQUEST, 'frontpage', 0 )) {
+	if (intval( mosGetParam( $_REQUEST, 'frontpage', 0 ) )) {
 
 		// toggles go to first place
 		if (!$fp->load( $row->id )) {
@@ -821,7 +821,7 @@ function changeContent( $cid=null, $state=0, $option ) {
 	}
 
 	$redirect 	= mosGetParam( $_POST, 'redirect', $row->sectionid );
-	$rtask 		= mosGetParam( $_POST, 'returntask', '' );
+	$rtask 		= strval( mosGetParam( $_POST, 'returntask', '' ) );
 	if ( $rtask ) {
 		$rtask = '&task='. $rtask;
 	} else {
@@ -899,8 +899,8 @@ function removeContent( &$cid, $sectionid, $option ) {
 		exit();
 	}
 
-	$msg = $total ." Item(s) sent to the Trash";
-	$return = mosGetParam( $_POST, 'returntask', '' );
+	$msg 	= $total ." Item(s) sent to the Trash";
+	$return = strval( mosGetParam( $_POST, 'returntask', '' ) );
 	mosRedirect( 'index2.php?option='. $option .'&task='. $return .'&sectionid='. $sectionid, $msg );
 }
 
@@ -1215,8 +1215,8 @@ function filterCategory( $query, $active=NULL ) {
 function menuLink( $redirect, $id ) {
 	global $database;
 
-	$menu = mosGetParam( $_POST, 'menuselect', '' );
-	$link = mosGetParam( $_POST, 'link_name', '' );
+	$menu = strval( mosGetParam( $_POST, 'menuselect', '' ) );
+	$link = strval( mosGetParam( $_POST, 'link_name', '' ) );
 
 	$link	= stripslashes( ampReplace($link) );
 	
@@ -1245,14 +1245,14 @@ function menuLink( $redirect, $id ) {
 }
 
 function go2menu() {
-	$menu = mosGetParam( $_POST, 'menu', 'mainmenu' );
+	$menu = strval( mosGetParam( $_POST, 'menu', 'mainmenu' ) );
 
 	mosRedirect( 'index2.php?option=com_menus&menutype='. $menu );
 }
 
 function go2menuitem() {
-	$menu 	= mosGetParam( $_POST, 'menu', 'mainmenu' );
-	$id		= mosGetParam( $_POST, 'menuid', 0 );
+	$menu 	= strval( mosGetParam( $_POST, 'menu', 'mainmenu' ) );
+	$id		= intval( mosGetParam( $_POST, 'menuid', 0 ) );
 
 	mosRedirect( 'index2.php?option=com_menus&menutype='. $menu .'&task=edit&hidemainmenu=1&id='. $id );
 }
@@ -1263,7 +1263,7 @@ function saveOrder( &$cid ) {
 	$total		= count( $cid );
 	$order 		= mosGetParam( $_POST, 'order', array(0) );
 	$redirect 	= mosGetParam( $_POST, 'redirect', 0 );
-	$rettask	= mosGetParam( $_POST, 'returntask', '' );
+	$rettask	= strval( mosGetParam( $_POST, 'returntask', '' ) );
 	$row 		= new mosContent( $database );
 	$conditions = array();
 

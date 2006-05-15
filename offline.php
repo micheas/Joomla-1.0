@@ -27,9 +27,9 @@ if (!defined( '_INSTALL_CHECK' )) {
 	if (class_exists( 'mosUser' )) {
 		// restore some session variables
 		$admin 				= new mosUser( $database );
-		$admin->id 			= mosGetParam( $_SESSION, 'session_user_id', '' );
-		$admin->username 	= mosGetParam( $_SESSION, 'session_username', '' );
-		$admin->usertype 	= mosGetParam( $_SESSION, 'session_usertype', '' );
+		$admin->id 			= intval( mosGetParam( $_SESSION, 'session_user_id', '' ) );
+		$admin->username 	= strval( mosGetParam( $_SESSION, 'session_username', '' ) );
+		$admin->usertype 	= strval( mosGetParam( $_SESSION, 'session_usertype', '' ) );
 		$session_id 		= mosGetParam( $_SESSION, 'session_id', '' );
 		$logintime 			= mosGetParam( $_SESSION, 'session_logintime', '' );
 	

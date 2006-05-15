@@ -29,7 +29,7 @@ require_once( $mosConfig_absolute_path . '/administrator/includes/admin.php' );
 session_name( md5( $mosConfig_live_site ) );
 session_start();
 
-$option 		= strtolower( mosGetParam( $_REQUEST, 'option', '' ) );
+$option 		= strval( strtolower( mosGetParam( $_REQUEST, 'option', '' ) ) );
 $task 			= strval( mosGetParam( $_REQUEST, 'task', '' ) );
 
 // mainframe is an API workhorse, lots of 'core' interaction routines
@@ -41,7 +41,7 @@ $my 			= $mainframe->initSessionAdmin( $option, $task );
 // initialise some common request directives
 $act 			= strtolower( mosGetParam( $_REQUEST, 'act', '' ) );
 $section 		= mosGetParam( $_REQUEST, 'section', '' );
-$no_html 		= strtolower( mosGetParam( $_REQUEST, 'no_html', '' ) );
+$no_html 		= intval( mosGetParam( $_REQUEST, 'no_html', 0 ) );
 $id         	= intval( mosGetParam( $_REQUEST, 'id', 0 ) );
 
 $cur_template 	= $mainframe->getTemplate();

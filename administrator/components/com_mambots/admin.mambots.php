@@ -23,7 +23,7 @@ if (!($acl->acl_check( 'administration', 'edit', 'users', $my->usertype, 'mambot
 
 require_once( $mainframe->getPath( 'admin_html' ) );
 
-$client = mosGetParam( $_REQUEST, 'client', '' );
+$client = strval( mosGetParam( $_REQUEST, 'client', '' ) );
 $cid 	= mosGetParam( $_POST, 'cid', array(0) );
 if (!is_array( $cid )) {
 	$cid = array(0);

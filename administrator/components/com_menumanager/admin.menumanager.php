@@ -22,8 +22,8 @@ if (!$acl->acl_check( 'administration', 'manage', 'users', $my->usertype, 'compo
 
 require_once( $mainframe->getPath( 'admin_html' ) );
 
-$menu 		= mosGetParam( $_GET, 'menu', '' );
-$type 		= mosGetParam( $_POST, 'type', '' );
+$menu 		= strval( mosGetParam( $_GET, 'menu', '' ) );
+$type 		= strval( mosGetParam( $_POST, 'type', '' ) );
 $cid 		= mosGetParam( $_POST, 'cid', '' );
 
 switch ($task) {
@@ -198,9 +198,9 @@ function editMenu( $option, $menu ) {
 function saveMenu() {
 	global $database;
 
-	$menutype 		= mosGetParam( $_POST, 'menutype', '' );
-	$old_menutype 	= mosGetParam( $_POST, 'old_menutype', '' );
-	$new			= mosGetParam( $_POST, 'new', 1 );
+	$menutype 		= strval( mosGetParam( $_POST, 'menutype', '' ) );
+	$old_menutype 	= strval( mosGetParam( $_POST, 'old_menutype', '' ) );
+	$new			= intval( mosGetParam( $_POST, 'new', 1 ) );
 
 	// block to stop renaming of 'mainmenu' menutype
 	if ( $old_menutype == 'mainmenu' ) {
@@ -464,8 +464,8 @@ function copyConfirm( $option, $type ) {
 function copyMenu( $option, $cid, $type ) {
 	global $database;
 
-	$menu_name 		= mosGetParam( $_POST, 'menu_name', 'New Menu' );
-	$module_name 	= mosGetParam( $_POST, 'module_name', 'New Module' );
+	$menu_name 		= strval( mosGetParam( $_POST, 'menu_name', 'New Menu' ) );
+	$module_name 	= strval( mosGetParam( $_POST, 'module_name', 'New Module' ) );
 
 	// check for unique menutype for new menu copy
 	$query = "SELECT params"

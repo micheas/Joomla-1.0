@@ -186,7 +186,7 @@ function saveBanner( $task ) {
 	}
 	
 	// Sets impressions to unlimited when `unlimited` checkbox ticked
-	$unlimited = mosGetParam( $_POST, 'unlimited', 0 );
+	$unlimited = intval( mosGetParam( $_POST, 'unlimited', 0 ) );
 	if ( $unlimited ) {
 		$row->imptotal = 0;
 	}

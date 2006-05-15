@@ -20,11 +20,8 @@ require_once( $mainframe->getPath( 'admin_html' ) );
 $path 		= $mosConfig_absolute_path .'/administrator/components/com_menus/';
 
 $menutype 	= strval( mosGetParam( $_REQUEST, 'menutype', 'mainmenu' ) );
-$type 		= mosGetParam( $_REQUEST, 'type', false );
-$access 	= mosGetParam( $_POST, 'access', '' );
-$utaccess	= mosGetParam( $_POST, 'utaccess', '' );
-$ItemName	= mosGetParam( $_POST, 'ItemName', '' );
-$menu 		= mosGetParam( $_POST, 'menu', '' );
+$type 		= strval( mosGetParam( $_REQUEST, 'type', false ) );
+$menu 		= strval( mosGetParam( $_POST, 'menu', '' ) );
 $cid 		= mosGetParam( $_POST, 'cid', array(0) );
 if (!is_array( $cid )) {
 	$cid = array(0);
@@ -114,7 +111,7 @@ switch ($task) {
 		break;
 
 	default:
-		$type = mosGetParam( $_REQUEST, 'type' );
+		$type = strval( mosGetParam( $_REQUEST, 'type' ) );
 		if ($type) {
 			// adding a new item - type selection form
 			require_once( $path . $type .'/'. $type .'.menu.php' );
@@ -487,7 +484,7 @@ function cancelMenu( $option ) {
 
 	$menu = new mosMenu( $database );
 	$menu->bind( $_POST );
-	$menuid = mosGetParam( $_POST, 'menuid', 0 );
+	$menuid = intval( mosGetParam( $_POST, 'menuid', 0 ) );
 	if ( $menuid ) {
 		$menu->id = $menuid;
 	}
@@ -605,14 +602,14 @@ function addDescendants($id, &$cid) {
 * Save the item(s) to the menu selected
 */
 function moveMenuSave( $option, $cid, $menu, $menutype ) {
-	global $database, $my;
+	global $database;
 
 	// add all decendants to the list
 	foreach ($cid as $id) addDescendants($id, $cid);
 
-	$row = new mosMenu( $database );
-	$ordering = 1000000;
-	$firstroot = 0;
+	$row 		= new mosMenu( $database );
+	$ordering 	= 1000000;
+	$firstroot 	= 0;
 	foreach ($cid as $id) {
 		$row->load( $id );
 

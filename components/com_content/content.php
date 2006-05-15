@@ -20,7 +20,7 @@ require_once( $mainframe->getPath( 'front_html', 'com_content' ) );
 $id			= intval( mosGetParam( $_REQUEST, 'id', 0 ) );
 $sectionid 	= intval( mosGetParam( $_REQUEST, 'sectionid', 0 ) );
 $pop 		= intval( mosGetParam( $_REQUEST, 'pop', 0 ) );
-$limit 		= intval( mosGetParam( $_REQUEST, 'limit', '' ) );
+$limit 		= intval( mosGetParam( $_REQUEST, 'limit', $mosConfig_list_limit ) );
 $limitstart = intval( mosGetParam( $_REQUEST, 'limitstart', 0 ) );
 
 // Editor usertype check
@@ -124,7 +124,7 @@ switch ( $task ) {
 function findKeyItem( $gid, $access, $pop, $option, $now ) {
 	global $database;
 	
-	$keyref = mosGetParam( $_REQUEST, 'keyref', '' );
+	$keyref = strval( mosGetParam( $_REQUEST, 'keyref', '' ) );
 	$keyref = $database->getEscaped( $keyref );
 
 	$query = "SELECT id"
@@ -133,6 +133,7 @@ function findKeyItem( $gid, $access, $pop, $option, $now ) {
 	;
 	$database->setQuery( $query );
 	$id = $database->loadResult();
+	
 	if ($id > 0) {
 		showItem( $id, $gid, $access, $pop, $option, 0 );
 	} else {
@@ -459,7 +460,7 @@ function showCategory( $id, $gid, &$access, $sectionid, $limit, $selected, $limi
 	$and 	= null;
 	$filter = null;
 	if ( $params->get( 'filter' ) ) {
-		$filter = mosGetParam( $_REQUEST, 'filter', '' );
+		$filter = strval( mosGetParam( $_REQUEST, 'filter', '' ) );
 		
 		if ( $filter ) {
 			// clean filter variable
@@ -758,8 +759,8 @@ function showArchiveSection( $id=NULL, $gid, &$access, $pop, $option ) {
 	$noauth = !$mainframe->getCfg( 'shownoauth' );
 
 	// Paramters
-	$year 	= mosGetParam( $_REQUEST, 'year', date( 'Y' ) );
-	$month 	= mosGetParam( $_REQUEST, 'month', date( 'm' ) );
+	$year 	= strval( mosGetParam( $_REQUEST, 'year', date( 'Y' ) ) );
+	$month 	= strval( mosGetParam( $_REQUEST, 'month', date( 'm' ) ) );
 
 	$params = new stdClass();
 	if ( $Itemid ) {
@@ -874,9 +875,9 @@ function showArchiveCategory( $id=0, $gid, &$access, $pop, $option, $now ) {
 	$catID 	= ( $id ? $id : 0 );
 	
 	// Parameters
-	$year 	= mosGetParam( $_REQUEST, 'year', 	date( 'Y' ) );
-	$month 	= mosGetParam( $_REQUEST, 'month', 	date( 'm' ) );
-	$module = mosGetParam( $_REQUEST, 'module', '' );
+	$year 	= intval( mosGetParam( $_REQUEST, 'year', 	date( 'Y' ) ) );
+	$month 	= intval( mosGetParam( $_REQUEST, 'month', 	date( 'm' ) ) );
+	$module = intval( mosGetParam( $_REQUEST, 'module', 0 ) );
 
 	// used by archive module
 	if ( $module ) {
@@ -1842,7 +1843,7 @@ function saveContent( &$access, $task ) {
 	require_once( $mainframe->getPath( 'class', 'com_frontpage' ) );
 	$fp = new mosFrontPage( $database );
 
-	if ( mosGetParam( $_REQUEST, 'frontpage', 0 ) ) {
+	if ( intval( mosGetParam( $_REQUEST, 'frontpage', 0 ) ) ) {
 
 		// toggles go to first place
 		if (!$fp->load( $row->id )) {
@@ -1910,7 +1911,7 @@ function saveContent( &$access, $task ) {
 			break;
 
 		case 'apply_new':
-			$Itemid = mosGetParam( $_POST, 'Returnid', $Itemid );
+			$Itemid = intval( mosGetParam( $_POST, 'Returnid', $Itemid ) );
 			$link 	= 'index.php?option=com_content&task=edit&id='. $row->id.'&Itemid='. $Itemid;
 			break;
 
@@ -1921,7 +1922,7 @@ function saveContent( &$access, $task ) {
 			if ( $Itemid ) {
 				$link = 'index.php?option=com_content&task=view&id='. $row->id.'&Itemid='. $Itemid;
 			} else {
-				$link = mosGetParam( $_POST, 'referer', '' );
+				$link = strval( mosGetParam( $_POST, 'referer', '' ) );
 			}
 			break;
 	}
@@ -1943,9 +1944,9 @@ function cancelContent( &$access ) {
 		$row->checkin();
 	}
 
-	$Itemid = mosGetParam( $_POST, 'Returnid', '0' );
+	$Itemid 	= intval( mosGetParam( $_POST, 'Returnid', '0' ) );
 
-	$referer 	= mosGetParam( $_POST, 'referer', '' );
+	$referer 	= strval( mosGetParam( $_POST, 'referer', '' ) );
 	$parts 		= parse_url( $referer );
 	parse_str( $parts['query'], $query );
 
@@ -2051,11 +2052,11 @@ function emailContentSend( $uid ) {
 	}	
 	
 	$_Itemid 			= $mainframe->getItemid( $uid, 0, 0  );
-	$email 				= mosGetParam( $_POST, 'email', '' );
-	$yourname 			= mosGetParam( $_POST, 'yourname', '' );
-	$youremail 			= mosGetParam( $_POST, 'youremail', '' );
+	$email 				= strval( mosGetParam( $_POST, 'email', '' ) );
+	$yourname 			= strval( mosGetParam( $_POST, 'yourname', '' ) );
+	$youremail 			= strval( mosGetParam( $_POST, 'youremail', '' ) );
 	$subject_default 	= _EMAIL_INFO .' ' . $yourname;
-	$subject = mosGetParam( $_POST, 'subject', $subject_default );
+	$subject 			= strval( mosGetParam( $_POST, 'subject', $subject_default ) );
 
 	if ($uid < 1 || !$email || !$youremail || ( is_email( $email ) == false ) || (is_email( $youremail ) == false)) {
 		mosErrorAlert( _EMAIL_ERR_NOINFO );
@@ -2093,11 +2094,9 @@ function is_email( $email ){
 function recordVote() {
 	global $database;
 
-	$user_rating = mosGetParam( $_REQUEST, 'user_rating', 0 );
-	$url = mosGetParam( $_REQUEST, 'url', '' );
-	$cid = mosGetParam( $_REQUEST, 'cid', 0 );
-	$cid = intval( $cid );
-	$user_rating = intval( $user_rating );
+	$user_rating 	= intval( mosGetParam( $_REQUEST, 'user_rating', 0 ) );
+	$url 			= mosGetParam( $_REQUEST, 'url', '' );
+	$cid 			= intval( mosGetParam( $_REQUEST, 'cid', 0 ) );
 
 	if (($user_rating >= 1) and ($user_rating <= 5)) {
 		$currip = getenv( 'REMOTE_ADDR' );

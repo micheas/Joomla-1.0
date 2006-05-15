@@ -439,7 +439,7 @@ class mosFullAdminMenu {
 }
 $cache =& mosCache::getCache( 'mos_fullmenu' );
 
-$hide = mosGetParam( $_REQUEST, 'hidemainmenu', 0 );
+$hide = intval( mosGetParam( $_REQUEST, 'hidemainmenu', 0 ) );
 
 if ( $hide ) {
 	mosFullAdminMenu::showDisabled( $my->usertype );

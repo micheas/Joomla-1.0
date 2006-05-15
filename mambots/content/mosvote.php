@@ -17,11 +17,10 @@ defined( '_VALID_MOS' ) or die( 'Restricted access' );
 $_MAMBOTS->registerFunction( 'onBeforeDisplayContent', 'botVoting' );
 
 function botVoting( &$row, &$params, $page=0 ) {
-	global $Itemid;
+	global $Itemid, $task;
 
 	$id 	= $row->id;
 	$option = 'com_content';
-	$task 	= strtolower( strval( mosGetParam( $_REQUEST, 'task', '' ) ) );
 
 	$html = '';
 	if ($params->get( 'rating' ) && !$params->get( 'popup' )){

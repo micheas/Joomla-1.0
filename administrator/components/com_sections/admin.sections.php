@@ -187,7 +187,7 @@ function showSections( $scope, $option ) {
 * @param string The name of the current user
 */
 function editSection( $uid=0, $scope='', $option ) {
-	global $database, $my;
+	global $database, $my, $mainframe;
 
 	$row = new mosSection( $database );
 	// load the row from the db table
@@ -231,7 +231,11 @@ function editSection( $uid=0, $scope='', $option ) {
 		
 		// handling for MOSImage directories
 		if ( trim( $row->params ) ) {
-			$temps = explode( ',', $row->params );
+			// get params definitions
+			$params = new mosParameters( $row->params, $mainframe->getPath( 'com_xml', 'com_sections' ), 'component' );
+			$temps 	= $params->get( 'imagefolders', '' );
+			
+			$temps 	= explode( ',', $temps );
 			foreach( $temps as $temp ) {
 				$selected_folders[] = mosHTML::makeOption( $temp, $temp );
 			}
@@ -338,7 +342,7 @@ function saveSection( $option, $scope, $task ) {
 	} else if ( strpos( $folders, '*#*' ) !== false ) {
 		$folders 	= str_replace( '*#*', '', $folders );
 	} 	
-	$row->params	= $folders;
+	$row->params	= 'imagefolders='. $folders;
 	
 	if (!$row->store()) {
 		echo "<script> alert('".$row->getError()."'); window.history.go(-1); </script>\n";

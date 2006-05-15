@@ -561,7 +561,10 @@ function editContent( $uid=0, $sectionid=0, $option ) {
 	. "\n WHERE id = $row->catid"
 	;
 	$database->setQuery( $query );
-	$selected_folders = $database->loadResult();	
+	$categoryParam = $database->loadResult();	
+	
+	$paramsCat = new mosParameters( $categoryParam, $mainframe->getPath( 'com_xml', 'com_categories' ), 'component' );
+	$selected_folders = $paramsCat->get( 'imagefolders', '' );
 
 	if ( !$selected_folders ) {
 		$selected_folders = '*2*';
@@ -575,8 +578,11 @@ function editContent( $uid=0, $sectionid=0, $option ) {
 		. "\n FROM #__sections"
 		. "\n WHERE id = $row->sectionid"
 		;
-		$database->setQuery( $query );
-		$selected_folders = $database->loadResult();			
+		$database->setQuery( $query );		
+		$sectionParam = $database->loadResult();			
+		
+		$paramsSec = new mosParameters( $sectionParam, $mainframe->getPath( 'com_xml', 'com_sections' ), 'component' );
+		$selected_folders = $paramsSec->get( 'imagefolders', '' );
 	}
 	
 	if ( trim( $selected_folders ) ) {

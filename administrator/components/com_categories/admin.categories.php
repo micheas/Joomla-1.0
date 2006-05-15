@@ -255,7 +255,7 @@ function showCategories( $section, $option ) {
 * @param string The name of the current user
 */
 function editCategory( $uid=0, $section='' ) {
-	global $database, $my;
+	global $database, $my, $mainframe;
 
 	$type 		= strval( mosGetParam( $_REQUEST, 'type', '' ) );
 	$redirect 	= strval( mosGetParam( $_REQUEST, 'section', 'content' ) );	
@@ -340,7 +340,11 @@ function editCategory( $uid=0, $section='' ) {
 			
 			// handling for MOSImage directories
 			if ( trim( $row->params ) ) {
-				$temps = explode( ',', $row->params );
+				// get params definitions
+				$params = new mosParameters( $row->params, $mainframe->getPath( 'com_xml', 'com_categories' ), 'component' );
+				$temps 	= $params->get( 'imagefolders', '' );
+				
+				$temps 	= explode( ',', $temps );
 				foreach( $temps as $temp ) {
 					$selected_folders[] = mosHTML::makeOption( $temp, $temp );
 				}
@@ -505,7 +509,7 @@ function saveCategory( $task ) {
 			$folders 	= str_replace( '*#*', '', $folders );
 		} 
 		
-		$row->params	= $folders;
+		$row->params	= 'imagefolders='. $folders;
 	}
 	
 	if (!$row->check()) {

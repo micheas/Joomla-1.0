@@ -40,7 +40,7 @@ require_once( $mosConfig_absolute_path .'/includes/frontend.php' );
 $option 	= strtolower( strval( mosGetParam( $_REQUEST, 'option' ) ) );
 $Itemid 	= intval( mosGetParam( $_REQUEST, 'Itemid', 0 ) );
 $no_html 	= intval( mosGetParam( $_REQUEST, 'no_html', 0 ) );
-$act 		= mosGetParam( $_REQUEST, 'act', '' );
+$act 		= strval( mosGetParam( $_REQUEST, 'act', '' ) );
 $do_pdf 	= intval( mosGetParam( $_REQUEST, 'do_pdf', 0 ) );
 
 // mainframe is an API workhorse, lots of 'core' interaction routines
@@ -90,7 +90,7 @@ require_once( $mosConfig_absolute_path . '/editor/editor.php' );
 
 ob_start();
 if ($path = $mainframe->getPath( 'front' )) {
-	$task 	= strtolower( strval( mosGetParam( $_REQUEST, 'task', '' ) ) );
+	$task 	= strval( mosGetParam( $_REQUEST, 'task', '' ) );
 	$ret 	= mosMenuCheck( $Itemid, $option, $task, $gid );
 	if ($ret) {
 		require_once( $path );

@@ -69,7 +69,7 @@ function viewSearch() {
 	// html output
 	search_html::openhtml( $params );
 
-	$searchword = strtolower( strval( mosGetParam( $_REQUEST, 'searchword', '' ) ) );
+	$searchword = strval( mosGetParam( $_REQUEST, 'searchword', '' ) );
 	$searchword = $database->getEscaped( trim( $searchword ) );
 	
 	// limit searchword to 20 characters

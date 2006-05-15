@@ -1567,7 +1567,7 @@ function show( $row, $params, $gid, &$access, $pop, $option='com_content', $Item
 
 
 function editItem( $uid, $gid, &$access, $sectionid=0, $task, $Itemid ){
-	global $database, $my;
+	global $database, $my, $mainframe;
 	global $mosConfig_absolute_path, $mosConfig_live_site;
 
 	$nullDate = $database->getNullDate();
@@ -1680,7 +1680,10 @@ function editItem( $uid, $gid, &$access, $sectionid=0, $task, $Itemid ){
 	. "\n WHERE id = $row->catid"
 	;
 	$database->setQuery( $query );
-	$selected_folders = $database->loadResult();	
+	$categoryParam = $database->loadResult();	
+	
+	$paramsCat = new mosParameters( $categoryParam, $mainframe->getPath( 'com_xml', 'com_categories' ), 'component' );
+	$selected_folders = $paramsCat->get( 'imagefolders', '' );
 	
 	if ( !$selected_folders ) {
 		$selected_folders = '*2*';
@@ -1695,7 +1698,10 @@ function editItem( $uid, $gid, &$access, $sectionid=0, $task, $Itemid ){
 		. "\n WHERE id = $row->sectionid"
 		;
 		$database->setQuery( $query );
-		$selected_folders = $database->loadResult();			
+		$sectionParam = $database->loadResult();			
+		
+		$paramsSec = new mosParameters( $sectionParam, $mainframe->getPath( 'com_xml', 'com_sections' ), 'component' );
+		$selected_folders = $paramsSec->get( 'imagefolders', '' );
 	}
 	
 	if ( trim( $selected_folders ) ) {

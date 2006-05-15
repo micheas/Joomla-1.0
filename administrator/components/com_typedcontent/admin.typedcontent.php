@@ -222,7 +222,7 @@ function edit( $uid, $option ) {
 		$row->publish_down 	= mosFormatDate( $row->publish_down, _CURRENT_SERVER_TIME_FORMAT );
 
 		if (trim( $row->publish_down ) == $nullDate) {
-			$row->publish_down = "Never";
+			$row->publish_down = 'Never';
 		}
 
 		$query = "SELECT name"

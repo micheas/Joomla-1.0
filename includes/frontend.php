@@ -172,10 +172,8 @@ function mosLoadModules( $position='left', $style=0 ) {
 * Assembles head tags
 */
 function mosShowHead() {
-	global $database, $option, $my, $mainframe, $_VERSION;
+	global $database, $option, $my, $mainframe, $_VERSION, $task;
 	global $mosConfig_MetaDesc, $mosConfig_MetaKeys, $mosConfig_live_site, $mosConfig_sef, $mosConfig_absolute_path, $mosConfig_sitename, $mosConfig_favicon;
-
-	$task = strtolower( strval( mosGetParam( $_REQUEST, 'task', '' ) ) );
 
 	if ($my->id || $mainframe->get( 'joomlaJavascript' )) {
 		?>

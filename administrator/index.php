@@ -22,14 +22,14 @@ if (!file_exists( '../configuration.php' )) {
 require_once( '../configuration.php' );
 require_once( '../includes/joomla.php' );
 include_once ( $mosConfig_absolute_path . '/language/'. $mosConfig_lang .'.php' );
-
+/*
 //Installation sub folder check, removed for work with SVN
 if (file_exists( '../installation/index.php' )) {
 	define( '_INSTALL_CHECK', 1 );
 	include ($mosConfig_absolute_path .'/offline.php');
 	exit();
 }
-
+*/
 $option = strtolower( strval( mosGetParam( $_REQUEST, 'option', NULL ) ) );
 
 // mainframe is an API workhorse, lots of 'core' interaction routines

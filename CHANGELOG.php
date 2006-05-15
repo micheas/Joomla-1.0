@@ -58,6 +58,7 @@ Low Level Threat
 
 15-May-2006 Rey Gigataras
  # Fixed [topic,61926] : Frontend static language text
+ # Fixed [topic,61971] : E-mail cloaking broken, TinyMCE `mce_href` problem
 
 
 14-May-2006 Rey Gigataras

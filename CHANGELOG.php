@@ -39,8 +39,6 @@ Legend:
 ------------------------------------------------------------------------------------
 
 
----------------- 1.0.9 Beta 2 Released -- [15-May-2006 22:00 UTC] ------------------
-
 This Release Contains following Security Fixes
 
 Low Level Threat
@@ -55,6 +53,13 @@ Low Level Threat
  * Add ability to selectively disable certain types of syndicated feeds
 
 --
+
+
+17-May-2006 Rey Gigataras
+ # Fixed artf4673 : setlocale
+ 
+
+---------------- 1.0.9 Beta 2 Released -- [15-May-2006 22:00 UTC] ------------------
 
 15-May-2006 Rey Gigataras
  # Fixed [topic,61926] : Frontend static language text

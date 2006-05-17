@@ -2068,13 +2068,11 @@ class mosHTML {
 		// displays close button in Pop-up window
 		if ( $params->get( 'popup' ) && !$hide_js ) {
 			?>
-			<div align="center" style="margin-top: 30px; margin-bottom: 30px;">
-			<a href='javascript:window.close();'>
-			<span class="small">
-			<?php echo _PROMPT_CLOSE;?>
-			</span>
-			</a>
-			</div>
+			<script language="javascript" type="text/javascript">
+				document.write('<div align="center" style="margin-top: 30px; margin-bottom: 30px;">');
+				document.write('<a href="#" onclick="javascript:window.close();"><span class="small"><?php echo _PROMPT_CLOSE;?></span></a>');
+				document.write('</div>');
+			</script>
 			<?php
 		}
 	}
@@ -2115,6 +2113,7 @@ class mosHTML {
 	*/
 	function PrintIcon( &$row, &$params, $hide_js, $link, $status=NULL ) {
 		global $mosConfig_live_site, $mosConfig_absolute_path, $cur_template, $Itemid;
+		
 		if ( $params->get( 'print' )  && !$hide_js ) {
 			// use default settings if none declared
 			if ( !$status ) {
@@ -2132,18 +2131,21 @@ class mosHTML {
 				// Print Preview button - used when viewing page
 				?>
 				<td align="right" width="100%" class="buttonheading">
-				<a href="javascript:void(0)" onclick="javascript:window.print(); return false" title="<?php echo _CMN_PRINT;?>">
-				<?php echo $image;?>
-				</a>
+					<script language="javascript" type="text/javascript">
+						document.write('<td align="right" width="100%" class="buttonheading">');
+						document.write('<a href="#" onclick="javascript:window.print(); return false" title="<?php echo _CMN_PRINT;?>">');
+						document.write('<?php echo $image;?>');
+						document.write('</a>');
+						document.write('</td>');
+					</script>				
 				</td>
-				<?php
+				<?php			
 			} else {
 				// Print Button - used in pop-up window
 				?>
 				<td align="right" width="100%" class="buttonheading">
-				<a href="javascript:void(0)" onclick="window.open('<?php echo $link; ?>','win2','<?php echo $status; ?>');" title="<?php echo _CMN_PRINT;?>">
-				<?php echo $image;?>
-				</a>
+					<a href="<?php echo $link; ?>" target="_blank" onclick="window.open('<?php echo $link; ?>','win2','<?php echo $status; ?>'); return false;" title="<?php echo _CMN_PRINT;?>">
+						<?php echo $image;?></a>
 				</td>
 				<?php
 			}

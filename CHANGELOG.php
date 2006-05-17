@@ -58,6 +58,7 @@ Low Level Threat
 17-May-2006 Rey Gigataras
  # Fixed artf4673 : setlocale
  # Fixed artf4685 : unhandled fragment identifier with core SEF enabled 
+ # Fixed artf4678 : Print, PDF and email buttons aren't accessible
  # Fixed [topic,62124] : Hover for icons when editing content in front-end
 
 

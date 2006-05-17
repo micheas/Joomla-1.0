@@ -60,6 +60,7 @@ Low Level Threat
  # Fixed artf4685 : unhandled fragment identifier with core SEF enabled 
  # Fixed artf4678 : Print, PDF and email buttons aren't accessible
  # Fixed [topic,62124] : Hover for icons when editing content in front-end
+ # Fixed [topic,62165] : Canot login - admin_session_life not set
 
 
 ---------------- 1.0.9 Beta 2 Released -- [15-May-2006 22:00 UTC] ------------------

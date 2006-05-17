@@ -724,16 +724,14 @@ class mosMainFrame {
 	* Added as of 1.0.8
 	* Deperciated 1.1
 	*/
-	function initSessionAdmin($option, $task) {	
-		global $mosConfig_absolute_path;
-		
+	function initSessionAdmin($option, $task) {			
 		// logout check
 		if ($option == 'logout') {
-			require $mosConfig_absolute_path .'/administrator/logout.php';
+			require $GLOBALS['mosConfig_absolute_path'] .'/administrator/logout.php';
 			exit();
 		}
 		
-		$site = $this->getCfg( 'live_site' );
+		$site = $GLOBALS['mosConfig_live_site'];
 		
 		// check if session name corresponds to correct format
 		if ( session_name() != md5( $site ) ) {
@@ -756,8 +754,15 @@ class mosMainFrame {
 		if ( $session_id == md5( $my->id . $my->username . $my->usertype . $logintime ) ) {
 			// if task action is to `save` or `apply` complete action before doing session checks.
 			if ($task != 'save' && $task != 'apply') {
+				// test for session_life_admin
+				if ( @$GLOBALS['mosConfig_session_life_admin'] ) {
+					$session_life_admin = $GLOBALS['mosConfig_session_life_admin'];
+				} else {
+					$session_life_admin = 1800;
+				}
+				
 				// purge expired admin sessions only		
-				$past = time() - $this->getCfg( 'session_life_admin' );
+				$past = time() - $session_life_admin;
 				$query = "DELETE FROM #__session"
 				. "\n WHERE time < '$past'"
 				. "\n AND guest = 1"

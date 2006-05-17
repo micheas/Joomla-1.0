@@ -319,7 +319,9 @@ function showPathway( $Itemid ) {
 		$path .= implode ( "$img " ,$mainframe->getCustomPathWay());
 	}
 
-	echo '<span class="pathway">'. $home .' '. $path .'</span>';
+	if ( $Itemid && $Itemid != 99999999 ) {
+		echo '<span class="pathway">'. $home .' '. $path .'</span>';
+	}
 }
 
 // code placed in a function to prevent messing up global variables

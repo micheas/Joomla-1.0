@@ -31,9 +31,9 @@ function botMosSef( $published, &$row, &$params, $page=0 ) {
 	}
 	
 	// check whether SEF is off
-	if ( !$mosConfig_sef ) {
-		return true;
-	}
+	//if ( !$mosConfig_sef ) {
+	//	return true;
+	//}
 	
 	// simple performance check to determine whether bot should process further
 	if ( strpos( $row->text, 'href="' ) === false ) {
@@ -56,27 +56,22 @@ function botMosSef( $published, &$row, &$params, $page=0 ) {
 */
 function botMosSef_replacer( &$matches ) {
 	global $mosConfig_live_site;
-	
+
 	// original text that might be replaced
 	$original = 'href="'. $matches[1] .'"';
 
-	// disable bot from being applied to mailto tags
-	if ( strpos( $matches[1], 'mailto:' ) !== false ) {
-		return $original;
-	}
-
-	// disable bot from being applied to javascript tags
-	if ( strpos( $matches[1], 'javascript:' ) !== false ) {
-		return $original;
-	}
+	// array list of non http/https	URL schemes
+	$url_schemes = explode( ', ', _URL_SCHEMES );
 	
-	// will only process links containing 'index.php?option
-	if ( strpos( $matches[1], 'index.php?option' ) !== false ) {
-		// check if url match is a absolute link
-		if (strpos( $matches[1], $mosConfig_live_site ) === 0 ) {
-			$matches[1] = str_replace( $mosConfig_live_site .'/', '', $matches[1] );
-		}		
+	foreach ( $url_schemes as $url ) {
+		// disable bot from being applied to specific URL Scheme tag
+		if ( strpos( $matches[1], $url ) !== false ) {
+			return $original;
+		}
+	}
 
+	// will only process links containing 'index.php?option or links starting with '#'	
+	if ( strpos( $matches[1], 'index.php?option' ) !== false || strpos( $matches[1], '#' ) === 0  ) {
 		// convert url to SEF link
 		$link 		= sefRelToAbs( $matches[1] );
 		

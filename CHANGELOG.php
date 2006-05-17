@@ -57,10 +57,12 @@ Low Level Threat
 
 17-May-2006 Rey Gigataras
  # Fixed artf4673 : setlocale
+ # Fixed artf4685 : unhandled fragment identifier with core SEF enabled 
  # Fixed [topic,62124] : Hover for icons when editing content in front-end
- 
+
 
 ---------------- 1.0.9 Beta 2 Released -- [15-May-2006 22:00 UTC] ------------------
+
 
 15-May-2006 Rey Gigataras
  # Fixed [topic,61926] : Frontend static language text

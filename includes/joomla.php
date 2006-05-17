@@ -104,6 +104,10 @@ $now = date( 'Y-m-d H:i', time() );
 DEFINE( '_CURRENT_SERVER_TIME', $now );
 DEFINE( '_CURRENT_SERVER_TIME_FORMAT', '%Y-%m-%d %H:%M:%S' );
 
+// Non http/https URL Schemes
+$url_schemes = 'data:, file:, ftp:, gopher:, imap:, ldap:, mailto:, news:, nntp:, telnet:, javascript:, irc:';
+DEFINE( '_URL_SCHEMES', $url_schemes );
+
 /**
  * @package Joomla
  * @abstract

@@ -4756,12 +4756,14 @@ class mosAdminMenus {
 	* Also can be used in conjunction with the menulist param to create the chosen image
 	* load the default or use no image
 	*/
-	function ImageCheck( $file, $directory='/images/M_images/', $param=NULL, $param_directory='/images/M_images/', $alt=NULL, $name='image', $type=1, $align='middle' ) {
+	function ImageCheck( $file, $directory='/images/M_images/', $param=NULL, $param_directory='/images/M_images/', $alt=NULL, $name='image', $type=1, $align='middle', $title=NULL ) {
 		global $mosConfig_absolute_path, $mosConfig_live_site, $mainframe;
 
 		$cur_template = $mainframe->getTemplate();
 
-		$name = ( $name ? 'name="'. $name .'"' : '' );
+		$name 	= ( $name 	? 'name="'. $name .'"' 		: '' );		
+		$title 	= ( $title 	? 'title="'. $title .'"' 	: '' );		
+		$alt 	= ( $alt 	? '$alt="'. $alt .'"' 		: '' );
 		
 		if ( $param ) {
 			$image = $mosConfig_live_site. $param_directory . $param;
@@ -4780,7 +4782,7 @@ class mosAdminMenus {
 
 			// outputs actual html <img> tag
 			if ( $type ) {
-				$image = '<img src="'. $image .'" alt="'. $alt .'" align="'. $align .'" '. $name .' border="0" />';
+				$image = '<img src="'. $image .'" align="'. $align .'" '. $alt .' '. $name .' '. $title .' border="0" />';
 			}
 		}
 
@@ -4793,12 +4795,14 @@ class mosAdminMenus {
 	* Also can be used in conjunction with the menulist param to create the chosen image
 	* load the default or use no image
 	*/
-	function ImageCheckAdmin( $file, $directory='/administrator/images/', $param=NULL, $param_directory='/administrator/images/', $alt=NULL, $name=NULL, $type=1, $align='middle' ) {
+	function ImageCheckAdmin( $file, $directory='/administrator/images/', $param=NULL, $param_directory='/administrator/images/', $alt=NULL, $name=NULL, $type=1, $align='middle', $title=NULL ) {
 		global $mosConfig_absolute_path, $mosConfig_live_site, $mainframe;
 		
 		$cur_template = $mainframe->getTemplate();
 
-		$name = ( $name ? 'name="'. $name .'"' : '' );
+		$name 	= ( $name 	? 'name="'. $name .'"' 		: '' );		
+		$title 	= ( $title 	? 'title="'. $title .'"' 	: '' );		
+		$alt 	= ( $alt 	? '$alt="'. $alt .'"' 		: '' );
 		
 		if ( $param ) {
 			$image = $mosConfig_live_site. $param_directory . $param;
@@ -4816,7 +4820,7 @@ class mosAdminMenus {
 
 			// outputs actual html <img> tag
 			if ( $type ) {
-				$image = '<img src="'. $image .'" alt="'. $alt .'" align="'. $align .'" '. $name .' border="0" />';
+				$image = '<img src="'. $image .'" align="'. $align .'" '. $alt .' '. $name .' '. $title .' border="0" />';
 			}
 		}
 

@@ -2012,6 +2012,7 @@ class mosHTML {
 			$html .= "\n\t<label for=\"$tag_name$k\">$t</label>";
 		}
 		$html .= "\n";
+		
 		return $html;
 	}
 
@@ -2024,9 +2025,10 @@ class mosHTML {
 	*/
 	function yesnoRadioList( $tag_name, $tag_attribs, $selected, $yes=_CMN_YES, $no=_CMN_NO ) {
 		$arr = array(
-		mosHTML::makeOption( '0', $no ),
-		mosHTML::makeOption( '1', $yes )
+			mosHTML::makeOption( '0', $no ),
+			mosHTML::makeOption( '1', $yes )
 		);
+		
 		return mosHTML::radioList( $arr, $tag_name, $tag_attribs, $selected );
 	}
 
@@ -2074,9 +2076,11 @@ class mosHTML {
 		if ( $params->get( 'popup' ) && !$hide_js ) {
 			?>
 			<script language="javascript" type="text/javascript">
-				document.write('<div align="center" style="margin-top: 30px; margin-bottom: 30px;">');
-				document.write('<a href="#" onclick="javascript:window.close();"><span class="small"><?php echo _PROMPT_CLOSE;?></span></a>');
-				document.write('</div>');
+			<!--
+			document.write('<div align="center" style="margin-top: 30px; margin-bottom: 30px;">');
+			document.write('<a href="#" onclick="javascript:window.close();"><span class="small"><?php echo _PROMPT_CLOSE;?></span></a>');
+			document.write('</div>');
+			//-->
 			</script>
 			<?php
 		}
@@ -2110,6 +2114,7 @@ class mosHTML {
 		$text = preg_replace( '/&quot;/', ' ', $text );
 		$text = strip_tags( $text );
 		$text = htmlspecialchars( $text );
+		
 		return $text;
 	}
 
@@ -2117,8 +2122,6 @@ class mosHTML {
 	* Writes Print icon
 	*/
 	function PrintIcon( &$row, &$params, $hide_js, $link, $status=NULL ) {
-		global $mosConfig_live_site, $mosConfig_absolute_path, $cur_template, $Itemid;
-		
 		if ( $params->get( 'print' )  && !$hide_js ) {
 			// use default settings if none declared
 			if ( !$status ) {
@@ -2135,15 +2138,15 @@ class mosHTML {
 			if ( $params->get( 'popup' ) && !$hide_js ) {
 				// Print Preview button - used when viewing page
 				?>
-				<td align="right" width="100%" class="buttonheading">
-					<script language="javascript" type="text/javascript">
-						document.write('<td align="right" width="100%" class="buttonheading">');
-						document.write('<a href="#" onclick="javascript:window.print(); return false" title="<?php echo _CMN_PRINT;?>">');
-						document.write('<?php echo $image;?>');
-						document.write('</a>');
-						document.write('</td>');
-					</script>				
-				</td>
+				<script language="javascript" type="text/javascript">
+				<!--
+				document.write('<td align="right" width="100%" class="buttonheading">');
+				document.write('<a href="#" onclick="javascript:window.print(); return false;" title="<?php echo _CMN_PRINT;?>">');
+				document.write('<?php echo $image;?>');
+				document.write('</a>');
+				document.write('</td>');
+				//-->
+				</script>				
 				<?php			
 			} else {
 				// Print Button - used in pop-up window

@@ -282,8 +282,7 @@ function showPathway( $Itemid ) {
 		}
 		$item =& $mitems[$mid];
 
-		// converts & to &amp; for xtml compliance
-		$itemname = stripslashes( ampReplace( $item->name ) );
+		$itemname = stripslashes( $item->name );
 
 		// if it is the current page, then display a non hyperlink
 		if ($item->id == $Itemid || empty( $mid ) || empty($item->link)) {
@@ -299,6 +298,7 @@ function showPathway( $Itemid ) {
 			$newlink = '<a href="'. sefRelToAbs( $item->link .'&Itemid='. $item->id ) .'" class="pathway">'. $itemname .'</a>';
 		}
 
+		// converts & to &amp; for xtml compliance
 		$newlink = ampReplace( $newlink );
 
 		if (trim($newlink)!="") {

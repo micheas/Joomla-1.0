@@ -4777,7 +4777,7 @@ class mosAdminMenus {
 
 		$name 	= ( $name 	? 'name="'. $name .'"' 		: '' );		
 		$title 	= ( $title 	? 'title="'. $title .'"' 	: '' );		
-		$alt 	= ( $alt 	? '$alt="'. $alt .'"' 		: '' );
+		$alt 	= ( $alt 	? 'alt="'. $alt .'"' 		: '' );
 		
 		if ( $param ) {
 			$image = $mosConfig_live_site. $param_directory . $param;
@@ -4816,7 +4816,7 @@ class mosAdminMenus {
 
 		$name 	= ( $name 	? 'name="'. $name .'"' 		: '' );		
 		$title 	= ( $title 	? 'title="'. $title .'"' 	: '' );		
-		$alt 	= ( $alt 	? '$alt="'. $alt .'"' 		: '' );
+		$alt 	= ( $alt 	? 'alt="'. $alt .'"' 		: '' );
 		
 		if ( $param ) {
 			$image = $mosConfig_live_site. $param_directory . $param;

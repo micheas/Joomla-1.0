@@ -55,6 +55,10 @@ Low Level Threat
 --
 
 
+18-May-2006 Rey Gigataras
+ # Fixed artf4700 : pathway ampReplaces item name twice
+
+
 17-May-2006 Rey Gigataras
  # Fixed artf4673 : setlocale
  # Fixed artf4685 : unhandled fragment identifier with core SEF enabled 

@@ -94,5 +94,6 @@ $mosConfig_dirperms = '';
 $mosConfig_helpurl = 'http://help.joomla.org';
 $mosConfig_mbf_content='0';
 $mosConfig_editor = 'tinymce';
+$mosConfig_admin_expired = '1';
 setlocale (LC_ALL, $mosConfig_locale);			// Country locale
 ?>

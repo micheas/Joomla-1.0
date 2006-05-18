@@ -40,6 +40,10 @@ $tstart = mosProfiler::getmicrotime();
 	</div>
 </div>
 <div id="ctr" align="center">
+	<?php
+	// handling of mosmsg text in url
+	include_once( $mosConfig_absolute_path .'/administrator/modules/mod_mosmsg.php' ); 
+	?>
 	<div class="login">
 		<div class="login-form">
 			<img src="templates/joomla_admin/images/login.gif" alt="Login" />

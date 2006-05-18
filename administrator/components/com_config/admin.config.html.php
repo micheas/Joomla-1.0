@@ -443,6 +443,14 @@ class HTML_config {
 				<td>&nbsp;</td>
 			</tr>
 			<tr>
+				<td>Remember Expired Admin page:</td>
+				<td>
+				<?php echo $lists['admin_expired']; ?>
+				<?php echo mosToolTip('If session expires, when you log back in within 10 minutes of logout, you will be redirected on login to the page you were trying to access when you were logged out'); ?>
+				</td>
+				<td>&nbsp;</td>
+			</tr>
+			<tr>
 				<td>Session Authentication Method:</td>
 				<td>
 				<?php echo $lists['session_type']; ?>

@@ -57,6 +57,9 @@ Low Level Threat
 
 18-May-2006 Rey Gigataras
  # Fixed artf4700 : pathway ampReplaces item name twice
+ # Fixed artf4712 : 'type' of $mosConfig_error_reporting does not match code
+ 
+ + Remember Expired Admin page functionality
 
 
 17-May-2006 Rey Gigataras

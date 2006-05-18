@@ -26,7 +26,7 @@ require_once( 'configuration.php' );
 require_once( 'includes/joomla.php' );
 
 //Installation sub folder check, removed for work with SVN
-if (file_exists( 'installation/index.php' )) {
+if (file_exists( 'installation/index.php' ) && $_VERSION->SVN == 0) {
 	define( '_INSTALL_CHECK', 1 );
 	include ( $mosConfig_absolute_path .'/offline.php');
 	exit();

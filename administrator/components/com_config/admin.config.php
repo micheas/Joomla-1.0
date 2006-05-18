@@ -154,7 +154,8 @@ function showconfig( $option) {
 	);
 
 	$lists['error_reporting'] = mosHTML::selectList( $errors, 'config_error_reporting', 'class="inputbox" size="1"', 'value', 'text', $row->config_error_reporting );
-
+	
+	$lists['admin_expired'] = mosHTML::yesnoRadioList( 'config_admin_expired', 'class="inputbox"', $row->config_admin_expired );
 
 // LOCALE SETTINGS
 

@@ -24,7 +24,7 @@ require_once( '../includes/joomla.php' );
 include_once ( $mosConfig_absolute_path . '/language/'. $mosConfig_lang .'.php' );
 
 //Installation sub folder check, removed for work with SVN
-if (file_exists( '../installation/index.php' )) {
+if (file_exists( '../installation/index.php' ) && $_VERSION->SVN == 0) {
 	define( '_INSTALL_CHECK', 1 );
 	include ($mosConfig_absolute_path .'/offline.php');
 	exit();
@@ -85,8 +85,11 @@ if (isset( $_POST['submit'] )) {
 		session_name( md5( $mosConfig_live_site ) );
 		session_start();
 
+		// construct Session ID
 		$logintime 	= time();
 		$session_id = md5( $my->id . $my->username . $my->usertype . $logintime );
+		
+		// add Session ID entry to DB
 		$query = "INSERT INTO #__session"
 		. "\n SET time = '$logintime', session_id = '$session_id', userid = $my->id, usertype = '$my->usertype', username = '$my->username'"
 		;
@@ -111,17 +114,64 @@ if (isset( $_POST['submit'] )) {
 			}	
 		}
 		
-		$_SESSION['session_id'] 		= $session_id;
-		$_SESSION['session_user_id'] 	= $my->id;
-		$_SESSION['session_username'] 	= $my->username;
-		$_SESSION['session_usertype'] 	= $my->usertype;
-		$_SESSION['session_gid'] 		= $my->gid;
-		$_SESSION['session_logintime'] 	= $logintime;
-		$_SESSION['session_user_params']= $my->params;
-		$_SESSION['session_userstate'] 	= array();
+		$_SESSION['session_id'] 			= $session_id;
+		$_SESSION['session_user_id'] 		= $my->id;
+		$_SESSION['session_username'] 		= $my->username;
+		$_SESSION['session_usertype'] 		= $my->usertype;
+		$_SESSION['session_gid'] 			= $my->gid;
+		$_SESSION['session_logintime'] 		= $logintime;
+		$_SESSION['session_user_params']	= $my->params;
+		$_SESSION['session_userstate'] 		= array();
 
 		session_write_close();
-				
+		
+		$expired = 'index2.php';
+		
+		// check if site designated as a production site 
+		// for a demo site disallow expired page functionality
+		if ( $_VERSION->SITE == 1 && @$mosConfig_admin_expired === '1' ) {
+			$file 	= $mainframe->getPath( 'com_xml', 'com_users' );
+			$params =& new mosParameters( $my->params, $file, 'component' );
+			
+			$now 	= time();
+
+			// expired page functionality handling
+			$expired 		= $params->def( 'expired', '' );
+			$expired_time 	= $params->def( 'expired_time', '' );
+	
+			// if now expired link set or expired time is more than 10 minutes ago, simply load normal admin homepage 		
+			if (!$expired || ( ( $now - $expired_time ) > 600 ) ) {
+				$expired = 'index2.php';
+			}
+			// link must also be a Joomla link to stop malicious redirection			
+			if ( strpos( $expired, 'index2.php?option=com_' ) !== 0 ) {
+				$expired = 'index2.php';
+			}
+			
+			// clear any existing expired page data
+			$params->set( 'expired', '' );
+			$params->set( 'expired_time', '' );
+	
+			// param handling
+			if (is_array( $params->toArray() )) {
+				$txt = array();
+				foreach ( $params->toArray() as $k=>$v) {
+					$txt[] = "$k=$v";
+				}
+				$saveparams = implode( "\n", $txt );
+			}
+	
+			// save cleared expired page info to user data
+			$query = "UPDATE #__users"
+			. "\n SET params = '$saveparams'"
+			. "\n WHERE id = $my->id"
+			. "\n AND username = '$my->username'"
+			. "\n AND usertype = '$my->usertype'"
+			;
+			$database->setQuery( $query );
+			$database->query();
+		}
+
 		// check if auto_purge value set
 		if ( $my->cfg_name == 'auto_purge' ) {
 			$purge 	= $my->cfg_value;
@@ -146,10 +196,11 @@ if (isset( $_POST['submit'] )) {
 		}		
 		
 		/** cannot using mosredirect as this stuffs up the cookie in IIS */
-		echo "<script>document.location.href='index2.php';</script>\n";
+		// redirects page to admin homepage by default or expired page
+		echo "<script>document.location.href='$expired';</script>\n";
 		exit();
 	} else {
-		mosErrorAlert("Incorrect Username, Password.  Please try again", "document.location.href='index.php'");
+		mosErrorAlert("Incorrect Username, Password.  Please try again", "document.location.href='index.php?mosmsg=Incorrect Username, Password. Please try again'");
 	}
 } else {
 	initGzip();

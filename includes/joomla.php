@@ -62,7 +62,7 @@ if (version_compare( phpversion(), '5.0' ) < 0) {
 
 @set_magic_quotes_runtime( 0 );
 
-if (@$mosConfig_error_reporting === 0) {
+if ( @$mosConfig_error_reporting === 0 || @$mosConfig_error_reporting === '0' ) {
 	error_reporting( 0 );
 } else if (@$mosConfig_error_reporting > 0) {
 	error_reporting( $mosConfig_error_reporting );
@@ -724,7 +724,9 @@ class mosMainFrame {
 	* Added as of 1.0.8
 	* Deperciated 1.1
 	*/
-	function initSessionAdmin($option, $task) {			
+	function initSessionAdmin($option, $task) {	
+		global $_VERSION, $mosConfig_admin_expired;
+		
 		// logout check
 		if ($option == 'logout') {
 			require $GLOBALS['mosConfig_absolute_path'] .'/administrator/logout.php';
@@ -796,13 +798,52 @@ class mosMainFrame {
 				
 				// if no entry in session table that corresponds boot from admin area
 				if ( $count == 0 ) {
-					echo "<script>document.location.href='index.php?mosmsg=Admin Session expired'</script>\n";
+					$link 	= NULL;
+					
+					if ($_SERVER['QUERY_STRING']) {
+						$link = 'index2.php?'. $_SERVER['QUERY_STRING'];
+					}
+					
+					// check if site designated as a production site 
+					// for a demo site disallow expired page functionality
+					// link must also be a Joomla link to stop malicious redirection
+					if ( $link && strpos( $link, 'index2.php?option=com_' ) === 0 && $_VERSION->SITE == 1 && @$mosConfig_admin_expired === '1' ) {
+						$now 	= time();
+						
+						$file 	= $this->getPath( 'com_xml', 'com_users' );
+						$params =& new mosParameters( $my->params, $file, 'component' );
+						
+						// return to expired page functionality
+						$params->set( 'expired', 		$link );
+						$params->set( 'expired_time', 	$now );
+
+						// param handling
+						if (is_array( $params->toArray() )) {
+							$txt = array();
+							foreach ( $params->toArray() as $k=>$v) {
+								$txt[] = "$k=$v";
+							}
+							$saveparams = implode( "\n", $txt );
+						}
+						
+						// save expired page info to user data
+						$query = "UPDATE #__users"
+						. "\n SET params = '$saveparams'"
+						. "\n WHERE id = $my->id"
+						. "\n AND username = '$my->username'"
+						. "\n AND usertype = '$my->usertype'"
+						;
+						$this->_db->setQuery( $query );
+						$this->_db->query();
+					}
+
+					echo "<script>document.location.href='index.php?mosmsg=Admin Session Expired'</script>\n";
 					exit();
 				}
 			}
 		} else {
 			// session id does not correspond to required session format
-			echo "<script>document.location.href='index.php?mosmsg=Incorrect Session ID'</script>\n";
+			echo "<script>document.location.href='index.php?mosmsg=Invalid Session'</script>\n";
 			exit();
 		}
 
@@ -1839,8 +1880,11 @@ class mosHTML {
 	*/
 	function selectList( &$arr, $tag_name, $tag_attribs, $key, $text, $selected=NULL ) {
 		reset( $arr );
-		$html = "\n<select name=\"$tag_name\" $tag_attribs>";
-		for ($i=0, $n=count( $arr ); $i < $n; $i++ ) {
+		
+		$html 	= "\n<select name=\"$tag_name\" $tag_attribs>";
+		$count 	= count( $arr );
+		
+		for ($i=0, $n=$count; $i < $n; $i++ ) {
 			$k = $arr[$i]->$key;
 			$t = $arr[$i]->$text;
 			$id = ( isset($arr[$i]->id) ? @$arr[$i]->id : null);
@@ -1861,6 +1905,7 @@ class mosHTML {
 			$html .= "\n\t<option value=\"".$k."\"$extra>" . $t . "</option>";
 		}
 		$html .= "\n</select>\n";
+		
 		return $html;
 	}
 

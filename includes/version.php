@@ -21,7 +21,7 @@ class joomlaVersion {
 	/** @var int Main Release Level */
 	var $RELEASE 	= '1.0';
 	/** @var string Development Status */
-	var $DEV_STATUS = 'Beta 2';
+	var $DEV_STATUS = 'Beta 3';
 	/** @var int Sub Release Level */
 	var $DEV_LEVEL 	= '9';
 	/** @var int build Number */
@@ -29,9 +29,9 @@ class joomlaVersion {
 	/** @var string Codename */
 	var $CODENAME 	= 'Sunshine';
 	/** @var string Date */
-	var $RELDATE 	= '15 May 2006';
+	var $RELDATE 	= 'TBA';
 	/** @var string Time */
-	var $RELTIME 	= '22:00';
+	var $RELTIME 	= '00:00';
 	/** @var string Timezone */
 	var $RELTZ 		= 'UTC';
 	/** @var string Copyright Text */
@@ -42,6 +42,8 @@ class joomlaVersion {
 	var $SITE 		= 1;
 	/** @var string Whether site has restricted functionality mostly used for demo sites: 0 is default */
 	var $RESTRICT	= 0;
+	/** @var string Whether site is still in development phase (disables checks for /installation folder) - should be set to 0 for package release */
+	var $SVN		= 1;
 
 	
 	/**

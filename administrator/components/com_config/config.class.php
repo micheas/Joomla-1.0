@@ -66,6 +66,8 @@ class mosConfig {
 	/** @var int */
 	var $config_session_life_admin	= 1800;
 	/** @var int */
+	var $config_admin_expired		= '1';
+	/** @var int */
 	var $config_session_type		= 0;
 	/** @var int */
 	var $config_error_reporting		= 0;

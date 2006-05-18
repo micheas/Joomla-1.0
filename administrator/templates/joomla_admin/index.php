@@ -91,7 +91,7 @@ initEditor();
 			</div>
 			<div align="center" class="smallgrey">
 				<?php echo $version; ?>
-				<br/>
+				<br />
 				<a href="http://www.joomla.org/content/blogcategory/32/66/" target="_blank">Check for latest Version</a>
 			</div>			
 			<?php

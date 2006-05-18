@@ -79,7 +79,7 @@ class HTML_content {
 			#
 			</th>
 			<th width="5">
-			<input type="checkbox" name="toggle" value="" onClick="checkAll(<?php echo count( $rows ); ?>);" />
+			<input type="checkbox" name="toggle" value="" onclick="checkAll(<?php echo count( $rows ); ?>);" />
 			</th>
 			<th class="title">
 			Title
@@ -217,7 +217,7 @@ class HTML_content {
 				if ( $times ) {
 					?>
 					<td align="center">
-					<a href="javascript: void(0);" onMouseOver="return overlib('<table><?php echo $times; ?></table>', CAPTION, 'Publish Information', BELOW, RIGHT);" onMouseOut="return nd();" onClick="return listItemTask('cb<?php echo $i;?>','<?php echo $row->state ? "unpublish" : "publish";?>')">
+					<a href="javascript: void(0);" onMouseOver="return overlib('<table><?php echo $times; ?></table>', CAPTION, 'Publish Information', BELOW, RIGHT);" onMouseOut="return nd();" onclick="return listItemTask('cb<?php echo $i;?>','<?php echo $row->state ? "unpublish" : "publish";?>')">
 					<img src="images/<?php echo $img;?>" width="12" height="12" border="0" alt="<?php echo $alt; ?>" />
 					</a>
 					</td>
@@ -225,7 +225,7 @@ class HTML_content {
 				}
 				?>
 				<td align="center">
-				<a href="javascript: void(0);" onClick="return listItemTask('cb<?php echo $i;?>','toggle_frontpage')">
+				<a href="javascript: void(0);" onclick="return listItemTask('cb<?php echo $i;?>','toggle_frontpage')">
 				<img src="images/<?php echo ( $row->frontpage ) ? 'tick.png' : 'publish_x.png';?>" width="12" height="12" border="0" alt="<?php echo ( $row->frontpage ) ? 'Yes' : 'No';?>" />
 				</a>
 				</td>
@@ -357,7 +357,7 @@ class HTML_content {
 			#
 			</th>
 			<th width="20">
-			<input type="checkbox" name="toggle" value="" onClick="checkAll(<?php echo count( $rows ); ?>);" />
+			<input type="checkbox" name="toggle" value="" onclick="checkAll(<?php echo count( $rows ); ?>);" />
 			</th>
 			<th class="title">
 			Title
@@ -500,7 +500,7 @@ class HTML_content {
 		$i = 0;
 		foreach ($images as $k=>$items) {
 			foreach ($items as $v) {
-				echo "folderimages[".$i++."] = new Array( '$k','".addslashes( $v->value )."','".addslashes( $v->text )."' );\n\t\t";
+				echo "folderimages[".$i++."] = new Array( '$k','".addslashes( ampReplace( $v->value ) )."','".addslashes( ampReplace( $v->text ) )."' );\n\t\t";
 			}
 		}
 		?>
@@ -691,7 +691,7 @@ class HTML_content {
 					</td>
 					<td>
 					<input class="text_area" type="text" name="created" id="created" size="25" maxlength="19" value="<?php echo $row->created; ?>" />
-					<input name="reset" type="reset" class="button" onClick="return showCalendar('created', 'y-mm-dd');" value="...">
+					<input name="reset" type="reset" class="button" onclick="return showCalendar('created', 'y-mm-dd');" value="..." />
 					</td>
 				</tr>
 				<tr>
@@ -700,7 +700,7 @@ class HTML_content {
 					</td>
 					<td>
 					<input class="text_area" type="text" name="publish_up" id="publish_up" size="25" maxlength="19" value="<?php echo $row->publish_up; ?>" />
-					<input type="reset" class="button" value="..." onClick="return showCalendar('publish_up', 'y-mm-dd');">
+					<input type="reset" class="button" value="..." onclick="return showCalendar('publish_up', 'y-mm-dd');" />
 					</td>
 				</tr>
 				<tr>
@@ -709,7 +709,7 @@ class HTML_content {
 					</td>
 					<td>
 					<input class="text_area" type="text" name="publish_down" id="publish_down" size="25" maxlength="19" value="<?php echo $row->publish_down; ?>" />
-					<input type="reset" class="button" value="..." onClick="return showCalendar('publish_down', 'y-mm-dd');">
+					<input type="reset" class="button" value="..." onclick="return showCalendar('publish_down', 'y-mm-dd');" />
 					</td>
 				</tr>
 				</table>
@@ -746,7 +746,7 @@ class HTML_content {
 					<td>
 					<?php echo $row->hits;?>
 					<div <?php echo $visibility; ?>>
-					<input name="reset_hits" type="button" class="button" value="Reset Hit Count" onClick="submitbutton('resethits');">
+					<input name="reset_hits" type="button" class="button" value="Reset Hit Count" onclick="submitbutton('resethits');" />
 					</div>
 					</td>
 				</tr>
@@ -823,9 +823,9 @@ class HTML_content {
 								</div>
 							</td>
 							<td width="2%">
-								<input class="button" type="button" value=">>" onclick="addSelectedToList('adminForm','imagefiles','imagelist')" title="Add"/>
-								<br/>
-								<input class="button" type="button" value="<<" onclick="delSelectedFromList('adminForm','imagelist')" title="Remove"/>
+								<input class="button" type="button" value=">>" onclick="addSelectedToList('adminForm','imagefiles','imagelist')" title="Add" />
+								<br />
+								<input class="button" type="button" value="<<" onclick="delSelectedFromList('adminForm','imagelist')" title="Remove" />
 							</td>
 							<td width="48%">
 								<div align="center">
@@ -845,14 +845,14 @@ class HTML_content {
 				<tr valign="top">
 					<td>
 						<div align="center">
-							Sample Image:<br/>
-							<img name="view_imagefiles" src="../images/M_images/blank.png" width="100" />
+							Sample Image:<br />
+							<img name="view_imagefiles" src="../images/M_images/blank.png" alt="Sample Image" width="100" />
 						</div>
 					</td>
 					<td valign="top">
 						<div align="center">
-							Active Image:<br/>
-							<img name="view_imagelist" src="../images/M_images/blank.png" width="100" />
+							Active Image:<br />
+							<img name="view_imagelist" src="../images/M_images/blank.png" alt="Active Image" width="100" />
 						</div>
 					</td>
 				</tr>
@@ -926,7 +926,7 @@ class HTML_content {
 						</tr>
 						<tr>
 							<td colspan="2">
-							<input class="button" type="button" value="Apply" onClick="applyImageProps()" />
+							<input class="button" type="button" value="Apply" onclick="applyImageProps()" />
 							</td>
 						</tr>
 						</table>
@@ -969,19 +969,19 @@ class HTML_content {
 					<td>
 					Description:
 					<br />
-					<textarea class="text_area" cols="30" rows="3" style="width:300px; height:50px" name="metadesc" width="500"><?php echo str_replace('&','&amp;',$row->metadesc); ?></textarea>
+					<textarea class="text_area" cols="30" rows="3" style="width: 350px; height: 50px" name="metadesc"><?php echo str_replace('&','&amp;',$row->metadesc); ?></textarea>
 					</td>
 				</tr>
 					<tr>
 					<td>
 					Keywords:
 					<br />
-					<textarea class="text_area" cols="30" rows="3" style="width:300px; height:50px" name="metakey" width="500"><?php echo str_replace('&','&amp;',$row->metakey); ?></textarea>
+					<textarea class="text_area" cols="30" rows="3" style="width: 350px; height: 50px" name="metakey"><?php echo str_replace('&','&amp;',$row->metakey); ?></textarea>
 					</td>
 				</tr>
 				<tr>
 					<td>
-					<input type="button" class="button" value="Add Sect/Cat/Title" onClick="f=document.adminForm;f.metakey.value=document.adminForm.sectionid.options[document.adminForm.sectionid.selectedIndex].text+', '+getSelectedText('adminForm','catid')+', '+f.title.value+f.metakey.value;" />
+					<input type="button" class="button" value="Add Sect/Cat/Title" onclick="f=document.adminForm;f.metakey.value=document.adminForm.sectionid.options[document.adminForm.sectionid.selectedIndex].text+', '+getSelectedText('adminForm','catid')+', '+f.title.value+f.metakey.value;" />
 					</td>
 				</tr>
 				</table>
@@ -1002,7 +1002,7 @@ class HTML_content {
 					</td>
 				</tr>
 				<tr>
-					<td valign="top" width="90px">
+					<td valign="top" width="90">
 					Select a Menu
 					</td>
 					<td>
@@ -1010,7 +1010,7 @@ class HTML_content {
 					</td>
 				</tr>
 				<tr>
-					<td valign="top" width="90px">
+					<td valign="top" width="90">
 					Menu Item Name
 					</td>
 					<td>
@@ -1021,7 +1021,7 @@ class HTML_content {
 					<td>
 					</td>
 					<td>
-					<input name="menu_link" type="button" class="button" value="Link to Menu" onClick="submitbutton('menulink');" />
+					<input name="menu_link" type="button" class="button" value="Link to Menu" onclick="submitbutton('menulink');" />
 					</td>
 				</tr>
 				<tr>

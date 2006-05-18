@@ -279,7 +279,7 @@ class mosParameters {
 		$result[0] = $label ? $label : $name;
 
 		if ($result[0] == '@spacer') {
-			$result[0] = '';
+			$result[0] = '&nbsp;';
 		} else {
 			$result[0] = mosToolTip( addslashes( $description ), addslashes( $result[0] ), '', '', $result[0], '#', 0 );
 		}
@@ -310,7 +310,7 @@ class mosParameters {
 	function _form_text( $name, $value, &$node, $control_name ) {
 		$size = $node->getAttribute( 'size' );
 
-		return '<input type="text" name="'. $control_name .'['. $name .']" value="'. $value .'" class="text_area" size="'. $size .'"/>';
+		return '<input type="text" name="'. $control_name .'['. $name .']" value="'. $value .'" class="text_area" size="'. $size .'" />';
 	}
 	/**
 	* @param string The name of the form element

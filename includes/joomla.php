@@ -4707,10 +4707,11 @@ class mosAdminMenus {
 		if ( $temps[0]->value != 'None' ) {
 			foreach( $temps as $temp ) {
 				if ( substr( $temp->value, -1, 1 ) != '/' ) { 
-					$temp = $temp->value .'/';
+					$temp 		= $temp->value .'/';
 					$folders[] 	= mosHTML::makeOption( $temp, $temp );
 				} else {
-					$temp = $temp->value;
+					$temp 		= $temp->value;
+					$temp 		= ampReplace( $temp );
 					$folders[] 	= mosHTML::makeOption( $temp, $temp );
 				}
 			}

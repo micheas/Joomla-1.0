@@ -589,6 +589,7 @@ function editContent( $uid=0, $sectionid=0, $option ) {
 	if ( trim( $selected_folders ) ) {
 		$temps = explode( ',', $selected_folders );
 		foreach( $temps as $temp ) {
+			$temp 		= ampReplace( $temp);
 			$folders[] 	= mosHTML::makeOption( $temp, $temp );
 		}
 	} else {

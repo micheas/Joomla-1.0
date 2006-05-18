@@ -432,7 +432,8 @@ class mosMenuBar {
 		$cur_template = $database->loadResult();	
 		?>
 		<td>
-			<script language="javascript">
+			<script language="javascript" type="text/javascript">
+			<!--
 			function popup() {
 				<?php
 				if ($updateEditors) {
@@ -442,6 +443,7 @@ class mosMenuBar {
 				?>
 				window.open('popups/<?php echo $popup;?>.php?t=<?php echo $cur_template; ?>', 'win1', 'status=no,toolbar=no,scrollbars=yes,titlebar=no,menubar=no,resizable=yes,width=640,height=480,directories=no,location=no');
 			}
+			//-->
 			</script>
 		 	<a class="toolbar" href="#" onclick="popup();">
 				<?php echo $image2; ?>

@@ -330,6 +330,23 @@ function saveconfig( $task ) {
 	//override any possible database password change
 	$row->config_password 	= $mosConfig_password;
 	
+	// handling of special characters
+	$row->config_sitename			= htmlspecialchars( $row->config_sitename, ENT_QUOTES );	
+	$row->config_MetaDesc			= htmlspecialchars( $row->config_MetaDesc, ENT_QUOTES );	
+	$row->config_MetaKeys			= htmlspecialchars( $row->config_MetaKeys, ENT_QUOTES );	
+
+	// handling of quotes (double and single) and amp characters
+	// htmlspecialchars not used to preserve ability to insert other html characters
+	$row->config_offline_message	= ampReplace( $row->config_offline_message );	
+	$row->config_offline_message	= str_replace( '"', '&quot;', $row->config_offline_message );	
+	$row->config_offline_message	= str_replace( "'", '&#039;', $row->config_offline_message );	
+	
+	// handling of quotes (double and single) and amp characters
+	// htmlspecialchars not used to preserve ability to insert other html characters
+	$row->config_error_message		= ampReplace( $row->config_error_message );	
+	$row->config_error_message		= str_replace( '"', '&quot;', $row->config_error_message );	
+	$row->config_error_message		= str_replace( "'", '&#039;', $row->config_error_message );	
+
 	$config = "<?php \n";
 	$config .= $row->getVarText();
 	$config .= "setlocale (LC_TIME, \$mosConfig_locale);\n";

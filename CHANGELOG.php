@@ -57,6 +57,7 @@ Low Level Threat
 
 20-May-2006 Rey Gigataras
  # Fixed artf4733 : Module Manager reorder via save button broken
+ # Fixed artf4736 : Quotation marks in Site Name
 
 
 18-May-2006 Rey Gigataras

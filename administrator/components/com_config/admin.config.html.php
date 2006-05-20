@@ -154,14 +154,14 @@ class HTML_config {
 			</tr>
 			<tr>
 				<td valign="top">Offline Message:</td>
-				<td><textarea class="text_area" cols="60" rows="2" style="width:500px; height:40px" name="config_offline_message"><?php echo htmlspecialchars( stripslashes( $row->config_offline_message ), ENT_QUOTES); ?></textarea><?php
+				<td><textarea class="text_area" cols="60" rows="2" style="width:500px; height:40px" name="config_offline_message"><?php echo $row->config_offline_message; ?></textarea><?php
 					$tip = 'A message that displays if your site is offline';
 					echo mosToolTip( $tip );
 				?></td>
 			</tr>
 			<tr>
 				<td valign="top">System Error Message:</td>
-				<td><textarea class="text_area" cols="60" rows="2" style="width:500px; height:40px" name="config_error_message"><?php echo htmlspecialchars( stripslashes( $row->config_error_message ), ENT_QUOTES); ?></textarea><?php
+				<td><textarea class="text_area" cols="60" rows="2" style="width:500px; height:40px" name="config_error_message"><?php echo $row->config_error_message; ?></textarea><?php
 					$tip = 'A message that displays if Joomla! could not connect to the database';
 					echo mosToolTip( $tip );
 				?></td>
@@ -634,11 +634,11 @@ class HTML_config {
 			<table class="adminform">
 			<tr>
 				<td width="185" valign="top">Global Site Meta Description:</td>
-				<td><textarea class="text_area" cols="50" rows="3" style="width:500px; height:50px" name="config_MetaDesc"><?php echo htmlspecialchars($row->config_MetaDesc, ENT_QUOTES); ?></textarea></td>
+				<td><textarea class="text_area" cols="50" rows="3" style="width:500px; height:50px" name="config_MetaDesc"><?php echo $row->config_MetaDesc; ?></textarea></td>
 			</tr>
 			<tr>
 				<td valign="top">Global Site Meta Keywords:</td>
-				<td><textarea class="text_area" cols="50" rows="3" style="width:500px; height:50px" name="config_MetaKeys"><?php echo htmlspecialchars($row->config_MetaKeys, ENT_QUOTES); ?></textarea></td>
+				<td><textarea class="text_area" cols="50" rows="3" style="width:500px; height:50px" name="config_MetaKeys"><?php echo $row->config_MetaKeys; ?></textarea></td>
 			</tr>
 			<tr>
 				<td valign="top">Show Title Meta Tag:</td>

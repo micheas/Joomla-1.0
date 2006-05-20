@@ -281,8 +281,9 @@ function editCategory( $uid=0, $section='' ) {
 		mosRedirect( 'index2.php?option=categories&section='. $row->section, 'The category '. $row->title .' is currently being edited by another administrator' );
 	}
 
-	$lists['links']	= 0;
-	$menus 			= NULL;
+	$lists['links']		= 0;
+	$menus 				= NULL;
+	$selected_folders	= NULL;
 	if ( $uid ) {
 		// existing record
 		$row->checkout( $my->id );
@@ -324,16 +325,16 @@ function editCategory( $uid=0, $section='' ) {
 			for( $i = 0; $i < $count; $i++ ) {
 				switch ( $menus[$i]->type ) {
 					case 'content_category':
-					$menus[$i]->type = 'Table - Content Category';
-					break;
+						$menus[$i]->type = 'Table - Content Category';
+						break;
 					
 					case 'content_blog_category':
-					$menus[$i]->type = 'Blog - Content Category';
-					break;
+						$menus[$i]->type = 'Blog - Content Category';
+						break;
 					
 					case 'content_archive_category':
-					$menus[$i]->type = 'Blog - Content Category Archive';
-					break;
+						$menus[$i]->type = 'Blog - Content Category Archive';
+						break;
 				}
 			}
 			$lists['links']	= 1;

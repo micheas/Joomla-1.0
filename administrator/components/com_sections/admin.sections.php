@@ -199,6 +199,7 @@ function editSection( $uid=0, $scope='', $option ) {
 		mosRedirect( 'index2.php?option='. $option .'&scope='. $row->scope .'&mosmsg='. $msg );
 	}
 
+	$selected_folders = NULL;
 	if ( $uid ) {
 		$row->checkout( $my->id );
 		if ( $row->id > 0 ) {

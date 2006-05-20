@@ -207,7 +207,7 @@ function viewContent( $sectionid, $option ) {
 	. "\n LEFT JOIN #__users AS u ON u.id = c.checked_out"
 	. "\n LEFT JOIN #__users AS v ON v.id = c.created_by"
 	. "\n LEFT JOIN #__content_frontpage AS f ON f.content_id = c.id"
-	. ( count( $where ) ? "\nWHERE " . implode( ' AND ', $where ) : '' )
+	. ( count( $where ) ? "\n WHERE " . implode( ' AND ', $where ) : '' )
 	. $order
 	;
 	$database->setQuery( $query, $pageNav->limitstart, $pageNav->limit );
@@ -395,6 +395,7 @@ function editContent( $uid=0, $sectionid=0, $option ) {
 		mosRedirect( 'index2.php?option=com_content', 'The module '. $row->title .' is currently being edited by another administrator' );
 	}
 
+	$selected_folders = NULL;
 	if ($uid) {
 		$row->checkout( $my->id );
 		

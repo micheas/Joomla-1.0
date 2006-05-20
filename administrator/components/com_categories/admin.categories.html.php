@@ -353,7 +353,7 @@ class categories_html {
 					<td>
 					Image Position:
 					</td>
-					<td>
+					<td colspan="2">
 					<?php echo $lists['image_position']; ?>
 					</td>
 				</tr>
@@ -361,7 +361,7 @@ class categories_html {
 					<td>
 					Ordering:
 					</td>
-					<td>
+					<td colspan="2">
 					<?php echo $lists['ordering']; ?>
 					</td>
 				</tr>
@@ -369,7 +369,7 @@ class categories_html {
 					<td>
 					Access Level:
 					</td>
-					<td>
+					<td colspan="2">
 					<?php echo $lists['access']; ?>
 					</td>
 				</tr>
@@ -377,7 +377,7 @@ class categories_html {
 					<td>
 					Published:
 					</td>
-					<td>
+					<td colspan="2">
 					<?php echo $lists['published']; ?>
 					</td>
 				</tr>

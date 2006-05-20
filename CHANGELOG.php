@@ -55,6 +55,10 @@ Low Level Threat
 --
 
 
+20-May-2006 Rey Gigataras
+ # Fixed artf4733 : Module Manager reorder via save button broken
+
+
 18-May-2006 Rey Gigataras
  # Fixed artf4700 : pathway ampReplaces item name twice
  # Fixed artf4712 : 'type' of $mosConfig_error_reporting does not match code

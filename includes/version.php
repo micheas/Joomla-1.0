@@ -29,9 +29,9 @@ class joomlaVersion {
 	/** @var string Codename */
 	var $CODENAME 	= 'Sunshine';
 	/** @var string Date */
-	var $RELDATE 	= 'TBA';
+	var $RELDATE 	= '21 May 2006';
 	/** @var string Time */
-	var $RELTIME 	= '00:00';
+	var $RELTIME 	= '15:00';
 	/** @var string Timezone */
 	var $RELTZ 		= 'UTC';
 	/** @var string Copyright Text */
@@ -43,7 +43,7 @@ class joomlaVersion {
 	/** @var string Whether site has restricted functionality mostly used for demo sites: 0 is default */
 	var $RESTRICT	= 0;
 	/** @var string Whether site is still in development phase (disables checks for /installation folder) - should be set to 0 for package release */
-	var $SVN		= 1;
+	var $SVN		= 0;
 
 	
 	/**

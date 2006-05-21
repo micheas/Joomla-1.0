@@ -36,7 +36,8 @@ Legend:
 - -> Removed
 ! -> Note
 
-------------------------------------------------------------------------------------
+
+---------------- 1.0.9 Beta 3 Released -- [21-May-2006 15:00 UTC] ------------------
 
 
 This Release Contains following Security Fixes

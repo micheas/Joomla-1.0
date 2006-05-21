@@ -4269,15 +4269,37 @@ class mosAdminMenus {
 	* build the link/url of a menu item
 	*/
 	function Link( &$row, $id, $link=NULL ) {
+		global $mainframe;
+		
 		if ( $id ) {
-			if ( $link ) {
-				$link = $row->link;
-			} else {
-				$link = $row->link .'&amp;Itemid='. $row->id;
-			}
+			switch ($row->type) {
+				case 'content_item_link':
+				case 'content_typed':
+					// load menu params
+					$params = new mosParameters( $row->params, $mainframe->getPath( 'menu_xml', $row->type ), 'menu' );
+
+					if ( $params->get( 'unique_itemid' ) ) {
+						$row->link .= '&Itemid='. $row->id;
+					} else {
+						$temp = split( '&task=view&id', $row->link);
+						$row->link .= '&Itemid='. $mainframe->getItemid($temp[1]);
+					}
+					
+					$link = $row->link;
+					break;
+				
+				default:
+					if ( $link ) {
+						$link = $row->link;
+					} else {
+						$link = $row->link .'&amp;Itemid='. $row->id;
+					}
+					break;
+			}			
 		} else {
 			$link = NULL;
 		}
+		
 		return $link;
 	}
 

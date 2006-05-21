@@ -1879,7 +1879,10 @@ class mosHTML {
 	* @returns string HTML for the select list
 	*/
 	function selectList( &$arr, $tag_name, $tag_attribs, $key, $text, $selected=NULL ) {
-		reset( $arr );
+		// check if array
+		if ( is_array( $arr ) ) {
+			reset( $arr );
+		}
 		
 		$html 	= "\n<select name=\"$tag_name\" $tag_attribs>";
 		$count 	= count( $arr );
@@ -4281,8 +4284,8 @@ class mosAdminMenus {
 					if ( $params->get( 'unique_itemid' ) ) {
 						$row->link .= '&Itemid='. $row->id;
 					} else {
-						$temp = split( '&task=view&id', $row->link);
-						$row->link .= '&Itemid='. $mainframe->getItemid($temp[1]);
+						$temp = split( '&task=view&id=', $row->link);
+						$row->link .= '&Itemid='. $mainframe->getItemid($temp[1], 0, 0);
 					}
 					
 					$link = $row->link;

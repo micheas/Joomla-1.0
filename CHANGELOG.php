@@ -56,8 +56,10 @@ Low Level Threat
 
 
 21-May-2006 Rey Gigataras
+ # Fixed artf4714 : Can't add Menu Item :: Link - Static Content 
  # Fixed : "Unique Itemid" handling for `Link - Content Item`
  # Fixed : Add "Unique Itemid" handling for `Link - Static Content`
+ # Fixed artf4714 : Can't add Menu Item :: Link - Static Content 
  # Fixed [topic,62056] : Copyright date
 
 

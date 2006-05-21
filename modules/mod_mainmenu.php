@@ -25,6 +25,9 @@ if (!defined( '_MOS_MAINMENU_MODULE' )) {
 		global $Itemid, $mosConfig_live_site, $mainframe;
 		$txt = '';
 
+		// load menu params
+		$menuparams = new mosParameters( $mitem->params, $mainframe->getPath( 'menu_xml', $mitem->type ), 'menu' );
+		
 		switch ($mitem->type) {
 			case 'separator':
 			case 'component_item_link':
@@ -39,7 +42,8 @@ if (!defined( '_MOS_MAINMENU_MODULE' )) {
 				break;
 				
 			case 'content_item_link':
-				if ( $params->get( 'unique_itemid' ) ) {
+			case 'content_typed':
+				if ( $menuparams->get( 'unique_itemid' ) ) {
 					$mitem->link .= '&Itemid='. $mitem->id;
 				} else {
 					$temp = split("&task=view&id=", $mitem->link);
@@ -47,7 +51,6 @@ if (!defined( '_MOS_MAINMENU_MODULE' )) {
 				}
 				break;
 
-			case 'content_typed':
 			default:
 				$mitem->link .= '&Itemid='. $mitem->id;
 				break;
@@ -388,7 +391,6 @@ $params->def('indent_image6', 		'indent.png');
 $params->def('spacer', 				'');
 $params->def('end_spacer', 			'');
 $params->def('full_active_id', 		0);
-$params->def('unique_itemid', 		0);
 
 switch ( $params->get( 'menu_style', 'vert_indent' ) ) {
 	case 'list_flat':

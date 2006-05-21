@@ -55,6 +55,11 @@ Low Level Threat
 --
 
 
+21-May-2006 Rey Gigataras
+ # Fixed : "Unique Itemid" handling for `Link - Content Item`
+ # Fixed : Add "Unique Itemid" handling for `Link - Static Content`
+
+
 20-May-2006 Rey Gigataras
  # Fixed artf4733 : Module Manager reorder via save button broken
  # Fixed artf4736 : Quotation marks in Site Name

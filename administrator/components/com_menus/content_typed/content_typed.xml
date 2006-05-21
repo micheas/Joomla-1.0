@@ -12,5 +12,10 @@
 	<description>Creates a link to Static Content Item</description>
 	<params>
 		<param name="menu_image" type="imagelist" directory="/images/stories" hide_default="1" default="" label="Menu Image" description="A small image to be placed to the left or right of your menu item, images must be in images/stories/" />
+		<param name="@spacer" type="spacer" default="" label="" description="" />
+		<param name="unique_itemid" type="radio" default="0" label="Unique Itemid" description="Use a unique Itemid for the link">
+			<option value="0">No</option>
+			<option value="1">Yes</option>
+		</param>
 	</params>
 </mosinstall>

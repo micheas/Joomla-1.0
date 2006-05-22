@@ -18,11 +18,10 @@ defined( '_VALID_MOS' ) or die( 'Restricted access' );
 // load the html drawing class
 require_once( $mainframe->getPath( 'front_html' ) );
 
-global $database, $my;
+global $database, $my, $mainframe;
 global $mosConfig_live_site;
 
-$menu = new mosMenu( $database );
-$menu->load( $Itemid );
+$menu = $mainframe->get( 'menu' );
 $params = new mosParameters( $menu->params );
 
 $params->def( 'page_title', 1 );

@@ -51,8 +51,7 @@ function viewSearch() {
 
 	// Adds parameter handling
 	if( $Itemid > 0 && $Itemid != 99999999 ) {
-		$menu = new mosMenu( $database );
-		$menu->load( $Itemid );
+		$menu = $mainframe->get( 'menu' );
 		$params = new mosParameters( $menu->params );
 		$params->def( 'page_title', 1 );
 		$params->def( 'pageclass_sfx', '' );

@@ -78,8 +78,7 @@ function listContacts( $option, $catid ) {
 		$currentcat = NULL;
 
 		// Parameters
-		$menu = new mosMenu( $database );
-		$menu->load( $Itemid );
+		$menu = $mainframe->get( 'menu' );
 		$params = new mosParameters( $menu->params );
 
 		$params->def( 'page_title', 		1 );
@@ -336,8 +335,7 @@ function contactpage( $contact_id ) {
 		}
 
 		// params from menu item
-		$menu = new mosMenu( $database );
-		$menu->load( $Itemid );
+		$menu = $mainframe->get( 'menu' );
 		$menu_params = new mosParameters( $menu->params );
 
 		$menu_params->def( 'page_title', 1 );
@@ -415,8 +413,7 @@ function sendmail( $con_id, $option ) {
 		$subject 	= strval( mosGetParam( $_POST, 'subject', 		$default ) );
 		$email_copy = strval( mosGetParam( $_POST, 'email_copy', 	0 ) );
 
-		$menu = new mosMenu( $database );
-		$menu->load( $Itemid );
+		$menu = $mainframe->get( 'menu' );
 		$mparams = new mosParameters( $menu->params );		
 		$bannedEmail 	= $mparams->get( 'bannedEmail', 	'' );		
 		$bannedSubject 	= $mparams->get( 'bannedSubject', 	'' );		

@@ -106,8 +106,7 @@ function listWeblinks( $catid ) {
 	$categories = $database->loadObjectList();
 	
 	// Parameters
-	$menu = new mosMenu( $database );
-	$menu->load( $Itemid );
+	$menu = $mainframe->get( 'menu' );
 	$params = new mosParameters( $menu->params );
 	$params->def( 'page_title', 1 );
 	$params->def( 'header', $menu->name );

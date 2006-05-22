@@ -646,11 +646,9 @@ class mosMainFrame {
 		$session 	=& $this->_session;
 		$session 	= new mosSession( $this->_db );
 		
-		// purge expired frontend logged sessions only - expiry time set in Global Config
+		// purge expired sessions
 		$session->purge('core');
-		//$and 		= "\n AND guest = 0 \n AND gid > 0";
-		//$past		= time() - 10;
-		//$and 		.= "\n OR ( ( time < '$past' ) \n AND guest = 1 \n AND userid = 0 )";
+		// purge expired frontend logged sessions only - expiry time set in Global Config
 		//$session->purge(intval( $this->getCfg( 'lifetime' ) ), $and );
 		// purge expired frontend guest sessions only - expire time fixed at 15 mins
 		//$and 		= "\n AND guest = 1 \n AND userid = 0";
@@ -3546,16 +3544,16 @@ function mosMakeHtmlSafe( &$mixed, $quote_style=ENT_QUOTES, $exclude_keys='' ) {
 * @return boolean True if the visitor's group at least equal to the menu access
 */
 function mosMenuCheck( $Itemid, $menu_option, $task, $gid ) {
-	global $database;
-	
-	$dblink = "index.php?option=$menu_option";
+	global $database, $mainframe;
 	
 	if ( $Itemid != '' && $Itemid != 0 && $Itemid != 99999999 ) {
-		$query = "SELECT access"
+		$query = "SELECT *"
 		. "\n FROM #__menu"
 		. "\n WHERE id = $Itemid"
 		;
 	} else {
+		$dblink = "index.php?option=$menu_option";
+		
 		if ($task != '') {
 			$dblink	.= "&task=$task";
 		}
@@ -3572,6 +3570,9 @@ function mosMenuCheck( $Itemid, $menu_option, $task, $gid ) {
 	foreach ($results as $result) {
 		$access = max( $access, $result->access );
 	}
+	
+	// save menu information to global mainframe
+	$mainframe->set( 'menu', $results[0] );
 	
 	return ($access <= $gid);
 }

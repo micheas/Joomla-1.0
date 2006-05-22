@@ -23,8 +23,7 @@ showWrap( $option );
 function showWrap( $option ) {
 	global $database, $Itemid, $mainframe;
 
-	$menu = new mosMenu( $database );
-	$menu->load( $Itemid );
+	$menu = $mainframe->get( 'menu' );
 	$params = new mosParameters( $menu->params );
 	$params->def( 'back_button', $mainframe->getCfg( 'back_button' ) );
 	$params->def( 'scrolling', 'auto' );

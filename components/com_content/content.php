@@ -149,8 +149,7 @@ function frontpage( $gid, &$access, $pop, $now ) {
 	$noauth 	= !$mainframe->getCfg( 'shownoauth' );
 
 	// Parameters
-	$menu = new mosMenu( $database );
-	$menu->load( $Itemid );
+	$menu = $mainframe->get( 'menu' );
 	$params = new mosParameters( $menu->params );
 	$orderby_sec = $params->def( 'orderby_sec', '' );
 	$orderby_pri = $params->def( 'orderby_pri', '' );
@@ -217,8 +216,7 @@ function showSection( $id, $gid, &$access, $now ) {
 	// Paramters
 	$params = new stdClass();
 	if ( $Itemid ) {
-		$menu = new mosMenu( $database );
-		$menu->load( $Itemid );
+		$menu = $mainframe->get( 'menu' );
 		$params = new mosParameters( $menu->params );
 	} else {
 		$menu 	= '';
@@ -362,8 +360,7 @@ function showCategory( $id, $gid, &$access, $sectionid, $limit, $selected, $limi
 	// Paramters
 	$params = new stdClass();
 	if ( $Itemid ) {
-		$menu = new mosMenu( $database );
-		$menu->load( $Itemid );
+		$menu = $mainframe->get( 'menu' );
 		$params = new mosParameters( $menu->params );
 	} else {
 		$menu = '';
@@ -429,8 +426,6 @@ function showCategory( $id, $gid, &$access, $sectionid, $limit, $selected, $limi
 
 	$pagetitle = '';
 	if ( $Itemid ) {
-		$menu = new mosMenu( $database );
-		$menu->load( $Itemid );
 		$pagetitle = $menu->name;
 	} 
 
@@ -582,8 +577,7 @@ function showBlogSection( $id=0, $gid, &$access, $pop, $now=NULL ) {
 	// Parameters
 	$params = new stdClass();
 	if ( $Itemid ) {
-		$menu = new mosMenu( $database );
-		$menu->load( $Itemid );
+		$menu = $mainframe->get( 'menu' );
 		$params = new mosParameters( $menu->params );
 	} else {
 		$menu = "";
@@ -664,8 +658,7 @@ function showBlogCategory( $id=0, $gid, &$access, $pop, $now ) {
 	// Paramters
 	$params = new stdClass();
 	if ( $Itemid ) {
-		$menu = new mosMenu( $database );
-		$menu->load( $Itemid );
+		$menu = $mainframe->get( 'menu' );
 		$params = new mosParameters( $menu->params );
 	} else {
 		$menu = '';
@@ -764,8 +757,7 @@ function showArchiveSection( $id=NULL, $gid, &$access, $pop, $option ) {
 
 	$params = new stdClass();
 	if ( $Itemid ) {
-		$menu = new mosMenu( $database );
-		$menu->load( $Itemid );
+		$menu = $mainframe->get( 'menu' );
 		$params = new mosParameters( $menu->params );
 	} else {
 		$menu = "";
@@ -887,8 +879,7 @@ function showArchiveCategory( $id=0, $gid, &$access, $pop, $option, $now ) {
 	}
 
 	if ( $Itemid ) {
-		$menu = new mosMenu( $database );
-		$menu->load( $Itemid );
+		$menu = $mainframe->get( 'menu' );
 		$params = new mosParameters( $menu->params );
 	} else {
 		$menu = '';
@@ -1321,8 +1312,7 @@ function showItem( $uid, $gid, &$access, $pop, $option='com_content', $now ) {
 		// loads the links for Next & Previous Button
 		if ( $params->get( 'item_navigation' ) ) {				
 			// Paramters for menu item as determined by controlling Itemid
-			$menu = new mosMenu( $database );
-			$menu->load( $Itemid );
+			$menu = $mainframe->get( 'menu' );
 			$mparams = new mosParameters( $menu->params );
 
 			// the following is needed as different menu items types utilise a different param to control ordering

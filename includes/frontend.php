@@ -74,9 +74,9 @@ function &initModules() {
 		. "\n FROM #__modules AS m"
 		. "\n INNER JOIN #__modules_menu AS mm ON mm.moduleid = m.id"
 		. "\n WHERE m.published = 1"
-		. "\n AND m.access <= '". $my->gid ."'"
+		. "\n AND m.access <= $my->gid"
 		. "\n AND m.client_id != 1"
-		. "\n AND ( mm.menuid = '". $Itemid ."' OR mm.menuid = 0 )"
+		. "\n AND ( mm.menuid = $Itemid OR mm.menuid = 0 )"
 		. "\n ORDER BY ordering";
 
 		$database->setQuery( $query );
@@ -194,7 +194,7 @@ function mosShowHead() {
 
 	$query = "SELECT a.*"
 	. "\n FROM #__components AS a"
-	. "\n WHERE a.admin_menu_link LIKE( '%option=com_syndicate%' )"
+	. "\n WHERE a.admin_menu_link = 'option=com_syndicate'"
 	. "\n AND a.option = 'com_syndicate'"
 	;
 	$database->setQuery( $query );

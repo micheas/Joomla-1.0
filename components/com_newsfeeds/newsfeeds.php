@@ -85,8 +85,7 @@ function listFeeds( $catid ) {
 	}
 
 	// Parameters
-	$menu = new mosMenu( $database );
-	$menu->load( $Itemid );
+	$menu = $mainframe->get( 'menu' );
 	$params = new mosParameters( $menu->params );
 
 	$params->def( 'page_title', 		1 );
@@ -201,8 +200,7 @@ function showFeed( $feedid ) {
 	$LitePath = $mosConfig_absolute_path . '/includes/Cache/Lite.php';
 
 	// Adds parameter handling
-	$menu = new mosMenu( $database );
-	$menu->load( $Itemid );
+	$menu = $mainframe->get( 'menu' );
 	$params = new mosParameters( $menu->params );
 	$params->def( 'page_title', 	1 );
 	$params->def( 'header', 		$menu->name );

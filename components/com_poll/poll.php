@@ -189,8 +189,7 @@ function pollresult( $uid ) {
 	$pollist .= '</select>';
 
 	// Adds parameter handling
-	$menu = new mosMenu( $database );
-	$menu->load( $Itemid );
+	$menu = $mainframe->get( 'menu' );
 
 	$params = new mosParameters( $menu->params );
 	$params->def( 'page_title', 1 );

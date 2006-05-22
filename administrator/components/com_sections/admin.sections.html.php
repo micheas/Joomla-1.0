@@ -235,7 +235,7 @@ class sections_html {
 		<table width="100%">
 		<tr>
 			<td valign="top" width="60%">
-				<table class="adminform" border="1">
+				<table class="adminform">
 				<tr>
 					<th colspan="3">
 					Section Details

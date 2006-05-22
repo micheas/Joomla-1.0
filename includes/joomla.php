@@ -647,11 +647,14 @@ class mosMainFrame {
 		$session 	= new mosSession( $this->_db );
 		
 		// purge expired frontend logged sessions only - expiry time set in Global Config
-		$and 		= "\n AND guest = 0 \n AND gid > 0";
-		$session->purge(intval( $this->getCfg( 'lifetime' ) ), $and );
+		$session->purge('core');
+		//$and 		= "\n AND guest = 0 \n AND gid > 0";
+		//$past		= time() - 10;
+		//$and 		.= "\n OR ( ( time < '$past' ) \n AND guest = 1 \n AND userid = 0 )";
+		//$session->purge(intval( $this->getCfg( 'lifetime' ) ), $and );
 		// purge expired frontend guest sessions only - expire time fixed at 15 mins
-		$and 		= "\n AND guest = 1 \n AND userid = 0";
-		$session->purge( 900, $and );
+		//$and 		= "\n AND guest = 1 \n AND userid = 0";
+		//$session->purge( 900, $and );
 
 		// Session Cookie `name`
 		$sessionCookieName 	= mosMainFrame::sessionCookieName();
@@ -660,7 +663,7 @@ class mosMainFrame {
 		
 		// Session ID / `value`
 		$sessionValueCheck 	= mosMainFrame::sessionCookieValue( $sessioncookie );
-		//echo mosMakePassword(32);
+
 		// Check if existing session exists in db corresponding to Session cookie `value` 
 		// extra check added in 1.0.8 to test sessioncookie value is of correct length
 		if ( $sessioncookie && strlen($sessioncookie) == 32 && $sessioncookie != '-' && $session->load($sessionValueCheck) ) {
@@ -706,14 +709,15 @@ class mosMainFrame {
 			$remCookieValue	= strval( mosGetParam( $_COOKIE, $remCookieName, null ) );
 			
 			// test if cookie is correct length			
-			if ( strlen($remCookieValue) == 64 ) {
+			if ( strlen($remCookieValue) > 64 ) {
 				// Separate Values from Remember Me Cookie
 				$remUser	= substr( $remCookieValue, 0, 32 );
 				$remPass	= substr( $remCookieValue, 32, 32 );
+				$remID		= substr( $remCookieValue, 64  );
 
 				// check if Remember me cookie exists. Login with usercookie info.
 				if ( strlen($remUser) == 32 && strlen($remPass) == 32 ) {
-					$this->login( $remUser, $remPass, 1 );
+					$this->login( $remUser, $remPass, 1, $remID );
 				}
 			}
 		}
@@ -964,7 +968,7 @@ class mosMainFrame {
 	* table. A successful validation updates the current session record with
 	* the users details.
 	*/
-	function login( $username=null,$passwd=null, $remember=0 ) {
+	function login( $username=null,$passwd=null, $remember=0, $userid=NULL ) {
 		global $acl, $_VERSION;
 		
 		$bypost = 0;
@@ -983,51 +987,26 @@ class mosMainFrame {
 			echo "<script> alert(\""._LOGIN_INCOMPLETE."\"); window.history.go(-1); </script>\n";
 			exit();
 		} else {
-			if ( $remember && strlen($username) == 32 && strlen($passwd) == 32 ) {
+			if ( $remember && strlen($username) == 32 && strlen($passwd) == 32 && $userid ) {
 			// query used for remember me cookie
 				$harden = mosHash( @$_SERVER['HTTP_USER_AGENT'] );
-				/*.
-				$query = "SELECT *"
+				
+				$query = "SELECT id, name, username, password, usertype, block, gid"
 				. "\n FROM #__users"
-				. "\n WHERE block != 1"
-				. "\n AND MD5( CONCAT( username , '$harden' ) ) = '$username'"
-				. "\n AND MD5( CONCAT( password , '$harden' ) ) = '$passwd'"
-				;
-				*/
-				// load ALL data from user table
-				$query = "SELECT username, password"
-				. "\n FROM #__users"
-				. "\n WHERE block != 1"
-				. "\n ORDER BY gid"
+				. "\n WHERE id = $userid"
+				. "\n AND block = 0"
 				;
 				$this->_db->setQuery( $query );
-				$users = $this->_db->loadObjectList();
+				$this->_db->loadObject($user);
 				
-				$load_username = NULL;
-				$load_password = NULL;
-				foreach ($users as $user) {
-					$check_username = md5( $user->username . $harden );
-					$check_password = md5( $user->password . $harden );
+				$check_username = md5( $user->username . $harden );
+				$check_password = md5( $user->password . $harden );
 
-					if ( $check_username == $username && $check_password == $passwd ) {
-						$load_username = $user->username;
-						$load_password = $user->password;
-						break;
-					}
-				}
-				
-				if ($load_username && $load_password) {
-					$query = "SELECT *"
-					. "\n FROM #__users"
-					. "\n WHERE block != 1"
-					. "\n AND username = '$load_username'"
-					. "\n AND password = '$load_password'"
-					;
-					$this->_db->setQuery( $query );
-					$this->_db->loadObject( $row );
-				}
+				if ( $check_username == $username && $check_password == $passwd ) {
+					$row = $user;
+				}				
 			} else {
-				$query = "SELECT *"
+				$query = "SELECT id, name, username, password, usertype, block, gid"
 				. "\n FROM #__users"
 				. "\n WHERE block != 1"
 				. "\n AND username = '$username'"
@@ -1036,10 +1015,7 @@ class mosMainFrame {
 				$this->_db->setQuery( $query );
 				$this->_db->loadObject( $row );
 			}
-			//$this->_db->setQuery( $query );
-			//$row = null;
-
-			//if ($this->_db->loadObject( $row );) {
+			
 			if (is_object($row)) {
 				// user blocked from login
 				if ($row->block == 1) {
@@ -1097,7 +1073,7 @@ class mosMainFrame {
 					// cookie lifetime of 365 days
 					$lifetime 		= time() + 365*24*60*60;
 					$remCookieName 	= mosMainFrame::remCookieName_User();
-					$remCookieValue = mosMainFrame::remCookieValue_User( $row->username ) . mosMainFrame::remCookieValue_Pass( $row->password );
+					$remCookieValue = mosMainFrame::remCookieValue_User( $row->username ) . mosMainFrame::remCookieValue_Pass( $row->password ) . $row->id;
 					setcookie( $remCookieName, $remCookieValue, $lifetime, '/' );
 				}
 				mosCache::cleanCache();
@@ -1152,16 +1128,22 @@ class mosMainFrame {
 		$user->gid 			= intval( $this->_session->gid );
 
 		if ($user->id) {
-			$query = "SELECT params"
+			$query = "SELECT id, name, email, block, sendEmail, registerDate, lastvisitDate, activation, params"
 			. "\n FROM #__users"
 			. "\n WHERE id = ". intval( $user->id )
 			;
 			$database->setQuery( $query );
-			$params = $database->loadResult();
-		} else {
-			$params = '';
+			$database->loadObject( $my );
+			
+			$user->params 			= $my->params;
+			$user->name				= $my->name;
+			$user->email			= $my->email;
+			$user->block			= $my->block;
+			$user->sendEmail		= $my->sendEmail;
+			$user->registerDate		= $my->registerDate;
+			$user->lastvisitDate	= $my->lastvisitDate;
+			$user->activation		= $my->activation;
 		}
-		$user->params = $params;
 
 		return $user;
 	}
@@ -3388,11 +3370,33 @@ class mosSession extends mosDBTable {
 	 * @return boolean
 	 */
 	function purge( $inc=1800, $and='' ) {
-		$past = time() - $inc;
-		$query = "DELETE FROM $this->_tbl"
-		. "\n WHERE ( time < '$past' )"
-		. $and
-		;
+		global $mainframe;
+		
+		if ($inc == 'core') {
+			$past_logged 	= time() - $mainframe->getCfg( 'lifetime' );
+			$past_guest 	= time() - 900;
+
+			$query = "DELETE FROM $this->_tbl"
+			. "\n WHERE ("
+			// purging expired logged sessions
+			. "\n ( time < '$past_logged' )"
+			. "\n AND guest = 0"
+			. "\n AND gid > 0"
+			. "\n ) OR ("
+			// purging expired guest sessions
+			. "\n ( time < '$past_guest' )"
+			. "\n AND guest = 1"
+			. "\n AND userid = 0"
+			. "\n )"
+			;
+		} else {
+		// kept for backward compatability
+			$past = time() - $inc;
+			$query = "DELETE FROM $this->_tbl"
+			. "\n WHERE ( time < '$past' )"
+			. $and
+			;
+		}
 		$this->_db->setQuery($query);
 
 		return $this->_db->query();

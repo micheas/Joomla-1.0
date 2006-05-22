@@ -23,10 +23,8 @@ if (!defined( '_MOS_MAINMENU_MODULE' )) {
 	*/
 	function mosGetMenuLink( $mitem, $level=0, &$params, $open=null ) {
 		global $Itemid, $mosConfig_live_site, $mainframe;
+		
 		$txt = '';
-
-		// load menu params
-		$menuparams = new mosParameters( $mitem->params, $mainframe->getPath( 'menu_xml', $mitem->type ), 'menu' );
 		
 		switch ($mitem->type) {
 			case 'separator':
@@ -43,11 +41,21 @@ if (!defined( '_MOS_MAINMENU_MODULE' )) {
 				
 			case 'content_item_link':
 			case 'content_typed':
-				if ( $menuparams->get( 'unique_itemid' ) ) {
+				// load menu params
+				$menuparams = new mosParameters( $mitem->params, $mainframe->getPath( 'menu_xml', $mitem->type ), 'menu' );
+				
+				$unique_itemid = $menuparams->get( 'unique_itemid', 1 );
+				
+				if ( $unique_itemid ) {
 					$mitem->link .= '&Itemid='. $mitem->id;
 				} else {
-					$temp = split("&task=view&id=", $mitem->link);
-					$mitem->link .= '&Itemid='. $mainframe->getItemid($temp[1]);
+					$temp = split('&task=view&id=', $mitem->link);
+					
+					if ( $mitem->type == 'content_typed' ) {
+						$mitem->link .= '&Itemid='. $mainframe->getItemid($temp[1], 1, 0);
+					} else {
+						$mitem->link .= '&Itemid='. $mainframe->getItemid($temp[1], 0, 1);
+					}
 				}
 				break;
 

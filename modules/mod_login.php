@@ -53,12 +53,7 @@ if ( $my->id ) {
 // Logout output
 // ie HTML when already logged in and trying to logout
 	if ( $name ) {
-		$query = "SELECT name"
-		. "\n FROM #__users"
-		. "\n WHERE id = $my->id"
-		;
-		$database->setQuery( $query );
-		$name = $database->loadResult();
+		$name = $my->name;
 	} else {
 		$name = $my->username;
 	}	

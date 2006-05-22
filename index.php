@@ -203,6 +203,7 @@ $_MOS_OPTION = array();
 require_once( $mosConfig_absolute_path . '/editor/editor.php' );
 
 ob_start();
+
 if ($path = $mainframe->getPath( 'front' )) {
 	$task 	= strval( mosGetParam( $_REQUEST, 'task', '' ) );
 	$ret 	= mosMenuCheck( $Itemid, $option, $task, $gid );
@@ -218,6 +219,7 @@ if ($path = $mainframe->getPath( 'front' )) {
 }
 
 $_MOS_OPTION['buffer'] = ob_get_contents();
+
 ob_end_clean();
 
 initGzip();

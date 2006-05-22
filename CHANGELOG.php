@@ -56,6 +56,8 @@ Low Level Threat
 --
 
 22-May-2006 Rey Gigataras
+ # PERFORMANCE [topic,63468] : slow auto-login because of new MD5 calculations on whole users DB
+ 
  # Fixed [topic,63446] : Category and Section
 
 

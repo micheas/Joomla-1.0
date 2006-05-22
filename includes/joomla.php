@@ -978,6 +978,7 @@ class mosMainFrame {
 			$bypost 	= 1;
 		}
 
+		$row = null;
 		if (!$username || !$passwd) {
 			echo "<script> alert(\""._LOGIN_INCOMPLETE."\"); window.history.go(-1); </script>\n";
 			exit();
@@ -985,13 +986,46 @@ class mosMainFrame {
 			if ( $remember && strlen($username) == 32 && strlen($passwd) == 32 ) {
 			// query used for remember me cookie
 				$harden = mosHash( @$_SERVER['HTTP_USER_AGENT'] );
-
+				/*.
 				$query = "SELECT *"
 				. "\n FROM #__users"
 				. "\n WHERE block != 1"
 				. "\n AND MD5( CONCAT( username , '$harden' ) ) = '$username'"
 				. "\n AND MD5( CONCAT( password , '$harden' ) ) = '$passwd'"
 				;
+				*/
+				// load ALL data from user table
+				$query = "SELECT username, password"
+				. "\n FROM #__users"
+				. "\n WHERE block != 1"
+				. "\n ORDER BY gid"
+				;
+				$this->_db->setQuery( $query );
+				$users = $this->_db->loadObjectList();
+				
+				$load_username = NULL;
+				$load_password = NULL;
+				foreach ($users as $user) {
+					$check_username = md5( $user->username . $harden );
+					$check_password = md5( $user->password . $harden );
+
+					if ( $check_username == $username && $check_password == $passwd ) {
+						$load_username = $user->username;
+						$load_password = $user->password;
+						break;
+					}
+				}
+				
+				if ($load_username && $load_password) {
+					$query = "SELECT *"
+					. "\n FROM #__users"
+					. "\n WHERE block != 1"
+					. "\n AND username = '$load_username'"
+					. "\n AND password = '$load_password'"
+					;
+					$this->_db->setQuery( $query );
+					$this->_db->loadObject( $row );
+				}
 			} else {
 				$query = "SELECT *"
 				. "\n FROM #__users"
@@ -999,11 +1033,14 @@ class mosMainFrame {
 				. "\n AND username = '$username'"
 				. "\n AND password = '$passwd'"
 				;
+				$this->_db->setQuery( $query );
+				$this->_db->loadObject( $row );
 			}
-			$this->_db->setQuery( $query );
-			$row = null;
-			
-			if ($this->_db->loadObject( $row )) {
+			//$this->_db->setQuery( $query );
+			//$row = null;
+
+			//if ($this->_db->loadObject( $row );) {
+			if (is_object($row)) {
 				// user blocked from login
 				if ($row->block == 1) {
 					mosErrorAlert(_LOGIN_BLOCKED);

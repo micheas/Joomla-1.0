@@ -37,7 +37,7 @@ Legend:
 ! -> Note
 
 
----------------- 1.0.9 Beta 3 Released -- [21-May-2006 15:00 UTC] ------------------
+------------------------------------------------------------------------------------
 
 
 This Release Contains following Security Fixes
@@ -54,6 +54,12 @@ Low Level Threat
  * Add ability to selectively disable certain types of syndicated feeds
 
 --
+
+22-May-2006 Rey Gigataras
+ # Fixed [topic,63446] : Category and Section
+
+
+---------------- 1.0.9 Beta 3 Released -- [21-May-2006 15:00 UTC] ------------------
 
 
 21-May-2006 Rey Gigataras

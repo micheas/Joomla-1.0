@@ -235,14 +235,14 @@ class sections_html {
 		<table width="100%">
 		<tr>
 			<td valign="top" width="60%">
-				<table class="adminform">
+				<table class="adminform" border="1">
 				<tr>
 					<th colspan="3">
 					Section Details
 					</th>
 				<tr>
 				<tr>
-					<td width="150">
+					<td width="100">
 					Scope:
 					</td>
 					<td width="85%" colspan="2">
@@ -269,31 +269,6 @@ class sections_html {
 				</tr>
 				<tr>
 					<td>
-					Image:
-					</td>
-					<td>
-					<?php echo $lists['image']; ?>
-					</td>
-					<td rowspan="4" width="50%">
-					<?php
-						$path = $mosConfig_live_site . "/images/";
-						if ($row->image != "blank.png") {
-							$path.= "stories/";
-						}
-					?>
-					<img src="<?php echo $path;?><?php echo $row->image;?>" name="imagelib" width="80" height="80" border="2" alt="Preview" />
-					</td>
-				</tr>
-				<tr>
-					<td>
-					Image Position:
-					</td>
-					<td colspan="2">
-					<?php echo $lists['image_position']; ?>
-					</td>
-				</tr>
-				<tr>
-					<td>
 					Ordering:
 					</td>
 					<td colspan="2">
@@ -302,9 +277,34 @@ class sections_html {
 				</tr>
 				<tr>
 					<td>
+					Image:
+					</td>
+					<td>
+					<?php echo $lists['image']; ?>
+					</td>
+					<td rowspan="5" width="50%">
+					<?php
+						$path = $mosConfig_live_site . "/images/";
+						if ($row->image != "blank.png") {
+							$path.= "stories/";
+						}
+					?>
+					<img src="<?php echo $path . $row->image;?>" name="imagelib" width="80" height="80" border="2" alt="Preview" />
+					</td>
+				</tr>
+				<tr>
+					<td>
+					Image Position:
+					</td>
+					<td>
+					<?php echo $lists['image_position']; ?>
+					</td>
+				</tr>
+				<tr>
+					<td>
 					Access Level:
 					</td>
-					<td colspan="2">
+					<td>
 					<?php echo $lists['access']; ?>
 					</td>
 				</tr>
@@ -312,12 +312,12 @@ class sections_html {
 					<td>
 					Published:
 					</td>
-					<td colspan="2">
+					<td>
 					<?php echo $lists['published']; ?>
 					</td>
 				</tr>
 				<tr>
-					<td valign="top" colspan="3">
+					<td valign="top" colspan="2">
 					Description:
 					</td>
 				</tr>

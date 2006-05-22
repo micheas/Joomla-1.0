@@ -333,12 +333,20 @@ class categories_html {
 				</tr>
 				<tr>
 					<td>
+					Ordering:
+					</td>
+					<td colspan="2">
+					<?php echo $lists['ordering']; ?>
+					</td>
+				</tr>
+				<tr>
+					<td>
 					Image:
 					</td>
 					<td>
 					<?php echo $lists['image']; ?>
 					</td>
-					<td rowspan="4" width="50%">
+					<td rowspan="5" width="50%">
 					<script language="javascript" type="text/javascript">
 					if (document.forms[0].image.options.value!=''){
 					  jsimg='../images/stories/' + getSelectedValue( 'adminForm', 'image' );
@@ -353,23 +361,15 @@ class categories_html {
 					<td>
 					Image Position:
 					</td>
-					<td colspan="2">
-					<?php echo $lists['image_position']; ?>
-					</td>
-				</tr>
-				<tr>
 					<td>
-					Ordering:
-					</td>
-					<td colspan="2">
-					<?php echo $lists['ordering']; ?>
+					<?php echo $lists['image_position']; ?>
 					</td>
 				</tr>
 				<tr>
 					<td>
 					Access Level:
 					</td>
-					<td colspan="2">
+					<td>
 					<?php echo $lists['access']; ?>
 					</td>
 				</tr>
@@ -377,12 +377,12 @@ class categories_html {
 					<td>
 					Published:
 					</td>
-					<td colspan="2">
+					<td>
 					<?php echo $lists['published']; ?>
 					</td>
 				</tr>
 				<tr>
-					<td valign="top" colspan="3">
+					<td valign="top" colspan="2">
 					Description:
 					</td>
 				</tr>
@@ -412,7 +412,7 @@ class categories_html {
 						</td>
 					<tr>
 					<tr>
-						<td valign="top" width="100px">
+						<td valign="top" width="100">
 						Select a Menu
 						</td>
 						<td>
@@ -420,7 +420,7 @@ class categories_html {
 						</td>
 					<tr>
 					<tr>
-						<td valign="top" width="100px">
+						<td valign="top" width="100">
 						Select Menu Type
 						</td>
 						<td>
@@ -428,7 +428,7 @@ class categories_html {
 						</td>
 					<tr>
 					<tr>
-						<td valign="top" width="100px">
+						<td valign="top" width="100">
 						Menu Item Name
 						</td>
 						<td>

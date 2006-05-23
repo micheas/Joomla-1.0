@@ -107,6 +107,19 @@ DEFINE( '_CURRENT_SERVER_TIME_FORMAT', '%Y-%m-%d %H:%M:%S' );
 // Non http/https URL Schemes
 $url_schemes = 'data:, file:, ftp:, gopher:, imap:, ldap:, mailto:, news:, nntp:, telnet:, javascript:, irc:';
 DEFINE( '_URL_SCHEMES', $url_schemes );
+	
+// disable strict mode in MySQL 5
+if (!defined( '_JOS_SET_SQLMODE' )) {
+	/** ensure that functions are declared only once */
+	define( '_JOS_SET_SQLMODE', 1 );
+	
+	// if running mysql 5, set sql-mode to mysql40 - thereby circumventing strict mode problems
+	if ( strpos( $database->getVersion(), '5' ) === 0 ) {
+		$query = "SET sql_mode = 'MYSQL40'";
+		$database->setQuery( $query );
+		$database->query();
+	}
+}
 
 /**
  * @package Joomla

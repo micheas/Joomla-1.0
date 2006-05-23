@@ -55,6 +55,10 @@ Low Level Threat
 
 --
 
+23-May-2006 Rey Gigataras
+ # Fixed [topic,63674] : MySQL 5 strict mode in Admin Backend
+
+
 22-May-2006 Rey Gigataras
  # PERFORMANCE [topic,63468] : slow auto-login because of new MD5 calculations on whole users DB
  

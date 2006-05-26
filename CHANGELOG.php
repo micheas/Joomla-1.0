@@ -58,7 +58,7 @@ Low Level Threat
 27-May-2006 Rey Gigataras
  # Fixed [topic,64308] : cache and content items on frontpage
  # Fixed [topic,63824] : Notice on com_contact
- # Fixed artf4801 : inputFilter::filterTags prints unexpected text
+ # Fixed [artf4801] : inputFilter::filterTags prints unexpected text
 
 
 23-May-2006 Rey Gigataras
@@ -75,30 +75,30 @@ Low Level Threat
 
 
 21-May-2006 Rey Gigataras
- # Fixed artf4714 : Can't add Menu Item :: Link - Static Content 
+ # Fixed [artf4714] : Can't add Menu Item :: Link - Static Content 
  # Fixed : "Unique Itemid" handling for `Link - Content Item`
  # Fixed : Add "Unique Itemid" handling for `Link - Static Content`
- # Fixed artf4714 : Can't add Menu Item :: Link - Static Content 
+ # Fixed [artf4714] : Can't add Menu Item :: Link - Static Content 
  # Fixed [topic,62056] : Copyright date
 
 
 20-May-2006 Rey Gigataras
- # Fixed artf4733 : Module Manager reorder via save button broken
- # Fixed artf4736 : Quotation marks in Site Name
+ # Fixed [artf4733] : Module Manager reorder via save button broken
+ # Fixed [artf4736] : Quotation marks in Site Name
  # Fixed [topic,63257] : Notice when creating new category
 
 
 18-May-2006 Rey Gigataras
- # Fixed artf4700 : pathway ampReplaces item name twice
- # Fixed artf4712 : 'type' of $mosConfig_error_reporting does not match code
+ # Fixed [artf4700] : pathway ampReplaces item name twice
+ # Fixed [artf4712] : 'type' of $mosConfig_error_reporting does not match code
  
  + Remember Expired Admin page functionality
 
 
 17-May-2006 Rey Gigataras
- # Fixed artf4673 : setlocale
- # Fixed artf4685 : unhandled fragment identifier with core SEF enabled 
- # Fixed artf4678 : Print, PDF and email buttons aren't accessible
+ # Fixed [artf4673] : setlocale
+ # Fixed [artf4685] : unhandled fragment identifier with core SEF enabled 
+ # Fixed [artf4678] : Print, PDF and email buttons aren't accessible
  # Fixed [topic,62124] : Hover for icons when editing content in front-end
  # Fixed [topic,62165] : Canot login - admin_session_life not set
 
@@ -123,20 +123,20 @@ Low Level Threat
 
 
 13-May-2006 Rey Gigataras
- * SECURITY [ Low Level ]: artf4529 : User with access to administration area can easly create super administrator.
+ * SECURITY [ Low Level ]: [artf4529] : User with access to administration area can easly create super administrator.
  
- # Fixed artf4555 : Slight Bug in registration system
- # Fixed artf4641 : Module sites with one template - modules should not show up - itemid issue
+ # Fixed [artf4555] : Slight Bug in registration system
+ # Fixed [artf4641] : Module sites with one template - modules should not show up - itemid issue
  # Fixed : `Itemid=99999999` appearing in next & prev navigation links
  # Fixed : `Itemid=` appearing in `Blog` links items
  
 
 13-May-2006 Andrew Eddie
- # Fixed artf3302 : PatTemplate custom Functions getpage() undefined
+ # Fixed [artf3302] : PatTemplate custom Functions getpage() undefined
 
 
 12-May-2006 Louis Landry
- # Fixed artf4284 : database::load() resets private properties
+ # Fixed [artf4284] : database::load() resets private properties
 
 
 12-May-2006 Rey Gigataras
@@ -144,11 +144,11 @@ Low Level Threat
 
 
 11-May-2006 Rey Gigataras
- # Fixed artf4614 : Warning in mosCreateGUID
- # Fixed artf4619 : task=category shows unpublished items
- # Fixed artf4621 : Media manager with long filenames = no button
- # Fixed artf4613 : Sub Menu Item deletion Security Bug 
- # Fixed artf4613 : Restoring menu items without a valid parent
+ # Fixed [artf4614] : Warning in mosCreateGUID
+ # Fixed [artf4619] : task=category shows unpublished items
+ # Fixed [artf4621] : Media manager with long filenames = no button
+ # Fixed [artf4613] : Sub Menu Item deletion Security Bug 
+ # Fixed [artf4613] : Restoring menu items without a valid parent
  # Fixed [topic,59258] : bug when editing user profile
  # Fixed [topic,61190] : Menu Item Inconsistency
 
@@ -158,7 +158,7 @@ Low Level Threat
 
 
 09-May-2006 Rey Gigataras
- # Fixed artf4577 : saveUser in com_user has incorrect escaping for password
+ # Fixed [artf4577] : saveUser in com_user has incorrect escaping for password
 
 
 28-Apr-2006 Alex Kempkens
@@ -168,15 +168,15 @@ Low Level Threat
 27-Apr-2006 Rey Gigataras
  + Support for restricting ability to access certain functionality for demo sites
 
- # Fixed artf4527 : incorrect style in function botNoEditorEditorArea
+ # Fixed [artf4527] : incorrect style in function botNoEditorEditorArea
  # Fixed [topic,57926] : mod_poll.php Warning 
  
 
 26-Apr-2006 Rey Gigataras
- # Fixed artf3912 : Pear's cache lite and safe_mode
- # Fixed artf3711 : mosemailcloak generates invalid XHTML
- # Fixed artf3251 : Wrong file count in Media Manager
- # Fixed artf3196 : com_media does not properly manage file names with simple quotes (')
+ # Fixed [artf3912] : Pear's cache lite and safe_mode
+ # Fixed [artf3711] : mosemailcloak generates invalid XHTML
+ # Fixed [artf3251] : Wrong file count in Media Manager
+ # Fixed [artf3196] : com_media does not properly manage file names with simple quotes (')
 
 
 25-Apr-2006 Rey Gigataras
@@ -186,10 +186,10 @@ Low Level Threat
 24-Apr-2006 Rey Gigataras
  * SECURITY [ Low Level ]: logged in user session are not affected by changes of user account
 
- # Fixed artf4503 : Hardcoded text in page navigation
- # Fixed artf4473 : Bad char in search
- # Fixed artf4499 : Editing Quotated Menu Item
- # Fixed artf4472 : Creating New User system message only sends to superusers
+ # Fixed [artf4503] : Hardcoded text in page navigation
+ # Fixed [artf4473] : Bad char in search
+ # Fixed [artf4499] : Editing Quotated Menu Item
+ # Fixed [artf4472] : Creating New User system message only sends to superusers
  # Fixed : Unable to 'Delete' `Super Administrator` - with check to ensure at least one active `Super Administrator` still exists
  # Fixed : Unable to 'change' group of `Administrator` & `Super Administrator` - with check to ensure at least one active `Super Administrator` still exists
 
@@ -211,23 +211,23 @@ Low Level Threat
 
 
 16-Apr-2006 Rey Gigataras
- # Fixed artf4424 : gethostbyaddr(): Address is not a valid IPv4 or IPv6 address
- # Fixed artf4407 : Image preview doesn't work with custom directory
+ # Fixed [artf4424] : gethostbyaddr(): Address is not a valid IPv4 or IPv6 address
+ # Fixed [artf4407] : Image preview doesn't work with custom directory
  # Fixed [topic,54741] :  Who's Online guest count increments with RSS feed access
 
 
 14-Apr-2006 Rey Gigataras
- # Fixed artf4400 : Search: Itemid in mod_search also finds trashed Itemid's
- # Fixed artf4399 : Search title in com_search is never from language file
+ # Fixed [artf4400] : Search: Itemid in mod_search also finds trashed Itemid's
+ # Fixed [artf4399] : Search title in com_search is never from language file
 
 
 12-Apr-2006 Rey Gigataras
- # Fixed artf4346 : $mainframe->login($username,$pwd) compatibility broken
+ # Fixed [artf4346] : $mainframe->login($username,$pwd) compatibility broken
  # Fixed : `body` parameter for mailto tags
 
 
 11-Apr-2006 Rey Gigataras
- # Fixed artf4340 : Itemid on menu - multiple links to same content
+ # Fixed [artf4340] : Itemid on menu - multiple links to same content
  # Fixed : cache support for `Blog - Content Section Archive` & `Blog - Content Category Archive`
  # Fixed : SEF.php incorrect handling of `mailto` & `javascript` links
  # Fixed : $shownoauth default value in `configuration.php-dist`
@@ -237,14 +237,14 @@ Low Level Threat
 
 08-Apr-2006 Rey Gigataras
  # Fixed [topic,45136.0] : stop Cache system from creating large amount of Cache files
- # Fixed artf4302 : 'Read more' link is always displayed if 'Linked Titles' option enabled
- # Fixed artf4304 : Bugs in search.html.php
+ # Fixed [artf4302] : 'Read more' link is always displayed if 'Linked Titles' option enabled
+ # Fixed [artf4304] : Bugs in search.html.php
  # Fixed : Content Popup page behaviour
 
 
 07-Apr-2006 Rey Gigataras
- # Fixed artf4294 : InputFilter failed escaping string
- # Fixed artf4050 : mod_mainmenu.php not setting id=active_menu
+ # Fixed [artf4294] : InputFilter failed escaping string
+ # Fixed [artf4050] : mod_mainmenu.php not setting id=active_menu
 
 
 06-Apr-2006 Rey Gigataras
@@ -253,16 +253,16 @@ Low Level Threat
  * SECURITY [ Low Level ]: check for menu item added to 'Submit News' page
  * SECURITY [ Low Level ]: check for menu item added to 'Submit Weblink' page
  
- # Fixed artf4282 : Extra Empty Menu Span Tags
+ # Fixed [artf4282] : Extra Empty Menu Span Tags
 
 
 05-Apr-2006 Rey Gigataras
- # Fixed artf4010 : When creating new module. Two modules are created when clicking save
+ # Fixed [artf4010] : When creating new module. Two modules are created when clicking save
 
 
 02-Apr-2006 Rey Gigataras
- # Fixed artf3575 : Correction needed in stylesheet
- # Fixed artf4089 : Problem with domit, extended characters and PHP 5.0.2
+ # Fixed [artf3575] : Correction needed in stylesheet
+ # Fixed [artf4089] : Problem with domit, extended characters and PHP 5.0.2
 
 
 01-Apr-2006 Rey Gigataras
@@ -275,7 +275,7 @@ Low Level Threat
 
 
 30-Mar-2006 Rey Gigataras
- * SECURITY [ Low Level ]: artf3702 : breadcrumbs: information gathering possible by simple urlhacks
+ * SECURITY [ Low Level ]: [artf3702] : breadcrumbs: information gathering possible by simple urlhacks
 
  # Fixed [topic,47932.0.html] : 1.0.8 com_contact - incorrect URL?
 
@@ -283,11 +283,11 @@ Low Level Threat
 
 
 29-Mar-2006 Rey Gigataras
- # Fixed artf4133 : Blog - Content Section Archive
- # Fixed artf4093 : No parameter tool tip when ' is used in module.xml
- # Fixed artf4028 : url to the site is added to the entered link in a menu item (SEF disabled)
- # Fixed artf4102 : mosimage.php - Erroneous right alignment of images
- # Fixed artf4131 : com_contact displays non-localized message
+ # Fixed [artf4133] : Blog - Content Section Archive
+ # Fixed [artf4093] : No parameter tool tip when ' is used in module.xml
+ # Fixed [artf4028] : url to the site is added to the entered link in a menu item (SEF disabled)
+ # Fixed [artf4102] : mosimage.php - Erroneous right alignment of images
+ # Fixed [artf4131] : com_contact displays non-localized message
  
  ^ Upgrade to TinyMCE 2.0.5.1
  ^ Upgrade to TinyMCE compressor 1.0.8
@@ -302,19 +302,19 @@ Low Level Threat
  
 24-Mar-2006 Alex Kempkens
  + Check for mambot/system directory in installer and installation dialogs
- # artf4066	content sections not being translated
+ # [artf4066]	content sections not being translated
 
 
 16-Mar-2006 Rey Gigataras
- # Fixed artf3913 : artf3809: Error with < AND > in tinymce - static content manager
+ # Fixed [artf3913] : [artf3809]: Error with < AND > in tinymce - static content manager
  # Fixed : checked out lock icon visible for same user
  # Fixed : Global Config JS error when no session_type value yet set - issue only when upgrading
  # Fixed [topic,44206.0.html] : XML help files no longer supported
 
 
 15-Mar-2006 Rey Gigataras
- # Fixed artf3927 : Typo in Installer Screen
- # Fixed artf3940 : single quotes/apostrophes (') 
+ # Fixed [artf3927] : Typo in Installer Screen
+ # Fixed [artf3940] : single quotes/apostrophes (') 
  # Fixed [topic,46202.0.html] : Problem found in Session id function 
  
 
@@ -335,29 +335,29 @@ Low Level Threat
 
 
 11-Mar-2006 Rey Gigataras
- # Fixed artf3873 : Invalid Itemid for com_content Category Link
+ # Fixed [artf3873] : Invalid Itemid for com_content Category Link
  # Fixed [topic,45343.0.html] : Random image default behavoir
 
  + PERFORMANCE : Auto purge of expired messages for com_messages [default of 7 days]
 
 
 10-Mar-2006 Rey Gigataras
- # Fixed artf3885 : Remove the last hardcoded texts
- # Fixed artf3713 : Joomla still doesn't work with SQL mode enabled
+ # Fixed [artf3885] : Remove the last hardcoded texts
+ # Fixed [artf3713] : Joomla still doesn't work with SQL mode enabled
  
  ^ Ensure showPathway is only called once
 
 
 09-Mar-2006 Rey Gigataras
- # Fixed artf3863 : mod_whosonline double ONLINE
+ # Fixed [artf3863] : mod_whosonline double ONLINE
  # Fixed [topic,44644.0.html] : Miss spelled Position as Postition
  # Fixed [topic,41593.0.html] : Table - content section - filter works only for the first page
 
 
 08-Mar-2006 Rey Gigataras
- # Fixed artf3847 : A mistake in joomla_admin template
- # Fixed artf3748 : Archive - Access Denied
- # Fixed artf3592 : Archive Pagination Problem
+ # Fixed [artf3847] : A mistake in joomla_admin template
+ # Fixed [artf3748] : Archive - Access Denied
+ # Fixed [artf3592] : Archive Pagination Problem
  # Fixed [topic,41627.0.html] : "Undefined variable: filter"
  # Fixed [topic,43315.0.html] : Static text in content.php
  # Fixed [topic,41466.0.html] : NullDate AND '0000-00-00 00:00:00'
@@ -369,39 +369,39 @@ Low Level Threat
 07-Mar-2006 Rey Gigataras
  + Show whether Cache directory is writable where it is used - com_newsfeeds, com_syndicate, custom modules
  
- # Fixed artf3818 : Path error for agent_browser.php in joomla.php
+ # Fixed [artf3818] : Path error for agent_browser.php in joomla.php
  # Fixed ensure all require and include calls are using absolute paths
 
 
 06-Mar-2006 Rey Gigataras
- # Fixed artf3756 : mossef bot rewrites javascript:void(0) in href
- # Fixed artf3745 : includes/joomla.php on line 790 setSessionGarbageClean
+ # Fixed [artf3756] : mossef bot rewrites javascript:void(0) in href
+ # Fixed [artf3745] : includes/joomla.php on line 790 setSessionGarbageClean
  # Fixed [topic,41619.0.html] : mosimage caption problem
  # Fixed [topic,42023.0.html] : sample data error with Link - Static Content CID value
  
 
 02-Mar-2006 Rey Gigataras
- # Fixed artf3728 : Error if change the "Syndicate" name in db table "jos_components"
- # Fixed artf3731 : mod_newsflash shows errors when no items are available
- # Fixed artf3733 : Site (frontend): url to the site is added to the entered link in a content item. 
- # Fixed artf3696 : Typo Site Mambot: Edit [ TinyMCE WYSIWYG Editor ] 
- # Fixed artf3658 : "New" Content Link/Image Showing With No Categories Present
- # Fixed artf3697 : sefreltoabs error with links to other sites
+ # Fixed [artf3728] : Error if change the "Syndicate" name in db table "jos_components"
+ # Fixed [artf3731] : mod_newsflash shows errors when no items are available
+ # Fixed [artf3733] : Site (frontend): url to the site is added to the entered link in a content item. 
+ # Fixed [artf3696] : Typo Site Mambot: Edit [ TinyMCE WYSIWYG Editor ] 
+ # Fixed [artf3658] : "New" Content Link/Image Showing With No Categories Present
+ # Fixed [artf3697] : sefreltoabs error with links to other sites
 
 
 01-Mar-2006 Rey Gigataras
  * SECURITY [ Low Level ]: Harden mosmsg
  
- # Fixed artf3656 : contact-component, dropdown
+ # Fixed [artf3656] : contact-component, dropdown
 
 
 28-Feb-2006 Rey Gigataras
- # Fixed artf3655 : Login module error
- # Fixed artf3668 : mosemailcloak bug with mailto:
- # Fixed artf3681 : invalid markup in com_content showCategories() 
- # Fixed artf3688 : Hardcoded text in contact.html.php 
- # Fixed artf3664 : Image links gets preceeded by "Live Site" URL after v1.0.8 upgrade 
- # Fixed artf3703 : configuration.php-dist has a typo 
+ # Fixed [artf3655] : Login module error
+ # Fixed [artf3668] : mosemailcloak bug with mailto:
+ # Fixed [artf3681] : invalid markup in com_content showCategories() 
+ # Fixed [artf3688] : Hardcoded text in contact.html.php 
+ # Fixed [artf3664] : Image links gets preceeded by "Live Site" URL after v1.0.8 upgrade 
+ # Fixed [artf3703] : configuration.php-dist has a typo 
  # Fixed [topic,41404.0.html] : configuration.php-dist missing `;`
 
 
@@ -465,7 +465,7 @@ Medium Level Threat
 25-Feb-2006 Rey Gigataras
  # Fixed [topic,40568.0.html] : Conversion of &amp; to & when editing 'new' modules, breaking xhtml compliance
  # Fixed [topic,40568.0.html] : Itemid=99999999 visible when navigating polls
- # Fixed artf3630 : Site name printed twice in the popup window title (print, email to friend)
+ # Fixed [artf3630] : Site name printed twice in the popup window title (print, email to friend)
  
  ^ Upgraded to TinyMCE 2.0.4
  
@@ -491,7 +491,7 @@ Medium Level Threat
 
 
 22-Feb-2006 Rey Gigataras
- # Fixed artf3591 : Error if unpublish menu item
+ # Fixed [artf3591] : Error if unpublish menu item
  # Fixed [topic,39295.0.html] : SEF handling of custom .htaccess reconfigured urls
  # Fixed [topic,39295.0.html] : mod_login return value incorrectly returning 'index.php?' if coming from site homepage
  
@@ -532,11 +532,11 @@ Medium Level Threat
 
 
 17-Feb-2006 Rey Gigataras
- # Fixed artf3543 : Rev 2393 Language Manager Error
+ # Fixed [artf3543] : Rev 2393 Language Manager Error
  # Fixed [topic,22061.0.html] : Wrapper Autoheight ability set to off by default, as causes javascript errors when used on sites not on your domain
  # Fixed [topic,30542.0.html] : MySQL 5 support in strict mode 
- # Fixed artf3605 : Spelling error when saving content
- # Fixed artf3576 : Javascript conflict in mod_wrapper
+ # Fixed [artf3605] : Spelling error when saving content
+ # Fixed [artf3576] : Javascript conflict in mod_wrapper
 
  ^ PERFORMANCE : `dynamic` Itemid checks store previous query results - affect = reduction in queries
  ^ PERFORMANCE : `static` Itemid counters now loads only once - affect = reduction in queries
@@ -548,7 +548,7 @@ Medium Level Threat
  
 
 16-Feb-2006 Rey Gigataras
- # Fixed artf3523 : mosemailcloak issue with mailto params
+ # Fixed [artf3523] : mosemailcloak issue with mailto params
  # Fixed : disable mossef bot from working on mailto links
  # Fixed [topic,36637.0.html] : SEF deactivated relative & absolute url handling
  # Fixed [topic,36637.0.html] : Session username not correct for those coming from `Remember Me` cookie
@@ -559,7 +559,7 @@ Medium Level Threat
 
 
 15-Feb-2006 Rey Gigataras
- # Fixed artf3527 : "New" Content Link and Image Not Present When Category Empty
+ # Fixed [artf3527] : "New" Content Link and Image Not Present When Category Empty
  # Fixed [topic,36462.0.html] : Static Content Start/Finish publishing time is based on server time, not local time
  # Fixed : Publisher submission message for frontend content editing/submission
 
@@ -567,13 +567,13 @@ Medium Level Threat
 14-Feb-2006 Rey Gigataras
  * SECURITY [ Low Level ]: Disable ability to enter more than one email address in Contact Component contact form
  
- # Fixed artf3144 : NULL values from SQL tables not loaded
+ # Fixed [artf3144] : NULL values from SQL tables not loaded
  # Fixed [topic,31769.0.html] : $access variable conflict com_content
  # Fixed [topic,32201.0.html] : mod_related_items urls not xhtml compliant
  # Fixed [topic,31185.0.html] : heading in pagination not working
  # Fixed [topic,10947.0.html] : Add Prefix check to installer  
- # Fixed artf3082 : Template preview *still* not available 
- # Fixed artf2925 : mosGetParam has side affects
+ # Fixed [artf3082] : Template preview *still* not available 
+ # Fixed [artf2925] : mosGetParam has side affects
  # Fixed [topic,38017.0.html] : Content -> New -> Cancel 
  
  ^ Upgraded TinyMCE to 2.0.3 & TinyMCE GZip Compressor to 1.0.7
@@ -592,35 +592,35 @@ Medium Level Threat
  * SECURITY [ Low Level ]: Newsfeed Search returns items despite category 'state'
  * SECURITY [ Low Level ]: Weblink Search returns items despite category 'state'
  
- # Fixed artf3391 : Aphostrophes in Category: Edit
- # Fixed artf3291 : Alert() problem
- # Fixed artf3188 : Unnecessary table cell in contact.html.php
- # Fixed artf3121 : css errors in tiny_mce and rhuk_solarflare_ii template
- # Fixed artf3181 : Task routing class
- # Fixed artf3400 : showCalendar does not get value of date
- # Fixed artf3348 : Bold tag overrides css in mod_poll.php 
- # Fixed artf3120 : &and & &link not defined in admin.categories.php
- # Fixed artf3446 : Problems with mosimage with caption
- # Fixed artf3100 : Incorrect Response Headers for Missing Pages
- # Fixed artf3220 : Search bug: No way to update referenced search component
- # Fixed artf3438 : RSS Feed Created it not base on the same encoding of the content
- # Fixed artf3108 : Joomla 1.0.7 core SEF bug gives 404 on homepage
- # Fixed artf3169 : RSS feeds does not work with SEF disabled
+ # Fixed [artf3391] : Aphostrophes in Category: Edit
+ # Fixed [artf3291] : Alert() problem
+ # Fixed [artf3188] : Unnecessary table cell in contact.html.php
+ # Fixed [artf3121] : css errors in tiny_mce and rhuk_solarflare_ii template
+ # Fixed [artf3181] : Task routing class
+ # Fixed [artf3400] : showCalendar does not get value of date
+ # Fixed [artf3348] : Bold tag overrides css in mod_poll.php 
+ # Fixed [artf3120] : &and & &link not defined in admin.categories.php
+ # Fixed [artf3446] : Problems with mosimage with caption
+ # Fixed [artf3100] : Incorrect Response Headers for Missing Pages
+ # Fixed [artf3220] : Search bug: No way to update referenced search component
+ # Fixed [artf3438] : RSS Feed Created it not base on the same encoding of the content
+ # Fixed [artf3108] : Joomla 1.0.7 core SEF bug gives 404 on homepage
+ # Fixed [artf3169] : RSS feeds does not work with SEF disabled
 
 
 11-Feb-2006 Rey Gigataras
  * SECURITY [ Medium Level ]: Protect against real server path disclosure via syndication component
  * SECURITY [ Medium Level ]: Limit arbitrary file creation via syndication component
  
- # Fixed artf3397 : link to menu and loss of images list
- # Fixed artf3109 : 1.0.7 "The XML page cannot be displayed ERROR" ob_gzhandler issue
- # Fixed artf3447 : TinyMCE and relative urls
- # Fixed artf3183 : Sub-menu items of separators not showing in module menu selection list
- # Fixed artf3103 : $mosConfig_cachepath not used everywhere
- # Fixed artf3114 : mod_related_items outputs nothing
- # Fixed artf3234 : mod_related_items unitialized mosConfig_offset variable
- # Fixed artf3402 : Missing param in module
- # Fixed artf3067 : Reopen: Unhandled fragment identifier with core SEF enabled
+ # Fixed [artf3397] : link to menu and loss of images list
+ # Fixed [artf3109] : 1.0.7 "The XML page cannot be displayed ERROR" ob_gzhandler issue
+ # Fixed [artf3447] : TinyMCE and relative urls
+ # Fixed [artf3183] : Sub-menu items of separators not showing in module menu selection list
+ # Fixed [artf3103] : $mosConfig_cachepath not used everywhere
+ # Fixed [artf3114] : mod_related_items outputs nothing
+ # Fixed [artf3234] : mod_related_items unitialized mosConfig_offset variable
+ # Fixed [artf3402] : Missing param in module
+ # Fixed [artf3067] : Reopen: Unhandled fragment identifier with core SEF enabled
  # Fixed [topic,31813.0.html] : new .htaccess gives proper 404s [Steve Graham]
  
  + Disable session.use_trans_sid to .htaccess
@@ -629,10 +629,10 @@ Medium Level Threat
 10-Feb-2006 Rey Gigataras
  * SECURITY [ Low Level ]: Harden frontend Session ID
  
- # Fixed artf3421 : Session cleanup relies on administrator login
- # Fixed artf3307 : Error in code - non critical, but logout setcookie not working
- # Fixed artf3126 : Short open PHP tag in pathway.php 
- # Fixed artf3126 : artf3413 : small problem with variable in xml_domit_lite_parser.php
+ # Fixed [artf3421] : Session cleanup relies on administrator login
+ # Fixed [artf3307] : Error in code - non critical, but logout setcookie not working
+ # Fixed [artf3126] : Short open PHP tag in pathway.php 
+ # Fixed [artf3126] : [artf3413] : small problem with variable in xml_domit_lite_parser.php
  # Fixed [topic,34620.0.html] : Excessive Joomla Sessions, and AOL Login Problem [Steve Graham]
  # Fixed mosWarning() $title error
  
@@ -642,12 +642,12 @@ Medium Level Threat
  * SECURITY [ Medium Level ]: # Fixed : `Content` items viewable when category/section 'unpublished' - mod_newsflash 
  * SECURITY [ Low Level ]: # Fixed : `Content` item links visible despite category/section 'access level' - mod_newsflash, mod_latestnews, mod_mostread
  
- # Fixed artf3393 : Latestnews doesn't show static content
+ # Fixed [artf3393] : Latestnews doesn't show static content
 
 
 07-Feb-2006 Robin Muilwijk
- # Fixed artf3328, 1.0.7 EN Installation Typo - Step 1
- # Fixed artf3401 : Spelling errors in two modules
+ # Fixed [artf3328], 1.0.7 EN Installation Typo - Step 1
+ # Fixed [artf3401] : Spelling errors in two modules
 
 
 31-Jan-2006 Rey Gigataras
@@ -717,20 +717,20 @@ Low Level Threat
 
 15-Jan-2006 Rey Gigataras
  * SECURITY [ Low Level ]: Hide database password in Global Configuration
- # Fixed artf3064 : Warning: Invalid argument supplied mod_fullmenu Line 57
- # Fixed artf3063 : Poll Component Output Display Error
+ # Fixed [artf3064] : Warning: Invalid argument supplied mod_fullmenu Line 57
+ # Fixed [artf3063] : Poll Component Output Display Error
 
 14-Jan-2006  Louis Landry
  # Fixed Caching `Blog` pagination problem
 
 14-Jan-2006 Rey Gigataras
  * SECURITY [ Low Level ]: disallow Author from publishing items or changing publish state [identified Max Dymond]
- # Fixed artf3055 : Weblink submit, no email to admin
- # Fixed artf3045 : Unhandled fragment identifier with core SEF enabled
- # Fixed artf3032 : 1783: Can't get custom CSS in Tiny MCE
- # Fixed artf3052 : Contact Component Re-Direct Issue
- # Fixed artf3043 : Login & Logout redirecting to $mosConfig_live_site
- # Fixed artf3040 : Site Modules | Display can be duplicated on Pages
+ # Fixed [artf3055] : Weblink submit, no email to admin
+ # Fixed [artf3045] : Unhandled fragment identifier with core SEF enabled
+ # Fixed [artf3032] : 1783: Can't get custom CSS in Tiny MCE
+ # Fixed [artf3052] : Contact Component Re-Direct Issue
+ # Fixed [artf3043] : Login & Logout redirecting to $mosConfig_live_site
+ # Fixed [artf3040] : Site Modules | Display can be duplicated on Pages
  # Fixed problem with display mod_rssfeed twice on a page
  ^ Contact Component confirmation now uses mosredireect msg, rather than JS
 
@@ -740,19 +740,19 @@ Low Level Threat
 
 13-Jan-2006 Rey Gigataras
  * SECURITY [ Low Level ]: + simple filter check to Contact Component
- # Fixed artf3038 : Warning: array_search(): Wrong datatype for second argument in
- # Fixed artf3037 : New 404 tags aren't translated
- # Fixed artf3035 : Bug with mod_newsflash
+ # Fixed [artf3038] : Warning: array_search(): Wrong datatype for second argument in
+ # Fixed [artf3037] : New 404 tags aren't translated
+ # Fixed [artf3035] : Bug with mod_newsflash
  
 12-Jan-2006 Alex Kempkens
  # Fixed mosFormateDate, handling offset's with value 0
 
 12-Jan-2006 Rey Gigataras
  * SECURITY [ Low Level ]: changed `Email Copy` param option for new Contacts now set to `hide`
- # Fixed artf2070 : mosHTML:encoding_converter() breaks with &ouml;
+ # Fixed [artf2070] : mosHTML:encoding_converter() breaks with &ouml;
  # Fixed missing <li> tag in newsfeed component
- # Fixed artf1487 : Media Manager breaks when illegal characters in uploaded file name
- # Fixed artf2108 : Saving a parent inside of a child 
+ # Fixed [artf1487] : Media Manager breaks when illegal characters in uploaded file name
+ # Fixed [artf2108] : Saving a parent inside of a child 
  + caching support to `Frontpage` component
  + missing param for `Table - Weblink Category`
  - sef handling in mod_search.php as SEF
@@ -760,40 +760,40 @@ Low Level Threat
  - unnecessary param variable in mod_latestnews.php
 
 10-Jan-2006 Rey Gigataras
- * SECURITY [ Low Level ]: Fixed artf2386 : Preventing Spambots through com_contact
- # Fixed artf2622 : admin.users.php session_start called when a session is already open
- # Fixed artf2789 : invalid xhtml
- # Fixed artf2989 : User WYSIWYG editor setting resets after adding new user from backend
- # Fixed artf2986 : Wrong link to image-icon in weblinks
+ * SECURITY [ Low Level ]: Fixed [artf2386] : Preventing Spambots through com_contact
+ # Fixed [artf2622] : admin.users.php session_start called when a session is already open
+ # Fixed [artf2789] : invalid xhtml
+ # Fixed [artf2989] : User WYSIWYG editor setting resets after adding new user from backend
+ # Fixed [artf2986] : Wrong link to image-icon in weblinks
 
 08-Jan-2006 Johan Janssens
  * SECURITY [ Low Level ]: Fixed Security Vulnerability in TinyMCE Compressor
 
 08-Jan-2006 Rey Gigataras
- * SECURITY [ Low Level ]: Fixed artf2950 : Information leak with Vcard hide function
+ * SECURITY [ Low Level ]: Fixed [artf2950] : Information leak with Vcard hide function
  * SECURITY [ Low Level ]: changed `VCard` param option for new Contacts now set to `hide`
  # Fixed DOMIT bugs [identified by sarahk] http://sarahk.pcpropertymanager.com/blog/using-domit-rss/225/
- # Fixed artf2793 : New user confirmation link warning on login 
- # Fixed artf2732 : Pagination in the Blog section/category doesnt work 
- # Fixed artf2943 : Incorrect Redirect for Weblinks
- # Fixed artf2945 : Undefined constant in php_http_exceptions.php
+ # Fixed [artf2793] : New user confirmation link warning on login 
+ # Fixed [artf2732] : Pagination in the Blog section/category doesnt work 
+ # Fixed [artf2943] : Incorrect Redirect for Weblinks
+ # Fixed [artf2945] : Undefined constant in php_http_exceptions.php
 
 07-Jan-2006 Rey Gigataras
- # Fixed artf2933 : Pathway problem on Windows
+ # Fixed [artf2933] : Pathway problem on Windows
 
 06-Jan-2006 Rey Gigataras
  ^ changed mod_archive so that no Itemid is assigned, meaning it uses the default Itemid=99999999
- # Fixed artf2738 : Incorrect SEF links for archive com_content links
- # Fixed artf1809 : mospagebreak problem with "Special Characters"
- # Fixed artf2861 : article_seperator glitch
+ # Fixed [artf2738] : Incorrect SEF links for archive com_content links
+ # Fixed [artf1809] : mospagebreak problem with "Special Characters"
+ # Fixed [artf2861] : article_seperator glitch
 
 05-Jan-2006 Rey Gigataras
- # Fixed artf2825 : RSS module SEF urls
+ # Fixed [artf2825] : RSS module SEF urls
 
 04-Jan-2006 Rey Gigataras
- * SECURITY [ Low Level ]: Fixed artf2050 : Itemid in index2.php
+ * SECURITY [ Low Level ]: Fixed [artf2050] : Itemid in index2.php
  # Fixed Related items Module shows Expired items - Mambo Tracker [#7590] 
- # Fixed artf2185 : Changing weblinks possible for everyone
+ # Fixed [artf2185] : Changing weblinks possible for everyone
 
 03-Jan-2006 Andy Miller
  ^ Updated copyright information for iCandy Junior icons
@@ -801,26 +801,26 @@ Low Level Threat
 03-Jan-2005 Rey Gigataras
  # Fixed XHTML validation error in `Blog` view with decmimal value widths
  # Fixed XHTML validation error in `Table - Content Category`
- # Fixed artf2791 : RSS item links not SEF'd
- # Fixed artf2791 : RSS items have no category
- # Fixed artf2813 : Media Manager doesn't support ICO files
+ # Fixed [artf2791] : RSS item links not SEF'd
+ # Fixed [artf2791] : RSS items have no category
+ # Fixed [artf2813] : Media Manager doesn't support ICO files
 
 02-Jan-2006 Rey Gigataras
- # Fixed artf2802 : All content made bold for Rss module published on the frontpage
- # Fixed artf2780 : Newsflash Read More bad link
- # Fixed artf2786 : Newsflash module not picking up "linked title" global setting
- # Fixed artf2810 : 1.0.x changelog incorrectly states release date of 1.0.5
+ # Fixed [artf2802] : All content made bold for Rss module published on the frontpage
+ # Fixed [artf2780] : Newsflash Read More bad link
+ # Fixed [artf2786] : Newsflash module not picking up "linked title" global setting
+ # Fixed [artf2810] : 1.0.x changelog incorrectly states release date of 1.0.5
  
 30-Dec-2005 Rey Gigataras
  # Fixed `Unlimited` banner impressions option
- # Fixed artf2776 : Multiple banners not possible
- # Fixed artf2788 : admin template css errors
+ # Fixed [artf2776] : Multiple banners not possible
+ # Fixed [artf2788] : admin template css errors
 
 29-Dec-2005 Rey Gigataras
- # Fixed artf2646 : name="" not valid XHTML
- # Fixed artf2747 : title_alias is missing in mambots
+ # Fixed [artf2646] : name="" not valid XHTML
+ # Fixed [artf2747] : title_alias is missing in mambots
  # Fixed `Reset Clicks` button not working in admin component `Banner Manager`
- # Fixed artf2712 : Clicks reset on save 
+ # Fixed [artf2712] : Clicks reset on save 
 
 29-Dec-2005 Andrew Eddie
  ^ SEF error handling throws to new /templates/404.php file
@@ -850,20 +850,20 @@ Medium Level Threats
  ^ patTemplate Translate now recognises 1.0 version language constants
 
 20-Dec-2005 Emir Sakic
- # Fixed artf2432 : Apostrophe in paths isn't escaped properly
+ # Fixed [artf2432] : Apostrophe in paths isn't escaped properly
 
 20-Dec-2005 Johan Janssens
- # Fixed artf2389 : gzip compression not operational
- # Fixed artf2599 : loosing Itemid afet submitting "ask for new password"
- # Fixed artf1712 : Search Mambots return duplicate results
- # Fixed artf2534 : Template chooser no longer able to manage SEF urls / XHTML validation
- # Fixed artf1410 : 'Special' access menu locks out 'public' menu's articles "read more" content
- # Fixed artf2595 : Deleted "mass mail" item menu in component menu
- # Fixed artf2518 : mod_latestnews problem
- # Fixed artf2591 : mosMakePath problem with mkdir on strato
- # Fixed artf2665 : Most Read module generates incorrect class for <li> statement
- # Fixed artf2666 : Pagination Error in Category Manager
- # Fixed artf2407 : parameter type=mos_category show only "- Select Content Category -"
+ # Fixed [artf2389] : gzip compression not operational
+ # Fixed [artf2599] : loosing Itemid afet submitting "ask for new password"
+ # Fixed [artf1712] : Search Mambots return duplicate results
+ # Fixed [artf2534] : Template chooser no longer able to manage SEF urls / XHTML validation
+ # Fixed [artf1410] : 'Special' access menu locks out 'public' menu's articles "read more" content
+ # Fixed [artf2595] : Deleted "mass mail" item menu in component menu
+ # Fixed [artf2518] : mod_latestnews problem
+ # Fixed [artf2591] : mosMakePath problem with mkdir on strato
+ # Fixed [artf2665] : Most Read module generates incorrect class for <li> statement
+ # Fixed [artf2666] : Pagination Error in Category Manager
+ # Fixed [artf2407] : parameter type=mos_category show only "- Select Content Category -"
 
 16-Dec-2005 Andy Miller
  # Fixed mod_whosonline not rendering list properly
@@ -872,11 +872,11 @@ Medium Level Threats
  + Added database::getAffectedRows to db connectors
 
 10-Dec-2005 Emir Sakic
- # Fixed artf2517 : "Cancel" the editing of content after "apply" not possible
+ # Fixed [artf2517] : "Cancel" the editing of content after "apply" not possible
 
 09-Dec-2005 Emir Sakic
- # Fixed artf2324 : SEF for components assumes option is always first part of query
- # Fixed artf1955 : Search results bug
+ # Fixed [artf2324] : SEF for components assumes option is always first part of query
+ # Fixed [artf1955] : Search results bug
 
 07-Dec-2005 Andrew Eddie
  # Fixed unitialised array in mosHTML::MenuSelect method
@@ -884,34 +884,34 @@ Medium Level Threats
  # Fixed bug in mosDBTable::load where null table values don't overwrite properly
 
 07-Dec-2005 Johan Janssens
- # Fixed artf2430 : invalid values in tabpane.css
- # Fixed artf2457 : VCard bug IS a bug
- # Fixed artf2218 : RSS Newsfeed module generates wrong rendering output
- # Fixed artf2453 : Random Image Module
- # Fixed artf2251 : Poll title error
- # Fixed artf2393 : Original editor cannot open content item if checked out
- # Fixed artf2323 : overlib_hideform_mini.js parse error
- # Fixed artf2248 : Incorrect hits count on multipage articles
- # Fixed artf2342 : getBlogCategoryCount
- # Fixed artf2464 : Contacts Component image path error
- # Fixed artf2404 : Contact detail html bug
+ # Fixed [artf2430] : invalid values in tabpane.css
+ # Fixed [artf2457] : VCard bug IS a bug
+ # Fixed [artf2218] : RSS Newsfeed module generates wrong rendering output
+ # Fixed [artf2453] : Random Image Module
+ # Fixed [artf2251] : Poll title error
+ # Fixed [artf2393] : Original editor cannot open content item if checked out
+ # Fixed [artf2323] : overlib_hideform_mini.js parse error
+ # Fixed [artf2248] : Incorrect hits count on multipage articles
+ # Fixed [artf2342] : getBlogCategoryCount
+ # Fixed [artf2464] : Contacts Component image path error
+ # Fixed [artf2404] : Contact detail html bug
  ^ Replaced install.png with transparent image - contributed by joomlashack
- # Fixed artf2245 : RSS not showing enclosure tags
- # Fixed artf2247 : RSS newsfeed on Frontend missing link
+ # Fixed [artf2245] : RSS not showing enclosure tags
+ # Fixed [artf2247] : RSS newsfeed on Frontend missing link
  # Fixed bug in Domit lite parser
  # Fixed mosMail() is missing "ReplyTo:" field to avoid anti-spam rules (SPF)
  # Fixed Small typo in mosBindArrayToObject
 
 06-Dec-2005 Alex Kempkens
- # Fixed artf2434: Typo in database.php checkout function line 1050
- # Fixed artf2398 : Parameter Text Area field name
+ # Fixed [artf2434]: Typo in database.php checkout function line 1050
+ # Fixed [artf2398] : Parameter Text Area field name
 
 06-Dec-2005 Johan Janssens
- # Fixed artf2418 : Banners Client Manager Next Page Issue: Joomla 1.04
- # Fixed artf2156 : memory exhastion error in joomla.xml.php
- # Fixed artf2378 : mosCommonHTML::CheckedOutProcessing not checking if the current user
+ # Fixed [artf2418] : Banners Client Manager Next Page Issue: Joomla 1.04
+ # Fixed [artf2156] : memory exhastion error in joomla.xml.php
+ # Fixed [artf2378] : mosCommonHTML::CheckedOutProcessing not checking if the current user
                     has checked out the document
- # Fixed artf1948 : Pagination problem still exists
+ # Fixed [artf1948] : Pagination problem still exists
  ^ Upgraded TinyMCE Compressor [1.0.4]
  ^ Upgraded TinyMCE [2.0.1]
 
@@ -935,32 +935,32 @@ Medium Level Threats
  # Site templates allowed to have custom index2.php (fixes problems where custom code is required in index2)
 
 29-Nov-2005 Andrew Eddie
- # Fixed artf2258 : Parameter tooltips missing in 1.0.4
+ # Fixed [artf2258] : Parameter tooltips missing in 1.0.4
 
 28-Nov-2005 Andrew Eddie
- # Fixed artf2329 : mosMainFrame::getBasePath refers to non-existant JFile class.
- # Fixed artf2246 : Error in frontend.html.php
- # Fixed artf2190 : mod_poll.php modification
- # Fixed artf2292 : [WITH FIX] Sql query missing hits
+ # Fixed [artf2329] : mosMainFrame::getBasePath refers to non-existant JFile class.
+ # Fixed [artf2246] : Error in frontend.html.php
+ # Fixed [artf2190] : mod_poll.php modification
+ # Fixed [artf2292] : [WITH FIX] Sql query missing hits
 
 24-Nov-2005 Emir Sakic
- # Fixed artf2225 : Email / Print redirects to homepage
- # Fixed artf1705 : Not same URL for same item : duplicate content
+ # Fixed [artf2225] : Email / Print redirects to homepage
+ # Fixed [artf1705] : Not same URL for same item : duplicate content
 
 23-Nov-2005 Johan Janssens
  # Fixed : Content Finish Publishing & not authorized
 
 22-Nov-2005 Marko Schmuck
- # Fixed artf2240 : 1.0.4 URL encoding entire frontend?
- # Fixed artf2222 : ampReplace in content.html.php
+ # Fixed [artf2240] : 1.0.4 URL encoding entire frontend?
+ # Fixed [artf2222] : ampReplace in content.html.php
  + Versioncheck for new_link parameter for mysql_connect.
 
 22-Nov-2005 Levis Bisson
- # Fixed artf2221 : 1.0.4: includes/database.php faulty on PHP < 4.2.0
- # Fixed artf2219 : Bug in pageNavigation.php - added "if not define _PN_LT or _PN_RT"
+ # Fixed [artf2221] : 1.0.4: includes/database.php faulty on PHP < 4.2.0
+ # Fixed [artf2219] : Bug in pageNavigation.php - added "if not define _PN_LT or _PN_RT"
 
 22-Nov-2005 Johan Janssens
- # Fixed artf2224 : Problem with Media Manager
+ # Fixed [artf2224] : Problem with Media Manager
  # Fixed : Can't create new folders in media manager
 
 
@@ -982,7 +982,7 @@ Low Level Threat
 ---
 
 20-Nov-2005 Levis Bisson
- # Fixed Artifact artf1967 displays with an escaped apostrophe in both title and TOC.
+ # Fixed Artifact [artf1967] displays with an escaped apostrophe in both title and TOC.
 
 20-Nov-2005 Emir Sakic
  * SECURITY [ Critical Level ]: Hardened SEF against XSS injection
@@ -995,25 +995,25 @@ Low Level Threat
 
 17-Nov-2005 Johan Janssens
  ^ Replaced install.png with new image
- - Reverted artf2139 : admin menu xhtml
+ - Reverted [artf2139] : admin menu xhtml
  + Added clone function for PHP5 backwards compatibility
 
 16-Nov-2005 Rey Gigataras
- # Fixed artf2137 : editorArea xhtml
- # Fixed artf2139 : admin menu xhtml
- # Fixed artf2136 : Admin menubar valid xhtml
- # Fixed artf2135 : Admin invalid xhtml
- # Fixed artf2140 : mosMenuBar::publishList
- # Fixed artf2027 : uploading images from custom component
+ # Fixed [artf2137] : editorArea xhtml
+ # Fixed [artf2139] : admin menu xhtml
+ # Fixed [artf2136] : Admin menubar valid xhtml
+ # Fixed [artf2135] : Admin invalid xhtml
+ # Fixed [artf2140] : mosMenuBar::publishList
+ # Fixed [artf2027] : uploading images from custom component
 
 13-Nov-2005 Rey Gigataras
- # PERFORMANCE: Fixed artf1993 : Inefficient queries in com_content
- # Fixed artf2021 : artf1791 : Failed Login results in redirect to referring page
- # Fixed artf2021 : appendMetaTag() prepends instead of appends
- # Fixed artf1981 : incorrect url's at next/previous links at content items
- # Fixed artf2079 : SQL error in category manager thru contact manager
- # Fixed artf1586 : .htaccess - RewriteEngine problem
- # Fixed artf1976 : Check for custom icon in mod_quickicon.php
+ # PERFORMANCE: Fixed [artf1993] : Inefficient queries in com_content
+ # Fixed [artf2021] : [artf1791] : Failed Login results in redirect to referring page
+ # Fixed [artf2021] : appendMetaTag() prepends instead of appends
+ # Fixed [artf1981] : incorrect url's at next/previous links at content items
+ # Fixed [artf2079] : SQL error in category manager thru contact manager
+ # Fixed [artf1586] : .htaccess - RewriteEngine problem
+ # Fixed [artf1976] : Check for custom icon in mod_quickicon.php
 
 11-Nov-2005 Andy Miller
  # Fixed issue with RSS module not displaying inside module rendering wrapper
@@ -1025,11 +1025,11 @@ Low Level Threat
  # Fixed mod_quickicon `redeclaration of function` error possibilities
 
 07-Nov-2005 Johan Janssens
- # Fixed  artf1648 : tinyMCE BR and P elements
- # Fixed artf1700 : TinyMCE doesn't support relative URL's for images
+ # Fixed  [artf1648] : tinyMCE BR and P elements
+ # Fixed [artf1700] : TinyMCE doesn't support relative URL's for images
 
 07-Nov-2005 Andrew Eddie
- * SECURITY [ Low Level ]: Fixed artf1978 : mod_poll SQL Injection Vulnerability
+ * SECURITY [ Low Level ]: Fixed [artf1978] : mod_poll SQL Injection Vulnerability
  * SECURITY [ Low Level ]: Fixed SQL injection possibility in several mosDBTable methods
  * SECURITY [ Low Level ]: Fixed malicious injection into filename variables in com_media
  ^ mosDBTable::publish_array renamed to publish
@@ -1040,79 +1040,79 @@ Low Level Threat
  # Fixed custom() & customX() functions in menu.html.php no checking for image in /administrator/images/
 
 04-Nov-2005 Rey Gigataras
- # Fixed artf1953 : Page Class Suffix in Contacts component
- # Fixed artf1945 : mosToolTip not generating valid xhtml
+ # Fixed [artf1953] : Page Class Suffix in Contacts component
+ # Fixed [artf1945] : mosToolTip not generating valid xhtml
 
 03-Nov-2005 Rey Gigataras
  + modduleclass_sfx support to mod_poll
- # Fixed artf1902 : Incorrect number of table cells in mod_poll
+ # Fixed [artf1902] : Incorrect number of table cells in mod_poll
 
 03-Nov-2005 Samuel Moffatt
  # Fixed bug which prevented component uninstall if another XML file was in the directory
 
 01-Nov-2005 Rey Gigataras
- # Fixed artf1888 : linkable [category|section] URL incorrect
- # Fixed artf1620 : Hardcoded words in pdf.php
- # Fixed artf1887 : Content: Bug in creation date generation
+ # Fixed [artf1888] : linkable [category|section] URL incorrect
+ # Fixed [artf1620] : Hardcoded words in pdf.php
+ # Fixed [artf1887] : Content: Bug in creation date generation
 
 31-Oct-2005 Johan Janssens
- # Fixed artf1277 : News Feed Display Bad Accent character
+ # Fixed [artf1277] : News Feed Display Bad Accent character
 
 31-Oct-2005 Rey Gigataras
- # Fixed artf1739 : Problem with the menuitem type url and assigned templates and modules
- # Fixed artf1574 : Who is online after update to Joomla 1.0.3 no more work correctly
- # Fixed artf1666 : Notice: on component installation
- # Fixed artf1573 : Manage Banners | Error in Field Name
- # Fixed artf1597 : Small bug in loadAssocList function in database.php
- # Fixed artf1832 : Logout problem
- # Fixed artf1769 : Undefined index: 2 in includes/joomla.php on line 2721
- # Fixed artf1749 : Email-to-friend is NOT actually from friend
- # Fixed artf1591 : page is expired at installation
- # Fixed artf1851 : 1.0.2 copy content has error
- # Fixed artf1569 : Display of mouseover in IE gives a problem with a dropdown-box
- # Fixed artf1869 : Poll produces MySQL-Error when accessed via Component Link
- # Fixed artf1694 : 1.0.3 undefined indexes filter_sectionid and catid on "Add New Content"
- # Fixed artf1834 : English Localisation
- # Fixed artf1771 : Wrong mosmsg
- # Fixed artf1792 : "Receive Submission Emails" label is misleading
- # Fixed artf1770 : Undefined index: HTTP_USER_AGENT
+ # Fixed [artf1739] : Problem with the menuitem type url and assigned templates and modules
+ # Fixed [artf1574] : Who is online after update to Joomla 1.0.3 no more work correctly
+ # Fixed [artf1666] : Notice: on component installation
+ # Fixed [artf1573] : Manage Banners | Error in Field Name
+ # Fixed [artf1597] : Small bug in loadAssocList function in database.php
+ # Fixed [artf1832] : Logout problem
+ # Fixed [artf1769] : Undefined index: 2 in includes/joomla.php on line 2721
+ # Fixed [artf1749] : Email-to-friend is NOT actually from friend
+ # Fixed [artf1591] : page is expired at installation
+ # Fixed [artf1851] : 1.0.2 copy content has error
+ # Fixed [artf1569] : Display of mouseover in IE gives a problem with a dropdown-box
+ # Fixed [artf1869] : Poll produces MySQL-Error when accessed via Component Link
+ # Fixed [artf1694] : 1.0.3 undefined indexes filter_sectionid and catid on "Add New Content"
+ # Fixed [artf1834] : English Localisation
+ # Fixed [artf1771] : Wrong mosmsg
+ # Fixed [artf1792] : "Receive Submission Emails" label is misleading
+ # Fixed [artf1770] : Undefined index: HTTP_USER_AGENT
 
 30-Oct-2005 Rey Gigataras
  ^ Upgraded TinyMCE Compressor [1.02]
  ^ Upgraded TinyMCE [2.0 RC4]
 
 27-Oct-2005 Johan Janssens
- # Fixed artf1671 : Media Manager
- # Fixed artf1814 : Tab Class wrong
- # Fixed artf1086 : Icons at the control panel fall apart
+ # Fixed [artf1671] : Media Manager
+ # Fixed [artf1814] : Tab Class wrong
+ # Fixed [artf1086] : Icons at the control panel fall apart
 
 26-Oct-2005 Samuel Moffatt
  # Fixed bug where a new database object with the same username, password and host but different database name would kill Joomla!
 
 25-Oct-2005 Johan Janssens
- # Fixed artf1733 : $contact->id used instead of $Itemid
- # Fixed artf1654 : base url above title tag
- # Fixed artf1738 : Registration - javascript alert
+ # Fixed [artf1733] : $contact->id used instead of $Itemid
+ # Fixed [artf1654] : base url above title tag
+ # Fixed [artf1738] : Registration - javascript alert
 
 23-Oct-2005 Rey Gigataras
- # Fixed artf1695 : Show Empty Categories in Section does not work
- # Fixed artf1710 : Unnecessary queries (optimization)
- # Fixed artf1711 : Missing whitespace in search results
- # Fixed artf1706 : Mambo logo not removed from admin images
- # Fixed artf1708 : Search CMT: Hardcoded date format
- # Fixed artf1689 : Joomla! Installer - Wording still not correct
- # Fixed artf1692 : email and print buttons (maybe also the PDF) does not validate
+ # Fixed [artf1695] : Show Empty Categories in Section does not work
+ # Fixed [artf1710] : Unnecessary queries (optimization)
+ # Fixed [artf1711] : Missing whitespace in search results
+ # Fixed [artf1706] : Mambo logo not removed from admin images
+ # Fixed [artf1708] : Search CMT: Hardcoded date format
+ # Fixed [artf1689] : Joomla! Installer - Wording still not correct
+ # Fixed [artf1692] : email and print buttons (maybe also the PDF) does not validate
 
 19-Oct-2005 Andrew Eddie
  # Fixed missing autoclear in "list-item" stock template
 
 19-Oct-2005 Rey Gigataras
- # Fixed artf1577 : MenuLink Blog section error
+ # Fixed [artf1577] : MenuLink Blog section error
 
 19-Oct-2005 Levis Bisson
   Applyed Feature Requests:
-^ Artifact artf1282 : Easier sorting of static content in creating menu links
-^ Artifact artf1162 : Remove hardcoding of <<, <, > and >> in pageNavigation.php
+^ Artifact [artf1282] : Easier sorting of static content in creating menu links
+^ Artifact [artf1162] : Remove hardcoding of <<, <, > and >> in pageNavigation.php
 
 
 ---------------- 1.0.3 Released -- [14-Oct-2005 10:00 UTC] ------------------
@@ -1125,80 +1125,80 @@ Medium Level Threat
 Low Level Threat
  * Fixed securitybug in admin.content.html.php when 2 logged in and try to edit the same content
  * Fixed Search Component flooding, by limiting searching to between 3 and 20 characters
- * Fixed artf1405 : Joomla shows Items to unauthorized users
+ * Fixed [artf1405] : Joomla shows Items to unauthorized users
 
 -------
 
 14-Oct-2005 Rey Gigataras
  # Fixed edit icon not showing on frontpage
- # Fixed artf1553 : database.php fails to pass resource id into mysql_get_server_info() call
- # Fixed artf1560 : Install1.php doesn't enforce rule against old_ table prefix
+ # Fixed [artf1553] : database.php fails to pass resource id into mysql_get_server_info() call
+ # Fixed [artf1560] : Install1.php doesn't enforce rule against old_ table prefix
 
 13-Oct-2005 Andy Miller
- # Fixed artf1504 : rhuk_solarflare_ii Template | Menus with " not displaying correctly
+ # Fixed [artf1504] : rhuk_solarflare_ii Template | Menus with " not displaying correctly
 
 13-Oct-2005 Rey Gigataras
  # Fixed duplicated module creation in install
  # Fixed XHTML issue in rss feed module
  # Fixed XHTML issue in com_search
- # Fixed artf1550 : Properly SEFify com_registration links
- # Fixed artf1533 : rhuk_solarflare_ii 2.2 active_menu
- # Fixed artf1354 : Can't create new user
- # Fixed artf1433 : Images in Templates
- # Fixed artf1531 : RSS Feed showing wrong livesite URL
+ # Fixed [artf1550] : Properly SEFify com_registration links
+ # Fixed [artf1533] : rhuk_solarflare_ii 2.2 active_menu
+ # Fixed [artf1354] : Can't create new user
+ # Fixed [artf1433] : Images in Templates
+ # Fixed [artf1531] : RSS Feed showing wrong livesite URL
 
 12-Oct-2005 Marko Schmuck
  * SECURITY [ Low Level ]: Fixed security bug in admin.content.html.php when 2 logged in and try to edit the same content
 
 12-Oct-2005 Johan Janssens
- # Fixed artf1266 : gzip compression conflict
- # Fixed artf1453 : Weblink item missing approved parameter
- # Fixed artf1452 : Error deleting Language file
- # Fixed artf1373 : Pagination error
+ # Fixed [artf1266] : gzip compression conflict
+ # Fixed [artf1453] : Weblink item missing approved parameter
+ # Fixed [artf1452] : Error deleting Language file
+ # Fixed [artf1373] : Pagination error
 
 12-Oct-2005 Rey Gigataras
  ^ Core now automatically calculates the offset between yourself and the server
  # Fixed bug in Global Config param `Time Offset`
- # Fixed artf1414 : Missing images in HTML_toolbar
- # Fixed artf1513 : PDF format does not work at version 1.0.2
+ # Fixed [artf1414] : Missing images in HTML_toolbar
+ # Fixed [artf1513] : PDF format does not work at version 1.0.2
 
 11-Oct-2005 Rey Gigataras
  * SECURITY [ Low Level ]: Fixed Search Component flooding, by limiting searching to between 3 and 20 characters
  ^ Blog - Content Category Archive will no longer show dropdown selector when coming from Archive Module
- # Fixed artf1470 : Archives not working in the front end
- # Fixed artf1495 : Frontend Archive blog display
- # Fixed artf1364 : TinyMCE loads wrong template styles
- # Fixed artf1494 : Template fault in offline preview
- # Fixed artf1497 : mosemailcloak adds trailing space
- # Fixed artf1493 : mod_whosonline.php
+ # Fixed [artf1470] : Archives not working in the front end
+ # Fixed [artf1495] : Frontend Archive blog display
+ # Fixed [artf1364] : TinyMCE loads wrong template styles
+ # Fixed [artf1494] : Template fault in offline preview
+ # Fixed [artf1497] : mosemailcloak adds trailing space
+ # Fixed [artf1493] : mod_whosonline.php
 
 09-Oct-2005 Rey Gigataras
  * SECURITY [ Medium Level ]: Fixed SQL injection bug in content submission
- * SECURITY [ Low Level ]: Fixed artf1405 : Joomla shows Items to unauthorized users
- # Fixed artf1454 : After update email_cloacking bot is always on
- # Fixed artf1447 : Bug in mosloadposition mambot
- # Fixed artf1483 : SEF default .htaccess file settings are too lax
- # Fixed artf1480 : Administrator type user can loggof Super Adminstrator
- # Fixed artf1422 : PDF Icon is set to on when it should be off
- # Fixed artf1476 : Error at "number of Trashed Items" in sections
- # Fixed artf1415 : Wrong image in editList() function of mosToolBar class
+ * SECURITY [ Low Level ]: Fixed [artf1405] : Joomla shows Items to unauthorized users
+ # Fixed [artf1454] : After update email_cloacking bot is always on
+ # Fixed [artf1447] : Bug in mosloadposition mambot
+ # Fixed [artf1483] : SEF default .htaccess file settings are too lax
+ # Fixed [artf1480] : Administrator type user can loggof Super Adminstrator
+ # Fixed [artf1422] : PDF Icon is set to on when it should be off
+ # Fixed [artf1476] : Error at "number of Trashed Items" in sections
+ # Fixed [artf1415] : Wrong image in editList() function of mosToolBar class
 
 08-Oct-2005 Johan Janssens
- # Fixed artf1384 : tinyMCE doesnt save converted entities
+ # Fixed [artf1384] : tinyMCE doesnt save converted entities
 
 07-Oct-2005 Andy Miller
  # Fixed tabpane css font issue
 
 07-Oct-2005 Johan Janssens
- # Fixed artf1421 : unneeded file includes\domit\testing_domit.php
+ # Fixed [artf1421] : unneeded file includes\domit\testing_domit.php
 
 07-Oct-2005 Andy Stewart
- # Fixed artf1382 : Added installation check to ensure "//" is not generated via PHP_SELF
- # Fixed artf1439 : Used correct ErrorMsg function and updated javascript redirect to remove POSTDATA message
- # Fixed artf1400 : Added a check of $other within com_categories to skip section exists check if set to "other"
+ # Fixed [artf1382] : Added installation check to ensure "//" is not generated via PHP_SELF
+ # Fixed [artf1439] : Used correct ErrorMsg function and updated javascript redirect to remove POSTDATA message
+ # Fixed [artf1400] : Added a check of $other within com_categories to skip section exists check if set to "other"
 
 05-Oct-2005 Robin Muilwijk
- # Fixed artf1366 : Typo in admin, Adding a new menu item - Blog Content Category
+ # Fixed [artf1366] : Typo in admin, Adding a new menu item - Blog Content Category
 
 
 ---------------- 1.0.2 Released -- [02-Oct-2005 16:00 UTC] ------------------
@@ -1207,34 +1207,34 @@ Low Level Threat
 02-Oct-2005 Rey Gigataras
  ^ Added check to mosCommonHTML::loadOverlib(); function that will stop it from being loaded twice on a page
  # Fixed Content display not honouring Section or Category publish state
- # Fixed artf1344 : Link to menu shows wrong menu type
- # Fixed artf1189 : Long menu names get truncated, duplicate menus made
- # Fixed artf1192 : Unpublished Bots
- # Fixed artf1223 : Error with Edit items in categories and sections
- # Fixed artf1219 : Joomla Component Module displays Error!
- # Fixed artf1183 : Section module: Still "no items to display"
- # Fixed artf1241 : Editing content fails with MySQL 5.0.12b
- # Fixed artf1306 : modules - parameters of type text not stored correctly
+ # Fixed [artf1344] : Link to menu shows wrong menu type
+ # Fixed [artf1189] : Long menu names get truncated, duplicate menus made
+ # Fixed [artf1192] : Unpublished Bots
+ # Fixed [artf1223] : Error with Edit items in categories and sections
+ # Fixed [artf1219] : Joomla Component Module displays Error!
+ # Fixed [artf1183] : Section module: Still "no items to display"
+ # Fixed [artf1241] : Editing content fails with MySQL 5.0.12b
+ # Fixed [artf1306] : modules - parameters of type text not stored correctly
 
 01-Oct-2005 Andy Miller
  # Fixed base href in Content Preview for broken images
 
 01-Oct-2005 Johan Janssens
  ^ Updated TinyMCE editor to version RC 3
- # Fixed artf1221 : Unable to Submit Content (still not working post-patch)
- # Fixed artf1108 : Tooltips on mouseover causes parameter panel to widen
- # Fixed artf1217 : WYSIWYG-Editor and mospagebreak with 2 parameters
+ # Fixed [artf1221] : Unable to Submit Content (still not working post-patch)
+ # Fixed [artf1108] : Tooltips on mouseover causes parameter panel to widen
+ # Fixed [artf1217] : WYSIWYG-Editor and mospagebreak with 2 parameters
 
 01-Oct-2005 Andy Stewart
- # Fixed artf1305 - Added a check within mosimage mambot for introtext being hidden
- # Fixes artf1343 - Removed xml declaration at top of gpl.html
+ # Fixed [artf1305] - Added a check within mosimage mambot for introtext being hidden
+ # Fixes [artf1343] - Removed xml declaration at top of gpl.html
 
 01-Oct-2005 Arno Zijlstra
  ^ Changed OSM banner 2 a little to show banner changing
 
 01-Oct-2005 Levis Bisson
- # Fixed artf1311 : Banners not showing / returning PHP error
- # Fixed artf1319 : Banners not showing in frontend / admin
+ # Fixed [artf1311] : Banners not showing / returning PHP error
+ # Fixed [artf1319] : Banners not showing in frontend / admin
 
 30-Sep-2005 Andy Miller
  # Fixed poor rendering of fieldset with solarflare2
@@ -1245,7 +1245,7 @@ Low Level Threat
 
 30-Sep-2005 Andy Stewart
  + Updated installation routine to recognise port numbers other than 80
- # Fixed artf1293 : added $op=mosGetParam so sendmail is called when running globals.php-off
+ # Fixed [artf1293] : added $op=mosGetParam so sendmail is called when running globals.php-off
 
 30-Sep-2005 Rey Gigataras
  ^ Module Manager `position` dropdown ordering alphabetically
@@ -1254,61 +1254,61 @@ Low Level Threat
  # Fixed Seach Module not using Itemid of existng `Seach` component menu item
  # Fixed `Link to Menu` problem with Sections menu ordering
  # Fixed `Link to Menu` problem with Category = `Content Category`
- # Fixed artf1300 : PDF shows Author name despite setting content item
+ # Fixed [artf1300] : PDF shows Author name despite setting content item
 
 30-Sep-2005 Levis Bisson
  + Added UTF-8 support
  # Fixed tooltips empty links
- # Fixed artf1265 : url in 'edit-menue-item' of submenues is wrong
- # Fixed artf1277 : News Feed Display Bad Accent character
+ # Fixed [artf1265] : url in 'edit-menue-item' of submenues is wrong
+ # Fixed [artf1277] : News Feed Display Bad Accent character
 
 29-Sep-2005 Arno Zijlstra
  # Fixed publish/unpublish select check in contacts
 
 29-Sep-2005 Rey Gigataras
- # Fixed artf1276 : tiny mce background
- # Fixed artf1281 : Bad name of XML file
- # Fixed artf1180 : Call-by-reference warning when editing menu
- # Fixed artf1188 : includes/vcard.class.php uses short open tags
+ # Fixed [artf1276] : tiny mce background
+ # Fixed [artf1281] : Bad name of XML file
+ # Fixed [artf1180] : Call-by-reference warning when editing menu
+ # Fixed [artf1188] : includes/vcard.class.php uses short open tags
 
 29-Sep-2005 Levis Bisson
- # Fixed artf1274 : Module display bug when using register/forgot password links
- # Fixed artf1238 : header("Location: $url")- some servers require an absolute URI
+ # Fixed [artf1274] : Module display bug when using register/forgot password links
+ # Fixed [artf1238] : header("Location: $url")- some servers require an absolute URI
 
 28-Sep-2005 Levis Bisson
- # Fixed artf1250 : Order is no use when many pages
- # Fixed artf1254 : Unable to delete when count > 1
- # Fixed artf1248 : Invalid argument supplied for 3P modules
+ # Fixed [artf1250] : Order is no use when many pages
+ # Fixed [artf1254] : Unable to delete when count > 1
+ # Fixed [artf1248] : Invalid argument supplied for 3P modules
 
 27-Sep-2005 Arno Zijlstra
- # Fixed artf1253 : Apply button image path
- # Fixed artf1240 : WITH FIX: banners component - undefined var task
- # Fixed artf1242 : Problem with "Who's online"
- # Fixed artf1218 : 'Search' does not include weblinks?
+ # Fixed [artf1253] : Apply button image path
+ # Fixed [artf1240] : WITH FIX: banners component - undefined var task
+ # Fixed [artf1242] : Problem with "Who's online"
+ # Fixed [artf1218] : 'Search' does not include weblinks?
 
 25-Sep-2005 Emir Sakic
- # Fixed artf1185 : globals.php-off breaks pathway
- # Fixed artf1196 : undefined constant categoryid
- # Fixed artf1216 : madeyourweb no </head> TAG
+ # Fixed [artf1185] : globals.php-off breaks pathway
+ # Fixed [artf1196] : undefined constant categoryid
+ # Fixed [artf1216] : madeyourweb no </head> TAG
 
 24-Sep-2005 Rey Gigataras
- ^ artf1214 : pastarchives.jpg seems unintuitive.
+ ^ [artf1214] : pastarchives.jpg seems unintuitive.
 
 22-Sep-2005 Rey Gigataras
  + Added Version Information to bottom of joomla_admin template, with link to 'Joomla! 1.0.x Series Information'
- # Fixed artf1175 : Create catagory with selection of Section
- # Fixed artf1179 : Custom RSS Newsfeed Module has nested <TR>
+ # Fixed [artf1175] : Create catagory with selection of Section
+ # Fixed [artf1179] : Custom RSS Newsfeed Module has nested <TR>
 
 
 ---------------- 1.0.1 Released -- [21-Sep-2005 16:30 UTC] ------------------
 
 
 21-Sep-2005 Rey Gigataras
- # Fixed artf1157 : Section module: Content not displayed, wrong header
- # Fixed artf1159 : Can't cancel "Submit - Content" menu item type form
- # Fixed artf1172 : "Help" link in Administration links to Mamboserver.com
- # Fixed artf1171 : mod_related_items shows all items twice
- # Fixed artf1167 : Component - Search
+ # Fixed [artf1157] : Section module: Content not displayed, wrong header
+ # Fixed [artf1159] : Can't cancel "Submit - Content" menu item type form
+ # Fixed [artf1172] : "Help" link in Administration links to Mamboserver.com
+ # Fixed [artf1171] : mod_related_items shows all items twice
+ # Fixed [artf1167] : Component - Search
  # Fixed [RC] incorrect redirect when cancelling from Frontend 'Submit - Content'
  # Fixed undefined variable in Trash Manager
  # Fixed [RC] `Trash` button when no item selected
@@ -1316,18 +1316,18 @@ Low Level Threat
 
 20-Sep-2005 Levis Bisson
  ^ added a chmod to the install unlink function
- # Fixed artf1150 : the created_by on initial creation of Static Content Item
+ # Fixed [artf1150] : the created_by on initial creation of Static Content Item
 
 20-Sep-2005 Marko Schmuck
  ^ Changed Time Offsets to hardcoded list with country/city names
 
 20-Sep-2005 Rey Gigataras
  # Fixed /installation/ folder check
- # Fixed artf1153 : Quote appears in com_poll error
- # Fixed artf1151 : empty span
- # Fixed artf1089 : multile select image insert reverses list order
- # Fixed artf1138 : Joomla allows creation of double used username
- # Fixed artf1133 : There is no install request to make /mambot/editor writeable
+ # Fixed [artf1153] : Quote appears in com_poll error
+ # Fixed [artf1151] : empty span
+ # Fixed [artf1089] : multile select image insert reverses list order
+ # Fixed [artf1138] : Joomla allows creation of double used username
+ # Fixed [artf1133] : There is no install request to make /mambot/editor writeable
 
 19-Sep-2005 Andrew Eddie
  # Fixed incorrect js function in patTemplate sticky and ordering templates/links
@@ -1337,50 +1337,50 @@ Low Level Threat
  ^ Additional Overlib info for non-image files and directories
  ^ 'Cancel' button for Media Manager
  ^ Option to run TinyMCE in compressed mode - off by default
- # Fixed artf1111 : mosShowHead and the order of headers
- # Fixed artf1117 : database.php - bcc
- # Fixed artf1114 : database.php _nullDate
- # Fixed TinyMCE errors caused by use of compressed tinymce_gzip.php [artf1088||artf1034||artf1090||artf1044]
+ # Fixed [artf1111] : mosShowHead and the order of headers
+ # Fixed [artf1117] : database.php - bcc
+ # Fixed [artf1114] : database.php _nullDate
+ # Fixed TinyMCE errors caused by use of compressed tinymce_gzip.php [[artf1088]||[artf1034]||[artf1090]||[artf1044]]
  # Installed Editor Mambots are now published by default
  # Fixed error in RSS module
- # Fixed artf1106 : Default Editor Will Not Take Codes Like Java Script
+ # Fixed [artf1106] : Default Editor Will Not Take Codes Like Java Script
  # Fixed delete file in Media Manager
 
 18-Sep-2005 Arno Zijlstra
- # Fixed artf1084 : <br> stays in empty content
- # Fixed artf1101: Typo in Global Config
+ # Fixed [artf1084] : <br> stays in empty content
+ # Fixed [artf1101]: Typo in Global Config
 
 18-Sep-2005 Andrew Eddie
  # Fixed issues in patTemplate Translate Function and Modifier
  # Fixed issue with patTemplate variable for Tabs graphics
 
 18-Sep-2005 Rey Gigataras
- # Fixed artf1046 : Menu Manager Item Publishing
- # Fixed artf1036 : newsflash error when logged in in frontend
- # Fixed artf1033 : madeyourweb template logo path
- # Fixed artf1039 : & to &amp; translation in menu and contenttitle
+ # Fixed [artf1046] : Menu Manager Item Publishing
+ # Fixed [artf1036] : newsflash error when logged in in frontend
+ # Fixed [artf1033] : madeyourweb template logo path
+ # Fixed [artf1039] : & to &amp; translation in menu and contenttitle
  # Fixed PHP5 passed by reference error in admin.content.php
- # Fixed artf1068 : live bookmark link is wrong
- # Fixed artf1030 : Bug Joomla 1.0.0 Stable (un)publishing News Feeds
- # Fixed artf1048 : Custom Module Bug
- # Fixed artf1080 : Joomla! Installer
- # Fixed artf1050 : error in sql - database update
- # Fixed artf1081 : com_categories can't edit category when clicking hyperlink
- # Fixed artf1053 : Can not unassign template
- # Fixed artf1079 : com_weblinks can't edit links
- # Fixed artf1029 : Site -> Global Configuration = greyed out top menu
- # Fixed artf1064 : Deletion of Modules and Fix
- # Fixed artf1052 : Double Installer Locations
- # Fixed artf1051 : Copyright bumped to the right of the site
- # Fixed artf1059 : component editor bug
- # Fixed artf1041 : mod_mainmenu.xml: escape character for apostrophe missing
- # Fixed artf1040 : category manager not in content-menu
+ # Fixed [artf1068] : live bookmark link is wrong
+ # Fixed [artf1030] : Bug Joomla 1.0.0 Stable (un)publishing News Feeds
+ # Fixed [artf1048] : Custom Module Bug
+ # Fixed [artf1080] : Joomla! Installer
+ # Fixed [artf1050] : error in sql - database update
+ # Fixed [artf1081] : com_categories can't edit category when clicking hyperlink
+ # Fixed [artf1053] : Can not unassign template
+ # Fixed [artf1079] : com_weblinks can't edit links
+ # Fixed [artf1029] : Site -> Global Configuration = greyed out top menu
+ # Fixed [artf1064] : Deletion of Modules and Fix
+ # Fixed [artf1052] : Double Installer Locations
+ # Fixed [artf1051] : Copyright bumped to the right of the site
+ # Fixed [artf1059] : component editor bug
+ # Fixed [artf1041] : mod_mainmenu.xml: escape character for apostrophe missing
+ # Fixed [artf1040] : category manager not in content-menu
 
 17-Sep-2005 Levis Bisson
- # Fixed artf1037: Media Manager not uploading
- # Fixed artf1025: Registration admin notification
- # Fixed artf1043: Template Chooser doesn't work
- # Fixed artf1042: Template Chooser shows rogue entry
+ # Fixed [artf1037]: Media Manager not uploading
+ # Fixed [artf1025]: Registration admin notification
+ # Fixed [artf1043]: Template Chooser doesn't work
+ # Fixed [artf1042]: Template Chooser shows rogue entry
 
 
 ---------------- 1.0.0 Released -- [17-Sep-2005 00:30 UTC] ------------------
@@ -1420,9 +1420,9 @@ Low Level Threat
  ^ Ordering of Toolbar Icons/buttons now more consistent
  ^ Frontend Edit, status info moved to an overlib
  ^ Search Component converted to GET method
- # Fixed artf1018 : Warning Backend Statistic
- # Fixed artf1016 : Notice: RSS undefined constant
- # Fixed artf1020 : Hide mosimages in blogview doesn't work
+ # Fixed [artf1018] : Warning Backend Statistic
+ # Fixed [artf1016] : Notice: RSS undefined constant
+ # Fixed [artf1020] : Hide mosimages in blogview doesn't work
  # Various Search Component Fixes
  # Fixed Search Component not honouring Show/Hide Date Global Config setting
  # Fixed [#6668] No static content edit icon for frontend logged in author

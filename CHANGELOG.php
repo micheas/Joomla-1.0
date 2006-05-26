@@ -58,6 +58,7 @@ Low Level Threat
 27-May-2006 Rey Gigataras
  # Fixed [topic,64308] : cache and content items on frontpage
  # Fixed [topic,63824] : Notice on com_contact
+ # Fixed artf4801 : inputFilter::filterTags prints unexpected text
 
 
 23-May-2006 Rey Gigataras

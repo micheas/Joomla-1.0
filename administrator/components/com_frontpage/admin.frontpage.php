@@ -16,8 +16,7 @@
 defined( '_VALID_MOS' ) or die( 'Restricted access' );
 
 // ensure user has access to this function
-if (!($acl->acl_check( 'administration', 'edit', 'users', $my->usertype, 'components', 'all' )
-		| $acl->acl_check( 'administration', 'edit', 'users', $my->usertype, 'components', 'com_frontpage' ))) {
+if (!($acl->acl_check( 'administration', 'edit', 'users', $my->usertype, 'components', 'all' ) | $acl->acl_check( 'administration', 'edit', 'users', $my->usertype, 'components', 'com_frontpage' ))) {
 	mosRedirect( 'index2.php', _NOT_AUTH );
 }
 
@@ -209,6 +208,9 @@ function changeFrontPage( $cid=null, $state=0, $option ) {
 		$row = new mosContent( $database );
 		$row->checkin( $cid[0] );
 	}
+	
+	// clean any existing cache files
+	mosCache::cleanCache( 'com_content' );
 
 	mosRedirect( "index2.php?option=$option" );
 }
@@ -235,6 +237,9 @@ function removeFrontPage( &$cid, $option ) {
 		}
 	}
 	$fp->updateOrder();
+	
+	// clean any existing cache files
+	mosCache::cleanCache( 'com_content' );
 
 	mosRedirect( "index2.php?option=$option" );
 }
@@ -249,6 +254,9 @@ function orderFrontPage( $uid, $inc, $option ) {
 	$fp = new mosFrontPage( $database );
 	$fp->load( $uid );
 	$fp->move( $inc );
+	
+	// clean any existing cache files
+	mosCache::cleanCache( 'com_content' );
 
 	mosRedirect( "index2.php?option=$option" );
 }
@@ -271,6 +279,9 @@ function accessMenu( $uid, $access ) {
 	if ( !$row->store() ) {
 		return $row->getError();
 	}
+	
+	// clean any existing cache files
+	mosCache::cleanCache( 'com_content' );
 
 	mosRedirect( 'index2.php?option=com_frontpage' );
 }
@@ -296,6 +307,9 @@ function saveOrder( &$cid ) {
 		$row->load( $cid[$i] );
 		$row->updateOrder();
 	}
+	
+	// clean any existing cache files
+	mosCache::cleanCache( 'com_content' );
 
 	$msg 	= 'New ordering saved';
 	mosRedirect( 'index2.php?option=com_frontpage', $msg );

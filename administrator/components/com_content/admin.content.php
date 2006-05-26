@@ -42,7 +42,6 @@ switch ($task) {
 	case 'menulink':
 	case 'apply':
 	case 'save':
-		mosCache::cleanCache( 'com_content' );
 		saveContent( $sectionid, $task );
 		break;
 
@@ -743,6 +742,9 @@ function saveContent( $sectionid, $task ) {
 	$row->checkin();
 	$row->updateOrder( "catid = $row->catid AND state >= 0" );
 
+	// clean any existing cache files
+	mosCache::cleanCache( 'com_content' );
+	
 	$redirect = mosGetParam( $_POST, 'redirect', $sectionid );
 	switch ( $task ) {
 		case 'go2menu':
@@ -785,7 +787,7 @@ function saveContent( $sectionid, $task ) {
 */
 function changeContent( $cid=null, $state=0, $option ) {
 	global $database, $my, $task;
-
+	
 	if (count( $cid ) < 1) {
 		$action = $state == 1 ? 'publish' : ($state == -1 ? 'archive' : 'unpublish');
 		echo "<script> alert('Select an item to $action'); window.history.go(-1);</script>\n";
@@ -810,6 +812,9 @@ function changeContent( $cid=null, $state=0, $option ) {
 		$row->checkin( $cid[0] );
 	}
 
+	// clean any existing cache files
+	mosCache::cleanCache( 'com_content' );
+	
 	switch ( $state ) {
 		case -1:				
 			$msg = $total .' Item(s) successfully Archived';
@@ -881,6 +886,9 @@ function toggleFrontPage( $cid, $section, $option ) {
 		}
 		$fp->updateOrder();
 	}
+	
+	// clean any existing cache files
+	mosCache::cleanCache( 'com_content' );
 
 	mosRedirect( 'index2.php?option='. $option .'&sectionid='. $section, $msg );
 }
@@ -908,6 +916,9 @@ function removeContent( &$cid, $sectionid, $option ) {
 		exit();
 	}
 
+	// clean any existing cache files
+	mosCache::cleanCache( 'com_content' );
+	
 	$msg 	= $total ." Item(s) sent to the Trash";
 	$return = strval( mosGetParam( $_POST, 'returntask', '' ) );
 	mosRedirect( 'index2.php?option='. $option .'&task='. $return .'&sectionid='. $sectionid, $msg );
@@ -1206,6 +1217,9 @@ function accessMenu( $uid, $access, $option ) {
 
 	$redirect = mosGetParam( $_POST, 'redirect', $row->sectionid );
 
+	// clean any existing cache files
+	mosCache::cleanCache( 'com_content' );
+	
 	mosRedirect( 'index2.php?option='. $option .'&sectionid='. $redirect );
 }
 
@@ -1302,6 +1316,9 @@ function saveOrder( &$cid ) {
 		$row->load( $cond[0] );
 		$row->updateOrder( $cond[1] );
 	} // foreach
+
+	// clean any existing cache files
+	mosCache::cleanCache( 'com_content' );
 
 	$msg 	= 'New ordering saved';
 	switch ( $rettask ) {

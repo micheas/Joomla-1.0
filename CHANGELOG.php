@@ -55,6 +55,10 @@ Low Level Threat
 
 --
 
+27-May-2006 Rey Gigataras
+ # Fixed [topic,64308] : cache and content items on frontpage
+
+
 23-May-2006 Rey Gigataras
  # Fixed [topic,63674] : MySQL 5 strict mode in Admin Backend
 

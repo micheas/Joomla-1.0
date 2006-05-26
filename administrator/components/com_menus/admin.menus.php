@@ -48,7 +48,9 @@ switch ($task) {
 		break;
 
 	case 'save':
-	case 'apply':
+	case 'apply':	
+		// clean any existing cache files
+		mosCache::cleanCache( 'com_content' );
 		require_once( $path . $type .'/'. $type .'.menu.php' );
 		break;
 
@@ -425,6 +427,9 @@ function publishMenuSection( $cid=null, $publish=1, $menutype ) {
 		}
 	}
 	
+	// clean any existing cache files
+	mosCache::cleanCache( 'com_content' );
+
 	mosRedirect( 'index2.php?option=com_menus&menutype='. $menutype );
 }
 
@@ -471,6 +476,9 @@ function TrashMenuSection( $cid=NULL, $menutype='mainmenu' ) {
 	}
 
 	$total = count( $cid );
+	
+	// clean any existing cache files
+	mosCache::cleanCache( 'com_content' );
 
 	$msg = $total .' Item(s) sent to the Trash';	
 	mosRedirect( 'index2.php?option=com_menus&menutype='. $menutype, $msg );
@@ -503,6 +511,9 @@ function orderMenu( $uid, $inc, $option ) {
 	$row = new mosMenu( $database );
 	$row->load( $uid );
 	$row->move( $inc, "menutype = '$row->menutype' AND parent = $row->parent" );
+	
+	// clean any existing cache files
+	mosCache::cleanCache( 'com_content' );
 
 	mosRedirect( 'index2.php?option='. $option .'&menutype='. $row->menutype );
 }
@@ -525,6 +536,9 @@ function accessMenu( $uid, $access, $option, $menutype ) {
 	if (!$menu->store()) {
 		return $menu->getError();
 	}
+	
+	// clean any existing cache files
+	mosCache::cleanCache( 'com_content' );
 
 	mosRedirect( 'index2.php?option='. $option .'&menutype='. $menutype );
 }
@@ -787,6 +801,9 @@ function saveOrder( &$cid, $menutype ) {
 		$row->load( $cond[0] );
 		$row->updateOrder( $cond[1] );
 	} 
+	
+	// clean any existing cache files
+	mosCache::cleanCache( 'com_content' );
 
 	$msg 	= 'New ordering saved';
 	mosRedirect( 'index2.php?option=com_menus&menutype='. $menutype, $msg );

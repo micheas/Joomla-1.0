@@ -247,7 +247,7 @@ if ($mosConfig_sef) {
 		}
 
 		if ($lang!='') {
-			$QUERY_STRING .= '&lang='. $lang;
+			$QUERY_STRING .= '&amp;lang='. $lang;
 		}
 
 		$_SERVER['QUERY_STRING'] 	= $QUERY_STRING;

@@ -335,8 +335,8 @@ function contactpage( $contact_id ) {
 		}
 
 		// params from menu item
-		$menu = $mainframe->get( 'menu' );
-		$menu_params = new mosParameters( $menu->params );
+		$menu 			= $mainframe->get( 'menu' );
+		$menu_params 	= new mosParameters( $menu->params );
 
 		$menu_params->def( 'page_title', 1 );
 		$menu_params->def( 'header', $menu->name );

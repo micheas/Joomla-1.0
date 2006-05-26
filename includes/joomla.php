@@ -3585,7 +3585,13 @@ function mosMenuCheck( $Itemid, $menu_option, $task, $gid ) {
 	}
 	
 	// save menu information to global mainframe
-	$mainframe->set( 'menu', $results[0] );
+	if(isset($result[0])) {
+		// loads menu info of particular Itemid
+		$mainframe->set( 'menu', $results[0] );
+	} else {
+		// loads empty Menu info
+		$mainframe->set( 'menu', new mosMenu($database) );
+	}
 	
 	return ($access <= $gid);
 }

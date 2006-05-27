@@ -3585,7 +3585,7 @@ function mosMenuCheck( $Itemid, $menu_option, $task, $gid ) {
 	}
 	
 	// save menu information to global mainframe
-	if(isset($result[0])) {
+	if(isset($results[0])) {
 		// loads menu info of particular Itemid
 		$mainframe->set( 'menu', $results[0] );
 	} else {

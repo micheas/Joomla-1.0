@@ -192,6 +192,7 @@ function mosShowHead() {
 		echo "<base href=\"$mosConfig_live_site/\" />\r\n";
 	}
 
+	$row = new mosComponent( $database );
 	$query = "SELECT a.*"
 	. "\n FROM #__components AS a"
 	. "\n WHERE a.admin_menu_link = 'option=com_syndicate'"

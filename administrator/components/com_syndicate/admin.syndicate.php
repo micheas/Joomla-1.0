@@ -45,7 +45,7 @@ function showSyndicate( $option ) {
 
 	$query = "SELECT a.id"
 	. "\n FROM #__components AS a"
-	. "\n WHERE a.admin_menu_link LIKE( '%option=com_syndicate%' )"
+	. "\n WHERE ( a.admin_menu_link = 'option=com_syndicate' OR a.admin_menu_link = 'option=com_syndicate&hidemainmenu=1' )"
 	. "\n AND a.option = 'com_syndicate'"
 	;
 	$database->setQuery( $query );

@@ -195,7 +195,7 @@ function mosShowHead() {
 	$row = new mosComponent( $database );
 	$query = "SELECT a.*"
 	. "\n FROM #__components AS a"
-	. "\n WHERE a.admin_menu_link = 'option=com_syndicate'"
+	. "\n WHERE ( a.admin_menu_link = 'option=com_syndicate' OR a.admin_menu_link = 'option=com_syndicate&hidemainmenu=1' )"
 	. "\n AND a.option = 'com_syndicate'"
 	;
 	$database->setQuery( $query );

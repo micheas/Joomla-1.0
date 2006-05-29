@@ -42,7 +42,8 @@ function feedFrontpage( $showFeed ) {
 	// pull id of syndication component
 	$query = "SELECT a.id"
 	. "\n FROM #__components AS a"
-	. "\n WHERE a.option = 'com_syndicate'"
+	. "\n WHERE ( a.admin_menu_link = 'option=com_syndicate' OR a.admin_menu_link = 'option=com_syndicate&hidemainmenu=1' )"
+	. "\n AND a.option = 'com_syndicate'"
 	;
 	$database->setQuery( $query );
 	$id = $database->loadResult();

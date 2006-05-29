@@ -147,7 +147,7 @@ function mosLoadModules( $position='left', $style=0 ) {
 
 		echo $prepend;
 
-		if ((substr("$module->module",0,4))=="mod_") {
+		if ((substr("$module->module",0,4))=='mod_') {
 			if ($params->get('cache') == 1 && $mosConfig_caching == 1) {
 				$cache->call('modules_html::module2', $module, $params, $Itemid, $style, $my->gid  );
 			} else {
@@ -155,7 +155,7 @@ function mosLoadModules( $position='left', $style=0 ) {
 			}
 		} else {
 			if ($params->get('cache') == 1 && $mosConfig_caching == 1) {
-				$cache->call('modules_html::module', $module, $params, $Itemid, $style, $my->gid );
+				$cache->call('modules_html::module', $module, $params, $Itemid, $style, 0, $my->gid );
 			} else {
 				modules_html::module( $module, $params, $Itemid, $style );
 			}

@@ -265,6 +265,9 @@ class HTML_content {
 		$k = 0;
 		foreach ( $items as $row ) {
 			$row->created = mosFormatDate ($row->created, $params->get( 'date_format' ));
+			
+			// calculate Itemid
+			HTML_content::_Itemid( $row );			
 			?>
 			<tr class="sectiontableentry<?php echo ($k+1) . $params->get( 'pageclass_sfx' ); ?>" >
 				<?php
@@ -541,7 +544,7 @@ class HTML_content {
 	function _Itemid( &$row ) {
 		global $task, $Itemid, $mainframe;
 		
-		if ( $task != 'view' ) {
+		if ( $task != 'view' && $task != 'category' ) {
 			$row->_Itemid = $mainframe->getItemid( $row->id, 0, 0 );
 		} else {
 			// when viewing a content item, it is not necessary to calculate the Itemid
@@ -1375,7 +1378,7 @@ class HTML_content {
 		<input type="hidden" name="version" value="<?php echo $row->version; ?>" />
 		<input type="hidden" name="sectionid" value="<?php echo $row->sectionid; ?>" />
 		<input type="hidden" name="created_by" value="<?php echo $row->created_by; ?>" />
-		<input type="hidden" name="referer" value="<?php echo ampReplace( $_SERVER['HTTP_REFERER'] ); ?>" />
+		<input type="hidden" name="referer" value="<?php echo ampReplace( @$_SERVER['HTTP_REFERER'] ); ?>" />
 		<input type="hidden" name="task" value="" />
 		</form>
 		<?php

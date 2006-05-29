@@ -56,9 +56,10 @@ Low Level Threat
 --
 
 29-May-2006 Rey Gigataras
- # Fixed [topic,64994] : problem with related items
  # Fixed [artf4812] : In footer.php (C) should be &copy;
  # Fixed [artf4806] : typo in mambots/search/contacts.searchbot.php causes sef errors
+ # Fixed [topic,64994] : problem with related items
+ # Fixed [topic,64046] : adding new content Frontend fails with Authorization Error
 
 
 27-May-2006 Rey Gigataras

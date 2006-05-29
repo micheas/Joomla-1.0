@@ -57,6 +57,7 @@ Low Level Threat
 
 29-May-2006 Rey Gigataras
  # Fixed [topic,64994] : problem with related items
+ # Fixed [artf4812] : In footer.php (C) should be &copy;
 
 
 27-May-2006 Rey Gigataras

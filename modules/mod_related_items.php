@@ -14,7 +14,7 @@
 // no direct access
 defined( '_VALID_MOS' ) or die( 'Restricted access' );
 
-global $mosConfig_offset;
+global $mosConfig_offset, $option, $task;
 
 $id 		= mosGetParam( $_REQUEST, 'id', null );
 

@@ -55,6 +55,10 @@ Low Level Threat
 
 --
 
+29-May-2006 Rey Gigataras
+ # Fixed [topic,64994] : problem with related items
+
+
 27-May-2006 Rey Gigataras
  # Fixed [topic,64308] : cache and content items on frontpage
  # Fixed [topic,63824] : Notice on com_contact

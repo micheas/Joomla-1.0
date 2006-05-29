@@ -120,7 +120,8 @@ function botSearchContent( $text, $phrase='', $ordering='' ) {
 	. "\n CONCAT(a.introtext, a.fulltext) AS text,"
 	. "\n CONCAT_WS( '/', u.title, b.title ) AS section,"
 	. "\n CONCAT( 'index.php?option=com_content&task=view&id=', a.id ) AS href,"
-	. "\n '2' AS browsernav"
+	. "\n '2' AS browsernav,"
+	. "\n 'content' AS type"
 	. "\n FROM #__content AS a"
 	. "\n INNER JOIN #__categories AS b ON b.id=a.catid"
 	. "\n INNER JOIN #__sections AS u ON u.id = a.sectionid"
@@ -140,10 +141,12 @@ function botSearchContent( $text, $phrase='', $ordering='' ) {
 	$list = $database->loadObjectList();
 
 	// search static content
-	$query = "SELECT a.title AS title, a.created AS created,"
+	$query = "SELECT a.title AS title,"
+	. "\n a.created AS created,"
 	. "\n a.introtext AS text,"
+	. "\n '". _STATIC_CONTENT ."' AS section,"
 	. "\n CONCAT( 'index.php?option=com_content&task=view&id=', a.id, '&Itemid=', m.id ) AS href,"
-	. "\n '2' as browsernav, '". _STATIC_CONTENT ."' AS section,"
+	. "\n '2' AS browsernav," 
 	. "\n a.id"
 	. "\n FROM #__content AS a"
 	. "\n LEFT JOIN #__menu AS m ON m.componentid = a.id"
@@ -164,7 +167,8 @@ function botSearchContent( $text, $phrase='', $ordering='' ) {
 	. "\n a.introtext AS text,"
 	. "\n CONCAT_WS( '/', '". _SEARCH_ARCHIVED ." ', u.title, b.title ) AS section,"
 	. "\n CONCAT('index.php?option=com_content&task=view&id=',a.id) AS href,"
-	. "\n '2' AS browsernav"
+	. "\n '2' AS browsernav,"
+	. "\n 'content' AS type"
 	. "\n FROM #__content AS a"
 	. "\n INNER JOIN #__categories AS b ON b.id=a.catid"
 	. "\n INNER JOIN #__sections AS u ON u.id = a.sectionid"
@@ -195,10 +199,11 @@ function botSearchContent( $text, $phrase='', $ordering='' ) {
 		}
 	
 		// search static content not connected to a menu
-		$query = "SELECT a.title AS title, a.created AS created,"
+		$query = "SELECT a.title AS title,"
+		. "\n a.created AS created,"
 		. "\n a.introtext AS text,"
-		. "\n CONCAT( 'index.php?option=com_content&task=view&id=', a.id ) AS href,"
 		. "\n '2' as browsernav, '". _STATIC_CONTENT ."' AS section,"
+		. "\n CONCAT( 'index.php?option=com_content&task=view&id=', a.id ) AS href,"
 		. "\n a.id"
 		. "\n FROM #__content AS a"
 		. "\n WHERE ($where)"

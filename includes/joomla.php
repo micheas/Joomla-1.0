@@ -1481,7 +1481,7 @@ class mosMainFrame {
 		
 		$_Itemid = '';
 		
-		if ($_Itemid == '' && $typed) {
+		if ($_Itemid == '' && $typed && $this->getStaticContentCount()) {
 			$exists = 0;
 			foreach( $this->get( '_ContentTyped', array() ) as $key => $value ) {
 				// check if id has been tested before, if it is pull from class variable store
@@ -1512,10 +1512,10 @@ class mosMainFrame {
 			}
 		}
 
-		if ($_Itemid == '' && $link) {
+		if ($_Itemid == '' && $link && $this->getContentItemLinkCount()) {
 			$exists = 0;
 			foreach( $this->get( '_ContentItemLink', array() ) as $key => $value ) {
-				// check if id has been tested before, if it is pull from class variable store
+			// check if id has been tested before, if it is pull from class variable store
 				if ( $key == $id ) {
 					$_Itemid 	= $value;
 					$exists 	= 1;
@@ -1790,6 +1790,7 @@ class mosMainFrame {
 			."\n WHERE type = 'content_item_link'"
 			."\n AND published = 1"
 			;
+			$this->_db->setQuery( $query );
 			// saves query result to variable
 			$this->set( '_ContentItemLinkCount', $this->_db->loadResult() );
 		}

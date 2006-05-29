@@ -277,7 +277,7 @@ class HTML_typedcontent {
 		$i = 0;
 		foreach ($images as $k=>$items) {
 			foreach ($items as $v) {
-				echo "\n	folderimages[".$i++."] = new Array( '$k','".addslashes( $v->value )."','".addslashes( $v->text )."' );";
+				echo "folderimages[".$i++."] = new Array( '$k','".addslashes( $v->value )."','".addslashes( $v->text )."' );\t";
 			}
 		}
 		?>

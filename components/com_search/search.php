@@ -100,19 +100,19 @@ function viewSearch() {
 	$searchphrases = array();
 
 	$phrase = new stdClass();
-	$phrase->value = 'any';
-	$phrase->text = _SEARCH_ANYWORDS;
-	$searchphrases[] = $phrase;
+	$phrase->value 		= 'any';
+	$phrase->text 		= _SEARCH_ANYWORDS;
+	$searchphrases[] 	= $phrase;
 
 	$phrase = new stdClass();
-	$phrase->value = 'all';
-	$phrase->text = _SEARCH_ALLWORDS;
-	$searchphrases[] = $phrase;
+	$phrase->value 		= 'all';
+	$phrase->text 		= _SEARCH_ALLWORDS;
+	$searchphrases[] 	= $phrase;
 
 	$phrase = new stdClass();
-	$phrase->value = 'exact';
-	$phrase->text = _SEARCH_PHRASE;
-	$searchphrases[] = $phrase;
+	$phrase->value 		= 'exact';
+	$phrase->text 		= _SEARCH_PHRASE;
+	$searchphrases[] 	= $phrase;
 
 	$lists['searchphrase']= mosHTML::radioList( $searchphrases, 'searchphrase', '', $searchphrase );
 
@@ -178,13 +178,16 @@ function viewSearch() {
 			if ( strpos( $rows[$i]->href, 'http' ) == false ) {
 				$url = parse_url( $rows[$i]->href );
 				parse_str( @$url['query'], $link );
-				
+
 				// determines Itemid for Content items where itemid has not been included
-				if ( @$link['task'] == 'view' && isset($link['id']) && !isset($link['Itemid']) ) {
-					$itemid = '';
-					if ($mainframe->getItemid( $link['id'] )) {
-						$itemid = '&amp;Itemid='. $mainframe->getItemid( $link['id'] );
+				if ( isset($rows[$i]->type) && @$link['task'] == 'view' && isset($link['id']) && !isset($link['Itemid']) ) {
+					$itemid 	= '';
+					$_itemid = $mainframe->getItemid( $link['id'], 0 );
+					
+					if ($_itemid) {
+						$itemid = '&amp;Itemid='. $_itemid; 
 					}
+					
 					$rows[$i]->href = $rows[$i]->href . $itemid;
 				}
 			}

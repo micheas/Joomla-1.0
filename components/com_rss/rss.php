@@ -167,11 +167,6 @@ function feedFrontpage( $showFeed ) {
 	}
 	$info[ 'file' ] = $mosConfig_cachepath .'/'. $filename;
 
-	// check if specific feed type is enabled
-	if ( $params->get( 'rss091', 1 ) ) {
-		
-	}
-	
 	// load feed creator class
 	$rss 	= new UniversalFeedCreator();
 	// load image creator class

@@ -52,12 +52,17 @@ Low Level Threat
  * Changes to access level of user account will kill any active session for that user
  * Hardening of backend `User Manager` to stop 'Adminstrators' from being able to create 'Super Administrator' users
  * Add ability to selectively disable certain types of syndicated feeds
+ * Ensure module caching does not inadvertently make special level modules visible to registered users
 
 --
 
 29-May-2006 Rey Gigataras
+ # SECURITY [ Low Level ]: [artf4752] : caching makes modules assigned to special user visible to registered users
+ 
  # Fixed [artf4812] : In footer.php (C) should be &copy;
  # Fixed [artf4806] : typo in mambots/search/contacts.searchbot.php causes sef errors
+ # Fixed [artf4752] : patTemplate strip comments problems 
+ # Fixed [artf4752] : rss.php unnecessary logic code check 
  # Fixed [topic,64994] : problem with related items
  # Fixed [topic,64046] : adding new content Frontend fails with Authorization Error
 

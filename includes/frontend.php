@@ -149,13 +149,13 @@ function mosLoadModules( $position='left', $style=0 ) {
 
 		if ((substr("$module->module",0,4))=="mod_") {
 			if ($params->get('cache') == 1 && $mosConfig_caching == 1) {
-				$cache->call('modules_html::module2', $module, $params, $Itemid, $style );
+				$cache->call('modules_html::module2', $module, $params, $Itemid, $style, $my->gid  );
 			} else {
 				modules_html::module2( $module, $params, $Itemid, $style, $count );
 			}
 		} else {
 			if ($params->get('cache') == 1 && $mosConfig_caching == 1) {
-				$cache->call('modules_html::module', $module, $params, $Itemid, $style );
+				$cache->call('modules_html::module', $module, $params, $Itemid, $style, $my->gid );
 			} else {
 				modules_html::module( $module, $params, $Itemid, $style );
 			}

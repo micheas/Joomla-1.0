@@ -58,6 +58,7 @@ Low Level Threat
 
 30-May-2006 Rey Gigataras
  # Fixed [topic,65381] : Override Created Date
+ # Fixed [artf4830] : top menu items reversed in madeyourweb template
 
 
 29-May-2006 Rey Gigataras

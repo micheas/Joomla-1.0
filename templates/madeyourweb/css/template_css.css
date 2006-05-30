@@ -374,7 +374,7 @@ white-space: nowrap;
 ul#mainlevel-nav li{
 width: auto !important;
 width: 5%;
-float: right;
+float: left;
 margin: 0;
 font-size: 10px;
 height: 20px;

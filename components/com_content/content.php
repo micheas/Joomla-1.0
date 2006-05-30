@@ -1772,11 +1772,13 @@ function saveContent( &$access, $task ) {
 	global $mosConfig_absolute_path, $Itemid;
 
 	$nullDate = $database->getNullDate();
+	
 	$row = new mosContent( $database );
 	if ( !$row->bind( $_POST ) ) {
 		echo "<script> alert('".$row->getError()."'); window.history.go(-1); </script>\n";
 		exit();
 	}
+	
 	$isNew = $row->id < 1;
 	if ( $isNew ) {
 		// new record
@@ -1784,21 +1786,34 @@ function saveContent( &$access, $task ) {
 			mosNotAuth();
 			return;
 		}
-		$row->created = date( 'Y-m-d H:i:s' );
-		$row->created_by = $my->id;
+		
+		$row->created 		= date( 'Y-m-d H:i:s' );
+		$row->created_by 	= $my->id;
 	} else {
 		// existing record
 		if ( !( $access->canEdit || ( $access->canEditOwn && $row->created_by == $my->id ) ) ) {
 			mosNotAuth();
 			return;
 		}
+		
 		$row->modified 		= date( 'Y-m-d H:i:s' );
 		$row->modified_by 	= $my->id;
 	}
-	if ( trim( $row->publish_down ) == 'Never' ) {
-		$row->publish_down = $nullDate;
+	
+	if (strlen(trim( $row->publish_up )) <= 10) {
+		$row->publish_up .= ' 00:00:00';
 	}
-
+	$row->publish_up = mosFormatDate( $row->publish_up, _CURRENT_SERVER_TIME_FORMAT, -$mosConfig_offset );
+	
+	if (trim( $row->publish_down ) == 'Never' || trim( $row->publish_down ) == '') {
+		$row->publish_down = $nullDate;
+	} else {
+		if (strlen(trim( $row->publish_down )) <= 10) {
+			$row->publish_down .= ' 00:00:00';
+		}
+		$row->publish_down = mosFormatDate( $row->publish_down, _CURRENT_SERVER_TIME_FORMAT, -$mosConfig_offset );
+	}
+	
 	// code cleaner for xhtml transitional compliance
 	$row->introtext = str_replace( '<br>', '<br />', $row->introtext );
 	$row->fulltext 	= str_replace( '<br>', '<br />', $row->fulltext );

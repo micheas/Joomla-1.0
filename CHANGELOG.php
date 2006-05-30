@@ -56,6 +56,10 @@ Low Level Threat
 
 --
 
+30-May-2006 Rey Gigataras
+ # Fixed [topic,65381] : Override Created Date
+
+
 29-May-2006 Rey Gigataras
  # SECURITY [ Low Level ]: [artf4752] : caching makes modules assigned to special user visible to registered users
  

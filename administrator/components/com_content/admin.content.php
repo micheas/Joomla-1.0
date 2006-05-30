@@ -452,7 +452,7 @@ function editContent( $uid=0, $sectionid=0, $option ) {
 			$category->load( $_POST['catid'] );
 			$sectionid = $category->section;
 		} else {
-			$row->catid 	= NULL;
+			$row->catid 	= 0;
 		}
 		
 		$row->sectionid 	= $sectionid;
@@ -659,12 +659,15 @@ function saveContent( $sectionid, $task ) {
 	if ($row->id) {
 		$row->modified 		= date( 'Y-m-d H:i:s' );
 		$row->modified_by 	= $my->id;
-		$row->created 		= mosFormatDate( $row->created, _CURRENT_SERVER_TIME_FORMAT, -$mosConfig_offset );
-	} else {
-		$row->created 		= date( 'Y-m-d H:i:s' );
-		$row->created_by 	= $my->id;
 	}
 
+	$row->created_by 	= $row->created_by ? $row->created_by : $my->id;
+	
+	if ($row->created && strlen(trim( $row->created )) <= 10) {
+		$row->created 	.= ' 00:00:00';
+	}
+	$row->created 		= $row->created ? mosFormatDate( $row->created, '%Y-%m-%d %H:%M:%S', -$mosConfig_offset ) : date( 'Y-m-d H:i:s' );
+	
 	if (strlen(trim( $row->publish_up )) <= 10) {
 		$row->publish_up .= ' 00:00:00';
  	}
@@ -673,6 +676,9 @@ function saveContent( $sectionid, $task ) {
 	if (trim( $row->publish_down ) == 'Never' || trim( $row->publish_down ) == '') {
 		$row->publish_down = $nullDate;
 	} else {
+		if (strlen(trim( $row->publish_down )) <= 10) {
+			$row->publish_down .= ' 00:00:00';
+		}
 		$row->publish_down = mosFormatDate( $row->publish_down, _CURRENT_SERVER_TIME_FORMAT, -$mosConfig_offset );
 	}
 

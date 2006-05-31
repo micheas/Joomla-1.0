@@ -14,6 +14,12 @@
 // no direct access
 defined( '_VALID_MOS' ) or die( 'Restricted access' );
 
+global $mosConfig_frontend_login;
+
+if ( $mosConfig_frontend_login != NULL && ($mosConfig_frontend_login === 0 || $mosConfig_frontend_login === '0')) {
+	return;
+}
+
 // url of current page that user will be returned to after login
 $url = mosGetParam( $_SERVER, 'REQUEST_URI', null );
 // if return link does not contain https:// & http:// and to url

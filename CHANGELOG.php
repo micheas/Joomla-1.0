@@ -53,10 +53,13 @@ Low Level Threat
  * Hardening of backend `User Manager` to stop 'Adminstrators' from being able to create 'Super Administrator' users
  * Add ability to selectively disable certain types of syndicated feeds
  * Ensure module caching does not inadvertently make special level modules visible to registered users
+ * Add ability to totally disable access to frontend login page
 
 --
 
 31-May-2006 Rey Gigataras
+ # SECURITY [ Low Level ]: New Glbal Config param to allow disabling of Frontend Login
+
  # Fixed [artf4844] : initial setup failure on IIS when installed in subdirectory
  # Fixed : DB error when attempting a checkin action after cancelling from creating a New item
 

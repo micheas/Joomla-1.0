@@ -14,7 +14,14 @@
 // no direct access
 defined( '_VALID_MOS' ) or die( 'Restricted access' );
 
+global $mosConfig_frontend_login;
+
 require_once( $mainframe->getPath( 'front_html' ) );
+
+if ( $mosConfig_frontend_login != NULL && ($mosConfig_frontend_login === 0 || $mosConfig_frontend_login === '0')) {
+	echo _NOT_AUTH;
+	return;
+}
 
 switch( $task ) {
 	case 'lostPassword':

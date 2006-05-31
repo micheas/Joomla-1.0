@@ -200,11 +200,24 @@ class HTML_config {
 				?></td>
 			</tr>
 			<tr>
+				<td>Frontend Login:</td>
+				<td>
+					<?php echo $lists['frontend_login']; ?>
+					<?php
+					$tip = 'If `No`, disables the Frontend login page even when not associated with a menu item. Will also disable Registration functionality';
+					echo mosToolTip( $tip );
+					?>
+				</td>
+			</tr>
+			<tr>
 				<td>Debug Site:</td>
-				<td><?php echo $lists['debug']; ?><?php
+				<td>
+					<?php echo $lists['debug']; ?>
+					<?php
 					$tip = 'If yes, displays diagnostic information and SQL errors if present';
 					echo mosToolTip( $tip );
-				?></td>
+					?>
+				</td>
 			</tr>
 			<tr>
 				<td>Default WYSIWYG Editor:</td>
@@ -212,10 +225,13 @@ class HTML_config {
 			</tr>
 			<tr>
 				<td>List Length:</td>
-				<td><?php echo $lists['list_limit']; ?><?php
+				<td>
+					<?php echo $lists['list_limit']; ?>
+					<?php
 					$tip = 'Sets the default length of lists in the administrator for all users';
 					echo mosToolTip( $tip );
-				?></td>
+					?>
+				</td>
 			</tr>
 			<tr>
 				<td>Favourites Site Icon:</td>

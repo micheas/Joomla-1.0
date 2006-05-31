@@ -35,6 +35,8 @@ class mosConfig {
 	var $config_list_limit		= 30;
 	/** @var string */
 	var $config_favicon			= null;
+	/** @var string */
+	var $config_frontend_login	= 1;
 
 // Debug
 	/** @var int */

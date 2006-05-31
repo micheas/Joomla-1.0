@@ -57,6 +57,7 @@ Low Level Threat
 --
 
 31-May-2006 Rey Gigataras
+ # Fixed [artf4844] : initial setup failure on IIS when installed in subdirectory
  # Fixed : DB error when attempting a checkin action after cancelling from creating a New item
 
 

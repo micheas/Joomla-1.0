@@ -4390,11 +4390,11 @@ class mosAdminMenus {
 		. "\n FROM #__menu AS m"
 		. "\n WHERE m.published = 1"
 		//. "\n AND m.type != 'separator'"
-		. "\n AND NOT ("
-			. "\n ( m.type = 'url' )"
-			. "\n AND ( m.link LIKE '%index.php%' )"
-			. "\n AND ( m.link LIKE '%Itemid=%' )"
-		. "\n )"
+		//. "\n AND NOT ("
+		//	. "\n ( m.type = 'url' )"
+		//	. "\n AND ( m.link LIKE '%index.php%' )"
+		//	. "\n AND ( m.link LIKE '%Itemid=%' )"
+		//. "\n )"
 		. "\n ORDER BY m.menutype, m.parent, m.ordering"
 		;
 		$database->setQuery( $query );
@@ -4415,20 +4415,25 @@ class mosAdminMenus {
 		$list = mosTreeRecurse( intval( $mitems[0]->parent ), '', array(), $children, 20, 0, 0 );
 
 		// Code that adds menu name to Display of Page(s)
-		$text_count = "0";
-		$mitems_spacer = $mitems_temp[0]->menutype;
+		$text_count 	= 0;
+		$mitems_spacer 	= $mitems_temp[0]->menutype;
 		foreach ($list as $list_a) {
 			foreach ($mitems_temp as $mitems_a) {
 				if ($mitems_a->id == $list_a->id) {
 					// Code that inserts the blank line that seperates different menus
 					if ($mitems_a->menutype != $mitems_spacer) {
-						$list_temp[] = mosHTML::makeOption( -999, '----' );
-						$mitems_spacer = $mitems_a->menutype;
+						$list_temp[] 	= mosHTML::makeOption( -999, '----' );
+						$mitems_spacer 	= $mitems_a->menutype;
 					}
-					$text = $mitems_a->menutype." | ".$list_a->treename;
-					$list_temp[] = mosHTML::makeOption( $list_a->id, $text );
-					if ( strlen($text) > $text_count) {
-						$text_count = strlen($text);
+					
+					// do not display `url` menu item types that contain `index.php` and `Itemid`
+					if (!($mitems_a->type == 'url' && strpos($mitems_a->link, 'index.php') !== false && strpos($mitems_a->link, 'Itemid=') !== false)) {
+						$text 			= $mitems_a->menutype .' | '. $list_a->treename;
+						$list_temp[] 	= mosHTML::makeOption( $list_a->id, $text );
+						
+						if ( strlen($text) > $text_count) {
+							$text_count = strlen($text);
+						}
 					}
 				}
 			}
@@ -4454,6 +4459,7 @@ class mosAdminMenus {
 			// adds space, in select box which is not saved
 			$mitems[] = mosHTML::makeOption( -999, '----' );
 		}
+		
 		// append the rest of the menu items to the array
 		foreach ($list as $item) {
 			$mitems[] = mosHTML::makeOption( $item->value, $item->text );

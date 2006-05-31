@@ -58,6 +58,10 @@ Low Level Threat
 
 --
 
+
+---------------- 1.0.9 Beta 4 Released -- [31-May-2006 16:00 UTC] ------------------
+
+
 31-May-2006 Rey Gigataras
  # SECURITY [ Low Level ]: New `Global Config` param to allow disabling of Frontend Login
  # SECURITY [ Low Level ]: New `Global Config` param to allow disabling of Frontend User params

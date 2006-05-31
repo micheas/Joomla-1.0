@@ -56,6 +56,10 @@ Low Level Threat
 
 --
 
+31-May-2006 Rey Gigataras
+ # Fixed : DB error when attempting a checkin action after cancelling from creating a New item
+
+
 30-May-2006 Rey Gigataras
  # Fixed [topic,65381] : Override Created Date
  # Fixed [artf4830] : top menu items reversed in madeyourweb template

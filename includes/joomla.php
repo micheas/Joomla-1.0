@@ -4851,7 +4851,6 @@ class mosAdminMenus {
 			$folders[] 	= mosHTML::makeOption( 'None Selected' );
 		}
 		
-		//$javascript 	= "onchange=\"changeDynaList( 'imagefiles', folderimages, document.adminForm.folders.options[document.adminForm.folders.selectedIndex].value, 0, 0);  previewImage( 'imagefiles', 'view_imagefiles', '$path' );\"";
 		$javascript 	= "onchange=\"changeDynaList( 'imagefiles', folderimages, document.adminForm.folders.options[document.adminForm.folders.selectedIndex].value, 0, 0);\"";
 		$getfolders 	= mosHTML::selectList( $folders, 'folders', 'class="inputbox" size="1" '. $javascript, 'value', 'text', '/' );
 		
@@ -4859,7 +4858,7 @@ class mosAdminMenus {
 	}
 
 	function GetImages( &$images, $path, $base='/' ) {
-		if ( count($base) > 0 ) {
+		if ( is_array($base) && count($base) > 0 ) {
 			if ( $base[0]->value != '/' ) {
 				$base = $base[0]->value .'/';
 			} else {
@@ -4868,12 +4867,12 @@ class mosAdminMenus {
 		} else {
 			$base = '/';
 		}
+		
 		if ( !isset($images[$base] ) ) {
 			$images[$base][] = mosHTML::makeOption( '' );
 		}
 
 		$javascript	= "onchange=\"previewImage( 'imagefiles', 'view_imagefiles', '$path/' )\" onfocus=\"previewImage( 'imagefiles', 'view_imagefiles', '$path/' )\"";
-		//$javascript	= "onchange=\"previewImage( 'imagefiles', 'view_imagefiles', '$path/' )\"";
 		$getimages	= mosHTML::selectList( $images[$base], 'imagefiles', 'class="inputbox" size="10" multiple="multiple" '. $javascript , 'value', 'text', null );
 
 		return $getimages;
@@ -4881,6 +4880,7 @@ class mosAdminMenus {
 
 	function GetSavedImages( &$row, $path ) {
 		$images2 = array();
+		
 		foreach( $row->images as $file ) {
 			$temp = explode( '|', $file );
 			if( strrchr($temp[0], '/') ) {
@@ -4890,7 +4890,7 @@ class mosAdminMenus {
 			}
 			$images2[] = mosHTML::makeOption( $file, $filename );
 		}
-		//$javascript	= "onchange=\"previewImage( 'imagelist', 'view_imagelist', '$path/' ); showImageProps( '$path/' ); \" onfocus=\"previewImage( 'imagelist', 'view_imagelist', '$path/' )\"";
+		
 		$javascript	= "onchange=\"previewImage( 'imagelist', 'view_imagelist', '$path/' ); showImageProps( '$path/' ); \"";
 		$imagelist 	= mosHTML::selectList( $images2, 'imagelist', 'class="inputbox" size="10" '. $javascript, 'value', 'text' );
 

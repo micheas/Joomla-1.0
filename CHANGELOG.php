@@ -64,6 +64,7 @@ Low Level Threat
 
  # Fixed [artf4844] : initial setup failure on IIS when installed in subdirectory
  # Fixed [topic,65009] : "Email to Friend" Can Send Unusable URLs
+ # Fixed [topic,65604] : Notices when adding static content
  # Fixed : DB error when attempting a checkin action after cancelling from creating a New item
 
 

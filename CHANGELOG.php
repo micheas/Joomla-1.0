@@ -63,6 +63,7 @@ Low Level Threat
  # SECURITY [ Low Level ]: New `Global Config` param to allow disabling of Frontend User params
 
  # Fixed [artf4844] : initial setup failure on IIS when installed in subdirectory
+ # Fixed [topic,65009] : "Email to Friend" Can Send Unusable URLs
  # Fixed : DB error when attempting a checkin action after cancelling from creating a New item
 
 

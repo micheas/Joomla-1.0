@@ -1991,6 +1991,8 @@ function emailContentForm( $uid ) {
 
 	$row = new mosContent( $database );
 	$row->load( $uid );
+	
+	$itemid = intval( mosGetParam( $_GET, 'itemid', 0 ) );
 
 	if ( $row->id === null || $row->access > $my->gid ) {
 		mosNotAuth();
@@ -2003,7 +2005,8 @@ function emailContentForm( $uid ) {
 		;
 		$database->setQuery( $query );
 		$template = $database->loadResult();
-		HTML_content::emailForm( $row->id, $row->title, $template );
+		
+		HTML_content::emailForm( $row->id, $row->title, $template, $itemid );
 	}
 
 }
@@ -2016,7 +2019,9 @@ function emailContentSend( $uid ) {
 	global $database, $mainframe;
 	global $mosConfig_live_site, $mosConfig_sitename, $mosConfig_db;
 
-	$validate = mosGetParam( $_POST, mosHash( $mosConfig_db ), 0 );
+	$validate 	= mosGetParam( $_POST, mosHash( $mosConfig_db ), 0 );
+	$itemid 	= intval( mosGetParam( $_POST, 'itemid', 0 ) );
+	
 	if (!$validate) {
 		// probably a spoofing attack
 		mosErrorAlert( _NOT_AUTH );
@@ -2039,11 +2044,11 @@ function emailContentSend( $uid ) {
 	
 	// Attempt to defend against header injections:
 	$badStrings = array(
-	'Content-Type:',
-	'MIME-Version:',
-	'Content-Transfer-Encoding:',
-	'bcc:',
-	'cc:'
+		'Content-Type:',
+		'MIME-Version:',
+		'Content-Transfer-Encoding:',
+		'bcc:',
+		'cc:'
 	);
 	
 	// Loop through each POST'ed value and test if it contains
@@ -2071,7 +2076,6 @@ function emailContentSend( $uid ) {
 		mosErrorAlert( _NOT_AUTH );
 	}	
 	
-	$_Itemid 			= $mainframe->getItemid( $uid, 0, 0  );
 	$email 				= strval( mosGetParam( $_POST, 'email', '' ) );
 	$yourname 			= strval( mosGetParam( $_POST, 'yourname', '' ) );
 	$youremail 			= strval( mosGetParam( $_POST, 'youremail', '' ) );
@@ -2090,8 +2094,16 @@ function emailContentSend( $uid ) {
 	$database->setQuery( $query );
 	$template = $database->loadResult();
 
+	// determine Itemid for Item
+	if ($itemid) {
+		$_itemid = '&Itemid='. $itemid;
+	} else {
+		$itemid  = $mainframe->getItemid( $uid, 0, 0  );
+		$_itemid = '&Itemid='. $itemid;
+	}
+	
 	// link sent in email
-	$link = sefRelToAbs( $mosConfig_live_site .'/index.php?option=com_content&task=view&id='. $uid .'&Itemid='. $_Itemid );
+	$link = sefRelToAbs( $mosConfig_live_site .'/index.php?option=com_content&task=view&id='. $uid . $_itemid );
 
 	// message text
 	$msg = sprintf( _EMAIL_MSG, $mosConfig_sitename, $yourname, $youremail, $link );

@@ -692,11 +692,18 @@ class HTML_content {
 	* Writes Email icon
 	*/
 	function EmailIcon( &$row, &$params, $hide_js ) {
-		global $mosConfig_live_site;
+		global $mosConfig_live_site, $Itemid, $task;
 		
 		if ( $params->get( 'email' ) && !$params->get( 'popup' ) && !$hide_js ) {
 			$status = 'status=no,toolbar=no,scrollbars=yes,titlebar=no,menubar=no,resizable=yes,width=400,height=250,directories=no,location=no';
-			$link 	= $mosConfig_live_site .'/index2.php?option=com_content&amp;task=emailform&amp;id='. $row->id;
+			
+			if ($task == 'view') {
+				$_Itemid = '&amp;itemid='. $Itemid;
+			} else {
+				$_Itemid = '';
+			}
+			
+			$link 	= $mosConfig_live_site .'/index2.php?option=com_content&amp;task=emailform&amp;id='. $row->id . $_Itemid;
 			
 			if ( $params->get( 'icons' ) ) {
 				$image = mosAdminMenus::ImageCheck( 'emailButton.png', '/images/M_images/', NULL, NULL, _CMN_EMAIL, _CMN_EMAIL );
@@ -1387,7 +1394,7 @@ class HTML_content {
 	/**
 	* Writes Email form for filling in the send destination
 	*/
-	function emailForm( $uid, $title, $template='' ) {
+	function emailForm( $uid, $title, $template='', $itemid ) {
 		global $mosConfig_sitename, $mainframe, $mosConfig_db;
 
 		$mainframe->setPageTitle( $title );
@@ -1460,6 +1467,7 @@ class HTML_content {
 		</table>
 
 		<input type="hidden" name="id" value="<?php echo $uid; ?>" />
+		<input type="hidden" name="itemid" value="<?php echo $itemid; ?>" />
 		<input type="hidden" name="<?php echo mosHash( $mosConfig_db );?>" value="1" />
 		</form>
 		<?php

@@ -210,6 +210,16 @@ class HTML_config {
 				</td>
 			</tr>
 			<tr>
+				<td>Frontend User Params:</td>
+				<td>
+					<?php echo $lists['frontend_userparams']; ?>
+					<?php
+					$tip = 'If `No`, disables the frontend User params functionality';
+					echo mosToolTip( $tip );
+					?>
+				</td>
+			</tr>
+			<tr>
 				<td>Debug Site:</td>
 				<td>
 					<?php echo $lists['debug']; ?>

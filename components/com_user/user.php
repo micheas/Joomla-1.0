@@ -143,7 +143,7 @@ function userEdit( $option, $uid, $submitvalue) {
 }
 
 function userSave( $option, $uid) {
-	global $database, $my;
+	global $database, $my, $mosConfig_frontend_userparams;
 
 	$user_id = intval( mosGetParam( $_POST, 'id', 0 ));
 
@@ -178,14 +178,16 @@ function userSave( $option, $uid) {
 		$row->password = $orig_password;
 	}
 
+	if ($mosConfig_frontend_userparams == '1' || $mosConfig_frontend_userparams == 1 || $mosConfig_frontend_userparams == NULL) {
 	// save params
-	$params = mosGetParam( $_POST, 'params', '' );
-	if (is_array( $params )) {
-		$txt = array();
-		foreach ( $params as $k=>$v) {
-			$txt[] = "$k=$v";
+		$params = mosGetParam( $_POST, 'params', '' );
+		if (is_array( $params )) {
+			$txt = array();
+			foreach ( $params as $k=>$v) {
+				$txt[] = "$k=$v";
+			}
+			$row->params = implode( "\n", $txt );
 		}
-		$row->params = implode( "\n", $txt );
 	}
 
 	if (!$row->check()) {

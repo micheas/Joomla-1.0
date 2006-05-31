@@ -37,7 +37,7 @@ class HTML_user {
 	}
 
 	function userEdit( $row, $option, $submitvalue, &$params ) {
-		global $mosConfig_absolute_path;
+		global $mosConfig_absolute_path, $mosConfig_frontend_userparams;
 
 		require_once( $mosConfig_absolute_path .'/includes/HTML_toolbar.php' );
 
@@ -127,18 +127,17 @@ class HTML_user {
 				<input class="inputbox" type="password" name="verifyPass" size="40" />
 			</td>
 		</tr>
-		<tr>
-			<td colspan="2">
-				<?php echo $params->render( 'params' ); ?>
-			</td>
-		</tr>
-		<!--
-		<tr>
-			<td colspan="2">
-				<input class="button" type="button" value="<?php echo $submitvalue; ?>" onclick="submitbutton()" />
-			</td>
-		</tr>
-		-->
+		<?php 
+		if ($mosConfig_frontend_userparams == '1' || $mosConfig_frontend_userparams == 1 || $mosConfig_frontend_userparams == NULL) {
+			?>
+			<tr>
+				<td colspan="2">
+					<?php echo $params->render( 'params' ); ?>
+				</td>
+			</tr>
+			<?php
+		}
+		?>
 		</table>
 
 		<input type="hidden" name="id" value="<?php echo $row->id;?>" />

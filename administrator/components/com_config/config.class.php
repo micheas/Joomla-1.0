@@ -30,7 +30,7 @@ class mosConfig {
 	/** @var string */
 	var $config_sitename		= null;
 	/** @var string */
-	var $config_editor			='tinymce';
+	var $config_editor			= 'tinymce';
 	/** @var int */
 	var $config_list_limit		= 30;
 	/** @var string */
@@ -125,6 +125,8 @@ class mosConfig {
 	var $config_uniquemail				= null;
 	/** @var int */
 	var $config_shownoauth				= 0;
+	/** @var int */
+	var $config_frontend_userparams		= 1;
 
 // Meta Settings
 	/** @var string */

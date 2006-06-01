@@ -208,6 +208,9 @@ if ($siteUrl) {
 	$config .= "\$mosConfig_helpurl = 'http://help.joomla.org';\n";
 	$config .= "\$mosConfig_mbf_content = '0';\n";
 	$config .= "\$mosConfig_editor = 'tinymce';\n";
+	$config .= "\$mosConfig_admin_expired = '1';\n";
+	$config .= "\$mosConfig_frontend_login = '1';\n";
+	$config .= "\$mosConfig_frontend_userparams = '1';\n";
 	$config .= "setlocale (LC_TIME, \$mosConfig_locale);\n";
 	$config .= "?>";
 

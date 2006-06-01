@@ -37,7 +37,7 @@ Legend:
 ! -> Note
 
 
-------------------------------------------------------------------------------------
+---------------- 1.0.9 Stable Released -- [**-June-2006 **:** UTC] ------------------
 
 
 This Release Contains following Security Fixes
@@ -61,6 +61,10 @@ Low Level Threat
 
 ---------------- 1.0.9 Beta 4 Released -- [31-May-2006 16:00 UTC] ------------------
 
+
+01-June-2006 Rey Gigataras
+ # Fixed : New Global Config params (added in 1.0.9) not created on clean install
+ 
 
 31-May-2006 Rey Gigataras
  # SECURITY [ Low Level ]: New `Global Config` param to allow disabling of Frontend Login

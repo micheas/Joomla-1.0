@@ -205,7 +205,7 @@ if (isset( $_POST['submit'] )) {
 		echo "<script>document.location.href='$expired';</script>\n";
 		exit();
 	} else {
-		//mosErrorAlert("Incorrect Username, Password.  Please try again", "document.location.href='index.php?mosmsg=Incorrect Username, Password. Please try again'");
+		mosErrorAlert("Incorrect Username, Password.  Please try again", "document.location.href='index.php?mosmsg=Incorrect Username, Password. Please try again'");
 	}
 } else {
 	initGzip();

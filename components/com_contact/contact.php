@@ -352,7 +352,7 @@ function contactpage( $contact_id ) {
 
 
 function sendmail( $con_id, $option ) {
-	global $database, $Itemid;
+	global $mainframe, $database, $Itemid;
 	global $mosConfig_sitename, $mosConfig_live_site, $mosConfig_mailfrom, $mosConfig_fromname, $mosConfig_db;
 
 	$validate = mosGetParam( $_POST, mosHash( $mosConfig_db ), 0 );

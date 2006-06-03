@@ -35,9 +35,13 @@ $database = null;
 $errors = array();
 if (!$DBcreated){
 	if (!$DBhostname || !$DBuserName || !$DBname) {
-		db_err ("stepBack3","The database details provided are incorrect and/or empty.");
+		db_err ('stepBack3','The database details provided are incorrect and/or empty.');
 	}
 
+	if($DBPrefix == '') {
+		db_err ('stepBack','You have not entered a database prefix.');
+	}
+	
 	$database = new database( $DBhostname, $DBuserName, $DBpassword, '', '', false );
 	$test = $database->getErrorMsg();
 
@@ -45,14 +49,6 @@ if (!$DBcreated){
 		db_err ('stepBack2','The password and username provided are incorrect.');
 	}
 
-	if($DBname == '') {
-		db_err ('stepBack','The database name provided is empty.');
-	}
-
-	if($DBPrefix == '') {
-		db_err ('stepBack','You have not entered a database prefix.');
-	}
-	
 	// Does this code actually do anything???
 	$configArray['DBhostname'] = $DBhostname;
 	$configArray['DBuserName'] = $DBuserName;

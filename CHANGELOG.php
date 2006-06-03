@@ -62,6 +62,7 @@ Low Level Threat
 03-June-2006 Rey Gigataras
  # Fixed artf4864 : /includes/frontend.php
  # Fixed [topic,66138] : Invailid Session at Admin login
+ # Fixed [topic,66044] : Installation checks
  # Fixed : No ability to set Cache time for Syndication modules
  # Fixed : `Remember Expired Admin page` functionality changed from 600 seconds to half the `Admin Session Lifetime` value
 

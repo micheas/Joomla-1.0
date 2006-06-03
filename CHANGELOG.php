@@ -65,6 +65,7 @@ Low Level Threat
  # Fixed [topic,66044] : Installation checks
  # Fixed : No ability to set Cache time for Syndication modules
  # Fixed : `Remember Expired Admin page` functionality changed from 600 seconds to half the `Admin Session Lifetime` value
+ # Fixed : Admin session purge (to limit only one active session per account) deleting frontend logged in session
 
 
 03-June-2006 Robin Muilwijk

@@ -37,11 +37,12 @@ $mainframe = new mosMainFrame( $database, $option, '..', true );
 
 if (isset( $_POST['submit'] )) {
 	/** escape and trim to minimise injection of malicious sql */
-	$usrname 	= $database->getEscaped( mosGetParam( $_POST, 'usrname', '' ) );
-	$pass 		= $database->getEscaped( mosGetParam( $_POST, 'pass', '' ) );
+	$usrname 	= $database->getEscaped( mosGetParam( $_POST, 'usrname', NULL ) );
+	$pass 		= $database->getEscaped( mosGetParam( $_POST, 'pass', NULL ) );
 
-	if (!$pass) {
-		echo "<script>alert('Please enter a password'); document.location.href='index.php';</script>\n";
+	if($pass == NULL) {
+		echo "<script>alert('Please enter a password'); document.location.href='index.php?mosmsg=Please enter a password'</script>\n";
+		exit();
 	} else {
 		$pass = md5( $pass );
 	}
@@ -204,7 +205,7 @@ if (isset( $_POST['submit'] )) {
 		echo "<script>document.location.href='$expired';</script>\n";
 		exit();
 	} else {
-		mosErrorAlert("Incorrect Username, Password.  Please try again", "document.location.href='index.php?mosmsg=Incorrect Username, Password. Please try again'");
+		//mosErrorAlert("Incorrect Username, Password.  Please try again", "document.location.href='index.php?mosmsg=Incorrect Username, Password. Please try again'");
 	}
 } else {
 	initGzip();

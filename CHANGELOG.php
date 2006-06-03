@@ -63,6 +63,7 @@ Low Level Threat
  # Fixed artf4864 : /includes/frontend.php
  # Fixed [topic,66138] : Invailid Session at Admin login
  # Fixed [topic,66044] : Installation checks
+ # Fixed [topic,66276] : admin password ="0"
  # Fixed : No ability to set Cache time for Syndication modules
  # Fixed : `Remember Expired Admin page` functionality changed from 600 seconds to half the `Admin Session Lifetime` value
  # Fixed : Admin session purge (to limit only one active session per account) deleting frontend logged in session

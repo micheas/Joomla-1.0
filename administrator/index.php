@@ -139,15 +139,16 @@ if (isset( $_POST['submit'] )) {
 			$expired 		= $params->def( 'expired', '' );
 			$expired_time 	= $params->def( 'expired_time', '' );
 	
-			// if now expired link set or expired time is more than 10 minutes ago, simply load normal admin homepage 		
-			if (!$expired || ( ( $now - $expired_time ) > 600 ) ) {
+			// if now expired link set or expired time is more than half the admin session life set, simply load normal admin homepage 	
+			$checktime = ( $mosConfig_session_life_admin ? $mosConfig_session_life_admin : 1800 ) / 2;	
+			if (!$expired || ( ( $now - $expired_time ) > $checktime ) ) {
 				$expired = 'index2.php';
 			}
 			// link must also be a Joomla link to stop malicious redirection			
 			if ( strpos( $expired, 'index2.php?option=com_' ) !== 0 ) {
 				$expired = 'index2.php';
 			}
-			
+
 			// clear any existing expired page data
 			$params->set( 'expired', '' );
 			$params->set( 'expired_time', '' );

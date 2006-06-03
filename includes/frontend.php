@@ -81,6 +81,7 @@ function &initModules() {
 
 		$database->setQuery( $query );
 		$modules = $database->loadObjectList();
+		
 		foreach ($modules as $module) {
 			$GLOBALS['_MOS_MODULES'][$module->position][] = $module;
 		}

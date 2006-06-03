@@ -128,6 +128,7 @@ function mosLoadCustomModule( &$module, &$params ) {
 	$rssitems 			= $params->get( 'rssitems', '' );
 	$rssdesc 			= $params->get( 'rssdesc', '' );
 	$moduleclass_sfx 	= $params->get( 'moduleclass_sfx', '' );
+	$rsscache			= $params->get( 'rsscache', 3600 );
 	$cachePath			= $mosConfig_cachepath .'/';
 	
 	echo '<table cellpadding="0" cellspacing="0" class="moduletable' . $moduleclass_sfx . '">';
@@ -148,7 +149,7 @@ function mosLoadCustomModule( &$module, &$params ) {
 			$LitePath = $mosConfig_absolute_path .'/includes/Cache/Lite.php';
 			require_once( $mosConfig_absolute_path .'/includes/domit/xml_domit_rss_lite.php');
 			$rssDoc = new xml_domit_rss_document_lite();
-			$rssDoc->useCacheLite(true, $LitePath, $cachePath, 3600);
+			$rssDoc->useCacheLite(true, $LitePath, $cachePath, $rsscache);
 			$success = $rssDoc->loadRSS( $rssurl );
 			
 			if ( $success )	{		

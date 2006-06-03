@@ -122,6 +122,7 @@ class modules_html {
 		$rssitemdesc		= $params->get( 'rssitemdesc', 1 );
 		$words 				= $params->def( 'word_count', 0 );
 		$rsstitle			= $params->get( 'rsstitle', 1 );
+		$rsscache			= $params->get( 'rsscache', 3600 );
 
 		$contentBuffer	= '';
 		
@@ -129,7 +130,7 @@ class modules_html {
 		require_once( $mosConfig_absolute_path .'/includes/domit/xml_domit_rss.php' );
 		
 		$rssDoc = new xml_domit_rss_document();
-		$rssDoc->useCacheLite(true, $LitePath, $cacheDir, 3600);
+		$rssDoc->useCacheLite(true, $LitePath, $cacheDir, $rsscache);
 		$success = $rssDoc->loadRSS( $rssurl );
 
 		if ( $success )	{		

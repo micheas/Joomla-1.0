@@ -3576,7 +3576,7 @@ function mosMenuCheck( $Itemid, $menu_option, $task, $gid ) {
 			$dblink	.= "&task=$task";
 		}
 		
-		$query = "SELECT access"
+		$query = "SELECT *"
 		. "\n FROM #__menu"
 		. "\n WHERE link LIKE '$dblink%'"
 		;

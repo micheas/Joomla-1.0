@@ -61,6 +61,7 @@ Low Level Threat
 
 03-June-2006 Rey Gigataras
  # Fixed [topic,66138] : Invailid Session at Admin login
+ # Fixed : No ability to set Cache time for Syndication modules
 
 
 03-June-2006 Robin Muilwijk

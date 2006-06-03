@@ -413,8 +413,8 @@ function sendmail( $con_id, $option ) {
 		$subject 	= strval( mosGetParam( $_POST, 'subject', 		$default ) );
 		$email_copy = strval( mosGetParam( $_POST, 'email_copy', 	0 ) );
 
-		$menu = $mainframe->get( 'menu' );
-		$mparams = new mosParameters( $menu->params );		
+		$menu 			= $mainframe->get( 'menu' );
+		$mparams 		= new mosParameters( $menu->params );		
 		$bannedEmail 	= $mparams->get( 'bannedEmail', 	'' );		
 		$bannedSubject 	= $mparams->get( 'bannedSubject', 	'' );		
 		$bannedText 	= $mparams->get( 'bannedText', 		'' );		

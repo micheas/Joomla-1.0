@@ -752,7 +752,7 @@ class mosMainFrame {
 		
 		// check if session name corresponds to correct format
 		if ( session_name() != md5( $site ) ) {
-			echo "<script>document.location.href='$site/administrator/index.php'</script>\n";
+			echo "<script>document.location.href='index.php'</script>\n";
 			exit();
 		}
 
@@ -856,6 +856,10 @@ class mosMainFrame {
 					exit();
 				}
 			}
+		} else if ($session_id == '') {
+			// no session_id as user has person has not attempted to login
+			echo "<script>document.location.href='index.php?mosmsg=You need to login'</script>\n";
+			exit();
 		} else {
 			// session id does not correspond to required session format
 			echo "<script>document.location.href='index.php?mosmsg=Invalid Session'</script>\n";

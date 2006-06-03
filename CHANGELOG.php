@@ -59,13 +59,19 @@ Low Level Threat
 --
 
 
----------------- 1.0.9 Beta 4 Released -- [31-May-2006 16:00 UTC] ------------------
+03-June-2006 Rey Gigataras
+ # Fixed [topic,66138] : Invailid Session at Admin login
+
 
 03-June-2006 Robin Muilwijk
- # Fixed [topic, 66360] : Fatal error com_contact/contact.php
+ # Fixed [topic,66360] : Fatal error com_contact/contact.php
+
 
 01-June-2006 Rey Gigataras
  # Fixed : New Global Config params (added in 1.0.9) not created on clean install
+ 
+ 
+---------------- 1.0.9 Beta 4 Released -- [31-May-2006 16:00 UTC] ------------------
  
 
 31-May-2006 Rey Gigataras

@@ -37,26 +37,37 @@ Legend:
 ! -> Note
 
 
----------------- 1.0.9 Stable Released -- [**-June-2006 **:** UTC] ------------------
+---------------- 1.0.9 Stable Released -- [05-June-2006 04:00 UTC] ------------------
 
 
 This Release Contains following Security Fixes
 
-Low Level Threat
- * Harden mosmsg
- * Breadcrumbs title visibility even when access restricted
- * 'Edit Your Details' page now needs a published menu item to be accessible
- * 'Check-In My Items' page now needs a published menu item to be accessible
- * 'Submit News' page now needs a published menu item to be accessible
- * 'Submit Weblink' page now needs a published menu item to be accessible
- * Changes to access level of user account will kill any active session for that user
- * Hardening of backend `User Manager` to stop 'Adminstrators' from being able to create 'Super Administrator' users
- * Add ability to selectively disable certain types of syndicated feeds
- * Ensure module caching does not inadvertently make special level modules visible to registered users
- * Add ability to totally disable access to frontend login page
- * Add ability to disable frontend user params
+Joomla! utilizes the Open Web Application Security Project (OWASP) web application security system to categorize security vunerabilities found within Joomla!
+http://www.owasp.org/index.php/OWASP_Top_Ten_Project
+
+
+12 Low Level Threats in 1.0.9 
+
+A1 Unvalidated Input
+ * A1 - Harden mosmsg
+ * A1 - Hardening of backend `User Manager` to stop 'Adminstrators' from being able to create 'Super Administrator' users
+ 
+A2 Broken Access Control 
+ * A2 - Breadcrumbs title visibility even when access restricted
+ * A2 - 'Edit Your Details' page now needs a published menu item to be accessible
+ * A2 - 'Check-In My Items' page now needs a published menu item to be accessible
+ * A2 - 'Submit News' page now needs a published menu item to be accessible
+ * A2 - 'Submit Weblink' page now needs a published menu item to be accessible
+ * A2 - Add ability to selectively disable certain types of syndicated feeds
+ * A2 - Ensure module caching does not inadvertently make special level modules visible to registered users
+ * A2 - Add ability to totally disable access to frontend login page
+ * A2 - Add ability to disable frontend user params
+ 
+A3 - Broken Authentication and Session Management
+ * A3 - Changes to access level of user account will kill any active session for that user
 
 --
+
 
 04-June-2006 Rey Gigataras
  # Fixed [artf4878] : inlegal dates in mysqll tables
@@ -80,12 +91,9 @@ Low Level Threat
  # Fixed : New Global Config params (added in 1.0.9) not created on clean install
  
  
----------------- 1.0.9 Beta 4 Released -- [31-May-2006 16:00 UTC] ------------------
- 
-
 31-May-2006 Rey Gigataras
- # SECURITY [ Low Level ]: New `Global Config` param to allow disabling of Frontend Login
- # SECURITY [ Low Level ]: New `Global Config` param to allow disabling of Frontend User params
+ # SECURITY A2 [ Low Level ]: New `Global Config` param to allow disabling of Frontend Login
+ # SECURITY A2 [ Low Level ]: New `Global Config` param to allow disabling of Frontend User params
 
  # Fixed [artf4844] : initial setup failure on IIS when installed in subdirectory
  # Fixed [topic,65009] : "Email to Friend" Can Send Unusable URLs
@@ -100,7 +108,7 @@ Low Level Threat
 
 
 29-May-2006 Rey Gigataras
- # SECURITY [ Low Level ]: [artf4752] : caching makes modules assigned to special user visible to registered users
+ # SECURITY A2 [ Low Level ]: [artf4752] : caching makes modules assigned to special user visible to registered users
  
  # Fixed [artf4812] : In footer.php (C) should be &copy;
  # Fixed [artf4806] : typo in mambots/search/contacts.searchbot.php causes sef errors
@@ -124,9 +132,6 @@ Low Level Threat
  # PERFORMANCE [topic,63468] : slow auto-login because of new MD5 calculations on whole users DB
  
  # Fixed [topic,63446] : Category and Section
-
-
----------------- 1.0.9 Beta 3 Released -- [21-May-2006 15:00 UTC] ------------------
 
 
 21-May-2006 Rey Gigataras
@@ -158,9 +163,6 @@ Low Level Threat
  # Fixed [topic,62165] : Canot login - admin_session_life not set
 
 
----------------- 1.0.9 Beta 2 Released -- [15-May-2006 22:00 UTC] ------------------
-
-
 15-May-2006 Rey Gigataras
  # Fixed [topic,61926] : Frontend static language text
  # Fixed [topic,61971] : E-mail cloaking broken, TinyMCE `mce_href` problem
@@ -170,7 +172,7 @@ Low Level Threat
 
 
 14-May-2006 Rey Gigataras
- * SECURITY [ Low Level ]: add ability to selectively disable certain types of syndicated feeds
+ * SECURITY A2 [ Low Level ]: add ability to selectively disable certain types of syndicated feeds
  
  ^ Upgrade to TinyMCE 2.0.6.1
  
@@ -178,7 +180,7 @@ Low Level Threat
 
 
 13-May-2006 Rey Gigataras
- * SECURITY [ Low Level ]: [artf4529] : User with access to administration area can easly create super administrator.
+ * SECURITY A1 [ Low Level ]: [artf4529] : User with access to administration area can easly create super administrator.
  
  # Fixed [artf4555] : Slight Bug in registration system
  # Fixed [artf4641] : Module sites with one template - modules should not show up - itemid issue
@@ -239,7 +241,7 @@ Low Level Threat
 
 
 24-Apr-2006 Rey Gigataras
- * SECURITY [ Low Level ]: logged in user session are not affected by changes of user account
+ * SECURITY A3 [ Low Level ]: logged in user session are not affected by changes of user account
 
  # Fixed [artf4503] : Hardcoded text in page navigation
  # Fixed [artf4473] : Bad char in search
@@ -250,7 +252,7 @@ Low Level Threat
 
 
 20-Apr-2006 Rey Gigataras
- * SECURITY [ Low Level ]: Allow only one session per user account in Admin Backend
+ * SECURITY A3 [ Low Level ]: Allow only one session per user account in Admin Backend
  
  + Allow `save` and `apply` actions to be completed before logging out expired sessions
 
@@ -303,10 +305,10 @@ Low Level Threat
 
 
 06-Apr-2006 Rey Gigataras
- * SECURITY [ Low Level ]: check for menu item added to 'Edit Your Details' page
- * SECURITY [ Low Level ]: check for menu item added to 'Check-In My Items' page
- * SECURITY [ Low Level ]: check for menu item added to 'Submit News' page
- * SECURITY [ Low Level ]: check for menu item added to 'Submit Weblink' page
+ * SECURITY A2 [ Low Level ]: check for menu item added to 'Edit Your Details' page
+ * SECURITY A2 [ Low Level ]: check for menu item added to 'Check-In My Items' page
+ * SECURITY A2 [ Low Level ]: check for menu item added to 'Submit News' page
+ * SECURITY A2 [ Low Level ]: check for menu item added to 'Submit Weblink' page
  
  # Fixed [artf4282] : Extra Empty Menu Span Tags
 
@@ -330,7 +332,7 @@ Low Level Threat
 
 
 30-Mar-2006 Rey Gigataras
- * SECURITY [ Low Level ]: [artf3702] : breadcrumbs: information gathering possible by simple urlhacks
+ * SECURITY A1 [ Low Level ]: [artf3702] : breadcrumbs: information gathering possible by simple urlhacks
 
  # Fixed [topic,47932.0.html] : 1.0.8 com_contact - incorrect URL?
 
@@ -445,7 +447,7 @@ Low Level Threat
 
 
 01-Mar-2006 Rey Gigataras
- * SECURITY [ Low Level ]: Harden mosmsg
+ * SECURITY A1 [ Low Level ]: Harden mosmsg
  
  # Fixed [artf3656] : contact-component, dropdown
 

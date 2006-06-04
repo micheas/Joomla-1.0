@@ -4,8 +4,8 @@
 # Dumping data for table `jos_banner`
 #
 
-INSERT INTO `#__banner` VALUES (1, 1, 'banner', 'OSM 1', 0, 42, 0, 'osmbanner1.png', 'http://www.opensourcematters.org', '2004-07-07 15:31:29', 1, 0, '2000-00-00 00:00:00', NULL, NULL);
-INSERT INTO `#__banner` VALUES (2, 1, 'banner', 'OSM 2', 0, 48, 0, 'osmbanner2.png', 'http://www.opensourcematters.org', '2004-07-07 15:31:29', 1, 0, '2000-00-00 00:00:00', NULL, NULL);
+INSERT INTO `#__banner` VALUES (1, 1, 'banner', 'OSM 1', 0, 42, 0, 'osmbanner1.png', 'http://www.opensourcematters.org', '2004-07-07 15:31:29', 1, 0, '0000-00-00 00:00:00', NULL, NULL);
+INSERT INTO `#__banner` VALUES (2, 1, 'banner', 'OSM 2', 0, 48, 0, 'osmbanner2.png', 'http://www.opensourcematters.org', '2004-07-07 15:31:29', 1, 0, '0000-00-00 00:00:00', NULL, NULL);
 
 #
 # Dumping data for table `#__bannerclient`
@@ -77,9 +77,9 @@ INSERT INTO `#__menu` VALUES (10, 'othermenu', 'Joomla! Home', 'http://www.jooml
 INSERT INTO `#__menu` VALUES (11, 'othermenu', 'Joomla! Forums', 'http://forum.joomla.org', 'url', 1, 0, 0, 0, 1, 0, '0000-00-00 00:00:00', 0, 0, 0, 3, '');
 INSERT INTO `#__menu` VALUES (12, 'othermenu', 'OSM Home', 'http://www.opensourcematters.org', 'url', 1, 0, 0, 0, 1, 0, '0000-00-00 00:00:00', 0, 0, 0, 3, '');
 INSERT INTO `#__menu` VALUES (24, 'othermenu', 'Administrator', 'administrator/', 'url', 1, 0, 0, 0, 3, 0, '0000-00-00 00:00:00', 0, 0, 0, 3, 'menu_image=-1');
-INSERT INTO `#__menu` VALUES (21, 'usermenu', 'Your Details', 'index.php?option=com_user&task=UserDetails', 'url', 1, 0, 0, 0, 1, 0, '2000-00-00 00:00:00', 0, 0, 1, 3, '');
-INSERT INTO `#__menu` VALUES (13, 'usermenu', 'Submit News', 'index.php?option=com_content&task=new&sectionid=1&Itemid=0', 'url', 1, 0, 0, 0, 2, 0, '2000-00-00 00:00:00', 0, 0, 1, 2, '');
-INSERT INTO `#__menu` VALUES (14, 'usermenu', 'Submit WebLink', 'index.php?option=com_weblinks&task=new', 'url', 1, 0, 0, 0, 4, 0, '2000-00-00 00:00:00', 0, 0, 1, 2, '');
+INSERT INTO `#__menu` VALUES (21, 'usermenu', 'Your Details', 'index.php?option=com_user&task=UserDetails', 'url', 1, 0, 0, 0, 1, 0, '0000-00-00 00:00:00', 0, 0, 1, 3, '');
+INSERT INTO `#__menu` VALUES (13, 'usermenu', 'Submit News', 'index.php?option=com_content&task=new&sectionid=1&Itemid=0', 'url', 1, 0, 0, 0, 2, 0, '0000-00-00 00:00:00', 0, 0, 1, 2, '');
+INSERT INTO `#__menu` VALUES (14, 'usermenu', 'Submit WebLink', 'index.php?option=com_weblinks&task=new', 'url', 1, 0, 0, 0, 4, 0, '0000-00-00 00:00:00', 0, 0, 1, 2, '');
 INSERT INTO `#__menu` VALUES (15, 'usermenu', 'Check-In My Items', 'index.php?option=com_user&task=CheckIn', 'url', 1, 0, 0, 0, 5, 0, '0000-00-00 00:00:00', 0, 0, 1, 2, '');
 INSERT INTO `#__menu` VALUES (16, 'usermenu', 'Logout', 'index.php?option=com_login', 'components', 1, 0, 15, 0, 5, 0, '0000-00-00 00:00:00', 0, 0, 1, 3, '');
 INSERT INTO `#__menu` VALUES (17, 'topmenu', 'Home', 'index.php', 'url', 1, 0, 0, 0, 1, 0, '0000-00-00 00:00:00', 0, 0, 0, 3, '');
@@ -124,7 +124,7 @@ INSERT INTO `#__poll_data` VALUES (12, 14, '', 0);
 # Dumping data for table `#__polls`
 #
 
-INSERT INTO `#__polls` VALUES (14, 'This Joomla! installation was ....', 1, 0, '2000-00-00 00:00:00', 1, 0, 86400);
+INSERT INTO `#__polls` VALUES (14, 'This Joomla! installation was ....', 1, 0, '0000-00-00 00:00:00', 1, 0, 86400);
 
 #
 # Dumping data for table `#__poll_menu`

@@ -58,9 +58,12 @@ Low Level Threat
 
 --
 
+04-June-2006 Rey Gigataras
+ # Fixed [artf4878] : inlegal dates in mysqll tables
+
 
 03-June-2006 Rey Gigataras
- # Fixed artf4864 : /includes/frontend.php
+ # Fixed [artf4864] : /includes/frontend.php
  # Fixed [topic,66138] : Invailid Session at Admin login
  # Fixed [topic,66044] : Installation checks
  # Fixed [topic,66276] : admin password ="0"

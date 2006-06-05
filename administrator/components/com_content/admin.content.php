@@ -956,6 +956,9 @@ function orderContent( $uid, $inc, $option ) {
 	$row->move( $inc, "catid = $row->catid AND state >= 0" );
 
 	$redirect = mosGetParam( $_POST, 'redirect', $row->sectionid );
+	
+	// clean any existing cache files
+	mosCache::cleanCache( 'com_content' );
 
 	mosRedirect( 'index2.php?option='. $option .'&sectionid='. $redirect );
 }
@@ -1054,6 +1057,9 @@ function moveSectionSave( &$cid, $sectionid, $option ) {
 		$row->store();
 		$row->updateOrder( "catid = $row->catid AND state >= 0" );
 	}
+	
+	// clean any existing cache files
+	mosCache::cleanCache( 'com_content' );
 
 	$msg = $total. ' Item(s) successfully moved to Section: '. $section .', Category: '. $category;
 	mosRedirect( 'index2.php?option='. $option .'&sectionid='. $sectionid .'&mosmsg='. $msg );
@@ -1180,6 +1186,9 @@ function copyItemSave( $cid, $sectionid, $option ) {
 		}
 		$row->updateOrder( "catid='". $row->catid ."' AND state >= 0" );
 	}
+	
+	// clean any existing cache files
+	mosCache::cleanCache( 'com_content' );
 
 	$msg = $total. ' Item(s) successfully copied to Section: '. $section .', Category: '. $category;
 	mosRedirect( 'index2.php?option='. $option .'&sectionid='. $sectionid .'&mosmsg='. $msg );
@@ -1268,6 +1277,9 @@ function menuLink( $redirect, $id ) {
 	}
 	$row->checkin();
 	$row->updateOrder( "menutype = '$row->menutype' AND parent = $row->parent" );
+	
+	// clean any existing cache files
+	mosCache::cleanCache( 'com_content' );
 
 	$msg = $link .' (Link - Content Item) in menu: '. $menu .' successfully created';
 	mosRedirect( 'index2.php?option=com_content&sectionid='. $redirect .'&task=edit&hidemainmenu=1&id='. $id, $msg );

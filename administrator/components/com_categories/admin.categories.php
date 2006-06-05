@@ -547,12 +547,16 @@ function saveCategory( $task ) {
 		;
 		$database->setQuery( $query );
 	}
-
 	if (!$database->query()) {
 		echo "<script> alert('".$database->getErrorMsg()."'); window.history.go(-1); </script>\n";
 		exit();
 	}
-
+	
+	if ($redirect == 'content') {
+		// clean any existing cache files
+		mosCache::cleanCache( 'com_content' );
+	}	
+	
 	switch ( $task ) {
 		case 'go2menu':
 			mosRedirect( 'index2.php?option=com_menus&menutype='. $menu );
@@ -634,7 +638,12 @@ function removeCategories( $section, $cid ) {
 			echo "<script> alert('".$database->getErrorMsg()."'); window.history.go(-1); </script>\n";
 		}
 	}
-
+	
+	if ($section == 'content') {
+		// clean any existing cache files
+		mosCache::cleanCache( 'com_content' );
+	}	
+	
 	if (count( $err )) {
 		$cids = implode( "\', \'", $err );
 		$msg = 'Category(s): '. $cids .' cannot be removed as they contain records';
@@ -680,12 +689,17 @@ function publishCategories( $section, $categoryid=null, $cid=null, $publish=1 ) 
 		echo "<script> alert('".$database->getErrorMsg()."'); window.history.go(-1); </script>\n";
 		exit();
 	}
-
+	
 	if (count( $cid ) == 1) {
 		$row = new mosCategory( $database );
 		$row->checkin( $cid[0] );
 	}
 
+	if ($section == 'content') {
+		// clean any existing cache files
+		mosCache::cleanCache( 'com_content' );
+	}		
+	
 	mosRedirect( 'index2.php?option=com_categories&section='. $section );
 }
 
@@ -716,6 +730,9 @@ function orderCategory( $uid, $inc ) {
 	$row = new mosCategory( $database );
 	$row->load( $uid );
 	$row->move( $inc, "section = '$row->section'" );
+	
+	// clean any existing cache files
+	mosCache::cleanCache( 'com_content' );
 
 	mosRedirect( 'index2.php?option=com_categories&section='. $row->section );
 }
@@ -798,7 +815,12 @@ function moveCategorySave( $cid, $sectionOld ) {
 	}
 	$sectionNew = new mosSection ( $database );
 	$sectionNew->load( $sectionMove );
-
+	
+	if ($sectionOld == 'content') {
+		// clean any existing cache files
+		mosCache::cleanCache( 'com_content' );
+	}
+	
 	$msg = $total ." Categories moved to ". $sectionNew->name;
 	mosRedirect( 'index2.php?option=com_categories&section='. $sectionOld .'&mosmsg='. $msg );
 }
@@ -908,7 +930,12 @@ function copyCategorySave( $cid, $sectionOld ) {
 
 	$sectionNew = new mosSection ( $database );
 	$sectionNew->load( $sectionMove );
-
+	
+	if ($sectionOld == 'content') {
+		// clean any existing cache files
+		mosCache::cleanCache( 'com_content' );
+	}
+	
 	$msg = $total .' Categories copied to '. $sectionNew->name;
 	mosRedirect( 'index2.php?option=com_categories&section='. $sectionOld .'&mosmsg='. $msg );
 }
@@ -929,6 +956,11 @@ function accessMenu( $uid, $access, $section ) {
 	}
 	if ( !$row->store() ) {
 		return $row->getError();
+	}
+	
+	if ($section == 'content') {
+		// clean any existing cache files
+		mosCache::cleanCache( 'com_content' );
 	}
 
 	mosRedirect( 'index2.php?option=com_categories&section='. $section );
@@ -1004,7 +1036,12 @@ function menuLink( $id ) {
 	}
 	$row->checkin();
 	$row->updateOrder( "menutype = '$menu'" );
-
+	
+	if ($redirect == 'content') {
+		// clean any existing cache files
+		mosCache::cleanCache( 'com_content' );
+	}
+	
 	$msg = $name .' ( '. $menutype .' ) in menu: '. $menu .' successfully created';
 	mosRedirect( 'index2.php?option=com_categories&section='. $redirect .'&task=editA&hidemainmenu=1&id='. $id, $msg );
 }
@@ -1044,6 +1081,11 @@ function saveOrder( &$cid, $section ) {
 		$row->updateOrder( $cond[1] );
 	} // foreach
 
+	if ($section == 'content') {
+		// clean any existing cache files
+		mosCache::cleanCache( 'com_content' );
+	}
+	
 	$msg 	= 'New ordering saved';
 	mosRedirect( 'index2.php?option=com_categories&section='. $section, $msg );
 } // saveOrder

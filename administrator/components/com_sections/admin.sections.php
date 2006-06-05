@@ -351,6 +351,9 @@ function saveSection( $option, $scope, $task ) {
 	}
 	$row->checkin();
 	$row->updateOrder( "scope='$row->scope'" );
+	
+	// clean any existing cache files
+	mosCache::cleanCache( 'com_content' );
 
 	switch ( $task ) {
 		case 'go2menu':
@@ -431,6 +434,9 @@ function removeSections( $cid, $scope, $option ) {
 		$msg = 'Sections(s): '. $cids .' cannot be removed as they contain categories';
 		mosRedirect( 'index2.php?option='. $option .'&scope='. $scope, $msg );
 	}
+	
+	// clean any existing cache files
+	mosCache::cleanCache( 'com_content' );
 
 	$names = implode( ', ', $name );
 	$msg = 'Section(s): '. $names .' successfully deleted';
@@ -501,6 +507,9 @@ function publishSections( $scope, $cid=null, $publish=1, $option ) {
 			}
 		}
 	}
+	
+	// clean any existing cache files
+	mosCache::cleanCache( 'com_content' );
 
 	mosRedirect( 'index2.php?option='. $option .'&scope='. $scope );
 }
@@ -530,6 +539,9 @@ function orderSection( $uid, $inc, $option, $scope ) {
 	$row = new mosSection( $database );
 	$row->load( $uid );
 	$row->move( $inc, "scope = '$row->scope'" );
+	
+	// clean any existing cache files
+	mosCache::cleanCache( 'com_content' );
 
 	mosRedirect( 'index2.php?option='. $option .'&scope='. $scope );
 }
@@ -659,6 +671,9 @@ function copySectionSave( $sectionid ) {
 	}
 	$sectionOld = new mosSection ( $database );
 	$sectionOld->load( $sectionMove );
+	
+	// clean any existing cache files
+	mosCache::cleanCache( 'com_content' );
 
 	$msg = 'Section '. $sectionOld-> name .' and all its Categories and Items have been copied as '. $title;
 	mosRedirect( 'index2.php?option=com_sections&scope=content&mosmsg='. $msg );
@@ -681,6 +696,9 @@ function accessMenu( $uid, $access, $option ) {
 	if ( !$row->store() ) {
 		return $row->getError();
 	}
+	
+	// clean any existing cache files
+	mosCache::cleanCache( 'com_content' );
 
 	mosRedirect( 'index2.php?option='. $option .'&scope='. $row->scope );
 }
@@ -738,6 +756,9 @@ function menuLink( $id ) {
 	}
 	$row->checkin();
 	$row->updateOrder( "menutype = '$menu'" );
+	
+	// clean any existing cache files
+	mosCache::cleanCache( 'com_content' );
 
 	$msg = $name .' ( '. $menutype .' ) in menu: '. $menu .' successfully created';
 	mosRedirect( 'index2.php?option=com_sections&scope=content&task=editA&hidemainmenu=1&id='. $id,  $msg );
@@ -777,6 +798,9 @@ function saveOrder( &$cid ) {
 		$row->load( $cond[0] );
 		$row->updateOrder( $cond[1] );
 	} // foreach
+
+	// clean any existing cache files
+	mosCache::cleanCache( 'com_content' );
 
 	$msg 	= 'New ordering saved';
 	mosRedirect( 'index2.php?option=com_sections&scope=content', $msg );

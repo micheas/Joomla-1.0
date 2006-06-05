@@ -48,7 +48,6 @@ switch ( $task ) {
 
 	case 'save':
 	case 'apply':
-		mosCache::cleanCache( 'com_content' );
 		saveModule( $option, $client, $task );
 		break;
 
@@ -62,7 +61,6 @@ switch ( $task ) {
 
 	case 'publish':
 	case 'unpublish':
-		mosCache::cleanCache( 'com_content' );
 		publishModule( $cid, ($task == 'publish'), $option, $client );
 		break;
 
@@ -221,6 +219,8 @@ function copyModule( $option, $uid, $client ) {
 		$database->query();
 	}
 
+	mosCache::cleanCache( 'com_content' );
+	
 	$msg = 'Module Copied ['. $row->title .']';
 	mosRedirect( 'index2.php?option='. $option .'&client='. $client, $msg );
 }
@@ -294,6 +294,8 @@ function saveModule( $option, $client, $task ) {
 		}				
 	}
 
+	mosCache::cleanCache( 'com_content' );
+	
 	switch ( $task ) {
 		case 'apply':
 			$msg = 'Successfully Saved changes to Module: '. $row->title;
@@ -517,6 +519,8 @@ function removeModule( &$cid, $option, $client ) {
 		echo "<script>alert('Module(s): \'$cids\' cannot be deleted they can only be un-installed as they are Joomla! modules.');</script>\n";
 	}
 
+	mosCache::cleanCache( 'com_content' );
+	
 	mosRedirect( 'index2.php?option='. $option .'&client='. $client );
 }
 
@@ -552,6 +556,8 @@ function publishModule( $cid=null, $publish=1, $option, $client ) {
 		$row->checkin( $cid[0] );
 	}
 
+	mosCache::cleanCache( 'com_content' );
+	
 	mosRedirect( 'index2.php?option='. $option .'&client='. $client );
 }
 
@@ -594,6 +600,8 @@ function orderModule( $uid, $inc, $option ) {
 		$client = '';
 	}
 
+	mosCache::cleanCache( 'com_content' );
+	
 	mosRedirect( 'index2.php?option='. $option .'&client='. $client );
 }
 
@@ -629,6 +637,8 @@ function accessMenu( $uid, $access, $option, $client ) {
 		return $row->getError();
 	}
 
+	mosCache::cleanCache( 'com_content' );
+	
 	mosRedirect( 'index2.php?option='. $option .'&client='. $client );
 }
 
@@ -667,6 +677,8 @@ function saveOrder( &$cid, $client ) {
 		$row->updateOrder( $cond[1] );
 	} // foreach
 
+	mosCache::cleanCache( 'com_content' );
+	
 	$msg 	= 'New ordering saved';
 	mosRedirect( 'index2.php?option=com_modules&client='. $client, $msg );
 } // saveOrder

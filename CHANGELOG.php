@@ -37,7 +37,7 @@ Legend:
 ! -> Note
 
 
----------------- 1.0.9 Stable Released -- [05-June-2006 04:00 UTC] ------------------
+---------------- 1.0.9 Stable Released -- [05-June-2006 16:00 UTC] ------------------
 
 
 This Release Contains following Security Fixes
@@ -71,6 +71,7 @@ A3 - Broken Authentication and Session Management
 
 04-June-2006 Rey Gigataras
  # Fixed [artf4878] : inlegal dates in mysqll tables
+ # Fixed : missing content cache clearing calls
 
 
 03-June-2006 Rey Gigataras

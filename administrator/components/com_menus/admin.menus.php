@@ -653,6 +653,9 @@ function moveMenuSave( $option, $cid, $menu, $menutype ) {
 		$row->updateOrder( "menutype = '$row->menutype' AND parent = $row->parent" );
 	} // if
 
+	// clean any existing cache files
+	mosCache::cleanCache( 'com_content' );
+	
 	$msg = count($cid) .' Menu Items moved to '. $menu;
 	mosRedirect( 'index2.php?option='. $option .'&menutype='. $menutype .'&mosmsg='. $msg );
 } // moveMenuSave
@@ -726,6 +729,10 @@ function copyMenuSave( $option, $cid, $menu, $menutype ) {
 		}
 		$curr->updateOrder( "menutype = '$curr->menutype' AND parent = $curr->parent" );
 	} // foreach
+	
+	// clean any existing cache files
+	mosCache::cleanCache( 'com_content' );
+
 	$msg = count( $cid ) .' Menu Items Copied to '. $menu;
 	mosRedirect( 'index2.php?option='. $option .'&menutype='. $menutype .'&mosmsg='. $msg );
 }
@@ -814,7 +821,6 @@ function saveOrder( &$cid, $menutype ) {
 *
 */
 function josMenuChildrenRecurse( $mitems, $parents, $list, $maxlevel=20, $level=0 ) {
-
 	// check to reduce recursive processing
 	if ( $level <= $maxlevel && count( $parents ) ) {
 		$children = array();

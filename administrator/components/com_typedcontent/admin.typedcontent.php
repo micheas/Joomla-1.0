@@ -367,6 +367,9 @@ function save( $option, $task ) {
 		exit();
 	}
 	$row->checkin();
+	
+	// clean any existing cache files
+	mosCache::cleanCache( 'com_content' );
 
 	switch ( $task ) {
 		case 'go2menu':
@@ -423,6 +426,9 @@ function trash( &$cid, $option ) {
 		echo "<script> alert('".$database->getErrorMsg()."'); window.history.go(-1); </script>\n";
 		exit();
 	}
+	
+	// clean any existing cache files
+	mosCache::cleanCache( 'com_content' );
 
 	$msg = $total ." Item(s) sent to the Trash";
 	mosRedirect( 'index2.php?option='. $option, $msg );
@@ -463,6 +469,9 @@ function changeState( $cid=null, $state=0, $option ) {
 		$row = new mosContent( $database );
 		$row->checkin( $cid[0] );
 	}
+	
+	// clean any existing cache files
+	mosCache::cleanCache( 'com_content' );
 
 	if ( $state == "1" ) {
 		$msg = $total ." Item(s) successfully Published";
@@ -489,6 +498,9 @@ function changeAccess( $id, $access, $option  ) {
 	if ( !$row->store() ) {
 		return $row->getError();
 	}
+	
+	// clean any existing cache files
+	mosCache::cleanCache( 'com_content' );
 
 	mosRedirect( 'index2.php?option='. $option );
 }
@@ -550,6 +562,9 @@ function menuLink( $option, $id ) {
 	}
 	$row->checkin();
 	$row->updateOrder( "menutype='$row->menutype' AND parent='$row->parent'" );
+	
+	// clean any existing cache files
+	mosCache::cleanCache( 'com_content' );
 
 	$msg = $link .' (Link - Static Content) in menu: '. $menu .' successfully created';
 	mosRedirect( 'index2.php?option='. $option .'&task=edit&hidemainmenu=1&id='. $id, $msg );
@@ -616,6 +631,9 @@ function saveOrder( &$cid ) {
 		$row->load( $cond[0] );
 		$row->updateOrder( $cond[1] );
 	} // foreach
+
+	// clean any existing cache files
+	mosCache::cleanCache( 'com_content' );
 
 	$msg 	= 'New ordering saved';
 	mosRedirect( 'index2.php?option=com_typedcontent', $msg );

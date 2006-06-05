@@ -434,6 +434,9 @@ function deleteMenu( $option, $cid, $type ) {
 		$mod->updateOrder( "position='right'" );
 	}
 
+	// clean any existing cache files
+	mosCache::cleanCache( 'com_content' );
+	
 	$msg = 'Menu Deleted';
 	mosRedirect( 'index2.php?option=' . $option, $msg );
 }
@@ -537,6 +540,9 @@ function copyMenu( $option, $cid, $type ) {
 		exit();
 	}
 
+	// clean any existing cache files
+	mosCache::cleanCache( 'com_content' );
+	
 	$msg = 'Copy of Menu `'. $type .'` created, consisting of '. $total .' items';
 	mosRedirect( 'index2.php?option=' . $option, $msg );
 }

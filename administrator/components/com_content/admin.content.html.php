@@ -475,7 +475,7 @@ class HTML_content {
 
 		// used to hide "Reset Hits" when hits = 0
 		if ( !$row->hits ) {
-			$visibility = "style='display: none; visbility: hidden;'";
+			$visibility = "style='display: none; visibility: hidden;'";
 		} else {
 			$visibility = "";
 		}

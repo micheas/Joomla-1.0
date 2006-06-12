@@ -75,7 +75,7 @@ if (!defined( '_JOS_POLL_MODULE' )) {
 		?>
 		<script language="javascript" type="text/javascript">
 		<!--
-		function submitbutton() {
+		function submitbutton_Poll() {
 			var form 		= document.pollxtd;			
 			var radio		= form.voteid;
 			var radioLength = radio.length;
@@ -136,7 +136,7 @@ if (!defined( '_JOS_POLL_MODULE' )) {
 		<tr>
 			<td>
 				<div align="center">
-					<input type="button" onclick="submitbutton();" name="task_button" class="button" value="<?php echo _BUTTON_VOTE; ?>" />
+					<input type="button" onclick="submitbutton_Poll();" name="task_button" class="button" value="<?php echo _BUTTON_VOTE; ?>" />
 					&nbsp;
 					<input type="button" name="option" class="button" value="<?php echo _BUTTON_RESULTS; ?>" onclick="document.location.href='<?php echo sefRelToAbs("index.php?option=com_poll&amp;task=results&amp;id=$poll->id"); ?>';" />
 				</div>

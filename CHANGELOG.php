@@ -36,10 +36,17 @@ Legend:
 - -> Removed
 ! -> Note
 
-10-June-2006 Robin Muilwijk
 
-# Fixed [topic, 68168] : Typo /administrator/components/com_content/admin.content.html.php - line 478
-# Fixed [topic, 68168] : Typo /administrator/components/com_typedcontent/admin.typedcontent.html.php - line 266
+-------------------------------------------------------------------------------------
+
+
+12-June-2006 Rey Gigataras
+# Fixed [artf4913] : Poll Module breaks "Add Article"
+
+
+10-June-2006 Robin Muilwijk
+# Fixed [topic,68168] : Typo /administrator/components/com_content/admin.content.html.php - line 478
+# Fixed [topic,68168] : Typo /administrator/components/com_typedcontent/admin.typedcontent.html.php - line 266
 
 
 ---------------- 1.0.9 Stable Released -- [05-June-2006 16:00 UTC] ------------------

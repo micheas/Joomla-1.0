@@ -190,7 +190,7 @@ DEFINE('_SUBJECT_PROMPT',' Message subject:');
 DEFINE('_BUTTON_SUBMIT_MAIL','Send e-mail');
 DEFINE('_BUTTON_CANCEL','Cancel');
 DEFINE('_EMAIL_ERR_NOINFO','You must enter your valid e-mail and the valid e-mail to send to.');
-DEFINE('_EMAIL_MSG',' The following page from the "%s" website has been sent to you by %s ( %s ).
+DEFINE('_EMAIL_MSG','The following page from the "%s" website has been sent to you by %s ( %s ).
 
 You can access it at the following url:
 %s');

@@ -43,6 +43,7 @@ Legend:
 12-June-2006 Rey Gigataras
 # Fixed [artf4913] : Poll Module breaks "Add Article"
 # Fixed [artf4929] : Finish date not shown
+# Fixed [artf4881] : Extra space in English email text string
 # Fixed [topic,68467] : If 2 polls published - voiting on second poll not work
 
 

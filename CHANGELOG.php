@@ -42,6 +42,7 @@ Legend:
 
 12-June-2006 Rey Gigataras
 # Fixed [artf4913] : Poll Module breaks "Add Article"
+# Fixed [topic,68467] : If 2 polls published - voiting on second poll not work
 
 
 10-June-2006 Robin Muilwijk

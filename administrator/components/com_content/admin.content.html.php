@@ -167,7 +167,7 @@ class HTML_content {
 			} else {
 				$times .= "<tr><td>Start: $row->publish_up</td></tr>";
 			}
-			if ($row->publish_down == $nullDate || $row->publish_down = 'Never') {
+			if ($row->publish_down == $nullDate || $row->publish_down == 'Never') {
 				$times .= "<tr><td>Finish: No Expiry</td></tr>";
 			} else {
 				$times .= "<tr><td>Finish: $row->publish_down</td></tr>";

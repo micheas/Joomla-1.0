@@ -43,6 +43,7 @@ Legend:
 16-June-2006 Rey Gigataras
 # Fixed [topic,66859] : Table views of content category in backend
 # Fixed [topic,68201] : Permissions check page missing /mambots/system/
+# Fixed [topic,67115] : Error warning frontend.php
 
 
 12-June-2006 Rey Gigataras

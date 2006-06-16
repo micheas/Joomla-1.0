@@ -42,6 +42,7 @@ Legend:
 
 16-June-2006 Rey Gigataras
 # Fixed [topic,66859] : Table views of content category in backend
+# Fixed [topic,68201] : Permissions check page missing /mambots/system/
 
 
 12-June-2006 Rey Gigataras

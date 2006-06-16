@@ -402,7 +402,7 @@ class HTML_contact {
 	* Writes Name & Position
 	*/
 	function _writeContactName( &$contact, &$params, &$menu_params ) {
-		global $Itemid, $hide_js;
+		global $Itemid, $hide_js, $mosConfig_live_site;
 		
 		if ( $contact->name ||  $contact->con_position ) {
 			if ( $contact->name && $params->get( 'name' ) ) {
@@ -415,7 +415,7 @@ class HTML_contact {
 					</td>
 					<?php
 					// displays Print Icon
-					$print_link = 'index2.php?option=com_contact&amp;task=view&amp;contact_id='. $contact->id .'&amp;Itemid='. $Itemid .'&amp;pop=1';
+					$print_link = $mosConfig_live_site .'/index2.php?option=com_contact&amp;task=view&amp;contact_id='. $contact->id .'&amp;Itemid='. $Itemid .'&amp;pop=1';
 					mosHTML::PrintIcon( $contact, $params, $hide_js, $print_link );
 					?>
 				</tr>

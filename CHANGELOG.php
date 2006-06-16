@@ -40,6 +40,10 @@ Legend:
 -------------------------------------------------------------------------------------
 
 
+16-June-2006 Rey Gigataras
+# Fixed [topic,66859] : Table views of content category in backend
+
+
 12-June-2006 Rey Gigataras
 # Fixed [artf4913] : Poll Module breaks "Add Article"
 # Fixed [artf4929] : Finish date not shown

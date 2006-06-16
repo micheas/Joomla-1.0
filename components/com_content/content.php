@@ -20,7 +20,7 @@ require_once( $mainframe->getPath( 'front_html', 'com_content' ) );
 $id			= intval( mosGetParam( $_REQUEST, 'id', 0 ) );
 $sectionid 	= intval( mosGetParam( $_REQUEST, 'sectionid', 0 ) );
 $pop 		= intval( mosGetParam( $_REQUEST, 'pop', 0 ) );
-$limit 		= intval( mosGetParam( $_REQUEST, 'limit', $mosConfig_list_limit ) );
+$limit 		= intval( mosGetParam( $_REQUEST, 'limit', 0 ) );
 $limitstart = intval( mosGetParam( $_REQUEST, 'limitstart', 0 ) );
 
 // Editor usertype check
@@ -506,8 +506,11 @@ function showCategory( $id, $gid, &$access, $sectionid, $limit, $selected, $limi
 	$database->setQuery( $query );
 	$counter = $database->loadObjectList();
 	$total = $counter[0]->numitems;
+	
 	$limit = $limit ? $limit : $params->get( 'display_num' ) ;
-	if ( $total <= $limit ) $limitstart = 0;
+	if ( $total <= $limit ) { 
+		$limitstart = 0;
+	}
 
 	require_once( $GLOBALS['mosConfig_absolute_path'] . '/includes/pageNavigation.php' );
 	$pageNav = new mosPageNav( $total, $limitstart, $limit );

@@ -41,26 +41,28 @@ Legend:
 
 
 16-June-2006 Rey Gigataras
-# Fixed [artf5006] : Contact-item print button
-# Fixed [artf4925] : alt="" not always output 1.0.9
-# Fixed [artf4921] : anchor links break
-# Fixed [artf4888] : too many columns in table layout of params
-# Fixed [topic,66859] : Table views of content category in backend
-# Fixed [topic,68201] : Permissions check page missing /mambots/system/
-# Fixed [topic,67115] : Error warning frontend.php
-# Fixed [topic,67144] : Check for status of SEF in mossef incorrectly commented out
+ # Fixed [artf5006] : Contact-item print button
+ # Fixed [artf4925] : alt="" not always output 1.0.9
+ # Fixed [artf4921] : anchor links break
+ # Fixed [artf4888] : too many columns in table layout of params
+ # Fixed [topic,66859] : Table views of content category in backend
+ # Fixed [topic,68201] : Permissions check page missing /mambots/system/
+ # Fixed [topic,67115] : Error warning frontend.php
+ # Fixed [topic,67144] : Check for status of SEF in mossef incorrectly commented out
+ 
+ # PERFORMANCE [topic,63468] : mod_fullmenu unnecessary count of archived items in section query
 
 
 12-June-2006 Rey Gigataras
-# Fixed [artf4913] : Poll Module breaks "Add Article"
-# Fixed [artf4929] : Finish date not shown
-# Fixed [artf4881] : Extra space in English email text string
-# Fixed [topic,68467] : If 2 polls published - voiting on second poll not work
+ # Fixed [artf4913] : Poll Module breaks "Add Article"
+ # Fixed [artf4929] : Finish date not shown
+ # Fixed [artf4881] : Extra space in English email text string
+ # Fixed [topic,68467] : If 2 polls published - voiting on second poll not work
 
 
 10-June-2006 Robin Muilwijk
-# Fixed [topic,68168] : Typo /administrator/components/com_content/admin.content.html.php - line 478
-# Fixed [topic,68168] : Typo /administrator/components/com_typedcontent/admin.typedcontent.html.php - line 266
+ # Fixed [topic,68168] : Typo /administrator/components/com_content/admin.content.html.php - line 478
+ # Fixed [topic,68168] : Typo /administrator/components/com_typedcontent/admin.typedcontent.html.php - line 266
 
 
 ---------------- 1.0.9 Stable Released -- [05-June-2006 16:00 UTC] ------------------

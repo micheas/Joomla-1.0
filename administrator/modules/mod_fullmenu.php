@@ -43,24 +43,15 @@ class mosFullAdminMenu {
 		$canMassMail 		= $acl->acl_check( 'administration', 'manage', 'users', $usertype, 'components', 'com_massmail' );
 		$canManageUsers 	= $acl->acl_check( 'administration', 'manage', 'users', $usertype, 'components', 'com_users' );
 
-		$query = "SELECT a.id, a.title, a.name, COUNT( DISTINCT c.id ) AS numcat, COUNT( DISTINCT b.id ) AS numarc"
+		$query = "SELECT a.id, a.title, a.name"
 		. "\n FROM #__sections AS a"
-		. "\n LEFT JOIN #__categories AS c ON c.section = a.id"
-		. "\n LEFT JOIN #__content AS b ON b.sectionid = a.id AND b.state = -1"
 		. "\n WHERE a.scope = 'content'"
 		. "\n GROUP BY a.id"
 		. "\n ORDER BY a.ordering"
 		;
 		$database->setQuery( $query );
 		$sections = $database->loadObjectList();
-		$nonemptySections = 0;
-		if (count($sections) > 0) {
-			foreach ($sections as $section) {
-				if ($section->numcat > 0) {
-					$nonemptySections++;
-				}
-			}
-		}
+		
 		$menuTypes = mosAdminMenus::menutypes();
 		?>
 		<div id="myMenuID"></div>
@@ -145,18 +136,10 @@ class mosFullAdminMenu {
 				foreach ($sections as $section) {
 					$txt = addslashes( $section->title ? $section->title : $section->name );
 ?>					['<img src="../includes/js/ThemeOffice/document.png" />','<?php echo $txt;?>', null, null,'<?php echo $txt;?>',
-<?php
-					if ($section->numcat) {
-?>						['<img src="../includes/js/ThemeOffice/edit.png" />', '<?php echo $txt;?> Items', 'index2.php?option=com_content&sectionid=<?php echo $section->id;?>',null,null],
-<?php
-					}
-?>						['<img src="../includes/js/ThemeOffice/add_section.png" />', 'Add/Edit <?php echo $txt;?> Categories', 'index2.php?option=com_categories&section=<?php echo $section->id;?>',null, null],
-<?php
-					if ($section->numarc) {
-?>						['<img src="../includes/js/ThemeOffice/backup.png" />', '<?php echo $txt;?> Archive', 'index2.php?option=com_content&task=showarchive&sectionid=<?php echo $section->id;?>',null,null],
-<?php
-					}
-?>					],
+						['<img src="../includes/js/ThemeOffice/edit.png" />', '<?php echo $txt;?> Items', 'index2.php?option=com_content&sectionid=<?php echo $section->id;?>',null,null],
+						['<img src="../includes/js/ThemeOffice/backup.png" />', '<?php echo $txt;?> Archives','index2.php?option=com_content&task=showarchive&sectionid=<?php echo $section->id;?>',null,null],
+						['<img src="../includes/js/ThemeOffice/add_section.png" />', '<?php echo $txt;?> Categories', 'index2.php?option=com_categories&section=<?php echo $section->id;?>',null, null],
+					],
 <?php
 				} // foreach
 ?>				],

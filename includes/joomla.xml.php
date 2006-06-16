@@ -237,7 +237,7 @@ class mosParameters {
 
 			if ($description = $element->getAttribute( 'description' )) {
 				// add the params description to the display
-				$html[] = '<tr><td colspan="3">' . $description . '</td></tr>';
+				$html[] = '<tr><td colspan="2">' . $description . '</td></tr>';
 			}
 
 			//$params = mosParseParams( $row->params );

@@ -154,13 +154,17 @@ function mosLoadModules( $position='left', $style=0 ) {
 		echo $prepend;
 
 		if ((substr("$module->module",0,4))=='mod_') {
+		// normal modules
 			if ($params->get('cache') == 1 && $mosConfig_caching == 1) {
+			// module caching
 				$cache->call('modules_html::module2', $module, $params, $Itemid, $style, $my->gid  );
 			} else {
 				modules_html::module2( $module, $params, $Itemid, $style, $count );
 			}
 		} else {
+		// custom or new modules
 			if ($params->get('cache') == 1 && $mosConfig_caching == 1) {
+			// module caching
 				$cache->call('modules_html::module', $module, $params, $Itemid, $style, 0, $my->gid );
 			} else {
 				modules_html::module( $module, $params, $Itemid, $style );
@@ -168,6 +172,7 @@ function mosLoadModules( $position='left', $style=0 ) {
 		}
 
 		echo $postpend;
+		
 		$count++;
 	}
 	if ($style == 1) {

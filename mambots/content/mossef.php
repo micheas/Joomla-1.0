@@ -31,9 +31,9 @@ function botMosSef( $published, &$row, &$params, $page=0 ) {
 	}
 	
 	// check whether SEF is off
-	//if ( !$mosConfig_sef ) {
-	//	return true;
-	//}
+	if ( !$mosConfig_sef ) {
+		return true;
+	}
 	
 	// simple performance check to determine whether bot should process further
 	if ( strpos( $row->text, 'href="' ) === false ) {

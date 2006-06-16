@@ -79,7 +79,9 @@ function botMosSef_replacer( &$matches ) {
 		return $replace;
 	} else if ( strpos( $matches[1], '#' ) === 0 ) {
 	// special handling for anchor only links
-		$link 		= 'index.php?'. $_SERVER['QUERY_STRING'] . $matches[1];
+		$url 		= $_SERVER['REQUEST_URI'];
+		$url		= explode( '?option', $url );
+		$link 		= 'index.php?option'. $url[1] . $matches[1];
 		$link 		= sefRelToAbs( $link );
 
 		$replace 	= 'href="'. $link .'"';

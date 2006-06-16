@@ -49,6 +49,7 @@ Legend:
  # Fixed [topic,68201] : Permissions check page missing /mambots/system/
  # Fixed [topic,67115] : Error warning frontend.php
  # Fixed [topic,67144] : Check for status of SEF in mossef incorrectly commented out
+ # Fixed [topic,67279] : Voting/Rating not working when disabled globally, but enabled locally for selected items
  
  # PERFORMANCE [topic,63468] : mod_fullmenu unnecessary count of archived items in section query
 

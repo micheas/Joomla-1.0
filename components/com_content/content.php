@@ -142,7 +142,7 @@ function findKeyItem( $gid, $access, $pop, $option, $now ) {
 }
 
 function frontpage( $gid, &$access, $pop, $now ) {
-	global $database, $mainframe, $my, $Itemid;
+	global $database, $mainframe;
 
 	$now 		= _CURRENT_SERVER_TIME;
 	$nullDate 	= $database->getNullDate();
@@ -151,14 +151,16 @@ function frontpage( $gid, &$access, $pop, $now ) {
 	// Parameters
 	$menu = $mainframe->get( 'menu' );
 	$params = new mosParameters( $menu->params );
-	$orderby_sec = $params->def( 'orderby_sec', '' );
-	$orderby_pri = $params->def( 'orderby_pri', '' );
 
 	// Ordering control
-	$order_sec = _orderby_sec( $orderby_sec );
-	$order_pri = _orderby_pri( $orderby_pri );
-
-	$voting = votingQuery();
+	$orderby_sec 	= $params->def( 'orderby_sec', '' );
+	$orderby_pri 	= $params->def( 'orderby_pri', '' );
+	$order_sec 		= _orderby_sec( $orderby_sec );
+	$order_pri 		= _orderby_pri( $orderby_pri );
+	
+	// voting control
+	$voting = $params->def( 'rating', '' );
+	$voting = votingQuery($voting);
 	
 	$where 	= _where( 1, $access, $noauth, $gid, 0, $now, NULL, NULL, $params );	
 	$where 	= ( count( $where ) ? "\n WHERE ". implode( "\n AND ", $where ) : '' );
@@ -601,7 +603,9 @@ function showBlogSection( $id=0, $gid, &$access, $pop, $now=NULL ) {
 	$order_sec 		= _orderby_sec( $orderby_sec );
 	$order_pri 		= _orderby_pri( $orderby_pri );
 
-	$voting = votingQuery();
+	// voting control
+	$voting = $params->def( 'rating', '' );
+	$voting = votingQuery($voting);
 	
 	// Main data query
 	$query = "SELECT a.id, a.title, a.title_alias, a.introtext, a.sectionid, a.state, a.catid, a.created, a.created_by, a.created_by_alias, a.modified, a.modified_by,"
@@ -681,8 +685,10 @@ function showBlogCategory( $id=0, $gid, &$access, $pop, $now ) {
 	$orderby_pri 	= $params->def( 'orderby_pri', '' );
 	$order_sec 		= _orderby_sec( $orderby_sec );
 	$order_pri 		= _orderby_pri( $orderby_pri );
-
-	$voting = votingQuery();
+	
+	// voting control
+	$voting = $params->def( 'rating', '' );
+	$voting = votingQuery($voting);
 	
 	// Main data query
 	$query = "SELECT a.id, a.title, a.title_alias, a.introtext, a.sectionid, a.state, a.catid, a.created, a.created_by, a.created_by_alias, a.modified, a.modified_by,"
@@ -796,8 +802,10 @@ function showArchiveSection( $id=NULL, $gid, &$access, $pop, $option ) {
 	$database->setQuery( $query );
 	$items = $database->loadObjectList();
 	$archives = count( $items );
-
-	$voting = votingQuery();
+	
+	// voting control
+	$voting = $params->def( 'rating', '' );
+	$voting = votingQuery($voting);
 	
 	// Main Query
 	$query = "SELECT a.id, a.title, a.title_alias, a.introtext, a.sectionid, a.state, a.catid, a.created, a.created_by, a.created_by_alias, a.modified, a.modified_by,"
@@ -909,8 +917,10 @@ function showArchiveCategory( $id=0, $gid, &$access, $pop, $option, $now ) {
 	$database->setQuery( $query );
 	$items 		= $database->loadObjectList();
 	$archives 	= count( $items );
-
-	$voting = votingQuery();
+	
+	// voting control
+	$voting = $params->def( 'rating', '' );
+	$voting = votingQuery($voting);
 	
 	// main query
 	$query = "SELECT a.id, a.title, a.title_alias, a.introtext, a.sectionid, a.state, a.catid, a.created, a.created_by, a.created_by_alias, a.modified, a.modified_by,"
@@ -1253,19 +1263,21 @@ function showItem( $uid, $gid, &$access, $pop, $option='com_content', $now ) {
 		;
 	}
 
-	$voting = votingQuery();
+	//$voting = votingQuery();
 	
 	// main query
 	$query = "SELECT a.*, u.name AS author, u.usertype, cc.name AS category, s.name AS section, g.name AS groups,"
 	. "\n s.published AS sec_pub, cc.published AS cat_pub, s.access AS sec_access, cc.access AS cat_access,"
 	. "\n s.id AS sec_id, cc.id as cat_id"
-	. $voting['select']
+	//. $voting['select']
+	//. "\n , ROUND( v.rating_sum / v.rating_count ) AS rating, v.rating_count"
 	. "\n FROM #__content AS a"
 	. "\n LEFT JOIN #__categories AS cc ON cc.id = a.catid"
 	. "\n LEFT JOIN #__sections AS s ON s.id = cc.section AND s.scope = 'content'"
 	. "\n LEFT JOIN #__users AS u ON u.id = a.created_by"
 	. "\n LEFT JOIN #__groups AS g ON a.access = g.id"
-	. $voting['join']
+	//. $voting['join']
+	//. "\n LEFT JOIN #__content_rating AS v ON a.id = v.content_id"
 	. "\n WHERE a.id = $uid"
 	. $xwhere
 	. "\n AND a.access <= $gid"
@@ -1435,6 +1447,22 @@ function show( $row, $params, $gid, &$access, $pop, $option='com_content', $Item
 	// if a popup item (e.g. print page) set popup param to correct value
 	if ( $pop ) {
 		$params->set( 'popup', 1 );
+	}
+	
+	// check if voting/rating enabled
+	if ( $params->get( 'rating' ) ) {
+		// voting query
+		$query = "SELECT ROUND( v.rating_sum / v.rating_count ) AS rating, v.rating_count"
+		. "\n FROM #__content AS a"
+		. "\n LEFT JOIN #__content_rating AS v ON a.id = v.content_id"
+		. "\n WHERE a.id = $row->id"
+		;
+		$database->setQuery( $query );
+		$database->loadObject($voting);
+
+		// add to $row info
+		$row->rating 		= $voting->rating;
+		$row->rating_count 	= $voting->rating_count;
 	}
 	
 	if ( $params->get( 'section_link' ) || $params->get( 'category_link' ) ) {
@@ -2313,10 +2341,10 @@ function _where( $type=1, &$access, &$noauth, $gid, $id, $now=NULL, $year=NULL, 
 	return $where;
 }
 
-function votingQuery() {
+function votingQuery( $active=NULL ) {
 	global $mainframe;
 	
-	$voting	= $mainframe->getCfg( 'vote' );
+	$voting	= ( $active ? $active : $mainframe->getCfg( 'vote' ) );
 
 	if ( $voting ) {
 		// calculate voting count

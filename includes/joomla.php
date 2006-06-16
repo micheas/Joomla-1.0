@@ -4913,25 +4913,33 @@ class mosAdminMenus {
 	* Also can be used in conjunction with the menulist param to create the chosen image
 	* load the default or use no image
 	*/
-	function ImageCheck( $file, $directory='/images/M_images/', $param=NULL, $param_directory='/images/M_images/', $alt=NULL, $name='image', $type=1, $align='middle', $title=NULL ) {
+	function ImageCheck( $file, $directory='/images/M_images/', $param=NULL, $param_directory='/images/M_images/', $alt=NULL, $name='image', $type=1, $align='middle', $title=NULL, $admin=NULL ) {
 		global $mosConfig_absolute_path, $mosConfig_live_site, $mainframe;
 
 		$cur_template = $mainframe->getTemplate();
 
-		$name 	= ( $name 	? 'name="'. $name .'"' 		: '' );		
-		$title 	= ( $title 	? 'title="'. $title .'"' 	: '' );		
-		$alt 	= ( $alt 	? 'alt="'. $alt .'"' 		: '' );
+		$name 	= ( $name 	? ' name="'. $name .'"' 	: '' );		
+		$title 	= ( $title 	? ' title="'. $title .'"' 	: '' );		
+		$alt 	= ( $alt 	? ' alt="'. $alt .'"' 		: ' alt=""' );
+		$align 	= ( $align 	? ' align="'. $align .'"' 	: '' );
+
+		// change directory path from frontend or backend
+		if ($admin) {
+			$path 	= '/administrator/templates/'. $cur_template .'/images/';
+		} else {
+			$path 	= '/templates/'. $cur_template .'/images/';
+		}
 		
 		if ( $param ) {
 			$image = $mosConfig_live_site. $param_directory . $param;
 			if ( $type ) {
-				$image = '<img src="'. $image .'" align="'. $align .'" alt="'. $alt .'" '. $name .' border="0" />';
+				$image = '<img src="'. $image .'" '. $alt . $name . $align .' border="0" />';
 			}
 		} else if ( $param == -1 ) {
 			$image = '';
 		} else {
-			if ( file_exists( $mosConfig_absolute_path .'/templates/'. $cur_template .'/images/'. $file ) ) {
-				$image = $mosConfig_live_site .'/templates/'. $cur_template .'/images/'. $file;
+			if ( file_exists( $mosConfig_absolute_path . $path . $file ) ) {
+				$image = $mosConfig_live_site . $path . $file;
 			} else {
 				// outputs only path to image
 				$image = $mosConfig_live_site. $directory . $file;
@@ -4939,7 +4947,7 @@ class mosAdminMenus {
 
 			// outputs actual html <img> tag
 			if ( $type ) {
-				$image = '<img src="'. $image .'" align="'. $align .'" '. $alt .' '. $name .' '. $title .' border="0" />';
+				$image = '<img src="'. $image .'" '. $alt . $name . $title . $align .' border="0" />';
 			}
 		}
 
@@ -4953,34 +4961,42 @@ class mosAdminMenus {
 	* load the default or use no image
 	*/
 	function ImageCheckAdmin( $file, $directory='/administrator/images/', $param=NULL, $param_directory='/administrator/images/', $alt=NULL, $name=NULL, $type=1, $align='middle', $title=NULL ) {
-		global $mosConfig_absolute_path, $mosConfig_live_site, $mainframe;
+/*		
+		global $mosConfig_absolute_path, $mosConfig_live_site, $mainframe;		
 		
 		$cur_template = $mainframe->getTemplate();
 
-		$name 	= ( $name 	? 'name="'. $name .'"' 		: '' );		
-		$title 	= ( $title 	? 'title="'. $title .'"' 	: '' );		
-		$alt 	= ( $alt 	? 'alt="'. $alt .'"' 		: '' );
+		$name 	= ( $name 	? ' name="'. $name .'"' 	: '' );		
+		$title 	= ( $title 	? ' title="'. $title .'"' 	: '' );		
+		$alt 	= ( $alt 	? ' alt="'. $alt .'"' 		: ' alt=""' );
+		$align 	= ( $align 	? ' align="'. $align .'"' 	: '' );
+
+		$path 	= '/administrator/templates/'. $cur_template .'/images/';
 		
 		if ( $param ) {
 			$image = $mosConfig_live_site. $param_directory . $param;
 			if ( $type ) {
-				$image = '<img src="'. $image .'" align="'. $align .'" alt="'. $alt .'" '. $name .' border="0" />';
+				$image = '<img src="'. $image .'" '. $alt . $name . $align .' border="0" />';
 			}
 		} else if ( $param == -1 ) {
 			$image = '';
 		} else {
-			if ( file_exists( $mosConfig_absolute_path .'/administrator/templates/'. $cur_template .'/images/'. $file ) ) {
-				$image = $mosConfig_live_site .'/administrator/templates/'. $cur_template .'/images/'. $file;
+			if ( file_exists( $mosConfig_absolute_path . $path . $file ) ) {
+				$image = $mosConfig_live_site . $path . $file;
 			} else {
+				// outputs only path to image
 				$image = $mosConfig_live_site. $directory . $file;
 			}
 
 			// outputs actual html <img> tag
 			if ( $type ) {
-				$image = '<img src="'. $image .'" align="'. $align .'" '. $alt .' '. $name .' '. $title .' border="0" />';
+				$image = '<img src="'. $image .'" '. $alt . $name . $title . $align .' border="0" />';
 			}
 		}
-
+*/
+		// functionality consolidated into ImageCheck 
+		$image = mosAdminMenus::ImageCheck( $file, $directory, $param, $param_directory, $alt, $name, $type, $align, $title, $admin=1 );
+		
 		return $image;
 	}
 

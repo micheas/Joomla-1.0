@@ -43,6 +43,7 @@ Legend:
 16-June-2006 Rey Gigataras
 # Fixed [artf5006] : Contact-item print button
 # Fixed [artf4925] : alt="" not always output 1.0.9
+# Fixed [artf4921] : anchor links break
 # Fixed [topic,66859] : Table views of content category in backend
 # Fixed [topic,68201] : Permissions check page missing /mambots/system/
 # Fixed [topic,67115] : Error warning frontend.php

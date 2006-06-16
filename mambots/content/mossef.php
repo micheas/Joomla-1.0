@@ -55,8 +55,6 @@ function botMosSef( $published, &$row, &$params, $page=0 ) {
 * @return string
 */
 function botMosSef_replacer( &$matches ) {
-	global $mosConfig_live_site;
-
 	// original text that might be replaced
 	$original = 'href="'. $matches[1] .'"';
 
@@ -70,12 +68,20 @@ function botMosSef_replacer( &$matches ) {
 		}
 	}
 
-	// will only process links containing 'index.php?option or links starting with '#'	
-	if ( strpos( $matches[1], 'index.php?option' ) !== false || strpos( $matches[1], '#' ) === 0  ) {
+	if ( strpos( $matches[1], 'index.php?option' ) !== false  ) {
+	// links containing 'index.php?option
 		// convert url to SEF link
 		$link 		= sefRelToAbs( $matches[1] );
-		
+
 		// reconstruct html output
+		$replace 	= 'href="'. $link .'"';
+		
+		return $replace;
+	} else if ( strpos( $matches[1], '#' ) === 0 ) {
+	// special handling for anchor only links
+		$link 		= 'index.php?'. $_SERVER['QUERY_STRING'] . $matches[1];
+		$link 		= sefRelToAbs( $link );
+
 		$replace 	= 'href="'. $link .'"';
 		
 		return $replace;

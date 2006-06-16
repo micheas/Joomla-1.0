@@ -471,7 +471,7 @@ function sefRelToAbs( $string ) {
 		return $mosConfig_live_site .'/'. $string . $fragment;
 
 		// allows SEF without mod_rewrite
-		// uncomment Line 348 and comment out Line 354	
+		// uncomment Line 477 and comment out Line 471	
 	
 		// uncomment line below if you dont have mod_rewrite
 		// return $mosConfig_live_site .'/index.php/'. $string . $fragment;
@@ -488,13 +488,6 @@ function sefRelToAbs( $string ) {
 				eregi("^(https?:[\/]+[^\/]+)(.*$)", $mosConfig_live_site, $live_site_parts);
 				
 				$string = $live_site_parts[1] . $string;
-			/*
-			// check that url does not contain `http`, `https`, `ftp`, `mailto` or `javascript` at start of string
-			} else if ( ( strpos( $string, 'http' ) !== 0 ) && ( strpos( $string, 'https' ) !== 0 ) && ( strpos( $string, 'ftp' ) !== 0 ) && ( strpos( $string, 'file' ) !== 0 ) && ( strpos( $string, 'mailto' ) !== 0 ) && ( strpos( $string, 'javascript' ) !== 0 ) && ( strpos( $string, 'irc' ) !== 0 ) ) {
-				// URI doesn't start with a "/" so relative to the page (live-site):
-				$string = $mosConfig_live_site .'/'. $string;
-			}
-			*/
 			} else {
 				$check = 1;
 				

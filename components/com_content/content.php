@@ -1974,7 +1974,11 @@ function saveContent( &$access, $task ) {
 		default:
 			$Itemid = mosGetParam( $_POST, 'Returnid', '' );
 			if ( $Itemid ) {
-				$link = 'index.php?option=com_content&task=view&id='. $row->id.'&Itemid='. $Itemid;
+				if ( $access->canEdit ) {
+					$link = 'index.php?option=com_content&task=view&id='. $row->id.'&Itemid='. $Itemid;
+				} else {
+					$link = 'index.php';
+				}
 			} else {
 				$link = strval( mosGetParam( $_POST, 'referer', '' ) );
 			}

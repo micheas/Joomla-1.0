@@ -68,6 +68,7 @@ A1 Unvalidated Input
  # SECURITY A1 [ Low Level ]: frontend submission forms hardened against spoofing
 
  # Fixed [artf5031] : Frontend Editing of Content Changes Start Publishing Time
+ # Fixed [artf4951] : author submitting content gets error message
 
 
 16-June-2006 Rey Gigataras

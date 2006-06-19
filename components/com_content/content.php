@@ -992,9 +992,9 @@ function showArchiveCategory( $id=0, $gid, &$access, $pop, $option, $now ) {
 	} else {
 		// if coming from the Archive Module, the Archive Dropdown selector is not shown
 		if ( $id ) {
-			BlogOutput( $rows, $params, $gid, $access, $pop, $menu, 1 );
+			BlogOutput( $rows, $params, $gid, $access, $pop, $menu, 1, 1 );
 		} else {
-			BlogOutput( $rows, $params, $gid, $access, $pop, $menu, 0 );
+			BlogOutput( $rows, $params, $gid, $access, $pop, $menu, 0, 1 );
 		}
 	}
 
@@ -1006,7 +1006,7 @@ function showArchiveCategory( $id=0, $gid, &$access, $pop, $option, $now ) {
 }
 
 
-function BlogOutput ( &$rows, &$params, $gid, &$access, $pop, &$menu, $archive=NULL ) {
+function BlogOutput ( &$rows, &$params, $gid, &$access, $pop, &$menu, $archive=NULL, $archive_page=NULL ) {
 	global $mainframe, $Itemid, $task, $id, $option, $database, $mosConfig_live_site;
 
 	// parameters
@@ -1203,11 +1203,21 @@ function BlogOutput ( &$rows, &$params, $gid, &$access, $pop, &$menu, $archive=N
 				
 				if ( $option == 'com_frontpage' ) {
 					$link 	= 'index.php?option=com_frontpage'. $Itemid_link;
-				} else if ( $archive ) {
+				} else if ( $archive_page ) {
 					$year 	= $params->get( 'year' );
 					$month 	= $params->get( 'month' );
 					
-					$link 	= 'index.php?option=com_content&amp;task='. $task .'&amp;id='. $id . $Itemid_link .'&amp;year='. $year .'&amp;month='. $month;
+					if (!$archive) {
+					// used when access via archive module
+						$id		= '&amp;id=0';
+						$module	= '&amp;module=1';
+					} else {
+					// used when access via menu item
+						$id 	= '&amp;id='. $id;
+						$module	= '';
+					}
+					
+					$link 	= 'index.php?option=com_content&amp;task='. $task . $id . $Itemid_link .'&amp;year='. $year .'&amp;month='. $month . $module;
 				} else {
 					$link 	= 'index.php?option=com_content&amp;task='. $task .'&amp;id='. $id . $Itemid_link;
 				}

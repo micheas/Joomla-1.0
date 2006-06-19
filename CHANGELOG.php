@@ -69,6 +69,7 @@ A1 Unvalidated Input
 
  # Fixed [artf5031] : Frontend Editing of Content Changes Start Publishing Time
  # Fixed [artf4951] : author submitting content gets error message
+ # Fixed [artf5028] : Page navigation incorrect on pages viewed through archive module
 
 
 16-June-2006 Rey Gigataras

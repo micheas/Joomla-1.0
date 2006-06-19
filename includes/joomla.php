@@ -724,7 +724,7 @@ class mosMainFrame {
 				// Separate Values from Remember Me Cookie
 				$remUser	= substr( $remCookieValue, 0, 32 );
 				$remPass	= substr( $remCookieValue, 32, 32 );
-				$remID		= substr( $remCookieValue, 64  );
+				$remID		= intval( substr( $remCookieValue, 64  ) );
 
 				// check if Remember me cookie exists. Login with usercookie info.
 				if ( strlen($remUser) == 32 && strlen($remPass) == 32 ) {

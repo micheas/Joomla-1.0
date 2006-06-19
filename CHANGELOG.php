@@ -40,6 +40,24 @@ Legend:
 -------------------------------------------------------------------------------------
 
 
+This Release Contains following Security Fixes
+
+Joomla! utilizes the Open Web Application Security Project (OWASP) web application security system to categorize security vunerabilities found within Joomla!
+http://www.owasp.org/index.php/OWASP_Top_Ten_Project
+
+
+** High Level Threats fixed in 1.0.10 
+
+A1 Unvalidated Input
+ * A1 - Secured `Remember Me` functionality
+
+--
+
+
+19-June-2006 Rey Gigataras
+ # SECURITY A1 [ High Level ]: `Remember Me` functionality vulnerability
+
+
 16-June-2006 Rey Gigataras
  # Fixed [artf5006] : Contact-item print button
  # Fixed [artf4925] : alt="" not always output 1.0.9
@@ -75,7 +93,7 @@ Joomla! utilizes the Open Web Application Security Project (OWASP) web applicati
 http://www.owasp.org/index.php/OWASP_Top_Ten_Project
 
 
-12 Low Level Threats in 1.0.9 
+12 Low Level Threats fixed in 1.0.9 
 
 A1 Unvalidated Input
  * A1 - Harden mosmsg

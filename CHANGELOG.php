@@ -49,13 +49,15 @@ http://www.owasp.org/index.php/OWASP_Top_Ten_Project
 ** High Level Threats fixed in 1.0.10 
 
 A1 Unvalidated Input
- * A1 - Secured `Remember Me` functionality
+ * A1 - Secured `Remember Me` functionality against SQL injection attacks
+ * A1 - Secured `Related Items` module against SQL injection attacks
 
 --
 
 
 19-June-2006 Rey Gigataras
- # SECURITY A1 [ High Level ]: `Remember Me` functionality vulnerability
+ # SECURITY A1 [ High Level ]: `Remember Me` functionality SQL injection vulnerability
+ # SECURITY A1 [ High Level ]: `Related Items` module SQL injection vulnerability
 
 
 16-June-2006 Rey Gigataras

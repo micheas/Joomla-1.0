@@ -46,11 +46,17 @@ Joomla! utilizes the Open Web Application Security Project (OWASP) web applicati
 http://www.owasp.org/index.php/OWASP_Top_Ten_Project
 
 
-** High Level Threats fixed in 1.0.10 
+** HIGH Level Threats fixed in 1.0.10 
 
 A1 Unvalidated Input
  * A1 - Secured `Remember Me` functionality against SQL injection attacks
  * A1 - Secured `Related Items` module against SQL injection attacks
+ * A1 - Secured `Weblinks` submission against SQL injection attacks
+ 
+ 
+** LOW Level Threats fixed in 1.0.10 
+A1 Unvalidated Input
+ * A1 - Hardened frontend submission forms against spoofing
 
 --
 
@@ -58,6 +64,8 @@ A1 Unvalidated Input
 19-June-2006 Rey Gigataras
  # SECURITY A1 [ High Level ]: `Remember Me` functionality SQL injection vulnerability
  # SECURITY A1 [ High Level ]: `Related Items` module SQL injection vulnerability
+ # SECURITY A1 [ High Level ]: `weblinks` submission SQL injection vulnerability
+ # SECURITY A1 [ Low Level ]: frontend submission forms hardened against spoofing
 
 
 16-June-2006 Rey Gigataras

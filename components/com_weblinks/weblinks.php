@@ -284,7 +284,6 @@ function cancelWebLink( $option ) {
 * @param database A database connector object
 */
 function saveWeblink( $option ) {
-	global $mosConfig_mailfrom, $mosConfig_fromname;
 	global $database, $my;
 
 	if ($my->gid < 1) {
@@ -292,6 +291,23 @@ function saveWeblink( $option ) {
 		return;
 	}
 
+	// security check to see if link exists in a menu
+	$link = 'index.php?option=com_weblinks&task=new';
+	$query = "SELECT id"
+	. "\n FROM #__menu"
+	. "\n WHERE link LIKE '%$link%'"
+	. "\n AND published = 1"
+	;
+	$database->setQuery( $query );
+	$exists = $database->loadResult();
+	if ( !$exists ) {						
+		mosNotAuth();
+		return;
+	}		
+	
+	// simple spoof check security
+	josSpoofCheck();	
+	
 	$row = new mosWeblink( $database );
 	if (!$row->bind( $_POST, 'published' )) {
 		echo "<script> alert('".$row->getError()."'); window.history.go(-1); </script>\n";
@@ -302,8 +318,10 @@ function saveWeblink( $option ) {
 	$row->date = date( 'Y-m-d H:i:s' );
 	
 	// until full edit capabilities are given for weblinks - limit saving to new weblinks only
-	$row->id = 0;
-
+	$row->id = 0;	
+	
+	$row->title = $database->getEscaped( $row->title );
+	
 	if (!$row->check()) {
 		echo "<script> alert('".$row->getError()."'); window.history.go(-1); </script>\n";
 		exit();
@@ -336,6 +354,6 @@ function saveWeblink( $option ) {
 	}
 
 	$msg 	= $isNew ? _THANK_SUB : '';
-	mosRedirect( 'index.php', $msg ); 
+	//mosRedirect( 'index.php', $msg ); 
 }
 ?>

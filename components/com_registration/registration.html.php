@@ -71,7 +71,7 @@ class HTML_registration {
 		$validate = josSpoofValue();
 		?>
 		<script language="javascript" type="text/javascript">
-		function submitbutton() {
+		function submitbutton_reg() {
 			var form = document.mosForm;
 			var r = new RegExp("[\<|\>|\"|\'|\%|\;|\(|\)|\&|\+|\-]", "i");
 
@@ -161,7 +161,7 @@ class HTML_registration {
 		<input type="hidden" name="useractivation" value="<?php echo $useractivation;?>" />
 		<input type="hidden" name="option" value="<?php echo $option; ?>" />
 		<input type="hidden" name="task" value="saveRegistration" />
-		<input type="button" value="<?php echo _BUTTON_SEND_REG; ?>" class="button" onclick="submitbutton()" />
+		<input type="button" value="<?php echo _BUTTON_SEND_REG; ?>" class="button" onclick="submitbutton_reg()" />
 		<input type="hidden" name="<?php echo $validate; ?>" value="1" />
 		</form>
 		<?php

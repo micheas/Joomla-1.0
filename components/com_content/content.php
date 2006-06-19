@@ -1800,7 +1800,7 @@ function editItem( $uid, $gid, &$access, $sectionid=0, $task, $Itemid ){
 */
 function saveContent( &$access, $task ) {
 	global $database, $mainframe, $my;
-	global $mosConfig_absolute_path, $Itemid;
+	global $mosConfig_absolute_path, $mosConfig_offset, $Itemid;
 
 	// simple spoof check security
 	josSpoofCheck();	

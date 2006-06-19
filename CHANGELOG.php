@@ -67,6 +67,8 @@ A1 Unvalidated Input
  # SECURITY A1 [ High Level ]: `weblinks` submission SQL injection vulnerability
  # SECURITY A1 [ Low Level ]: frontend submission forms hardened against spoofing
 
+ # Fixed [artf5031] : Frontend Editing of Content Changes Start Publishing Time
+
 
 16-June-2006 Rey Gigataras
  # Fixed [artf5006] : Contact-item print button

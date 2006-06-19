@@ -81,6 +81,10 @@ class mosWeblink extends mosDBTable {
 		if ( !( eregi( 'http://', $this->url ) || ( eregi( 'https://',$this->url ) )  || ( eregi( 'ftp://',$this->url ) ) ) ) {
 			$this->url = 'http://'.$this->url;
 		}
+		
+		// SQL injection protection
+		$this->catid = intval($this->catid);
+		$this->title = $this->_db->getEscaped( $this->title );
 
 		/** check for existing name */
 		$query = "SELECT id"

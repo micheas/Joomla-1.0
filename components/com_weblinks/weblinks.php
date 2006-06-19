@@ -320,8 +320,6 @@ function saveWeblink( $option ) {
 	// until full edit capabilities are given for weblinks - limit saving to new weblinks only
 	$row->id = 0;	
 	
-	$row->title = $database->getEscaped( $row->title );
-	
 	if (!$row->check()) {
 		echo "<script> alert('".$row->getError()."'); window.history.go(-1); </script>\n";
 		exit();
@@ -354,6 +352,6 @@ function saveWeblink( $option ) {
 	}
 
 	$msg 	= $isNew ? _THANK_SUB : '';
-	//mosRedirect( 'index.php', $msg ); 
+	mosRedirect( 'index.php', $msg ); 
 }
 ?>

@@ -19,12 +19,16 @@ defined( '_VALID_MOS' ) or die( 'Restricted access' );
 require_once( $mainframe->getPath( 'front_html' ) );
 
 global $database, $my, $mainframe;
-global $mosConfig_live_site, $mosConfig_frontend_login;
+global $mosConfig_live_site, $mosConfig_frontend_login, $mosConfig_db;
 
 if ( $mosConfig_frontend_login != NULL && ($mosConfig_frontend_login === 0 || $mosConfig_frontend_login === '0')) {
+	header( "HTTP/1.0 403 Forbidden" );
 	echo _NOT_AUTH;
 	return;
 }
+
+// simple spoof check security
+josSpoofCheck();	
 
 $menu = $mainframe->get( 'menu' );
 $params = new mosParameters( $menu->params );

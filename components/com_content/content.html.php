@@ -956,6 +956,9 @@ class HTML_content {
 		mosMakeHtmlSafe( $row );
 
 		require_once( $GLOBALS['mosConfig_absolute_path'] . '/includes/HTML_toolbar.php' );
+		
+		// used for spoof hardening
+		$validate = josSpoofValue();
 
 		$Returnid 	= intval( mosGetParam( $_REQUEST, 'Returnid', $Itemid ) );
 		$tabs 		= new mosTabs(0, 1);
@@ -1387,6 +1390,7 @@ class HTML_content {
 		<input type="hidden" name="created_by" value="<?php echo $row->created_by; ?>" />
 		<input type="hidden" name="referer" value="<?php echo ampReplace( @$_SERVER['HTTP_REFERER'] ); ?>" />
 		<input type="hidden" name="task" value="" />
+		<input type="hidden" name="<?php echo $validate; ?>" value="1" />
 		</form>
 		<?php
 	}
@@ -1395,8 +1399,11 @@ class HTML_content {
 	* Writes Email form for filling in the send destination
 	*/
 	function emailForm( $uid, $title, $template='', $itemid ) {
-		global $mosConfig_sitename, $mainframe, $mosConfig_db;
-
+		global $mainframe;
+		
+		// used for spoof hardening
+		$validate = josSpoofValue();
+		
 		$mainframe->setPageTitle( $title );
 		$mainframe->addCustomHeadTag( '<link rel="stylesheet" href="templates/'. $template .'/css/template_css.css" type="text/css" />' );
 		?>
@@ -1468,7 +1475,7 @@ class HTML_content {
 
 		<input type="hidden" name="id" value="<?php echo $uid; ?>" />
 		<input type="hidden" name="itemid" value="<?php echo $itemid; ?>" />
-		<input type="hidden" name="<?php echo mosHash( $mosConfig_db );?>" value="1" />
+		<input type="hidden" name="<?php echo $validate; ?>" value="1" />
 		</form>
 		<?php
 	}

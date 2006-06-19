@@ -54,10 +54,13 @@ function lostPassForm( $option ) {
 }
 
 function sendNewPass( $option ) {
-	global $database, $Itemid;
+	global $database;
 	global $mosConfig_live_site, $mosConfig_sitename;
 	global $mosConfig_mailfrom, $mosConfig_fromname;
 
+	// simple spoof check security
+	josSpoofCheck();	
+	
 	$_live_site = $mosConfig_live_site;
 	$_sitename 	= $mosConfig_sitename;
 
@@ -121,6 +124,9 @@ function saveRegistration() {
 		return;
 	}
 
+	// simple spoof check security
+	josSpoofCheck();	
+	
 	$row = new mosUser( $database );
 
 	if (!$row->bind( $_POST, 'usertype' )) {

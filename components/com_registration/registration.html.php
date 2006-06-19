@@ -21,6 +21,8 @@ defined( '_VALID_MOS' ) or die( 'Restricted access' );
 */
 class HTML_registration {
 	function lostPassForm($option) {
+		// used for spoof hardening
+		$validate = josSpoofValue();
 		?>
 		<form action="index.php" method="post">
 
@@ -52,16 +54,21 @@ class HTML_registration {
 		</tr>
 		<tr>
 			<td colspan="2">
-				<input type="hidden" name="option" value="<?php echo $option;?>" />
-				<input type="hidden" name="task" value="sendNewPass" /> <input type="submit" class="button" value="<?php echo _BUTTON_SEND_PASS; ?>" />
+				<input type="submit" class="button" value="<?php echo _BUTTON_SEND_PASS; ?>" />
 			</td>
 		</tr>
 		</table>
+		
+		<input type="hidden" name="option" value="<?php echo $option;?>" />
+		<input type="hidden" name="task" value="sendNewPass" /> 
+		<input type="hidden" name="<?php echo $validate; ?>" value="1" />
 		</form>
 		<?php
 	}
 
 	function registerForm($option, $useractivation) {
+		// used for spoof hardening
+		$validate = josSpoofValue();
 		?>
 		<script language="javascript" type="text/javascript">
 		function submitbutton() {
@@ -155,6 +162,7 @@ class HTML_registration {
 		<input type="hidden" name="option" value="<?php echo $option; ?>" />
 		<input type="hidden" name="task" value="saveRegistration" />
 		<input type="button" value="<?php echo _BUTTON_SEND_REG; ?>" class="button" onclick="submitbutton()" />
+		<input type="hidden" name="<?php echo $validate; ?>" value="1" />
 		</form>
 		<?php
 	}

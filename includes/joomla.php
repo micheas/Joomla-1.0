@@ -5787,6 +5787,70 @@ function mosBackTrace() {
 	}
 }
 
+function josSpoofCheck( $header=NULL ) {	
+	$validate 	= mosGetParam( $_POST, josSpoofValue(), 0 );
+	
+	// probably a spoofing attack
+	if (!$validate) {
+		header( 'HTTP/1.0 403 Forbidden' );
+		mosErrorAlert( _NOT_AUTH );
+		return;
+	}
+	
+	// First, make sure the form was posted from a browser.
+	// For basic web-forms, we don't care about anything
+	// other than requests from a browser:   
+	if (!isset( $_SERVER['HTTP_USER_AGENT'] )) {
+		header( 'HTTP/1.0 403 Forbidden' );
+		mosErrorAlert( _NOT_AUTH );
+		return;
+	}
+	
+	// Make sure the form was indeed POST'ed:
+	//  (requires your html form to use: action="post")
+	if (!$_SERVER['REQUEST_METHOD'] == 'POST' ) {
+		header( 'HTTP/1.0 403 Forbidden' );
+		mosErrorAlert( _NOT_AUTH );
+		return;
+	}
+	
+	if ($header) {
+	// Attempt to defend against header injections:
+		$badStrings = array(
+			'Content-Type:',
+			'MIME-Version:',
+			'Content-Transfer-Encoding:',
+			'bcc:',
+			'cc:'
+		);
+		
+		// Loop through each POST'ed value and test if it contains
+		// one of the $badStrings:
+		foreach ($_POST as $k => $v){
+			foreach ($badStrings as $v2) {
+				if (strpos( $v, $v2 ) !== false) {
+					header( "HTTP/1.0 403 Forbidden" );
+					mosErrorAlert( _NOT_AUTH );
+					return;
+				}
+			}
+		}   
+		
+		// Made it past spammer test, free up some memory
+		// and continue rest of script:   
+		unset($k, $v, $v2, $badStrings);
+	}
+}
+
+function josSpoofValue() {
+	global $mainframe;
+	
+	$random		= date( 'dmY' );
+	$validate 	= mosHash( $mainframe->getCfg( 'db' ) . $random );
+	
+	return $validate;
+}
+
 // ----- NO MORE CLASSES OR FUNCTIONS PASSED THIS POINT -----
 // Post class declaration initialisations
 // some version of PHP don't allow the instantiation of classes

@@ -1802,6 +1802,9 @@ function saveContent( &$access, $task ) {
 	global $database, $mainframe, $my;
 	global $mosConfig_absolute_path, $Itemid;
 
+	// simple spoof check security
+	josSpoofCheck();	
+	
 	$nullDate = $database->getNullDate();
 	
 	$row = new mosContent( $database );
@@ -2048,54 +2051,12 @@ function emailContentForm( $uid ) {
  */
 function emailContentSend( $uid ) {
 	global $database, $mainframe;
-	global $mosConfig_live_site, $mosConfig_sitename, $mosConfig_db;
+	global $mosConfig_live_site, $mosConfig_sitename;
 
-	$validate 	= mosGetParam( $_POST, mosHash( $mosConfig_db ), 0 );
+	// simple spoof check security
+	josSpoofCheck(1);	
+	
 	$itemid 	= intval( mosGetParam( $_POST, 'itemid', 0 ) );
-	
-	if (!$validate) {
-		// probably a spoofing attack
-		mosErrorAlert( _NOT_AUTH );
-	}
-
-	// First, make sure the form was posted from a browser.
-	// For basic web-forms, we don't care about anything
-	// other than requests from a browser:   
-	if (!isset( $_SERVER['HTTP_USER_AGENT'] )) {
-		header( "HTTP/1.0 403 Forbidden" );
-		mosErrorAlert( _NOT_AUTH );
-	}
-	
-	// Make sure the form was indeed POST'ed:
-	//  (requires your html form to use: action="post")
-	if (!$_SERVER['REQUEST_METHOD'] == 'POST' ) {
-		header("HTTP/1.0 403 Forbidden");
-		mosErrorAlert( _NOT_AUTH );
-	}
-	
-	// Attempt to defend against header injections:
-	$badStrings = array(
-		'Content-Type:',
-		'MIME-Version:',
-		'Content-Transfer-Encoding:',
-		'bcc:',
-		'cc:'
-	);
-	
-	// Loop through each POST'ed value and test if it contains
-	// one of the $badStrings:
-	foreach ($_POST as $k => $v){
-		foreach ($badStrings as $v2) {
-			if (strpos( $v, $v2 ) !== false) {
-				header( "HTTP/1.0 403 Forbidden" );
-				mosErrorAlert( _NOT_AUTH );
-			}
-		}
-	}   
-	
-	// Made it past spammer test, free up some memory
-	// and continue rest of script:   
-	unset($k, $v, $v2, $badStrings);
 	
 	// check for session cookie
 	// Session Cookie `name`

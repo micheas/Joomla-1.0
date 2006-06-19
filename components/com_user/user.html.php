@@ -41,6 +41,9 @@ class HTML_user {
 
 		require_once( $mosConfig_absolute_path .'/includes/HTML_toolbar.php' );
 
+		// used for spoof hardening
+		$validate = josSpoofValue();
+		
 		mosCommonHTML::loadOverlib();		
 		?>
 		<script language="javascript" type="text/javascript">
@@ -143,6 +146,7 @@ class HTML_user {
 		<input type="hidden" name="id" value="<?php echo $row->id;?>" />
 		<input type="hidden" name="option" value="<?php echo $option;?>">
 		<input type="hidden" name="task" value="saveUserEdit" />
+		<input type="hidden" name="<?php echo $validate; ?>" value="1" />
 		</form>
 		<?php
 	}

@@ -151,7 +151,10 @@ function userSave( $option, $uid) {
 	if ($uid == 0 || $user_id == 0 || $user_id != $uid) {
 		mosNotAuth();
 		return;
-	}
+	}	
+	
+	// simple spoof check security
+	josSpoofCheck();	
 	
 	$row = new mosUser( $database );
 	$row->load( $user_id );	

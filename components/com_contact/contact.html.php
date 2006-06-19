@@ -644,11 +644,11 @@ class HTML_contact {
 	* Writes Email form
 	*/
 	function _writeEmailForm( &$contact, &$params, $sitename, &$menu_params ) {
-		global $Itemid, $mainframe;
+		global $Itemid;
 		
 		if ( $contact->email_to && !$params->get( 'popup' ) && $params->get( 'email_form' ) ) {
 			// used for spoof hardening
-			$validate = mosHash( $mainframe->getCfg( 'db' ) );
+			$validate = josSpoofValue();
 			?>
 			<tr>
 				<td colspan="2">

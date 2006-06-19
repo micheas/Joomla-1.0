@@ -27,9 +27,6 @@ if ( $mosConfig_frontend_login != NULL && ($mosConfig_frontend_login === 0 || $m
 	return;
 }
 
-// simple spoof check security
-josSpoofCheck();	
-
 $menu = $mainframe->get( 'menu' );
 $params = new mosParameters( $menu->params );
 

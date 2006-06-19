@@ -87,6 +87,8 @@ if ( $my->id ) {
 } else {
 // Login output
 // ie HTML when not logged in and trying to login
+	// used for spoof hardening
+	$validate = josSpoofValue(1);
 	?>
 	<form action="<?php echo sefRelToAbs( 'index.php' ); ?>" method="post" name="login" >
 	<?php
@@ -145,6 +147,7 @@ if ( $my->id ) {
 	<input type="hidden" name="lang" value="<?php echo $mosConfig_lang; ?>" />
 	<input type="hidden" name="return" value="<?php echo sefRelToAbs( $login ); ?>" />
 	<input type="hidden" name="message" value="<?php echo $message_login; ?>" />
+	<input type="hidden" name="<?php echo $validate; ?>" value="1" />
 	</form>
 	<?php
 }

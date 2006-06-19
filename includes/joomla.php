@@ -986,7 +986,7 @@ class mosMainFrame {
 	function login( $username=null,$passwd=null, $remember=0, $userid=NULL ) {
 		global $acl, $_VERSION;
 		
-		$bypost = 0;
+		$bypost = 0;		
 		
 		// if no username and password passed from function, then function is being called from login module/component
 		if (!$username || !$passwd) {
@@ -995,6 +995,8 @@ class mosMainFrame {
 			$passwd 	= md5( $passwd );
 			
 			$bypost 	= 1;
+			
+			josSpoofCheck(NULL,1);
 		}
 
 		$row = null;
@@ -5787,8 +5789,8 @@ function mosBackTrace() {
 	}
 }
 
-function josSpoofCheck( $header=NULL ) {	
-	$validate 	= mosGetParam( $_POST, josSpoofValue(), 0 );
+function josSpoofCheck( $header=NULL, $alt=NULL ) {	
+	$validate 	= mosGetParam( $_POST, josSpoofValue($alt), 0 );
 	
 	// probably a spoofing attack
 	if (!$validate) {
@@ -5842,10 +5844,14 @@ function josSpoofCheck( $header=NULL ) {
 	}
 }
 
-function josSpoofValue() {
+function josSpoofValue($alt=NULL) {
 	global $mainframe;
 	
-	$random		= date( 'dmY' );
+	if ($alt) {
+		$random		= date( 'Ymd' );
+	} else {		
+		$random		= date( 'dmY' );
+	}
 	$validate 	= mosHash( $mainframe->getCfg( 'db' ) . $random );
 	
 	return $validate;

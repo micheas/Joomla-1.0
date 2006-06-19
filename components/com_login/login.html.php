@@ -25,7 +25,7 @@ class loginHTML {
 		global $mosConfig_lang;
 		
 		// used for spoof hardening
-		$validate = josSpoofValue();
+		$validate = josSpoofValue(1);
 
 		$return = $params->get('login');
 		?>

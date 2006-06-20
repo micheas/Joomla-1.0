@@ -177,10 +177,10 @@ class HTML_content {
 						if ( $params->get( 'filter' ) ) {
 							?>
 							<td align="right" width="100%" nowrap="nowrap">
-							<?php
-							echo _FILTER .'&nbsp;';
-							?>
-							<input type="text" name="filter" value="<?php echo $lists['filter'];?>" class="inputbox" onchange="document.adminForm.submit();" />
+								<?php
+								echo _FILTER .'&nbsp;';
+								?>
+								<input type="text" name="filter" value="<?php echo $lists['filter'];?>" class="inputbox" onchange="document.adminForm.submit();" />
 							</td>
 							<?php
 						}
@@ -188,10 +188,10 @@ class HTML_content {
 						if ( $params->get( 'order_select' ) ) {
 							?>
 							<td align="right" width="100%" nowrap="nowrap">
-							<?php
-							echo '&nbsp;&nbsp;&nbsp;'. _ORDER_DROPDOWN .'&nbsp;';
-							echo $lists['order'];
-							?>
+								<?php
+								echo '&nbsp;&nbsp;&nbsp;'. _ORDER_DROPDOWN .'&nbsp;';
+								echo $lists['order'];
+								?>
 							</td>
 							<?php
 						}
@@ -199,21 +199,21 @@ class HTML_content {
 						if ( $params->get( 'display' ) ) {
 							?>
 							<td align="right" width="100%" nowrap="nowrap">
-							<?php
-							$order = '';
-							if ( $lists['order_value'] ) {
-								$order = '&amp;order='. $lists['order_value'];
-							}
-							$filter = '';
-							if ( $lists['filter'] ) {
-								$filter = '&amp;filter='. $lists['filter'];
-							}
-
-							$link = 'index.php?option=com_content&amp;task=category&amp;sectionid='. $sectionid .'&amp;id='. $catid .'&amp;Itemid='. $Itemid . $order . $filter;
-							
-							echo '&nbsp;&nbsp;&nbsp;'. _PN_DISPLAY_NR .'&nbsp;';
-							echo $pageNav->getLimitBox( $link );
-							?>
+								<?php
+								$order = '';
+								if ( $lists['order_value'] ) {
+									$order = '&amp;order='. $lists['order_value'];
+								}
+								$filter = '';
+								if ( $lists['filter'] ) {
+									$filter = '&amp;filter='. $lists['filter'];
+								}
+	
+								$link = 'index.php?option=com_content&amp;task=category&amp;sectionid='. $sectionid .'&amp;id='. $catid .'&amp;Itemid='. $Itemid . $order . $filter;
+								
+								echo '&nbsp;&nbsp;&nbsp;'. _PN_DISPLAY_NR .'&nbsp;';
+								echo $pageNav->getLimitBox( $link );
+								?>
 							</td>
 							<?php
 						}
@@ -232,28 +232,28 @@ class HTML_content {
 				if ( $params->get( 'date' ) ) {
 					?>
 					<td class="sectiontableheader<?php echo $params->get( 'pageclass_sfx' ); ?>" width="35%">
-					&nbsp;<?php echo _DATE; ?>
+						<?php echo _DATE; ?>
 					</td>
 					<?php
 				}
 				if ( $params->get( 'title' ) ) {
 					?>
 					<td class="sectiontableheader<?php echo $params->get( 'pageclass_sfx' ); ?>">
-					<?php echo _HEADER_TITLE; ?>
+						<?php echo _HEADER_TITLE; ?>
 					</td>
 					<?php
 				}
 				if ( $params->get( 'author' ) ) {
 					?>
 					<td class="sectiontableheader<?php echo $params->get( 'pageclass_sfx' ); ?>" align="left" width="25%">
-					<?php echo _HEADER_AUTHOR; ?>
+						<?php echo _HEADER_AUTHOR; ?>
 					</td>
 					<?php
 				}
 				if ( $params->get( 'hits' ) ) {
 					?>
 					<td align="center" class="sectiontableheader<?php echo $params->get( 'pageclass_sfx' ); ?>" width="5%">
-					<?php echo _HEADER_HITS; ?>
+						<?php echo _HEADER_HITS; ?>
 					</td>
 					<?php
 				}

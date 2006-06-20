@@ -61,7 +61,7 @@ class HTML_content {
 			</td>
 		</tr>
 		<tr>
-			<td>
+			<td width="100%">
 			<?php
 			// Displays the Table of Items in Category View
 			if ( $items ) {

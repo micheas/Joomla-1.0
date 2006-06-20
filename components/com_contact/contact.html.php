@@ -51,7 +51,7 @@ class HTML_contact {
 			</td>
 		</tr>
 		<tr>
-			<td>
+			<td width="100%">
 			<?php
 			if ( count( $rows ) ) {
 				HTML_contact::showTable( $params, $rows, $catid, $tabclass );
@@ -60,9 +60,7 @@ class HTML_contact {
 			</td>
 		</tr>
 		<tr>
-			<td>&nbsp;
-
-			</td>
+			<td>&nbsp;</td>
 		</tr>
 		<tr>
 			<td>
@@ -317,17 +315,8 @@ class HTML_contact {
 		HTML_contact::_writeContactName( $contact, $params, $menu_params );
 		?>
 		<tr>
-			<td>
-				<table border="0" width="100%">
-				<tr>
-					<td></td>
-					<td rowspan="2" align="right" valign="top">
-					<?php
-					// displays Image
-					HTML_contact::_writeImage( $contact, $params );
-					?>
-					</td>
-				</tr>
+			<td width="100%">
+				<table width="100%">
 				<tr>
 					<td>
 					<?php
@@ -339,6 +328,12 @@ class HTML_contact {
 
 					// displays Misc Info
 					HTML_contact::_writeContactMisc( $contact, $params );
+					?>
+					</td>
+					<td align="right" valign="top">
+					<?php
+					// displays Image
+					HTML_contact::_writeImage( $contact, $params );
 					?>
 					</td>
 				</tr>
@@ -369,7 +364,7 @@ class HTML_contact {
 		if ( $params->get( 'page_title' )  && !$params->get( 'popup' ) ) {
 			?>
 			<tr>
-				<td class="componentheading<?php echo $menu_params->get( 'pageclass_sfx' ); ?>" colspan="2">
+				<td width="100%" class="componentheading<?php echo $menu_params->get( 'pageclass_sfx' ); ?>">
 					<?php echo $params->get( 'header' ); ?>
 				</td>
 			</tr>
@@ -385,13 +380,13 @@ class HTML_contact {
 			global $Itemid;
 			?>
 			<tr>
-				<td colspan="2" align="center">
-				<br />
-				<form action="<?php echo sefRelToAbs( 'index.php?option=com_contact&amp;Itemid='. $Itemid ); ?>" method="post" name="selectForm" target="_top" id="selectForm">
-					<?php echo (_CONTACT_SEL); ?>
+				<td align="center">
 					<br />
-					<?php echo $contact->select; ?>
-				</form>
+					<form action="<?php echo sefRelToAbs( 'index.php?option=com_contact&amp;Itemid='. $Itemid ); ?>" method="post" name="selectForm" target="_top" id="selectForm">
+						<?php echo (_CONTACT_SEL); ?>
+						<br />
+						<?php echo $contact->select; ?>
+					</form>
 				</td>
 			</tr>
 			<?php
@@ -408,23 +403,29 @@ class HTML_contact {
 			if ( $contact->name && $params->get( 'name' ) ) {
 				?>
 				<tr>
-					<td width="100%" class="contentheading<?php echo $menu_params->get( 'pageclass_sfx' ); ?>">
-					<?php
-					echo $contact->name;
-					?>
+					<td class="contentheading<?php echo $menu_params->get( 'pageclass_sfx' ); ?>" width="100%">
+						<table width="100%">
+						<tr>
+							<td width="100%">
+								<?php
+								echo $contact->name;
+								?>
+							</td>
+							<?php
+							// displays Print Icon
+							$print_link = $mosConfig_live_site .'/index2.php?option=com_contact&amp;task=view&amp;contact_id='. $contact->id .'&amp;Itemid='. $Itemid .'&amp;pop=1';
+							mosHTML::PrintIcon( $contact, $params, $hide_js, $print_link );
+							?>
+						</tr>
+						</table
 					</td>
-					<?php
-					// displays Print Icon
-					$print_link = $mosConfig_live_site .'/index2.php?option=com_contact&amp;task=view&amp;contact_id='. $contact->id .'&amp;Itemid='. $Itemid .'&amp;pop=1';
-					mosHTML::PrintIcon( $contact, $params, $hide_js, $print_link );
-					?>
 				</tr>
 				<?php
 			}
 			if ( $contact->con_position && $params->get( 'position' ) ) {
 				?>
 				<tr>
-					<td colspan="2">
+					<td width="100%">
 					<?php
 					echo $contact->con_position;
 					?>

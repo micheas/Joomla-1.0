@@ -67,6 +67,7 @@ A1 Unvalidated Input
  # Fixed [topic,70612] : Very small text error in file sample_data.sql
  # Fixed [topic,69871] : mossef notice 
  # Fixed [topic,68031] : Problems with banner.php
+ # Fixed [topic,67826] : content.html weblinks.html display issues in Opera
 
 
 19-June-2006 Rey Gigataras

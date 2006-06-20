@@ -1011,7 +1011,7 @@ class mosMainFrame {
 				$query = "SELECT id, name, username, password, usertype, block, gid"
 				. "\n FROM #__users"
 				. "\n WHERE id = $userid"
-				. "\n AND block = 0"
+				//. "\n AND block = 0"
 				;
 				$this->_db->setQuery( $query );
 				$this->_db->loadObject($user);
@@ -1025,8 +1025,9 @@ class mosMainFrame {
 			} else {
 				$query = "SELECT id, name, username, password, usertype, block, gid"
 				. "\n FROM #__users"
-				. "\n WHERE block != 1"
-				. "\n AND username = '$username'"
+				//. "\n WHERE block != 1"
+				//. "\n AND username = '$username'"
+				. "\n WHERE username = '$username'"
 				. "\n AND password = '$passwd'"
 				;
 				$this->_db->setQuery( $query );

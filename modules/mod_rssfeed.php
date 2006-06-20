@@ -36,7 +36,7 @@ $moduleclass_sfx 	= $params->get( 'moduleclass_sfx', 	'' );
 $rss091  			= $params->get( 'rss091', 			1 );
 $rss10  			= $params->get( 'rss10', 			1 );
 $rss20  			= $params->get( 'rss20', 			1 );
-$atom  				= $params->get( 'atom', 			1 );
+$atom03				= $params->get( 'atom', 			1 );
 $opml  				= $params->get( 'opml', 			1 );
 $rss091_image		= $params->get( 'rss091_image', 	'' );
 $rss10_image		= $params->get( 'rss10_image', 		'' );
@@ -113,7 +113,7 @@ if ( !$syndicateParams->get( 'opml', 1 ) ) {
 	}
 
 	// atom link
-	if ( $atom ) {
+	if ( $atom03 ) {
 		$link = 'index.php?option=com_rss&amp;feed=ATOM0.3&amp;no_html=1';
 		output_rssfeed( $link, 'atom03.gif', $atom_image, 'ATOM 0.3', 'ATOM03' );
 	}

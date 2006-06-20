@@ -69,6 +69,7 @@ A1 Unvalidated Input
  # Fixed [topic,68031] : Problems with banner.php
  # Fixed [topic,67826] : content.html weblinks.html display issues in Opera
  # Fixed [topic,67594] : Extra space in content.html.php
+ # Fixed [topic,67016] : ATOM 0.3 Always enable even I disable ATOM 0.3 in Administrator Panel
 
 
 19-June-2006 Rey Gigataras

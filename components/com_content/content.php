@@ -297,6 +297,9 @@ function showSection( $id, $gid, &$access, $now ) {
 	;
 	$database->setQuery( $query );
 	$categories = $database->loadObjectList();
+	
+	// remove slashes
+	$section->name = stripslashes($section->name);
 
 	// Dynamic Page Title
 	$mainframe->SetPageTitle( $menu->name );
@@ -563,6 +566,9 @@ function showCategory( $id, $gid, &$access, $sectionid, $limit, $selected, $limi
 	$lists['task'] 			= 'category';
 	$lists['filter'] 		= $filter;
 
+	// remove slashes
+	$category->name = stripslashes($category->name);
+	
 	// Dynamic Page Title
 	$mainframe->SetPageTitle( $pagetitle );
 

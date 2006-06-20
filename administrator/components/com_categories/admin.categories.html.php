@@ -292,7 +292,7 @@ class categories_html {
 			<?php echo $row->id ? 'Edit' : 'New';?>
 			</small>
 			<small><small>
-			[ <?php echo $component; ?>: <?php echo $row->name; ?> ]
+			[ <?php echo $component; ?>: <?php echo stripslashes($row->name); ?> ]
 			</small></small>
 			</th>
 		</tr>

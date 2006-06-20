@@ -558,7 +558,7 @@ class HTML_content {
 			if ( $row->id ) {
 				?>
 				<small><small>
-				[ Section: <?php echo $section?> ]
+				[ Section: <?php echo $section; ?> ]
 				</small></small>
 				<?php
 			}

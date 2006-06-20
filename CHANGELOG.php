@@ -62,6 +62,7 @@ A1 Unvalidated Input
 
 
 20-June-2006 Rey Gigataras
+ # Fixed [artf5025] : Category Titles with an Apostraphe leave a leading slash
  # Fixed [topic,70612] : Very small text error in file sample_data.sql
  # Fixed [topic,69871] : mossef notice 
  # Fixed [topic,68031] : Problems with banner.php

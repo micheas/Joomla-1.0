@@ -226,7 +226,7 @@ class sections_html {
 			<?php echo $row->id ? 'Edit' : 'New';?>
 			</small>
 			<small><small>
-			[ <?php echo $name ; ?> ]
+			[ <?php echo stripslashes($name); ?> ]
 			</small></small>
 			</th>
 		</tr>

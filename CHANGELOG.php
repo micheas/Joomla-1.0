@@ -61,6 +61,10 @@ A1 Unvalidated Input
 --
 
 
+20-June-2006 Rey Gigataras
+ # Fixed [topic,70612] : Very small text error in file sample_data.sql
+
+
 19-June-2006 Rey Gigataras
  # SECURITY A1 [ High Level ]: `Remember Me` functionality SQL injection vulnerability
  # SECURITY A1 [ High Level ]: `Related Items` module SQL injection vulnerability

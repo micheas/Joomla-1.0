@@ -58,8 +58,10 @@ function mosMainBody() {
 * Utility functions and classes
 */
 function mosLoadComponent( $name ) {
-	// set up some global variables for use by the frontend component
-	global $mainframe, $database;
+	// set up some global variables for use by frontend components
+	global $mainframe, $database, $my, $acl;
+	global $task, $Itemid, $id, $option, $gid;
+
 	include( $mainframe->getCfg( 'absolute_path' )."/components/com_$name/$name.php" );
 }
 /**

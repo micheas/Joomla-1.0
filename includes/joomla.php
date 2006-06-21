@@ -341,8 +341,6 @@ class mosAbstractTasker {
 		return null;
 	}
 }
-
-
 /**
 * Class to support function caching
 * @package Joomla
@@ -354,7 +352,7 @@ class mosCache {
 	function &getCache(  $group=''  ) {
 		global $mosConfig_absolute_path, $mosConfig_caching, $mosConfig_cachepath, $mosConfig_cachetime;
 
-		require_once( $mosConfig_absolute_path . '/includes/Cache/Lite/Function.php' );
+		require_once( $mosConfig_absolute_path . '/includes/joomla.cache.php' );
 
 		$options = array(
 			'cacheDir' 		=> $mosConfig_cachepath . '/',
@@ -362,7 +360,7 @@ class mosCache {
 			'defaultGroup' 	=> $group,
 			'lifeTime' 		=> $mosConfig_cachetime
 		);
-		$cache = new Cache_Lite_Function( $options );
+		$cache = new JCache_Lite_Function( $options );
 		return $cache;
 	}
 	/**

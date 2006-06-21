@@ -69,6 +69,9 @@ A4 Cross Site Scripting
 
 --
 
+21-June-2006 Alex Kempkens
+ # Fixed [artf5051] : Making cache aware of different languages
+ ! Be aware that it is now important to include all parameters, even optional once, in the cached calls.
 
 21-June-2006 David Gal
  # Fixed [topic,66858] : Can't set language 

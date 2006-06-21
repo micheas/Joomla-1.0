@@ -61,6 +61,10 @@ A1 Unvalidated Input
 --
 
 
+21-June-2006 David Gal
+ # Fixed [topic,66858] : Can't set language 
+
+
 21-June-2006 Rey Gigataras
  # Fixed [artf4976] : htaccess file instructions confusing users
  # Fixed [artf4917] : PHP getenv function fails in ISAPI mode

@@ -1718,6 +1718,7 @@ class DOMIT_Lite_Parser {
 
 		$this->preserveCDATA = $preserveCDATA;
 
+		/*
 		//create instance of expat parser (should be included in php distro)
 		if (version_compare(phpversion(), '5.0', '<=')) {
 			$parser = xml_parser_create('');
@@ -1729,6 +1730,14 @@ class DOMIT_Lite_Parser {
 			} else {
 				$parser = xml_parser_create();
 			}
+		}
+		*/
+		
+		//create instance of expat parser (should be included in php distro)
+		if (version_compare(phpversion(), '5.0', '<=')) {
+			$parser = xml_parser_create('');
+		} else {
+			$parser = xml_parser_create('iso-8859-1');
 		}
 
 		//set handlers for SAX events

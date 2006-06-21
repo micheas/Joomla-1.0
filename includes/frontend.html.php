@@ -304,7 +304,7 @@ class modules_html {
 			<td>
 				<?php
 				if ( $type ) {
-					modules_html::CustomContent(&$module, $params);
+					modules_html::CustomContent( $module, $params);
 				} else {
 					include( $mosConfig_absolute_path . '/modules/' . $module->module . '.php' );
 					
@@ -327,7 +327,7 @@ class modules_html {
 		global $mainframe, $database, $my;
 
 		if ( $type ) {
-			modules_html::CustomContent(&$module, $params);
+			modules_html::CustomContent( $module, $params);
 		} else {
 			include( $mosConfig_absolute_path . '/modules/' . $module->module . '.php' );
 			
@@ -356,7 +356,7 @@ class modules_html {
 			}
 
 			if ( $type ) {
-				modules_html::CustomContent(&$module, $params);
+				modules_html::CustomContent( $module, $params);
 			} else {
 				include( $mosConfig_absolute_path . '/modules/' . $module->module . '.php' );
 				
@@ -386,7 +386,7 @@ class modules_html {
 						}
 
 						if ( $type ) {
-							modules_html::CustomContent(&$module, $params);
+							modules_html::CustomContent( $module, $params);
 						} else {
 							include( $mosConfig_absolute_path . '/modules/' . $module->module . '.php' );
 							
@@ -402,7 +402,7 @@ class modules_html {
 		<?php
 	}
 	
-	function CustomContent($module, $params) {
+	function CustomContent( &$module, $params) {
 		global $_MAMBOTS;
 		
 		$row		= $module;

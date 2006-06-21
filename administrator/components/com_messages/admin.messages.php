@@ -149,7 +149,6 @@ function saveMessage( $option ) {
 		exit();
 	}
 
-
 	if (!$row->send()) {
 		mosRedirect( 'index2.php?option=com_messages&mosmsg=' . $row->getError() );
 	}

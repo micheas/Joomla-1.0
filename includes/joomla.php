@@ -631,6 +631,11 @@ class mosMainFrame {
 			} else if (!isset( $this->_userstate[$var_name] )) {
 				$this->setUserState( $var_name, $var_default );
 			}			
+			
+			// filter input
+			$iFilter = new InputFilter();			
+			$this->_userstate[$var_name] = $iFilter->process( $this->_userstate[$var_name] );
+			
 			return $this->_userstate[$var_name];
 		} else {
 			return null;

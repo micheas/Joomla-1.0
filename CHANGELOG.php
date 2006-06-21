@@ -65,6 +65,7 @@ A1 Unvalidated Input
 
 A4 Cross Site Scripting
  * A4 - Secured com_messages from XSS vulnerability
+ * A4 - Secured getUserStateFromRequest() from XSS vulnerability
 
 --
 
@@ -76,6 +77,7 @@ A4 Cross Site Scripting
 21-June-2006 Rey Gigataras
  # SECURITY A4 [ Medium Level ]: XSS vulerability when using SEF
  # SECURITY A4 [ Low Level ]: XSS vulerability in com_messages
+ # SECURITY A4 [ Low Level ]: XSS vulerability in getUserStateFromRequest()
 
  # Fixed [artf4976] : htaccess file instructions confusing users
  # Fixed [artf4917] : PHP getenv function fails in ISAPI mode

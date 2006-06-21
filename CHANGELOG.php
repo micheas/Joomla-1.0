@@ -54,6 +54,11 @@ A1 Unvalidated Input
  * A1 - Secured `Weblinks` submission against SQL injection attacks
  
  
+** MEDIUM Level Threats fixed in 1.0.10 
+A4 Cross Site Scripting
+ * A4 - Secured SEF from XSS vulnerability
+
+
 ** LOW Level Threats fixed in 1.0.10 
 A1 Unvalidated Input
  * A1 - Hardened frontend submission forms against spoofing
@@ -66,10 +71,12 @@ A1 Unvalidated Input
 
 
 21-June-2006 Rey Gigataras
+ # SECURITY A4 [ Medium Level ]: XSS vulerability when using SEF
+
  # Fixed [artf4976] : htaccess file instructions confusing users
  # Fixed [artf4917] : PHP getenv function fails in ISAPI mode
  # Fixed [topic,69083] : mambots not being applied to `User` Module content 
- # Fixed [topic,,69894] : Filter doesn't work when cache on
+ # Fixed [topic,69894] : Filter doesn't work when cache on
 
 
 20-June-2006 Rey Gigataras

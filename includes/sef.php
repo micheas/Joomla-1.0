@@ -404,11 +404,13 @@ function sefRelToAbs( $string ) {
 				$fragment = '#'. $url['fragment'];
 			}
 		}
-		
+
 		// check if link contained a query component
 		if ( isset($url['query']) ) {
 			// special handling for javascript
 			$url['query'] = stripslashes( str_replace( '+', '%2b', $url['query'] ) );
+			// clean possible xss attacks
+			$url['query'] = preg_replace( "'%3Cscript[^%3E]*%3E.*?%3C/script%3E'si", '', $url['query'] );
 
 			// break url into component parts			
 			parse_str( $url['query'], $parts );
@@ -419,9 +421,9 @@ function sefRelToAbs( $string ) {
 					$parts[$key] = stripslashes( str_replace( '%2b', '+', $value ) );
 				}
 			}
-			
+			//var_dump($parts);
 			$sefstring = '';
-			
+
 			// Component com_content urls
 			if ( ( $parts['option'] == 'com_content' || $parts['option'] == 'content' ) && ( $parts['task'] != 'new' ) && ( $parts['task'] != 'edit' ) ) {
 			// index.php?option=com_content [&task=$task] [&sectionid=$sectionid] [&id=$id] [&Itemid=$Itemid] [&limit=$limit] [&limitstart=$limitstart] [&year=$year] [&month=$month] [&module=$module]

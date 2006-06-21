@@ -63,7 +63,8 @@ A1 Unvalidated Input
 
 21-June-2006 Rey Gigataras
  # Fixed [artf4976] : htaccess file instructions confusing users
- # Fixed [topic,69083] : mambots not being applied to `User` Module content
+ # Fixed [artf4917] : PHP getenv function fails in ISAPI mode
+ # Fixed [topic,69083] : mambots not being applied to `User` Module content 
 
 
 20-June-2006 Rey Gigataras

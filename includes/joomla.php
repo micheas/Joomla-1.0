@@ -1387,8 +1387,8 @@ class mosMainFrame {
 			}
 			setcookie( 'mosvisitor', 1 );
 
-			if (phpversion() <= "4.2.1") {
-				$agent = getenv( "HTTP_USER_AGENT" );
+			if (phpversion() <= '4.2.1') {
+				$agent = getenv( 'HTTP_USER_AGENT' );
 				$domain = @gethostbyaddr( getenv( "REMOTE_ADDR" ) );
 			} else {
 				if ( isset($_SERVER['HTTP_USER_AGENT']) ) {

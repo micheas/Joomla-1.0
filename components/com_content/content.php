@@ -2143,7 +2143,7 @@ function recordVote() {
 	$cid 			= intval( mosGetParam( $_REQUEST, 'cid', 0 ) );
 
 	if (($user_rating >= 1) and ($user_rating <= 5)) {
-		$currip = getenv( 'REMOTE_ADDR' );
+		$currip = ( phpversion() <= '4.2.1' ? @getenv( 'REMOTE_ADDR' ) : $_SERVER['REMOTE_ADDR'] );
 
 		$query = "SELECT *"
 		. "\n FROM #__content_rating"

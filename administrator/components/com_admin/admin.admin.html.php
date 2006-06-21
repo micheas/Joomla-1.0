@@ -52,7 +52,7 @@ class HTML_admin_misc {
 	function get_server_software() {
 		if (isset($_SERVER['SERVER_SOFTWARE'])) {
 			return $_SERVER['SERVER_SOFTWARE'];
-		} else if (($sf = getenv('SERVER_SOFTWARE'))) {
+		} else if (($sf = phpversion() <= '4.2.1' ? getenv('SERVER_SOFTWARE') : $_SERVER['SERVER_SOFTWARE'])) {
 			return $sf;
 		} else {
 			return 'n/a';
@@ -137,7 +137,7 @@ class HTML_admin_misc {
 					<strong>User Agent:</strong>
 				</td>
 				<td>
-					<?php echo phpversion() <= "4.2.1" ? getenv( "HTTP_USER_AGENT" ) : $_SERVER['HTTP_USER_AGENT'];?>
+					<?php echo phpversion() <= '4.2.1' ? getenv( 'HTTP_USER_AGENT' ) : $_SERVER['HTTP_USER_AGENT'];?>
 				</td>
 			</tr>
 			<tr>

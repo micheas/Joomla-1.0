@@ -52,7 +52,10 @@ switch ( $task ) {
 		break;
 
 	case 'category':
-		$cache->call( 'showCategory', $id, $gid, $access, $sectionid, $limit, NULL, $limitstart, 0 );
+		$selected 	= strval( mosGetParam( $_REQUEST, 'order', '' ) );
+		$filter 	= strval( mosGetParam( $_REQUEST, 'filter', '' ) );	
+
+		$cache->call( 'showCategory', $id, $gid, $access, $sectionid, $limit, NULL, $limitstart, 0, $selected, $filter );
 		break;
 
 	case 'blogsection':
@@ -317,11 +320,9 @@ function showSection( $id, $gid, &$access, $now ) {
 * @param int The number of items to dislpay
 * @param int The offset for pagination
 */
-function showCategory( $id, $gid, &$access, $sectionid, $limit, $selected, $limitstart, $now  ) {
+function showCategory( $id, $gid, &$access, $sectionid, $limit, $selected, $limitstart, $now, $selected, $filter ) {
 	global $database, $mainframe, $Itemid, $mosConfig_list_limit;
 	
-	$selected = strval( mosGetParam( $_REQUEST, 'order', '' ) );
-
 	$category = new mosCategory( $database );
 	$category->load( $id );
 	
@@ -458,10 +459,7 @@ function showCategory( $id, $gid, &$access, $sectionid, $limit, $selected, $limi
 	// get the total number of published items in the category
 	// filter functionality
 	$and 	= null;
-	$filter = null;
 	if ( $params->get( 'filter' ) ) {
-		$filter = strval( mosGetParam( $_REQUEST, 'filter', '' ) );
-		
 		if ( $filter ) {
 			// clean filter variable
 			$filter = strtolower( $filter );

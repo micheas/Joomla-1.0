@@ -69,6 +69,7 @@ A1 Unvalidated Input
  # Fixed [artf4976] : htaccess file instructions confusing users
  # Fixed [artf4917] : PHP getenv function fails in ISAPI mode
  # Fixed [topic,69083] : mambots not being applied to `User` Module content 
+ # Fixed [topic,,69894] : Filter doesn't work when cache on
 
 
 20-June-2006 Rey Gigataras

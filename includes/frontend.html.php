@@ -20,6 +20,8 @@ defined( '_VALID_MOS' ) or die( 'Restricted access' );
 class modules_html {
 
 	function module( &$module, &$params, $Itemid, $style=0 ) {
+		global $_MAMBOTS;
+		
 		// custom module params
 		$moduleclass_sfx 	= $params->get( 'moduleclass_sfx' );
 		$rssurl 			= $params->get( 'rssurl' );
@@ -29,6 +31,19 @@ class modules_html {
 			modules_html::modoutput_feed( $module, $params, $moduleclass_sfx );
 		}
 
+		if ($module->content != '') {
+		// mambot handling for custom modules
+			// load content bots
+			$_MAMBOTS->loadBotGroup( 'content' );
+			
+			$row		= $module;
+			$row->text 	= $module->content;
+			
+			$results	= $_MAMBOTS->trigger( 'onPrepareContent', array( &$row, &$params, 0 ), true );
+			
+			$module->content = $row->text;
+		}
+		
 		switch ( $style ) {
 			case -3:
 			// allows for rounded corners
@@ -289,7 +304,7 @@ class modules_html {
 			<td>
 				<?php
 				if ( $type ) {
-					echo $module->content;
+					modules_html::CustomContent(&$module, $params);
 				} else {
 					include( $mosConfig_absolute_path . '/modules/' . $module->module . '.php' );
 					
@@ -312,7 +327,7 @@ class modules_html {
 		global $mainframe, $database, $my;
 
 		if ( $type ) {
-			echo $module->content;
+			modules_html::CustomContent(&$module, $params);
 		} else {
 			include( $mosConfig_absolute_path . '/modules/' . $module->module . '.php' );
 			
@@ -341,7 +356,7 @@ class modules_html {
 			}
 
 			if ( $type ) {
-				echo $module->content;
+				modules_html::CustomContent(&$module, $params);
 			} else {
 				include( $mosConfig_absolute_path . '/modules/' . $module->module . '.php' );
 				
@@ -371,7 +386,7 @@ class modules_html {
 						}
 
 						if ( $type ) {
-							echo $module->content;
+							modules_html::CustomContent(&$module, $params);
 						} else {
 							include( $mosConfig_absolute_path . '/modules/' . $module->module . '.php' );
 							
@@ -385,6 +400,26 @@ class modules_html {
 			</div>
 		</div>
 		<?php
+	}
+	
+	function CustomContent($module, $params) {
+		global $_MAMBOTS;
+		
+		$row		= $module;
+		$row->text	= $module->content;
+		
+		$results = $_MAMBOTS->trigger( 'onBeforeDisplayContent', array( &$row, &$params, 0 ) );
+		echo trim( implode( "\n", $results ) );
+		
+		$module->content = $row->text;
+		
+		// output custom module contents
+		echo $module->content;
+		
+		$results = $_MAMBOTS->trigger( 'onAfterDisplayContent', array( &$row, &$params, 0 ) );
+		echo trim( implode( "\n", $results ) );
+		
+		$module->content = $row->text;
 	}
 }
 ?>

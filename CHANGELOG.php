@@ -61,6 +61,10 @@ A1 Unvalidated Input
 --
 
 
+21-June-2006 Rey Gigataras
+ # Fixed [topic,69083] : mambots not being applied to `User` Module content
+
+
 20-June-2006 Rey Gigataras
  # Fixed [artf5025] : Category Titles with an Apostraphe leave a leading slash
  # Fixed [artf4927] : blocked user receives wrong error message

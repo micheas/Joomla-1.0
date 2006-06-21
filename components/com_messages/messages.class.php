@@ -46,6 +46,16 @@ class mosMessage extends mosDBTable {
 		$this->mosDBTable( '#__messages', 'message_id', $db );
 	}
 
+	/**
+	* Validation and filtering
+	*/
+	function check() {
+		// filter malicious code
+		$this->filter( );
+		
+		return true;
+	}
+	
 	function send( $from_id=null, $to_id=null, $subject=null, $message=null ) {
 		global $database;
 

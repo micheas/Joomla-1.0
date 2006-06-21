@@ -63,6 +63,9 @@ A4 Cross Site Scripting
 A1 Unvalidated Input
  * A1 - Hardened frontend submission forms against spoofing
 
+A4 Cross Site Scripting
+ * A4 - Secured com_messages from XSS vulnerability
+
 --
 
 
@@ -72,6 +75,7 @@ A1 Unvalidated Input
 
 21-June-2006 Rey Gigataras
  # SECURITY A4 [ Medium Level ]: XSS vulerability when using SEF
+ # SECURITY A4 [ Low Level ]: XSS vulerability in com_messages
 
  # Fixed [artf4976] : htaccess file instructions confusing users
  # Fixed [artf4917] : PHP getenv function fails in ISAPI mode

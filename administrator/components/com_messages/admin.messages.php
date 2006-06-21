@@ -143,11 +143,17 @@ function saveMessage( $option ) {
 		echo "<script> alert('".$row->getError()."'); window.history.go(-1); </script>\n";
 		exit();
 	}
+	
+ 	if (!$row->check()) {
+		echo "<script> alert('".$row->getError()."'); window.history.go(-1); </script>\n";
+		exit();
+	}
+
 
 	if (!$row->send()) {
-		mosRedirect( "index2.php?option=com_messages&mosmsg=" . $row->getError() );
+		mosRedirect( 'index2.php?option=com_messages&mosmsg=' . $row->getError() );
 	}
-	mosRedirect( "index2.php?option=com_messages" );
+	mosRedirect( 'index2.php?option=com_messages' );
 }
 
 function showMessages( $option ) {

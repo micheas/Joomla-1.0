@@ -32,12 +32,7 @@ if (!defined( '_JOS_NEWSFLASH_MODULE' )) {
 		$row->created 	= '';
 		$row->modified 	= '';	
 
-		$bs 			= $mainframe->getBlogSectionCount();
-		$bc 			= $mainframe->getBlogCategoryCount();
-		$gbs 			= $mainframe->getGlobalBlogSectionCount();
-		$ItemidCount 	= $mainframe->getItemid( $row->id, 0, 0, $bs, $bc, $gbs );
-		
-		HTML_content::show( $row, $params, $access, 0, 'com_content', $ItemidCount );
+		HTML_content::show( $row, $params, $access, 0 );
 	}
 }
 

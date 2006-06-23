@@ -417,7 +417,7 @@ class HTML_content {
 	* @param object An object with the record data
 	* @param boolean If <code>false</code>, the print button links to a popup window.  If <code>true</code> then the print button invokes the browser print method.
 	*/
-	function show( &$row, &$params, &$access, $page=0, $option='com_content', $ItemidCount=NULL ) {
+	function show( &$row, &$params, &$access, $page=0 ) {
 		global $mainframe, $hide_js;
 		global $mosConfig_live_site;
 		global $_MAMBOTS;

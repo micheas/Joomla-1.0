@@ -39,6 +39,20 @@ if (!defined( '_JOS_POLL_MODULE' )) {
 			return;
 		}
 
+		// try to find poll component's Itemid
+		$query = "SELECT id"
+		. "\n FROM #__menu"
+		. "\n WHERE type = 'components'"
+		. "\n AND published = 1"
+		. "\n AND link = 'index.php?option=com_poll'"
+		;
+		$database->setQuery( $query );
+		$_Itemid = $database->loadResult();
+		
+		if ($_Itemid) {
+			$_Itemid = '&amp;Itemid='. $_Itemid;
+		}			
+		
 		$z = 1;
 		foreach ($polls as $poll) {
 			if ($poll->id && $poll->title) {
@@ -55,7 +69,7 @@ if (!defined( '_JOS_POLL_MODULE' )) {
 					return;
 				}
 				
-				poll_vote_form_html( $poll, $options, $Itemid, $params, $z );
+				poll_vote_form_html( $poll, $options, $_Itemid, $params, $z );
 				
 				$z++;
 			}
@@ -68,7 +82,7 @@ if (!defined( '_JOS_POLL_MODULE' )) {
 	 * @param int The current menu item
 	 * @param string CSS suffix
 	 */
-	function poll_vote_form_html( &$poll, &$options, $Itemid, &$params, $z ) {		
+	function poll_vote_form_html( &$poll, &$options, $_Itemid, &$params, $z ) {		
 		$tabclass_arr 		= array( 'sectiontableentry2', 'sectiontableentry1' );
 		$tabcnt 			= 0;
 		$moduleclass_sfx 	= $params->get('moduleclass_sfx');		
@@ -100,7 +114,7 @@ if (!defined( '_JOS_POLL_MODULE' )) {
 		}		
 		//-->
 		</script>		
-		<form name="pollxtd<?php echo $z;?>" method="post" action="<?php echo sefRelToAbs("index.php?option=com_poll&amp;Itemid=$Itemid"); ?>">
+		<form name="pollxtd<?php echo $z;?>" method="post" action="<?php echo sefRelToAbs("index.php?option=com_poll$_Itemid"); ?>">
 		
 		<table width="95%" border="0" cellspacing="0" cellpadding="1" align="center" class="poll<?php echo $moduleclass_sfx; ?>">
 		<thead>
@@ -141,7 +155,7 @@ if (!defined( '_JOS_POLL_MODULE' )) {
 				<div align="center">
 					<input type="button" onclick="submitbutton_Poll<?php echo $z;?>();" name="task_button" class="button" value="<?php echo _BUTTON_VOTE; ?>" />
 					&nbsp;
-					<input type="button" name="option" class="button" value="<?php echo _BUTTON_RESULTS; ?>" onclick="document.location.href='<?php echo sefRelToAbs("index.php?option=com_poll&amp;task=results&amp;id=$poll->id"); ?>';" />
+					<input type="button" name="option" class="button" value="<?php echo _BUTTON_RESULTS; ?>" onclick="document.location.href='<?php echo sefRelToAbs("index.php?option=com_poll&amp;task=results&amp;id=$poll->id$_Itemid"); ?>';" />
 				</div>
 			</td>
 		</tr>

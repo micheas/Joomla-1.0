@@ -76,6 +76,7 @@ A4 Cross Site Scripting
  # Fixed [artf5059] : Blog ordering, items by - most hits 
  # Fixed [topic,67719] : Email Cloaking Ads extra space after cloaked address
  # Fixed [topic,66966] : E-mailing Cloaking Issue
+ # Fixed [topic,67141] : pathway empty when showing poll results
 
 
 21-June-2006 Alex Kempkens

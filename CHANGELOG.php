@@ -62,6 +62,7 @@ A4 Cross Site Scripting
 ** LOW Level Threats fixed in 1.0.10 
 A1 Unvalidated Input
  * A1 - Hardened frontend submission forms against spoofing
+ * A1 - Secured mosmsg from misuse
 
 A4 Cross Site Scripting
  * A4 - Secured com_messages from XSS vulnerability
@@ -70,6 +71,8 @@ A4 Cross Site Scripting
 --
 
 23-June-2006 Rey Gigataras
+ # SECURITY A1 [ Low Level ]: mosmsg hardened
+ 
  # Fixed [artf5059] : Blog ordering, items by - most hits 
  # Fixed [topic,67719] : Email Cloaking Ads extra space after cloaked address
  # Fixed [topic,66966] : E-mailing Cloaking Issue

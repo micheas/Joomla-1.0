@@ -16,6 +16,7 @@ defined( '_VALID_MOS' ) or die( 'Restricted access' );
 * Displays the capture output of the main element
 */
 function mosMainBody() {
+	global $mosConfig_live_site;
 	// message passed via the url
 	$mosmsg = strval( mosGetParam( $_REQUEST, 'mosmsg', '' ) );
 
@@ -23,7 +24,7 @@ function mosMainBody() {
 	
 	// Browser Check
 	$browserCheck = 0;
-	if ( isset( $_SERVER['HTTP_USER_AGENT'] ) ) {
+	if ( isset( $_SERVER['HTTP_USER_AGENT'] ) && isset( $_SERVER['HTTP_REFERER'] ) && strpos($_SERVER['HTTP_REFERER'], $mosConfig_live_site) !== false ) {
 		$browserCheck = 1;
 	}
 	

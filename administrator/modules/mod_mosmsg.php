@@ -18,7 +18,7 @@ $mosmsg = strval( ( strip_tags( mosGetParam( $_REQUEST, 'mosmsg', '' ) ) ) );
 
 // Browser Check
 $browserCheck = 0;
-if ( isset( $_SERVER['HTTP_USER_AGENT'] ) && isset( $_SERVER['HTTP_REFERER'] ) ) {
+if ( isset( $_SERVER['HTTP_USER_AGENT'] ) && isset( $_SERVER['HTTP_REFERER'] ) && strpos($_SERVER['HTTP_REFERER'], $mosConfig_live_site) !== false ) {
 	$browserCheck = 1;
 }
 

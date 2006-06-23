@@ -70,6 +70,7 @@ A4 Cross Site Scripting
 --
 
 23-June-2006 Rey Gigataras
+ # Fixed [artf5059] : Blog ordering, items by - most hits 
  # Fixed [topic,67719] : Email Cloaking Ads extra space after cloaked address
  # Fixed [topic,66966] : E-mailing Cloaking Issue
 

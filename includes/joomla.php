@@ -1565,14 +1565,13 @@ class mosMainFrame {
 			}
 			// if id hasnt been checked before initaite query
 			if ( !$exists ) {
-				$query = "SELECT ms.id AS sid, ms.type AS stype, mc.id AS cid, mc.type AS ctype, i.id as sectionid, i.id as catid"
+				$query = "SELECT ms.id AS sid, ms.type AS stype, mc.id AS cid, mc.type AS ctype, i.id as sectionid, i.id As catid, ms.published AS spub, mc.published AS cpub"
 				. "\n FROM #__content AS i"
 				. "\n LEFT JOIN #__sections AS s ON i.sectionid = s.id"
 				. "\n LEFT JOIN #__menu AS ms ON ms.componentid = s.id "
 				. "\n LEFT JOIN #__categories AS c ON i.catid = c.id"
 				. "\n LEFT JOIN #__menu AS mc ON mc.componentid = c.id "
-				. "\n WHERE ( ms.published = 1 OR mc.published = 1 )"
-				. "\n AND ( ms.type IN ( 'content_section', 'content_blog_section' ) OR mc.type IN ( 'content_blog_category', 'content_category' ) )"
+				. "\n WHERE ( ms.type IN ( 'content_section', 'content_blog_section' ) OR mc.type IN ( 'content_blog_category', 'content_category' ) )"
 				. "\n AND i.id = $id"
 				. "\n ORDER BY ms.type DESC, mc.type DESC, ms.id, mc.id"
 				;
@@ -1581,19 +1580,19 @@ class mosMainFrame {
 
 				if (count($links)) {
 					foreach($links as $link) {
-						if ($link->stype == 'content_section' && $link->sectionid == $id && !isset($content_section)) {
+						if ($link->stype == 'content_section' && $link->sectionid == $id && !isset($content_section) && $link->spub == 1) {
 							$content_section = $link->sid;
 						}
 						
-						if ($link->stype == 'content_blog_section' && $link->sectionid == $id && !isset($content_blog_section)) {
+						if ($link->stype == 'content_blog_section' && $link->sectionid == $id && !isset($content_blog_section) && $link->spub == 1) {
 							$content_blog_section = $link->sid;
 						}						
 						
-						if ($link->ctype == 'content_blog_category' && $link->catid == $id && !isset($content_blog_category)) {
+						if ($link->ctype == 'content_blog_category' && $link->catid == $id && !isset($content_blog_category) && $link->cpub == 1) {
 							$content_blog_category = $link->cid;
 						}	
 						
-						if ($link->ctype == 'content_category' && $link->catid == $id && !isset($content_category)) {
+						if ($link->ctype == 'content_category' && $link->catid == $id && !isset($content_category) && $link->cpub == 1) {
 							$content_category = $link->cid;
 						}	
 					}
@@ -1715,6 +1714,25 @@ class mosMainFrame {
 			}
 		}
 
+		if ($_Itemid == '') {
+			// ensure that query is only called once		
+			if ( !$this->get( '_GlobalBlogCategory' ) && !defined( '_JOS_GBC' ) ) {					
+				define( '_JOS_GBC', 1 );
+				
+				// Search in global blog category
+				$query = "SELECT id "
+				. "\n FROM #__menu "
+				. "\n WHERE type = 'content_blog_category'"
+				. "\n AND published = 1"
+				. "\n AND componentid = 0"
+				;
+				$this->_db->setQuery( $query );
+				$this->set( '_GlobalBlogCategory', $this->_db->loadResult() );
+			}
+			
+			$_Itemid = $this->get( '_GlobalBlogCategory' );
+		}
+		
 		if ( $_Itemid != '' ) {
 		// if Itemid value discovered by queries, return this value
 			return $_Itemid;
@@ -1726,44 +1744,26 @@ class mosMainFrame {
 
 	/**
 	* @return number of Published Blog Sections
+	* Kept for Backward Compatability
 	*/
 	function getBlogSectionCount( ) {
-		// ensure that query is only called once		
-		if ( !$this->get( '_BlogSectionCount' ) && !defined( '_JOS_BSC' ) ) {		
-			define( '_JOS_BSC', 1 );
-			
-			$this->set( '_BlogSectionCount', 1 );
-		}
-		
-		return $this->get( '_BlogSectionCount' );
+		return 1;
 	}
 
 	/**
 	* @return number of Published Blog Categories
+	* Kept for Backward Compatability
 	*/
 	function getBlogCategoryCount( ) {
-		// ensure that query is only called once		
-		if ( !$this->get( '_BlogCategoryCount' )&& !defined( '_JOS_BCC' ) ) {
-			define( '_JOS_BCC', 1 );
-			
-			$this->set( '_BlogCategoryCount', 1 );
-		}
-		
-		return $this->get( '_BlogCategoryCount' );
+		return 1;
 	}
 
 	/**
 	* @return number of Published Global Blog Sections
+	* Kept for Backward Compatability
 	*/
 	function getGlobalBlogSectionCount( ) {
-		// ensure that query is only called once		
-		if ( !$this->get( '_GlobalBlogSectionCount' ) && !defined( '_JOS_GBSC' ) ) {		
-			define( '_JOS_GBSC', 1 );
-			
-			$this->set( '_GlobalBlogSectionCount', 1 );
-		}
-		
-		return $this->get( '_GlobalBlogSectionCount' );
+		return 1;
 	}
 
 	/**

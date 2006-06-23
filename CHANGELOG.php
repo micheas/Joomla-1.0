@@ -75,6 +75,7 @@ A4 Cross Site Scripting
  
  # Fixed [artf5059] : Blog ordering, items by - most hits 
  # Fixed [artf4969] : Missing Itemid in readmore with multi category blog
+ # Fixed [artf5083] : Problem with Description/Description Image parameters of "List - Content Section"
  # Fixed [topic,67719] : Email Cloaking Ads extra space after cloaked address
  # Fixed [topic,66966] : E-mailing Cloaking Issue
  # Fixed [topic,67141] : pathway empty when showing poll results

@@ -47,19 +47,27 @@ class HTML_content {
 		}
 		?>
 		<table width="100%" cellpadding="0" cellspacing="0" border="0" align="center" class="contentpane<?php echo $params->get( 'pageclass_sfx' ); ?>">
-		<tr>
-			<td width="60%" valign="top" class="contentdescription<?php echo $params->get( 'pageclass_sfx' ); ?>" colspan="2">
-			<?php
-			if ( $title->image ) {
-				$link = $mosConfig_live_site .'/images/stories/'. $title->image;
-				?>
-				<img src="<?php echo $link;?>" align="<?php echo $title->image_position;?>" hspace="6" alt="<?php echo $title->image;?>" />
-				<?php
-			}
-			echo $title->description;
+		<?php
+		if ( $params->get('description') || $params->get('description_image') ) {
 			?>
-			</td>
-		</tr>
+			<tr>
+				<td width="60%" valign="top" class="contentdescription<?php echo $params->get( 'pageclass_sfx' ); ?>" colspan="2">
+				<?php
+				if ( $params->get('description_image') && $title->image ) {
+					$link = $mosConfig_live_site .'/images/stories/'. $title->image;
+					?>
+					<img src="<?php echo $link;?>" align="<?php echo $title->image_position;?>" hspace="6" alt="<?php echo $title->image;?>" />
+					<?php
+				}
+				if ( $params->get('description') ) {
+					echo $title->description;
+				}
+				?>
+				</td>
+			</tr>
+			<?php
+		}
+		?>
 		<tr>
 			<td width="100%">
 			<?php

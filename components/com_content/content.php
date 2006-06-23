@@ -221,7 +221,7 @@ function showSection( $id, $gid, &$access, $now ) {
 	// Paramters
 	$params = new stdClass();
 	if ( $Itemid ) {
-		$menu = $mainframe->get( 'menu' );
+		$menu 	= $mainframe->get( 'menu' );
 		$params = new mosParameters( $menu->params );
 	} else {
 		$menu 	= '';
@@ -230,24 +230,30 @@ function showSection( $id, $gid, &$access, $now ) {
 	}
 	$orderby = $params->get( 'orderby', '' );
 
-	$params->set( 'type', 				'section' );
+	$params->set( 'type', 					'section' );
 
-	$params->def( 'page_title', 		1 );
-	$params->def( 'pageclass_sfx', 		'' );
-	$params->def( 'other_cat_section', 	1 );
-	$params->def( 'empty_cat_section', 	0 );
-	$params->def( 'other_cat', 			1 );
-	$params->def( 'empty_cat', 			0 );
-	$params->def( 'cat_items', 			1 );
-	$params->def( 'cat_description', 	1 );
-	$params->def( 'back_button', 		$mainframe->getCfg( 'back_button' ) );
-	$params->def( 'pageclass_sfx', 		'' );
+	$params->def( 'page_title', 			1 );
+	$params->def( 'pageclass_sfx', 			'' );
+	$params->def( 'description_sec', 		1 );
+	$params->def( 'description_sec_image', 	1 );
+	$params->def( 'other_cat_section', 		1 );
+	$params->def( 'empty_cat_section', 		0 );
+	$params->def( 'other_cat', 				1 );
+	$params->def( 'empty_cat', 				0 );
+	$params->def( 'cat_items', 				1 );
+	$params->def( 'cat_description', 		1 );
+	$params->def( 'back_button', 			$mainframe->getCfg( 'back_button' ) );
+	$params->def( 'pageclass_sfx', 			'' );
 	// param controls whether unpublished items visible to publishers and above
-	$params->def( 'unpublished', 		1 );
+	$params->def( 'unpublished', 			1 );
 		
 	// Ordering control
 	$orderby = _orderby_sec( $orderby );
 
+	// Description & Description Image control
+	$params->def( 'description', 			$params->get( 'description_sec' ) );
+	$params->def( 'description_image', 		$params->get( 'description_sec_image' ) );	
+	
 	if ( $access->canEdit ) {
 		$xwhere = '';
 		if ( $params->get( 'unpublished' ) ) {
@@ -366,7 +372,7 @@ function showCategory( $id, $gid, &$access, $sectionid, $limit, $selected, $limi
 	// Paramters
 	$params = new stdClass();
 	if ( $Itemid ) {
-		$menu = $mainframe->get( 'menu' );
+		$menu 	= $mainframe->get( 'menu' );
 		$params = new mosParameters( $menu->params );
 	} else {
 		$menu = '';
@@ -384,31 +390,37 @@ function showCategory( $id, $gid, &$access, $sectionid, $limit, $selected, $limi
 
 	$params->set( 'type', 				'category' );
 
-	$params->def( 'page_title',			1 );
-	$params->def( 'title', 				1 );
-	$params->def( 'hits', 				$mainframe->getCfg( 'hits' ) );
-	$params->def( 'author', 			!$mainframe->getCfg( 'hideAuthor' ) );
-	$params->def( 'date', 				!$mainframe->getCfg( 'hideCreateDate' ) );
-	$params->def( 'date_format', 		_DATE_FORMAT_LC );
-	$params->def( 'navigation', 		2 );
-	$params->def( 'display', 			1 );
-	$params->def( 'display_num', 		$mosConfig_list_limit );
-	$params->def( 'other_cat', 			1 );
-	$params->def( 'empty_cat', 			0 );
-	$params->def( 'cat_items', 			1 );
-	$params->def( 'cat_description', 	0 );
-	$params->def( 'back_button', 		$mainframe->getCfg( 'back_button' ) );
-	$params->def( 'pageclass_sfx', 		'' );
-	$params->def( 'headings', 			1 );
-	$params->def( 'order_select', 		1 );
-	$params->def( 'filter', 			1 );
-	$params->def( 'filter_type', 		'title' );
+	$params->def( 'description_cat', 		1 );
+	$params->def( 'description_cat_image', 	1 );
+	$params->def( 'page_title',				1 );
+	$params->def( 'title', 					1 );
+	$params->def( 'hits', 					$mainframe->getCfg( 'hits' ) );
+	$params->def( 'author', 				!$mainframe->getCfg( 'hideAuthor' ) );
+	$params->def( 'date', 					!$mainframe->getCfg( 'hideCreateDate' ) );
+	$params->def( 'date_format', 			_DATE_FORMAT_LC );
+	$params->def( 'navigation', 			2 );
+	$params->def( 'display', 				1 );
+	$params->def( 'display_num', 			$mosConfig_list_limit );
+	$params->def( 'other_cat', 				1 );
+	$params->def( 'empty_cat', 				0 );
+	$params->def( 'cat_items', 				1 );
+	$params->def( 'cat_description', 		0 );
+	$params->def( 'back_button', 			$mainframe->getCfg( 'back_button' ) );
+	$params->def( 'pageclass_sfx', 			'' );
+	$params->def( 'headings', 				1 );
+	$params->def( 'order_select', 			1 );
+	$params->def( 'filter', 				1 );
+	$params->def( 'filter_type', 			'title' );
 	// param controls whether unpublished items visible to publishers and above
 	$params->def( 'unpublished', 		1 );
 
 	// Ordering control
 	$orderby = _orderby_sec( $orderby );
 
+	// Description & Description Image control
+	$params->def( 'description', 			$params->get( 'description_cat' ) );
+	$params->def( 'description_image', 		$params->get( 'description_cat_image' ) );	
+	
 	if ( $sectionid == 0 ) {
 		$sectionid = $category->section;
 	}

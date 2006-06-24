@@ -1001,6 +1001,17 @@ class mosMainFrame {
 			
 			$bypost 	= 1;
 			
+			// Session Cookie `name`
+			$sessionCookieName 	= mosMainFrame::sessionCookieName();
+			// Get Session Cookie `value`
+			$sessioncookie 		= strval( mosGetParam( $_COOKIE, $sessionCookieName, null ) );
+			// extra check to ensure that Joomla! sessioncookie exists			
+			if ($sessioncookie != '-' || strlen($sessioncookie) != 32) {
+				header( 'HTTP/1.0 403 Forbidden' );
+				mosErrorAlert( _NOT_AUTH );
+				return;
+			}
+			
 			josSpoofCheck(NULL,1);
 		}
 
@@ -1016,7 +1027,6 @@ class mosMainFrame {
 				$query = "SELECT id, name, username, password, usertype, block, gid"
 				. "\n FROM #__users"
 				. "\n WHERE id = $userid"
-				//. "\n AND block = 0"
 				;
 				$this->_db->setQuery( $query );
 				$this->_db->loadObject($user);
@@ -1028,10 +1038,9 @@ class mosMainFrame {
 					$row = $user;
 				}				
 			} else {
+			// query used for login via login module
 				$query = "SELECT id, name, username, password, usertype, block, gid"
 				. "\n FROM #__users"
-				//. "\n WHERE block != 1"
-				//. "\n AND username = '$username'"
 				. "\n WHERE username = '$username'"
 				. "\n AND password = '$passwd'"
 				;

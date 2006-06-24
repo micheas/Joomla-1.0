@@ -587,6 +587,8 @@ class mosMainFrame {
 		}
 		return implode( "\n", $head ) . "\n";
 	}
+	
+	
 	/**
 	* @return string
 	*/

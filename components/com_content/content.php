@@ -1289,21 +1289,15 @@ function showItem( $uid, $gid, &$access, $pop, $option='com_content', $now ) {
 		;
 	}
 
-	//$voting = votingQuery();
-	
 	// main query
 	$query = "SELECT a.*, u.name AS author, u.usertype, cc.name AS category, s.name AS section, g.name AS groups,"
 	. "\n s.published AS sec_pub, cc.published AS cat_pub, s.access AS sec_access, cc.access AS cat_access,"
 	. "\n s.id AS sec_id, cc.id as cat_id"
-	//. $voting['select']
-	//. "\n , ROUND( v.rating_sum / v.rating_count ) AS rating, v.rating_count"
 	. "\n FROM #__content AS a"
 	. "\n LEFT JOIN #__categories AS cc ON cc.id = a.catid"
 	. "\n LEFT JOIN #__sections AS s ON s.id = cc.section AND s.scope = 'content'"
 	. "\n LEFT JOIN #__users AS u ON u.id = a.created_by"
 	. "\n LEFT JOIN #__groups AS g ON a.access = g.id"
-	//. $voting['join']
-	//. "\n LEFT JOIN #__content_rating AS v ON a.id = v.content_id"
 	. "\n WHERE a.id = $uid"
 	. $xwhere
 	. "\n AND a.access <= $gid"

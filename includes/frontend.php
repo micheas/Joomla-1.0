@@ -186,7 +186,7 @@ function mosLoadModules( $position='left', $style=0 ) {
 * Assembles head tags
 */
 function mosShowHead() {
-	global $database, $option, $my, $mainframe, $_VERSION, $task;
+	global $database, $option, $my, $mainframe, $_VERSION, $task, $id;
 	global $mosConfig_MetaDesc, $mosConfig_MetaKeys, $mosConfig_live_site, $mosConfig_sef, $mosConfig_absolute_path, $mosConfig_sitename, $mosConfig_favicon;
 
 	if ($my->id || $mainframe->get( 'joomlaJavascript' )) {
@@ -200,8 +200,11 @@ function mosShowHead() {
 	$mainframe->addMetaTag( 'Generator', $_VERSION->PRODUCT . ' - ' . $_VERSION->COPYRIGHT);
 	$mainframe->addMetaTag( 'robots', 'index, follow' );
 
-	echo $mainframe->getHead();
-	
+	// cache activation
+	// echo $mainframe->getHead();
+	$cache =& mosCache::getCache('com_content');
+	echo $cache->call('mainframe->getHead', $_SERVER['QUERY_STRING'], $id);
+
 	if ( isset($mosConfig_sef) && $mosConfig_sef ) {
 		echo "<base href=\"$mosConfig_live_site/\" />\r\n";
 	}

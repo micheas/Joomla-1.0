@@ -79,6 +79,7 @@ A4 Cross Site Scripting
  # Fixed [topic,67719] : Email Cloaking Ads extra space after cloaked address
  # Fixed [topic,66966] : E-mailing Cloaking Issue
  # Fixed [topic,67141] : pathway empty when showing poll results
+ # Fixed [topic,67068] : Caching of Custom Heads still not working (not a full fix)
 
 
 21-June-2006 Alex Kempkens

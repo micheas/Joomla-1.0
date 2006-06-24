@@ -23,15 +23,15 @@ class joomlaVersion {
 	/** @var string Development Status */
 	var $DEV_STATUS = 'Stable';
 	/** @var int Sub Release Level */
-	var $DEV_LEVEL 	= '9';
+	var $DEV_LEVEL 	= '10';
 	/** @var int build Number */
 	var $BUILD	 	= '$Revision$';
 	/** @var string Codename */
-	var $CODENAME 	= 'Sunshine';
+	var $CODENAME 	= 'Sundown';
 	/** @var string Date */
-	var $RELDATE 	= '05 June 2006';
+	var $RELDATE 	= '24 June 2006';
 	/** @var string Time */
-	var $RELTIME 	= '16:00';
+	var $RELTIME 	= '08:00';
 	/** @var string Timezone */
 	var $RELTZ 		= 'UTC';
 	/** @var string Copyright Text */

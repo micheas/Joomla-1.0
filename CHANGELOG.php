@@ -37,7 +37,7 @@ Legend:
 ! -> Note
 
 
--------------------------------------------------------------------------------------
+---------------- 1.0.10 Stable Released -- [24-June-2006 08:00 UTC] ------------------
 
 
 This Release Contains following Security Fixes
@@ -46,7 +46,7 @@ Joomla! utilizes the Open Web Application Security Project (OWASP) web applicati
 http://www.owasp.org/index.php/OWASP_Top_Ten_Project
 
 
-** HIGH Level Threats fixed in 1.0.10 
+03 HIGH Level Threats fixed in 1.0.10 
 
 A1 Unvalidated Input
  * A1 - Secured `Remember Me` functionality against SQL injection attacks
@@ -54,12 +54,14 @@ A1 Unvalidated Input
  * A1 - Secured `Weblinks` submission against SQL injection attacks
  
  
-** MEDIUM Level Threats fixed in 1.0.10 
+01 MEDIUM Level Threats fixed in 1.0.10 
+
 A4 Cross Site Scripting
  * A4 - Secured SEF from XSS vulnerability
 
 
-** LOW Level Threats fixed in 1.0.10 
+04 LOW Level Threats fixed in 1.0.10 
+
 A1 Unvalidated Input
  * A1 - Hardened frontend submission forms against spoofing
  * A1 - Secured mosmsg from misuse
@@ -68,7 +70,8 @@ A4 Cross Site Scripting
  * A4 - Secured com_messages from XSS vulnerability
  * A4 - Secured getUserStateFromRequest() from XSS vulnerability
 
---
+-- -- --
+
 
 23-June-2006 Rey Gigataras
  # SECURITY A1 [ Low Level ]: mosmsg hardened

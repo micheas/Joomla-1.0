@@ -37,7 +37,7 @@ Legend:
 ! -> Note
 
 
----------------- 1.0.10 Stable Released -- [24-June-2006 08:00 UTC] ------------------
+---------------- 1.0.10 Stable Released -- [26-June-2006 00:00 UTC] ------------------
 
 
 This Release Contains following Security Fixes
@@ -60,7 +60,7 @@ A4 Cross Site Scripting
  * A4 - Secured SEF from XSS vulnerability
 
 
-04 LOW Level Threats fixed in 1.0.10 
+05 LOW Level Threats fixed in 1.0.10 
 
 A1 Unvalidated Input
  * A1 - Hardened frontend submission forms against spoofing

@@ -2930,18 +2930,17 @@ function mosGetParam( &$arr, $name, $def=null, $mask=0 ) {
 				// do nothing
 			} else if ($mask&_MOS_ALLOWHTML) {
 				// do nothing - compatibility mode
-				/*
-				if (is_null( $safeHtmlFilter )) {
-					$safeHtmlFilter = new InputFilter( null, null, 1, 1 );
-				}
-				$arr[$name] = $safeHtmlFilter->process( $arr[$name] );
-				*/
 			} else {
 				// send to inputfilter
 				if (is_null( $noHtmlFilter )) {
 					$noHtmlFilter = new InputFilter( /* $tags, $attr, $tag_method, $attr_method, $xss_auto */ );
 				}
 				$return = $noHtmlFilter->process( $return );
+				
+				if (is_numeric($def)) {
+				// if default value is numeric set variable type to integer
+					$return = intval($return);
+				}				
 			}
 			
 			// account for magic quotes setting
@@ -2949,7 +2948,7 @@ function mosGetParam( &$arr, $name, $def=null, $mask=0 ) {
 				$return = addslashes( $return );
 			}
 		}
-		
+
 		return $return;
 	} else {
 		return $def;

@@ -65,6 +65,7 @@ A4 Cross Site Scripting
 A1 Unvalidated Input
  * A1 - Hardened frontend submission forms against spoofing
  * A1 - Secured mosmsg from misuse
+ * A1 - Hardened mosgetparam by setting variable type to integer if default value is detected as numeric
 
 A4 Cross Site Scripting
  * A4 - Secured com_messages from XSS vulnerability
@@ -74,6 +75,8 @@ A4 Cross Site Scripting
 
 
 25-June-2006 Rey Gigataras
+ # SECURITY A1 [ Low Level ]: mosgetparam sets variable type to integer if default value is detected as numeric
+ 
  # Fixed [artf5091] : Missing closing "}" in one of PatFactory templates
  # Fixed [topic,71858] : Content Archive issue when caching on
  # Fixed [topic,71859] : Unable to login frontend

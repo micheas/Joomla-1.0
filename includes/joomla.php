@@ -666,11 +666,6 @@ class mosMainFrame {
 		
 		// purge expired sessions
 		$session->purge('core');
-		// purge expired frontend logged sessions only - expiry time set in Global Config
-		//$session->purge(intval( $this->getCfg( 'lifetime' ) ), $and );
-		// purge expired frontend guest sessions only - expire time fixed at 15 mins
-		//$and 		= "\n AND guest = 1 \n AND userid = 0";
-		//$session->purge( 900, $and );
 
 		// Session Cookie `name`
 		$sessionCookieName 	= mosMainFrame::sessionCookieName();
@@ -1006,7 +1001,7 @@ class mosMainFrame {
 			// Get Session Cookie `value`
 			$sessioncookie 		= strval( mosGetParam( $_COOKIE, $sessionCookieName, null ) );
 			// extra check to ensure that Joomla! sessioncookie exists			
-			if ($sessioncookie != '-' || strlen($sessioncookie) != 32) {
+			if (!($sessioncookie == '-' || strlen($sessioncookie) == 32)) {
 				header( 'HTTP/1.0 403 Forbidden' );
 				mosErrorAlert( _NOT_AUTH );
 				return;

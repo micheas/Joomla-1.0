@@ -22,6 +22,9 @@ $sectionid 	= intval( mosGetParam( $_REQUEST, 'sectionid', 0 ) );
 $pop 		= intval( mosGetParam( $_REQUEST, 'pop', 0 ) );
 $limit 		= intval( mosGetParam( $_REQUEST, 'limit', 0 ) );
 $limitstart = intval( mosGetParam( $_REQUEST, 'limitstart', 0 ) );
+$year 		= intval( mosGetParam( $_REQUEST, 'year', 	date( 'Y' ) ) );
+$month 		= intval( mosGetParam( $_REQUEST, 'month', 	date( 'm' ) ) );
+$module 	= intval( mosGetParam( $_REQUEST, 'module', 0 ) );
 
 // Editor usertype check
 $access = new stdClass();
@@ -71,12 +74,12 @@ switch ( $task ) {
 
 	case 'archivesection':
 		// Itemid is a dummy value to cater for caching
-		$cache->call( 'showArchiveSection', $id, $gid, $access, $pop, $option, $Itemid );
+		$cache->call( 'showArchiveSection', $id, $gid, $access, $pop, $option, $year, $month, $Itemid );
 		break;
 
 	case 'archivecategory':
 		// Itemid is a dummy value to cater for caching
-		$cache->call( 'showArchiveCategory', $id, $gid, $access, $pop, $option, $Itemid );
+		$cache->call( 'showArchiveCategory', $id, $gid, $access, $pop, $option, $year, $month, $module, $Itemid );
 		break;
 
 	case 'edit':
@@ -768,17 +771,13 @@ function showBlogCategory( $id=0, $gid, &$access, $pop, $now ) {
 	BlogOutput( $rows, $params, $gid, $access, $pop, $menu );
 }
 
-function showArchiveSection( $id=NULL, $gid, &$access, $pop, $option ) {
+function showArchiveSection( $id=NULL, $gid, &$access, $pop, $option, $year, $month ) {
 	global $database, $mainframe;
 	global $Itemid;
 
 	$secID 	= ( $id ? $id : 0 );
 	
 	$noauth = !$mainframe->getCfg( 'shownoauth' );
-
-	// Paramters
-	$year 	= strval( mosGetParam( $_REQUEST, 'year', date( 'Y' ) ) );
-	$month 	= strval( mosGetParam( $_REQUEST, 'month', date( 'm' ) ) );
 
 	$params = new stdClass();
 	if ( $Itemid ) {
@@ -883,7 +882,7 @@ function showArchiveSection( $id=NULL, $gid, &$access, $pop, $option ) {
 }
 
 
-function showArchiveCategory( $id=0, $gid, &$access, $pop, $option, $now ) {
+function showArchiveCategory( $id=0, $gid, &$access, $pop, $option, $year, $month, $module ) {
 	global $database, $mainframe;
 	global $Itemid;
 
@@ -893,11 +892,6 @@ function showArchiveCategory( $id=0, $gid, &$access, $pop, $option, $now ) {
 	// needed for check whether section & category is published
 	$catID 	= ( $id ? $id : 0 );
 	
-	// Parameters
-	$year 	= intval( mosGetParam( $_REQUEST, 'year', 	date( 'Y' ) ) );
-	$month 	= intval( mosGetParam( $_REQUEST, 'month', 	date( 'm' ) ) );
-	$module = intval( mosGetParam( $_REQUEST, 'module', 0 ) );
-
 	// used by archive module
 	if ( $module ) {
 		$check = '';

@@ -72,8 +72,10 @@ A4 Cross Site Scripting
 
 -- -- --
 
+
 25-June-2006 Rey Gigataras
  # Fixed [artf5091] : Missing closing "}" in one of PatFactory templates
+ # Fixed [topic,71858] : Content Archive issue when caching on
 
 
 23-June-2006 Rey Gigataras

@@ -395,7 +395,7 @@ function sefRelToAbs( $string ) {
 		
 		// break link into url component parts
 		$url = parse_url( $string );
-		
+
 		// check if link contained fragment identifiers (ex. #foo)
 		$fragment = '';
 		if ( isset($url['fragment']) ) {
@@ -414,7 +414,7 @@ function sefRelToAbs( $string ) {
 
 			// break url into component parts			
 			parse_str( $url['query'], $parts );
-			
+
 			// special handling for javascript
 			foreach( $parts as $key => $value) {
 				if ( strpos( $value, '+' ) !== false ) {
@@ -489,6 +489,8 @@ function sefRelToAbs( $string ) {
 				$sefstring 	= 'component/';
 				
 				foreach($parts as $key => $value) {
+					// remove slashes automatically added by parse_str
+					$value		= stripslashes($value);
 					$sefstring .= $key .','. $value.'/';
 				}
 				
@@ -500,7 +502,7 @@ function sefRelToAbs( $string ) {
 		return $mosConfig_live_site .'/'. $string . $fragment;
 
 		// allows SEF without mod_rewrite
-		// uncomment Line 477 and comment out Line 471	
+		// uncomment Line 508 and comment out Line 510	
 	
 		// uncomment line below if you dont have mod_rewrite
 		// return $mosConfig_live_site .'/index.php/'. $string . $fragment;

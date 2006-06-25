@@ -72,6 +72,9 @@ A4 Cross Site Scripting
 
 -- -- --
 
+25-June-2006 Rey Gigataras
+ # Fixed [artf5091] : Missing closing "}" in one of PatFactory templates
+
 
 23-June-2006 Rey Gigataras
  # SECURITY A1 [ Low Level ]: mosmsg hardened

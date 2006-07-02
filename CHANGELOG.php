@@ -45,6 +45,7 @@ Legend:
  # Fixed [artf5123] : Wrong name of function in joomla.cache.php
  # Fixed [artf5126] : includes/database.php uses deprecated function
  # Fixed [artf5171] : mosGetParam Default value issue
+ # Fixed [artf5112] : A mere mistake in the file contact.html.php
  
 
 ---------------- 1.0.10 Stable Released -- [26-June-2006 00:00 UTC] ------------------

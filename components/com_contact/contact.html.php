@@ -417,7 +417,7 @@ class HTML_contact {
 							mosHTML::PrintIcon( $contact, $params, $hide_js, $print_link );
 							?>
 						</tr>
-						</table
+						</table>
 					</td>
 				</tr>
 				<?php

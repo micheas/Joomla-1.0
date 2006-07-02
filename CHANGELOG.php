@@ -44,6 +44,7 @@ Legend:
  # Fixed [artf5181] : 5 step for unrecoverable admin-page crash.
  # Fixed [artf5123] : Wrong name of function in joomla.cache.php
  # Fixed [artf5126] : includes/database.php uses deprecated function
+ # Fixed [artf5171] : mosGetParam Default value issue
  
 
 ---------------- 1.0.10 Stable Released -- [26-June-2006 00:00 UTC] ------------------

@@ -37,6 +37,13 @@ Legend:
 ! -> Note
 
 
+---------------- 1.0.11 Nightly SVN --------------------------------------------------
+
+
+03-July-2006 Rey Gigataras
+ # Fixed [artf5181] : 5 step for unrecoverable admin-page crash.
+
+
 ---------------- 1.0.10 Stable Released -- [26-June-2006 00:00 UTC] ------------------
 
 

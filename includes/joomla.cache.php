@@ -51,7 +51,7 @@ class JCache_Lite_Function {
 		$arguments = func_get_args();	
 		
 		// Add language to all arguments, if not already added and multilingual support is activated
-		if( key_exists( 'mosConfig_multilingual_support', $GLOBALS ) && $GLOBALS['mosConfig_multilingual_support'] == 1 ) {
+		if( array_key_exists( 'mosConfig_multilingual_support', $GLOBALS ) && $GLOBALS['mosConfig_multilingual_support'] == 1 ) {
 			$arguments[] = $GLOBALS['mosConfig_lang'];
 		}
 		

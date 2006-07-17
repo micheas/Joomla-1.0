@@ -41,6 +41,7 @@ Legend:
 
 17-July-2006 Robin Muilwijk
  # Fixed [artf5157] : typo in media manager
+ # Fixed [artf5218] : duplicate entry of artf5157, typo in media manager
 
 
 03-July-2006 Rey Gigataras

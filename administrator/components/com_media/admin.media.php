@@ -166,7 +166,7 @@ function do_upload($file, $dest_dir) {
 	global $clearUploads;
 
 	if (file_exists($dest_dir.$file['name'])) {
-		mosRedirect( "index2.php?option=com_media&listdir=".$_POST['dirPath'], "Upload FAILED.File allready exists" );
+		mosRedirect( "index2.php?option=com_media&listdir=".$_POST['dirPath'], "Upload FAILED.File already exists" );
 	}
 	
 	$format = substr( $file['name'], -3 );

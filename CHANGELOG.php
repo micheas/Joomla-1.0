@@ -39,6 +39,9 @@ Legend:
 
 ---------------- 1.0.11 Nightly SVN --------------------------------------------------
 
+17-July-2006 Robin Muilwijk
+ # Fixed [artf5157] : typo in media manager
+
 
 03-July-2006 Rey Gigataras
  # Fixed [artf5181] : 5 step for unrecoverable admin-page crash.

@@ -122,6 +122,7 @@ class HTML_registration {
 			<td>
 				<input type="text" name="username" size="40" value="" class="inputbox" maxlength="25" />
 			</td>
+		</tr>
 		<tr>
 			<td>
 				<?php echo _REGISTER_EMAIL; ?> *

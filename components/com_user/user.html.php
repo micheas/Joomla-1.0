@@ -106,6 +106,7 @@ class HTML_user {
 			<td>
 				<input class="inputbox" type="text" name="email" value="<?php echo $row->email;?>" size="40" />
 			</td>
+		</tr>
 		<tr>
 			<td>
 				<?php echo _UNAME; ?>
@@ -144,7 +145,7 @@ class HTML_user {
 		</table>
 
 		<input type="hidden" name="id" value="<?php echo $row->id;?>" />
-		<input type="hidden" name="option" value="<?php echo $option;?>">
+		<input type="hidden" name="option" value="<?php echo $option;?>" />
 		<input type="hidden" name="task" value="saveUserEdit" />
 		<input type="hidden" name="<?php echo $validate; ?>" value="1" />
 		</form>

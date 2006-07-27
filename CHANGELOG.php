@@ -38,6 +38,8 @@ Legend:
 
 
 ---------------- 1.0.11 Nightly SVN --------------------------------------------------
+27-July-2006 Robin Muilwijk
+ # Fixed [artf5282] : missing table row tag and self closing tag
 
 17-July-2006 Robin Muilwijk
  # Fixed [artf5157] : typo in media manager

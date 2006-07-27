@@ -41,6 +41,7 @@ Legend:
 27-July-2006 Robin Muilwijk
  # Fixed [artf5282] : missing table row tag and self closing tag
  # Fixed [artf5297] : small html errors
+ # Fixed [5335] : missing direct access line
 
 17-July-2006 Robin Muilwijk
  # Fixed [artf5157] : typo in media manager

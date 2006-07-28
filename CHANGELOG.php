@@ -38,6 +38,9 @@ Legend:
 
 
 ---------------- 1.0.11 Nightly SVN --------------------------------------------------
+28-July-2006
+ # Fixed [artf5291] : missing onChange javascript code for filter field
+
 27-July-2006 Robin Muilwijk
  # Fixed [artf5282] : missing table row tag and self closing tag
  # Fixed [artf5297] : small html errors

@@ -38,6 +38,9 @@ Legend:
 
 
 ---------------- 1.0.11 Nightly SVN --------------------------------------------------
+07-Aug-2006 Rey Gigataras
+ # Fixed Zend Hash Del Key Or Index Vulnerability
+
 28-July-2006
  # Fixed [artf5291] : missing onChange javascript code for filter field
 

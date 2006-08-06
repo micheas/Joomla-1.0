@@ -26,7 +26,8 @@ function checkInputArray( &$array, $globalise=false ) {
 	static $banned = array( '_files', '_env', '_get', '_post', '_cookie', '_server', '_session', 'globals' );
 
 	foreach ($array as $key => $value) {
-		if (in_array( strtolower( $key ), $banned ) ) {
+		$key = urldecode( $key );
+		if (in_array( strtolower( $key ), $banned ) || intval( $key ) < 0) {
 			die( 'Illegal variable <b>' . implode( '</b> or <b>', $banned ) . '</b> passed to script.' );
 		}
 		if ($globalise) {

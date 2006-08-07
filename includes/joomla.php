@@ -5853,6 +5853,12 @@ function josSpoofCheck( $header=NULL, $alt=NULL ) {
 	}
 }
 
+/**
+ * Method to determine a hash for anti-spoofing variable names
+ *
+ * @return	string	Hashed var name
+ * @static	 
+ */
 function josSpoofValue($alt=NULL) {
 	global $mainframe;
 	
@@ -5861,7 +5867,9 @@ function josSpoofValue($alt=NULL) {
 	} else {		
 		$random		= date( 'dmY' );
 	}
-	$validate 	= mosHash( $mainframe->getCfg( 'db' ) . $random );
+	// the prefix ensures that the hash is non-numeric
+	// otherwise it will be intercepted by globals.php
+	$validate 	= 'j' . mosHash( $mainframe->getCfg( 'db' ) . $random );
 	
 	return $validate;
 }

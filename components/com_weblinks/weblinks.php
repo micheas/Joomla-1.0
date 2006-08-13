@@ -313,13 +313,16 @@ function saveWeblink( $option ) {
 		echo "<script> alert('".$row->getError()."'); window.history.go(-1); </script>\n";
 		exit();
 	}
+
+	// sanitise id field
+	// $row->id = (int) $row->id;
+	// until full edit capabilities are given for weblinks - limit saving to new weblinks only
+	$row->id = 0;	
+
 	$isNew = $row->id < 1;
 
 	$row->date = date( 'Y-m-d H:i:s' );
-	
-	// until full edit capabilities are given for weblinks - limit saving to new weblinks only
-	$row->id = 0;	
-	
+
 	if (!$row->check()) {
 		echo "<script> alert('".$row->getError()."'); window.history.go(-1); </script>\n";
 		exit();

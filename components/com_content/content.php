@@ -1826,7 +1826,10 @@ function saveContent( &$access, $task ) {
 		echo "<script> alert('".$row->getError()."'); window.history.go(-1); </script>\n";
 		exit();
 	}
-	
+
+	// sanitise id field
+	$row->id = (int) $row->id;
+
 	$isNew = $row->id < 1;
 	if ( $isNew ) {
 		// new record

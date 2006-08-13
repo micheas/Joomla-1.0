@@ -38,7 +38,10 @@ Legend:
 
 
 ---------------- 1.0.11 Nightly SVN --------------------------------------------------
-07-Aug-2006 Rey Gigataras
+14-Aug-2006
+ # Fixed Injection attack on content submissions where frontpage is selected
+
+07-Aug-2006 Andrew Eddie
  # Fixed Zend Hash Del Key Or Index Vulnerability
  # Fixed josSpoofValue function to ensure the hash is a string
 

@@ -656,6 +656,9 @@ function saveContent( $sectionid, $task ) {
 		exit();
 	}
 
+	// sanitise id field
+	$row->id = (int) $row->id;
+
 	if ($row->id) {
 		$row->modified 		= date( 'Y-m-d H:i:s' );
 		$row->modified_by 	= $my->id;

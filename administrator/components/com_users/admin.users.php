@@ -271,6 +271,9 @@ function saveUser( $task ) {
 		exit();
 	}
 
+	// sanitise id field
+	$row->id = (int) $row->id;
+
 	$isNew 	= !$row->id;
 	$pwd 	= '';
 

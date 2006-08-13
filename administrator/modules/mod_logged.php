@@ -51,9 +51,8 @@ $query = "SELECT *"
 . "\n WHERE userid != 0"
 . $and
 . "\n ORDER BY usertype, username"
-. "\n LIMIT $pageNav->limitstart, $pageNav->limit"
 ;
-$database->setQuery( $query );
+$database->setQuery( $query, $pageNav->limitstart, $pageNav->limit );
 $rows = $database->loadObjectList();
 ?>
 <table class="adminlist">

@@ -153,9 +153,8 @@ function showUsers( $option ) {
 
 	$query .= (count( $where ) ? "\n WHERE " . implode( ' AND ', $where ) : "")
 	. "\n GROUP BY a.id"
-	. "\n LIMIT $pageNav->limitstart, $pageNav->limit"
 	;
-	$database->setQuery( $query );
+	$database->setQuery( $query, $pageNav->limitstart, $pageNav->limit );
 	$rows = $database->loadObjectList();
 
 	if ($database->getErrorNum()) {

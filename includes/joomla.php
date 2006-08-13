@@ -1211,9 +1211,8 @@ class mosMainFrame {
 			. "\n WHERE client_id = 0"
 			. "\n AND ( menuid = 0 $assigned )"
 			. "\n ORDER BY menuid DESC"
-			. "\n LIMIT 1"
 			;
-			$this->_db->setQuery( $query );
+			$this->_db->setQuery( $query, 0, 1 );
 			$cur_template = $this->_db->loadResult();
 
 			// TemplateChooser Start

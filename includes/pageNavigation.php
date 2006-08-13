@@ -27,9 +27,9 @@ class mosPageNav {
 	var $total = null;
 
 	function mosPageNav( $total, $limitstart, $limit ) {
-		$this->total = intval( $total );
-		$this->limitstart = max( $limitstart, 0 );
-		$this->limit = max( $limit, 0 );
+		$this->total		= (int) $total;
+		$this->limitstart	= (int) max( $limitstart, 0 );
+		$this->limit		= (int) max( $limit, 0 );
 	}
 	/**
 	* Returns the html limit # input box

@@ -125,9 +125,8 @@ function viewMambots( $option, $client ) {
 	. ( count( $where ) ? "\n WHERE " . implode( ' AND ', $where ) : '' )
 	. "\n GROUP BY m.id"
 	. "\n ORDER BY m.folder ASC, m.ordering ASC, m.name ASC"
-	. "\n LIMIT $pageNav->limitstart, $pageNav->limit"
 	;
-	$database->setQuery( $query );
+	$database->setQuery( $query, $pageNav->limitstart, $pageNav->limit );
 	$rows = $database->loadObjectList();
 	if ($database->getErrorNum()) {
 		echo $database->stderr();

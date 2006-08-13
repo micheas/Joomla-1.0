@@ -208,9 +208,8 @@ function showCategories( $section, $option ) {
 	. "\n AND c.published != -2"
 	. "\n GROUP BY c.id"
 	. $order
-	. "\n LIMIT $pageNav->limitstart, $pageNav->limit"
 	;
-	$database->setQuery( $query );
+	$database->setQuery( $query, $pageNav->limitstart, $pageNav->limit );
 	$rows = $database->loadObjectList();
 	if ($database->getErrorNum()) {
 		echo $database->stderr();

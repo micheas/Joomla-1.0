@@ -32,9 +32,8 @@ $query = "SELECT a.id AS id, a.title AS title, COUNT(b.id) as cnt"
 . "\n GROUP BY a.id"
 . "\n HAVING COUNT( b.id ) > 0"
 . "\n ORDER BY a.ordering"
-. "\n LIMIT $count"
 ;
-$database->setQuery( $query );
+$database->setQuery( $query, 0, $count );
 $rows = $database->loadObjectList();
 
 $bs 	= $mainframe->getBlogSectionCount();

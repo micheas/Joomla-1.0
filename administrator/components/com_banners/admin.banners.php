@@ -115,9 +115,8 @@ function viewBanners( $option ) {
 
 	$query = "SELECT b.*, u.name AS editor"
 	. "\n FROM #__banner AS b "
-	. "\n LEFT JOIN #__users AS u ON u.id = b.checked_out"
-	. "\n LIMIT $pageNav->limitstart, $pageNav->limit";
-	$database->setQuery( $query );
+	. "\n LEFT JOIN #__users AS u ON u.id = b.checked_out";
+	$database->setQuery( $query, $pageNav->limitstart, $pageNav->limit );
 
 	if(!$result = $database->query()) {
 		echo $database->stderr();
@@ -281,9 +280,8 @@ function viewBannerClients( $option ) {
 	. "\n FROM #__bannerclient AS a"
 	. "\n LEFT JOIN #__banner AS b ON a.cid = b.cid"
 	. "\n LEFT JOIN #__users AS u ON u.id = a.checked_out"
-	. "\n GROUP BY a.cid"
-	. "\n LIMIT $pageNav->limitstart, $pageNav->limit";
-	$database->setQuery($sql);
+	. "\n GROUP BY a.cid";
+	$database->setQuery($sql, $pageNav->limitstart, $pageNav->limit);
 
 	if(!$result = $database->query()) {
 		echo $database->stderr();

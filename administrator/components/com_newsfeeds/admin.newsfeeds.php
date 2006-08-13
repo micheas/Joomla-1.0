@@ -105,9 +105,8 @@ function showNewsFeeds( $option ) {
 	. "\n LEFT JOIN #__users AS u ON u.id = a.checked_out"
 	. ( $catid ? "\n WHERE a.catid = $catid" : '' )
 	. "\n ORDER BY a.ordering"
-	. "\n LIMIT $pageNav->limitstart, $pageNav->limit"
 	;
-	$database->setQuery( $query );
+	$database->setQuery( $query, $pageNav->limitstart, $pageNav->limit );
 
 	$rows = $database->loadObjectList();
 	if ($database->getErrorNum()) {

@@ -132,9 +132,8 @@ function showSections( $scope, $option ) {
 	. "\n WHERE scope = '$scope'"
 	. "\n GROUP BY c.id"
 	. "\n ORDER BY c.ordering, c.name"
-	. "\n LIMIT $pageNav->limitstart, $pageNav->limit"
 	;
-	$database->setQuery( $query );
+	$database->setQuery( $query, $pageNav->limitstart, $pageNav->limit );
 	$rows = $database->loadObjectList();
 	if ($database->getErrorNum()) {
 		echo $database->stderr();

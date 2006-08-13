@@ -252,9 +252,8 @@ class HTML_admin_misc {
 					</tr>
 					<?php
 					$query = "SELECT name FROM #__mambots"
-					. "\nWHERE folder='editors' AND published='1'"
-					. "\nLIMIT 1";
-					$database->setQuery( $query );
+					. "\nWHERE folder='editors' AND published='1'";
+					$database->setQuery( $query, 0 , 1 );
 					$editor = $database->loadResult();
 					?>
 					<tr>

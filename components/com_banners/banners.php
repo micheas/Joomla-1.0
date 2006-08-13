@@ -52,9 +52,8 @@ function viewbanner() {
 	$query = "SELECT *"
 	. "\n FROM #__banner"
 	. "\n WHERE showBanner = 1"
-	. "\n LIMIT $bannum, 1"
 	;
-	$database->setQuery( $query );
+	$database->setQuery( $query, $bannum, 1 );
 	if ($database->loadObject( $banner )) {
 		$query = "UPDATE #__banner"
 		. "\n SET impmade = impmade + 1"

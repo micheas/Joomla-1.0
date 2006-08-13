@@ -320,9 +320,8 @@ function viewArchive( $sectionid, $option ) {
 	. "\n LEFT JOIN #__users AS v ON v.id = c.created_by"
 	. ( count( $where ) ? "\n WHERE " . implode( ' AND ', $where ) : '' )
 	. "\n ORDER BY c.catid, c.ordering"
-	. "\n LIMIT $pageNav->limitstart, $pageNav->limit"
 	;
-	$database->setQuery( $query );
+	$database->setQuery( $query, $pageNav->limitstart, $pageNav->limit );
 	$rows = $database->loadObjectList();
 	if ($database->getErrorNum()) {
 		echo $database->stderr();

@@ -114,9 +114,8 @@ function showWeblinks( $option ) {
 	. "\n LEFT JOIN #__users AS u ON u.id = a.checked_out"
 	. ( count( $where ) ? "\n WHERE " . implode( ' AND ', $where ) : "")
 	. "\n ORDER BY a.catid, a.ordering"
-	. "\n LIMIT $pageNav->limitstart, $pageNav->limit"
 	;
-	$database->setQuery( $query );
+	$database->setQuery( $query, $pageNav->limitstart, $pageNav->limit );
 
 	$rows = $database->loadObjectList();
 	if ($database->getErrorNum()) {

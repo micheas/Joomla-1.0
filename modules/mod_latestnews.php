@@ -37,9 +37,8 @@ switch ( $type ) {
 		. "\n AND ( a.publish_down = '$nullDate' OR a.publish_down >= '$now' )"
 		. ( $access ? "\n AND a.access <= $my->gid" : '' )
 		. "\n ORDER BY a.created DESC"
-		. "\n LIMIT $count"
 		;
-		$database->setQuery( $query );
+		$database->setQuery( $query, 0, $count );
 		$rows = $database->loadObjectList();
 		break;
 
@@ -58,9 +57,8 @@ switch ( $type ) {
 		. ( $secid ? "\n AND ( a.sectionid IN ( $secid ) )" : '' )
 		. ( $show_front == '0' ? "\n AND f.content_id IS NULL" : '' )
 		. "\n ORDER BY a.created DESC"
-		. "\n LIMIT $count"
 		;
-		$database->setQuery( $query );
+		$database->setQuery( $query, 0, $count );
 		$temp = $database->loadObjectList();
 		
 		$rows = array();
@@ -92,9 +90,8 @@ switch ( $type ) {
 		. "\n AND s.published = 1"
 		. "\n AND cc.published = 1"
 		. "\n ORDER BY a.created DESC"
-		. "\n LIMIT $count"
 		;
-		$database->setQuery( $query );
+		$database->setQuery( $query, 0, $count );
 		$rows = $database->loadObjectList();
 		break;
 }

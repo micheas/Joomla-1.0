@@ -88,9 +88,8 @@ function showPolls( $option ) {
 	. "\n LEFT JOIN #__users AS u ON u.id = m.checked_out"
 	. "\n LEFT JOIN #__poll_data AS d ON d.pollid = m.id AND d.text != ''"
 	. "\n GROUP BY m.id"
-	. "\n LIMIT $pageNav->limitstart, $pageNav->limit"
 	;
-	$database->setQuery( $query );
+	$database->setQuery( $query, $pageNav->limitstart, $pageNav->limit );
 	$rows = $database->loadObjectList();
 
 	if ($database->getErrorNum()) {

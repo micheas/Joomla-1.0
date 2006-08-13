@@ -120,9 +120,8 @@ function showContacts( $option ) {
 	. "\n LEFT JOIN #__users AS v ON v.id = cd.checked_out"
 	. $where
 	. "\n ORDER BY cd.catid, cd.ordering, cd.name ASC"
-	. "\n LIMIT $pageNav->limitstart, $pageNav->limit"
 	;
-	$database->setQuery( $query );
+	$database->setQuery( $query, $pageNav->limitstart, $pageNav->limit );
 	$rows = $database->loadObjectList();
 
 	// build list of categories

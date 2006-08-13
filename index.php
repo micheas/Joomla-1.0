@@ -68,9 +68,9 @@ if ($option == '') {
 		. "\n FROM #__menu"
 		. "\n WHERE menutype = 'mainmenu'"
 		. "\n AND published = 1"
-		. "\n ORDER BY parent, ordering LIMIT 1"
+		. "\n ORDER BY parent, ordering"
 		;
-		$database->setQuery( $query );
+		$database->setQuery( $query, 0, 1 );
 	}
 	$menu = new mosMenu( $database );
 	if ($database->loadObject( $menu )) {
@@ -116,9 +116,8 @@ if ( $Itemid === 0 ) {
 	. "\n WHERE menutype = 'mainmenu'"
 	. "\n AND published = 1"
 	. "\n ORDER BY parent, ordering"
-	. "\n LIMIT 1"
 	;
-	$database->setQuery( $query );
+	$database->setQuery( $query, 0, 1 );
 	$Itemid = $database->loadResult();
 }
 

@@ -74,12 +74,12 @@ switch ( $task ) {
 
 	case 'archivesection':
 		// Itemid is a dummy value to cater for caching
-		$cache->call( 'showArchiveSection', $id, $gid, $access, $pop, $option, $year, $month, $Itemid );
+		$cache->call( 'showArchiveSection', $id, $gid, $access, $pop, $option, $year, $month, $limit, $limitstart, $Itemid );
 		break;
 
 	case 'archivecategory':
 		// Itemid is a dummy value to cater for caching
-		$cache->call( 'showArchiveCategory', $id, $gid, $access, $pop, $option, $year, $month, $module, $Itemid );
+		$cache->call( 'showArchiveCategory', $id, $gid, $access, $pop, $option, $year, $month, $module, $limit, $limitstart, $Itemid );
 		break;
 
 	case 'edit':
@@ -147,7 +147,7 @@ function findKeyItem( $gid, $access, $pop, $option, $now ) {
 	}
 }
 
-function frontpage( $gid, &$access, $pop, $now ) {
+function frontpage( $gid, &$access, $pop, $now, $limit, $limitstart ) {
 	global $database, $mainframe;
 
 	$now 		= _CURRENT_SERVER_TIME;
@@ -156,7 +156,7 @@ function frontpage( $gid, &$access, $pop, $now ) {
 
 	// Parameters
 	$menu = $mainframe->get( 'menu' );
-	$params = new mosParameters( $menu->params );
+	$params = new mosParameters( $menu->params );	
 
 	// Ordering control
 	$orderby_sec 	= $params->def( 'orderby_sec', '' );
@@ -170,6 +170,31 @@ function frontpage( $gid, &$access, $pop, $now ) {
 	
 	$where 	= _where( 1, $access, $noauth, $gid, 0, $now, NULL, NULL, $params );	
 	$where 	= ( count( $where ) ? "\n WHERE ". implode( "\n AND ", $where ) : '' );
+	
+	
+	// Limit & limitstart
+	$intro		= $params->def( 'intro', 				4 );
+	$leading 	= $params->def( 'leading', 				1 );
+	$links		= $params->def( 'link', 				4 );	
+
+	$limit = $intro + $leading + $links;
+
+	$query = "SELECT COUNT(a.id)"
+	. "\n FROM #__content AS a"
+	. "\n INNER JOIN #__content_frontpage AS f ON f.content_id = a.id"
+	. "\n INNER JOIN #__categories AS cc ON cc.id = a.catid"
+	. "\n INNER JOIN #__sections AS s ON s.id = a.sectionid"
+	. "\n LEFT JOIN #__users AS u ON u.id = a.created_by"
+	. "\n LEFT JOIN #__groups AS g ON a.access = g.id"
+	. $where
+	;
+	
+	$database->setQuery( $query );
+	$total = $database->loadResult();
+	
+	if ( $total <= $limit ) {
+		$limitstart = 0;
+	}		
 	
 	// query records
 	$query = "SELECT a.id, a.title, a.title_alias, a.introtext, a.sectionid, a.state, a.catid, a.created, a.created_by, a.created_by_alias, a.modified, a.modified_by,"
@@ -186,13 +211,13 @@ function frontpage( $gid, &$access, $pop, $now ) {
 	. $where
 	. "\n ORDER BY $order_pri $order_sec"
 	;
-	$database->setQuery( $query );
+	$database->setQuery( $query, $limitstart, $limit );
 	$rows = $database->loadObjectList();
 
 	// Dynamic Page Title
 	$mainframe->SetPageTitle( $menu->name );
 
-	BlogOutput( $rows, $params, $gid, $access, $pop, $menu );
+	BlogOutput( $rows, $params, $gid, $access, $pop, $menu, $limitstart, $limit, $total );
 }
 
 
@@ -589,7 +614,7 @@ function showCategory( $id, $gid, &$access, $sectionid, $limit, $selected, $limi
 } // showCategory
 
 
-function showBlogSection( $id=0, $gid, &$access, $pop, $now=NULL ) {
+function showBlogSection( $id=0, $gid, &$access, $pop, $now=NULL, $limit, $limitstart ) {
 	global $database, $mainframe, $Itemid;
 	
 	// needed for check whether section is published
@@ -626,6 +651,29 @@ function showBlogSection( $id=0, $gid, &$access, $pop, $now=NULL ) {
 	$voting = $params->def( 'rating', '' );
 	$voting = votingQuery($voting);
 	
+	// Limit & limitstart
+	$intro		= $params->def( 'intro', 				4 );
+	$leading 	= $params->def( 'leading', 				1 );
+	$links		= $params->def( 'link', 				4 );	
+
+	$limit = $limit ? $limit : ( $intro + $leading + $links );
+	
+	$query = "SELECT COUNT(a.id)"
+	. "\n FROM #__content AS a"
+	. "\n INNER JOIN #__categories AS cc ON cc.id = a.catid"
+	. "\n LEFT JOIN #__users AS u ON u.id = a.created_by"
+	. "\n LEFT JOIN #__sections AS s ON a.sectionid = s.id"
+	. "\n LEFT JOIN #__groups AS g ON a.access = g.id"
+	. $where
+	;
+	
+	$database->setQuery( $query );
+	$total = $database->loadResult();
+	
+	if ( $total <= $limit ) {
+		$limitstart = 0;
+	}
+	
 	// Main data query
 	$query = "SELECT a.id, a.title, a.title_alias, a.introtext, a.sectionid, a.state, a.catid, a.created, a.created_by, a.created_by_alias, a.modified, a.modified_by,"
 	. "\n a.checked_out, a.checked_out_time, a.publish_up, a.publish_down, a.images, a.urls, a.ordering, a.metakey, a.metadesc, a.access,"
@@ -640,7 +688,7 @@ function showBlogSection( $id=0, $gid, &$access, $pop, $now=NULL ) {
 	. $where
 	. "\n ORDER BY $order_pri $order_sec"
 	;
-	$database->setQuery( $query );
+	$database->setQuery( $query, $limitstart, $limit );
 	$rows = $database->loadObjectList();
 
 	// Dynamic Page Title
@@ -669,10 +717,10 @@ function showBlogSection( $id=0, $gid, &$access, $pop, $now=NULL ) {
 		}			
 	}
 
-	BlogOutput( $rows, $params, $gid, $access, $pop, $menu );
+	BlogOutput( $rows, $params, $gid, $access, $pop, $menu, $limitstart, $limit, $total );
 }
 
-function showBlogCategory( $id=0, $gid, &$access, $pop, $now ) {
+function showBlogCategory( $id=0, $gid, &$access, $pop, $now, $limit, $limitstart ) {
 	global $database, $mainframe, $Itemid;
 
 	$now 	= _CURRENT_SERVER_TIME;	
@@ -709,6 +757,29 @@ function showBlogCategory( $id=0, $gid, &$access, $pop, $now ) {
 	$voting = $params->def( 'rating', '' );
 	$voting = votingQuery($voting);
 	
+	// Limit & limitstart
+	$intro		= $params->def( 'intro', 				4 );
+	$leading 	= $params->def( 'leading', 				1 );
+	$links		= $params->def( 'link', 				4 );	
+
+	$limit = $limit ? $limit : ( $intro + $leading + $links );
+	
+	$query = "SELECT COUNT(a.id)"
+	. "\n FROM #__content AS a"
+	. "\n LEFT JOIN #__categories AS cc ON cc.id = a.catid"
+	. "\n LEFT JOIN #__users AS u ON u.id = a.created_by"
+	. "\n LEFT JOIN #__sections AS s ON a.sectionid = s.id"
+	. "\n LEFT JOIN #__groups AS g ON a.access = g.id"
+	. $where
+	;
+	
+	$database->setQuery( $query );
+	$total = $database->loadResult();
+	
+	if ( $total <= $limit ) {
+		$limitstart = 0;
+	}
+	
 	// Main data query
 	$query = "SELECT a.id, a.title, a.title_alias, a.introtext, a.sectionid, a.state, a.catid, a.created, a.created_by, a.created_by_alias, a.modified, a.modified_by,"
 	. "\n a.checked_out, a.checked_out_time, a.publish_up, a.publish_down, a.images, a.urls, a.ordering, a.metakey, a.metadesc, a.access,"
@@ -723,7 +794,7 @@ function showBlogCategory( $id=0, $gid, &$access, $pop, $now ) {
 	. $where
 	. "\n ORDER BY $order_pri $order_sec"
 	;
-	$database->setQuery( $query );
+	$database->setQuery( $query, $limitstart, $limit );
 	$rows = $database->loadObjectList();
 
 	// check whether section & category is published
@@ -768,10 +839,10 @@ function showBlogCategory( $id=0, $gid, &$access, $pop, $now ) {
 	// Dynamic Page Title
 	$mainframe->SetPageTitle( $menu->name );
 
-	BlogOutput( $rows, $params, $gid, $access, $pop, $menu );
+	BlogOutput( $rows, $params, $gid, $access, $pop, $menu, $limitstart, $limit, $total );
 }
 
-function showArchiveSection( $id=NULL, $gid, &$access, $pop, $option, $year, $month ) {
+function showArchiveSection( $id=NULL, $gid, &$access, $pop, $option, $year, $month, $limit, $limitstart ) {
 	global $database, $mainframe;
 	global $Itemid;
 
@@ -821,6 +892,29 @@ function showArchiveSection( $id=NULL, $gid, &$access, $pop, $option, $year, $mo
 	// voting control
 	$voting = $params->def( 'rating', '' );
 	$voting = votingQuery($voting);
+
+	// Limit & limitstart
+	$intro		= $params->def( 'intro', 				4 );
+	$leading 	= $params->def( 'leading', 				1 );
+	$links		= $params->def( 'link', 				4 );	
+
+	$limit = $limit ? $limit : ( $intro + $leading + $links );
+	
+	$query = "SELECT COUNT(a.id)"
+	. "\n FROM #__content AS a"
+	. "\n INNER JOIN #__categories AS cc ON cc.id = a.catid"
+	. "\n LEFT JOIN #__users AS u ON u.id = a.created_by"
+	. "\n LEFT JOIN #__sections AS s ON a.sectionid = s.id"
+	. "\n LEFT JOIN #__groups AS g ON a.access = g.id"
+	. $where
+	;
+	
+	$database->setQuery( $query );
+	$total = $database->loadResult();
+	
+	if ( $total <= $limit ) {
+		$limitstart = 0;
+	}	
 	
 	// Main Query
 	$query = "SELECT a.id, a.title, a.title_alias, a.introtext, a.sectionid, a.state, a.catid, a.created, a.created_by, a.created_by_alias, a.modified, a.modified_by,"
@@ -836,7 +930,7 @@ function showArchiveSection( $id=NULL, $gid, &$access, $pop, $option, $year, $mo
 	. $where
 	. "\n ORDER BY $order_pri $order_sec"
 	;
-	$database->setQuery( $query );
+	$database->setQuery( $query, $limitstart, $limit );
 	$rows = $database->loadObjectList();
 
 	// check whether section is published
@@ -871,7 +965,7 @@ function showArchiveSection( $id=NULL, $gid, &$access, $pop, $option, $year, $mo
 		// if no archives for category, hides search and outputs empty message
 		echo '<br /><div align="center">'. _CATEGORY_ARCHIVE_EMPTY .'</div>';
 	} else {
-		BlogOutput( $rows, $params, $gid, $access, $pop, $menu, 1 );
+		BlogOutput( $rows, $params, $gid, $access, $pop, $menu, $limitstart, $limit, $total, 1, 1 );
 	}
 
  	echo '<input type="hidden" name="id" value="'. $id .'" />';
@@ -882,7 +976,7 @@ function showArchiveSection( $id=NULL, $gid, &$access, $pop, $option, $year, $mo
 }
 
 
-function showArchiveCategory( $id=0, $gid, &$access, $pop, $option, $year, $month, $module ) {
+function showArchiveCategory( $id=0, $gid, &$access, $pop, $option, $year, $month, $module, $limit, $limitstart ) {
 	global $database, $mainframe;
 	global $Itemid;
 
@@ -931,6 +1025,29 @@ function showArchiveCategory( $id=0, $gid, &$access, $pop, $option, $year, $mont
 	// voting control
 	$voting = $params->def( 'rating', '' );
 	$voting = votingQuery($voting);
+
+// Limit & limitstart
+	$intro		= $params->def( 'intro', 				4 );
+	$leading 	= $params->def( 'leading', 				1 );
+	$links		= $params->def( 'link', 				4 );	
+
+	$limit = $limit ? $limit : ( $intro + $leading + $links );
+	
+	$query = "SELECT COUNT(a.id)"
+	. "\n FROM #__content AS a"
+	. "\n INNER JOIN #__categories AS cc ON cc.id = a.catid"
+	. "\n LEFT JOIN #__users AS u ON u.id = a.created_by"
+	. "\n LEFT JOIN #__sections AS s ON a.sectionid = s.id"
+	. "\n LEFT JOIN #__groups AS g ON a.access = g.id"
+	. $where
+	;
+	
+	$database->setQuery( $query );
+	$total = $database->loadResult();
+	
+	if ( $total <= $limit ) {
+		$limitstart = 0;
+	}		
 	
 	// main query
 	$query = "SELECT a.id, a.title, a.title_alias, a.introtext, a.sectionid, a.state, a.catid, a.created, a.created_by, a.created_by_alias, a.modified, a.modified_by,"
@@ -946,9 +1063,9 @@ function showArchiveCategory( $id=0, $gid, &$access, $pop, $option, $year, $mont
 	. $where
 	. "\n ORDER BY $order_sec"
 	;
-	$database->setQuery( $query );
+	$database->setQuery( $query, $limitstart, $limit );
 	$rows = $database->loadObjectList();
-	
+
 	// check whether section & category is published
 	if (!count($rows) && $catID != 0) {
 		$catCheck = new mosCategory( $database );
@@ -1002,9 +1119,9 @@ function showArchiveCategory( $id=0, $gid, &$access, $pop, $option, $year, $mont
 	} else {
 		// if coming from the Archive Module, the Archive Dropdown selector is not shown
 		if ( $id ) {
-			BlogOutput( $rows, $params, $gid, $access, $pop, $menu, 1, 1 );
+			BlogOutput( $rows, $params, $gid, $access, $pop, $menu, $limitstart, $limit, $total, 1, 1 );
 		} else {
-			BlogOutput( $rows, $params, $gid, $access, $pop, $menu, 0, 1 );
+			BlogOutput( $rows, $params, $gid, $access, $pop, $menu, $limitstart, $limit, $total, 0, 1 );
 		}
 	}
 
@@ -1016,9 +1133,8 @@ function showArchiveCategory( $id=0, $gid, &$access, $pop, $option, $year, $mont
 }
 
 
-function BlogOutput ( &$rows, &$params, $gid, &$access, $pop, &$menu, $archive=NULL, $archive_page=NULL ) {
+function BlogOutput ( &$rows, &$params, $gid, &$access, $pop, &$menu, $limitstart, $limit, $total, $archive=NULL, $archive_page=NULL ) {
 	global $mainframe, $Itemid, $task, $id, $option, $database, $mosConfig_live_site;
-
 	// parameters
 	if ( $params->get( 'page_title', 1 ) && $menu) {
 		$header = $params->def( 'header', $menu->name );
@@ -1044,15 +1160,7 @@ function BlogOutput ( &$rows, &$params, $gid, &$access, $pop, &$menu, $archive=N
 	$params->def( 'pageclass_sfx', 	'' );
 	$params->set( 'intro_only', 	1 );
 
-	$total = count( $rows );
-
-	// pagination support
-	$limitstart = intval( mosGetParam( $_REQUEST, 'limitstart', 0 ) );
-	$limit 		= $intro + $leading + $links;
-	if ( $total <= $limit ) {
-		$limitstart = 0;
-	}
-	$i = $limitstart;
+	$i = 0;
 
 	// used to display section/catagory description text and images
 	// currently not supported in Archives
@@ -1120,7 +1228,7 @@ function BlogOutput ( &$rows, &$params, $gid, &$access, $pop, &$menu, $archive=N
 			echo '<tr>';
 			echo '<td valign="top">';
 			for ( $z = 0; $z < $leading; $z++ ) {
-				if ( $i >= $total ) {
+				if ( $i >= ($total - $limitstart) ) {
 					// stops loop if total number of items is less than the number set to display as leading
 					break;
 				}
@@ -1139,7 +1247,7 @@ function BlogOutput ( &$rows, &$params, $gid, &$access, $pop, &$menu, $archive=N
 			echo '<table width="100%"  cellpadding="0" cellspacing="0">';
 			// intro story output
 			for ( $z = 0; $z < $intro; $z++ ) {
-				if ( $i >= $total ) {
+				if ( $i >= ($total - $limitstart) ) {
 					// stops loop if total number of items is less than the number set to display as intro + leading
 					break;
 				}
@@ -1917,7 +2025,7 @@ function saveContent( &$access, $task ) {
 	if ( intval( mosGetParam( $_REQUEST, 'frontpage', 0 ) ) ) {
 
 		// toggles go to first place
-		if (!$fp->load( (int)$row->id )) {
+		if (!$fp->load( $row->id )) {
 			// new entry
 			$query = "INSERT INTO #__content_frontpage"
 			. "\n VALUES ( $row->id, 1 )"
@@ -1931,7 +2039,7 @@ function saveContent( &$access, $task ) {
 		}
 	} else {
 		// no frontpage mask
-		if ( !$fp->delete( (int)$row->id ) ) {
+		if ( !$fp->delete( $row->id ) ) {
 			$msg .= $fp->stderr();
 		}
 		$fp->ordering = 0;

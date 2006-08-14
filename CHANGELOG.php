@@ -38,6 +38,10 @@ Legend:
 
 
 ---------------- 1.0.11 Nightly SVN --------------------------------------------------
+
+15-Aug-2006
+ # Fixed SQL LIMIT in com_content frontend
+
 14-Aug-2006
  # Fixed Injection attack on content submissions where frontpage is selected
  # Fixed possible injection attack thru mosPageNav constructor

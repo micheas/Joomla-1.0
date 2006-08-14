@@ -560,7 +560,7 @@ function menuLink( $option, $id ) {
 		exit();
 	}
 	$row->checkin();
-	$row->updateOrder( "menutype='$row->menutype' AND parent='$row->parent'" );
+	$row->updateOrder( "menutype=" . $database->Quote( $row->menutype ) . " AND parent=" . (int) $row->parent );
 	
 	// clean any existing cache files
 	mosCache::cleanCache( 'com_content' );
@@ -606,7 +606,7 @@ function saveOrder( &$cid ) {
 
 	// update ordering values
 	for ( $i=0; $i < $total; $i++ ) {
-		$row->load( $cid[$i] );
+		$row->load( (int) $cid[$i] );
 		if ($row->ordering != $order[$i]) {
 			$row->ordering = $order[$i];
 			if (!$row->store()) {

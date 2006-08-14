@@ -748,7 +748,7 @@ function saveContent( $sectionid, $task ) {
 	$fp->updateOrder();
 
 	$row->checkin();
-	$row->updateOrder( "catid = $row->catid AND state >= 0" );
+	$row->updateOrder( "catid = " . (int) $row->catid . " AND state >= 0" );
 
 	// clean any existing cache files
 	mosCache::cleanCache( 'com_content' );
@@ -1039,7 +1039,7 @@ function moveSectionSave( &$cid, $sectionid, $option ) {
 		$row->load( intval( $id ) );
 		$row->ordering = 0;
 		$row->store();
-		$row->updateOrder( "catid = $row->catid AND state >= 0" );
+		$row->updateOrder( "catid = " . (int) $row->catid . " AND state >= 0" );
 	}
 
 	$query = "UPDATE #__content SET sectionid = $newsect, catid = $newcat"
@@ -1057,7 +1057,7 @@ function moveSectionSave( &$cid, $sectionid, $option ) {
 		$row->load( intval( $id ) );
 		$row->ordering = 0;
 		$row->store();
-		$row->updateOrder( "catid = $row->catid AND state >= 0" );
+		$row->updateOrder( "catid = " . (int) $row->catid . " AND state >= 0" );
 	}
 	
 	// clean any existing cache files
@@ -1186,7 +1186,7 @@ function copyItemSave( $cid, $sectionid, $option ) {
 			echo "<script> alert('".$row->getError()."'); window.history.go(-1); </script>\n";
 			exit();
 		}
-		$row->updateOrder( "catid='". $row->catid ."' AND state >= 0" );
+		$row->updateOrder( "catid='". (int) $row->catid ."' AND state >= 0" );
 	}
 	
 	// clean any existing cache files
@@ -1278,7 +1278,7 @@ function menuLink( $redirect, $id ) {
 		exit();
 	}
 	$row->checkin();
-	$row->updateOrder( "menutype = '$row->menutype' AND parent = $row->parent" );
+	$row->updateOrder( "menutype = " . $database->Quote( $row->menutype ) . " AND parent = " . (int) $row->parent );
 	
 	// clean any existing cache files
 	mosCache::cleanCache( 'com_content' );
@@ -1312,7 +1312,7 @@ function saveOrder( &$cid ) {
 
 	// update ordering values
 	for( $i=0; $i < $total; $i++ ) {
-		$row->load( $cid[$i] );
+		$row->load( (int) $cid[$i] );
 		if ($row->ordering != $order[$i]) {
 			$row->ordering = $order[$i];
 			if (!$row->store()) {

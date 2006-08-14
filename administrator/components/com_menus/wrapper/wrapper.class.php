@@ -95,7 +95,7 @@ class wrapper_menu {
 			exit();
 		}
 		$row->checkin();
-		$row->updateOrder( "menutype = '$row->menutype' AND parent = $row->parent" );
+		$row->updateOrder( 'menutype = ' . $database->Quote( $row->menutype ) . ' AND parent = ' . (int) $row->parent );
 
 
 		$msg = 'Menu item Saved';

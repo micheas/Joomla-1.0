@@ -349,7 +349,7 @@ function saveSection( $option, $scope, $task ) {
 		exit();
 	}
 	$row->checkin();
-	$row->updateOrder( "scope='$row->scope'" );
+	$row->updateOrder( 'scope=' . $database->Quote( $row->scope ) );
 	
 	// clean any existing cache files
 	mosCache::cleanCache( 'com_content' );
@@ -606,7 +606,7 @@ function copySectionSave( $sectionid ) {
 			exit();
 		}
 		$section->checkin();
-		$section->updateOrder( "section = '$section->id'" );
+		$section->updateOrder( "section = " . $database->Quote( $section->id ) );
 		// stores original catid
 		$newsectids[]["old"] = $id;
 		// pulls new catid
@@ -635,7 +635,7 @@ function copySectionSave( $sectionid ) {
 			exit();
 		}
 		$category->checkin();
-		$category->updateOrder( "section = '$category->section'" );
+		$category->updateOrder( "section = " . $database->Quote( $category->section ) );
 		// stores original catid
 		$newcatids[]["old"] = $id;
 		// pulls new catid
@@ -754,7 +754,7 @@ function menuLink( $id ) {
 		exit();
 	}
 	$row->checkin();
-	$row->updateOrder( "menutype = '$menu'" );
+	$row->updateOrder( "menutype = " . $database->Quote( $menu ) );
 	
 	// clean any existing cache files
 	mosCache::cleanCache( 'com_content' );
@@ -773,7 +773,7 @@ function saveOrder( &$cid ) {
 
 	// update ordering values
 	for( $i=0; $i < $total; $i++ ) {
-		$row->load( $cid[$i] );
+		$row->load( (int) $cid[$i] );
 		if ($row->ordering != $order[$i]) {
 			$row->ordering = $order[$i];
 			if (!$row->store()) {

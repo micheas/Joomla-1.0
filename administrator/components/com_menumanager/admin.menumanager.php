@@ -250,7 +250,7 @@ function saveMenu() {
 			}
 
 			$row->checkin();
-			$row->updateOrder( "position='". $row->position ."'" );
+			$row->updateOrder( "position=". $database->Quote( $row->position ) );
 
 			// module assigned to show on All pages by default
 			// ToDO: Changed to become a Joomla! db-object
@@ -530,7 +530,7 @@ function copyMenu( $option, $cid, $type ) {
 		exit();
 	}
 	$row->checkin();
-	$row->updateOrder( "position='$row->position'" );
+	$row->updateOrder( "position=" . $database->Quote( $row->position ) );
 	// module assigned to show on All pages by default
 	// ToDO: Changed to become a Joomla! db-object
 	$query = "INSERT INTO #__modules_menu VALUES ( $row->id, 0 )";

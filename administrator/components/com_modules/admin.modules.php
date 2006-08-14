@@ -201,7 +201,7 @@ function copyModule( $option, $uid, $client ) {
 	} else {
 		$where = "client_id='0'";
 	}
-	$row->updateOrder( "position='$row->position' AND ($where)" );
+	$row->updateOrder( 'position=' . $database->Quote( $row->position ) . " AND ($where)" );
 
 	$query = "SELECT menuid"
 	. "\n FROM #__modules_menu"
@@ -259,7 +259,7 @@ function saveModule( $option, $client, $task ) {
 	} else {
 		$where = "client_id=0";
 	}
-	$row->updateOrder( "position='$row->position' AND ( $where )" );
+	$row->updateOrder( 'position=' . $database->Quote( $row->position ) . " AND ($where)" );
 
 	$menus = mosGetParam( $_POST, 'selections', array() );
 
@@ -651,7 +651,7 @@ function saveOrder( &$cid, $client ) {
 
 	// update ordering values
 	for( $i=0; $i < $total; $i++ ) {
-		$row->load( $cid[$i] );
+		$row->load( (int) $cid[$i] );
 		if ($row->ordering != $order[$i]) {
 			$row->ordering = $order[$i];
 			if (!$row->store()) {

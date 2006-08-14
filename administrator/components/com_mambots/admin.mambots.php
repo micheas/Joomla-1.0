@@ -183,7 +183,7 @@ function saveMambot( $option, $client, $task ) {
 	} else {
 		$where = "client_id='0'";
 	}
-	$row->updateOrder( "folder = '$row->folder' AND ordering > -10000 AND ordering < 10000 AND ( $where )" );
+	$row->updateOrder( "folder = " . $database->Quote( $row->folder ) . " AND ordering > -10000 AND ordering < 10000 AND ( $where )" );
 
 	switch ( $task ) {
 		case 'apply':
@@ -422,7 +422,7 @@ function saveOrder( &$cid ) {
 
 	// update ordering values
 	for ( $i=0; $i < $total; $i++ ) {
-		$row->load( $cid[$i] );
+		$row->load( (int) $cid[$i] );
 		if ($row->ordering != $order[$i]) {
 			$row->ordering = $order[$i];
 			if (!$row->store()) {

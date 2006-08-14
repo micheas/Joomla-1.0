@@ -41,6 +41,7 @@ Legend:
 14-Aug-2006
  # Fixed Injection attack on content submissions where frontpage is selected
  # Fixed possible injection attack thru mosPageNav constructor
+ # Fixed possible injection attack thru saveOrder functions
 
 07-Aug-2006 Andrew Eddie
  # Fixed Zend Hash Del Key Or Index Vulnerability

@@ -293,8 +293,8 @@ function saveOrder( &$cid ) {
 
 	for( $i=0; $i < $total; $i++ ) {
 		$query = "UPDATE #__content_frontpage"
-		. "\n SET ordering = $order[$i]"
-		. "\n WHERE content_id = $cid[$i]";
+		. "\n SET ordering = " . (int) $order[$i]
+		. "\n WHERE content_id = " . (int) $cid[$i];
 		$database->setQuery( $query );
 		if (!$database->query()) {
 			echo "<script> alert('".$database->getErrorMsg()."'); window.history.go(-1); </script>\n";

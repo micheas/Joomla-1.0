@@ -523,13 +523,13 @@ function saveCategory( $task ) {
 	}
 	
 	$row->checkin();
-	$row->updateOrder( "section = '$row->section'" );
+	$row->updateOrder( "section = " . $database->Quote( $row->section ) );
 
 	if ( $oldtitle ) {
 		if ($oldtitle != $row->title) {
 			$query = "UPDATE #__menu"
-			. "\n SET name = '$row->title'"
-			. "\n WHERE name = '$oldtitle'"
+			. "\n SET name = " . $database->Quote( $row->title ) 
+			. "\n WHERE name = " . $database->Quote( $oldtitle )
 			. "\n AND type = 'content_category'"
 			;
 			$database->setQuery( $query );
@@ -542,7 +542,7 @@ function saveCategory( $task ) {
 		$row->section != 'com_newsfeeds' &&
 		$row->section != 'com_weblinks') {
 		$query = "UPDATE #__sections SET count=count+1"
-		. "\n WHERE id = '$row->section'"
+		. "\n WHERE id = " . $database->Quote( $row->section )
 		;
 		$database->setQuery( $query );
 	}
@@ -600,9 +600,9 @@ function removeCategories( $section, $cid ) {
 	if (intval( $section ) > 0) {
 		$table = 'content';
 	} else if (strpos( $section, 'com_' ) === 0) {
-		$table = substr( $section, 4 );
+		$table = $database->getEscaped( substr( $section, 4 ) );
 	} else {
-		$table = $section;
+		$table = $database->getEscaped( $section );
 	}
 
 	$query = "SELECT c.id, c.name, COUNT( s.catid ) AS numcat"
@@ -1055,7 +1055,7 @@ function saveOrder( &$cid, $section ) {
 
 	// update ordering values
 	for( $i=0; $i < $total; $i++ ) {
-		$row->load( $cid[$i] );
+		$row->load( (int) $cid[$i] );
 		if ($row->ordering != $order[$i]) {
 			$row->ordering = $order[$i];
 			if (!$row->store()) {
@@ -1070,7 +1070,11 @@ function saveOrder( &$cid, $section ) {
 					$found = true;
 					break;
 				} // if
-			if (!$found) $conditions[] = array($row->id, $condition);
+			if (!$found)
+			{
+				$conditions[] = array( $row->id, $condition);
+			}
+				
 		} // if
 	} // for
 

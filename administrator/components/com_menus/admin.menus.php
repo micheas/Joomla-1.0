@@ -377,7 +377,7 @@ function saveMenu( $option, $task='save' ) {
 		exit();
 	}
 	$row->checkin();
-	$row->updateOrder( "menutype = '$row->menutype' AND parent = $row->parent" );
+	$row->updateOrder( 'menutype = ' . $database->Quote( $row->menutype ) . ' AND parent = ' . (int) $row->parent );
 
 	$msg = 'Menu item Saved';
 	switch ( $task ) {
@@ -650,7 +650,7 @@ function moveMenuSave( $option, $cid, $menu, $menutype ) {
 
 	if ($firstroot) {
 		$row->load( $firstroot );
-		$row->updateOrder( "menutype = '$row->menutype' AND parent = $row->parent" );
+		$row->updateOrder( 'menutype = ' . $database->Quote( $row->menutype ) . ' AND parent = ' . (int) $row->parent );
 	} // if
 
 	// clean any existing cache files
@@ -727,7 +727,7 @@ function copyMenuSave( $option, $cid, $menu, $menutype ) {
 			echo "<script> alert('".$row->getError()."'); window.history.go(-1); </script>\n";
 			exit();
 		}
-		$curr->updateOrder( "menutype = '$curr->menutype' AND parent = $curr->parent" );
+		$curr->updateOrder( 'menutype = ' . $database->Quote( $curr->menutype ) . ' AND parent = ' . (int) $curr->parent );
 	} // foreach
 	
 	// clean any existing cache files
@@ -784,7 +784,7 @@ function saveOrder( &$cid, $menutype ) {
 
 	// update ordering values
 	for( $i=0; $i < $total; $i++ ) {
-		$row->load( $cid[$i] );
+		$row->load( (int) $cid[$i] );
 		if ($row->ordering != $order[$i]) {
 			$row->ordering = $order[$i];
 			if (!$row->store()) {
@@ -792,7 +792,7 @@ function saveOrder( &$cid, $menutype ) {
 				exit();
 			}
 			// remember to updateOrder this group
-			$condition = "menutype = '$menutype' AND parent = $row->parent AND published >= 0";
+			$condition = "menutype = " . $database->Quote( $menutype ) . " AND parent = $row->parent AND published >= 0";
 			$found = false;
 			foreach ( $conditions as $cond )
 				if ($cond[1]==$condition) {

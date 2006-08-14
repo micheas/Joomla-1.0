@@ -1939,13 +1939,13 @@ function saveContent( &$access, $task ) {
 	$fp->updateOrder();
 
 	$row->checkin();
-	$row->updateOrder( "catid = $row->catid" );
+	$row->updateOrder( "catid = " . (int) $row->catid );
 
 	// gets section name of item
 	$query = "SELECT s.title"
 	. "\n FROM #__sections AS s"
 	. "\n WHERE s.scope = 'content'"
-	. "\n AND s.id = $row->sectionid"
+	. "\n AND s.id = " . (int) $row->sectionid
 	;
 	$database->setQuery( $query );
 	// gets category name of item
@@ -1953,7 +1953,7 @@ function saveContent( &$access, $task ) {
 
 	$query = "SELECT c.title"
 	. "\n FROM #__categories AS c"
-	. "\n WHERE c.id = $row->catid"
+	. "\n WHERE c.id = " . (int) $row->catid
 	;
 	$database->setQuery( $query	);
 	$category = $database->loadResult();

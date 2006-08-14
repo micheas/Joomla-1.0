@@ -154,7 +154,7 @@ function showPathway( $Itemid ) {
 						. "\n FROM #__categories AS c"
 						. "\n LEFT JOIN #__sections AS s"
 						. "\n ON c.section = s.id"
-						. "\n WHERE c.id = $row->catid"
+						. "\n WHERE c.id = " . (int) $row->catid
 						. "\n AND c.access <= $my->id"
 						;
 						$database->setQuery( $query );

@@ -161,7 +161,7 @@ function editWeblink( $option, $id ) {
 	// build the html select list for ordering
 	$query = "SELECT ordering AS value, title AS text"
 	. "\n FROM #__weblinks"
-	. "\n WHERE catid = $row->catid"
+	. "\n WHERE catid = " . (int) $row->catid
 	. "\n ORDER BY ordering"
 	;
 	$lists['ordering'] 			= mosAdminMenus::SpecificOrdering( $row, $id, $query, 1 );
@@ -209,7 +209,7 @@ function saveWeblink( $option ) {
 		exit();
 	}
 	$row->checkin();
-	$row->updateOrder( "catid = $row->catid" );
+	$row->updateOrder( "catid = " . (int) $row->catid );
 
 	mosRedirect( "index2.php?option=$option" );
 }

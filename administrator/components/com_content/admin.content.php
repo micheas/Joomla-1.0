@@ -549,7 +549,7 @@ function editContent( $uid=0, $sectionid=0, $option ) {
 	// build the html select list for ordering
 	$query = "SELECT ordering AS value, title AS text"
 	. "\n FROM #__content"
-	. "\n WHERE catid = $row->catid"
+	. "\n WHERE catid = " . (int) $row->catid
 	. "\n AND state >= 0"
 	. "\n ORDER BY ordering"
 	;
@@ -558,7 +558,7 @@ function editContent( $uid=0, $sectionid=0, $option ) {
 	// pull param column from category info
 	$query = "SELECT params"
 	. "\n FROM #__categories"
-	. "\n WHERE id = $row->catid"
+	. "\n WHERE id = " . (int) $row->catid
 	;
 	$database->setQuery( $query );
 	$categoryParam = $database->loadResult();	
@@ -576,7 +576,7 @@ function editContent( $uid=0, $sectionid=0, $option ) {
 		// load param column from section info
 		$query = "SELECT params"
 		. "\n FROM #__sections"
-		. "\n WHERE id = $row->sectionid"
+		. "\n WHERE id = " . (int) $row->sectionid
 		;
 		$database->setQuery( $query );		
 		$sectionParam = $database->loadResult();			

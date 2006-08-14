@@ -1362,9 +1362,9 @@ function showItem( $uid, $gid, &$access, $pop, $option='com_content', $now ) {
 			// array of content items in same category correctly ordered
 			$query = "SELECT a.id"
 			. "\n FROM #__content AS a"
-			. "\n WHERE a.catid = $row->catid"
-			. "\n AND a.state = $row->state"
-			. ($access->canEdit ? '' : "\n AND a.access <= $gid" )
+			. "\n WHERE a.catid = " . (int) $row->catid
+			. "\n AND a.state = " . (int) $row->state
+			. ($access->canEdit ? '' : "\n AND a.access <= " . (int) $gid )
 			. $xwhere
 			. "\n ORDER BY $orderby"
 			;
@@ -1538,7 +1538,7 @@ function show( $row, $params, $gid, &$access, $pop, $option='com_content', $Item
 				. "\n FROM #__menu"
 				. "\n WHERE published = 1"
 				. "\n AND type IN ( 'content_category', 'content_blog_category' )"
-				. "\n AND componentid = $row->catid"
+				. "\n AND componentid = " . (int) $row->catid
 				. "\n ORDER BY type DESC, ordering"
 				;
 				$database->setQuery( $query );
@@ -1721,7 +1721,7 @@ function editItem( $uid, $gid, &$access, $sectionid=0, $task, $Itemid ){
 	// pull param column from category info
 	$query = "SELECT params"
 	. "\n FROM #__categories"
-	. "\n WHERE id = $row->catid"
+	. "\n WHERE id = " . (int) $row->catid
 	;
 	$database->setQuery( $query );
 	$categoryParam = $database->loadResult();	
@@ -1739,7 +1739,7 @@ function editItem( $uid, $gid, &$access, $sectionid=0, $task, $Itemid ){
 		// load param column from section info
 		$query = "SELECT params"
 		. "\n FROM #__sections"
-		. "\n WHERE id = $row->sectionid"
+		. "\n WHERE id = " . (int) $row->sectionid
 		;
 		$database->setQuery( $query );
 		$sectionParam = $database->loadResult();			
@@ -1785,7 +1785,7 @@ function editItem( $uid, $gid, &$access, $sectionid=0, $task, $Itemid ){
 	// build the html select list for ordering
 	$query = "SELECT ordering AS value, title AS text"
 	. "\n FROM #__content"
-	. "\n WHERE catid = $row->catid"
+	. "\n WHERE catid = " . (int) $row->catid
 	. "\n ORDER BY ordering"
 	;
 	$lists['ordering'] 		= mosAdminMenus::SpecificOrdering( $row, $uid, $query, 1 );

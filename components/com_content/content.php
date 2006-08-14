@@ -1917,7 +1917,7 @@ function saveContent( &$access, $task ) {
 	if ( intval( mosGetParam( $_REQUEST, 'frontpage', 0 ) ) ) {
 
 		// toggles go to first place
-		if (!$fp->load( $row->id )) {
+		if (!$fp->load( (int)$row->id )) {
 			// new entry
 			$query = "INSERT INTO #__content_frontpage"
 			. "\n VALUES ( $row->id, 1 )"
@@ -1931,7 +1931,7 @@ function saveContent( &$access, $task ) {
 		}
 	} else {
 		// no frontpage mask
-		if ( !$fp->delete( $row->id ) ) {
+		if ( !$fp->delete( (int)$row->id ) ) {
 			$msg .= $fp->stderr();
 		}
 		$fp->ordering = 0;

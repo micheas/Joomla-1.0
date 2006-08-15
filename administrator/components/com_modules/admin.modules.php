@@ -181,7 +181,7 @@ function copyModule( $option, $uid, $client ) {
 
 	$row = new mosModule( $database );
 	// load the row from the db table
-	$row->load( $uid );
+	$row->load( (int)$uid );
 	$row->title 		= 'Copy of '.$row->title;
 	$row->id 			= 0;
 	$row->iscore 		= 0;
@@ -321,7 +321,7 @@ function editModule( $option, $uid, $client ) {
 	$lists = array();
 	$row = new mosModule( $database );
 	// load the row from the db table
-	$row->load( $uid );
+	$row->load( (int)$uid );
 	// fail if checked out not by 'me'
 	if ($row->isCheckedOut( $my->id )) {
 		mosErrorAlert( "The module ".$row->title." is currently being edited by another administrator" );
@@ -585,7 +585,7 @@ function orderModule( $uid, $inc, $option ) {
 	$client = strval( mosGetParam( $_POST, 'client', '' ) );
 
 	$row = new mosModule( $database );
-	$row->load( $uid );
+	$row->load( (int)$uid );
 	if ($client == 'admin') {
 		$where = "client_id = 1";
 	} else {
@@ -626,7 +626,7 @@ function accessMenu( $uid, $access, $option, $client ) {
 	}
 
 	$row = new mosModule( $database );
-	$row->load( $uid );
+	$row->load( (int)$uid );
 	$row->access = $access;
 
 	if ( !$row->check() ) {

@@ -51,7 +51,7 @@ function pollAddVote( $uid ) {
 	}
 
 	$poll = new mosPoll( $database );
-	if (!$poll->load( $uid )) {
+	if (!$poll->load( (int)$uid )) {
 		echo '<h3>'. _NOT_AUTH .'</h3>';
 		echo '<input class="button" type="button" value="'. _CMN_CONTINUE .'" onClick="window.history.go(-1);">';
 		return;
@@ -114,7 +114,7 @@ function pollresult( $uid ) {
 	global $mainframe;
 
 	$poll = new mosPoll( $database );
-	$poll->load( $uid );
+	$poll->load( (int)$uid );
 
 	// if id value is passed and poll not published then exit
 	if ($poll->id != '' && !$poll->published) {

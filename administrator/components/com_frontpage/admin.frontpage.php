@@ -223,12 +223,12 @@ function removeFrontPage( &$cid, $option ) {
 	}
 	$fp = new mosFrontPage( $database );
 	foreach ($cid as $id) {
-		if (!$fp->delete( $id )) {
+		if (!$fp->delete( (int)$id )) {
 			echo "<script> alert('".$fp->getError()."'); </script>\n";
 			exit();
 		}
 		$obj = new mosContent( $database );
-		$obj->load( $id );
+		$obj->load( (int)$id );
 		$obj->mask = 0;
 		if (!$obj->store()) {
 			echo "<script> alert('".$fp->getError()."'); </script>\n";
@@ -251,7 +251,7 @@ function orderFrontPage( $uid, $inc, $option ) {
 	global $database;
 
 	$fp = new mosFrontPage( $database );
-	$fp->load( $uid );
+	$fp->load( (int)$uid );
 	$fp->move( $inc );
 	
 	// clean any existing cache files
@@ -269,7 +269,7 @@ function accessMenu( $uid, $access ) {
 	global $database;
 
 	$row = new mosContent( $database );
-	$row->load( $uid );
+	$row->load( (int)$uid );
 	$row->access = $access;
 
 	if ( !$row->check() ) {
@@ -303,7 +303,7 @@ function saveOrder( &$cid ) {
 
 		// update ordering
 		$row = new mosFrontPage( $database );
-		$row->load( $cid[$i] );
+		$row->load( (int)$cid[$i] );
 		$row->updateOrder();
 	}
 	

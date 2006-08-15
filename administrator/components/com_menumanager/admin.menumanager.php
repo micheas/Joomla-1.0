@@ -254,7 +254,7 @@ function saveMenu() {
 
 			// module assigned to show on All pages by default
 			// ToDO: Changed to become a Joomla! db-object
-			$query = "INSERT INTO #__modules_menu VALUES ( $row->id, 0 )";
+			$query = "INSERT INTO #__modules_menu VALUES ( ".(int)$row->id.", 0 )";
 			$database->setQuery( $query );
 			if ( !$database->query() ) {
 				echo "<script> alert('".$database->getErrorMsg()."'); window.history.go(-1); </script>\n";

@@ -225,7 +225,7 @@ function showSection( $id, $gid, &$access, $now ) {
 	global $database, $mainframe, $Itemid;
 
 	$section = new mosSection( $database );
-	$section->load( $id );
+	$section->load( (int)$id );
 	
 	/*
 	Check if section is published
@@ -358,7 +358,7 @@ function showCategory( $id, $gid, &$access, $sectionid, $limit, $selected, $limi
 	global $database, $mainframe, $Itemid, $mosConfig_list_limit;
 	
 	$category = new mosCategory( $database );
-	$category->load( $id );
+	$category->load( (int)$id );
 	
 	/*
 	Check if category is published
@@ -699,7 +699,7 @@ function showBlogSection( $id=0, $gid, &$access, $pop, $now=NULL, $limit, $limit
 	// check whether section is published
 	if (!count($rows) && $check) {
 		$secCheck = new mosSection( $database );
-		$secCheck->load( $check );
+		$secCheck->load( (int)$check );
 		
 		/*
 		* check whether section is published
@@ -800,7 +800,7 @@ function showBlogCategory( $id=0, $gid, &$access, $pop, $now, $limit, $limitstar
 	// check whether section & category is published
 	if (!count($rows) && $check) {
 		$catCheck = new mosCategory( $database );
-		$catCheck->load( $check );
+		$catCheck->load( (int)$check );
 		
 		/*
 		* check whether category is published
@@ -936,7 +936,7 @@ function showArchiveSection( $id=NULL, $gid, &$access, $pop, $option, $year, $mo
 	// check whether section is published
 	if (!count($rows) && $secID != 0) {
 		$secCheck = new mosSection( $database );
-		$secCheck->load( $secID );
+		$secCheck->load( (int)$secID );
 
 		/*
 		* check whether section is published
@@ -1069,7 +1069,7 @@ function showArchiveCategory( $id=0, $gid, &$access, $pop, $option, $year, $mont
 	// check whether section & category is published
 	if (!count($rows) && $catID != 0) {
 		$catCheck = new mosCategory( $database );
-		$catCheck->load( $catID );
+		$catCheck->load( (int)$catID );
 		
 		/*
 		* check whether category is published
@@ -1168,12 +1168,12 @@ function BlogOutput ( &$rows, &$params, $gid, &$access, $pop, &$menu, $limitstar
 		switch ( $menu->type ) {
 			case 'content_blog_section':
 				$description = new mosSection( $database );
-				$description->load( $menu->componentid );
+				$description->load( (int)$menu->componentid );
 				break;
 
 			case 'content_blog_category':
 				$description = new mosCategory( $database );
-				$description->load( $menu->componentid );
+				$description->load( (int)$menu->componentid );
 				break;
 
 			default:
@@ -1716,7 +1716,7 @@ function editItem( $uid, $gid, &$access, $sectionid=0, $task, $Itemid ){
 	$nullDate = $database->getNullDate();
 	$row = new mosContent( $database );
 	// load the row from the db table
-	$row->load( $uid );
+	$row->load( (int)$uid );
 
 	// fail if checked out not by 'me'
 	if ($row->isCheckedOut( $my->id )) {
@@ -2025,7 +2025,7 @@ function saveContent( &$access, $task ) {
 	if ( intval( mosGetParam( $_REQUEST, 'frontpage', 0 ) ) ) {
 
 		// toggles go to first place
-		if (!$fp->load( $row->id )) {
+		if (!$fp->load( (int)$row->id )) {
 			// new entry
 			$query = "INSERT INTO #__content_frontpage"
 			. "\n VALUES ( $row->id, 1 )"
@@ -2039,7 +2039,7 @@ function saveContent( &$access, $task ) {
 		}
 	} else {
 		// no frontpage mask
-		if ( !$fp->delete( $row->id ) ) {
+		if ( !$fp->delete( (int)$row->id ) ) {
 			$msg .= $fp->stderr();
 		}
 		$fp->ordering = 0;
@@ -2153,7 +2153,7 @@ function emailContentForm( $uid ) {
 	global $database, $my;
 
 	$row = new mosContent( $database );
-	$row->load( $uid );
+	$row->load( (int)$uid );
 	
 	$itemid = intval( mosGetParam( $_GET, 'itemid', 0 ) );
 

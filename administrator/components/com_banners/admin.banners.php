@@ -132,7 +132,7 @@ function editBanner( $bannerid, $option ) {
 	$lists = array();
 
 	$row = new mosBanner($database);
-	$row->load( $bannerid );
+	$row->load( (int)$bannerid );
 
   if ( $bannerid ){
 	$row->checkout( $my->id );
@@ -296,7 +296,7 @@ function editBannerClient( $clientid, $option ) {
 	global $database, $my;
 
 	$row = new mosBannerClient($database);
-	$row->load($clientid);
+	$row->load( (int)$clientid);
 
 	// fail if checked out not by 'me'
 	if ($row->checked_out && $row->checked_out != $my->id) {

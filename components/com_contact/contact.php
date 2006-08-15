@@ -467,7 +467,7 @@ function vCard( $id ) {
 	global $mosConfig_sitename, $mosConfig_live_site;
 
 	$contact	= new mosContact( $database );
-	$contact->load( $id );	
+	$contact->load( (int)$id );	
 	$params = new mosParameters( $contact->params );
 	
 	$show = $params->get( 'vcard', 0 );	

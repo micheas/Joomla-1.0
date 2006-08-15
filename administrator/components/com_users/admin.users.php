@@ -200,7 +200,7 @@ function editUser( $uid='0', $option='users' ) {
 
 	$row = new mosUser( $database );
 	// load the row from the db table
-	$row->load( $uid );
+	$row->load( (int)$uid );
 
 	if ( $uid ) {
 		$query = "SELECT *"
@@ -289,7 +289,7 @@ function saveUser( $task ) {
 		$row->registerDate = date( 'Y-m-d H:i:s' );
 	} else {
 		$original = new mosUser( $database );
-		$original->load( $row->id );
+		$original->load( (int)$row->id );
 		
 		// existing user stuff
 		if ($row->password == '') {

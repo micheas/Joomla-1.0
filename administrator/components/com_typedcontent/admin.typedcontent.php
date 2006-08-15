@@ -196,7 +196,7 @@ function edit( $uid, $option ) {
 	global $mosConfig_absolute_path, $mosConfig_live_site, $mosConfig_offset;
 
 	$row = new mosContent( $database );
-	$row->load( $uid );
+	$row->load( (int)$uid );
 
 	$lists 		= array();
 	$nullDate 	= $database->getNullDate();
@@ -488,7 +488,7 @@ function changeAccess( $id, $access, $option  ) {
 	global $database;
 
 	$row = new mosContent( $database );
-	$row->load( $id );
+	$row->load( (int)$id );
 	$row->access = $access;
 
 	if ( !$row->check() ) {
@@ -512,7 +512,7 @@ function resethits( $option, $id ) {
 	global $database;
 
 	$row = new mosContent($database);
-	$row->Load( $id );
+	$row->Load( (int)$id );
 	$row->hits = "0";
 	$row->store();
 	$row->checkin();

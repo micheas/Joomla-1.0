@@ -105,7 +105,7 @@ function editPoll( $uid=0, $option='com_poll' ) {
 
 	$row = new mosPoll( $database );
 	// load the row from the db table
-	$row->load( $uid );
+	$row->load( (int)$uid );
 
 	// fail if checked out not by 'me'
 	if ($row->isCheckedOut( $my->id )) {

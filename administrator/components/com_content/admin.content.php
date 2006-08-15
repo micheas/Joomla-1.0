@@ -168,7 +168,7 @@ function viewContent( $sectionid, $option ) {
 		$all 		= NULL;
 		$filter 	= "\n WHERE cc.section = '$sectionid'";
 		$section 	= new mosSection( $database );
-		$section->load( $sectionid );
+		$section->load( (int)$sectionid );
 	}
 
 	// used by filter
@@ -341,7 +341,7 @@ function viewArchive( $sectionid, $option ) {
 	$lists['sectionid']		= mosAdminMenus::SelectSection( 'filter_sectionid', $filter_sectionid, $javascript );
 
 	$section = new mosSection( $database );
-	$section->load( $sectionid );
+	$section->load( (int)$sectionid );
 
 	// get list of Authors for dropdown filter
 	$query = "SELECT c.created_by, u.name"
@@ -379,7 +379,7 @@ function editContent( $uid=0, $sectionid=0, $option ) {
 
 	// load the row from the db table
 	$row = new mosContent( $database );
-	$row->load( $uid );
+	$row->load( (int)$uid );
 
 	if ($uid) {
 		$sectionid = $row->sectionid;
@@ -446,9 +446,9 @@ function editContent( $uid=0, $sectionid=0, $option ) {
 			$sectionid = $_POST['filter_sectionid'];
 		}
 		if ( @$_POST['catid'] ) {
-			$row->catid 	= $_POST['catid'];
+			$row->catid 	= (int)$_POST['catid'];
 			$category = new mosCategory( $database );
-			$category->load( $_POST['catid'] );
+			$category->load( (int)$_POST['catid'] );
 			$sectionid = $category->section;
 		} else {
 			$row->catid 	= 0;
@@ -726,7 +726,7 @@ function saveContent( $sectionid, $task ) {
 	if (intval( mosGetParam( $_REQUEST, 'frontpage', 0 ) )) {
 
 		// toggles go to first place
-		if (!$fp->load( $row->id )) {
+		if (!$fp->load( (int)$row->id )) {
 			// new entry
 			$query = "INSERT INTO #__content_frontpage"
 			. "\n VALUES ( $row->id, 1 )"
@@ -740,7 +740,7 @@ function saveContent( $sectionid, $task ) {
 		}
 	} else {
 		// no frontpage mask
-		if (!$fp->delete( $row->id )) {
+		if (!$fp->delete( (int)$row->id )) {
 			$msg .= $fp->stderr();
 		}
 		$fp->ordering = 0;
@@ -954,7 +954,7 @@ function orderContent( $uid, $inc, $option ) {
 	global $database;
 
 	$row = new mosContent( $database );
-	$row->load( $uid );
+	$row->load( (int)$uid );
 	$row->move( $inc, "catid = $row->catid AND state >= 0" );
 
 	$redirect = mosGetParam( $_POST, 'redirect', $row->sectionid );
@@ -1204,7 +1204,7 @@ function resethits( $redirect, $id ) {
 	global $database;
 
 	$row = new mosContent($database);
-	$row->Load($id);
+	$row->Load((int)$id);
 	$row->hits = 0;
 	$row->store();
 	$row->checkin();
@@ -1222,7 +1222,7 @@ function accessMenu( $uid, $access, $option ) {
 	global $database;
 
 	$row = new mosContent( $database );
-	$row->load( $uid );
+	$row->load( (int)$uid );
 	$row->access = $access;
 
 	if ( !$row->check() ) {

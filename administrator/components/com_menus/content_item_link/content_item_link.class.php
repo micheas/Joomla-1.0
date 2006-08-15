@@ -27,7 +27,7 @@ class content_item_link_menu {
 		global $mosConfig_absolute_path;
 
 		$menu = new mosMenu( $database );
-		$menu->load( $uid );
+		$menu->load( (int)$uid );
 
 		// fail if checked out not by 'me'
 		if ($menu->checked_out && $menu->checked_out != $my->id) {

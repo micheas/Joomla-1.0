@@ -113,7 +113,7 @@ function clickbanner( $bid ) {
 	require_once( $mainframe->getPath( 'class' ) );
 
 	$row = new mosBanner($database);
-	$row->load($bid);
+	$row->load((int)$bid);
 	$row->clicks();
 
 	$pat = "http.*://";

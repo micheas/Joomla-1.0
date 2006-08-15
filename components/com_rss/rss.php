@@ -50,7 +50,7 @@ function feedFrontpage( $showFeed ) {
 
 	// load syndication parameters
 	$component = new mosComponent( $database );
-	$component->load( $id );
+	$component->load( (int)$id );
 	$params = new mosParameters( $component->params );
 
 	// test if security check is enbled

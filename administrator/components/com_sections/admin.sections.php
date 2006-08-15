@@ -190,7 +190,7 @@ function editSection( $uid=0, $scope='', $option ) {
 
 	$row = new mosSection( $database );
 	// load the row from the db table
-	$row->load( $uid );
+	$row->load( (int)$uid );
 
 	// fail if checked out not by 'me'
 	if ($row->isCheckedOut( $my->id )) {
@@ -536,7 +536,7 @@ function orderSection( $uid, $inc, $option, $scope ) {
 	global $database;
 
 	$row = new mosSection( $database );
-	$row->load( $uid );
+	$row->load( (int)$uid );
 	$row->move( $inc, "scope = '$row->scope'" );
 	
 	// clean any existing cache files
@@ -686,7 +686,7 @@ function accessMenu( $uid, $access, $option ) {
 	global $database;
 
 	$row = new mosSection( $database );
-	$row->load( $uid );
+	$row->load( (int)$uid );
 	$row->access = $access;
 
 	if ( !$row->check() ) {

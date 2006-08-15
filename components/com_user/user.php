@@ -133,7 +133,7 @@ function userEdit( $option, $uid, $submitvalue) {
 		return;
 	}
 	$row = new mosUser( $database );
-	$row->load( $uid );
+	$row->load( (int)$uid );
 	$row->orig_password = $row->password;
 
 	$file 	= $mainframe->getPath( 'com_xml', 'com_users' );
@@ -157,7 +157,7 @@ function userSave( $option, $uid) {
 	josSpoofCheck();	
 	
 	$row = new mosUser( $database );
-	$row->load( $user_id );	
+	$row->load( (int)$user_id );	
 	
 	$orig_password = $row->password;
 	$orig_username = $row->username;

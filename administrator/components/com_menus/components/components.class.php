@@ -28,11 +28,11 @@ class components_menu {
 		global $database, $my, $mainframe;
 
 		$menu = new mosMenu( $database );
-		$menu->load( $uid );
+		$menu->load( (int)$uid );
 
 		$row = new mosComponent( $database );
 		// load the row from the db table
-		$row->load( $menu->componentid );
+		$row->load( (int)$menu->componentid );
 
 		// fail if checked out not by 'me'
 		if ( $menu->checked_out && $menu->checked_out != $my->id ) {

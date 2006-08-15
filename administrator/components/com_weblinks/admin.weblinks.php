@@ -141,7 +141,7 @@ function editWeblink( $option, $id ) {
 
 	$row = new mosWeblink( $database );
 	// load the row from the db table
-	$row->load( $id );
+	$row->load( (int)$id );
 
 	// fail if checked out not by 'me'
 	if ($row->isCheckedOut( $my->id )) {
@@ -283,7 +283,7 @@ function publishWeblinks( $cid=null, $publish=1,  $option ) {
 function orderWeblinks( $uid, $inc, $option ) {
 	global $database;
 	$row = new mosWeblink( $database );
-	$row->load( $uid );
+	$row->load( (int)$uid );
 	$row->updateOrder();
 	$row->move( $inc, "published >= 0" );
 	$row->updateOrder();

@@ -172,7 +172,7 @@ function showItem ( $id ) {
 	global $database, $my;
 
 	$link = new mosWeblink($database);
-	$link->load($id);
+	$link->load((int)$id);
 	
 	/*
 	* Check if link is published
@@ -183,7 +183,7 @@ function showItem ( $id ) {
 	}
 	
 	$cat = new mosCategory($database);
-	$cat->load($link->catid);
+	$cat->load((int)$link->catid);
 	
 	/*
 	* Check if category is published
@@ -241,7 +241,7 @@ function editWebLink( $id, $option ) {
 	
 	$row = new mosWeblink( $database );
 	// load the row from the db table
-	$row->load( $id );
+	$row->load( (int)$id );
 
 	// fail if checked out not by 'me'
 	if ($row->isCheckedOut( $my->id )) {

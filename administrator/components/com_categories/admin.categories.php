@@ -273,7 +273,7 @@ function editCategory( $uid=0, $section='' ) {
 	
 	$row = new mosCategory( $database );
 	// load the row from the db table
-	$row->load( $uid );
+	$row->load( (int)$uid );
 
 	// fail if checked out not by 'me'
 	if ($row->checked_out && $row->checked_out != $my->id) {
@@ -727,7 +727,7 @@ function orderCategory( $uid, $inc ) {
 	global $database;
 
 	$row = new mosCategory( $database );
-	$row->load( $uid );
+	$row->load( (int)$uid );
 	$row->move( $inc, "section = '$row->section'" );
 	
 	// clean any existing cache files
@@ -883,7 +883,7 @@ function copyCategorySave( $cid, $sectionOld ) {
 
 	$category = new mosCategory ( $database );
 	foreach( $cid as $id ) {
-		$category->load( $id );
+		$category->load( (int)$id );
 		$category->id 		= NULL;
 		$category->title 	= 'Copy of '. $category->title;
 		$category->name 	= 'Copy of '. $category->name;
@@ -906,7 +906,7 @@ function copyCategorySave( $cid, $sectionOld ) {
 
 	$content = new mosContent ( $database );
 	foreach( $contentid as $id) {
-		$content->load( $id );
+		$content->load( (int)$id );
 		$content->id 		= NULL;
 		$content->sectionid = $sectionMove;
 		$content->hits 		= 0;
@@ -947,7 +947,7 @@ function accessMenu( $uid, $access, $section ) {
 	global $database;
 
 	$row = new mosCategory( $database );
-	$row->load( $uid );
+	$row->load( (int)$uid );
 	$row->access = $access;
 
 	if ( !$row->check() ) {

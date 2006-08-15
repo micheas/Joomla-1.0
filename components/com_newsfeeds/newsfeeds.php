@@ -167,7 +167,7 @@ function showFeed( $feedid ) {
 	require_once( $mainframe->getPath( 'class' ) );
 	
 	$newsfeed = new mosNewsFeed($database);
-	$newsfeed->load($feedid);
+	$newsfeed->load((int)$feedid);
 
 	/*
 	* Check if newsfeed is published
@@ -178,7 +178,7 @@ function showFeed( $feedid ) {
 	}
 	
 	$category = new mosCategory($database);
-	$category->load($newsfeed->catid);
+	$category->load((int)$newsfeed->catid);
 	
 	/*
 	* Check if newsfeed category is published

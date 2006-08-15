@@ -211,7 +211,7 @@ function editMambot( $option, $uid, $client ) {
 	$row 	= new mosMambot($database);
 
 	// load the row from the db table
-	$row->load( $uid );
+	$row->load( (int)$uid );
 
 	// fail if checked out not by 'me'
 	if ($row->isCheckedOut( $my->id )) {
@@ -371,7 +371,7 @@ function orderMambot( $uid, $inc, $option, $client ) {
 		$where = "client_id = 0";
 	}
 	$row = new mosMambot( $database );
-	$row->load( $uid );
+	$row->load( (int)$uid );
 	$row->move( $inc, "folder='$row->folder' AND ordering > -10000 AND ordering < 10000 AND ($where)"  );
 
 	mosRedirect( 'index2.php?option='. $option );
@@ -399,7 +399,7 @@ function accessMenu( $uid, $access, $option, $client ) {
 	}
 
 	$row = new mosMambot( $database );
-	$row->load( $uid );
+	$row->load( (int)$uid );
 	$row->access = $access;
 
 	if ( !$row->check() ) {

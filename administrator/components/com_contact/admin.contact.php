@@ -142,7 +142,7 @@ function editContact( $id, $option ) {
 
 	$row = new mosContact( $database );
 	// load the row from the db table
-	$row->load( $id );
+	$row->load( (int)$id );
 
 	if ($id) {
 		// do stuff for existing records
@@ -299,7 +299,7 @@ function orderContacts( $uid, $inc, $option ) {
 	global $database;
 
 	$row = new mosContact( $database );
-	$row->load( $uid );
+	$row->load( (int)$uid );
 	$row->updateOrder();
 	$row->move( $inc, "published >= 0" );
 	$row->updateOrder();

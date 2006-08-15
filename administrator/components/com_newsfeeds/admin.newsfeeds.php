@@ -133,7 +133,7 @@ function editNewsFeed( $id, $option ) {
 
 	$row = new mosNewsFeed( $database );
 	// load the row from the db table
-	$row->load( $id );
+	$row->load( (int)$id );
 
 	if ($id) {
 		// do stuff for existing records
@@ -281,7 +281,7 @@ function orderNewsFeed( $id, $inc, $option ) {
 	$catid 		= intval( mosGetParam( $_REQUEST, 'catid', 0 ) );
 
 	$row = new mosNewsFeed( $database );
-	$row->load( $id );
+	$row->load( (int)$id );
 	$row->move( $inc );
 
 	mosRedirect( 'index2.php?option='. $option );

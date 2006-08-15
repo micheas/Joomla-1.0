@@ -38,6 +38,8 @@ Legend:
 
 
 ---------------- 1.0.11 Nightly SVN --------------------------------------------------
+15-Aug-2006 Marko Schmuck
+ # Fixed possible injection attacks on ->load()
 
 15-Aug-2006 Andrew Eddie
  # Fixed remote execution issue in PEAR.php

@@ -293,13 +293,13 @@ class database {
 	*/
 	function query() {
 		global $mosConfig_debug;
-		if ($this->_debug) {
-			$this->_ticker++;
-	  		$this->_log[] = $this->_sql;
-		}
 		if ($this->_limit > 0 || $this->_offset > 0) {
 			$this->_sql .= "\nLIMIT $this->_offset, $this->_limit";
 		}
+		if ($this->_debug) {
+			$this->_ticker++;
+	  		$this->_log[] = $this->_sql;
+		}		
 		$this->_errorNum = 0;
 		$this->_errorMsg = '';
 		$this->_cursor = mysqli_query( $this->_resource, $this->_sql );

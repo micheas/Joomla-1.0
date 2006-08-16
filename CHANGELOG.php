@@ -38,13 +38,16 @@ Legend:
 
 
 ---------------- 1.0.11 Nightly SVN --------------------------------------------------
+17-Aug-2006 Mateusz Krzeszowiec
+ # Fixed logging query before applying LIMIT 
+
 15-Aug-2006 Marko Schmuck
  # Fixed possible injection attacks on ->load()
 
 15-Aug-2006 Andrew Eddie
  # Fixed remote execution issue in PEAR.php
 
-15-Aug-2006
+15-Aug-2006 Mateusz Krzeszowiec
  # Fixed SQL LIMIT in com_content frontend
 
 14-Aug-2006

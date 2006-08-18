@@ -59,6 +59,7 @@ http://www.owasp.org
 
 
 18-Aug-2006 Rey Gigataras
+ # SECURITY A? [ ? Level ]: globals.php not included in administrator/index.php 
  # Fixed [topic,72209] : Mambots fired on Modules
 
 
@@ -94,9 +95,9 @@ http://www.owasp.org
 
 
 27-July-2006 Robin Muilwijk
+ # SECURITY A? [ ? Level ]: [artf5335] : missing direct access line
  # Fixed [artf5282] : missing table row tag and self closing tag
  # Fixed [artf5297] : small html errors
- # Fixed [artf5335] : missing direct access line
 
 
 17-July-2006 Robin Muilwijk

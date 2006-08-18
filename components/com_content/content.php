@@ -47,7 +47,8 @@ switch ( $task ) {
 		break;
 
 	case 'view':
-		showItem( $id, $gid, $access, $pop, $option, 0 );
+		$cache->call( 'showItem', $id, $gid, $access, $pop, $option, 0 );
+		//showItem( $id, $gid, $access, $pop, $option, 0 );
 		break;
 
 	case 'section':

@@ -170,16 +170,16 @@ function frontpage( $gid, &$access, $pop, $now, $limit, $limitstart ) {
 	$voting = votingQuery($voting);
 	
 	$where 	= _where( 1, $access, $noauth, $gid, 0, $now, NULL, NULL, $params );	
-	$where 	= ( count( $where ) ? "\n WHERE ". implode( "\n AND ", $where ) : '' );
-	
+	$where 	= ( count( $where ) ? "\n WHERE ". implode( "\n AND ", $where ) : '' );	
 	
 	// Limit & limitstart
-	$intro		= $params->def( 'intro', 				4 );
-	$leading 	= $params->def( 'leading', 				1 );
-	$links		= $params->def( 'link', 				4 );	
+	$intro		= $params->def( 'intro', 	4 );
+	$leading 	= $params->def( 'leading', 	1 );
+	$links		= $params->def( 'link', 	4 );	
 
-	$limit = $intro + $leading + $links;
+	$limit 		= $intro + $leading + $links;
 
+	// query to determine total number of records
 	$query = "SELECT COUNT(a.id)"
 	. "\n FROM #__content AS a"
 	. "\n INNER JOIN #__content_frontpage AS f ON f.content_id = a.id"
@@ -188,8 +188,7 @@ function frontpage( $gid, &$access, $pop, $now, $limit, $limitstart ) {
 	. "\n LEFT JOIN #__users AS u ON u.id = a.created_by"
 	. "\n LEFT JOIN #__groups AS g ON a.access = g.id"
 	. $where
-	;
-	
+	;	
 	$database->setQuery( $query );
 	$total = $database->loadResult();
 	
@@ -536,6 +535,7 @@ function showCategory( $id, $gid, &$access, $sectionid, $limit, $selected, $limi
 		;
 	}
 
+	// query to determine total number of records
 	$query = "SELECT COUNT(a.id) as numitems"
 	. "\n FROM #__content AS a"
 	. "\n LEFT JOIN #__users AS u ON u.id = a.created_by"
@@ -630,7 +630,7 @@ function showBlogSection( $id=0, $gid, &$access, $pop, $now=NULL, $limit, $limit
 		$menu = $mainframe->get( 'menu' );
 		$params = new mosParameters( $menu->params );
 	} else {
-		$menu = "";
+		$menu = '';
 		$params = new mosParameters( '' );
 	}
 
@@ -653,12 +653,13 @@ function showBlogSection( $id=0, $gid, &$access, $pop, $now=NULL, $limit, $limit
 	$voting = votingQuery($voting);
 	
 	// Limit & limitstart
-	$intro		= $params->def( 'intro', 				4 );
-	$leading 	= $params->def( 'leading', 				1 );
-	$links		= $params->def( 'link', 				4 );	
+	$intro		= $params->def( 'intro', 	4 );
+	$leading 	= $params->def( 'leading', 	1 );
+	$links		= $params->def( 'link', 	4 );	
 
 	$limit = $limit ? $limit : ( $intro + $leading + $links );
 	
+	// query to determine total number of records
 	$query = "SELECT COUNT(a.id)"
 	. "\n FROM #__content AS a"
 	. "\n INNER JOIN #__categories AS cc ON cc.id = a.catid"
@@ -666,8 +667,7 @@ function showBlogSection( $id=0, $gid, &$access, $pop, $now=NULL, $limit, $limit
 	. "\n LEFT JOIN #__sections AS s ON a.sectionid = s.id"
 	. "\n LEFT JOIN #__groups AS g ON a.access = g.id"
 	. $where
-	;
-	
+	;	
 	$database->setQuery( $query );
 	$total = $database->loadResult();
 	
@@ -759,12 +759,13 @@ function showBlogCategory( $id=0, $gid, &$access, $pop, $now, $limit, $limitstar
 	$voting = votingQuery($voting);
 	
 	// Limit & limitstart
-	$intro		= $params->def( 'intro', 				4 );
-	$leading 	= $params->def( 'leading', 				1 );
-	$links		= $params->def( 'link', 				4 );	
+	$intro		= $params->def( 'intro', 	4 );
+	$leading 	= $params->def( 'leading', 	1 );
+	$links		= $params->def( 'link', 	4 );	
 
 	$limit = $limit ? $limit : ( $intro + $leading + $links );
 	
+	// query to determine total number of records
 	$query = "SELECT COUNT(a.id)"
 	. "\n FROM #__content AS a"
 	. "\n LEFT JOIN #__categories AS cc ON cc.id = a.catid"
@@ -772,8 +773,7 @@ function showBlogCategory( $id=0, $gid, &$access, $pop, $now, $limit, $limitstar
 	. "\n LEFT JOIN #__sections AS s ON a.sectionid = s.id"
 	. "\n LEFT JOIN #__groups AS g ON a.access = g.id"
 	. $where
-	;
-	
+	;	
 	$database->setQuery( $query );
 	$total = $database->loadResult();
 	
@@ -895,12 +895,13 @@ function showArchiveSection( $id=NULL, $gid, &$access, $pop, $option, $year, $mo
 	$voting = votingQuery($voting);
 
 	// Limit & limitstart
-	$intro		= $params->def( 'intro', 				4 );
-	$leading 	= $params->def( 'leading', 				1 );
-	$links		= $params->def( 'link', 				4 );	
+	$intro		= $params->def( 'intro', 	4 );
+	$leading 	= $params->def( 'leading', 	1 );
+	$links		= $params->def( 'link', 	4 );	
 
 	$limit = $limit ? $limit : ( $intro + $leading + $links );
 	
+	// query to determine total number of records
 	$query = "SELECT COUNT(a.id)"
 	. "\n FROM #__content AS a"
 	. "\n INNER JOIN #__categories AS cc ON cc.id = a.catid"
@@ -908,8 +909,7 @@ function showArchiveSection( $id=NULL, $gid, &$access, $pop, $option, $year, $mo
 	. "\n LEFT JOIN #__sections AS s ON a.sectionid = s.id"
 	. "\n LEFT JOIN #__groups AS g ON a.access = g.id"
 	. $where
-	;
-	
+	;	
 	$database->setQuery( $query );
 	$total = $database->loadResult();
 	
@@ -1027,13 +1027,14 @@ function showArchiveCategory( $id=0, $gid, &$access, $pop, $option, $year, $mont
 	$voting = $params->def( 'rating', '' );
 	$voting = votingQuery($voting);
 
-// Limit & limitstart
-	$intro		= $params->def( 'intro', 				4 );
-	$leading 	= $params->def( 'leading', 				1 );
-	$links		= $params->def( 'link', 				4 );	
+	// Limit & limitstart
+	$intro		= $params->def( 'intro', 	4 );
+	$leading 	= $params->def( 'leading', 	1 );
+	$links		= $params->def( 'link', 	4 );	
 
 	$limit = $limit ? $limit : ( $intro + $leading + $links );
 	
+	// query to determine total number of records
 	$query = "SELECT COUNT(a.id)"
 	. "\n FROM #__content AS a"
 	. "\n INNER JOIN #__categories AS cc ON cc.id = a.catid"
@@ -1041,8 +1042,7 @@ function showArchiveCategory( $id=0, $gid, &$access, $pop, $option, $year, $mont
 	. "\n LEFT JOIN #__sections AS s ON a.sectionid = s.id"
 	. "\n LEFT JOIN #__groups AS g ON a.access = g.id"
 	. $where
-	;
-	
+	;	
 	$database->setQuery( $query );
 	$total = $database->loadResult();
 	

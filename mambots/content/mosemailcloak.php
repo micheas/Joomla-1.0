@@ -31,6 +31,13 @@ function botMosEmailCloak( $published, &$row, &$params, $page=0 ) {
 	if ( strpos( $row->text, '@' ) === false ) {
 		return true;
 	}
+		
+	// simple check to allow disabling of bot
+	$regex = '{emailcloak=off}';
+	if ( strpos( $row->text, $regex ) !== false ) {
+		$row->text = str_replace( $regex, '', $row->text );
+		return true;
+	}
 	
 	// check if param query has previously been processed
 	if ( !isset($_MAMBOTS->_content_mambot_params['mosemailcloak']) ) {

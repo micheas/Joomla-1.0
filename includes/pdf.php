@@ -17,56 +17,107 @@
 // no direct access
 defined( '_VALID_MOS' ) or die( 'Restricted access' );
 
-function dofreePDF ( $database ) {
+function dofreePDF() {
 	global $mosConfig_live_site, $mosConfig_sitename, $mosConfig_offset;
-	global $mainframe;
+	global $mainframe, $database, $my;
 	
-	include( 'includes/class.ezpdf.php' );
-
-	$id = intval( mosGetParam( $_REQUEST, 'id', 1 ) );
-	$row = new mosContent( $database );
-	$row->load( $id );
-
-	$params = new mosParameters( $row->attribs );	
-	$params->def( 'author', 	!$mainframe->getCfg( 'hideAuthor' ) );
-	$params->def( 'createdate', !$mainframe->getCfg( 'hideCreateDate' ) );
-	$params->def( 'modifydate', !$mainframe->getCfg( 'hideModifyDate' ) );
+	$id 		= intval( mosGetParam( $_REQUEST, 'id', 1 ) );
 	
-	$row->fulltext 	= pdfCleaner( $row->fulltext );
-	$row->introtext = pdfCleaner( $row->introtext );
-
-	$pdf = new Cezpdf( 'a4', 'P' );  //A4 Portrait
-	$pdf -> ezSetCmMargins( 2, 1.5, 1, 1);
-	$pdf->selectFont( './fonts/Helvetica.afm' ); //choose font
-
-	$all = $pdf->openObject();
-	$pdf->saveState();
-	$pdf->setStrokeColor( 0, 0, 0, 1 );
-
-	// footer
-	$pdf->addText( 250, 822, 6, $mosConfig_sitename );
-	$pdf->line( 10, 40, 578, 40 );
-	$pdf->line( 10, 818, 578, 818 );
-	$pdf->addText( 30, 34, 6, $mosConfig_live_site );
-	$pdf->addText( 250, 34, 6, _PDF_POWERED );
-	$pdf->addText( 450, 34, 6, _PDF_GENERATED .' '. date( 'j F, Y, H:i', time() + $mosConfig_offset * 60 * 60 ) );
-
-	$pdf->restoreState();
-	$pdf->closeObject();
-	$pdf->addObject( $all, 'all' );
-	$pdf->ezSetDy( 30 );
-
-	$txt1 = $row->title;
-	$pdf->ezText( $txt1, 14 );
-
-	$txt2 = AuthorDateLine( $row, $params );
-
-	$pdf->ezText( $txt2, 8 );
+	$gid 		= $my->gid;
+	$now 		= _CURRENT_SERVER_TIME;
+	$nullDate 	= $database->getNullDate();
 	
-	$txt3 = $row->introtext ."\n". $row->fulltext;
-	$pdf->ezText( $txt3, 10 );
+	// query to check for state and access levels
+	$query = "SELECT a.*, cc.name AS category, s.name AS section, s.published AS sec_pub, cc.published AS cat_pub,"
+	. "\n  s.access AS sec_access, cc.access AS cat_access, s.id AS sec_id, cc.id as cat_id"
+	. "\n FROM #__content AS a"
+	. "\n LEFT JOIN #__categories AS cc ON cc.id = a.catid"
+	. "\n LEFT JOIN #__sections AS s ON s.id = cc.section AND s.scope = 'content'"
+	. "\n WHERE a.id = $id"
+	. "\n AND a.state = 1"
+	. "\n AND a.access <= $gid"
+	. "\n AND ( a.publish_up = '$nullDate' OR a.publish_up <= '$now' )"
+	. "\n AND ( a.publish_down = '$nullDate' OR a.publish_down >= '$now' )"	
+	;	
+	$database->setQuery( $query );
+	$row = NULL;
 	
-	$pdf->ezStream();
+	if ( $database->loadObject( $row ) ) {
+		/*
+		* check whether category is published
+		*/
+		if ( !$row->cat_pub && $row->catid ) {
+			mosNotAuth();  
+			return;
+		}
+		/*
+		* check whether section is published
+		*/
+		if ( !$row->sec_pub && $row->sectionid ) {
+			mosNotAuth(); 
+			return;
+		}
+		/*
+		* check whether category access level allows access
+		*/
+		if ( ($row->cat_access > $gid) && $row->catid ) {
+			mosNotAuth();  
+			return;
+		}
+		/*
+		* check whether section access level allows access
+		*/
+		if ( ($row->sec_access > $gid) && $row->sectionid ) {
+			mosNotAuth();  
+			return;
+		}
+		
+		include( 'includes/class.ezpdf.php' );
+	
+		$params = new mosParameters( $row->attribs );	
+		$params->def( 'author', 	!$mainframe->getCfg( 'hideAuthor' ) );
+		$params->def( 'createdate', !$mainframe->getCfg( 'hideCreateDate' ) );
+		$params->def( 'modifydate', !$mainframe->getCfg( 'hideModifyDate' ) );
+		
+		$row->fulltext 	= pdfCleaner( $row->fulltext );
+		$row->introtext = pdfCleaner( $row->introtext );
+	
+		$pdf = new Cezpdf( 'a4', 'P' );  //A4 Portrait
+		$pdf -> ezSetCmMargins( 2, 1.5, 1, 1);
+		$pdf->selectFont( './fonts/Helvetica.afm' ); //choose font
+	
+		$all = $pdf->openObject();
+		$pdf->saveState();
+		$pdf->setStrokeColor( 0, 0, 0, 1 );
+	
+		// footer
+		$pdf->addText( 250, 822, 6, $mosConfig_sitename );
+		$pdf->line( 10, 40, 578, 40 );
+		$pdf->line( 10, 818, 578, 818 );
+		$pdf->addText( 30, 34, 6, $mosConfig_live_site );
+		$pdf->addText( 250, 34, 6, _PDF_POWERED );
+		$pdf->addText( 450, 34, 6, _PDF_GENERATED .' '. date( 'j F, Y, H:i', time() + $mosConfig_offset * 60 * 60 ) );
+	
+		$pdf->restoreState();
+		$pdf->closeObject();
+		$pdf->addObject( $all, 'all' );
+		$pdf->ezSetDy( 30 );
+	
+		$txt1 = $row->title;
+		$pdf->ezText( $txt1, 14 );
+	
+		$txt2 = AuthorDateLine( $row, $params );
+	
+		$pdf->ezText( $txt2, 8 );
+		
+		$txt3 = $row->introtext ."\n". $row->fulltext;
+		$pdf->ezText( $txt3, 10 );
+		
+		$pdf->ezStream();
+	} else {
+		mosNotAuth();
+		return;
+	}
 }
 
 function decodeHTML( $string ) {
@@ -157,5 +208,5 @@ function AuthorDateLine( &$row, &$params ) {
 	return $text;
 }
 
-dofreePDF ( $database );
+dofreePDF();
 ?>

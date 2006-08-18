@@ -103,11 +103,11 @@ switch ( $task ) {
 		break;
 
 	case 'emailform':
-		emailContentForm( $id );
+		emailContentForm( $id, $gid );
 		break;
 
 	case 'emailsend':
-		emailContentSend( $id );
+		emailContentSend( $id, $gid );
 		break;
 
 	case 'vote':
@@ -2152,18 +2152,59 @@ function cancelContent( &$access ) {
  * Shows the email form for a given content item.
  * @param int The content item id
  */
-function emailContentForm( $uid ) {
-	global $database, $my;
+function emailContentForm( $uid, $gid ) {
+	global $database;
 
-	$row = new mosContent( $database );
-	$row->load( (int)$uid );
+	$itemid 	= intval( mosGetParam( $_GET, 'itemid', 0 ) );
 	
-	$itemid = intval( mosGetParam( $_GET, 'itemid', 0 ) );
-
-	if ( $row->id === null || $row->access > $my->gid ) {
-		mosNotAuth();
-		return;
-	} else {
+	$now 		= _CURRENT_SERVER_TIME;
+	$nullDate 	= $database->getNullDate();
+	
+	// query to check for state and access levels
+	$query = "SELECT a.*, cc.name AS category, s.name AS section, s.published AS sec_pub, cc.published AS cat_pub,"
+	. "\n  s.access AS sec_access, cc.access AS cat_access, s.id AS sec_id, cc.id as cat_id"
+	. "\n FROM #__content AS a"
+	. "\n LEFT JOIN #__categories AS cc ON cc.id = a.catid"
+	. "\n LEFT JOIN #__sections AS s ON s.id = cc.section AND s.scope = 'content'"
+	. "\n WHERE a.id = $uid"
+	. "\n AND a.state = 1"
+	. "\n AND a.access <= $gid"
+	. "\n AND ( a.publish_up = '$nullDate' OR a.publish_up <= '$now' )"
+	. "\n AND ( a.publish_down = '$nullDate' OR a.publish_down >= '$now' )"	
+	;	
+	$database->setQuery( $query );
+	$row = NULL;
+	
+	if ( $database->loadObject( $row ) ) {
+		/*
+		* check whether category is published
+		*/
+		if ( !$row->cat_pub && $row->catid ) {
+			mosNotAuth();  
+			return;
+		}
+		/*
+		* check whether section is published
+		*/
+		if ( !$row->sec_pub && $row->sectionid ) {
+			mosNotAuth(); 
+			return;
+		}
+		/*
+		* check whether category access level allows access
+		*/
+		if ( ($row->cat_access > $gid) && $row->catid ) {
+			mosNotAuth();  
+			return;
+		}
+		/*
+		* check whether section access level allows access
+		*/
+		if ( ($row->sec_access > $gid) && $row->sectionid ) {
+			mosNotAuth();  
+			return;
+		}
+		
 		$query = "SELECT template"
 		. "\n FROM #__templates_menu"
 		. "\n WHERE client_id = 0"
@@ -2173,22 +2214,22 @@ function emailContentForm( $uid ) {
 		$template = $database->loadResult();
 		
 		HTML_content::emailForm( $row->id, $row->title, $template, $itemid );
+	} else {
+		mosNotAuth();
+		return;
 	}
-
 }
 
 /**
  * Shows the email form for a given content item.
  * @param int The content item id
  */
-function emailContentSend( $uid ) {
+function emailContentSend( $uid, $gid ) {
 	global $database, $mainframe;
 	global $mosConfig_live_site, $mosConfig_sitename;
 
 	// simple spoof check security
 	josSpoofCheck(1);	
-	
-	$itemid 	= intval( mosGetParam( $_POST, 'itemid', 0 ) );
 	
 	// check for session cookie
 	// Session Cookie `name`
@@ -2198,44 +2239,97 @@ function emailContentSend( $uid ) {
 	
 	if ( !(strlen($sessioncookie) == 32 || $sessioncookie == '-') ) {
 		mosErrorAlert( _NOT_AUTH );
-	}	
+	}		
 	
-	$email 				= strval( mosGetParam( $_POST, 'email', '' ) );
-	$yourname 			= strval( mosGetParam( $_POST, 'yourname', '' ) );
-	$youremail 			= strval( mosGetParam( $_POST, 'youremail', '' ) );
-	$subject_default 	= _EMAIL_INFO .' ' . $yourname;
-	$subject 			= strval( mosGetParam( $_POST, 'subject', $subject_default ) );
-
-	if ($uid < 1 || !$email || !$youremail || ( is_email( $email ) == false ) || (is_email( $youremail ) == false)) {
-		mosErrorAlert( _EMAIL_ERR_NOINFO );
-	}
-
-	$query = "SELECT template"
-	. "\n FROM #__templates_menu"
-	. "\n WHERE client_id = 0"
-	. "\n AND menuid = 0"
-	;
+	$itemid 	= intval( mosGetParam( $_POST, 'itemid', 0 ) );	
+	$now 		= _CURRENT_SERVER_TIME;
+	$nullDate 	= $database->getNullDate();
+	
+	// query to check for state and access levels
+	$query = "SELECT a.*, cc.name AS category, s.name AS section, s.published AS sec_pub, cc.published AS cat_pub,"
+	. "\n  s.access AS sec_access, cc.access AS cat_access, s.id AS sec_id, cc.id as cat_id"
+	. "\n FROM #__content AS a"
+	. "\n LEFT JOIN #__categories AS cc ON cc.id = a.catid"
+	. "\n LEFT JOIN #__sections AS s ON s.id = cc.section AND s.scope = 'content'"
+	. "\n WHERE a.id = $uid"
+	. "\n AND a.state = 1"
+	. "\n AND a.access <= $gid"
+	. "\n AND ( a.publish_up = '$nullDate' OR a.publish_up <= '$now' )"
+	. "\n AND ( a.publish_down = '$nullDate' OR a.publish_down >= '$now' )"	
+	;	
 	$database->setQuery( $query );
-	$template = $database->loadResult();
-
-	// determine Itemid for Item
-	if ($itemid) {
-		$_itemid = '&Itemid='. $itemid;
-	} else {
-		$itemid  = $mainframe->getItemid( $uid, 0, 0  );
-		$_itemid = '&Itemid='. $itemid;
-	}
+	$row = NULL;
 	
-	// link sent in email
-	$link = sefRelToAbs( $mosConfig_live_site .'/index.php?option=com_content&task=view&id='. $uid . $_itemid );
-
-	// message text
-	$msg = sprintf( _EMAIL_MSG, $mosConfig_sitename, $yourname, $youremail, $link );
-
-	// mail function
-	mosMail( $youremail, $yourname, $email, $subject, $msg );
-
-	HTML_content::emailSent( $email, $template );
+	if ( $database->loadObject( $row ) ) {
+		/*
+		* check whether category is published
+		*/
+		if ( !$row->cat_pub && $row->catid ) {
+			mosNotAuth();  
+			return;
+		}
+		/*
+		* check whether section is published
+		*/
+		if ( !$row->sec_pub && $row->sectionid ) {
+			mosNotAuth(); 
+			return;
+		}
+		/*
+		* check whether category access level allows access
+		*/
+		if ( ($row->cat_access > $gid) && $row->catid ) {
+			mosNotAuth();  
+			return;
+		}
+		/*
+		* check whether section access level allows access
+		*/
+		if ( ($row->sec_access > $gid) && $row->sectionid ) {
+			mosNotAuth();  
+			return;
+		}
+		
+		$email 				= strval( mosGetParam( $_POST, 'email', '' ) );
+		$yourname 			= strval( mosGetParam( $_POST, 'yourname', '' ) );
+		$youremail 			= strval( mosGetParam( $_POST, 'youremail', '' ) );
+		$subject_default 	= _EMAIL_INFO .' ' . $yourname;
+		$subject 			= strval( mosGetParam( $_POST, 'subject', $subject_default ) );
+	
+		if ($uid < 1 || !$email || !$youremail || ( is_email( $email ) == false ) || (is_email( $youremail ) == false)) {
+			mosErrorAlert( _EMAIL_ERR_NOINFO );
+		}
+	
+		$query = "SELECT template"
+		. "\n FROM #__templates_menu"
+		. "\n WHERE client_id = 0"
+		. "\n AND menuid = 0"
+		;
+		$database->setQuery( $query );
+		$template = $database->loadResult();
+	
+		// determine Itemid for Item
+		if ($itemid) {
+			$_itemid = '&Itemid='. $itemid;
+		} else {
+			$itemid  = $mainframe->getItemid( $uid, 0, 0  );
+			$_itemid = '&Itemid='. $itemid;
+		}
+		
+		// link sent in email
+		$link = sefRelToAbs( $mosConfig_live_site .'/index.php?option=com_content&task=view&id='. $uid . $_itemid );
+	
+		// message text
+		$msg = sprintf( _EMAIL_MSG, $mosConfig_sitename, $yourname, $youremail, $link );
+	
+		// mail function
+		mosMail( $youremail, $yourname, $email, $subject, $msg );
+	
+		HTML_content::emailSent( $email, $template );
+	} else {
+		mosNotAuth();
+		return;
+	}
 }
 
 function is_email( $email ){

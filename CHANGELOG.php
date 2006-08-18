@@ -60,7 +60,10 @@ http://www.owasp.org
 
 18-Aug-2006 Rey Gigataras
  # SECURITY A? [ ? Level ]: globals.php not included in administrator/index.php 
+ # SECURITY A? [ ? Level ]: do_pdf command bypasses the user authentication
+ # SECURITY A? [ ? Level ]: emailform com_content task bypasses the user authentication
  # Fixed [topic,72209] : Mambots fired on Modules
+ + enable selective disabling of `Email Cloaking` bot via {emailcloak=off}
 
 
 17-Aug-2006 Rey Gigataras

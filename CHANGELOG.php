@@ -63,6 +63,10 @@ http://www.owasp.org
  # Fixed [topic,72209] : Mambots fired on Modules
 
 
+17-Aug-2006 Rey Gigataras
+ # Fixed [artf5266] : Blog-view shows "more..." even without intros
+
+
 17-Aug-2006 Mateusz Krzeszowiec
  # Fixed logging query before applying LIMIT 
 

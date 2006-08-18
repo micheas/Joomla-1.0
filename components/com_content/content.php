@@ -1293,10 +1293,12 @@ function BlogOutput ( &$rows, &$params, $gid, &$access, $pop, &$menu, $limitstar
 
 		// Links output
 		if ( $links && ( $i < $total )  ) {
+			$showmore = $leading + $intro;
+
 			echo '<tr>';
 			echo '<td valign="top">';
 			echo '<div class="blog_more'. $params->get( 'pageclass_sfx' ) .'">';
-			HTML_content::showLinks( $rows, $links, $total, $i, 1 );
+			HTML_content::showLinks( $rows, $links, $total, $i, $showmore );
 			echo '</div>';
 			echo '</td>';
 			echo '</tr>';

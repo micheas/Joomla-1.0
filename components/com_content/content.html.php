@@ -384,11 +384,11 @@ class HTML_content {
 				<?php echo _MORE; ?>
 				</strong>
 			</div>
-			
-			<ul>
 			<?php
-		}
-		
+		}		
+		?>
+		<ul>
+		<?php
 		for ( $z = 0; $z < $links; $z++ ) {
 			if ( $i >= $total ) {
 				// stops loop if total number of items is less than the number set to display as intro + leading

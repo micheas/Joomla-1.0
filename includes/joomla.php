@@ -5691,6 +5691,26 @@ function mosArrayToInts( &$array, $default=null ) {
 	}
 }
 
+/*
+* Function to handle an array of integers
+* Added 1.0.10
+*/
+function josGetArrayInts( $name, $type=NULL ) {
+	if ( $type == NULL ) {
+		$type = $_POST;
+	}
+	
+	$array = mosGetParam( $type, $name, array(0) );
+	
+	mosArrayToInts( $array );
+	
+	if (!is_array( $array )) {
+		$array = array(0);
+	}
+	
+	return $array;
+}
+
 /**
  * Utility class for helping with patTemplate
  */

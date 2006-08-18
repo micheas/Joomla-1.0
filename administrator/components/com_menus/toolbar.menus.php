@@ -32,10 +32,7 @@ switch ($task) {
 		break;
 
 	case 'edit':
-		$cid 	= mosGetParam( $_POST, 'cid', array(0) );
-		if (!is_array( $cid )) {
-			$cid = array(0);
-		}
+		$cid 	= josGetArrayInts( 'cid' );
 		$path 	= $mosConfig_absolute_path .'/administrator/components/com_menus/';
 
 		if ( $cid[0] ) {

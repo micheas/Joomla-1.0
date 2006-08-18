@@ -95,7 +95,8 @@ class content_blog_section {
 		global $database;
 
 		$params = mosGetParam( $_POST, 'params', '' );
-		$secids	= mosGetParam( $_POST, 'secid', array() );
+		
+		$secids	= josGetArrayInts( 'secid' );
 		$secid	= implode( ',', $secids );
 
 		$params['sectionid']	= $secid;

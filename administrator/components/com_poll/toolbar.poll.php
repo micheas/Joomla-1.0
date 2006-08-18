@@ -23,10 +23,7 @@ switch ($task) {
 		break;
 
 	case 'edit':
-		$cid = mosGetParam( $_REQUEST, 'cid', array(0) );
-		if (!is_array( $cid )) {
-			$cid = array(0);
-		}
+		$cid = josGetArrayInts( 'cid' );
 
 		$query = "SELECT published"
 		. "\n FROM #__polls"

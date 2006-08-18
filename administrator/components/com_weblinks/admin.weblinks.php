@@ -24,7 +24,7 @@ if (!($acl->acl_check( 'administration', 'edit', 'users', $my->usertype, 'compon
 require_once( $mainframe->getPath( 'admin_html' ) );
 require_once( $mainframe->getPath( 'class' ) );
 
-$cid 	= mosGetParam( $_POST, 'cid', array(0) );
+$cid = josGetArrayInts( 'cid' );
 
 switch ($task) {
 	case 'new':
@@ -248,8 +248,6 @@ function removeWeblinks( $cid, $option ) {
 */
 function publishWeblinks( $cid=null, $publish=1,  $option ) {
 	global $database, $my;
-
-	$catid = mosGetParam( $_POST, 'catid', array(0) );
 
 	if (!is_array( $cid ) || count( $cid ) < 1) {
 		$action = $publish ? 'publish' : 'unpublish';

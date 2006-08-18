@@ -22,10 +22,8 @@ $path 		= $mosConfig_absolute_path .'/administrator/components/com_menus/';
 $menutype 	= strval( mosGetParam( $_REQUEST, 'menutype', 'mainmenu' ) );
 $type 		= strval( mosGetParam( $_REQUEST, 'type', false ) );
 $menu 		= strval( mosGetParam( $_POST, 'menu', '' ) );
-$cid 		= mosGetParam( $_POST, 'cid', array(0) );
-if (!is_array( $cid )) {
-	$cid = array(0);
-}
+
+$cid 		= josGetArrayInts( 'cid' );
 
 switch ($task) {
 	case 'new':
@@ -778,7 +776,8 @@ function saveOrder( &$cid, $menutype ) {
 	global $database;
 
 	$total		= count( $cid );
-	$order 		= mosGetParam( $_POST, 'order', array(0) );
+	$order 		= josGetArrayInts( 'order' );
+	
 	$row		= new mosMenu( $database );
 	$conditions = array();
 

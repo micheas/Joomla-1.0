@@ -66,8 +66,8 @@ class TOOLBAR_menus {
 		global $id;
 
 		if ( !$id ) {
-			$cid = mosGetParam( $_POST, 'cid', array(0) );
-			$id = $cid[0];
+			$cid 	= josGetArrayInts( 'cid' );
+			$id 	= $cid[0];
 		}
 		$menutype 	= strval( mosGetParam( $_REQUEST, 'menutype', 'mainmenu' ) );
 

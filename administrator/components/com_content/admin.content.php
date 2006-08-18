@@ -18,10 +18,8 @@ defined( '_VALID_MOS' ) or die( 'Restricted access' );
 require_once( $mainframe->getPath( 'admin_html' ) );
 
 $sectionid 	= intval( mosGetParam( $_REQUEST, 'sectionid', 0 ) );
-$cid 		= mosGetParam( $_POST, 'cid', array(0) );
-if (!is_array( $cid )) {
-	$cid = array(0);
-}
+
+$cid 		= josGetArrayInts( 'cid' );
 
 switch ($task) {
 	case 'new':
@@ -1007,7 +1005,7 @@ function moveSection( $cid, $sectionid, $option ) {
 function moveSectionSave( &$cid, $sectionid, $option ) {
 	global $database, $my;
 
-	$sectcat = mosGetParam( $_POST, 'sectcat', '' );
+	$sectcat = josGetArrayInts( 'sectcat' );
 	list( $newsect, $newcat ) = explode( ',', $sectcat );
 
 	if (!$newsect && !$newcat ) {
@@ -1112,9 +1110,9 @@ function copyItem( $cid, $sectionid, $option ) {
 function copyItemSave( $cid, $sectionid, $option ) {
 	global $database;
 
-	$sectcat = mosGetParam( $_POST, 'sectcat', '' );
+	$sectcat	= josGetArrayInts( '$sectcat' );	
 	//seperate sections and categories from selection
-	$sectcat = explode( ',', $sectcat );
+	$sectcat 	= explode( ',', $sectcat );
 	list( $newsect, $newcat ) = $sectcat;
 
 	if ( !$newsect && !$newcat ) {
@@ -1304,9 +1302,11 @@ function saveOrder( &$cid ) {
 	global $database;
 
 	$total		= count( $cid );
-	$order 		= mosGetParam( $_POST, 'order', array(0) );
 	$redirect 	= mosGetParam( $_POST, 'redirect', 0 );
 	$rettask	= strval( mosGetParam( $_POST, 'returntask', '' ) );
+	
+	$order 		= josGetArrayInts( 'order' );
+	
 	$row 		= new mosContent( $database );
 	$conditions = array();
 

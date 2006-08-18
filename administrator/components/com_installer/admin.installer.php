@@ -146,10 +146,8 @@ function installFromDirectory( $installerClass, $option, $element, $client ) {
 * @param
 */
 function removeElement( $installerClass, $option, $element, $client ) {
-	$cid = mosGetParam( $_REQUEST, 'cid', array(0) );
-	if (!is_array( $cid )) {
-		$cid = array(0);
-	}
+
+	$cid 		= josGetArrayInts( 'cid' );
 
 	$installer 	= new $installerClass();
 	$result 	= false;

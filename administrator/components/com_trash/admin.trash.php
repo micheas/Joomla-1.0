@@ -23,11 +23,8 @@ if (!($acl->acl_check( 'administration', 'manage', 'users', $my->usertype, 'comp
 require_once( $mainframe->getPath( 'admin_html' ) );
 require_once( $mainframe->getPath( 'class', 'com_frontpage' ) );
 
-$mid = mosGetParam( $_POST, 'mid', array(0) );
-$cid = mosGetParam( $_POST, 'cid', array(0) );
-if ( !is_array( $cid ) ) {
-	$cid = array(0);
-}
+$mid = josGetArrayInts( 'mid' );
+$cid = josGetArrayInts( 'cid' );
 
 switch ($task) {
 	case 'deleteconfirm':
@@ -164,9 +161,9 @@ function viewdeleteTrash( $cid, $mid, $option ) {
 function deleteTrash( $cid, $option ) {
 	global $database;
 	
-	$type = mosGetParam( $_POST, 'type', array(0) );
+	$type 	= mosGetParam( $_POST, 'type', array(0) );
 
-	$total = count( $cid );
+	$total 	= count( $cid );
 
 	if ( $type == 'content' ) {
 		$obj = new mosContent( $database );
@@ -176,7 +173,7 @@ function deleteTrash( $cid, $option ) {
 			$obj->delete( $id );
 			$fp->delete( $id );
 		}
-	} else if ( $type == "menu" ) {
+	} else if ( $type == 'menu' ) {
 		$obj = new mosMenu( $database );
 		foreach ( $cid as $id ) {
 			$id = intval( $id );

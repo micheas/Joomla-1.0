@@ -24,7 +24,9 @@ require_once( $mainframe->getPath( 'admin_html' ) );
 
 $client 	= strval( mosGetParam( $_REQUEST, 'client', '' ) );
 $moduleid 	= mosGetParam( $_REQUEST, 'moduleid', null );
-$cid 		= mosGetParam( $_POST, 'cid', array(0) );
+
+$cid 		= josGetArrayInts( 'cid' );
+
 if ($cid[0] == 0 && isset($moduleid) ) {
 	$cid[0] = $moduleid;
 }
@@ -261,7 +263,7 @@ function saveModule( $option, $client, $task ) {
 	}
 	$row->updateOrder( 'position=' . $database->Quote( $row->position ) . " AND ($where)" );
 
-	$menus = mosGetParam( $_POST, 'selections', array() );
+	$menus 	= josGetArrayInts( 'selections' );
 
 	// delete old module to menu item associations
 	$query = "DELETE FROM #__modules_menu"
@@ -645,7 +647,8 @@ function saveOrder( &$cid, $client ) {
 	global $database;
 
 	$total		= count( $cid );
-	$order 		= mosGetParam( $_POST, 'order', array(0) );
+	$order 		= josGetArrayInts( 'order' );
+	
 	$row 		= new mosModule( $database );
 	$conditions = array();
 

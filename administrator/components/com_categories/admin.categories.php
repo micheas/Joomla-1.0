@@ -21,10 +21,8 @@ define( 'COM_IMAGE_BASE', $mosConfig_absolute_path . DIRECTORY_SEPARATOR . 'imag
 
 // get parameters from the URL or submitted form
 $section 	= strval( mosGetParam( $_REQUEST, 'section', 'content' ) );
-$cid 		= mosGetParam( $_REQUEST, 'cid', array(0) );
-if (!is_array( $cid )) {
-	$cid = array(0);
-}
+
+$cid 		= josGetArrayInts( 'cid' );
 
 switch ($task) {
 	case 'new':
@@ -878,7 +876,8 @@ function copyCategorySave( $cid, $sectionOld ) {
 	global $database;
 
 	$sectionMove 	= strval( mosGetParam( $_REQUEST, 'sectionmove', '' ) );
-	$contentid 		= mosGetParam( $_REQUEST, 'item', '' );
+	
+	$contentid		= josGetArrayInts( 'item', $_REQUEST );
 	$total 			= count( $contentid  );
 
 	$category = new mosCategory ( $database );
@@ -911,8 +910,8 @@ function copyCategorySave( $cid, $sectionOld ) {
 		$content->sectionid = $sectionMove;
 		$content->hits 		= 0;
 		foreach( $newcatids as $newcatid ) {
-			if ( $content->catid == $newcatid["old"] ) {
-				$content->catid = $newcatid["new"];
+			if ( $content->catid == $newcatid['old'] ) {
+				$content->catid = $newcatid['new'];
 			}
 		}
 		if (!$content->check()) {
@@ -1049,7 +1048,8 @@ function saveOrder( &$cid, $section ) {
 	global $database;
 
 	$total		= count( $cid );
-	$order 		= mosGetParam( $_POST, 'order', array(0) );
+	$order 		= josGetArrayInts( 'order' );
+
 	$row		= new mosCategory( $database );
 	$conditions = array();
 

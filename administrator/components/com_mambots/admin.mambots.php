@@ -24,10 +24,8 @@ if (!($acl->acl_check( 'administration', 'edit', 'users', $my->usertype, 'mambot
 require_once( $mainframe->getPath( 'admin_html' ) );
 
 $client = strval( mosGetParam( $_REQUEST, 'client', '' ) );
-$cid 	= mosGetParam( $_POST, 'cid', array(0) );
-if (!is_array( $cid )) {
-	$cid = array(0);
-}
+
+$cid 	= josGetArrayInts( 'cid' );
 
 switch ( $task ) {
 
@@ -416,7 +414,8 @@ function saveOrder( &$cid ) {
 	global $database;
 
 	$total		= count( $cid );
-	$order 		= mosGetParam( $_POST, 'order', array(0) );
+	$order 		= josGetArrayInts( 'order' );
+	
 	$row 		= new mosMambot( $database );
 	$conditions = array();
 

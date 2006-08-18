@@ -98,7 +98,8 @@ class content_blog_category {
 		global $database;
 
 		$params = mosGetParam( $_POST, 'params', '' );
-		$catids	= mosGetParam( $_POST, 'catid', array() );
+		
+		$catids	= josGetArrayInts( 'catid' );
 		$catid	= implode( ',', $catids );
 
 		$params['categoryid']	= $catid;

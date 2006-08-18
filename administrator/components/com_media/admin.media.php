@@ -33,13 +33,10 @@ function makeSafe( $file ) {
 	return str_replace( '..', '', urldecode( $file ) );
 }
 
-$cid = mosGetParam( $_POST, 'cid', array(0) );
-if (!is_array( $cid )) {
-	$cid = array(0);
-}
+$cid 		= josGetArrayInts( 'cid' );
 
-$listdir = makeSafe( mosGetParam( $_REQUEST, 'listdir', '' ) );
-$dirPath = makeSafe( mosGetParam( $_POST, 'dirPath', '' ) );
+$listdir 	= makeSafe( mosGetParam( $_REQUEST, 'listdir', '' ) );
+$dirPath 	= makeSafe( mosGetParam( $_POST, 'dirPath', '' ) );
 
 if (is_int(strpos ($listdir, "..")) && $listdir != '') {
 	mosRedirect( "index2.php?option=com_media&listdir=".$_POST['dirPath'], "NO HACKING PLEASE" );

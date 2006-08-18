@@ -24,10 +24,7 @@ if (!($acl->acl_check( 'administration', 'edit', 'users', $my->usertype, 'compon
 require_once( $mainframe->getPath( 'admin_html' ) );
 require_once( $mainframe->getPath( 'class' ) );
 
-$cid 	= mosGetParam( $_POST, 'cid', array(0) );
-if (!is_array( $cid )) {
-	$cid = array(0);
-}
+$cid = josGetArrayInts( 'cid' );
 
 switch ($task) {
 	case 'publish':
@@ -289,8 +286,8 @@ function saveOrder( &$cid ) {
 	global $database;
 
 	$total		= count( $cid );
-	$order 		= mosGetParam( $_POST, 'order', array(0) );
-
+	$order 		= josGetArrayInts( 'order' );
+	
 	for( $i=0; $i < $total; $i++ ) {
 		$query = "UPDATE #__content_frontpage"
 		. "\n SET ordering = " . (int) $order[$i]

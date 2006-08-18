@@ -24,10 +24,7 @@ if (!($acl->acl_check( 'administration', 'edit', 'users', $my->usertype, 'compon
 require_once( $mainframe->getPath( 'admin_html' ) );
 require_once( $mainframe->getPath( 'class' ) );
 
-$cid 	= mosGetParam( $_REQUEST, 'cid', array(0) );
-if (!is_array( $cid )) {
-	$cid = array(0);
-}
+$cid = josGetArrayInts( 'cid' );
 
 switch( $task ) {
 	case 'new':
@@ -170,7 +167,7 @@ function savePoll( $option ) {
 	}
 	$row->checkin();
 	// save the poll options
-	$options = mosGetParam( $_POST, 'polloption', array() );
+	$options = josGetArrayInts( 'polloption' );
 
 	foreach ($options as $i=>$text) {
 		$text = $database->Quote($text);
@@ -232,8 +229,6 @@ function removePoll( $cid, $option ) {
 */
 function publishPolls( $cid=null, $publish=1, $option ) {
 	global $database, $my;
-
-	$catid = mosGetParam( $_POST, 'catid', array(0) );
 
 	if (!is_array( $cid ) || count( $cid ) < 1) {
 		$action = $publish ? 'publish' : 'unpublish';

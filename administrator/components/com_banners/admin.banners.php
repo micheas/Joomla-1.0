@@ -112,13 +112,9 @@ function viewBanners( $option ) {
 
 	$query = "SELECT b.*, u.name AS editor"
 	. "\n FROM #__banner AS b "
-	. "\n LEFT JOIN #__users AS u ON u.id = b.checked_out";
+	. "\n LEFT JOIN #__users AS u ON u.id = b.checked_out"
+	;
 	$database->setQuery( $query, $pageNav->limitstart, $pageNav->limit );
-
-	if(!$result = $database->query()) {
-		echo $database->stderr();
-		return;
-	}
 	$rows = $database->loadObjectList();
 
 	HTML_banners::showBanners( $rows, $pageNav, $option );
@@ -279,11 +275,6 @@ function viewBannerClients( $option ) {
 	. "\n LEFT JOIN #__users AS u ON u.id = a.checked_out"
 	. "\n GROUP BY a.cid";
 	$database->setQuery($sql, $pageNav->limitstart, $pageNav->limit);
-
-	if(!$result = $database->query()) {
-		echo $database->stderr();
-		return;
-	}
 	$rows = $database->loadObjectList();
 
 	HTML_bannerClient::showClients( $rows, $pageNav, $option );

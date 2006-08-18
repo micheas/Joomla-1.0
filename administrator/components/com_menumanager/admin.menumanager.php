@@ -388,7 +388,7 @@ function deleteMenu( $option, $cid, $type ) {
 
 	$mids = mosGetParam( $_POST, 'mids', 0 );
 	if ( is_array( $mids ) ) {
-		$mids = mosArrayToInts( 'mids' );
+		mosArrayToInts( $mids );
 		$mids = implode( ',', $mids );
 	}
 	// delete menu items
@@ -402,7 +402,7 @@ function deleteMenu( $option, $cid, $type ) {
 	}
 
 	if ( is_array( $cid ) ) {
-		$cids = mosArrayToInts( 'cids' );
+		mosArrayToInts( $cids );
 		$cids = implode( ',', $cid );
 	} else {
 		$cids = $cid;

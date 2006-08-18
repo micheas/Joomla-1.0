@@ -16,6 +16,11 @@
 			<option value="1">Yes</option>
 		</param>
 		<param name="@spacer" type="spacer" default="" label="" description="" />
+		<param name="firebots" type="radio" default="1" label="Mambots" description="Select whether to allow Mambots to act upon this module">
+			<option value="0">No</option>
+			<option value="1">Yes</option>
+		</param>
+		<param name="@spacer" type="spacer" default="" label="" description="" />
 		<param name="rssurl" type="text" size="50" default="" label="RSS URL" description="Enter the URL of the RSS/RDF feed" />
 		<param name="rsstitle" type="radio" default="1" label="Feed Title" description="Display news feed title">
 			<option value="1">Yes</option>

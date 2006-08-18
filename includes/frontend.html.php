@@ -19,19 +19,23 @@ defined( '_VALID_MOS' ) or die( 'Restricted access' );
 */
 class modules_html {
 
+	/*
+	* Output Handling for Custom modules
+	*/
 	function module( &$module, &$params, $Itemid, $style=0 ) {
 		global $_MAMBOTS;
 		
 		// custom module params
 		$moduleclass_sfx 	= $params->get( 'moduleclass_sfx' );
 		$rssurl 			= $params->get( 'rssurl' );
-		
+		$firebots 			= $params->get( 'firebots', 0 );
+
 		if ( $rssurl ) {
 			// feed output
 			modules_html::modoutput_feed( $module, $params, $moduleclass_sfx );
 		}
 
-		if ($module->content != '') {
+		if ($module->content != '' && $firebots) {
 		// mambot handling for custom modules
 			// load content bots
 			$_MAMBOTS->loadBotGroup( 'content' );
@@ -70,6 +74,7 @@ class modules_html {
 	}
 
 	/**
+	* Output Handling for 3PD modules
 	* @param object
 	* @param object
 	* @param int The menu item ID
@@ -405,21 +410,27 @@ class modules_html {
 	function CustomContent( &$module, $params) {
 		global $_MAMBOTS;
 		
-		$row		= $module;
-		$row->text	= $module->content;
+		$firebots 			= $params->get( 'firebots', 0 );
 		
-		$results = $_MAMBOTS->trigger( 'onBeforeDisplayContent', array( &$row, &$params, 0 ) );
-		echo trim( implode( "\n", $results ) );
+		if ( $firebots ) {
+			$row		= $module;
+			$row->text	= $module->content;		
 		
-		$module->content = $row->text;
+			$results = $_MAMBOTS->trigger( 'onBeforeDisplayContent', array( &$row, &$params, 0 ) );
+			echo trim( implode( "\n", $results ) );
+			
+			$module->content = $row->text;
+		}
 		
 		// output custom module contents
 		echo $module->content;
 		
-		$results = $_MAMBOTS->trigger( 'onAfterDisplayContent', array( &$row, &$params, 0 ) );
-		echo trim( implode( "\n", $results ) );
-		
-		$module->content = $row->text;
+		if ( $firebots ) {
+			$results = $_MAMBOTS->trigger( 'onAfterDisplayContent', array( &$row, &$params, 0 ) );
+			echo trim( implode( "\n", $results ) );
+			
+			$module->content = $row->text;
+		}
 	}
 }
 ?>

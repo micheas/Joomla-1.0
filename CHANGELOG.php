@@ -37,35 +37,67 @@ Legend:
 ! -> Note
 
 
----------------- 1.0.11 Nightly SVN --------------------------------------------------
+---------------- 1.0.11 Beta Released -- [19-August-2006 ??:?? UTC] ------------------
+
+
+This Release Contains following Security Fixes
+
+Joomla! utilizes the Open Web Application Security Project (OWASP) web application security system to categorize security vunerabilities found within Joomla!
+http://www.owasp.org
+
+
+?? HIGH Level Threats fixed
+
+ 
+?? MEDIUM Level Threats fixed
+
+
+?? LOW Level Threats fixed
+
+
+-- -- --
+
+
+18-Aug-2006 Rey Gigataras
+ # Fixed [topic,72209] : Mambots fired on Modules
+
+
 17-Aug-2006 Mateusz Krzeszowiec
  # Fixed logging query before applying LIMIT 
 
+
 15-Aug-2006 Marko Schmuck
- # Fixed possible injection attacks on ->load()
+ # SECURITY A? [ ? Level ]: possible injection attacks on ->load()
+
 
 15-Aug-2006 Andrew Eddie
- # Fixed remote execution issue in PEAR.php
+ # SECURITY A? [ ? Level ]: remote execution issue in PEAR.php
+
 
 15-Aug-2006 Mateusz Krzeszowiec
- # Fixed SQL LIMIT in com_content frontend
+ # PERFORMANCE [topic,83325] : SQL LIMIT in com_content frontend
 
-14-Aug-2006
- # Fixed Injection attack on content submissions where frontpage is selected
- # Fixed possible injection attack thru mosPageNav constructor
- # Fixed possible injection attack thru saveOrder functions
+
+14-Aug-2006 Andrew Eddie
+ # SECURITY A? [ ? Level ]: Injection attack on content submissions where frontpage is selected
+ # SECURITY A? [ ? Level ]: possible injection attack thru mosPageNav constructor
+ # SECURITY A? [ ? Level ]: possible injection attack thru saveOrder functions
+
 
 07-Aug-2006 Andrew Eddie
- # Fixed Zend Hash Del Key Or Index Vulnerability
- # Fixed josSpoofValue function to ensure the hash is a string
+ # SECURITY A? [ ? Level ]: Zend Hash Del Key Or Index Vulnerability
+ # SECURITY A? [ ? Level ]: josSpoofValue function to ensure the hash is a string
 
-28-July-2006
+
+28-July-2006 Robin Muilwijk
  # Fixed [artf5291] : missing onChange javascript code for filter field
+
 
 27-July-2006 Robin Muilwijk
  # Fixed [artf5282] : missing table row tag and self closing tag
  # Fixed [artf5297] : small html errors
- # Fixed [5335] : missing direct access line
+ # Fixed [artf5335] : missing direct access line
+
 
 17-July-2006 Robin Muilwijk
  # Fixed [artf5157] : typo in media manager

@@ -75,7 +75,7 @@ function &initModules() {
 	if (!isset( $GLOBALS['_MOS_MODULES'] )) {
 		$check_Itemid = '';
 		if ($Itemid) {
-			$check_Itemid = "OR mm.menuid = $Itemid";
+			$check_Itemid = "OR mm.menuid = '$Itemid'";
 		}
 		
 		$query = "SELECT id, title, module, position, content, showtitle, params"

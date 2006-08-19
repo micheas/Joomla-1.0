@@ -94,6 +94,7 @@ http://www.owasp.org
 17-Aug-2006 Rey Gigataras
  + PERFORMANCE : Cache handling expanded to com_content showItem
  # Fixed [artf5266] : Blog-view shows "more..." even without intros
+ # Fixed [topic,81673] : frontend.php itemid issue
 
 
 17-Aug-2006 Mateusz Krzeszowiec

@@ -27,7 +27,10 @@ require_once( $mosConfig_absolute_path .'/includes/domit/xml_domit_lite_include.
 
 $client = strval( mosGetParam( $_REQUEST, 'client', '' ) );
 
-$cid 	= josGetArrayInts( 'cid' );
+$cid 	= mosGetParam( $_REQUEST, 'cid', array(0) );
+if (!is_array( $cid )) {
+	$cid = array(0);
+}
 
 switch ($task) {
 	case 'new':

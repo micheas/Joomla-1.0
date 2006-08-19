@@ -13,25 +13,78 @@
 
 // Set flag that this is a parent file
 define( "_VALID_MOS", 1 );
+
 /** security check */
 require( "../includes/auth.php" );
 include_once ( $mosConfig_absolute_path . '/language/' . $mosConfig_lang . '.php' );
 
+/*
+* Stops file upload below /images/stories directory
+* Added 1.0.11
+*/
+function limitDirectory( &$directory ) {
+	if ( strpos($directory, '../') === 0 ) {
+		$directory = substr($directory, 3);
+		
+		limitDirectory( $directory );
+	}
+	
+	return $directory;
+}
+
 $directory	= mosGetParam( $_REQUEST, 'directory', '');
+$css 		= mosGetParam( $_REQUEST, 't','');
+
 $media_path	= $mosConfig_absolute_path.'/media/';
 
-$userfile2=(isset($_FILES['userfile']['tmp_name']) ? $_FILES['userfile']['tmp_name'] : "");
-$userfile_name=(isset($_FILES['userfile']['name']) ? $_FILES['userfile']['name'] : "");
+$userfile2		= (isset($_FILES['userfile']['tmp_name']) ? $_FILES['userfile']['tmp_name'] : "");
+$userfile_name	= (isset($_FILES['userfile']['name']) ? $_FILES['userfile']['name'] : "");
 
+// limit access to functionality
+$referer 	= parse_url(@$_SERVER['HTTP_REFERER']);
+parse_str(@$referer['query'], $query);
+
+switch (@$query['option']) {
+	case 'com_banners':
+		break;		
+		
+	case 'com_categories':
+	case 'com_content':
+	case 'com_sections':
+	case 'com_typedcontent':
+		if ( @$query['task'] != 'edit' && @$query['task'] != 'editA'  ) {
+			echo _NOT_AUTH;
+			return;
+		}
+		break;		
+		
+	default:
+		echo _NOT_AUTH;
+		return;
+		break;		
+}
+
+limitDirectory( $directory );
+
+// check to see if directory exists
+if ( $directory != '' && !is_dir($mosConfig_absolute_path .'/images/stories/'. $directory)) {
+	$directory 	= '';
+}
+	
 if (isset($_FILES['userfile'])) {
 	if ($directory == 'banners') {
 		$base_Dir = "../../images/banners/";
 	} else if ( $directory != '' ) {
 		$base_Dir = '../../images/stories/'. $directory;
+
+		if (!is_dir($mosConfig_absolute_path .'/images/stories/'. $directory)) {
+			$base_Dir 	= '../../images/stories/';
+			$directory 	= '';
+		}
 	} else {
 		$base_Dir = '../../images/stories/';
 	}
-	
+
 	if (empty($userfile_name)) {
 		echo "<script>alert('Please select an image to upload'); document.location.href='uploadimage.php';</script>";
 	}
@@ -62,8 +115,16 @@ if (isset($_FILES['userfile'])) {
 	} else {
 		mosErrorAlert("Upload of ".$userfile_name." to ".$base_Dir." successful");
 	}
+		echo $base_Dir.$_FILES['userfile']['name'];
 }
-$css = mosGetParam($_REQUEST,'t','');
+
+// css file handling
+// check to see if template exists
+if ( $css != '' && !is_dir($mosConfig_absolute_path .'/administrator/templates/'. $css .'/css/template_css.css' )) {
+	$css 	= 'joomla_admin';
+} else if ( $css == '' ) {
+	$css 	= 'joomla_admin';
+}
 
 $iso = split( '=', _ISO );
 // xml prolog

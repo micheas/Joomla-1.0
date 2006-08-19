@@ -5693,7 +5693,7 @@ function mosArrayToInts( &$array, $default=null ) {
 
 /*
 * Function to handle an array of integers
-* Added 1.0.10
+* Added 1.0.11
 */
 function josGetArrayInts( $name, $type=NULL ) {
 	if ( $type == NULL ) {

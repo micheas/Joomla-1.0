@@ -39,6 +39,9 @@ switch ($task) {
 function pollAddVote( $uid ) {
 	global $database;
 
+	// simple spoof check security
+	josSpoofCheck();	
+	
 	$redirect = 1;
 
 	$sessionCookieName 	= mosMainFrame::sessionCookieName();

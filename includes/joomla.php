@@ -5819,7 +5819,7 @@ function mosBackTrace() {
 
 function josSpoofCheck( $header=NULL, $alt=NULL ) {	
 	$validate 	= mosGetParam( $_POST, josSpoofValue($alt), 0 );
-	
+
 	// probably a spoofing attack
 	if (!$validate) {
 		header( 'HTTP/1.0 403 Forbidden' );

@@ -89,6 +89,9 @@ if (!defined( '_JOS_POLL_MODULE' )) {
 
 		$cookiename 		= "voted$poll->id";
 		$voted 				= mosGetParam( $_COOKIE, $cookiename, 'z' );
+		
+		// used for spoof hardening
+		$validate = josSpoofValue();
 		?>
 		<script language="javascript" type="text/javascript">
 		<!--
@@ -163,6 +166,7 @@ if (!defined( '_JOS_POLL_MODULE' )) {
 
 		<input type="hidden" name="id" value="<?php echo $poll->id;?>" />
 		<input type="hidden" name="task" value="vote" />
+		<input type="hidden" name="<?php echo $validate; ?>" value="1" />
 		</form>
 		<?php
 	}

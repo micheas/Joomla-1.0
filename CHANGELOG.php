@@ -40,36 +40,41 @@ Legend:
 ---------------- 1.0.11 Beta 2 Released -- [19-August-2006 21:00 UTC] ------------------
 
 
-This Release Contains following Security Fixes
+This Release Contains the following 21 Security Fixes
 
 Joomla! utilizes the Open Web Application Security Project (OWASP) web application security system to categorize security vunerabilities found within Joomla!
 http://www.owasp.org
 
 
-?? HIGH Level Threats fixed
+05 HIGH Level Threats fixed
+
 
  
-?? MEDIUM Level Threats fixed
+07 MEDIUM Level Threats fixed
 
 
-?? LOW Level Threats fixed
+
+09 LOW Level Threats fixed
+
 
 
 -- -- --
 
 
 19-Aug-2006 Rey Gigataras
- # SECURITY A? [ HIGH Level ]: Limit Admin `Upload Image` from uploading below `/images/stories/` directory
+ # SECURITY A? [ MEDIUM Level ]: Limit Admin `Upload Image` from uploading below `/images/stories/` directory
  # SECURITY A? [ MEDIUM Level ]: Limit access to Admin `Upload Image` 
- # SECURITY A? [ LOW Level ]: XSS injection issue in Admin `Module Manager`
- # SECURITY A? [ LOW Level ]: XSS injection issue in Admin `Help` 
- # SECURITY A? [ LOW Level ]: XSS injection issue in Admin `Upload Image` 
+ # SECURITY A4 [ LOW Level ]: [topic,73761] : XSS injection issue in Admin `Module Manager`
+ # SECURITY A4 [ LOW Level ]: [topic,73761] : XSS injection issue in Admin `Help` 
+ # SECURITY A4 [ LOW Level ]: [topic,73761] : XSS injection issue in Admin `Upload Image` 
+ # SECURITY A4 [ LOW Level ]: [topic,73761] : XSS injection issue in Search 
 
 
 19-Aug-2006 Enno Klasing
- # SECURITY A? [ ? Level ]: Secured mosMail() against unvalidated input
- # SECURITY A? [ ? Level ]: Secured is_email() - in previous versions the existance of an email address somewhere in the string was sufficient
- # SECURITY A? [ ? Level ]: Secured com_content to not allow the tasks 'emailform' and 'emailsend' if $mosConfig_hideEmail is set
+ # SECURITY A1 [ ?? Level ]: Secured mosMail() against unvalidated input
+ # SECURITY A? [ ?? Level ]: Secured is_email() - in previous versions the existance of an email address somewhere in the string was sufficient
+ # SECURITY A2 [ ?? Level ]: Secured com_content to not allow the tasks 'emailform' and 'emailsend' if $mosConfig_hideEmail is set
+ 
  # Fixed : Empty subject in com_content mail2friend no longer possible
  # Fixed : Show error message if com_content mail2friend fails
  # Fixed : Show error message if com_contact mail fails
@@ -77,10 +82,11 @@ http://www.owasp.org
 
 
 18-Aug-2006 Rey Gigataras
- # SECURITY A? [ ? Level ]: globals.php not included in administrator/index.php 
- # SECURITY A? [ ? Level ]: do_pdf command bypasses the user authentication
- # SECURITY A? [ ? Level ]: emailform com_content task bypasses the user authentication
+ # SECURITY A? [ MEDIUM Level ]: globals.php not included in administrator/index.php 
+ # SECURITY A2 [ MEDIUM Level ]: do_pdf command bypasses the user authentication
+ # SECURITY A2 [ LOW Level ]: emailform com_content task bypasses the user authentication
  # SECURITY A? [ LOW Level ]: harden poll module
+ 
  # Fixed [topic,72209] : Mambots fired on Modules
  + enable selective disabling of `Email Cloaking` bot via {emailcloak=off}
 
@@ -95,11 +101,11 @@ http://www.owasp.org
 
 
 15-Aug-2006 Marko Schmuck
- # SECURITY A? [ ? Level ]: possible injection attacks on ->load()
+ # SECURITY A1 [ LOW Level ]: possible injection attacks on ->load()
 
 
 15-Aug-2006 Andrew Eddie
- # SECURITY A? [ ? Level ]: remote execution issue in PEAR.php
+ # SECURITY A? [ HIGH Level ]: remote execution issue in PEAR.php
 
 
 15-Aug-2006 Mateusz Krzeszowiec
@@ -107,14 +113,14 @@ http://www.owasp.org
 
 
 14-Aug-2006 Andrew Eddie
- # SECURITY A? [ ? Level ]: Injection attack on content submissions where frontpage is selected
- # SECURITY A? [ ? Level ]: possible injection attack thru mosPageNav constructor
- # SECURITY A? [ ? Level ]: possible injection attack thru saveOrder functions
+ # SECURITY A1 [ MEDIUM Level ]: Injection attack on content submissions where frontpage is selected
+ # SECURITY A1 [ LOW Level ]: possible injection attack thru mosPageNav constructor
+ # SECURITY A1 [ LOW Level ]: possible injection attack thru saveOrder functions
 
 
 07-Aug-2006 Andrew Eddie
- # SECURITY A? [ ? Level ]: Zend Hash Del Key Or Index Vulnerability
- # SECURITY A? [ ? Level ]: josSpoofValue function to ensure the hash is a string
+ # SECURITY A? [ HIGH Level ]: Zend Hash Del Key Or Index Vulnerability
+ # SECURITY A? [ MEDIUM Level ]: josSpoofValue function to ensure the hash is a string
 
 
 28-July-2006 Robin Muilwijk
@@ -122,7 +128,8 @@ http://www.owasp.org
 
 
 27-July-2006 Robin Muilwijk
- # SECURITY A? [ ? Level ]: [artf5335] : missing direct access line
+ # SECURITY A? [ HIGH Level ]: [artf5335] : missing direct access line
+ 
  # Fixed [artf5282] : missing table row tag and self closing tag
  # Fixed [artf5297] : small html errors
 

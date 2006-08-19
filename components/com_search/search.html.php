@@ -115,13 +115,17 @@ class search_html {
 			</td>
 		</tr>
 		</table>
+		
 		<br />
+		
 		<div align="center">
 			<?php
 			echo $pageNav->writePagesCounter();
 
-			$searchphrase 	= strtolower( strval( mosGetParam( $_REQUEST, 'searchphrase', 'any' ) ) );
 			$ordering 		= strtolower( strval( mosGetParam( $_REQUEST, 'ordering', 'newest' ) ) );
+			$searchphrase 	= strtolower( strval( mosGetParam( $_REQUEST, 'searchphrase', 'any' ) ) );
+			
+			$searchphrase	= htmlspecialchars($searchphrase);
 
 			$link = $mosConfig_live_site ."/index.php?option=$option&amp;Itemid=$Itemid&amp;searchword=$searchword&amp;searchphrase=$searchphrase&amp;ordering=$ordering";
 			echo $pageNav->getLimitBox( $link );
@@ -206,8 +210,11 @@ class search_html {
 	function conclusion( $searchword, $pageNav ) {
 		global $mosConfig_live_site, $option, $Itemid;
 		
-		$searchphrase 	= strtolower( strval( mosGetParam( $_REQUEST, 'searchphrase', 'any' ) ) );
 		$ordering 		= strtolower( strval( mosGetParam( $_REQUEST, 'ordering', 'newest' ) ) );
+		$searchphrase 	= strtolower( strval( mosGetParam( $_REQUEST, 'searchphrase', 'any' ) ) );	
+		
+		$searchphrase	= htmlspecialchars($searchphrase);
+		
 		$link 			= $mosConfig_live_site ."/index.php?option=$option&Itemid=$Itemid&searchword=$searchword&searchphrase=$searchphrase&ordering=$ordering";
 		?>
 		<tr>

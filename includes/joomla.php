@@ -5949,7 +5949,11 @@ function josSpoofValue($alt=NULL) {
 	global $mainframe;
 	
 	if ($alt) {
-		$random		= date( 'Ymd' );
+		if ( $alt == 1 ) {
+			$random		= date( 'Ymd' );
+		} else {
+			$random		= $alt . date( 'Ymd' );
+		}
 	} else {		
 		$random		= date( 'dmY' );
 	}

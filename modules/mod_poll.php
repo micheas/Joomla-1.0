@@ -91,7 +91,7 @@ if (!defined( '_JOS_POLL_MODULE' )) {
 		$voted 				= mosGetParam( $_COOKIE, $cookiename, 'z' );
 		
 		// used for spoof hardening
-		$validate = josSpoofValue();
+		$validate = josSpoofValue('poll');
 		?>
 		<script language="javascript" type="text/javascript">
 		<!--

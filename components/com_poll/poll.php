@@ -40,7 +40,7 @@ function pollAddVote( $uid ) {
 	global $database;
 
 	// simple spoof check security
-	josSpoofCheck();	
+	josSpoofCheck(0,'poll');	
 	
 	$redirect = 1;
 

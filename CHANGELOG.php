@@ -37,7 +37,7 @@ Legend:
 ! -> Note
 
 
----------------- 1.0.11 Beta Released -- [19-August-2006 00:30 UTC] ------------------
+---------------- 1.0.11 Beta 2 Released -- [19-August-2006 21:00 UTC] ------------------
 
 
 This Release Contains following Security Fixes
@@ -86,6 +86,7 @@ http://www.owasp.org
 
 
 17-Aug-2006 Rey Gigataras
+ + PERFORMANCE : Cache handling expanded to com_content showItem
  # Fixed [artf5266] : Blog-view shows "more..." even without intros
 
 

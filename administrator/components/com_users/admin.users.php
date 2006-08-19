@@ -582,14 +582,4 @@ function logoutUser( $cid=null, $option, $task ) {
 			break;
 	}
 }
-
-function is_email($email){
-	$rBool=false;
-
-	if(preg_match("/[\w\.\-]+@\w+[\w\.\-]*?\.\w{1,4}/", $email)){
-		$rBool=true;
-	}
-	
-	return $rBool;
-}
 ?>

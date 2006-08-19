@@ -3777,9 +3777,16 @@ function mosCreateMail( $from='', $fromname='', $subject, $body ) {
 * @param string/array Attachment file name(s)
 * @param string/array ReplyTo e-mail address(es)
 * @param string/array ReplyTo name(s)
+* @return boolean
 */
 function mosMail( $from, $fromname, $recipient, $subject, $body, $mode=0, $cc=NULL, $bcc=NULL, $attachment=NULL, $replyto=NULL, $replytoname=NULL ) {
 	global $mosConfig_debug;
+
+	// Filter from, fromname and subject
+	if (!is_email( $from ) || !is_name( $fromname ) || !is_name( $subject )) {
+		return false;
+	}
+
 	$mail = mosCreateMail( $from, $fromname, $subject, $body );
 
 	// activate HTML formatted emails
@@ -3789,26 +3796,44 @@ function mosMail( $from, $fromname, $recipient, $subject, $body, $mode=0, $cc=NU
 
 	if (is_array( $recipient )) {
 		foreach ($recipient as $to) {
+			if (!is_email( $to )) {
+				return false;
+			}
 			$mail->AddAddress( $to );
 		}
 	} else {
+		if (!is_email( $recipient )) {
+			return false;
+		}
 		$mail->AddAddress( $recipient );
 	}
 	if (isset( $cc )) {
 		if (is_array( $cc )) {
 			foreach ($cc as $to) {
+				if (!is_email( $to )) {
+					return false;
+				}
 				$mail->AddCC($to);
 			}
 		} else {
+			if (!is_email( $cc )) {
+				return false;
+			}
 			$mail->AddCC($cc);
 		}
 	}
 	if (isset( $bcc )) {
 		if (is_array( $bcc )) {
 			foreach ($bcc as $to) {
+				if (!is_email( $to )) {
+					return false;
+				}
 				$mail->AddBCC( $to );
 			}
 		} else {
+			if (!is_email( $bcc )) {
+				return false;
+			}
 			$mail->AddBCC( $bcc );
 		}
 	}
@@ -3827,9 +3852,15 @@ function mosMail( $from, $fromname, $recipient, $subject, $body, $mode=0, $cc=NU
 			reset( $replytoname );
 			foreach ($replyto as $to) {
 				$toname = ((list( $key, $value ) = each( $replytoname )) ? $value : '');
+				if (!is_email( $to ) || !is_name( $toname )) {
+					return false;
+				}
 				$mail->AddReplyTo( $to, $toname );
 			}
         } else {
+			if (!is_email( $replyto ) || !is_name( $replytoname )) {
+				return false;
+			}
 			$mail->AddReplyTo($replyto, $replytoname);
 		}
     }
@@ -3845,6 +3876,42 @@ function mosMail( $from, $fromname, $recipient, $subject, $body, $mode=0, $cc=NU
 	}
 	return $mailssend;
 } // mosMail
+
+/**
+ * Checks if a given string is a valid email address
+ *
+ * @param	string	$email	String to check for a valid email address
+ * @return	boolean
+ */
+function is_email( $email ) {
+	$valid = preg_match( '/^[\w\.\-]+@\w+[\w\.\-]*?\.\w{1,4}$/', $email );
+	return $valid;
+}
+
+/**
+ * Checks if a given string is a valid (from-)name or subject for an email
+ *
+ * @since		1.0.11
+ * @deprecated	1.5
+ * @param		string		$string		String to check for validity
+ * @return		boolean
+ */
+function is_name( $string ) {
+	/*
+	 * The following regular expression blocks all strings containing any low control characters:
+	 * 0x00-0x1F, 0x7F
+	 * These should be control characters in almost all used charsets.
+	 * The high control chars in ISO-8859-n (0x80-0x9F) are unused (e.g. http://en.wikipedia.org/wiki/ISO_8859-1)
+	 * Since they are valid UTF-8 bytes (e.g. used as the second byte of a two byte char),
+	 * they must not be filtered.
+	 */
+	$invalid = preg_match( '/[\x00-\x1F\x7F]/', $string );
+	if ($invalid) {
+		return false;
+	} else {
+		return true;
+	}
+}
 
 /**
  * Initialise GZIP

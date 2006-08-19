@@ -27,6 +27,12 @@ $con_id 	= intval( mosGetParam( $_REQUEST ,'con_id', 0 ) );
 $contact_id = intval( mosGetParam( $_REQUEST ,'contact_id', 0 ) );
 $catid 		= intval( mosGetParam( $_REQUEST ,'catid', 0 ) );
 
+switch( $op ) {
+	case 'sendmail':
+		sendmail( $con_id, $option );
+		break;
+}
+
 switch( $task ) {
 	case 'view':
 		contactpage( $contact_id );
@@ -38,12 +44,6 @@ switch( $task ) {
 
 	default:
 		listContacts( $option, $catid );
-		break;
-}
-
-switch( $op ) {
-	case 'sendmail':
-		sendmail( $con_id, $option );
 		break;
 }
 
@@ -432,7 +432,10 @@ function sendmail( $con_id, $option ) {
 		$prefix = sprintf( _ENQUIRY_TEXT, $mosConfig_live_site );
 		$text 	= $prefix ."\n". $name. ' <'. $email .'>' ."\n\n". stripslashes( $text );
 	
-		mosMail( $email, $name , $contact[0]->email_to, $mosConfig_fromname .': '. $subject, $text );
+		$success = mosMail( $email, $name , $contact[0]->email_to, $mosConfig_fromname .': '. $subject, $text );
+		if (!$success) {
+			mosErrorAlert( _CONTACT_FORM_NC );
+		}
 	
 		// parameter check
 		$params = new mosParameters( $contact[0]->params );		
@@ -444,22 +447,16 @@ function sendmail( $con_id, $option ) {
 			$copy_text = $copy_text ."\n\n". $text .'';
 			$copy_subject = _COPY_SUBJECT . $subject;
 			
-			mosMail( $mosConfig_mailfrom, $mosConfig_fromname, $email, $copy_subject, $copy_text );
+			$success = mosMail( $mosConfig_mailfrom, $mosConfig_fromname, $email, $copy_subject, $copy_text );
+			if (!$success) {
+				mosErrorAlert( _CONTACT_FORM_NC );
+			}
 		}
 		
 		$link = sefRelToAbs( 'index.php?option=com_contact&task=view&contact_id='. $contact[0]->id .'&Itemid='. $Itemid );
 
 		mosRedirect( $link, _THANK_MESSAGE );
 	}
-}
-
-function is_email($email){
-	$rBool=false;
-
-	if  ( preg_match( "/[\w\.\-]+@\w+[\w\.\-]*?\.\w{1,4}/" , $email ) ){
-		$rBool=true;
-	}
-	return $rBool;
 }
 
 function vCard( $id ) {

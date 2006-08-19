@@ -2153,7 +2153,12 @@ function cancelContent( &$access ) {
  * @param int The content item id
  */
 function emailContentForm( $uid, $gid ) {
-	global $database;
+	global $database, $mosConfig_hideEmail;
+
+	if ($mosConfig_hideEmail) {
+		echo _NOT_AUTH;
+		return;
+	}
 
 	$itemid 	= intval( mosGetParam( $_GET, 'itemid', 0 ) );
 	
@@ -2226,7 +2231,12 @@ function emailContentForm( $uid, $gid ) {
  */
 function emailContentSend( $uid, $gid ) {
 	global $database, $mainframe;
-	global $mosConfig_live_site, $mosConfig_sitename;
+	global $mosConfig_live_site, $mosConfig_sitename, $mosConfig_hideEmail;
+
+	if ($mosConfig_hideEmail) {
+		echo _NOT_AUTH;
+		return;
+	}
 
 	// simple spoof check security
 	josSpoofCheck(1);	
@@ -2293,8 +2303,10 @@ function emailContentSend( $uid, $gid ) {
 		$email 				= strval( mosGetParam( $_POST, 'email', '' ) );
 		$yourname 			= strval( mosGetParam( $_POST, 'yourname', '' ) );
 		$youremail 			= strval( mosGetParam( $_POST, 'youremail', '' ) );
-		$subject_default 	= _EMAIL_INFO .' ' . $yourname;
-		$subject 			= strval( mosGetParam( $_POST, 'subject', $subject_default ) );
+		$subject 			= strval( mosGetParam( $_POST, 'subject', '' ) );
+		if (empty( $subject )) {
+			$subject 		= _EMAIL_INFO . ' ' . $yourname;
+		}
 	
 		if ($uid < 1 || !$email || !$youremail || ( is_email( $email ) == false ) || (is_email( $youremail ) == false)) {
 			mosErrorAlert( _EMAIL_ERR_NOINFO );
@@ -2323,22 +2335,16 @@ function emailContentSend( $uid, $gid ) {
 		$msg = sprintf( _EMAIL_MSG, $mosConfig_sitename, $yourname, $youremail, $link );
 	
 		// mail function
-		mosMail( $youremail, $yourname, $email, $subject, $msg );
+		$success = mosMail( $youremail, $yourname, $email, $subject, $msg );
+		if (!$success) {
+			mosErrorAlert( _EMAIL_ERR_NOINFO );
+		}
 	
 		HTML_content::emailSent( $email, $template );
 	} else {
 		mosNotAuth();
 		return;
 	}
-}
-
-function is_email( $email ){
-	$rBool = false;
-
-	if (preg_match( "/[\w\.\-]+@\w+[\w\.\-]*?\.\w{1,4}/", $email )) {
-		$rBool = true;
-	}
-	return $rBool;
 }
 
 function recordVote() {

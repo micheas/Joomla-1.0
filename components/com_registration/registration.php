@@ -270,13 +270,4 @@ function activate( $option ) {
 		echo _REG_ACTIVATE_NOT_FOUND;
 	}
 }
-
-function is_email($email){
-	$rBool=false;
-
-	if(preg_match("/[\w\.\-]+@\w+[\w\.\-]*?\.\w{1,4}/", $email)){
-		$rBool=true;
-	}
-	return $rBool;
-}
 ?>

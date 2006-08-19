@@ -37,20 +37,20 @@ Legend:
 ! -> Note
 
 
----------------- 1.0.11 Beta 2 Released -- [19-August-2006 21:00 UTC] ------------------
+---------------- 1.0.11 Beta 2 Released -- [19-August-2006 22:00 UTC] ------------------
 
 
-This Release Contains the following 21 Security Fixes
+This Release Contains the following 23 Security Fixes
 
 Joomla! utilizes the Open Web Application Security Project (OWASP) web application security system to categorize security vunerabilities found within Joomla!
 http://www.owasp.org
 
 
-05 HIGH Level Threats fixed
+06 HIGH Level Threats fixed
 
 
  
-07 MEDIUM Level Threats fixed
+08 MEDIUM Level Threats fixed
 
 
 
@@ -71,9 +71,9 @@ http://www.owasp.org
 
 
 19-Aug-2006 Enno Klasing
- # SECURITY A1 [ ?? Level ]: Secured mosMail() against unvalidated input
- # SECURITY A? [ ?? Level ]: Secured is_email() - in previous versions the existance of an email address somewhere in the string was sufficient
- # SECURITY A2 [ ?? Level ]: Secured com_content to not allow the tasks 'emailform' and 'emailsend' if $mosConfig_hideEmail is set
+ # SECURITY A1 [ HIGH Level ]: Secured mosMail() against unvalidated input
+ # SECURITY A? [ MEDIUM Level ]: Secured is_email() - in previous versions the existance of an email address somewhere in the string was sufficient
+ # SECURITY A2 [ LOW Level ]: Secured com_content to not allow the tasks 'emailform' and 'emailsend' if $mosConfig_hideEmail is set
  
  # Fixed : Empty subject in com_content mail2friend no longer possible
  # Fixed : Show error message if com_content mail2friend fails

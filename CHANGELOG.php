@@ -58,14 +58,18 @@ http://www.owasp.org
 -- -- --
 
 
+19-Aug-2006 Rey Gigataras
+ # SECURITY A? [ ? Level ]: XSS to Admin Module Manager 
+
+
 19-Aug-2006 Enno Klasing
- * Secured mosMail() against unvalidated input
- * Secured is_email() - in previous versions the existance of an email address somewhere in the string was sufficient
- * Secured com_content to not allow the tasks 'emailform' and 'emailsend' if $mosConfig_hideEmail is set
+ # SECURITY A? [ ? Level ]: Secured mosMail() against unvalidated input
+ # SECURITY A? [ ? Level ]: Secured is_email() - in previous versions the existance of an email address somewhere in the string was sufficient
+ # SECURITY A? [ ? Level ]: Secured com_content to not allow the tasks 'emailform' and 'emailsend' if $mosConfig_hideEmail is set
+ # Fixed : Empty subject in com_content mail2friend no longer possible
+ # Fixed : Show error message if com_content mail2friend fails
+ # Fixed : Show error message if com_contact mail fails
  ^ Moved all instances of is_email() into /includes/joomla.php
- # Empty subject in com_content mail2friend no longer possible
- # Show error message if com_content mail2friend fails
- # Show error message if com_contact mail fails
 
 
 18-Aug-2006 Rey Gigataras

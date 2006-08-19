@@ -100,11 +100,12 @@ function viewModules( $option, $client ) {
 	$search 			= $database->getEscaped( trim( strtolower( $search ) ) );
 
 	if ($client == 'admin') {
-		$where[] = "m.client_id = '1'";
-		$client_id = 1;
+		$where[] 	= "m.client_id = '1'";
+		$client_id 	= 1;
 	} else {
-		$where[] = "m.client_id = '0'";
-		$client_id = 0;
+		$where[] 	= "m.client_id = '0'";
+		$client_id 	= 0;
+		$client 	= '';
 	}
 
 	// used by filter

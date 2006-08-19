@@ -121,7 +121,8 @@ function editPoll( $uid=0, $option='com_poll' ) {
 		$database->setQuery($query);
 		$options = $database->loadObjectList();
 	} else {
-		$row->lag = 3600*24;
+		$row->lag 		= 3600 * 24;
+		$row->published = 1;
 	}
 
 	// get selected pages
@@ -167,7 +168,7 @@ function savePoll( $option ) {
 	}
 	$row->checkin();
 	// save the poll options
-	$options = josGetArrayInts( 'polloption' );
+	$options = mosGetParam( $_POST, 'polloption', array() );
 
 	foreach ($options as $i=>$text) {
 		$text = $database->Quote($text);

@@ -59,7 +59,8 @@ http://www.owasp.org
 
 
 19-Aug-2006 Rey Gigataras
- # SECURITY A? [ ? Level ]: XSS to Admin Module Manager 
+ # SECURITY A? [ LOW Level ]: XSS injection issue in Admin `Module Manager`
+ # SECURITY A? [ LOW Level ]: XSS injection issue in Admin `Help` 
 
 
 19-Aug-2006 Enno Klasing

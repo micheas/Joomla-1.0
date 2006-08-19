@@ -394,11 +394,15 @@ class HTML_admin_misc {
 		$fullhelpurl = $helpurl . '/index2.php?option=com_content&amp;task=findkey&pop=1&keyref=';
 
 		$helpsearch = strval( mosGetParam( $_REQUEST, 'helpsearch', '' ) );
+		$helpsearch = addslashes(htmlspecialchars($helpsearch));
+
 		$page 		= strval( mosGetParam( $_REQUEST, 'page', 'joomla.whatsnew100.html' ) );
 		$toc 		= getHelpToc( $helpsearch );
 		if (!eregi( '\.html$', $page )) {
 			$page .= '.xml';
 		}
+		
+		echo $helpsearch;
 		?>
 		<style type="text/css">
 		.helpIndex {

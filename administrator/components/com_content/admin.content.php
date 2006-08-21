@@ -1005,8 +1005,11 @@ function moveSection( $cid, $sectionid, $option ) {
 function moveSectionSave( &$cid, $sectionid, $option ) {
 	global $database, $my;
 
-	$sectcat = josGetArrayInts( 'sectcat' );
+	$sectcat 	= mosGetParam( $_POST, 'sectcat', '' );
 	list( $newsect, $newcat ) = explode( ',', $sectcat );
+	// ensure values are integers
+	$newsect 	= intval( $newsect );
+	$newcat 	= intval( $newcat );
 
 	if (!$newsect && !$newcat ) {
 		mosRedirect( "index.php?option=com_content&sectionid=$sectionid&mosmsg=An error has occurred" );

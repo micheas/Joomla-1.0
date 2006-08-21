@@ -24,8 +24,7 @@ require_once( $mainframe->getPath( 'admin_html' ) );
 
 $menu 		= strval( mosGetParam( $_GET, 'menu', '' ) );
 $type 		= strval( mosGetParam( $_POST, 'type', '' ) );
-
-$cid 		= josGetArrayInts( 'cid' );
+$cid 		= mosGetParam( $_POST, 'cid', '' );
 
 switch ($task) {
 	case 'new':

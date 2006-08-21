@@ -156,7 +156,7 @@ function publishLanguage( $p_lname, $option ) {
 
 	$config = '';
 
-	$fp = fopen("../configuration.php","r");
+	$fp = fopen('../configuration.php','r');
 	while(!feof($fp)){
 		$buffer = fgets($fp,4096);
 		if (strstr($buffer,"\$mosConfig_lang")){
@@ -167,12 +167,12 @@ function publishLanguage( $p_lname, $option ) {
 	}
 	fclose($fp);
 
-	if ($fp = fopen("../configuration.php","w")){
+	if ($fp = fopen('../configuration.php','w')){
 		fputs($fp, $config, strlen($config));
 		fclose($fp);
-		mosRedirect("index2.php","Configuration successfully updated!");
+		mosRedirect('index2.php?option=com_languages',"Language successfully changed! $p_lname");
 	} else {
-		mosRedirect("index2.php","Error! Make sure that configuration.php is writeable.");
+		mosRedirect('ndex2.php?option=com_languages','Error!');
 	}
 
 }

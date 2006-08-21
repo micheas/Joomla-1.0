@@ -201,9 +201,12 @@ function mosShowHead() {
 	$mainframe->addMetaTag( 'robots', 'index, follow' );
 
 	// cache activation
-	// echo $mainframe->getHead();
-	$cache =& mosCache::getCache('com_content');
-	echo $cache->call('mainframe->getHead', $_SERVER['QUERY_STRING'], $id);
+	if (isset($_SERVER['QUERY_STRING']) && !empty($_SERVER['QUERY_STRING'])) {
+		$cache =& mosCache::getCache('com_content');	
+		echo $cache->call('mainframe->getHead', @$_SERVER['QUERY_STRING'], $id);
+	} else {
+		echo $mainframe->getHead();
+	}
 
 	if ( isset($mosConfig_sef) && $mosConfig_sef ) {
 		echo "<base href=\"$mosConfig_live_site/\" />\r\n";

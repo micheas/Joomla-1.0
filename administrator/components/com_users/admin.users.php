@@ -260,8 +260,7 @@ function saveUser( $task ) {
 	global $database, $my;
 	global $mosConfig_live_site, $mosConfig_mailfrom, $mosConfig_fromname, $mosConfig_sitename;
 
-	$row = new mosUser( $database );
-	
+	$row = new mosUser( $database );	
 	if (!$row->bind( $_POST )) {
 		echo "<script> alert('".$row->getError()."'); window.history.go(-1); </script>\n";
 		exit();

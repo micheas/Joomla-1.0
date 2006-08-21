@@ -425,7 +425,7 @@ function sefRelToAbs( $string ) {
 			$sefstring = '';
 
 			// Component com_content urls
-			if ( ( @$parts['option'] == 'com_content' || @$parts['option'] == 'content' ) && ( $parts['task'] != 'new' ) && ( $parts['task'] != 'edit' ) ) {
+			if ( ( (isset($parts['option']) && ($parts['option'] == 'com_content') || $parts['option'] == 'content' )) && ( $parts['task'] != 'new' ) && ( $parts['task'] != 'edit' ) ) {
 			// index.php?option=com_content [&task=$task] [&sectionid=$sectionid] [&id=$id] [&Itemid=$Itemid] [&limit=$limit] [&limitstart=$limitstart] [&year=$year] [&month=$month] [&module=$module]
 				$sefstring .= 'content/';
 				
@@ -484,7 +484,7 @@ function sefRelToAbs( $string ) {
 				$string = $sefstring;
 				
 			// all other components
-			} else if ( ( strpos( @$parts['option'], 'com_' ) !== false ) && ( @$parts['task'] != 'new' ) && ( @$parts['task'] != 'edit' ) ) {
+			} else if ( ( isset($parts['option']) && ( strpos( $parts['option'], 'com_' ) !== false ) ) && ( isset($parts['task']) && ( $parts['task'] != 'new' ) && ( $parts['task'] != 'edit' ) ) ) {
 			// index.php?option=com_xxxx &...
 				$sefstring 	= 'component/';
 				

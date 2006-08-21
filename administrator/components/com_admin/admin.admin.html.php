@@ -479,8 +479,11 @@ class HTML_admin_misc {
 							<a href="<?php echo $mosConfig_live_site;?>/administrator/index3.php?option=com_admin&task=sysinfo" target="helpFrame">
 								System Info</a>
 							|
+							<a href="<?php echo $mosConfig_live_site;?>/administrator/index3.php?option=com_admin&task=versioncheck" target="helpFrame">
+								Version Check</a>
+							|
 							<a href="http://www.joomla.org/content/blogcategory/32/66/" target="_blank">
-								Latest Version Check</a>
+								Latest Version Info</a>
 						</td>
 					</tr>
 				</table>
@@ -558,6 +561,171 @@ class HTML_admin_misc {
 			?>
 		</pre>
 		<?php
+	}
+	
+	function versionCheck() {
+		global $database, $mainframe, $mosConfig_absolute_path, $mosConfig_cachepath, $Itemid, $my;
+	
+		// check if cache directory is writeable
+		$cacheDir = $mosConfig_cachepath .'/';
+		if ( !is_writable( $cacheDir ) ) {	
+			echo 'Cache Directory Unwriteable';
+			return;
+		}
+	
+		// full RSS parser used to access image information
+		require_once( $mosConfig_absolute_path . '/includes/domit/xml_domit_rss.php');
+		$LitePath = $mosConfig_absolute_path . '/includes/Cache/Lite.php';
+	
+		// full RSS parser used to access image information
+		$rssDoc = new xml_domit_rss_document();
+		$rssDoc->useCacheLite( true, $LitePath, $cacheDir, 1800 );
+		$success = $rssDoc->loadRSS( 'http://www.joomla.org/index.php?option=com_rss_xtd&feed=RSS2.0&type=com_content&task=view&id=1795&Itemid=33' );
+		
+		if ( $success ) {
+			$currChannel	=& $rssDoc->getChannel(0);			
+			$currItem 		=& $currChannel->getItem(0);
+			
+			$item_title 	= $currItem->getTitle();
+			$item_title 	= mosCommonHTML::newsfeedEncoding( $rssDoc, $item_title );
+
+			// item description
+			$text = $currItem->getDescription();
+			$text = str_replace('||', '&', $text);
+			parse_str($text, $latest);
+			
+			$_VERSION 			= new joomlaVersion();			
+			$_VERSION->BUILD 	= str_replace('$Revision: ','',$_VERSION->BUILD); 			
+			$_VERSION->BUILD 	= str_replace(' $','',$_VERSION->BUILD); 			
+						
+			$isNew = 0;
+			
+			if ($latest['major'] != $_VERSION->RELEASE) {
+				$isNew = 1;
+			} else if($latest['minor'] != $_VERSION->DEV_LEVEL) {
+				$isNew = 1;
+			} else if($latest['rev'] != $_VERSION->BUILD) {
+				$isNew = 1;
+			} else if($latest['name'] != $_VERSION->CODENAME) {
+				$isNew = 1;
+			} else if($latest['date'] != $_VERSION->RELDATE) {
+				$isNew = 1;
+			}			
+			?>
+			<div align="center">
+				<fieldset style="width: 520px; text-align: center; color: #CCC; margin-bottom: 30px; margin-top: 15px; padding: 10px; vertical-align: middle;">
+					<h1>
+						<span style="color: #C0C0C0;">
+							Your version of Joomla! is
+						</span>
+						<?php
+						if ($isNew) {
+							?>
+							<span style="color: red;">
+								Out of Date
+							</span>
+							<img src="../images/cancel_f2.png"  style="vertical-align: middle;" />
+							<?php				
+						} else {
+							?>
+							<span style="color: green;">
+								Up-to-Date				
+							</span>
+							<img src="../images/apply_f2.png"  style="vertical-align: middle;" />
+							<?php
+						}
+						?>
+					</h1>
+				</fieldset>
+				
+				<table class="adminlist">
+				<tr>
+					<th width="150">
+					</th>
+					<th>
+						Version Number
+					</th>
+					<th>
+						Code Name
+					</th>
+					<th>
+						Date
+					</th>
+					<th>
+						Revision Number
+					</th>
+				</tr>
+				<tr align="center" style="font-weight: bold;">
+					<td align="left">
+						<h3 style="padding: 0px; margin: 8px;">
+							Latest Version
+						</h3>
+					</td>
+					<td>
+						<?php echo $latest['major'] .'.'. $latest['minor'];?>
+					</td>
+					<td>
+						<?php echo $latest['name'];?>
+					</td>
+					<td>
+						<?php echo $latest['date'];?>
+					</td>
+					<td>
+						<?php echo $latest['rev'];?>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="5" style="height: 10px;">
+					</td>
+				</tr>
+				<tr align="center">
+					<td align="left">
+						<h3 style="padding: 0px; margin: 8px;">
+							Your Version
+						</h3>
+					</td>
+					<td>
+						<?php echo $_VERSION->RELEASE .'.'. $_VERSION->DEV_LEVEL;?>
+					</td>
+					<td>
+						<?php echo $_VERSION->CODENAME;?>
+					</td>
+					<td>
+						<?php echo $_VERSION->RELDATE;?>
+					</td>
+					<td>
+						<?php echo $_VERSION->BUILD;?>
+					</td>
+				</tr>
+				</table>  
+				
+				<?php
+				if ($isNew) {
+					?>
+					<fieldset style="width: 520px; text-align: center; color: #CCC; margin-top: 30px; padding: 10px;">
+						<h3 style="color: #333">
+								<a href="<?php echo $latest['url']; ?>" target="_blank">
+									Read about and Download the latest version of Joomla! here.
+								</a>							
+						</h3>
+					</fieldset>
+					<?php				
+				}
+				?>
+				<span style="margin-bottom: 30px"">&nbsp;</span>
+				<?php 
+			} else {
+				?>
+				<fieldset style="width: 70%; text-align: center; color: #CCC; margin-top: 20px;  margin-bottom: 30px; padding: 10px;">
+					<h3 style="color: red">
+						Currently unable to connect to Official Joomla! Site to check for the latest version
+					</h3>
+				</fieldset>
+				<?php				
+			}
+			?>
+		</div>
+		<?php			
 	}
 }
 

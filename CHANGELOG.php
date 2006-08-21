@@ -61,6 +61,10 @@ http://www.owasp.org
 -- -- --
 
 
+21-Aug-2006 Rey Gigataras
+ + Live Joomla! Version Check functionality
+ 
+
 19-Aug-2006 Rey Gigataras
  # SECURITY A? [ MEDIUM Level ]: Limit Admin `Upload Image` from uploading below `/images/stories/` directory
  # SECURITY A? [ MEDIUM Level ]: Limit access to Admin `Upload Image` 

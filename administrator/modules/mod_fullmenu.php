@@ -277,11 +277,12 @@ if (!defined( '_JOS_FULLMENU_MODULE' )) {
 		// System Sub-Menu
 	?>			_cmSplit,
 	  			[null,'System',null,null,'System Management',
-	  			   ['<img src="../includes/js/ThemeOffice/sysinfo.png" />', 'System Info', 'index2.php?option=com_admin&task=sysinfo', null,'System Information'],
-	
+	  				['<img src="../includes/js/ThemeOffice/favicon.ico" />', 'Version Check', 'index2.php?option=com_admin&task=versioncheck', null,'Version Check'], 				
+	  				['<img src="../includes/js/ThemeOffice/sysinfo.png" />', 'System Info', 'index2.php?option=com_admin&task=sysinfo', null,'System Information'],
 	<?php
 	  		if ($canConfig) {
-	?>				['<img src="../includes/js/ThemeOffice/checkin.png" />', 'Global Checkin', 'index2.php?option=com_checkin', null,'Check-in all checked-out items'],
+	?>				
+					['<img src="../includes/js/ThemeOffice/checkin.png" />', 'Global Checkin', 'index2.php?option=com_checkin', null,'Check-in all checked-out items'],					
 	<?php
 				if ($mosConfig_caching) {
 	?>				['<img src="../includes/js/ThemeOffice/config.png" />','Clean Content Cache','index2.php?option=com_admin&task=clean_cache',null,'Clean the content items cache'],

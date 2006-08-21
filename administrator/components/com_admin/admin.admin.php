@@ -67,6 +67,10 @@ switch ($task) {
 		HTML_admin_misc::preview( 1 );
 		break;
 
+	case 'versioncheck':
+		HTML_admin_misc::versionCheck();
+		break;
+
 	case 'cpanel':
 	default:
 		HTML_admin_misc::controlPanel();

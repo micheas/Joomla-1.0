@@ -80,10 +80,8 @@ if (!defined( '_JOS_QUICKICON_MODULE' )) {
 			quickiconButton( $link, 'config.png', 'Global Configuration' );
 		}
 		
-		if ( $my->gid > 24 ) {
-			$link = 'index2.php?option=com_admin&task=versioncheck';
-			quickiconButton( $link, 'version_check.png', 'Version Check' );
-		}		
+		$link = 'index2.php?option=com_admin&task=versioncheck';
+		quickiconButton( $link, 'version_check.png', 'Version Check' );
 		?>
 	</div>
 	<?php

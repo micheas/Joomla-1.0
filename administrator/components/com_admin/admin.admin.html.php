@@ -580,15 +580,13 @@ class HTML_admin_misc {
 		// full RSS parser used to access image information
 		$rssDoc = new xml_domit_rss_document();
 		$rssDoc->useCacheLite( true, $LitePath, $cacheDir, 1800 );
-		$success = $rssDoc->loadRSS( 'http://www.joomla.org/index.php?option=com_rss_xtd&feed=RSS2.0&type=com_content&task=view&id=1795&Itemid=33' );
+		//$success = $rssDoc->loadRSS( 'http://www.joomla.org/index.php?option=com_rss_xtd&feed=RSS2.0&type=com_content&task=view&id=1795&Itemid=33' );
+		$success = $rssDoc->loadRSS( 'http://www.joomla.org/index.php?option=com_rss_xtd&feed=RSS2.0&type=com_content&task=blogcategory&id=45&Itemid=100' );
 		
 		if ( $success ) {
 			$currChannel	=& $rssDoc->getChannel(0);			
 			$currItem 		=& $currChannel->getItem(0);
 			
-			$item_title 	= $currItem->getTitle();
-			$item_title 	= mosCommonHTML::newsfeedEncoding( $rssDoc, $item_title );
-
 			// item description
 			$text = $currItem->getDescription();
 			$text = str_replace('||', '&', $text);
@@ -712,8 +710,33 @@ class HTML_admin_misc {
 					<?php				
 				}
 				?>
-				<span style="margin-bottom: 30px"">&nbsp;</span>
 				<?php 
+				$totalItems	= $currChannel->getItemCount();
+				
+				if ($totalItems == 2) {
+					$currItem 		=& $currChannel->getItem(1);
+					
+					$item_title 	= $currItem->getTitle();
+					$item_title 	= mosCommonHTML::newsfeedEncoding( $rssDoc, $item_title );
+		
+					// item description
+					$text = $currItem->getDescription();
+					$text = str_replace('||','.<p/><p>',$text);							
+					?>
+					<fieldset style="width: 520px; text-align: center; color: #CCC; margin-top: 15px; padding: 10px; vertical-align: middle;">
+						<h3 style="color: red">
+							SECURITY WARNING
+						</h3>
+						<span style="color: #666;">
+							<p>
+								<?php echo $text; ?>
+							</p>
+						</span>
+					</fieldset>			
+							
+					<span style="margin-bottom: 20px"">&nbsp;</span>
+					<?php								
+				}
 			} else {
 				?>
 				<fieldset style="width: 70%; text-align: center; color: #CCC; margin-top: 20px;  margin-bottom: 30px; padding: 10px;">

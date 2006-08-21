@@ -259,7 +259,17 @@ function editUser( $uid='0', $option='users' ) {
 function saveUser( $task ) {
 	global $database, $my;
 	global $mosConfig_live_site, $mosConfig_mailfrom, $mosConfig_fromname, $mosConfig_sitename;
-
+	
+	/*
+	$userIdPosted = mosGetParam($_POST, 'id');
+	if ($userIdPosted) {
+		$msg = checkUserPermissions( array($userIdPosted), 'save', in_array($my->gid, array(24, 25)) );
+		if ($msg) {
+			echo "<script type=\"text/javascript\"> alert('".$msg."'); window.history.go(-1);</script>\n";
+			exit;
+		}
+	}
+	*/
 	$row = new mosUser( $database );	
 	if (!$row->bind( $_POST )) {
 		echo "<script> alert('".$row->getError()."'); window.history.go(-1); </script>\n";
@@ -582,5 +592,77 @@ function logoutUser( $cid=null, $option, $task ) {
 			mosRedirect( 'index2.php?option='. $option, $database->getErrorMsg() );
 			break;
 	}
+}
+
+/**
+ * Check if users are of lower permissions than current user (if not super-admin) and if the user himself is not included
+ *
+ * @param array of userId $cid
+ * @param string $actionName to insert in message.
+ * @return string of error if error, otherwise null
+ * Added 1.0.11
+ */
+function checkUserPermissions( $cid, $actionName, $allowActionToMyself = false ) {
+	global $database, $acl,$_PLUGINS, $ueConfig, $my;
+	
+	$msg = null;
+	if (is_array( $cid ) && count( $cid )) {
+		$obj = new mosUser( $database );
+		foreach ($cid as $id) {
+			$obj->load( $id );
+			$groups = $acl->get_object_groups( 'users', $id, 'ARO' );
+			$this_group = strtolower( $acl->get_group_name( $groups[0], 'ARO' ) );
+			if ( !$allowActionToMyself && $id == $my->id ){
+ 				$msg .= 'You cannot '. $actionName .' Yourself!';
+ 			} else if (($obj->gid == $my->gid && !in_array($my->gid, array(24, 25))) ||
+ 					   ($obj->gid && !in_array($obj->gid,getChildGIDS($my->gid)))) {
+				$msg .= 'You cannot '. $actionName .' a `'. $this_group .'`. Only higher-level users have this power. ';
+			}
+		}
+	}
+	return $msg;
+}
+
+/**
+ * Added 1.0.11
+ */
+function getGIDSChildren($gid) {
+	global $database;
+	
+	$standardlist = array(-2,);
+	
+	$query = "SELECT g1.group_id, g1.name"
+	."\n FROM #__core_acl_aro_groups g1"
+	."\n LEFT JOIN #__core_acl_aro_groups g2 ON g2.lft >= g1.lft"
+	."\n WHERE g2.group_id = ". $gid
+	."\n ORDER BY g1.name"
+	;
+	$database->setQuery( $query );
+	$array = $database->loadResultArray();
+	
+	if( $gid > 0 ) {
+		$standardlist[]=-1;
+	}
+	$array = array_merge($array,$standardlist);
+	
+	return $array;
+}
+
+/**
+ * Added 1.0.11
+ */
+function getGIDSParents($gid) {
+	global $database;
+	
+  	$query = "SELECT g1.group_id, g1.name"
+	."\n FROM #__core_acl_aro_groups g1"
+	."\n LEFT JOIN #__core_acl_aro_groups g2 ON g2.lft <= g1.lft"
+	."\n WHERE g2.group_id = ".$gid
+	."\n ORDER BY g1.name"
+	;
+   	$database->setQuery( $query );
+	$array = $database->loadResultArray();
+	
+	return $array;
 }
 ?>

@@ -62,6 +62,8 @@ http://www.owasp.org
 
 
 21-Aug-2006 Rey Gigataras
+ # SECURITY A1 [ LOW Level ]: Hardened Admin `User Manager` "Save" action
+ 
  + Live Joomla! Version Check functionality
  
 

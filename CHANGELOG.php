@@ -72,13 +72,13 @@ http://www.owasp.org
 
 19-Aug-2006 Enno Klasing
  # SECURITY A1 [ HIGH Level ]: Secured mosMail() against unvalidated input
- # SECURITY A? [ MEDIUM Level ]: Secured is_email() - in previous versions the existance of an email address somewhere in the string was sufficient
+ # SECURITY A? [ MEDIUM Level ]: Secured isValidEmail() - in previous versions the existance of an email address somewhere in the string was sufficient
  # SECURITY A2 [ LOW Level ]: Secured com_content to not allow the tasks 'emailform' and 'emailsend' if $mosConfig_hideEmail is set
  
  # Fixed : Empty subject in com_content mail2friend no longer possible
  # Fixed : Show error message if com_content mail2friend fails
  # Fixed : Show error message if com_contact mail fails
- ^ Moved all instances of is_email() into /includes/joomla.php
+ ^ Moved all instances of is_email() amalgamated into isValidEmail in /includes/joomla.php
 
 
 18-Aug-2006 Rey Gigataras

@@ -277,7 +277,7 @@ if (!defined( '_JOS_FULLMENU_MODULE' )) {
 		// System Sub-Menu
 	?>			_cmSplit,
 	  			[null,'System',null,null,'System Management',
-	  				['<img src="../includes/js/ThemeOffice/favicon.ico" />', 'Version Check', 'index2.php?option=com_admin&task=versioncheck', null,'Version Check'], 				
+	  				['<img src="../includes/js/ThemeOffice/joomla_16x16.png" />', 'Version Check', 'index2.php?option=com_admin&task=versioncheck', null,'Version Check'], 				
 	  				['<img src="../includes/js/ThemeOffice/sysinfo.png" />', 'System Info', 'index2.php?option=com_admin&task=sysinfo', null,'System Information'],
 	<?php
 	  		if ($canConfig) {

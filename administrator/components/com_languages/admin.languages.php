@@ -27,6 +27,10 @@ require_once( "$mosConfig_absolute_path/includes/domit/xml_domit_lite_include.ph
 $cid 	= mosGetParam( $_REQUEST, 'cid', array(0) );
 if (!is_array( $cid )) {
 	$cid = array(0);
+} else {
+	foreach ( $cid as $key => $value ) {
+	        $key = preg_replace( '#\W#', '', $value );
+	}
 }
 
 switch ($task) {

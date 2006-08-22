@@ -73,16 +73,17 @@ function &initModules() {
 	global $database, $my, $Itemid;
 
 	if (!isset( $GLOBALS['_MOS_MODULES'] )) {
-		$check_Itemid = '';
+		$Itemid 		= intval($Itemid);
+		$check_Itemid 	= '';
 		if ($Itemid) {
-			$check_Itemid = "OR mm.menuid = '$Itemid'";
+			$check_Itemid = "OR mm.menuid = '". (int) $Itemid ."'";
 		}
 		
 		$query = "SELECT id, title, module, position, content, showtitle, params"
 		. "\n FROM #__modules AS m"
 		. "\n INNER JOIN #__modules_menu AS mm ON mm.moduleid = m.id"
 		. "\n WHERE m.published = 1"
-		. "\n AND m.access <= $my->gid"
+		. "\n AND m.access <= ". (int) $my->gid
 		. "\n AND m.client_id != 1"
 		. "\n AND ( mm.menuid = 0 $check_Itemid )"
 		. "\n ORDER BY ordering";

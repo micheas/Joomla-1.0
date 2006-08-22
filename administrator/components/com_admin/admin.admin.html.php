@@ -573,42 +573,40 @@ class HTML_admin_misc {
 			return;
 		}
 	
+		$_VERSION 			= new joomlaVersion();			
+		$_VERSION->BUILD 	= str_replace('$Revision: ','',$_VERSION->BUILD); 			
+		$_VERSION->BUILD 	= str_replace(' $','',$_VERSION->BUILD);
+		 	
+		$versioninfo 		= $_VERSION->RELEASE .'.'. $_VERSION->DEV_LEVEL;   
+		$versioninfo 		= '1.0.10';   
+		$url				= 'http://www.joomla.org/index.php?option=com_rss_xtd&feed=RSS2.0&version='. $versioninfo .'&type=versioncheck';
+		//echo $url;		
+		
 		// full RSS parser used to access image information
 		require_once( $mosConfig_absolute_path . '/includes/domit/xml_domit_rss.php');
 		$LitePath = $mosConfig_absolute_path . '/includes/Cache/Lite.php';
 	
 		// full RSS parser used to access image information
-		$rssDoc = new xml_domit_rss_document();
-		$rssDoc->useCacheLite( true, $LitePath, $cacheDir, 1800 );
-		//$success = $rssDoc->loadRSS( 'http://www.joomla.org/index.php?option=com_rss_xtd&feed=RSS2.0&type=com_content&task=view&id=1795&Itemid=33' );
-		$success = $rssDoc->loadRSS( 'http://www.joomla.org/index.php?option=com_rss_xtd&feed=RSS2.0&type=com_content&task=blogcategory&id=45&Itemid=100' );
+		$rssDoc 	= new xml_domit_rss_document();
+		$rssDoc->useCacheLite( true, $LitePath, $cacheDir, 1 );
+		$success 	= $rssDoc->loadRSS( $url );
 		
 		if ( $success ) {
-			$currChannel	=& $rssDoc->getChannel(0);			
-			$currItem 		=& $currChannel->getItem(0);
+			$currChannel	=& $rssDoc->getChannel(0);		
+			$totalItems		= $currChannel->getItemCount();
+		
+			$currItem 	=& $currChannel->getItem(1);			
+			$rawdata 	= $currItem->getDescription();
+			$rawdata 	= str_replace('||', '&', $rawdata);
+			parse_str($rawdata, $data);
 			
-			// item description
-			$text = $currItem->getDescription();
-			$text = str_replace('||', '&', $text);
-			parse_str($text, $latest);
-			
-			$_VERSION 			= new joomlaVersion();			
-			$_VERSION->BUILD 	= str_replace('$Revision: ','',$_VERSION->BUILD); 			
-			$_VERSION->BUILD 	= str_replace(' $','',$_VERSION->BUILD); 			
-						
-			$isNew = 0;
-			
-			if ($latest['major'] != $_VERSION->RELEASE) {
-				$isNew = 1;
-			} else if($latest['minor'] != $_VERSION->DEV_LEVEL) {
-				$isNew = 1;
-			} else if($latest['rev'] != $_VERSION->BUILD) {
-				$isNew = 1;
-			} else if($latest['name'] != $_VERSION->CODENAME) {
-				$isNew = 1;
-			} else if($latest['date'] != $_VERSION->RELDATE) {
-				$isNew = 1;
-			}			
+			if ($data['outofdate'] == 1) {
+				$image 		= '<img src="../images/apply_f2.png"  style="vertical-align: middle;" />';
+				$outofdate 	= 0;
+			} else {
+				$image 		= '<img src="../images/cancel_f2.png"  style="vertical-align: middle;" />';				
+				$outofdate 	= 1;
+			}
 			?>
 			<div align="center">
 				<fieldset style="width: 520px; text-align: center; color: #CCC; margin-bottom: 30px; margin-top: 15px; padding: 10px; vertical-align: middle;">
@@ -616,26 +614,21 @@ class HTML_admin_misc {
 						<span style="color: #C0C0C0;">
 							Your version of Joomla! is
 						</span>
-						<?php
-						if ($isNew) {
-							?>
-							<span style="color: red;">
-								Out of Date
-							</span>
-							<img src="../images/cancel_f2.png"  style="vertical-align: middle;" />
-							<?php				
-						} else {
-							?>
-							<span style="color: green;">
-								Up-to-Date				
-							</span>
-							<img src="../images/apply_f2.png"  style="vertical-align: middle;" />
-							<?php
-						}
-						?>
+						<span style="color: <?php echo $data['colour']; ?>;">
+							<?php echo $data['text']; ?> 
+						</span>
+						<?php echo $image; ?>
 					</h1>
 				</fieldset>
+				<?php
+				$rawdata = '';
 				
+				// Version Information
+				$currItem 	=& $currChannel->getItem(0);
+				$rawdata 	= $currItem->getDescription();
+				$rawdata 	= str_replace('||', '&', $rawdata);
+				parse_str($rawdata, $data);				
+				?>
 				<table class="adminlist">
 				<tr>
 					<th width="150">
@@ -660,16 +653,16 @@ class HTML_admin_misc {
 						</h3>
 					</td>
 					<td>
-						<?php echo $latest['major'] .'.'. $latest['minor'];?>
+						<?php echo $data['major'] .'.'. $data['minor'];?>
 					</td>
 					<td>
-						<?php echo $latest['name'];?>
+						<?php echo $data['name'];?>
 					</td>
 					<td>
-						<?php echo $latest['date'];?>
+						<?php echo $data['date'];?>
 					</td>
 					<td>
-						<?php echo $latest['rev'];?>
+						<?php echo $data['rev'];?>
 					</td>
 				</tr>
 				<tr>
@@ -698,38 +691,37 @@ class HTML_admin_misc {
 				</table>  
 				
 				<?php
-				if ($isNew) {
+				if ($outofdate) {
 					?>
 					<fieldset style="width: 520px; text-align: center; color: #CCC; margin-top: 30px; padding: 10px;">
 						<h3 style="color: #333">
-								<a href="<?php echo $latest['url']; ?>" target="_blank">
+								<a href="<?php echo $data['url']; ?>" target="_blank">
 									Read about and Download the latest version of Joomla! here.
 								</a>							
 						</h3>
 					</fieldset>
 					<?php				
 				}
-				?>
-				<?php 
-				$totalItems	= $currChannel->getItemCount();
 				
-				if ($totalItems == 2) {
-					$currItem 		=& $currChannel->getItem(1);
+				if ($totalItems == 3) {
+				
+					// Warning Message
+					$currItem 		=& $currChannel->getItem(2);
 					
-					$item_title 	= $currItem->getTitle();
-					$item_title 	= mosCommonHTML::newsfeedEncoding( $rssDoc, $item_title );
-		
-					// item description
-					$text = $currItem->getDescription();
-					$text = str_replace('||','.<p/><p>',$text);							
+					// Item description
+					$currItem 		=& $currChannel->getItem(0);
+					$rawdata 		= $currItem->getDescription();
+					$rawdata 		= str_replace('||', '&', $rawdata);
+					parse_str($rawdata, $data);				
+					$data['text'] 	= str_replace('%%','.<p/><p>', $data['text']);							
 					?>
 					<fieldset style="width: 520px; text-align: center; color: #CCC; margin-top: 15px; padding: 10px; vertical-align: middle;">
-						<h3 style="color: red">
-							SECURITY WARNING
+						<h3 style="color: <?php echo $data['colour']; ?>">
+							 <?php echo $data['title']; ?>
 						</h3>
 						<span style="color: #666;">
 							<p>
-								<?php echo $text; ?>
+								<?php echo $data['text']; ?>
 							</p>
 						</span>
 					</fieldset>			

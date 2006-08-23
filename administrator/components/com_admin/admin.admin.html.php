@@ -85,6 +85,14 @@ class HTML_admin_misc {
 				</th>
 			</tr>
 			<tr>
+				<td colspan="2">
+					<?php
+					// show security setting check
+					josSecurityCheck();
+					?>
+				</td>
+			</tr>			
+			<tr>
 				<td valign="top" width="250">
 					<strong>PHP built On:</strong>
 				</td>

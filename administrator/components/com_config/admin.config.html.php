@@ -802,6 +802,9 @@ class HTML_config {
 			<?php
 		$tabs->endTab();
 		$tabs->endPane();
+		
+		// show security setting check
+		josSecurityCheck();
 		?>
 		
 		<input type="hidden" name="option" value="<?php echo $option; ?>"/>

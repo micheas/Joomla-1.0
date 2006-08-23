@@ -304,4 +304,46 @@ function mosMakePath($base, $path='', $mode = NULL) {
 function mosMainBody_Admin() {
 	echo $GLOBALS['_MOS_OPTION']['buffer'];
 }
+
+function josSecurityCheck($width='95%') {		
+	$wrongSettingsTexts = array();
+	if ( ini_get("register_globals") == '1' ) {
+		$wrongSettingsTexts[] = "PHP register_globals setting is ON instead of OFF";
+	}
+	if ( ini_get("magic_quotes_gpc") != '1' ) {
+		$wrongSettingsTexts[] = "PHP magic_quotes_gpc setting is OFF instead of ON";
+	}
+	if ( RG_EMULATION != 0 ) {
+		$wrongSettingsTexts[] = "Joomla RG_EMULATION setting is ON instead of OFF in file global.php <br /> ( OFF by default for compatibility reasons )";
+	}
+	
+	if ( count($wrongSettingsTexts) ) {
+		?>
+		<div style="clear: both; margin: 3px; margin-top: 10px; padding: 0px 15px; display: block; float: left; border: 1px solid #ddd; background: white; text-align: left; width: <?php echo $width;?>;">
+			<h4>
+				SECURITY CHECK
+			</h4>
+			<p>
+				Following PHP Server Security Settings are not optimal for Security and it is recommended to change them:
+			</p>
+			<ul style="padding-left: 15px;">
+				<?php
+				foreach ($wrongSettingsTexts as $txt) {
+					?>	
+					<li style="color: red; font-weight: bold;">
+						<?php
+						echo $txt;
+						?>
+					</li>
+					<?php
+				}
+				?>
+			</ul>
+			<p>
+				Please check <a href="http://forum.joomla.org/index.php/topic,81058.0.html" target="_blank">the Official Joomla Server Security post</a> for more information.
+			</p>
+		</div>
+		<?php
+	}
+}
 ?>

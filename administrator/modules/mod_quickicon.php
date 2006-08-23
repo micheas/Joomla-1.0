@@ -31,6 +31,8 @@ if (!defined( '_JOS_QUICKICON_MODULE' )) {
 		<?php
 	}
 	
+	$securitycheck = intval( $params->get( 'securitycheck', 1 ) );
+	
 	?>
 	<div id="cpanel">
 		<?php
@@ -82,8 +84,13 @@ if (!defined( '_JOS_QUICKICON_MODULE' )) {
 		
 		$link = 'index2.php?option=com_admin&task=versioncheck';
 		quickiconButton( $link, 'version_check.png', 'Version Check' );
+		
+		if ($securitycheck) {
+			// show security setting check
+			josSecurityCheck('88%');
+		}
 		?>
-	</div>
+	</div>	
 	<?php
 }
 ?>

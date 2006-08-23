@@ -717,17 +717,23 @@ function checkUserPermissions( $cid, $actionName, $allowActionToMyself = false )
 	if (is_array( $cid ) && count( $cid )) {
 		$obj = new mosUser( $database );
 		foreach ($cid as $id) {
-			$obj->load( $id );
-			$groups = $acl->get_object_groups( 'users', $id, 'ARO' );
-			$this_group = strtolower( $acl->get_group_name( $groups[0], 'ARO' ) );
+			if ( $id != 0 ) {
+				$obj->load( $id );
+				$groups 	= $acl->get_object_groups( 'users', $id, 'ARO' );
+				$this_group = strtolower( $acl->get_group_name( $groups[0], 'ARO' ) );
+			} else {
+				$this_group = 'Registered';		// minimal user group
+				$obj->gid 	= $acl->get_group_id( $this_group, 'ARO' );
+			}
+			
 			if ( !$allowActionToMyself && $id == $my->id ){
  				$msg .= 'You cannot '. $actionName .' Yourself!';
- 			} else if (($obj->gid == $my->gid && !in_array($my->gid, array(24, 25))) ||
- 					   ($obj->gid && !in_array($obj->gid,getGIDSChildren($my->gid)))) {
+ 			} else if (($obj->gid == $my->gid && !in_array($my->gid, array(24, 25))) || ($obj->gid && !in_array($obj->gid,getGIDSChildren($my->gid)))) {
 				$msg .= 'You cannot '. $actionName .' a `'. $this_group .'`. Only higher-level users have this power. ';
 			}
 		}
 	}
+	
 	return $msg;
 }
 

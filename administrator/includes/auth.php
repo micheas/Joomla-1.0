@@ -15,8 +15,8 @@
 defined( '_VALID_MOS' ) or die( 'Restricted access' );
 
 $basePath 	= dirname( __FILE__ );
-$path 		= $basePath . '/../../configuration.php';
-require( $path );
+require( $basePath . '/../../globals.php' );
+require( $basePath . '/../../configuration.php' );
 
 if (!defined( '_MOS_MAMBO_INCLUDED' )) {
 	$path = $basePath . '/../../includes/joomla.php';
@@ -38,7 +38,7 @@ $session_id 	= strval( mosGetParam( $_SESSION, 'session_id', '' ) );
 $logintime 		= strval( mosGetParam( $_SESSION, 'session_logintime', '' ) );
 
 if ( $session_id != md5( $my->id.$my->username.$my->usertype.$logintime ) ) {
-	mosRedirect( "index.php" );
+	mosRedirect( 'index.php' );
 	die;
 }
 ?>

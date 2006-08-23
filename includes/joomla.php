@@ -854,6 +854,10 @@ class mosMainFrame {
 
 					echo "<script>document.location.href='index.php?mosmsg=Admin Session Expired'</script>\n";
 					exit();
+				} else {
+					// load variables into session, used to help secure /popups/ functionality
+					$_SESSION['option'] = $option;
+					$_SESSION['task'] 	= $task;					
 				}
 			}
 		} else if ($session_id == '') {

@@ -15,7 +15,7 @@
 define( "_VALID_MOS", 1 );
 
 /** security check */
-require( "../includes/auth.php" );
+require( '../includes/auth.php' );
 include_once ( $mosConfig_absolute_path . '/language/' . $mosConfig_lang . '.php' );
 
 /*
@@ -41,10 +41,9 @@ $userfile2		= (isset($_FILES['userfile']['tmp_name']) ? $_FILES['userfile']['tmp
 $userfile_name	= (isset($_FILES['userfile']['name']) ? $_FILES['userfile']['name'] : "");
 
 // limit access to functionality
-$referer 	= parse_url(@$_SERVER['HTTP_REFERER']);
-parse_str(@$referer['query'], $query);
-
-switch (@$query['option']) {
+$option = strval( mosGetParam( $_SESSION, 'option', '' ) );
+$task 	= strval( mosGetParam( $_SESSION, 'task', '' ) );
+switch ($option) {
 	case 'com_banners':
 		break;		
 		
@@ -52,7 +51,7 @@ switch (@$query['option']) {
 	case 'com_content':
 	case 'com_sections':
 	case 'com_typedcontent':
-		if ( @$query['task'] != 'edit' && @$query['task'] != 'editA'  ) {
+		if ( $task != 'edit' && $task != 'editA'  ) {
 			echo _NOT_AUTH;
 			return;
 		}

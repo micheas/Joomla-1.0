@@ -17,12 +17,29 @@ define( "_VALID_MOS", 1 );
 require_once( '../includes/auth.php' );
 include_once ( $mosConfig_absolute_path . '/language/' . $mosConfig_lang . '.php' );
 
-$database = new database( $mosConfig_host, $mosConfig_user, $mosConfig_password, $mosConfig_db, $mosConfig_dbprefix );
-$database->debug( $mosConfig_debug );
+// limit access to functionality
+$option = strval( mosGetParam( $_SESSION, 'option', '' ) );
+$task 	= strval( mosGetParam( $_SESSION, 'task', '' ) );
+switch ($option) {
+	case 'com_modules':
+		if ( $task != 'edit' && $task != 'editA'  && $task != 'new' ) {
+			echo _NOT_AUTH;
+			return;
+		}
+		break;		
+		
+	default:
+		echo _NOT_AUTH;
+		return;
+		break;		
+}
 
 $title 	= mosGetParam( $_REQUEST, 'title', 0 );
 $css 	= mosGetParam( $_REQUEST, 't', '');
 $row 	= null;
+
+$database = new database( $mosConfig_host, $mosConfig_user, $mosConfig_password, $mosConfig_db, $mosConfig_dbprefix );
+$database->debug( $mosConfig_debug );
 
 $query = "SELECT *"
 . "\n FROM #__modules"
@@ -38,6 +55,14 @@ $replace2	= "'";
 $content	= eregi_replace($pat, $replace, $row->content);
 $content	= eregi_replace($pat2, $replace2, $row->content);
 $title		= eregi_replace($pat2, $replace2, $row->title);
+
+// css file handling
+// check to see if template exists
+if ( $css != '' && !is_dir($mosConfig_absolute_path .'/administrator/templates/'. $css .'/css/template_css.css' )) {
+	$css 	= 'rhuk_solarflare_ii';
+} else if ( $css == '' ) {
+	$css 	= 'rhuk_solarflare_ii';
+}
 
 $iso = split( '=', _ISO );
 // xml prolog

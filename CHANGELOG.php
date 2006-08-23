@@ -69,7 +69,7 @@ http://www.owasp.org
 
 19-Aug-2006 Rey Gigataras
  # SECURITY A? [ MEDIUM Level ]: Limit Admin `Upload Image` from uploading below `/images/stories/` directory
- # SECURITY A? [ MEDIUM Level ]: Limit access to Admin `Upload Image` 
+ # SECURITY A? [ MEDIUM Level ]: Limit access to Admin `Popups` functionality 
  # SECURITY A4 [ LOW Level ]: [topic,73761] : XSS injection issue in Admin `Module Manager`
  # SECURITY A4 [ LOW Level ]: [topic,73761] : XSS injection issue in Admin `Help` 
  # SECURITY A4 [ LOW Level ]: [topic,73761] : XSS injection issue in Admin `Upload Image` 

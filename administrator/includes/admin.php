@@ -355,7 +355,7 @@ function josSecurityCheck($width='95%') {
  */
 function josVersionCheck($width='95%') {
 	$_VERSION 			= new joomlaVersion();				 	
-	$versioninfo 		= $_VERSION->RELEASE .'.'. $_VERSION->DEV_LEVEL;
+	$versioninfo 		= $_VERSION->RELEASE .'.'. $_VERSION->DEV_LEVEL .' '. $_VERSION->DEV_STATUS;
 	?>
 	<script type="text/javascript">
 		<!--//--><![CDATA[//><!--	
@@ -390,25 +390,25 @@ function josVersionCheck($width='95%') {
 	    function alertContents(http_request) {	
 	        if (http_request.readyState == 4) {
 	            if ((http_request.status == 200) && (http_request.responseText.length < 1025)) {
-					document.getElementById('cbLatestVersion').innerHTML = http_request.responseText;
+					document.getElementById('JLatestVersion').innerHTML = http_request.responseText;
 	            } else {
-	                document.getElementById('cbLatestVersion').innerHTML = 'unknown, unable to check!';
+	                document.getElementById('JLatestVersion').innerHTML = 'unknown, unable to check!';
 	            }
 	        }
 	
 	    }
 	
-	    function cbCheckVersion() {
-	    	document.getElementById('cbLatestVersion').innerHTML = 'Checking latest version now...';
+	    function JCheckVersion() {
+	    	document.getElementById('JLatestVersion').innerHTML = 'Checking latest version now...';
 	    	makeRequest('<?php echo 'index3.php?option=com_admin&task=uptodate&no_html=1'; ?>');
 	    	return false;
 	    }
 	    
-	    function cbInitAjax() {
+	    function JInitAjax() {
 	    	makeRequest('<?php echo 'index3.php?option=com_admin&task=uptodate&no_html=1'; ?>');
 	    }
 	
-	    function cbAddEvent(obj, evType, fn){
+	    function JAddEvent(obj, evType, fn){
 	    	if (obj.addEventListener){
 	    		obj.addEventListener(evType, fn, true);
 	    		return true;
@@ -420,13 +420,7 @@ function josVersionCheck($width='95%') {
 	    	}
 	    }
 	
-		<?php
-	    if (!(isset($ueConfig["noVersionCheck"]) && $ueConfig["noVersionCheck"] == "1")) {
-			?>
-			cbAddEvent(window, 'load', cbInitAjax);
-			<?php
-	    }
-		?>
+		JAddEvent(window, 'load', JInitAjax);
 		//--><!]]>
 	</script>
 	
@@ -438,8 +432,8 @@ function josVersionCheck($width='95%') {
 					<span style="font-weight: normal;">
 						Your version of Joomla! [ <?php echo $versioninfo; ?> ] is  
 					</span>	 
-					<div id="cbLatestVersion" style="display: inline;">
-						<a href="index2.php?option=com_admin&task=versioncheck" onclick="return cbCheckVersion();" style="cursor: pointer; text-decoration:underline;">
+					<div id="JLatestVersion" style="display: inline;">
+						<a href="index2.php?option=com_admin&task=versioncheck" onclick="return JCheckVersion();" style="cursor: pointer; text-decoration:underline;">
 							Check Now</a>
 					</div>
 				</h3>

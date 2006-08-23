@@ -1113,7 +1113,7 @@ function copyItem( $cid, $sectionid, $option ) {
 function copyItemSave( $cid, $sectionid, $option ) {
 	global $database;
 
-	$sectcat	= josGetArrayInts( '$sectcat' );	
+	$sectcat 	= mosGetParam( $_POST, 'sectcat', '' );
 	//seperate sections and categories from selection
 	$sectcat 	= explode( ',', $sectcat );
 	list( $newsect, $newcat ) = $sectcat;

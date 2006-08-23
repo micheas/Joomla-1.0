@@ -793,7 +793,7 @@ class HTML_admin_misc {
 								$rawdata 	= str_replace('||', '&', $rawdata);
 								parse_str($rawdata, $data);		
 				
-								if (isset($data['title']) && isset($data['text'])) {
+								if (isset($data['title']) || isset($data['text'])) {
 									$data['text'] 	= str_replace('%%','.<p/><p>', $data['text']);		
 									
 									if (!isset($data['width'])) {

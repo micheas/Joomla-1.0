@@ -577,10 +577,13 @@ class HTML_admin_misc {
 		$_VERSION->BUILD 	= str_replace('$Revision: ','',$_VERSION->BUILD); 			
 		$_VERSION->BUILD 	= str_replace(' $','',$_VERSION->BUILD);
 		 	
-		$versioninfo 		= $_VERSION->RELEASE .'.'. $_VERSION->DEV_LEVEL;   
-		$versioninfo 		= '1.0.10';   
+		$versioninfo 		= $_VERSION->RELEASE .'.'. $_VERSION->DEV_LEVEL;
+		if (strpos(strtolower($_VERSION->DEV_STATUS), 'beta') == 0) {
+			$versioninfo 	.= 'beta'; 
+		} else if (strpos(strtolower($_VERSION->DEV_STATUS), 'svn') == 0) {
+			$versioninfo 	.= 'svn';			
+		}
 		$url				= 'http://www.joomla.org/index.php?option=com_rss_xtd&feed=RSS2.0&version='. $versioninfo .'&type=versioncheck';
-		//echo $url;		
 		
 		// full RSS parser used to access image information
 		require_once( $mosConfig_absolute_path . '/includes/domit/xml_domit_rss.php');
@@ -588,158 +591,263 @@ class HTML_admin_misc {
 	
 		// full RSS parser used to access image information
 		$rssDoc 	= new xml_domit_rss_document();
-		$rssDoc->useCacheLite( true, $LitePath, $cacheDir, 1 );
+		$rssDoc->useCacheLite( true, $LitePath, $cacheDir, 1800 );
 		$success 	= $rssDoc->loadRSS( $url );
-		
-		if ( $success ) {
-			$currChannel	=& $rssDoc->getChannel(0);		
-			$totalItems		= $currChannel->getItemCount();
-		
-			$currItem 	=& $currChannel->getItem(1);			
-			$rawdata 	= $currItem->getDescription();
-			$rawdata 	= str_replace('||', '&', $rawdata);
-			parse_str($rawdata, $data);
-			
-			if ($data['outofdate'] == 1) {
-				$image 		= '<img src="../images/apply_f2.png"  style="vertical-align: middle;" />';
-				$outofdate 	= 0;
-			} else {
-				$image 		= '<img src="../images/cancel_f2.png"  style="vertical-align: middle;" />';				
-				$outofdate 	= 1;
-			}
-			?>
-			<div align="center">
-				<fieldset style="width: 520px; text-align: center; color: #CCC; margin-bottom: 30px; margin-top: 15px; padding: 10px; vertical-align: middle;">
-					<h1>
-						<span style="color: #C0C0C0;">
-							Your version of Joomla! is
-						</span>
-						<span style="color: <?php echo $data['colour']; ?>;">
-							<?php echo $data['text']; ?> 
-						</span>
-						<?php echo $image; ?>
-					</h1>
-				</fieldset>
-				<?php
-				$rawdata = '';
-				
-				// Version Information
-				$currItem 	=& $currChannel->getItem(0);
-				$rawdata 	= $currItem->getDescription();
-				$rawdata 	= str_replace('||', '&', $rawdata);
-				parse_str($rawdata, $data);				
-				?>
-				<table class="adminlist">
-				<tr>
-					<th width="150">
-					</th>
-					<th>
-						Version Number
-					</th>
-					<th>
-						Code Name
-					</th>
-					<th>
-						Date
-					</th>
-					<th>
-						Revision Number
-					</th>
-				</tr>
-				<tr align="center" style="font-weight: bold;">
-					<td align="left">
-						<h3 style="padding: 0px; margin: 8px;">
-							Latest Version
-						</h3>
-					</td>
-					<td>
-						<?php echo $data['major'] .'.'. $data['minor'];?>
-					</td>
-					<td>
-						<?php echo $data['name'];?>
-					</td>
-					<td>
-						<?php echo $data['date'];?>
-					</td>
-					<td>
-						<?php echo $data['rev'];?>
-					</td>
-				</tr>
-				<tr>
-					<td colspan="5" style="height: 10px;">
-					</td>
-				</tr>
-				<tr align="center">
-					<td align="left">
-						<h3 style="padding: 0px; margin: 8px;">
-							Your Version
-						</h3>
-					</td>
-					<td>
-						<?php echo $_VERSION->RELEASE .'.'. $_VERSION->DEV_LEVEL;?>
-					</td>
-					<td>
-						<?php echo $_VERSION->CODENAME;?>
-					</td>
-					<td>
-						<?php echo $_VERSION->RELDATE;?>
-					</td>
-					<td>
-						<?php echo $_VERSION->BUILD;?>
-					</td>
-				</tr>
-				</table>  
-				
-				<?php
-				if ($outofdate) {
-					?>
-					<fieldset style="width: 520px; text-align: center; color: #CCC; margin-top: 30px; padding: 10px;">
-						<h3 style="color: #333">
-								<a href="<?php echo $data['url']; ?>" target="_blank">
-									Read about and Download the latest version of Joomla! here.
-								</a>							
-						</h3>
-					</fieldset>
-					<?php				
-				}
-				
-				if ($totalItems == 3) {
-				
-					// Warning Message
-					$currItem 		=& $currChannel->getItem(2);
+		?>
+		<table class="adminform" border="1">
+		<tr>
+			<td>
+				<div align="center">
+					<?php
+					if ( $success ) {
+						$currChannel	=& $rssDoc->getChannel(0);		
+						$totalItems		= $currChannel->getItemCount();
 					
-					// Item description
-					$currItem 		=& $currChannel->getItem(0);
-					$rawdata 		= $currItem->getDescription();
-					$rawdata 		= str_replace('||', '&', $rawdata);
-					parse_str($rawdata, $data);				
-					$data['text'] 	= str_replace('%%','.<p/><p>', $data['text']);							
-					?>
-					<fieldset style="width: 520px; text-align: center; color: #CCC; margin-top: 15px; padding: 10px; vertical-align: middle;">
-						<h3 style="color: <?php echo $data['colour']; ?>">
-							 <?php echo $data['title']; ?>
-						</h3>
-						<span style="color: #666;">
-							<p>
-								<?php echo $data['text']; ?>
-							</p>
-						</span>
-					</fieldset>			
+						$outofdate 	= 0;
+					
+						if ($totalItems > 1) {				
+							// load data from feed item
+							$currItem 	=& $currChannel->getItem(1);
 							
-					<span style="margin-bottom: 20px"">&nbsp;</span>
-					<?php								
-				}
-			} else {
-				?>
-				<fieldset style="width: 70%; text-align: center; color: #CCC; margin-top: 20px;  margin-bottom: 30px; padding: 10px;">
-					<h3 style="color: red">
-						Currently unable to connect to Official Joomla! Site to check for the latest version
-					</h3>
-				</fieldset>
-				<?php				
-			}
-			?>
-		</div>
+							// check to see if the item loaded is the Status info
+							$rawtitle 	= '';
+							$rawtitle 	= strtolower($currItem->getTitle());							
+							if ($rawtitle == 'status') {	
+								// Status Information
+								$rawdata 	= $currItem->getDescription();
+								$rawdata 	= str_replace('||', '&', $rawdata);
+								parse_str($rawdata, $data);
+								
+								if ($data['outofdate'] == 1) {
+									$image 		= '<img src="../images/cancel_f2.png"  style="vertical-align: middle;" />';
+									$outofdate 	= 1;
+								} else if ($data['outofdate'] == 0) {
+									$image 		= '<img src="../images/apply_f2.png"  style="vertical-align: middle;" />';				
+									$outofdate 	= 0;
+								} else {
+									$image 		= '';				
+									$outofdate 	= 0;									
+								}
+								
+								if (isset($data['text'])) {
+									if (!isset($data['width'])) {
+										$data['width'] = '500';
+									}
+									if (!isset($data['colour'])) {
+										$data['colour'] = '#C0C0C0';
+									}
+									?>			
+									<fieldset style="width: <?php echo $data['width']; ?>px; text-align: center; color: #CCC; margin-bottom: 30px; margin-top: 15px; padding: 10px; vertical-align: middle; background-color: white;">
+										<h1>
+											<span style="color: #C0C0C0;">
+												Your version of Joomla! is
+											</span>
+											<span style="color: <?php echo $data['colour']; ?>;">
+												<?php echo $data['text']; ?> 
+											</span>
+											<?php echo $image; ?>
+										</h1>
+									</fieldset>
+									<?php
+								}
+							}
+						}			
+						
+						// load data from feed item
+						$currItem 	=& $currChannel->getItem(0);
+						
+						// check to see if the item loaded is the Status info
+						$rawtitle 	= '';
+						$rawtitle 	= strtolower($currItem->getTitle());							
+						if ($rawtitle == 'version') {	
+							// Version Information
+							$rawdata 	= '';
+							$rawdata 	= $currItem->getDescription();
+							$rawdata 	= str_replace('||', '&', $rawdata);
+							parse_str($rawdata, $data);		
+							
+							if (!isset($data['major'])) {
+								$data['major'] = '1.0';
+							}			
+							if (!isset($data['minor'])) {
+								$data['major'] = '*';
+							}			
+							if (!isset($data['name'])) {
+								$data['name'] = '***';
+							}			
+							if (!isset($data['date'])) {
+								$data['date'] = '***';
+							}			
+							if (!isset($data['rev'])) {
+								$data['rev'] = '***';
+							}						
+							?>
+							<table class="adminlist" align="center">
+							<tr>
+								<th width="150">
+								</th>
+								<th style="text-align: center;">
+									Version Number
+								</th>
+								<th style="text-align: center;">
+									Code Name
+								</th>
+								<th style="text-align: center;">
+									Date
+								</th>
+								<th style="text-align: center;">
+									Revision Number
+								</th>
+							</tr>
+							<tr align="center" style="font-weight: bold; text-align: center; background-color: #F0E68C;">
+								<td align="left">
+									<h3 style="padding: 0px; margin: 8px;">
+										Latest Version
+									</h3>
+								</td>
+								<td style="text-align: center;">
+									<?php echo $data['major'] .'.'. $data['minor'];?>
+								</td>
+								<td style="text-align: center;">
+									<?php echo $data['name'];?>
+								</td>
+								<td style="text-align: center;">
+									<?php echo $data['date'];?>
+								</td>
+								<td style="text-align: center;">
+									<?php echo $data['rev'];?>
+								</td>
+							</tr>
+							<tr class="row1">
+								<td colspan="5" style="height: 10px;">
+								</td>
+							</tr>
+							<tr align="center">
+								<td align="left">
+									<h3 style="padding: 0px; margin: 8px;">
+										Your Version
+									</h3>
+								</td>
+								<td style="text-align: center;">
+									<?php echo $_VERSION->RELEASE .'.'. $_VERSION->DEV_LEVEL;?>
+								</td>
+								<td style="text-align: center;">
+									<?php echo $_VERSION->CODENAME;?>
+								</td>
+								<td style="text-align: center;">
+									<?php echo $_VERSION->RELDATE;?>
+								</td>
+								<td style="text-align: center;">
+									<?php echo $_VERSION->BUILD;?>
+								</td>
+							</tr>
+							<tr class="row1">
+								<td colspan="5" style="height: 5px;">
+								</td>
+							</tr>
+							<tr>
+								<th colspan="5" style="height: 10px;">
+								</th>
+							</tr>
+							</table>  
+							
+							<?php				
+							if ($outofdate) {
+								?>
+								<fieldset style="width: 520px; text-align: center; color: #CCC; margin-top: 30px; padding: 10px; background-color: white;">
+									<h3 style="color: #333">
+										<a href="<?php echo $data['url']; ?>" target="_blank">
+											Read about and Download the latest version of Joomla! here.
+										</a>							
+									</h3>
+								</fieldset>
+								<?php				
+							}				
+						} else {
+							?>
+							<fieldset style="width: 70%; text-align: center; color: #CCC; margin-top: 20px;  margin-bottom: 30px; padding: 10px; background-color: white;">
+								<h3 style="color: red">
+									Currently unable to connect to Official Joomla! Site to check for the latest version
+								</h3>
+							</fieldset>
+							<?php				
+						}
+						
+						if ($totalItems > 1) {
+							if ($totalItems == 2) {					
+								$i = 1;
+							} else {
+								$i = 2;						
+							}
+							
+							// load data from feed item
+							$currItem 	=& $currChannel->getItem($i);
+							
+							// check to see if the item loaded is the Message info
+							$rawtitle 	= '';
+							$rawtitle 	= strtolower($currItem->getTitle());							
+							if ($rawtitle == 'message') {	
+								// Message Information
+								$rawdata 	= '';
+								$rawdata 	= $currItem->getDescription();
+								$rawdata 	= str_replace('||', '&', $rawdata);
+								parse_str($rawdata, $data);		
+				
+								if (isset($data['title']) && isset($data['text'])) {
+									$data['text'] 	= str_replace('%%','.<p/><p>', $data['text']);		
+									
+									if (!isset($data['width'])) {
+										$data['width'] = '500';
+									}			
+									?>
+									<fieldset style="width: <?php echo $data['width']; ?>px; text-align: center; color: #CCC; margin-top: 15px; padding: 10px; vertical-align: middle; background-color: white;">
+										<?php
+										// Message Title
+										if (isset($data['title'])) {
+											if (!isset($data['color'])) {
+												$data['color'] = '#666;';
+											}
+											?>
+											<h3 style="color: <?php echo $data['colour']; ?>">
+												 <?php echo $data['title']; ?>
+											</h3>
+											<?php
+										}
+				
+										// Message Text
+										if (isset($data['text'])) {
+											?>
+											<span style="color: #666;">
+												<p>
+													<?php echo $data['text']; ?>
+												</p>
+											</span>
+											<?php
+										}
+										?>
+									</fieldset>		
+									<?php
+								}
+							}
+							?>	
+									
+							<span style="margin-bottom: 20px"">&nbsp;</span>
+							<?php								
+						}
+					} else {
+						?>
+						<fieldset style="width: 70%; text-align: center; color: #CCC; margin-top: 20px;  margin-bottom: 30px; padding: 10px; background-color: white;">
+							<h3 style="color: red">
+								Currently unable to connect to Official Joomla! Site to check for the latest version
+							</h3>
+						</fieldset>
+						<?php				
+					}
+					?>
+				</div>
+			</td>
+		</tr>
+		</table>
 		<?php			
 	}
 }

@@ -9,6 +9,9 @@
  * See COPYRIGHT.php for copyright notices and details.
  */
 
+// no direct access
+defined( '_VALID_MOS' ) or die( 'Restricted access' );
+
 /**
  * Use 1 to emulate register_globals = on
  * WARNING: SETTING TO 1 MAY BE REQUIRED FOR BACKWARD COMPATIBILITY

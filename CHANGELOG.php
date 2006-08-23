@@ -61,6 +61,10 @@ http://www.owasp.org
 -- -- --
 
 
+23-Aug-2006 Rey Gigataras
+ # SECURITY A? [ MEDIUM Level ]: Missing defined( '_VALID_MOS' ) checks
+ 
+
 21-Aug-2006 Rey Gigataras
  # SECURITY A1 [ LOW Level ]: Hardened Admin `User Manager`
  

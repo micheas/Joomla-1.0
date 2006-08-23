@@ -11,6 +11,9 @@
 * See COPYRIGHT.php for copyright notices and details.
 */
 
+// no direct access
+defined( '_VALID_MOS' ) or die( 'Restricted access' );
+
 error_reporting( E_ALL );
 
 header ("Cache-Control: no-cache, must-revalidate");	// HTTP/1.1

@@ -311,13 +311,13 @@ function mosMainBody_Admin() {
 function josSecurityCheck($width='95%') {		
 	$wrongSettingsTexts = array();
 	if ( ini_get("register_globals") == '1' ) {
-		$wrongSettingsTexts[] = "PHP register_globals setting is ON instead of OFF";
+		$wrongSettingsTexts[] = "PHP register_globals setting is `ON` instead of `OFF`";
 	}
 	if ( ini_get("magic_quotes_gpc") != '1' ) {
-		$wrongSettingsTexts[] = "PHP magic_quotes_gpc setting is OFF instead of ON";
+		$wrongSettingsTexts[] = "PHP magic_quotes_gpc setting is `OFF` instead of `ON`";
 	}
 	if ( RG_EMULATION != 0 ) {
-		$wrongSettingsTexts[] = "Joomla RG_EMULATION setting is ON instead of OFF in file global.php <br /> ( OFF by default for compatibility reasons )";
+		$wrongSettingsTexts[] = "Joomla! RG_EMULATION setting is `ON` instead of `OFF` in file global.php <br /><span style=\"font-weight: normal; font-style: italic; color: black;\">`OFF` by default for compatibility reasons</span>";
 	}
 	
 	if ( count($wrongSettingsTexts) ) {
@@ -327,7 +327,7 @@ function josSecurityCheck($width='95%') {
 				SECURITY CHECK
 			</h4>
 			<p>
-				Following PHP Server Security Settings are not optimal for Security and it is recommended to change them:
+				Following PHP Server Security Settings are not optimal for <strong>Security</strong> and it is recommended to change them:
 			</p>
 			<ul style="padding-left: 15px;">
 				<?php

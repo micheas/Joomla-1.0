@@ -305,6 +305,9 @@ function mosMainBody_Admin() {
 	echo $GLOBALS['_MOS_OPTION']['buffer'];
 }
 
+/*
+ * Added 1.0.11
+ */
 function josSecurityCheck($width='95%') {		
 	$wrongSettingsTexts = array();
 	if ( ini_get("register_globals") == '1' ) {
@@ -340,7 +343,7 @@ function josSecurityCheck($width='95%') {
 				?>
 			</ul>
 			<p>
-				Please check <a href="http://forum.joomla.org/index.php/topic,81058.0.html" target="_blank">the Official Joomla Server Security post</a> for more information.
+				Please check <a href="http://forum.joomla.org/index.php/topic,81058.0.html" target="_blank">the Official Joomla! Server Security post</a> for more information.
 			</p>
 		</div>
 		<?php

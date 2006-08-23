@@ -172,7 +172,7 @@ function publishLanguage( $p_lname, $option ) {
 		fclose($fp);
 		mosRedirect('index2.php?option=com_languages',"Language successfully changed! $p_lname");
 	} else {
-		mosRedirect('ndex2.php?option=com_languages','Error!');
+		mosRedirect('index2.php?option=com_languages','Error!');
 	}
 
 }

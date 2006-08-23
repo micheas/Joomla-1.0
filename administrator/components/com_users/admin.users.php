@@ -711,7 +711,7 @@ function logoutUser( $cid=null, $option, $task ) {
  * Added 1.0.11
  */
 function checkUserPermissions( $cid, $actionName, $allowActionToMyself = false ) {
-	global $database, $acl,$_PLUGINS, $ueConfig, $my;
+	global $database, $acl, $my;
 	
 	$msg = null;
 	if (is_array( $cid ) && count( $cid )) {

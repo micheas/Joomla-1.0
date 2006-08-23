@@ -32,14 +32,6 @@ function limitDirectory( &$directory ) {
 	return $directory;
 }
 
-$directory	= mosGetParam( $_REQUEST, 'directory', '');
-$css 		= mosGetParam( $_REQUEST, 't','');
-
-$media_path	= $mosConfig_absolute_path.'/media/';
-
-$userfile2		= (isset($_FILES['userfile']['tmp_name']) ? $_FILES['userfile']['tmp_name'] : "");
-$userfile_name	= (isset($_FILES['userfile']['name']) ? $_FILES['userfile']['name'] : "");
-
 // limit access to functionality
 $option = strval( mosGetParam( $_SESSION, 'option', '' ) );
 $task 	= strval( mosGetParam( $_SESSION, 'task', '' ) );
@@ -62,6 +54,14 @@ switch ($option) {
 		return;
 		break;		
 }
+
+$directory	= mosGetParam( $_REQUEST, 'directory', '');
+$css 		= mosGetParam( $_REQUEST, 't','');
+
+$media_path	= $mosConfig_absolute_path.'/media/';
+
+$userfile2		= (isset($_FILES['userfile']['tmp_name']) ? $_FILES['userfile']['tmp_name'] : "");
+$userfile_name	= (isset($_FILES['userfile']['name']) ? $_FILES['userfile']['name'] : "");
 
 limitDirectory( $directory );
 

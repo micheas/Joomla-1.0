@@ -13,7 +13,11 @@
 		<filename module="mod_quickicon">mod_quickicon.php</filename>
 	</files>
 	<params>
-		<param name="securitycheck" type="radio" default="1" label="Security Check" description="Select whether to show the security check warning">
+		<param name="versioncheck" type="radio" default="1" label="Version Check" description="Select whether to show the live AJAX Version Check">
+			<option value="0">Hide</option>
+			<option value="1">Show</option>
+		</param>
+		<param name="securitycheck" type="radio" default="1" label="Security Check" description="Select whether to show the Security Check warning">
 			<option value="0">Hide</option>
 			<option value="1">Show</option>
 		</param>

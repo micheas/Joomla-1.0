@@ -349,4 +349,104 @@ function josSecurityCheck($width='95%') {
 		<?php
 	}
 }
+
+/*
+ * Added 1.0.11
+ */
+function josVersionCheck($width='95%') {
+	$_VERSION 			= new joomlaVersion();				 	
+	$versioninfo 		= $_VERSION->RELEASE .'.'. $_VERSION->DEV_LEVEL;
+	?>
+	<script type="text/javascript">
+		<!--//--><![CDATA[//><!--	
+	    function makeRequest(url) {	
+	        var http_request = false;
+	
+	        if (window.XMLHttpRequest) { // Mozilla, Safari,...
+	            http_request = new XMLHttpRequest();
+	            if (http_request.overrideMimeType) {
+	                http_request.overrideMimeType('text/xml');
+	                // See note below about this line
+	            }
+	        } else if (window.ActiveXObject) { // IE
+	            try {
+	                http_request = new ActiveXObject("Msxml2.XMLHTTP");
+	            } catch (e) {
+	                try {
+	                    http_request = new ActiveXObject("Microsoft.XMLHTTP");
+	                } catch (e) {}
+	            }
+	        }
+	
+	        if (!http_request) {
+	            // alert('Giving up: Cannot create an XMLHTTP instance');
+	            return false;
+	        }
+	        http_request.onreadystatechange = function() { alertContents(http_request); };
+	        http_request.open('GET', url, true);
+	        http_request.send(null);	
+	    }
+	
+	    function alertContents(http_request) {	
+	        if (http_request.readyState == 4) {
+	            if ((http_request.status == 200) && (http_request.responseText.length < 1025)) {
+					document.getElementById('cbLatestVersion').innerHTML = http_request.responseText;
+	            } else {
+	                document.getElementById('cbLatestVersion').innerHTML = 'unknown, unable to check!';
+	            }
+	        }
+	
+	    }
+	
+	    function cbCheckVersion() {
+	    	document.getElementById('cbLatestVersion').innerHTML = 'Checking latest version now...';
+	    	makeRequest('<?php echo 'index3.php?option=com_admin&task=uptodate&no_html=1'; ?>');
+	    	return false;
+	    }
+	    
+	    function cbInitAjax() {
+	    	makeRequest('<?php echo 'index3.php?option=com_admin&task=uptodate&no_html=1'; ?>');
+	    }
+	
+	    function cbAddEvent(obj, evType, fn){
+	    	if (obj.addEventListener){
+	    		obj.addEventListener(evType, fn, true);
+	    		return true;
+	    	} else if (obj.attachEvent){
+	    		var r = obj.attachEvent("on"+evType, fn);
+	    		return r;
+	    	} else {
+	    		return false;
+	    	}
+	    }
+	
+		<?php
+	    if (!(isset($ueConfig["noVersionCheck"]) && $ueConfig["noVersionCheck"] == "1")) {
+			?>
+			cbAddEvent(window, 'load', cbInitAjax);
+			<?php
+	    }
+		?>
+		//--><!]]>
+	</script>
+	
+	<div style="clear: both; margin: 3px; margin-top: 15px; padding: 0px 15px; display: block; float: left; border: 1px solid #ddd; background: white; text-align: left; width: <?php echo $width;?>;">
+		<table cellpadding="4" cellspacing="0" border="0" width="100%" class="adminheading">
+		<tr>
+			<td colspan="2" style="text-align: center;">
+				<h3>
+					<span style="font-weight: normal;">
+						Your version of Joomla! [ <?php echo $versioninfo; ?> ] is  
+					</span>	 
+					<div id="cbLatestVersion" style="display: inline;">
+						<a href="index2.php?option=com_admin&task=versioncheck" onclick="return cbCheckVersion();" style="cursor: pointer; text-decoration:underline;">
+							Check Now</a>
+					</div>
+				</h3>
+			</td>
+		</tr>
+	    </table>
+	</div>
+	<?php
+}		
 ?>

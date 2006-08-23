@@ -160,6 +160,14 @@ class HTML_admin_misc {
 				</td>
 			</tr>
 			<tr>
+				<td colspan="2">
+					<?php
+					// show version check
+					josVersionCheck('95%');
+					?>
+				</td>
+			</tr>			
+			<tr>
 				<td colspan="2" style="height: 10px;">
 				</td>
 			</tr>			

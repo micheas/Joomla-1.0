@@ -71,10 +71,78 @@ switch ($task) {
 		HTML_admin_misc::versionCheck();
 		break;
 
+	case 'uptodate':
+		uptodate();
+		break;
+
 	case 'cpanel':
 	default:
 		HTML_admin_misc::controlPanel();
 		break;
 
+}
+
+function uptodate(){
+	global $database, $mainframe, $mosConfig_absolute_path, $mosConfig_cachepath, $Itemid, $my;
+	
+	// check if cache directory is writeable
+	$cacheDir = $mosConfig_cachepath .'/';
+	if ( !is_writable( $cacheDir ) ) {	
+		echo 'Cache Directory Unwriteable';
+		return;
+	}
+
+	$uptodate 	= '&nbsp;<span style="color: black;">Unknown</span>';
+	
+	$_VERSION 			= new joomlaVersion();			
+	 	
+	$versioninfo 		= $_VERSION->RELEASE .'.'. $_VERSION->DEV_LEVEL;
+	if (strpos(strtolower($_VERSION->DEV_STATUS), 'beta') == 0) {
+		$versioninfo 	.= 'beta'; 
+	} else if (strpos(strtolower($_VERSION->DEV_STATUS), 'svn') == 0) {
+		$versioninfo 	.= 'svn';			
+	}
+	$url				= 'http://www.joomla.org/index.php?option=com_rss_xtd&feed=RSS2.0&version='. $versioninfo .'&type=versioncheck';
+	
+	// full RSS parser used to access image information
+	require_once( $mosConfig_absolute_path . '/includes/domit/xml_domit_rss.php');
+	$LitePath = $mosConfig_absolute_path . '/includes/Cache/Lite.php';
+
+	// full RSS parser used to access image information
+	$rssDoc 	= new xml_domit_rss_document();
+	$rssDoc->useCacheLite( true, $LitePath, $cacheDir, 1800 );
+	$success 	= $rssDoc->loadRSS( $url );
+	
+	if ( $success ) {
+		$currChannel	=& $rssDoc->getChannel(0);		
+		$totalItems		= $currChannel->getItemCount();
+	
+		if ($totalItems > 1) {				
+			// load data from feed item
+			$currItem 	=& $currChannel->getItem(1);
+			
+			// check to see if the item loaded is the Status info
+			$rawtitle 	= '';
+			$rawtitle 	= strtolower($currItem->getTitle());							
+			if ($rawtitle == 'status') {	
+				// Status Information
+				$rawdata 	= $currItem->getDescription();
+				$rawdata 	= str_replace('||', '&', $rawdata);
+				parse_str($rawdata, $data);
+				
+				if ($data['outofdate'] == 1) {
+					$uptodate 	= '&nbsp;<span style="color: red;">OUT OF DATE</span>&nbsp;';
+					$uptodate 	.= '<img src="../images/publish_x.png"  style="vertical-align: middle;" />';				
+				} else if ($data['outofdate'] == 0) {
+					$uptodate 	= '&nbsp;<span style="color: green;">UP-TO-DATE</span>&nbsp;';
+					$uptodate 	.= '<img src="../images/tick.png"  style="vertical-align: middle;" />';
+				} else {
+					$uptodate 	= '&nbsp;<span style="color: black;">Unknown</span>';
+				}
+			}
+		}		
+	}	
+	
+	echo $uptodate;
 }
 ?>

@@ -803,6 +803,9 @@ class HTML_config {
 		$tabs->endTab();
 		$tabs->endPane();
 		
+		// show version check
+		josVersionCheck();
+		
 		// show security setting check
 		josSecurityCheck();
 		?>

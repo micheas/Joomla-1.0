@@ -110,7 +110,7 @@ function uptodate(){
 
 	// full RSS parser used to access image information
 	$rssDoc 	= new xml_domit_rss_document();
-	$rssDoc->useCacheLite( true, $LitePath, $cacheDir, 1800 );
+	$rssDoc->useCacheLite( true, $LitePath, $cacheDir, 86400 );
 	$success 	= $rssDoc->loadRSS( $url );
 	
 	if ( $success ) {

@@ -85,7 +85,7 @@ A2 Broken Access Control
  * Fixed emailform com_content task bypassing the user authentication
  * Limit access to Admin `Popups` functionality 
  
-A4 Cross Site Scriptin 
+A4 Cross Site Scripting 
  * Fixed XSS injection issue in Admin `Module Manager`
  * Fixed XSS injection issue in Admin `Help` 
  * Fixed XSS injection issue in Admin `Upload Image` 

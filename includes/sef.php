@@ -484,26 +484,17 @@ function sefRelToAbs( $string ) {
 				$string = $sefstring;
 				
 			// all other components
-			//} else if ( ( isset($parts['option']) && ( strpos( $parts['option'], 'com_' ) !== false ) ) && ( ( @$parts['task'] != 'new' ) && ( @$parts['task'] != 'edit' ) ) ) {
-			} else if ( isset($parts['option']) && ( strpos( $parts['option'], 'com_' ) !== false ) ) {
+			} else if ( isset($parts['option']) && ( strpos($parts['option'], 'com_' ) !== false ) && ( isset($parts['task']) != 'new' ) && ( isset($parts['task']) != 'edit' ) ) {
 			// index.php?option=com_xxxx &...
-				$check = 1;			
-				if ( $parts['option'] == 'com_content' && isset($parts['task']) && ( ( $parts['task'] == 'new' ) || ( $parts['task'] == 'edit' ) ) ) {
-				// do not sef com_content, edit or new links
-					$check = 0;
+				$sefstring 	= 'component/';
+				
+				foreach($parts as $key => $value) {
+					// remove slashes automatically added by parse_str
+					$value		= stripslashes($value);
+					$sefstring .= $key .','. $value.'/';
 				}
-			
-				if ($check) {
-					$sefstring 	= 'component/';
-					
-					foreach($parts as $key => $value) {
-						// remove slashes automatically added by parse_str
-						$value		= stripslashes($value);
-						$sefstring .= $key .','. $value.'/';
-					}
-					
-					$string = str_replace( '=', ',', $sefstring );
-				}
+				
+				$string = str_replace( '=', ',', $sefstring );
 			}
 		}
 

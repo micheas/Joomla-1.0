@@ -426,7 +426,7 @@ function sendmail( $con_id, $option ) {
 			mosErrorAlert( _CONTACT_MORE_THAN );
 		}
 		
-		if ( !$email || !$text || ( isValidEmail( $email ) == false ) ) {
+		if ( !$email || !$text || ( JosIsValidEmail( $email ) == false ) ) {
 			mosErrorAlert( _CONTACT_FORM_NC );
 		}
 		$prefix = sprintf( _ENQUIRY_TEXT, $mosConfig_live_site );

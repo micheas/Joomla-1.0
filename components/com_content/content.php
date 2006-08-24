@@ -2308,7 +2308,7 @@ function emailContentSend( $uid, $gid ) {
 			$subject 		= _EMAIL_INFO . ' ' . $yourname;
 		}
 	
-		if ($uid < 1 || !$email || !$youremail || ( isValidEmail( $email ) == false ) || (isValidEmail( $youremail ) == false)) {
+		if ($uid < 1 || !$email || !$youremail || ( JosIsValidEmail( $email ) == false ) || (JosIsValidEmail( $youremail ) == false)) {
 			mosErrorAlert( _EMAIL_ERR_NOINFO );
 		}
 	

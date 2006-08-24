@@ -3787,7 +3787,7 @@ function mosMail( $from, $fromname, $recipient, $subject, $body, $mode=0, $cc=NU
 	global $mosConfig_debug;
 
 	// Filter from, fromname and subject
-	if (!isValidEmail( $from ) || !is_name( $fromname ) || !is_name( $subject )) {
+	if (!JosIsValidEmail( $from ) || !is_name( $fromname ) || !is_name( $subject )) {
 		return false;
 	}
 
@@ -3800,13 +3800,13 @@ function mosMail( $from, $fromname, $recipient, $subject, $body, $mode=0, $cc=NU
 
 	if (is_array( $recipient )) {
 		foreach ($recipient as $to) {
-			if (!isValidEmail( $to )) {
+			if (!JosIsValidEmail( $to )) {
 				return false;
 			}
 			$mail->AddAddress( $to );
 		}
 	} else {
-		if (!isValidEmail( $recipient )) {
+		if (!JosIsValidEmail( $recipient )) {
 			return false;
 		}
 		$mail->AddAddress( $recipient );
@@ -3814,13 +3814,13 @@ function mosMail( $from, $fromname, $recipient, $subject, $body, $mode=0, $cc=NU
 	if (isset( $cc )) {
 		if (is_array( $cc )) {
 			foreach ($cc as $to) {
-				if (!isValidEmail( $to )) {
+				if (!JosIsValidEmail( $to )) {
 					return false;
 				}
 				$mail->AddCC($to);
 			}
 		} else {
-			if (!isValidEmail( $cc )) {
+			if (!JosIsValidEmail( $cc )) {
 				return false;
 			}
 			$mail->AddCC($cc);
@@ -3829,13 +3829,13 @@ function mosMail( $from, $fromname, $recipient, $subject, $body, $mode=0, $cc=NU
 	if (isset( $bcc )) {
 		if (is_array( $bcc )) {
 			foreach ($bcc as $to) {
-				if (!isValidEmail( $to )) {
+				if (!JosIsValidEmail( $to )) {
 					return false;
 				}
 				$mail->AddBCC( $to );
 			}
 		} else {
-			if (!isValidEmail( $bcc )) {
+			if (!JosIsValidEmail( $bcc )) {
 				return false;
 			}
 			$mail->AddBCC( $bcc );
@@ -3856,13 +3856,13 @@ function mosMail( $from, $fromname, $recipient, $subject, $body, $mode=0, $cc=NU
 			reset( $replytoname );
 			foreach ($replyto as $to) {
 				$toname = ((list( $key, $value ) = each( $replytoname )) ? $value : '');
-				if (!isValidEmail( $to ) || !is_name( $toname )) {
+				if (!JosIsValidEmail( $to ) || !is_name( $toname )) {
 					return false;
 				}
 				$mail->AddReplyTo( $to, $toname );
 			}
         } else {
-			if (!isValidEmail( $replyto ) || !is_name( $replytoname )) {
+			if (!JosIsValidEmail( $replyto ) || !is_name( $replytoname )) {
 				return false;
 			}
 			$mail->AddReplyTo($replyto, $replytoname);
@@ -3887,7 +3887,7 @@ function mosMail( $from, $fromname, $recipient, $subject, $body, $mode=0, $cc=NU
  * @param	string	$email	String to check for a valid email address
  * @return	boolean
  */
-function isValidEmail( $email ) {
+function JosIsValidEmail( $email ) {
 	$valid = preg_match( '/^[\w\.\-]+@\w+[\w\.\-]*?\.\w{1,4}$/', $email );
 	
 	return $valid;

@@ -312,7 +312,7 @@ function saveUser( $task ) {
 		}
 		
 		// if group has been changed and where original group was a Super Admin
-		if ( $row->gid != $original->gid && $original->gid == 25 ) {	
+		if ( $row->gid != $original->gid ) {		
 			if ( $original->gid == 25 ) {					
 				// count number of active super admins
 				$query = "SELECT COUNT( id )"

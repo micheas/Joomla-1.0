@@ -475,7 +475,7 @@ function ajaxcheck(){
 	$rssDoc 	= new xml_domit_rss_document();
 	$rssDoc->setRSSTimeout(2);
 	$rssDoc->useHTTPClient(true);
-	$rssDoc->useCacheLite( true, $LitePath, $cacheDir, 86400 );
+	$rssDoc->useCacheLite( true, $LitePath, $cacheDir, 43200 );
 	$success 	= $rssDoc->loadRSS( $url );
 	
 	if ( $success ) {

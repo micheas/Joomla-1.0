@@ -71,7 +71,7 @@ class HTML_admin_misc {
 	}
 
 	function system_info( $version ) {
-		global $mosConfig_absolute_path, $database, $mosConfig_cachepath, $my;
+		global $mosConfig_absolute_path, $database, $mosConfig_cachepath, $mainframe;
 
 		$width 	= 400;	// width of 100%
 		$tabs 	= new mosTabs(0);
@@ -163,7 +163,9 @@ class HTML_admin_misc {
 				<td colspan="2">
 					<?php
 					// show version check
-					josVersionCheck('95%');
+					if ($mainframe->getCfg( 'versioncheck' ) || $mainframe->getCfg( 'versioncheck' ) === null) {
+						josVersionCheck('95%');
+					}
 					?>
 				</td>
 			</tr>			

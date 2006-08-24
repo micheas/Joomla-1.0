@@ -62,6 +62,8 @@ class mosConfig {
 	/** @var string */
 	var $config_secret				= null;
 	/** @var int */
+	var $config_versioncheck		= 1;
+	/** @var int */
 	var $config_gzip				= 0;
 	/** @var int */
 	var $config_lifetime			= 900;

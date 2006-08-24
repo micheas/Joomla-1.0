@@ -22,7 +22,7 @@ defined( '_VALID_MOS' ) or die( 'Restricted access' );
 class HTML_config {
 
 	function showconfig( &$row, &$lists, $option) {
-		global $mosConfig_absolute_path, $mosConfig_live_site, $mosConfig_session_type;
+		global $mosConfig_absolute_path, $mosConfig_live_site, $mosConfig_session_type, $mainframe;
 		
 		$tabs = new mosTabs(0);
 		?>
@@ -443,6 +443,14 @@ class HTML_config {
 				<td>&nbsp;</td>
 			</tr>
 			<tr>
+				<td>Version Check:</td>
+				<td>
+				<?php echo $lists['versioncheck']; ?>
+				<?php echo mosToolTip('Enable the Live AJAX Version Check functionality in the `Global Config` & `System Info` page'); ?>
+				</td>
+				<td>&nbsp;</td>
+			</tr>
+			<tr>
 				<td>GZIP Page Compression:</td>
 				<td>
 				<?php echo $lists['gzip']; ?>
@@ -804,7 +812,9 @@ class HTML_config {
 		$tabs->endPane();
 		
 		// show version check
-		josVersionCheck();
+		if ($mainframe->getCfg( 'versioncheck' ) || $mainframe->getCfg( 'versioncheck' ) === null) {			
+			josVersionCheck();
+		}
 		
 		// show security setting check
 		josSecurityCheck();

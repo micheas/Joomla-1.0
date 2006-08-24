@@ -80,15 +80,15 @@ function pollAddVote( $uid ) {
 
 	$query = "UPDATE #__poll_data"
 	. "\n SET hits = hits + 1"
-	. "\n WHERE pollid = $poll->id"
-	. "\n AND id = $voteid"
+	. "\n WHERE pollid = ".(int) $poll->id
+	. "\n AND id = ". (int) $voteid
 	;
 	$database->setQuery( $query );
 	$database->query();
 
 	$query = "UPDATE #__polls"
 	. "\n SET voters = voters + 1"
-	. "\n WHERE id = $poll->id"
+	. "\n WHERE id = ".(int) $poll->id
 	;
 	$database->setQuery( $query );
 
@@ -97,7 +97,7 @@ function pollAddVote( $uid ) {
 	$now = _CURRENT_SERVER_TIME;
 	
 	$query = "INSERT INTO #__poll_date"
-	. "\n SET date = '$now', vote_id = $voteid, poll_id = $poll->id"
+	. "\n SET date = '$now', vote_id = ". (int) $voteid .", poll_id = ".(int) $poll->id
 	;
 	$database->setQuery( $query );
 	$database->query();

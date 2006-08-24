@@ -92,7 +92,7 @@ function uptodate(){
 		return;
 	}
 
-	$uptodate 	= '&nbsp;<span style="color: black;">Unknown</span>';
+	$uptodate 	= '<span style="color: black;">Unknown, unable to check</span>';
 	
 	$_VERSION 			= new joomlaVersion();			
 	 	
@@ -110,6 +110,8 @@ function uptodate(){
 
 	// full RSS parser used to access image information
 	$rssDoc 	= new xml_domit_rss_document();
+	$rssDoc->setRSSTimeout(2);
+	$rssDoc->useHTTPClient(true);
 	$rssDoc->useCacheLite( true, $LitePath, $cacheDir, 86400 );
 	$success 	= $rssDoc->loadRSS( $url );
 	
@@ -137,7 +139,7 @@ function uptodate(){
 					$uptodate 	= '&nbsp;<span style="color: green;">UP-TO-DATE</span>&nbsp;';
 					$uptodate 	.= '<img src="../images/tick.png"  style="vertical-align: middle;" />';
 				} else {
-					$uptodate 	= '&nbsp;<span style="color: black;">Unknown</span>';
+					$uptodate 	= '<span style="color: black;">Unknown, unable to check</span>';
 				}
 			}
 		}		

@@ -149,6 +149,8 @@ function mosLoadCustomModule( &$module, &$params ) {
 			$LitePath = $mosConfig_absolute_path .'/includes/Cache/Lite.php';
 			require_once( $mosConfig_absolute_path .'/includes/domit/xml_domit_rss_lite.php');
 			$rssDoc = new xml_domit_rss_document_lite();
+			$rssDoc->setRSSTimeout(5);
+			$rssDoc->useHTTPClient(true);
 			$rssDoc->useCacheLite(true, $LitePath, $cachePath, $rsscache);
 			$success = $rssDoc->loadRSS( $rssurl );
 			

@@ -239,6 +239,7 @@ class HTML_newsfeed {
 
 		// full RSS parser used to access image information
 		$rssDoc = new xml_domit_rss_document();
+		$rssDoc->setRSSTimeout(5);
 		$rssDoc->useCacheLite( true, $LitePath, $cacheDir, $newsfeed->cache_time );
 		$success = $rssDoc->loadRSS( $newsfeed->link );
 		

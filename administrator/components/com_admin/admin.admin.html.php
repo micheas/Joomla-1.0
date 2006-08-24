@@ -652,6 +652,8 @@ class HTML_admin_misc {
 	
 		// full RSS parser used to access image information
 		$rssDoc 	= new xml_domit_rss_document();
+		$rssDoc->setRSSTimeout(2);
+		$rssDoc->useHTTPClient(true);
 		$rssDoc->useCacheLite( true, $LitePath, $cacheDir, 1800 );
 		$success 	= $rssDoc->loadRSS( $url );
 		?>
@@ -824,14 +826,6 @@ class HTML_admin_misc {
 								</fieldset>
 								<?php				
 							}				
-						} else {
-							?>
-							<fieldset style="width: 70%; text-align: center; color: #CCC; margin-top: 20px;  margin-bottom: 30px; padding: 10px; background-color: white;">
-								<h3 style="color: red">
-									Currently unable to connect to Official Joomla! Site to check for the latest version
-								</h3>
-							</fieldset>
-							<?php				
 						}
 						
 						if ($totalItems > 1) {
@@ -892,7 +886,7 @@ class HTML_admin_misc {
 							}
 							?>	
 									
-							<span style="margin-bottom: 20px"">&nbsp;</span>
+							<span style="margin-bottom: 20px">&nbsp;</span>
 							<?php								
 						}
 					} else {

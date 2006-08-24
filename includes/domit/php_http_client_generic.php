@@ -343,7 +343,7 @@ class php_http_client_generic extends php_http_request {
 	* @param string The message to be sent
 	* @return string The http response
 	*/
-	function &send($message) {
+	function send($message) {
 		$conn =& $this->connection;
 
 		if ($conn->isOpen()) {

@@ -484,25 +484,29 @@ function sefRelToAbs( $string ) {
 				$string = $sefstring;
 				
 			// all other components
-			} else if ( isset($parts['option']) && ( strpos($parts['option'], 'com_' ) !== false ) && ( isset($parts['task']) != 'new' ) && ( isset($parts['task']) != 'edit' ) ) {
 			// index.php?option=com_xxxx &...
-				$sefstring 	= 'component/';
-				
-				foreach($parts as $key => $value) {
-					// remove slashes automatically added by parse_str
-					$value		= stripslashes($value);
-					$sefstring .= $key .','. $value.'/';
+			} else if ( isset($parts['option']) && ( strpos($parts['option'], 'com_' ) !== false ) ) {
+				// do not SEF where com_content - `edit` or `new` task link				
+				if ( !( ( $parts['option'] == 'com_content' ) && ( ( isset($parts['task']) == 'new' ) || ( isset($parts['task']) == 'edit' ) ) ) ) {
+					$sefstring 	= 'component/';
+					
+					foreach($parts as $key => $value) {
+						// remove slashes automatically added by parse_str
+						$value		= stripslashes($value);
+						$sefstring .= $key .','. $value.'/';
+					}
+					
+					$string = str_replace( '=', ',', $sefstring );
 				}
-				
-				$string = str_replace( '=', ',', $sefstring );
 			}
 		}
 
+		// allows SEF without mod_rewrite
 		// comment line below if you dont have mod_rewrite
 		return $mosConfig_live_site .'/'. $string . $fragment;
 
 		// allows SEF without mod_rewrite
-		// uncomment Line 517 and comment out Line 519	
+		// uncomment Line 512 and comment out Line 514	
 	
 		// uncomment line below if you dont have mod_rewrite
 		// return $mosConfig_live_site .'/index.php/'. $string . $fragment;

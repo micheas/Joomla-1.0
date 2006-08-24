@@ -16,6 +16,8 @@ defined( '_VALID_MOS' ) or die( 'Restricted access' );
 
 $basePath 	= dirname( __FILE__ );
 require( $basePath . '/../../globals.php' );
+
+//$basePath 	= dirname( __FILE__ );
 require( $basePath . '/../../configuration.php' );
 
 if (!defined( '_MOS_MAMBO_INCLUDED' )) {

@@ -262,7 +262,7 @@ function editUser( $uid='0', $option='users' ) {
 }
 
 function saveUser( $task ) {
-	global $database, $my;
+	global $database, $my, $acl;
 	global $mosConfig_live_site, $mosConfig_mailfrom, $mosConfig_fromname, $mosConfig_sitename;
 	
 	$userIdPosted = mosGetParam($_POST, 'id');

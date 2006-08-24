@@ -27,8 +27,9 @@ Joomla! 1.0, including beta and release candidate versions.
 Our thanks to all those people who've contributed bug reports and
 code fixes.
 
-Legend:
 
+3. Legend
+---------
 * -> Security Fix
 # -> Bug Fix
 + -> Addition
@@ -37,32 +38,71 @@ Legend:
 ! -> Note
 
 
----------------- 1.0.11 Beta 3 Released -- [24-August-2006 10:00 UTC] ------------------
+----------------------------------------------------------------------------------------
+---------------- 1.0.11 Stable Released -- [**-August-2006 **:** UTC] ------------------
 
 
-This Release Contains the following 23 Security Fixes
+This Release Contains the following 22 Security Fixes
 
-Joomla! utilizes the Open Web Application Security Project (OWASP) web application security system to categorize security vunerabilities found within Joomla!
-http://www.owasp.org
+Joomla! utilizes the Open Web Application Security Project (OWASP) tOP tEN pROJECT to categorize security vunerabilities found within Joomla!
+http://www.owasp.org/index.php/OWASP_Top_Ten_Project
 
+--- - - - - - - - - ---
 
-06 HIGH Level Threats fixed
+04 HIGH Level Threats fixed
 
-
+A1 Unvalidated Input
+ * Secured mosMail() against unvalidated input
+ * Secured JosIsValidEmail() - in previous versions the existance of an email address somewhere in the string was sufficient
  
-08 MEDIUM Level Threats fixed
+A6 Injection Flaws 
+ * Fixed remote execution issue in PEAR.php
+ * Fixed Zend Hash Del Key Or Index Vulnerability
+ 
+--- - - - - - - - - ---
+ 
+04 MEDIUM Level Threats fixed
+
+A1 Unvalidated Input
+ * globals.php not included in administrator/index.php
+ 
+A2 Broken Access Control  
+ * Added Missing defined( '_VALID_MOS' ) checks
+ * Limit Admin `Upload Image` from uploading below `/images/stories/` directory
+ * Fixed do_pdf command bypassing the user authentication
+
+--- - - - - - - - - ---
+
+14 LOW Level Threats fixed
+
+A1 Unvalidated Input
+ * Hardened Admin `User Manager`
+ * Hardened poll module
+ * Fixed josSpoofValue function to ensure the hash is a string
+ 
+A2 Broken Access Control  
+ * Secured com_content to not allow the tasks 'emailform' and 'emailsend' if $mosConfig_hideEmail is set
+ * Fixed emailform com_content task bypassing the user authentication
+ * Limit access to Admin `Popups` functionality 
+ 
+A4 Cross Site Scriptin 
+ * Fixed XSS injection issue in Admin `Module Manager`
+ * Fixed XSS injection issue in Admin `Help` 
+ * Fixed XSS injection issue in Admin `Upload Image` 
+ * Fixed XSS injection issue in Search 
+
+A6 Injection Flaws 
+ * Secured against possible injection attacks on ->load()
+ * Secured against injection attack on content submissions where frontpage is selected
+ * Secured against possible injection attack thru mosPageNav constructor
+ * Secured against possible injection attack thru saveOrder functions
 
 
-
-09 LOW Level Threats fixed
-
-
-
--- -- --
+-- -- -- -- -- ---- -- ---- -- ---- -- ---- -- ---- -- ---- -- ---- -- ---- -- ---- -- ---- -- --
 
 
 23-Aug-2006 Rey Gigataras
- # SECURITY A? [ MEDIUM Level ]: Missing defined( '_VALID_MOS' ) checks
+ # SECURITY A2 [ MEDIUM Level ]: Missing defined( '_VALID_MOS' ) checks
  
  + Admin Security Warning check 
  
@@ -74,8 +114,8 @@ http://www.owasp.org
  
 
 19-Aug-2006 Rey Gigataras
- # SECURITY A? [ MEDIUM Level ]: Limit Admin `Upload Image` from uploading below `/images/stories/` directory
- # SECURITY A? [ MEDIUM Level ]: Limit access to Admin `Popups` functionality 
+ # SECURITY A2 [ MEDIUM Level ]: Limit Admin `Upload Image` from uploading below `/images/stories/` directory
+ # SECURITY A2 [ LOW Level ]: Limit access to Admin `Popups` functionality 
  # SECURITY A4 [ LOW Level ]: [topic,73761] : XSS injection issue in Admin `Module Manager`
  # SECURITY A4 [ LOW Level ]: [topic,73761] : XSS injection issue in Admin `Help` 
  # SECURITY A4 [ LOW Level ]: [topic,73761] : XSS injection issue in Admin `Upload Image` 
@@ -84,7 +124,7 @@ http://www.owasp.org
 
 19-Aug-2006 Enno Klasing
  # SECURITY A1 [ HIGH Level ]: Secured mosMail() against unvalidated input
- # SECURITY A? [ MEDIUM Level ]: Secured JosIsValidEmail() - in previous versions the existance of an email address somewhere in the string was sufficient
+ # SECURITY A1 [ HIGH  Level ]: Secured JosIsValidEmail() - in previous versions the existance of an email address somewhere in the string was sufficient
  # SECURITY A2 [ LOW Level ]: Secured com_content to not allow the tasks 'emailform' and 'emailsend' if $mosConfig_hideEmail is set
  
  # Fixed : Empty subject in com_content mail2friend no longer possible
@@ -94,10 +134,10 @@ http://www.owasp.org
 
 
 18-Aug-2006 Rey Gigataras
- # SECURITY A? [ MEDIUM Level ]: globals.php not included in administrator/index.php 
+ # SECURITY A1 [ MEDIUM Level ]: globals.php not included in administrator/index.php 
  # SECURITY A2 [ MEDIUM Level ]: do_pdf command bypasses the user authentication
  # SECURITY A2 [ LOW Level ]: emailform com_content task bypasses the user authentication
- # SECURITY A? [ LOW Level ]: harden poll module
+ # SECURITY A1 [ LOW Level ]: harden poll module
  
  # Fixed [topic,72209] : Mambots fired on Modules
  + enable selective disabling of `Email Cloaking` bot via {emailcloak=off}
@@ -114,11 +154,11 @@ http://www.owasp.org
 
 
 15-Aug-2006 Marko Schmuck
- # SECURITY A1 [ LOW Level ]: possible injection attacks on ->load()
+ # SECURITY A6 [ LOW Level ]: possible injection attacks on ->load()
 
 
 15-Aug-2006 Andrew Eddie
- # SECURITY A? [ HIGH Level ]: remote execution issue in PEAR.php
+ # SECURITY A6 [ HIGH Level ]: remote execution issue in PEAR.php
 
 
 15-Aug-2006 Mateusz Krzeszowiec
@@ -126,14 +166,14 @@ http://www.owasp.org
 
 
 14-Aug-2006 Andrew Eddie
- # SECURITY A1 [ MEDIUM Level ]: Injection attack on content submissions where frontpage is selected
- # SECURITY A1 [ LOW Level ]: possible injection attack thru mosPageNav constructor
- # SECURITY A1 [ LOW Level ]: possible injection attack thru saveOrder functions
+ # SECURITY A6 [ LOW Level ]: Injection attack on content submissions where frontpage is selected
+ # SECURITY A6 [ LOW Level ]: possible injection attack thru mosPageNav constructor
+ # SECURITY A6 [ LOW Level ]: possible injection attack thru saveOrder functions
 
 
 07-Aug-2006 Andrew Eddie
- # SECURITY A? [ HIGH Level ]: Zend Hash Del Key Or Index Vulnerability
- # SECURITY A? [ MEDIUM Level ]: josSpoofValue function to ensure the hash is a string
+ # SECURITY A6 [ HIGH Level ]: Zend Hash Del Key Or Index Vulnerability
+ # SECURITY A1 [ LOW Level ]: josSpoofValue function to ensure the hash is a string
 
 
 28-July-2006 Robin Muilwijk
@@ -141,7 +181,7 @@ http://www.owasp.org
 
 
 27-July-2006 Robin Muilwijk
- # SECURITY A? [ HIGH Level ]: [artf5335] : missing direct access line
+ # SECURITY A2 [ MEDIUM Level ]: [artf5335] : missing direct access line
  
  # Fixed [artf5282] : missing table row tag and self closing tag
  # Fixed [artf5297] : small html errors
@@ -160,6 +200,7 @@ http://www.owasp.org
  # Fixed [artf5112] : A mere mistake in the file contact.html.php
  
 
+--------------------------------------------------------------------------------------
 ---------------- 1.0.10 Stable Released -- [26-June-2006 00:00 UTC] ------------------
 
 
@@ -194,7 +235,7 @@ A4 Cross Site Scripting
  * A4 - Secured com_messages from XSS vulnerability
  * A4 - Secured getUserStateFromRequest() from XSS vulnerability
 
--- -- --
+-- -- -- -- -- ---- -- ---- -- ---- -- ---- -- ---- -- ---- -- ---- -- ---- -- ---- -- ---- -- --
 
 
 25-June-2006 Rey Gigataras
@@ -286,6 +327,7 @@ A4 Cross Site Scripting
  # Fixed [topic,68168] : Typo /administrator/components/com_typedcontent/admin.typedcontent.html.php - line 266
 
 
+--------------------------------------------------------------------------------------
 ---------------- 1.0.9 Stable Released -- [05-June-2006 16:00 UTC] ------------------
 
 
@@ -315,7 +357,7 @@ A2 Broken Access Control
 A3 - Broken Authentication and Session Management
  * A3 - Changes to access level of user account will kill any active session for that user
 
---
+-- -- -- -- -- ---- -- ---- -- ---- -- ---- -- ---- -- ---- -- ---- -- ---- -- ---- -- ---- -- --
 
 
 04-June-2006 Rey Gigataras
@@ -712,6 +754,7 @@ A3 - Broken Authentication and Session Management
  # Fixed [topic,41404.0.html] : configuration.php-dist missing `;`
 
 
+--------------------------------------------------------------------------------------
 ---------------- 1.0.8 Stable Released -- [25-Feb-2006 04:00 UTC] ------------------
 
 This Release Contains following Security Fixes
@@ -766,7 +809,7 @@ Medium Level Threat
  * Disallow Newsfeed Search returnings items despite category 'state'
  * Disallow Weblink Search returning items despite category 'state'
 
----
+-- -- -- -- -- ---- -- ---- -- ---- -- ---- -- ---- -- ---- -- ---- -- ---- -- ---- -- ---- -- --
 
 
 25-Feb-2006 Rey Gigataras
@@ -998,6 +1041,7 @@ Medium Level Threat
  * SECURITY [ Low Level ]: # Fixed : `Content Category` view accessible when category/section 'unpublished' - `Table - Content Category`
 
 
+--------------------------------------------------------------------------------------
 ---------------- 1.0.7 Released -- [15-Jan-2006 20:00 UTC] ------------------
 
 
@@ -1005,6 +1049,7 @@ Medium Level Threat
  # Fixed : database password being incorrectly overwritten with a blank
 
 
+--------------------------------------------------------------------------------------
 ---------------- 1.0.6 Released -- [15-Jan-2006 15:00 UTC] ------------------
 
 This Release Contains following Security Fixes
@@ -1020,7 +1065,7 @@ Low Level Threat
 * Hardened Itemid against misuse
 * Hide database password in Global Configuration
 
----
+-- -- -- -- -- ---- -- ---- -- ---- -- ---- -- ---- -- ---- -- ---- -- ---- -- ---- -- ---- -- --
 
 15-Jan-2006 Rey Gigataras
  * SECURITY [ Low Level ]: Hide database password in Global Configuration
@@ -1139,6 +1184,7 @@ Low Level Threat
  # Fixed a bug with all items on frontpage returning Itemid=1 (duplicate content)
 
 
+--------------------------------------------------------------------------------------
 ---------------- 1.0.5 Released -- [24-Dec-2005 10:00 UTC] ------------------
 
 
@@ -1147,7 +1193,7 @@ This Release Contains following Security Fixes
 Medium Level Threats
 * Hardened ability to use the contact component to proliferate spam
 
----
+-- -- -- -- -- ---- -- ---- -- ---- -- ---- -- ---- -- ---- -- ---- -- ---- -- ---- -- ---- -- --
 
 21-Dec-2005 Andrew Eddie
  # Fixed slow query in com_content (Author text in a content item is now set to Written By)
@@ -1271,6 +1317,7 @@ Medium Level Threats
  # Fixed : Can't create new folders in media manager
 
 
+--------------------------------------------------------------------------------------
 ---------------- 1.0.4 Released -- [21-Nov-2005 10:00 UTC] ------------------
 
 
@@ -1286,7 +1333,7 @@ Low Level Threat
  * Potential misuse of Media component file management functions
  * Add search limit param (default of 50) to `Search` Mambots to prevent search flooding
 
----
+-- -- -- -- -- ---- -- ---- -- ---- -- ---- -- ---- -- ---- -- ---- -- ---- -- ---- -- ---- -- --
 
 20-Nov-2005 Levis Bisson
  # Fixed Artifact [artf1967] displays with an escaped apostrophe in both title and TOC.
@@ -1422,6 +1469,7 @@ Low Level Threat
 ^ Artifact [artf1162] : Remove hardcoding of <<, <, > and >> in pageNavigation.php
 
 
+--------------------------------------------------------------------------------------
 ---------------- 1.0.3 Released -- [14-Oct-2005 10:00 UTC] ------------------
 
 
@@ -1434,7 +1482,7 @@ Low Level Threat
  * Fixed Search Component flooding, by limiting searching to between 3 and 20 characters
  * Fixed [artf1405] : Joomla shows Items to unauthorized users
 
--------
+-- -- -- -- -- ---- -- ---- -- ---- -- ---- -- ---- -- ---- -- ---- -- ---- -- ---- -- ---- -- --
 
 14-Oct-2005 Rey Gigataras
  # Fixed edit icon not showing on frontpage
@@ -1508,6 +1556,7 @@ Low Level Threat
  # Fixed [artf1366] : Typo in admin, Adding a new menu item - Blog Content Category
 
 
+--------------------------------------------------------------------------------------
 ---------------- 1.0.2 Released -- [02-Oct-2005 16:00 UTC] ------------------
 
 
@@ -1607,6 +1656,7 @@ Low Level Threat
  # Fixed [artf1179] : Custom RSS Newsfeed Module has nested <TR>
 
 
+--------------------------------------------------------------------------------------
 ---------------- 1.0.1 Released -- [21-Sep-2005 16:30 UTC] ------------------
 
 
@@ -1690,6 +1740,7 @@ Low Level Threat
  # Fixed [artf1042]: Template Chooser shows rogue entry
 
 
+--------------------------------------------------------------------------------------
 ---------------- 1.0.0 Released -- [17-Sep-2005 00:30 UTC] ------------------
 
 
@@ -1700,7 +1751,7 @@ Medium Level Threat
 Low Level Threat
  * Fixed [#6775] Display of static content without Itemid
 
--------
+-- -- -- -- -- ---- -- ---- -- ---- -- ---- -- ---- -- ---- -- ---- -- ---- -- ---- -- ---- -- --
 
 16-Sep-2005 Andrew Eddie
  # Fixed: 1014 : & amp ; in pathway
@@ -1912,4 +1963,5 @@ Low Level Threat
 
 
 ----- Derived from Mambo 4.5.2.3 circa. 17 Aug 12005 -----
+--------------------------------------------------------------------------------------
 

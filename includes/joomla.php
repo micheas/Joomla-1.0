@@ -3787,7 +3787,7 @@ function mosMail( $from, $fromname, $recipient, $subject, $body, $mode=0, $cc=NU
 	global $mosConfig_debug;
 
 	// Filter from, fromname and subject
-	if (!JosIsValidEmail( $from ) || !is_name( $fromname ) || !is_name( $subject )) {
+	if (!JosIsValidEmail( $from ) || !JosIsValidName( $fromname ) || !JosIsValidName( $subject )) {
 		return false;
 	}
 
@@ -3856,13 +3856,13 @@ function mosMail( $from, $fromname, $recipient, $subject, $body, $mode=0, $cc=NU
 			reset( $replytoname );
 			foreach ($replyto as $to) {
 				$toname = ((list( $key, $value ) = each( $replytoname )) ? $value : '');
-				if (!JosIsValidEmail( $to ) || !is_name( $toname )) {
+				if (!JosIsValidEmail( $to ) || !JosIsValidName( $toname )) {
 					return false;
 				}
 				$mail->AddReplyTo( $to, $toname );
 			}
         } else {
-			if (!JosIsValidEmail( $replyto ) || !is_name( $replytoname )) {
+			if (!JosIsValidEmail( $replyto ) || !JosIsValidName( $replytoname )) {
 				return false;
 			}
 			$mail->AddReplyTo($replyto, $replytoname);
@@ -3901,7 +3901,7 @@ function JosIsValidEmail( $email ) {
  * @param		string		$string		String to check for validity
  * @return		boolean
  */
-function is_name( $string ) {
+function JosIsValidName( $string ) {
 	/*
 	 * The following regular expression blocks all strings containing any low control characters:
 	 * 0x00-0x1F, 0x7F

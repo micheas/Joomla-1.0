@@ -37,7 +37,7 @@ Legend:
 ! -> Note
 
 
----------------- 1.0.11 Beta 2 Released -- [19-August-2006 22:00 UTC] ------------------
+---------------- 1.0.11 Beta 3 Released -- [24-August-2006 10:00 UTC] ------------------
 
 
 This Release Contains the following 23 Security Fixes

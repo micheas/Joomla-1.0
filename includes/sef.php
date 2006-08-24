@@ -425,7 +425,7 @@ function sefRelToAbs( $string ) {
 			$sefstring = '';
 
 			// Component com_content urls
-			if ( ( (isset($parts['option']) && ($parts['option'] == 'com_content') || $parts['option'] == 'content' )) && ( $parts['task'] != 'new' ) && ( $parts['task'] != 'edit' ) ) {
+			if ( ( ( isset($parts['option']) && ( $parts['option'] == 'com_content' || $parts['option'] == 'content' ) ) ) && ( $parts['task'] != 'new' ) && ( $parts['task'] != 'edit' ) ) {
 			// index.php?option=com_content [&task=$task] [&sectionid=$sectionid] [&id=$id] [&Itemid=$Itemid] [&limit=$limit] [&limitstart=$limitstart] [&year=$year] [&month=$month] [&module=$module]
 				$sefstring .= 'content/';
 				
@@ -484,17 +484,26 @@ function sefRelToAbs( $string ) {
 				$string = $sefstring;
 				
 			// all other components
-			} else if ( ( isset($parts['option']) && ( strpos( $parts['option'], 'com_' ) !== false ) ) && ( isset($parts['task']) && ( $parts['task'] != 'new' ) && ( $parts['task'] != 'edit' ) ) ) {
+			//} else if ( ( isset($parts['option']) && ( strpos( $parts['option'], 'com_' ) !== false ) ) && ( ( @$parts['task'] != 'new' ) && ( @$parts['task'] != 'edit' ) ) ) {
+			} else if ( isset($parts['option']) && ( strpos( $parts['option'], 'com_' ) !== false ) ) {
 			// index.php?option=com_xxxx &...
-				$sefstring 	= 'component/';
-				
-				foreach($parts as $key => $value) {
-					// remove slashes automatically added by parse_str
-					$value		= stripslashes($value);
-					$sefstring .= $key .','. $value.'/';
+				$check = 1;			
+				if ( $parts['option'] == 'com_content' && isset($parts['task']) && ( ( $parts['task'] == 'new' ) || ( $parts['task'] == 'edit' ) ) ) {
+				// do not sef com_content, edit or new links
+					$check = 0;
 				}
-				
-				$string = str_replace( '=', ',', $sefstring );
+			
+				if ($check) {
+					$sefstring 	= 'component/';
+					
+					foreach($parts as $key => $value) {
+						// remove slashes automatically added by parse_str
+						$value		= stripslashes($value);
+						$sefstring .= $key .','. $value.'/';
+					}
+					
+					$string = str_replace( '=', ',', $sefstring );
+				}
 			}
 		}
 
@@ -502,7 +511,7 @@ function sefRelToAbs( $string ) {
 		return $mosConfig_live_site .'/'. $string . $fragment;
 
 		// allows SEF without mod_rewrite
-		// uncomment Line 508 and comment out Line 510	
+		// uncomment Line 517 and comment out Line 519	
 	
 		// uncomment line below if you dont have mod_rewrite
 		// return $mosConfig_live_site .'/index.php/'. $string . $fragment;

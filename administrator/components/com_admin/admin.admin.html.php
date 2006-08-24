@@ -191,39 +191,15 @@ class HTML_admin_misc {
 							<img src="../images/<?php echo $img; ?>" />
 						</td>
 					</tr>
-					<tr>					
-						<td>
-							Safe Mode:
-						</td>
-						<td style="font-weight: bold;">
-							<?php echo HTML_admin_misc::get_php_setting('safe_mode',1,0); ?>
-						</td>
-						<td>
-							<?php $img = ((ini_get('safe_mode')) ? 'publish_x.png' : 'tick.png'); ?>
-							<img src="../images/<?php echo $img; ?>" />
-						</td>
-					</tr>
 					<tr>
 						<td>
-							Short Open Tags:
+							Register Globals:
 						</td>
 						<td style="font-weight: bold;">
-							<?php echo HTML_admin_misc::get_php_setting('short_open_tag',1,0); ?>
+							<?php echo HTML_admin_misc::get_php_setting('register_globals',1,0); ?>
 						</td>
 						<td>
-							<?php $img = ((ini_get('short_open_tag')) ? 'publish_x.png' : 'tick.png'); ?>
-							<img src="../images/<?php echo $img; ?>" />
-						</td>
-					</tr>
-					<tr>
-						<td>
-							File Uploads:
-						</td>
-						<td style="font-weight: bold;">
-							<?php echo HTML_admin_misc::get_php_setting('file_uploads',1,1); ?>
-						</td>
-						<td>
-							<?php $img = ((!ini_get('file_uploads')) ? 'publish_x.png' : 'tick.png'); ?>
+							<?php $img = ((ini_get('register_globals')) ? 'publish_x.png' : 'tick.png'); ?>
 							<img src="../images/<?php echo $img; ?>" />
 						</td>
 					</tr>
@@ -239,27 +215,27 @@ class HTML_admin_misc {
 							<img src="../images/<?php echo $img; ?>" />
 						</td>
 					</tr>
-					<tr>
+					<tr>					
 						<td>
-							Register Globals:
+							Safe Mode:
 						</td>
 						<td style="font-weight: bold;">
-							<?php echo HTML_admin_misc::get_php_setting('register_globals',1,0); ?>
+							<?php echo HTML_admin_misc::get_php_setting('safe_mode',1,0); ?>
 						</td>
 						<td>
-							<?php $img = ((ini_get('register_globals')) ? 'publish_x.png' : 'tick.png'); ?>
+							<?php $img = ((ini_get('safe_mode')) ? 'publish_x.png' : 'tick.png'); ?>
 							<img src="../images/<?php echo $img; ?>" />
 						</td>
 					</tr>
 					<tr>
 						<td>
-							Output Buffering:
+							File Uploads:
 						</td>
 						<td style="font-weight: bold;">
-							<?php echo HTML_admin_misc::get_php_setting('output_buffering',1,0); ?>
+							<?php echo HTML_admin_misc::get_php_setting('file_uploads',1,1); ?>
 						</td>
 						<td>
-							<?php $img = ((ini_get('output_buffering')) ? 'publish_x.png' : 'tick.png'); ?>
+							<?php $img = ((!ini_get('file_uploads')) ? 'publish_x.png' : 'tick.png'); ?>
 							<img src="../images/<?php echo $img; ?>" />
 						</td>
 					</tr>
@@ -281,6 +257,26 @@ class HTML_admin_misc {
 						</td>
 						<td style="font-weight: bold;" colspan="2">
 							<?php echo (($sp=ini_get('session.save_path'))?$sp:'none'); ?>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							Short Open Tags:
+						</td>
+						<td style="font-weight: bold;">
+							<?php echo HTML_admin_misc::get_php_setting('short_open_tag'); ?>
+						</td>
+						<td>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							Output Buffering:
+						</td>
+						<td style="font-weight: bold;">
+							<?php echo HTML_admin_misc::get_php_setting('output_buffering'); ?>
+						</td>
+						<td>
 						</td>
 					</tr>
 					<tr>

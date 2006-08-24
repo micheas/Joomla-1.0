@@ -247,7 +247,7 @@ class HTML_admin_misc {
 							<?php echo HTML_admin_misc::get_php_setting('session.auto_start',1,0); ?>
 						</td>
 						<td>
-							<?php $img = ((!ini_get('magic_quotes_gpc')) ? 'publish_x.png' : 'tick.png'); ?>
+							<?php $img = ((ini_get('session.auto_start')) ? 'publish_x.png' : 'tick.png'); ?>
 							<img src="../images/<?php echo $img; ?>" />
 						</td>
 					</tr>

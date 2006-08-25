@@ -107,7 +107,7 @@ if (isset($_FILES['userfile'])) {
 		if (!move_uploaded_file ($_FILES['userfile']['tmp_name'],$media_path.$_FILES['userfile']['name']) || !mosChmod($media_path.$_FILES['userfile']['name'])) {
 			mosErrorAlert('Upload of '.$userfile_name.' failed');
 		} else {
-			mosErrorAlert('Upload of '.$userfile_name.' to '.$base_Dir.' successful');
+			mosErrorAlert('Upload of '.$userfile_name.' to '.$base_Dir.' successful', "window.close()");
 		}
 	} elseif (!move_uploaded_file ($_FILES['userfile']['tmp_name'],$base_Dir.$_FILES['userfile']['name']) || !mosChmod($base_Dir.$_FILES['userfile']['name'])) {
 		mosErrorAlert('Upload of '.$userfile_name.' failed');

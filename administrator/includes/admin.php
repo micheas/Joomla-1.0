@@ -364,13 +364,12 @@ function josVersionCheck($width='95%') {
 	    function makeRequest(url) {	
 	        var http_request = false;
 	
-	        if (window.XMLHttpRequest) { // Mozilla, Safari,...
+	        if (window.XMLHttpRequest) {
 	            http_request = new XMLHttpRequest();
 	            if (http_request.overrideMimeType) {
 	                http_request.overrideMimeType('text/xml');
-	                // See note below about this line
 	            }
-	        } else if (window.ActiveXObject) { // IE
+	        } else if (window.ActiveXObject) {
 	            try {
 	                http_request = new ActiveXObject("Msxml2.XMLHTTP");
 	            } catch (e) {
@@ -381,7 +380,6 @@ function josVersionCheck($width='95%') {
 	        }
 	
 	        if (!http_request) {
-	            // alert('Giving up: Cannot create an XMLHTTP instance');
 	            return false;
 	        }
 	        http_request.onreadystatechange = function() { alertContents(http_request); };
@@ -394,20 +392,14 @@ function josVersionCheck($width='95%') {
 	            if ((http_request.status == 200) && (http_request.responseText.length < 1025)) {
 					document.getElementById('JLatestVersion').innerHTML = http_request.responseText;
 	            } else {
-	                document.getElementById('JLatestVersion').innerHTML = 'unknown, unable to check!';
+	                document.getElementById('JLatestVersion').innerHTML = 'Unknown, unable to check!';
 	            }
 	        }
 	
 	    }
 	
-	    function JCheckVersion() {
-	    	document.getElementById('JLatestVersion').innerHTML = 'Checking latest version now...';
-	    	makeRequest('<?php echo 'index3.php?option=com_admin&task=uptodate&no_html=1'; ?>');
-	    	return false;
-	    }
-	    
 	    function JInitAjax() {
-	    	makeRequest('<?php echo 'index3.php?option=com_admin&task=uptodate&no_html=1'; ?>');
+	    	makeRequest('<?php echo 'index3.php?option=com_admin&task=quickcheck&no_html=1'; ?>');
 	    }
 	
 	    function JAddEvent(obj, evType, fn){
@@ -434,9 +426,8 @@ function josVersionCheck($width='95%') {
 					<span style="font-weight: normal;">
 						Your version of Joomla! [ <?php echo $versioninfo; ?> ] is  
 					</span>	 
-					<div id="JLatestVersion" style="display: inline; font-size: 13px;">
-						<a href="index2.php?option=com_admin&task=versioncheck" onclick="return JCheckVersion();" style="cursor: pointer; text-decoration:underline;">
-							Check Now</a>
+					<div id="JLatestVersion" style="display: inline; font-size: 13px; color:#888">
+						...Checking...
 					</div>
 				</h3>
 			</td>

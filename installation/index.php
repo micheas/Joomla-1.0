@@ -27,12 +27,12 @@ include_once( 'common.php' );
 $task 		= mosGetParam( $_GET, 'task', '' );
 
 switch ($task) {
-	case 'ajaxcheck':
-		ajaxcheck();
+	case 'quickcheck':
+		quickcheck();
 		break;
 		
-	case 'versioncheck':
-		versioncheck();
+	case 'fullcheck':
+		fullcheck();
 		break;
 		
 	default:
@@ -115,13 +115,12 @@ function view() {
 								    function makeRequest(url) {	
 								        var http_request = false;
 								
-								        if (window.XMLHttpRequest) { // Mozilla, Safari,...
+								        if (window.XMLHttpRequest) {
 								            http_request = new XMLHttpRequest();
 								            if (http_request.overrideMimeType) {
 								                http_request.overrideMimeType('text/xml');
-								                // See note below about this line
 								            }
-								        } else if (window.ActiveXObject) { // IE
+								        } else if (window.ActiveXObject) {
 								            try {
 								                http_request = new ActiveXObject("Msxml2.XMLHTTP");
 								            } catch (e) {
@@ -132,7 +131,6 @@ function view() {
 								        }
 								
 								        if (!http_request) {
-								            // alert('Giving up: Cannot create an XMLHTTP instance');
 								            return false;
 								        }
 								        http_request.onreadystatechange = function() { alertContents(http_request); };
@@ -145,20 +143,14 @@ function view() {
 								            if ((http_request.status == 200) && (http_request.responseText.length < 1025)) {
 												document.getElementById('JLatestVersion').innerHTML = http_request.responseText;
 								            } else {
-								                document.getElementById('JLatestVersion').innerHTML = 'unknown, unable to check!';
+								                document.getElementById('JLatestVersion').innerHTML = 'Unknown, unable to check!';
 								            }
 								        }
 								
 								    }
 								
-								    function JCheckVersion() {
-								    	document.getElementById('JLatestVersion').innerHTML = 'Checking latest version now...';
-								    	makeRequest('<?php echo 'index.php?task=ajaxcheckk'; ?>');
-								    	return false;
-								    }
-								    
 								    function JInitAjax() {
-								    	makeRequest('<?php echo 'index.php?task=ajaxcheck'; ?>');
+								    	makeRequest('<?php echo 'index.php?task=quickcheck'; ?>');
 								    }
 								
 								    function JAddEvent(obj, evType, fn){
@@ -174,7 +166,7 @@ function view() {
 								    }
 								
 									JAddEvent(window, 'load', JInitAjax);
-									//--><!]]>
+									//--><!]]>							
 								</script>
 								
 								<div style="clear: both; margin: 3px; padding: 0px 15px; display: block; float: left; text-align: left; width: 95%;">
@@ -182,10 +174,9 @@ function view() {
 									<tr>
 										<td colspan="2" style="text-align: center;">
 											Your version of Joomla! [ <?php echo $versioninfo; ?> ] is:  
-											<h3 style="margin: 0px; padding: 0px;">
-												<div id="JLatestVersion">
-													<a href="index2.php?option=com_admin&task=versioncheck" onclick="return JCheckVersion();" style="cursor: pointer; text-decoration:underline;">
-														Check Now</a>
+											<h3 style="margin-top: 20px; font-size: 13px;">
+												<div id="JLatestVersion" style="display: inline; font-size: 13px; color:#888">
+													...Checking...
 												</div>
 											</h3>
 										</td>
@@ -193,10 +184,8 @@ function view() {
 								    </table>
 								</div>
 							
-							
-							
 								<?php
-								$link 	= 'index.php?task=versioncheck';
+								$link 	= 'index.php?task=fullcheck';
 								$status = 'status=no,toolbar=no,scrollbars=yes,titlebar=no,menubar=no,resizable=yes,width=700,height=480,directories=no,location=no';
 								?>
 								<input name="Button3" type="submit" value="Detailed Version Check" onclick="window.open('<?php echo $link; ?>','win2','<?php echo $status; ?>'); return false;" />
@@ -449,7 +438,7 @@ function view() {
 /*
  * Added 1.0.11
  */
-function ajaxcheck(){
+function quickcheck(){
 	global $database, $mainframe, $mosConfig_absolute_path, $mosConfig_cachepath, $Itemid, $my;
 	
 	$basePath = dirname( __FILE__ );
@@ -525,7 +514,7 @@ function ajaxcheck(){
 /*
  * Added 1.0.11
  */
-function versioncheck() {
+function fullcheck() {
 	$basePath = dirname( __FILE__ );
 					
 	// check if cache directory is writeable

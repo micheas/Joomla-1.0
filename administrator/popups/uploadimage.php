@@ -91,28 +91,28 @@ if (isset($_FILES['userfile'])) {
 	$filename = split("\.", $userfile_name);
 
 	if (eregi("[^0-9a-zA-Z_]", $filename[0])) {
-		mosErrorAlert("File must only contain alphanumeric characters and no spaces please.");
+		mosErrorAlert('File must only contain alphanumeric characters and no spaces please.');
 	}
 
 	if (file_exists($base_Dir.$userfile_name)) {
-		mosErrorAlert("Image ".$userfile_name." already exists.");
+		mosErrorAlert('Image '.$userfile_name.' already exists.');
 	}
 
-	if ((strcasecmp(substr($userfile_name,-4),".gif")) && (strcasecmp(substr($userfile_name,-4),".jpg")) && (strcasecmp(substr($userfile_name,-4),".png")) && (strcasecmp(substr($userfile_name,-4),".bmp")) &&(strcasecmp(substr($userfile_name,-4),".doc")) && (strcasecmp(substr($userfile_name,-4),".xls")) && (strcasecmp(substr($userfile_name,-4),".ppt")) && (strcasecmp(substr($userfile_name,-4),".swf")) && (strcasecmp(substr($userfile_name,-4),".pdf"))) {
-		mosErrorAlert("The file must be gif, png, jpg, bmp, swf, doc, xls or ppt");
+	if ((strcasecmp(substr($userfile_name,-4),'.gif')) && (strcasecmp(substr($userfile_name,-4),'.jpg')) && (strcasecmp(substr($userfile_name,-4),'.png')) && (strcasecmp(substr($userfile_name,-4),'.bmp')) &&(strcasecmp(substr($userfile_name,-4),'.doc')) && (strcasecmp(substr($userfile_name,-4),'.xls')) && (strcasecmp(substr($userfile_name,-4),'.ppt')) && (strcasecmp(substr($userfile_name,-4),'.swf')) && (strcasecmp(substr($userfile_name,-4),'.pdf'))) {
+		mosErrorAlert('The file must be gif, png, jpg, bmp, swf, doc, xls or ppt');
 	}
 
 
-	if (eregi(".pdf", $userfile_name) || eregi(".doc", $userfile_name) || eregi(".xls", $userfile_name) || eregi(".ppt", $userfile_name)) {
+	if (eregi('.pdf', $userfile_name) || eregi('.doc', $userfile_name) || eregi('.xls', $userfile_name) || eregi('.ppt', $userfile_name)) {
 		if (!move_uploaded_file ($_FILES['userfile']['tmp_name'],$media_path.$_FILES['userfile']['name']) || !mosChmod($media_path.$_FILES['userfile']['name'])) {
-			mosErrorAlert("Upload of ".$userfile_name." failed");
+			mosErrorAlert('Upload of '.$userfile_name.' failed');
 		} else {
-			mosErrorAlert("Upload of ".$userfile_name." to $media_path successful");
+			mosErrorAlert('Upload of '.$userfile_name.' to '.$base_Dir.' successful');
 		}
 	} elseif (!move_uploaded_file ($_FILES['userfile']['tmp_name'],$base_Dir.$_FILES['userfile']['name']) || !mosChmod($base_Dir.$_FILES['userfile']['name'])) {
-		mosErrorAlert("Upload of ".$userfile_name." failed");
+		mosErrorAlert('Upload of '.$userfile_name.' failed');
 	} else {
-		mosErrorAlert("Upload of ".$userfile_name." to ".$base_Dir." successful");
+		mosErrorAlert('Upload of '.$userfile_name.' to '.$base_Dir.' successful', "window.close()");
 	}
 		echo $base_Dir.$_FILES['userfile']['name'];
 }

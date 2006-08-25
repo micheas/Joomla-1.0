@@ -430,11 +430,11 @@ function josVersionCheck($width='95%') {
 		<table cellpadding="4" cellspacing="0" border="0" width="100%" class="adminheading">
 		<tr>
 			<td colspan="2" style="text-align: center;">
-				<h3>
+				<h3 style="margin-top: 20px; font-size: 13px;">
 					<span style="font-weight: normal;">
 						Your version of Joomla! [ <?php echo $versioninfo; ?> ] is  
 					</span>	 
-					<div id="JLatestVersion" style="display: inline;">
+					<div id="JLatestVersion" style="display: inline; font-size: 13px;">
 						<a href="index2.php?option=com_admin&task=versioncheck" onclick="return JCheckVersion();" style="cursor: pointer; text-decoration:underline;">
 							Check Now</a>
 					</div>

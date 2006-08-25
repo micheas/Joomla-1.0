@@ -622,7 +622,220 @@ class HTML_admin_misc {
 		<?php
 	}
 	
-	function versionCheck() {
+	
+	function versionCheckSimple() {
+		global $database, $mainframe, $mosConfig_absolute_path, $mosConfig_cachepath, $Itemid, $my;
+	
+		// check if cache directory is writeable
+		$cacheDir = $mosConfig_cachepath .'/';
+		if ( !is_writable( $cacheDir ) ) {	
+			?>
+			<fieldset style="width: 70%; text-align: center; color: #CCC; margin-top: 20px;  margin-bottom: 30px; padding: 10px; background-color: white;">
+				<h3 style="color: red">
+					Currently unable to connect to Official Joomla! Site to check for the latest version
+				</h3>
+			</fieldset>
+			<?php				
+			return;
+		}
+	
+		$_VERSION 			= new joomlaVersion();			
+		$_VERSION->BUILD 	= str_replace('$Revision: ','',$_VERSION->BUILD); 			
+		$_VERSION->BUILD 	= str_replace(' $','',$_VERSION->BUILD);
+		 	
+		$url		= 'http://www.joomla.org/cache/versioncheck.xml';
+		
+		// full RSS parser used to access image information
+		require_once( $mosConfig_absolute_path . '/includes/domit/xml_domit_rss.php');
+		$LitePath = $mosConfig_absolute_path . '/includes/Cache/Lite.php';
+	
+		// full RSS parser used to access image information
+		$rssDoc 	= new xml_domit_rss_document();
+		$rssDoc->setRSSTimeout(2);
+		$rssDoc->useHTTPClient(true);
+		$rssDoc->useCacheLite( true, $LitePath, $cacheDir, 86400 );
+		$success 	= $rssDoc->loadRSS( $url );
+		?>
+		<table class="adminform" border="1" style="margin-bottom: 50px;">
+		<tr>
+			<td>
+				<div align="center">
+					<?php
+					if ( $success ) {
+						$currChannel	=& $rssDoc->getChannel(0);		
+						$totalItems		= $currChannel->getItemCount();
+					
+						if ($totalItems > 0) {				
+							// load data from feed item
+							$currItem 	=& $currChannel->getItem(0);
+			
+							// version Information
+							$rawdata 	= $currItem->getDescription();
+							$rawdata 	= str_replace('||', '&', $rawdata);
+							parse_str($rawdata, $data);
+							
+							$outofdate 	= 0;
+							
+							if (!isset($data['major']) || !isset($data['minor']) ) {
+								?>
+								<fieldset style="width: 70%; text-align: center; color: #CCC; margin-top: 20px;  margin-bottom: 30px; padding: 10px; background-color: white;">
+									<h3 style="color: red">
+										Currently unable to connect to Official Joomla! Site to check for the latest version
+									</h3>
+								</fieldset>
+								<?php				
+							} else {			
+								if ($data['major'] > $_VERSION->RELEASE) {
+								// out of date if major release number of latest larger				
+									$outofdate 	= 1;				
+								}
+								if ($data['minor'] > $_VERSION->DEV_LEVEL) {
+								// out of date if minor release number of latest larger				
+									$outofdate 	= 1;				
+								}				
+
+								if ($outofdate == 1) {
+									$text 	= 'OUT OF DATE';
+									$colour = 'red';
+									$image	= '<img src="../images/cancel_f2.png"  style="vertical-align: middle;" />';
+								} else if ($outofdate == 0) {
+									$text 	= 'UP-TO-DATE';
+									$colour = 'green';
+									$image	= '<img src="../images/apply_f2.png"  style="vertical-align: middle;" />';				
+								}
+								
+								?>			
+								<fieldset style="width: 520px; text-align: center; color: #CCC; margin-bottom: 30px; margin-top: 15px; padding: 10px; vertical-align: middle; background-color: white;">
+									<h1>
+										<span style="color: #C0C0C0;">
+											Your version of Joomla! is
+										</span>
+										<span style="color: <?php echo $colour; ?>;">
+											<?php echo $text; ?> 
+										</span>
+										<?php echo $image; ?>
+									</h1>
+								</fieldset>
+								<?php								
+								if (!isset($data['major'])) {
+									$data['major'] = '1.0';
+								}			
+								if (!isset($data['minor'])) {
+									$data['major'] = '*';
+								}			
+								if (!isset($data['name'])) {
+									$data['name'] = '***';
+								}			
+								if (!isset($data['date'])) {
+									$data['date'] = '***';
+								}			
+								if (!isset($data['rev'])) {
+									$data['rev'] = '***';
+								}						
+								?>
+								<table class="adminlist" align="center">
+								<tr>
+									<th width="150">
+									</th>
+									<th style="text-align: center;">
+										Version Number
+									</th>
+									<th style="text-align: center;">
+										Code Name
+									</th>
+									<th style="text-align: center;">
+										Date
+									</th>
+									<th style="text-align: center;">
+										Revision Number
+									</th>
+								</tr>
+								<tr align="center" style="font-weight: bold; text-align: center; background-color: #F0E68C;">
+									<td align="left">
+										<h3 style="padding: 0px; margin: 8px;">
+											Latest Version
+										</h3>
+									</td>
+									<td style="text-align: center;">
+										<?php echo $data['major'] .'.'. $data['minor'];?>
+									</td>
+									<td style="text-align: center;">
+										<?php echo $data['name'];?>
+									</td>
+									<td style="text-align: center;">
+										<?php echo $data['date'];?>
+									</td>
+									<td style="text-align: center;">
+										<?php echo $data['rev'];?>
+									</td>
+								</tr>
+								<tr class="row1">
+									<td colspan="5" style="height: 10px;">
+									</td>
+								</tr>
+								<tr align="center">
+									<td align="left">
+										<h3 style="padding: 0px; margin: 8px;">
+											Your Version
+										</h3>
+									</td>
+									<td style="text-align: center;">
+										<?php echo $_VERSION->RELEASE .'.'. $_VERSION->DEV_LEVEL;?>
+									</td>
+									<td style="text-align: center;">
+										<?php echo $_VERSION->CODENAME;?>
+									</td>
+									<td style="text-align: center;">
+										<?php echo $_VERSION->RELDATE;?>
+									</td>
+									<td style="text-align: center;">
+										<?php echo $_VERSION->BUILD;?>
+									</td>
+								</tr>
+								<tr class="row1">
+									<td colspan="5" style="height: 5px;">
+									</td>
+								</tr>
+								<tr>
+									<th colspan="5" style="height: 10px;">
+									</th>
+								</tr>
+								</table>  
+								
+								<?php				
+								if ($outofdate) {
+									?>
+									<fieldset style="width: 520px; text-align: center; color: #CCC; margin-top: 30px; padding: 10px; background-color: white;">
+										<h3 style="color: #333">
+											<a href="<?php echo $data['url']; ?>" target="_blank">
+												Read about and Download the latest version of Joomla! here.
+											</a>							
+										</h3>
+									</fieldset>
+									<?php				
+								}				
+							}								
+						}							
+					} else {
+						?>
+						<fieldset style="width: 70%; text-align: center; color: #CCC; margin-top: 20px;  margin-bottom: 30px; padding: 10px; background-color: white;">
+							<h3 style="color: red">
+								Currently unable to connect to Official Joomla! Site to check for the latest version
+							</h3>
+						</fieldset>
+						<?php				
+					}
+					?>
+					<div style="height: 50px;">						
+					</div>
+				</div>
+			</td>
+		</tr>
+		</table>
+		<?php			
+	}
+
+	function versionCheckComplex() {
 		global $database, $mainframe, $mosConfig_absolute_path, $mosConfig_cachepath, $Itemid, $my;
 	
 		// check if cache directory is writeable
@@ -652,7 +865,7 @@ class HTML_admin_misc {
 		$rssDoc 	= new xml_domit_rss_document();
 		$rssDoc->setRSSTimeout(2);
 		$rssDoc->useHTTPClient(true);
-		$rssDoc->useCacheLite( true, $LitePath, $cacheDir, 1800 );
+		$rssDoc->useCacheLite( true, $LitePath, $cacheDir, 86400 );
 		$success 	= $rssDoc->loadRSS( $url );
 		?>
 		<table class="adminform" border="1">

@@ -68,11 +68,11 @@ switch ($task) {
 		break;
 
 	case 'versioncheck':
-		HTML_admin_misc::versionCheck();
+		HTML_admin_misc::versionCheckSimple();
 		break;
 
 	case 'uptodate':
-		uptodate();
+		uptodateSimple();
 		break;
 
 	case 'cpanel':
@@ -82,17 +82,92 @@ switch ($task) {
 
 }
 
-function uptodate(){
+/*
+ * Added 1.0.11
+ */
+function uptodateSimple(){
 	global $database, $mainframe, $mosConfig_absolute_path, $mosConfig_cachepath, $Itemid, $my;
 	
 	// check if cache directory is writeable
 	$cacheDir = $mosConfig_cachepath .'/';
 	if ( !is_writable( $cacheDir ) ) {	
-		echo 'Cache Directory Unwriteable';
+		echo '... Cache Directory Unwriteable';
 		return;
 	}
 
-	$uptodate 	= '<span style="color: black;">Unknown, unable to check</span>';
+	$message 	= '<span style="color: black;">Unknown, unable to check</span>';
+	
+	$_VERSION 	= new joomlaVersion();			
+	 	
+	$url		= 'http://www.joomla.org/cache/versioncheck.xml';
+	
+	// full RSS parser used to access image information
+	require_once( $mosConfig_absolute_path . '/includes/domit/xml_domit_rss.php');
+	$LitePath = $mosConfig_absolute_path . '/includes/Cache/Lite.php';
+
+	// full RSS parser used to access image information
+	$rssDoc 	= new xml_domit_rss_document();
+	$rssDoc->setRSSTimeout(2);
+	$rssDoc->useHTTPClient(true);
+	// file cached for 3 days
+	$rssDoc->useCacheLite( true, $LitePath, $cacheDir, 259200 );
+	$success 	= $rssDoc->loadRSS( $url );
+	
+	if ( $success ) {
+		$currChannel	=& $rssDoc->getChannel(0);		
+		$totalItems		= $currChannel->getItemCount();
+	
+		if ($totalItems > 0) {				
+			// load data from feed item
+			$currItem 	=& $currChannel->getItem(0);
+			
+			// version Information
+			$rawdata 	= $currItem->getDescription();
+			$rawdata 	= str_replace('||', '&', $rawdata);
+			parse_str($rawdata, $data);
+			
+			$outofdate 	= 0;
+			
+			if (!isset($data['major']) || !isset($data['minor']) ) {
+				$message = '<span style="color: black;">Unknown, unable to check</span>';
+			} else {			
+				if ($data['major'] > $_VERSION->RELEASE) {
+				// out of date if major release number of latest larger				
+					$outofdate 	= 1;				
+				}
+				if ($data['minor'] > $_VERSION->DEV_LEVEL) {
+				// out of date if minor release number of latest larger				
+					$outofdate 	= 1;				
+				}
+				
+				if ($outofdate == 1) {
+				// `out of date` message
+					$message 	= '&nbsp;<span style="color: red;">OUT OF DATE</span>&nbsp;';
+					$message 	.= '<img src="../images/publish_x.png"  style="vertical-align: middle;" />';				
+				} else {
+				// `up-to-date` message
+					$message 	= '&nbsp;<span style="color: green;">UP-TO-DATE</span>&nbsp;';
+					$message 	.= '<img src="../images/tick.png"  style="vertical-align: middle;" />';
+				}
+			}
+		}		
+	}	
+	
+	echo $message;
+}
+
+/*
+function uptodateComplex(){
+	global $database, $mainframe, $mosConfig_absolute_path, $mosConfig_cachepath, $Itemid, $my;
+	
+	// check if cache directory is writeable
+	$cacheDir = $mosConfig_cachepath .'/';
+	if ( !is_writable( $cacheDir ) ) {	
+		echo '... Cache Directory Unwriteable';
+		return;
+	}
+
+	$message 			= '<span style="color: black;">Unknown, unable to check</span>';
 	
 	$_VERSION 			= new joomlaVersion();			
 	 	
@@ -112,7 +187,8 @@ function uptodate(){
 	$rssDoc 	= new xml_domit_rss_document();
 	$rssDoc->setRSSTimeout(2);
 	$rssDoc->useHTTPClient(true);
-	$rssDoc->useCacheLite( true, $LitePath, $cacheDir, 86400 );
+	// file cached for 3 days
+	$rssDoc->useCacheLite( true, $LitePath, $cacheDir, 259200 );
 	$success 	= $rssDoc->loadRSS( $url );
 	
 	if ( $success ) {
@@ -133,18 +209,22 @@ function uptodate(){
 				parse_str($rawdata, $data);
 				
 				if ($data['outofdate'] == 1) {
-					$uptodate 	= '&nbsp;<span style="color: red;">OUT OF DATE</span>&nbsp;';
-					$uptodate 	.= '<img src="../images/publish_x.png"  style="vertical-align: middle;" />';				
+				// `out of date` message
+					$message 	= '&nbsp;<span style="color: red;">OUT OF DATE</span>&nbsp;';
+					$message 	.= '<img src="../images/publish_x.png"  style="vertical-align: middle;" />';				
 				} else if ($data['outofdate'] == 0) {
-					$uptodate 	= '&nbsp;<span style="color: green;">UP-TO-DATE</span>&nbsp;';
-					$uptodate 	.= '<img src="../images/tick.png"  style="vertical-align: middle;" />';
+				// `up-to-date` message
+					$message 	= '&nbsp;<span style="color: green;">UP-TO-DATE</span>&nbsp;';
+					$message 	.= '<img src="../images/tick.png"  style="vertical-align: middle;" />';
 				} else {
-					$uptodate 	= '<span style="color: black;">Unknown, unable to check</span>';
+				// `unable to connect` message
+					$message 	= '<span style="color: black;">Unknown, unable to check</span>';
 				}
 			}
 		}		
 	}	
 	
-	echo $uptodate;
+	echo $message;
 }
+*/
 ?>

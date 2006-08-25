@@ -39,7 +39,7 @@ code fixes.
 
 
 ----------------------------------------------------------------------------------------
----------------- 1.0.11 Stable Released -- [**-August-2006 **:** UTC] ------------------
+---------------- 1.0.11 Stable Released -- [25-August-2006 **:** UTC] ------------------
 
 
 This Release Contains the following 22 Security Fixes

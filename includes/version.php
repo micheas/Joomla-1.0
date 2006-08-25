@@ -24,7 +24,7 @@ class joomlaVersion {
 	/** @var int Main Release Level */
 	var $RELEASE 	= '1.0';
 	/** @var string Development Status */
-	var $DEV_STATUS = 'Beta 3.5';
+	var $DEV_STATUS = 'Stable';
 	/** @var int Sub Release Level */
 	var $DEV_LEVEL 	= '11';
 	/** @var int build Number */
@@ -32,7 +32,7 @@ class joomlaVersion {
 	/** @var string Codename */
 	var $CODENAME 	= 'Sunburst';
 	/** @var string Date */
-	var $RELDATE 	= '** August 2006';
+	var $RELDATE 	= '25 August 2006';
 	/** @var string Time */
 	var $RELTIME 	= '**:**';
 	/** @var string Timezone */

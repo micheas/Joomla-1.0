@@ -40,6 +40,9 @@ switch ($task) {
 		break;		
 }
 
+/*
+ * Added 1.0.11
+ */
 function view() {	
 	$sp 		= ini_get( 'session.save_path' );
 	
@@ -443,6 +446,9 @@ function view() {
 	<?php
 }
 
+/*
+ * Added 1.0.11
+ */
 function ajaxcheck(){
 	global $database, $mainframe, $mosConfig_absolute_path, $mosConfig_cachepath, $Itemid, $my;
 	
@@ -451,21 +457,15 @@ function ajaxcheck(){
 	// check if cache directory is writeable
 	$cacheDir = $basePath .'/../cache/';
 	if ( !is_writable( $cacheDir ) ) {	
-		echo 'Cache Directory Unwriteable';
+		echo '... Cache Directory Unwriteable';
 		return;
 	}
 
-	$uptodate 	= '<span style="color: black;">Unknown, unable to check</span>';
+	$message 	= '<span style="color: black;">Unknown, unable to check</span>';
 	
-	$_VERSION 			= new joomlaVersion();			
+	$_VERSION 	= new joomlaVersion();			
 	 	
-	$versioninfo 		= $_VERSION->RELEASE .'.'. $_VERSION->DEV_LEVEL;
-	if (strpos(strtolower($_VERSION->DEV_STATUS), 'beta') == 0) {
-		$versioninfo 	.= 'beta'; 
-	} else if (strpos(strtolower($_VERSION->DEV_STATUS), 'svn') == 0) {
-		$versioninfo 	.= 'svn';			
-	}
-	$url				= 'http://www.joomla.org/index.php?option=com_rss_xtd&feed=RSS2.0&version='. $versioninfo .'&type=versioncheck';
+	$url		= 'http://www.joomla.org/cache/versioncheck.xml';
 	
 	// full RSS parser used to access image information
 	require_once( $basePath . '/../includes/domit/xml_domit_rss.php');
@@ -475,42 +475,56 @@ function ajaxcheck(){
 	$rssDoc 	= new xml_domit_rss_document();
 	$rssDoc->setRSSTimeout(2);
 	$rssDoc->useHTTPClient(true);
-	$rssDoc->useCacheLite( true, $LitePath, $cacheDir, 43200 );
+	// file cached for 3 days
+	$rssDoc->useCacheLite( true, $LitePath, $cacheDir, 259200 );
 	$success 	= $rssDoc->loadRSS( $url );
 	
 	if ( $success ) {
 		$currChannel	=& $rssDoc->getChannel(0);		
 		$totalItems		= $currChannel->getItemCount();
 	
-		if ($totalItems > 1) {				
+		if ($totalItems > 0) {				
 			// load data from feed item
-			$currItem 	=& $currChannel->getItem(1);
+			$currItem 	=& $currChannel->getItem(0);
 			
-			// check to see if the item loaded is the Status info
-			$rawtitle 	= '';
-			$rawtitle 	= strtolower($currItem->getTitle());							
-			if ($rawtitle == 'status') {	
-				// Status Information
-				$rawdata 	= $currItem->getDescription();
-				$rawdata 	= str_replace('||', '&', $rawdata);
-				parse_str($rawdata, $data);
+			// version Information
+			$rawdata 	= $currItem->getDescription();
+			$rawdata 	= str_replace('||', '&', $rawdata);
+			parse_str($rawdata, $data);
+			
+			$outofdate 	= 0;
+			
+			if (!isset($data['major']) || !isset($data['minor']) ) {
+				$message = '<span style="color: black;">Unknown, unable to check</span>';
+			} else {			
+				if ($data['major'] > $_VERSION->RELEASE) {
+				// out of date if major release number of latest larger				
+					$outofdate 	= 1;				
+				}
+				if ($data['minor'] > $_VERSION->DEV_LEVEL) {
+				// out of date if minor release number of latest larger				
+					$outofdate 	= 1;				
+				}
 				
-				if ($data['outofdate'] == 1) {
-					$uptodate 	= '&nbsp;<span style="color: red;">OUT OF DATE</span>&nbsp;';
-					$uptodate 	.= '<img src="../images/publish_x.png"  style="vertical-align: middle;" />';				
-				} else if ($data['outofdate'] == 0) {
-					$uptodate 	= '&nbsp;<span style="color: green;">UP-TO-DATE</span>&nbsp;';
-					$uptodate 	.= '<img src="../images/tick.png"  style="vertical-align: middle;" />';
+				if ($outofdate == 1) {
+				// `out of date` message
+					$message 	= '&nbsp;<span style="color: red;">OUT OF DATE</span>&nbsp;';
+					$message 	.= '<img src="../images/publish_x.png"  style="vertical-align: middle;" />';				
 				} else {
-					$uptodate 	= '<span style="color: black;">Unknown, unable to check</span>';
+				// `up-to-date` message
+					$message 	= '&nbsp;<span style="color: green;">UP-TO-DATE</span>&nbsp;';
+					$message 	.= '<img src="../images/tick.png"  style="vertical-align: middle;" />';
 				}
 			}
 		}		
 	}	
 	
-	echo $uptodate;
+	echo $message;
 }
 
+/*
+ * Added 1.0.11
+ */
 function versioncheck() {
 	$basePath = dirname( __FILE__ );
 					

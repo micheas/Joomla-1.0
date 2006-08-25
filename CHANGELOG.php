@@ -106,6 +106,8 @@ A6 Injection Flaws
 24-Aug-2006 Rey Gigataras
  # SECURITY A6 [ LOW Level ]: Add exploit blocking rules to htaccess
  # SECURITY A6 [ LOW Level ]: Harden loading of globals.php by using require() instead of include_once();
+ 
+ + Installation Security Warning check 
 
 
 23-Aug-2006 Rey Gigataras

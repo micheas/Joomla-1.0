@@ -174,21 +174,21 @@ function view() {
 									<tr>
 										<td colspan="2" style="text-align: center;">
 											Your version of Joomla! [ <?php echo $versioninfo; ?> ] is:  
-											<h3 style="margin-top: 20px; font-size: 13px;">
+											<h3 style="margin-top: 10px; font-size: 13px;">
 												<div id="JLatestVersion" style="display: inline; font-size: 13px; color:#888">
 													...Checking...
 												</div>
 											</h3>
+							
+											<?php
+											$link 	= 'index.php?task=fullcheck';
+											$status = 'status=no,toolbar=no,scrollbars=yes,titlebar=no,menubar=no,resizable=yes,width=700,height=480,directories=no,location=no';
+											?>
+											<input name="Button3" type="submit" value="Detailed Version Check" onclick="window.open('<?php echo $link; ?>','win2','<?php echo $status; ?>'); return false;" />
 										</td>
 									</tr>
 								    </table>
 								</div>
-							
-								<?php
-								$link 	= 'index.php?task=fullcheck';
-								$status = 'status=no,toolbar=no,scrollbars=yes,titlebar=no,menubar=no,resizable=yes,width=700,height=480,directories=no,location=no';
-								?>
-								<input name="Button3" type="submit" value="Detailed Version Check" onclick="window.open('<?php echo $link; ?>','win2','<?php echo $status; ?>'); return false;" />
 							</td>
 						</tr>
 						</table>
@@ -279,6 +279,60 @@ function view() {
 				</div>
 				<div class="clr"></div>
 				
+				<?php
+				$wrongSettingsTexts = array();
+				if ( ini_get('register_globals') == '1' ) {
+					$wrongSettingsTexts[] = "PHP register_globals setting is `ON` instead of `OFF`";
+				}
+				if ( RG_EMULATION != 0 ) {
+					$wrongSettingsTexts[] = "Joomla! RG_EMULATION setting is `ON` instead of `OFF` in file globals.php <br /><span style=\"font-weight: normal; font-style: italic; color: black;\">`ON` by default for compatibility reasons</span>";
+				}	
+				if ( ini_get('magic_quotes_gpc') != '1' ) {
+					$wrongSettingsTexts[] = "PHP magic_quotes_gpc setting is `OFF` instead of `ON`";
+				}
+				
+				if ( count($wrongSettingsTexts) ) {
+					?>							
+					<h1>
+						Security check:
+					</h1>
+					
+					<div class="install-text">
+						Following PHP Server Security Settings are not optimal for <strong>Security</strong> and it is recommended to change them:
+						<p>
+							Please check <a href="http://forum.joomla.org/index.php/topic,81058.0.html" target="_blank">the Official Joomla! Server Security post</a> for more information.
+						</p>
+						<div class="ctr"></div>
+					</div>
+							
+					<div class="install-form">
+						<div class="form-block" style="text-align: center;">
+							<table class="content">
+							<tr>
+								<td class="item">
+									<ul style="padding-left: 15px; text-align: left; padding-bottom: 20px;">
+										<?php
+										foreach ($wrongSettingsTexts as $txt) {
+											?>	
+											<li style="color: red; font-weight: bold;">
+												<?php
+												echo $txt;
+												?>
+											</li>
+											<?php
+										}
+										?>
+									</ul>
+								</td>
+							</tr>
+							</table>
+						</div>
+					</div>
+					<div class="clr"></div>
+					<?php
+				}
+				?>
+												
 				<h1>
 					Recommended settings:
 				</h1>
@@ -433,6 +487,41 @@ function view() {
 	</body>
 	</html>
 	<?php
+}
+
+/*
+ * Added 1.0.11
+ */
+function SecurityCheck($width='95%') {		
+	$wrongSettingsTexts = array();
+	if ( ini_get('register_globals') == '1' ) {
+		$wrongSettingsTexts[] = "PHP register_globals setting is `ON` instead of `OFF`";
+	}
+	if ( RG_EMULATION != 0 ) {
+		$wrongSettingsTexts[] = "Joomla! RG_EMULATION setting is `ON` instead of `OFF` in file globals.php <br /><span style=\"font-weight: normal; font-style: italic; color: black;\">`ON` by default for compatibility reasons</span>";
+	}	
+	if ( ini_get('magic_quotes_gpc') != '1' ) {
+		$wrongSettingsTexts[] = "PHP magic_quotes_gpc setting is `OFF` instead of `ON`";
+	}
+	
+	if ( count($wrongSettingsTexts) ) {
+		?>
+			<ul style="padding-left: 15px; text-align: left;">
+				<?php
+				foreach ($wrongSettingsTexts as $txt) {
+					?>	
+					<li style="color: red; font-weight: bold;">
+						<?php
+						echo $txt;
+						?>
+					</li>
+					<?php
+				}
+				?>
+			</ul>
+		</div>
+		<?php
+	}
 }
 
 /*

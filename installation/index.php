@@ -717,9 +717,6 @@ function versioncheck() {
 							</fieldset>
 							<?php				
 						}		
-						?>
-						<span style="margin-bottom: 30px">&nbsp;</span>						
-						<?php		
 					}								
 				}							
 			} else {
@@ -732,10 +729,17 @@ function versioncheck() {
 				<?php				
 			}
 			?>
-		
+			<span style="margin-bottom: 30px">&nbsp;</span>		
 		</div>
 	</div>
 	
+	<div class="ctr">						
+		<a href="#" onclick="window.close();">
+			[ Close Window ]</a>				
+	</div>
+	
+	<div style="margin-bottom: 20px">&nbsp;</div>		
+
 	<div class="ctr">
 		<a href="http://www.joomla.org" target="_blank">Joomla!</a> is Free Software released under the GNU/GPL License.
 	</div>

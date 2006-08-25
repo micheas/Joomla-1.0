@@ -826,7 +826,7 @@ class HTML_admin_misc {
 						<?php				
 					}
 					?>
-					<div style="height: 50px;">						
+					<div style="height: 50px;">			
 					</div>
 				</div>
 			</td>

@@ -19,7 +19,7 @@ if (!file_exists( '../configuration.php' )) {
 	exit();
 }
 
-include_once( '../globals.php' );
+require( '../globals.php' );
 require_once( '../configuration.php' );
 require_once( '../includes/joomla.php' );
 include_once ( $mosConfig_absolute_path . '/language/'. $mosConfig_lang .'.php' );

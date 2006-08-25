@@ -21,7 +21,7 @@ if (!file_exists( 'configuration.php' ) || filesize( 'configuration.php' ) < 10)
 	exit();
 }
 
-include_once( 'globals.php' );
+require( 'globals.php' );
 require_once( 'configuration.php' );
 require_once( 'includes/joomla.php' );
 

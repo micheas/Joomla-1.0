@@ -42,7 +42,7 @@ code fixes.
 ---------------- 1.0.11 Stable Released -- [25-August-2006 **:** UTC] ------------------
 
 
-This Release Contains the following 23 Security Fixes
+This Release Contains the following 24 Security Fixes
 
 Joomla! utilizes the Open Web Application Security Project (OWASP) tOP tEN pROJECT to categorize security vunerabilities found within Joomla!
 http://www.owasp.org/index.php/OWASP_Top_Ten_Project
@@ -73,7 +73,7 @@ A2 Broken Access Control
 
 --- - - - - - - - - ---
 
-15 LOW Level Threats fixed
+16 LOW Level Threats fixed
 
 A1 Unvalidated Input
  * Hardened Admin `User Manager`
@@ -97,12 +97,14 @@ A6 Injection Flaws
  * Secured against injection attack on content submissions where frontpage is selected
  * Secured against possible injection attack thru mosPageNav constructor
  * Secured against possible injection attack thru saveOrder functions
+ * Add exploit blocking rules to htaccess
 
 
 -- -- -- -- -- ---- -- ---- -- ---- -- ---- -- ---- -- ---- -- ---- -- ---- -- ---- -- ---- -- --
 
 
 24-Aug-2006 Rey Gigataras
+ # SECURITY A6 [ LOW Level ]: Add exploit blocking rules to htaccess
  # SECURITY A6 [ LOW Level ]: Harden loading of globals.php by using require() instead of include_once();
 
 

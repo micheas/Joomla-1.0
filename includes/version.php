@@ -24,7 +24,7 @@ class joomlaVersion {
 	/** @var int Main Release Level */
 	var $RELEASE 	= '1.0';
 	/** @var string Development Status */
-	var $DEV_STATUS = 'Stable';
+	var $DEV_STATUS = 'RC';
 	/** @var int Sub Release Level */
 	var $DEV_LEVEL 	= '11';
 	/** @var int build Number */
@@ -34,7 +34,7 @@ class joomlaVersion {
 	/** @var string Date */
 	var $RELDATE 	= '25 August 2006';
 	/** @var string Time */
-	var $RELTIME 	= '**:**';
+	var $RELTIME 	= '20:00';
 	/** @var string Timezone */
 	var $RELTZ 		= 'UTC';
 	/** @var string Copyright Text */

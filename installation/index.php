@@ -175,7 +175,7 @@ function view() {
 						It is important to Always install the latest Stable version of Joomla!
 					</p>
 					<p>
-						More information can always be found at <a href="http://www.joomla.org">www.joomla.org</a>						
+						More information can always be found at <a href="http://www.joomla.org" target="_blank">www.joomla.org</a>						
 					</p>
 					<div class="ctr"></div>
 				</div>

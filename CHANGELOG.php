@@ -44,7 +44,7 @@ code fixes.
 
 This Release Contains the following 26 Security Fixes
 
-Joomla! utilizes the Open Web Application Security Project (OWASP) tOP tEN pROJECT to categorize security vunerabilities found within Joomla!
+Joomla! utilizes the Open Web Application Security Project (OWASP) Top Ten Project to categorize security vunerabilities found within Joomla!
 http://www.owasp.org/index.php/OWASP_Top_Ten_Project
 
 --- - - - - - - - - ---

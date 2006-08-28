@@ -22,11 +22,19 @@ include_once ( $mosConfig_absolute_path . '/language/' . $mosConfig_lang . '.php
 * Stops file upload below /images/stories directory
 * Added 1.0.11
 */
-function limitDirectory( &$directory ) {
-	if ( strpos($directory, '../') === 0 ) {
-		$directory = substr($directory, 3);
+function limitDirectory( &$directory, $check=0 ) {
+	if ( strpos($directory, '../') !== false && $check == 0) {
+		$directory = str_replace('../', '', $directory);
 		
 		limitDirectory( $directory );
+	}
+
+	$check = 1;
+	
+	if ( strpos($directory, '..\\') !== false && $check == 1) {
+		$directory = str_replace('..\\', '', $directory);
+		
+		limitDirectory( $directory, 1 );
 	}
 	
 	return $directory;

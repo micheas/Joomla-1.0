@@ -23,22 +23,7 @@ require_once( '../includes/version.php' );
 
 /** Include common.php */
 include_once( 'common.php' );
-
-$task 		= mosGetParam( $_GET, 'task', '' );
-
-switch ($task) {
-	case 'quickcheck':
-		quickcheck();
-		break;
-		
-	case 'fullcheck':
-		fullcheck();
-		break;
-		
-	default:
-		view();
-		break;		
-}
+view();
 
 /*
  * Added 1.0.11
@@ -97,114 +82,16 @@ function view() {
 				</h1>
 	
 				<h1>
-					Version Check:
+					Required Settings Check:
 				</h1>
 				
 				<div class="install-text">
-					A live online check to see if your version of Joomla! is the newest version available
-					<div class="ctr"></div>
-				</div>
-						
-				<div class="install-form">
-					<div class="form-block" style="text-align: center;">
-						<table class="content">
-						<tr>
-							<td class="item">
-								<script type="text/javascript">
-									<!--//--><![CDATA[//><!--	
-								    function makeRequest(url) {	
-								        var http_request = false;
-								
-								        if (window.XMLHttpRequest) {
-								            http_request = new XMLHttpRequest();
-								            if (http_request.overrideMimeType) {
-								                http_request.overrideMimeType('text/xml');
-								            }
-								        } else if (window.ActiveXObject) {
-								            try {
-								                http_request = new ActiveXObject("Msxml2.XMLHTTP");
-								            } catch (e) {
-								                try {
-								                    http_request = new ActiveXObject("Microsoft.XMLHTTP");
-								                } catch (e) {}
-								            }
-								        }
-								
-								        if (!http_request) {
-								            return false;
-								        }
-								        http_request.onreadystatechange = function() { alertContents(http_request); };
-								        http_request.open('GET', url, true);
-								        http_request.send(null);	
-								    }
-								
-								    function alertContents(http_request) {	
-								        if (http_request.readyState == 4) {
-								            if ((http_request.status == 200) && (http_request.responseText.length < 1025)) {
-												document.getElementById('JLatestVersion').innerHTML = http_request.responseText;
-								            } else {
-								                document.getElementById('JLatestVersion').innerHTML = 'Unknown, unable to check!';
-								            }
-								        }
-								
-								    }
-								
-								    function JInitAjax() {
-								    	makeRequest('<?php echo 'index.php?task=quickcheck'; ?>');
-								    }
-								
-								    function JAddEvent(obj, evType, fn){
-								    	if (obj.addEventListener){
-								    		obj.addEventListener(evType, fn, true);
-								    		return true;
-								    	} else if (obj.attachEvent){
-								    		var r = obj.attachEvent("on"+evType, fn);
-								    		return r;
-								    	} else {
-								    		return false;
-								    	}
-								    }
-								
-									JAddEvent(window, 'load', JInitAjax);
-									//--><!]]>							
-								</script>
-								
-								<div style="clear: both; margin: 3px; padding: 0px 15px; display: block; float: left; text-align: left; width: 95%;">
-									<table cellpadding="4" cellspacing="0" border="0" width="100%" class="adminheading">
-									<tr>
-										<td colspan="2" style="text-align: center;">
-											Your version of Joomla! [ <?php echo $versioninfo; ?> ] is:  
-											<h3 style="margin-top: 10px; font-size: 13px;">
-												<div id="JLatestVersion" style="display: inline; font-size: 13px; color:#888">
-													...Checking...
-												</div>
-											</h3>
-							
-											<?php
-											$link 	= 'index.php?task=fullcheck';
-											$status = 'status=no,toolbar=no,scrollbars=yes,titlebar=no,menubar=no,resizable=yes,width=700,height=480,directories=no,location=no';
-											?>
-											<input name="Button3" type="submit" value="Detailed Version Check" onclick="window.open('<?php echo $link; ?>','win2','<?php echo $status; ?>'); return false;" />
-										</td>
-									</tr>
-								    </table>
-								</div>
-							</td>
-						</tr>
-						</table>
-					</div>
-				</div>	
-				<div class="clr"></div>		
-				
-				<h1>
-					Pre-installation check
-				</h1>
-				
-				<div class="install-text">
-					If any of these items are highlighted
-					in red then please take actions to correct them. Failure to do so
-					could lead to your Joomla installation not functioning
-					correctly.
+					<p>
+						If any of these items are highlighted in red then please take actions to correct them. 
+					</p>
+					<p>
+						Failure to do so could lead to your Joomla! installation not functioning correctly.
+					</p>
 					<div class="ctr"></div>
 				</div>
 	
@@ -279,6 +166,66 @@ function view() {
 				</div>
 				<div class="clr"></div>
 				
+				<h1>
+					Version Check:
+				</h1>
+				
+				<div class="install-text">
+					<p>
+						It is important to Always install the latest Stable version of Joomla!
+					</p>
+					<p>
+						More information can always be found at <a href="http://www.joomla.org">www.joomla.org</a>						
+					</p>
+					<div class="ctr"></div>
+				</div>
+						
+				<div class="install-form">
+					<div class="form-block" style="text-align: center;">
+						<table class="content">
+						<tr>
+							<td class="item">
+								<?php
+								$link 			= 'http://www.joomla.org/content/blogcategory/32/66/';
+								$status 		= 'status=yes,toolbar=yes,scrollbars=yes,titlebar=yes,menubar=yes,resizable=yes,directories=yes,location=yes';
+								
+								$release 		= strtotime($_VERSION->RELDATE);
+								$now	 		= strtotime('now');
+								$age			= ($now - $release) / 86400;	
+								$age			= round($age);		
+								?>
+								<div style="clear: both; margin: 3px; padding: 0px 0px; display: block; float: left;">
+									<table cellpadding="0" cellspacing="0" border="0" width="100%" class="adminheading">
+									<tr>
+										<td colspan="2" style="text-align: center;">
+											<h3 style="font-size: 12px;">
+												<?php
+												if ($age > 1) {							
+													?>
+													<p style="font-weight: normal; padding: 0px; margin: 0px; font-size: 11px;">
+														This version of Joomla! [ <?php echo $versioninfo; ?> ] is  
+													</p>
+													<div style="font-size: 13px; color: #cc0000;">
+														<?php echo $age; ?> days old
+													</div>
+													<?php
+												}
+												?>
+												<div style="margin-top: 10px;">
+													<input name="Button3" type="submit" value="Check for newer version" onclick="window.open('<?php echo $link; ?>','win2','<?php echo $status; ?>'); return false;" />							
+												</div>
+											</h3>
+										</td>
+									</tr>
+								    </table>
+								</div>
+							</td>
+						</tr>
+						</table>
+					</div>
+				</div>	
+				<div class="clr"></div>		
+				
 				<?php
 				$wrongSettingsTexts = array();
 				if ( ini_get('register_globals') == '1' ) {
@@ -294,11 +241,13 @@ function view() {
 				if ( count($wrongSettingsTexts) ) {
 					?>							
 					<h1>
-						Security check:
+						Security Check:
 					</h1>
 					
 					<div class="install-text">
-						Following PHP Server Security Settings are not optimal for <strong>Security</strong> and it is recommended to change them:
+						<p>
+							Following PHP Server Settings are not optimal for <strong>Security</strong> and it is recommended to change them:
+						</p>
 						<p>
 							Please check <a href="http://forum.joomla.org/index.php/topic,81058.0.html" target="_blank">the Official Joomla! Server Security post</a> for more information.
 						</p>
@@ -306,7 +255,7 @@ function view() {
 					</div>
 							
 					<div class="install-form">
-						<div class="form-block" style="text-align: center;">
+						<div class="form-block" style=" border: 1px solid #cc0000; background: #ffffcc;">
 							<table class="content">
 							<tr>
 								<td class="item">
@@ -334,14 +283,17 @@ function view() {
 				?>
 												
 				<h1>
-					Recommended settings:
+					Recommended Settings Check:
 				</h1>
 				
 				<div class="install-text">
-					These settings are recommended for PHP in order to ensure full
-					compatibility with Joomla.
-					<br />
-					However, Joomla will still operate if your settings do not quite match the recommended
+					<p>
+						These settings are recommended for PHP in order to ensure full
+						compatibility with Joomla!.
+					</p>					
+					<p>
+						However, Joomla! will still operate if your settings do not quite match the recommended
+					</p>
 					<div class="ctr"></div>
 				</div>
 		
@@ -431,15 +383,16 @@ function view() {
 				<div class="clr"></div>
 		
 				<h1>
-					Directory and File Permissions:
+					Directory and File Permissions Check:
 				</h1>
 				
 				<div class="install-text">
-					In order for Joomla to function
-					correctly it needs to be able to access or write to certain files
-					or directories. If you see "Unwriteable" you need to change the
-					permissions on the file or directory to allow Joomla
-					to write to it.
+					<p>
+						In order for Joomla! to function correctly it needs to be able to access or write to certain files or directories. 
+					</p>
+					<p>
+						If you see "Unwriteable" you need to change the permissions on the file or directory to allow Joomla! to write to it.
+					</p>
 					<div class="clr">&nbsp;&nbsp;</div>
 					<div class="ctr"></div>
 				</div>
@@ -480,344 +433,6 @@ function view() {
 		</div>
 	</div>
 	
-	<div class="ctr">
-		<a href="http://www.joomla.org" target="_blank">Joomla</a> is Free Software released under the GNU/GPL License.
-	</div>
-	
-	</body>
-	</html>
-	<?php
-}
-
-/*
- * Added 1.0.11
- */
-function SecurityCheck($width='95%') {		
-	$wrongSettingsTexts = array();
-	if ( ini_get('register_globals') == '1' ) {
-		$wrongSettingsTexts[] = "PHP register_globals setting is `ON` instead of `OFF`";
-	}
-	if ( RG_EMULATION != 0 ) {
-		$wrongSettingsTexts[] = "Joomla! RG_EMULATION setting is `ON` instead of `OFF` in file globals.php <br /><span style=\"font-weight: normal; font-style: italic; color: black;\">`ON` by default for compatibility reasons</span>";
-	}	
-	if ( ini_get('magic_quotes_gpc') != '1' ) {
-		$wrongSettingsTexts[] = "PHP magic_quotes_gpc setting is `OFF` instead of `ON`";
-	}
-	
-	if ( count($wrongSettingsTexts) ) {
-		?>
-			<ul style="padding-left: 15px; text-align: left;">
-				<?php
-				foreach ($wrongSettingsTexts as $txt) {
-					?>	
-					<li style="color: red; font-weight: bold;">
-						<?php
-						echo $txt;
-						?>
-					</li>
-					<?php
-				}
-				?>
-			</ul>
-		</div>
-		<?php
-	}
-}
-
-/*
- * Added 1.0.11
- */
-function quickcheck(){
-	global $database, $mainframe, $mosConfig_absolute_path, $mosConfig_cachepath, $Itemid, $my;
-	
-	$basePath = dirname( __FILE__ );
-					
-	// check if cache directory is writeable
-	$cacheDir = $basePath .'/../cache/';
-	if ( !is_writable( $cacheDir ) ) {	
-		echo '... Cache Directory Unwriteable';
-		return;
-	}
-
-	$message 	= '<span style="color: black;">Unknown, unable to check</span>';
-	
-	$_VERSION 	= new joomlaVersion();			
-	 	
-	$url		= 'http://www.joomla.org/cache/versioncheck.xml';
-	
-	// full RSS parser used to access image information
-	require_once( $basePath . '/../includes/domit/xml_domit_rss.php');
-	$LitePath = $basePath . '/../includes/Cache/Lite.php';
-
-	// full RSS parser used to access image information
-	$rssDoc 	= new xml_domit_rss_document();
-	$rssDoc->setRSSTimeout(30);
-	$rssDoc->useHTTPClient(true);
-	// file cached for 3 days
-	$rssDoc->useCacheLite( true, $LitePath, $cacheDir, 86400 );
-	$success 	= $rssDoc->loadRSS( $url );
-	
-	if ( $success ) {
-		$currChannel	=& $rssDoc->getChannel(0);		
-		$totalItems		= $currChannel->getItemCount();
-	
-		if ($totalItems > 0) {				
-			// load data from feed item
-			$currItem 	=& $currChannel->getItem(0);
-			
-			// version Information
-			$rawdata 	= $currItem->getDescription();
-			$rawdata 	= str_replace('||', '&', $rawdata);
-			parse_str($rawdata, $data);
-			
-			$outofdate 	= 0;
-			
-			if (!isset($data['major']) || !isset($data['minor']) ) {
-				$message = '<span style="color: black;">Unknown, unable to check</span>';
-			} else {			
-				if ($data['major'] > $_VERSION->RELEASE) {
-				// out of date if major release number of latest larger				
-					$outofdate 	= 1;				
-				}
-				if ($data['minor'] > $_VERSION->DEV_LEVEL) {
-				// out of date if minor release number of latest larger				
-					$outofdate 	= 1;				
-				}
-				
-				if ($outofdate == 1) {
-				// `out of date` message
-					$message 	= '&nbsp;<span style="color: red;">OUT OF DATE</span>&nbsp;';
-					$message 	.= '<img src="../images/publish_x.png"  style="vertical-align: middle;" />';				
-				} else {
-				// `up-to-date` message
-					$message 	= '&nbsp;<span style="color: green;">UP-TO-DATE</span>&nbsp;';
-					$message 	.= '<img src="../images/tick.png"  style="vertical-align: middle;" />';
-				}
-			}
-		}		
-	}	
-	
-	echo $message;
-}
-
-/*
- * Added 1.0.11
- */
-function fullcheck() {
-	$basePath = dirname( __FILE__ );
-					
-	// check if cache directory is writeable
-	$cacheDir = $basePath .'/../cache/';
-	if ( !is_writable( $cacheDir ) ) {	
-		?>
-		<fieldset style="width: 70%; text-align: center; color: #CCC; margin-top: 20px;  margin-bottom: 30px; padding: 10px; background-color: white;">
-			<h3 style="color: red">
-				Currently unable to connect to Official Joomla! Site to check for the latest version
-			</h3>
-		</fieldset>
-		<?php				
-		return;
-	}
-	
-	$_VERSION 			= new joomlaVersion();			
-	$_VERSION->BUILD 	= str_replace('$Revision: ','',$_VERSION->BUILD); 			
-	$_VERSION->BUILD 	= str_replace(' $','',$_VERSION->BUILD);
-	 	
-	$url		= 'http://www.joomla.org/cache/versioncheck.xml';
-	
-	// full RSS parser used to access image information
-	require_once( $basePath . '/../includes/domit/xml_domit_rss.php');
-	$LitePath = $basePath . '/../includes/Cache/Lite.php';
-	
-	// full RSS parser used to access image information
-	$rssDoc 	= new xml_domit_rss_document();
-	$rssDoc->setRSSTimeout(30);
-	$rssDoc->useHTTPClient(true);
-	$rssDoc->useCacheLite( true, $LitePath, $cacheDir, 86400 );
-	$success 	= $rssDoc->loadRSS( $url );
-	
-	echo "<?xml version=\"1.0\" encoding=\"iso-8859-1\"?".">";
-	?>
-	<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-	<html xmlns="http://www.w3.org/1999/xhtml">
-	<head>
-	<title>Joomla - Web Installer</title>
-	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-	<link rel="shortcut icon" href="../images/favicon.ico" />
-	<link rel="stylesheet" href="install.css" type="text/css" />
-	</head>
-	<body>
-	
-	<div id="ctr" align="center">
-		<div class="install" style="width: 95%;">
-			<?php
-			if ( $success ) {
-				$currChannel	=& $rssDoc->getChannel(0);		
-				$totalItems		= $currChannel->getItemCount();
-			
-				if ($totalItems > 0) {				
-					// load data from feed item
-					$currItem 	=& $currChannel->getItem(0);
-	
-					// version Information
-					$rawdata 	= $currItem->getDescription();
-					$rawdata 	= str_replace('||', '&', $rawdata);
-					parse_str($rawdata, $data);
-					
-					$outofdate 	= 0;
-					
-					if (!isset($data['major']) || !isset($data['minor']) ) {
-						?>
-						<fieldset style="width: 70%; text-align: center; color: #CCC; margin-top: 20px;  margin-bottom: 30px; padding: 10px; background-color: white;">
-							<h3 style="color: red">
-								Currently unable to connect to Official Joomla! Site to check for the latest version
-							</h3>
-						</fieldset>
-						<?php				
-					} else {			
-						if ($data['major'] > $_VERSION->RELEASE) {
-						// out of date if major release number of latest larger				
-							$outofdate 	= 1;				
-						}
-						if ($data['minor'] > $_VERSION->DEV_LEVEL) {
-						// out of date if minor release number of latest larger				
-							$outofdate 	= 1;				
-						}				
-
-						if ($outofdate == 1) {
-							$text 	= 'OUT OF DATE';
-							$colour = 'red';
-							$image	= '<img src="../images/cancel_f2.png"  style="vertical-align: middle;" />';
-						} else if ($outofdate == 0) {
-							$text 	= 'UP-TO-DATE';
-							$colour = 'green';
-							$image	= '<img src="../images/apply_f2.png"  style="vertical-align: middle;" />';				
-						}
-						
-						if (!isset($data['major'])) {
-							$data['major'] = '1.0';
-						}			
-						if (!isset($data['minor'])) {
-							$data['major'] = '*';
-						}			
-						if (!isset($data['name'])) {
-							$data['name'] = '***';
-						}			
-						if (!isset($data['date'])) {
-							$data['date'] = '***';
-						}			
-						if (!isset($data['rev'])) {
-							$data['rev'] = '***';
-						}						
-						?>
-						<fieldset style="width: 520px; px; text-align: center; color: #CCC; margin-bottom: 30px; margin-top: 15px; padding: 10px; vertical-align: middle; border: 1px solid #ccc; background-color: white;">
-							<h1 style="text-align: center; border-bottom: 0px;">
-								<span style="color: #C0C0C0;">
-									Your version of Joomla! is
-								</span>
-								<span style="color: <?php echo $colour; ?>;">
-									<?php echo $text; ?> 
-								</span>
-								<?php echo $image; ?>
-							</h1>
-						</fieldset>
-						
-						<table class="adminlist" align="center" width="98%" style="border: 1px solid #ccc; background-color: white;">
-						<tr>
-							<th width="150">
-							</th>							
-							<th style="text-align: center;">
-								Version Number
-							</th>
-							<th style="text-align: center;">
-								Code Name
-							</th>
-							<th style="text-align: center;">
-								Date
-							</th>
-							<th style="text-align: center;">
-								Revision Number
-							</th>
-						</tr>
-						<tr align="center" style="font-weight: bold; text-align: center; background-color: #F0E68C;">
-							<td align="left">
-								<h3 style="padding: 0px; margin: 8px;">
-									Latest Version
-								</h3>
-							</td>
-							<td style="text-align: center;">
-								<?php echo $data['major'] .'.'. $data['minor'];?>
-							</td>
-							<td style="text-align: center;">
-								<?php echo $data['name'];?>
-							</td>
-							<td style="text-align: center;">
-								<?php echo $data['date'];?>
-							</td>
-							<td style="text-align: center;">
-								<?php echo $data['rev'];?>
-							</td>
-						</tr>
-						<tr class="row1">
-							<td colspan="5" style="height: 10px;">
-							</td>
-						</tr>
-						<tr align="center">
-							<td align="left">
-								<h3 style="padding: 0px; margin: 8px;">
-									Your Version
-								</h3>
-							</td>
-							<td style="text-align: center;">
-								<?php echo $_VERSION->RELEASE .'.'. $_VERSION->DEV_LEVEL;?>
-							</td>
-							<td style="text-align: center;">
-								<?php echo $_VERSION->CODENAME;?>
-							</td>
-							<td style="text-align: center;">
-								<?php echo $_VERSION->RELDATE;?>
-							</td>
-							<td style="text-align: center;">
-								<?php echo $_VERSION->BUILD;?>
-							</td>
-						</tr>
-						</table>  
-						
-						<?php				
-						if ($outofdate) {
-							?>
-							<fieldset style="width: 520px; text-align: center; color: #CCC; margin-top: 30px; padding: 10px; border: 1px solid #ccc; background-color: white;">
-								<h3 style="color: #333">
-									<a href="<?php echo $data['url']; ?>" target="_blank">
-										Read about and Download the latest version of Joomla! here.
-									</a>							
-								</h3>
-							</fieldset>
-							<?php				
-						}		
-					}								
-				}							
-			} else {
-				?>
-				<fieldset style="width: 70%; text-align: center; color: #CCC; margin-top: 20px;  margin-bottom: 30px; padding: 10px; border: 1px solid #ccc; background: white;">
-					<h3 style="color: red">
-						Currently unable to connect to Official Joomla! Site to check for the latest version
-					</h3>
-				</fieldset>
-				<?php				
-			}
-			?>
-			<span style="margin-bottom: 30px">&nbsp;</span>		
-		</div>
-	</div>
-	
-	<div class="ctr">						
-		<a href="#" onclick="window.close();">
-			[ Close Window ]</a>				
-	</div>
-	
-	<div style="margin-bottom: 20px">&nbsp;</div>		
-
 	<div class="ctr">
 		<a href="http://www.joomla.org" target="_blank">Joomla!</a> is Free Software released under the GNU/GPL License.
 	</div>

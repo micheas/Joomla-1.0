@@ -442,6 +442,8 @@ class HTML_config {
 				<td><strong><?php echo $row->config_secret; ?></strong></td>
 				<td>&nbsp;</td>
 			</tr>
+			<?php
+			/*
 			<tr>
 				<td>Version Check:</td>
 				<td>
@@ -450,6 +452,8 @@ class HTML_config {
 				</td>
 				<td>&nbsp;</td>
 			</tr>
+			*/
+			?>
 			<tr>
 				<td>GZIP Page Compression:</td>
 				<td>
@@ -812,9 +816,7 @@ class HTML_config {
 		$tabs->endPane();
 		
 		// show version check
-		if ($mainframe->getCfg( 'versioncheck' ) || $mainframe->getCfg( 'versioncheck' ) === null) {			
-			josVersionCheck();
-		}
+		josVersionCheck();
 		
 		// show security setting check
 		josSecurityCheck();

@@ -1254,34 +1254,45 @@ class mosMainFrame {
 	* @param string The base path from which to load the configuration file
 	*/
 	function _setAdminPaths( $option, $basePath='.' ) {
-		$option = strtolower( $option );
-		$this->_path = new stdClass();
-
+		$option 		= strtolower( $option );
+		
+		$this->_path 	= new stdClass();
+		
+		// security check to disable use of `/`, `\\` and `:` in $options variable 
+		if (strpos($option, '/') !== false || strpos($option, '\\') !== false || strpos($option, ':') !== false) {
+			mosErrorAlert( 'Restricted access' );
+			return;
+		}
+			
 		$prefix = substr( $option, 0, 4 );
-		if ($prefix != 'com_') {
+		if ($prefix != 'com_' && $prefix != 'mod_') {
 			// ensure backward compatibility with existing links
-			$name = $option;
+			$name 	= $option;
 			$option = "com_$option";
 		} else {
-			$name = substr( $option, 4 );
+			$name 	= substr( $option, 4 );
 		}
+		
 		// components
 		if (file_exists( "$basePath/templates/$this->_template/components/$name.html.php" )) {
-			$this->_path->front = "$basePath/components/$option/$name.php";
-			$this->_path->front_html = "$basePath/templates/$this->_template/components/$name.html.php";
+			$this->_path->front 		= "$basePath/components/$option/$name.php";
+			$this->_path->front_html 	= "$basePath/templates/$this->_template/components/$name.html.php";
 		} else if (file_exists( "$basePath/components/$option/$name.php" )) {
-			$this->_path->front = "$basePath/components/$option/$name.php";
-			$this->_path->front_html = "$basePath/components/$option/$name.html.php";
+			$this->_path->front 		= "$basePath/components/$option/$name.php";
+			$this->_path->front_html 	= "$basePath/components/$option/$name.html.php";
 		}
+		
 		if (file_exists( "$basePath/administrator/components/$option/admin.$name.php" )) {
-			$this->_path->admin = "$basePath/administrator/components/$option/admin.$name.php";
-			$this->_path->admin_html = "$basePath/administrator/components/$option/admin.$name.html.php";
+			$this->_path->admin 		= "$basePath/administrator/components/$option/admin.$name.php";
+			$this->_path->admin_html 	= "$basePath/administrator/components/$option/admin.$name.html.php";
 		}
+		
 		if (file_exists( "$basePath/administrator/components/$option/toolbar.$name.php" )) {
-			$this->_path->toolbar = "$basePath/administrator/components/$option/toolbar.$name.php";
-			$this->_path->toolbar_html = "$basePath/administrator/components/$option/toolbar.$name.html.php";
-			$this->_path->toolbar_default = "$basePath/administrator/includes/toolbar.html.php";
+			$this->_path->toolbar 			= "$basePath/administrator/components/$option/toolbar.$name.php";
+			$this->_path->toolbar_html 		= "$basePath/administrator/components/$option/toolbar.$name.html.php";
+			$this->_path->toolbar_default 	= "$basePath/administrator/includes/toolbar.html.php";
 		}
+		
 		if (file_exists( "$basePath/components/$option/$name.class.php" )) {
 			$this->_path->class = "$basePath/components/$option/$name.class.php";
 		} else if (file_exists( "$basePath/administrator/components/$option/$name.class.php" )) {
@@ -1289,13 +1300,17 @@ class mosMainFrame {
 		} else if (file_exists( "$basePath/includes/$name.php" )) {
 			$this->_path->class = "$basePath/includes/$name.php";
 		}
-		if (file_exists("$basePath/administrator/components/$option/admin.$name.php" )) {
-			$this->_path->admin = "$basePath/administrator/components/$option/admin.$name.php";
-			$this->_path->admin_html = "$basePath/administrator/components/$option/admin.$name.html.php";
+
+		if ($prefix == 'mod_' && file_exists("$basePath/administrator/modules/$option.php")) {
+			$this->_path->admin 		= "$basePath/administrator/modules/$option.php";
+			$this->_path->admin_html 	= "$basePath/administrator/modules/mod_$name.html.php";
+		} else if (file_exists("$basePath/administrator/components/$option/admin.$name.php" )) {
+			$this->_path->admin 		= "$basePath/administrator/components/$option/admin.$name.php";
+			$this->_path->admin_html 	= "$basePath/administrator/components/$option/admin.$name.html.php";
 		} else {
-			$this->_path->admin = "$basePath/administrator/components/com_admin/admin.admin.php";
-			$this->_path->admin_html = "$basePath/administrator/components/com_admin/admin.admin.html.php";
-		}
+			$this->_path->admin 		= "$basePath/administrator/components/com_admin/admin.admin.php";
+			$this->_path->admin_html 	= "$basePath/administrator/components/com_admin/admin.admin.html.php";
+		}		
 	}
 	/**
 	* Returns a stored path variable

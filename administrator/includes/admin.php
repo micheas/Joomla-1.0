@@ -312,30 +312,27 @@ function mosMainBody_Admin() {
  */
 function josSecurityCheck($width='95%') {		
 	$wrongSettingsTexts = array();
+	if ( ini_get('magic_quotes_gpc') != '1' ) {
+		$wrongSettingsTexts[] = 'PHP magic_quotes_gpc setting is `OFF` instead of `ON`';
+	}
 	if ( ini_get('register_globals') == '1' ) {
-		$wrongSettingsTexts[] = "PHP register_globals setting is `ON` instead of `OFF`";
+		$wrongSettingsTexts[] = 'PHP register_globals setting is `ON` instead of `OFF`';
 	}
 	if ( RG_EMULATION != 0 ) {
-		$wrongSettingsTexts[] = "Joomla! RG_EMULATION setting is `ON` instead of `OFF` in file globals.php <br /><span style=\"font-weight: normal; font-style: italic; color: black;\">`ON` by default for compatibility reasons</span>";
+		$wrongSettingsTexts[] = 'Joomla! RG_EMULATION setting is `ON` instead of `OFF` in file globals.php <br /><span style="font-weight: normal; font-style: italic; color: #666;">`ON` by default for compatibility reasons</span>';
 	}	
-	if ( ini_get('magic_quotes_gpc') != '1' ) {
-		$wrongSettingsTexts[] = "PHP magic_quotes_gpc setting is `OFF` instead of `ON`";
-	}
 	
 	if ( count($wrongSettingsTexts) ) {
 		?>
-		<div style="clear: both; margin: 3px; margin-top: 10px; padding: 0px 15px; display: block; float: left; border: 1px solid #ddd; background: white; text-align: left; width: <?php echo $width;?>;">
-			<h4>
-				SECURITY CHECK
-			</h4>
-			<p>
-				Following PHP Server Security Settings are not optimal for <strong>Security</strong> and it is recommended to change them:
-			</p>
-			<ul style="padding-left: 15px;">
+		<div style="clear: both; margin: 3px; margin-top: 10px; padding: 0px 15px; display: block; float: left; border: 1px solid #cc0000; background: #ffffcc; text-align: left; width: <?php echo $width;?>;">
+			<p style="color: #CC0000;">
+				Following PHP Server Settings are not optimal for <strong>Security</strong> and it is recommended to change them:
+			</p>			
+			<ul style="padding-left: 15px; list-style: none;" >
 				<?php
 				foreach ($wrongSettingsTexts as $txt) {
 					?>	
-					<li style="color: red; font-weight: bold;">
+					<li style="min-height: 25px; padding-bottom: 5px; padding-left: 25px; color: red; font-weight: bold; background-image: url(../includes/js/ThemeOffice/warning.png); background-repeat: no-repeat; background-position: 0px 2px;" >
 						<?php
 						echo $txt;
 						?>
@@ -344,8 +341,8 @@ function josSecurityCheck($width='95%') {
 				}
 				?>
 			</ul>
-			<p>
-				Please check <a href="http://forum.joomla.org/index.php/topic,81058.0.html" target="_blank">the Official Joomla! Server Security post</a> for more information.
+			<p style="color: #666;">
+				Please check <a href="http://forum.joomla.org/index.php/topic,81058.0.html" target="_blank" style="color: blue; text-decoration: underline">the Official Joomla! Server Security post</a> for more information.
 			</p>
 		</div>
 		<?php
@@ -355,85 +352,48 @@ function josSecurityCheck($width='95%') {
 /*
  * Added 1.0.11
  */
-function josVersionCheck($width='95%') {
-	$_VERSION 			= new joomlaVersion();				 	
-	$versioninfo 		= $_VERSION->RELEASE .'.'. $_VERSION->DEV_LEVEL .' '. $_VERSION->DEV_STATUS;
-	?>
-	<script type="text/javascript">
-		<!--//--><![CDATA[//><!--	
-	    function makeRequest(url) {	
-	        var http_request = false;
+ function josVersionCheck($width='95%',$always=1) {
+	$_VERSION 		= new joomlaVersion();				 	
+	$versioninfo 	= $_VERSION->RELEASE .'.'. $_VERSION->DEV_LEVEL .' '. $_VERSION->DEV_STATUS;
 	
-	        if (window.XMLHttpRequest) {
-	            http_request = new XMLHttpRequest();
-	            if (http_request.overrideMimeType) {
-	                http_request.overrideMimeType('text/xml');
-	            }
-	        } else if (window.ActiveXObject) {
-	            try {
-	                http_request = new ActiveXObject("Msxml2.XMLHTTP");
-	            } catch (e) {
-	                try {
-	                    http_request = new ActiveXObject("Microsoft.XMLHTTP");
-	                } catch (e) {}
-	            }
-	        }
+	$link 			= 'http://www.joomla.org/content/blogcategory/32/66/';
+	$status 		= 'status=yes,toolbar=yes,scrollbars=yes,titlebar=yes,menubar=yes,resizable=yes,directories=yes,location=yes';
 	
-	        if (!http_request) {
-	            return false;
-	        }
-	        http_request.onreadystatechange = function() { alertContents(http_request); };
-	        http_request.open('GET', url, true);
-	        http_request.send(null);	
-	    }
-	
-	    function alertContents(http_request) {	
-	        if (http_request.readyState == 4) {
-	            if ((http_request.status == 200) && (http_request.responseText.length < 1025)) {
-					document.getElementById('JLatestVersion').innerHTML = http_request.responseText;
-	            } else {
-	                document.getElementById('JLatestVersion').innerHTML = 'Unknown, unable to check!';
-	            }
-	        }
-	
-	    }
-	
-	    function JInitAjax() {
-	    	makeRequest('<?php echo 'index3.php?option=com_admin&task=quickcheck&no_html=1'; ?>');
-	    }
-	
-	    function JAddEvent(obj, evType, fn){
-	    	if (obj.addEventListener){
-	    		obj.addEventListener(evType, fn, true);
-	    		return true;
-	    	} else if (obj.attachEvent){
-	    		var r = obj.attachEvent("on"+evType, fn);
-	    		return r;
-	    	} else {
-	    		return false;
-	    	}
-	    }
-	
-		JAddEvent(window, 'load', JInitAjax);
-		//--><!]]>
-	</script>
-	
-	<div style="clear: both; margin: 3px; margin-top: 15px; padding: 0px 15px; display: block; float: left; border: 1px solid #ddd; background: white; text-align: left; width: <?php echo $width;?>;">
-		<table cellpadding="4" cellspacing="0" border="0" width="100%" class="adminheading">
-		<tr>
-			<td colspan="2" style="text-align: center;">
-				<h3 style="margin-top: 20px; font-size: 13px;">
-					<span style="font-weight: normal;">
-						Your version of Joomla! [ <?php echo $versioninfo; ?> ] is  
-					</span>	 
-					<div id="JLatestVersion" style="display: inline; font-size: 13px; color:#888">
-						...Checking...
-					</div>
-				</h3>
-			</td>
-		</tr>
-	    </table>
-	</div>
-	<?php
-}		
+	$release 		= strtotime($_VERSION->RELDATE);
+	$now	 		= strtotime('now');
+	$age			= ($now - $release) / 86400;	
+	$age			= round($age);	
+
+	if ($always) {
+		if ($age > 1) {
+			$check = 1;
+		} else {
+			$check = 0;			
+		}
+	} else {
+		if ($age > 27) {
+			$check = 1;
+		} else {
+			$check = 0;			
+		}
+	}
+
+ 	if ($check) {
+		?>
+		<div style="clear: both; margin: 3px; margin-top: 15px; padding: 0px 15px; display: block; float: left; border: 1px solid silver; background: white; text-align: center; width: <?php echo $width;?>;">
+			<h3 style="margin-top: 10px; font-size: 12px;" color="#008080">
+				<div style="font-weight: normal; color: #666;">
+					Your version of Joomla! [ <?php echo $versioninfo; ?> ] is  
+				</div>	 
+				<div style="font-size: 13px; color: #CC0000;">
+					<?php echo $age; ?> days old
+				</div>
+				<div>
+					<input class="button" name="Button3" type="submit" value="Check for newer version" onclick="window.open('<?php echo $link; ?>','win2','<?php echo $status; ?>'); return false;" />							
+				</div>
+			</h3>
+		</div>
+		<?php
+	}
+}
 ?>

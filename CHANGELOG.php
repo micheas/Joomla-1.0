@@ -39,10 +39,10 @@ code fixes.
 
 
 ----------------------------------------------------------------------------------------
----------------- 1.0.11 RC Released -- [25-August-2006 20:00 UTC] ------------------
+---------------- 1.0.11 Stable Released -- [28-August-2006 18:00 UTC] ------------------
 
 
-This Release Contains the following 24 Security Fixes
+This Release Contains the following 25 Security Fixes
 
 Joomla! utilizes the Open Web Application Security Project (OWASP) tOP tEN pROJECT to categorize security vunerabilities found within Joomla!
 http://www.owasp.org/index.php/OWASP_Top_Ten_Project
@@ -73,7 +73,7 @@ A2 Broken Access Control
 
 --- - - - - - - - - ---
 
-16 LOW Level Threats fixed
+17 LOW Level Threats fixed
 
 A1 Unvalidated Input
  * Hardened Admin `User Manager`
@@ -88,11 +88,12 @@ A2 Broken Access Control
 A4 Cross Site Scripting 
  * Fixed XSS injection issue in Admin `Module Manager`
  * Fixed XSS injection issue in Admin `Help` 
- * Fixed XSS injection issue in Admin `Upload Image` 
  * Fixed XSS injection issue in Search 
 
 A6 Injection Flaws 
  * Harden loading of globals.php by using require() instead of include_once();
+ * Block potential misuse of $option variable
+ * Block against injection issue in Admin `Upload Image`  
  * Secured against possible injection attacks on ->load()
  * Secured against injection attack on content submissions where frontpage is selected
  * Secured against possible injection attack thru mosPageNav constructor
@@ -103,11 +104,16 @@ A6 Injection Flaws
 -- -- -- -- -- ---- -- ---- -- ---- -- ---- -- ---- -- ---- -- ---- -- ---- -- ---- -- ---- -- --
 
 
+28-Aug-2006 Rey Gigataras
+ # SECURITY A6 [ LOW Level ]: Block potential misuse of $option variable
+
+
 24-Aug-2006 Rey Gigataras
  # SECURITY A6 [ LOW Level ]: Add exploit blocking rules to htaccess
  # SECURITY A6 [ LOW Level ]: Harden loading of globals.php by using require() instead of include_once();
  
  + Installation Security Warning check 
+ + Admin & Installation Version age warning 
 
 
 23-Aug-2006 Rey Gigataras
@@ -118,17 +124,15 @@ A6 Injection Flaws
 
 21-Aug-2006 Rey Gigataras
  # SECURITY A1 [ LOW Level ]: Hardened Admin `User Manager`
- 
- + Live Joomla! Version Check functionality
- 
+  
 
 19-Aug-2006 Rey Gigataras
  # SECURITY A2 [ MEDIUM Level ]: Limit Admin `Upload Image` from uploading below `/images/stories/` directory
  # SECURITY A2 [ LOW Level ]: Limit access to Admin `Popups` functionality 
  # SECURITY A4 [ LOW Level ]: [topic,73761] : XSS injection issue in Admin `Module Manager`
  # SECURITY A4 [ LOW Level ]: [topic,73761] : XSS injection issue in Admin `Help` 
- # SECURITY A4 [ LOW Level ]: [topic,73761] : XSS injection issue in Admin `Upload Image` 
  # SECURITY A4 [ LOW Level ]: [topic,73761] : XSS injection issue in Search 
+ # SECURITY A6 [ LOW Level ]: [topic,73761] : Block against injection issue in Admin `Upload Image` 
 
 
 19-Aug-2006 Enno Klasing

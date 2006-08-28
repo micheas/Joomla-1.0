@@ -92,7 +92,7 @@ initEditor();
 			<div align="center" class="smallgrey">
 				<?php echo $version; ?>
 				<br />
-				<a href="index2.php?option=com_admin&task=versioncheck">Check for latest Version</a>
+				<a href="http://www.joomla.org/content/blogcategory/32/66/" target="_blank">Check for latest Version</a>
 			</div>			
 			<?php
 			if ( $mosConfig_debug ) {

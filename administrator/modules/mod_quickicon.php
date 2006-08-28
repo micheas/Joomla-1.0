@@ -67,12 +67,12 @@ if (!defined( '_JOS_QUICKICON_MODULE' )) {
 			$link = 'index2.php?option=com_menumanager';
 			quickiconButton( $link, 'menu.png', 'Menu Manager' );
 		}
-		/*
+		
 		if ( $my->gid > 24 ) {
 			$link = 'index2.php?option=com_languages';
 			quickiconButton( $link, 'langmanager.png', 'Language Manager' );
 		}
-		*/
+		
 		if ( $my->gid > 23 ) {
 			$link = 'index2.php?option=com_users';
 			quickiconButton( $link, 'user.png', 'User Manager' );
@@ -82,14 +82,14 @@ if (!defined( '_JOS_QUICKICON_MODULE' )) {
 			$link = 'index2.php?option=com_config&hidemainmenu=1';
 			quickiconButton( $link, 'config.png', 'Global Configuration' );
 		}
-		
+		/*
 		$link = 'index2.php?option=com_admin&task=versioncheck';
 		quickiconButton( $link, 'version_check.png', 'Version Check' );
-		
+		*/
 		
 		if ($versioncheck) {
 		// show version check
-			josVersionCheck('88%');
+			josVersionCheck('88%',0);
 		}
 		
 		if ($securitycheck) {
@@ -97,7 +97,8 @@ if (!defined( '_JOS_QUICKICON_MODULE' )) {
 			josSecurityCheck('88%');
 		}
 		?>
-	</div>	
+	</div>
+	<div style="clear:both;"></div>	
 	<?php
 }
 ?>

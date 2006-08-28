@@ -51,7 +51,21 @@ class mosInstallerModule extends mosInstaller {
 			. ($client == 'admin' ? '/administrator' : '')
 			. '/modules/' )
 		);
-
+		
+		$e = &$mosinstall->getElementsByPath( 'position', 1 );
+		if (!is_null($e)) {
+			$position = $e->getText();
+			
+			if ($e->getAttribute( 'published' ) == '1') {
+				$published = 1;
+			} else {
+				$published = 0;
+			}
+		} else {
+			$position 	= 'left';
+			$published 	= 0;
+		}
+		
 		if ($this->parseFiles( 'files', 'module', 'No file is marked as module file' ) === false) {
 			return false;
 		}
@@ -75,7 +89,8 @@ class mosInstallerModule extends mosInstaller {
 			$row = new mosModule( $database );
 			$row->title 		= $this->elementName();
 			$row->ordering 		= 99;
-			$row->position 		= 'left';
+			$row->published		= $published;
+			$row->position 		= $position;
 			$row->showtitle 	= 1;
 			$row->iscore 		= 0;
 			$row->access 		= $client == 'admin' ? 99 : 0;

@@ -98,7 +98,7 @@ if (!defined( '_JOS_QUICKICON_MODULE' )) {
 		}
 		?>
 	</div>
-	<div style="clear:both;"></div>	
+	<div style="clear:both;"> </div>	
 	<?php
 }
 ?>

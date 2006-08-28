@@ -360,7 +360,7 @@ function saveUser( $task ) {
 	// save usertype to usetype column
 	$query = "SELECT name"
 	. "\n FROM #__core_acl_aro_groups"
-	. "\n WHERE group_id = $row->gid"
+	. "\n WHERE group_id = " . (int) $row->gid
 	;
 	$database->setQuery( $query );
 	$usertype = $database->loadResult();

@@ -24,17 +24,17 @@ class joomlaVersion {
 	/** @var int Main Release Level */
 	var $RELEASE 	= '1.0';
 	/** @var string Development Status */
-	var $DEV_STATUS = 'RC';
+	var $DEV_STATUS = 'Stable';
 	/** @var int Sub Release Level */
 	var $DEV_LEVEL 	= '11';
 	/** @var int build Number */
 	var $BUILD	 	= '$Revision$';
 	/** @var string Codename */
-	var $CODENAME 	= 'Sunburst';
+	var $CODENAME 	= 'Sunbow';
 	/** @var string Date */
-	var $RELDATE 	= '25 August 2006';
+	var $RELDATE 	= '28 August 2006';
 	/** @var string Time */
-	var $RELTIME 	= '20:00';
+	var $RELTIME 	= '18:00';
 	/** @var string Timezone */
 	var $RELTZ 		= 'UTC';
 	/** @var string Copyright Text */

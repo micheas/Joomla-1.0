@@ -460,6 +460,8 @@ function saveTemplateAssign( $option, $client ) {
 
 	if ( !in_array( '', $menus ) ) {
 		foreach ( $menus as $menuid ){
+			$menuid = (int) $menuid;
+
 			// If 'None' is not in array
 			if ( $menuid != -999 ) {
 				// check if there is already a template assigned to this menu item

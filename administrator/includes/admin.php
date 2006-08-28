@@ -325,11 +325,11 @@ function josSecurityCheck($width='95%') {
 	
 	if ( count($wrongSettingsTexts) ) {
 		?>
-		<div style="clear: both; margin: 3px; margin-top: 10px; padding: 0px 15px; display: block; float: left; border: 1px solid #cc0000; background: #ffffcc; text-align: left; width: <?php echo $width;?>;">
+		<div style="clear: both; margin: 3px; margin-top: 10px; padding: 5px 15px; display: block; float: left; border: 1px solid #cc0000; background: #ffffcc; text-align: left; width: <?php echo $width;?>;">
 			<p style="color: #CC0000;">
 				Following PHP Server Settings are not optimal for <strong>Security</strong> and it is recommended to change them:
 			</p>			
-			<ul style="padding-left: 15px; list-style: none;" >
+			<ul style="margin: 0px; padding: 0px; padding-left: 15px; list-style: none;" >
 				<?php
 				foreach ($wrongSettingsTexts as $txt) {
 					?>	

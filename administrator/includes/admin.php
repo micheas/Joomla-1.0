@@ -312,6 +312,7 @@ function mosMainBody_Admin() {
  */
 function josSecurityCheck($width='95%') {		
 	$wrongSettingsTexts = array();
+	
 	if ( ini_get('magic_quotes_gpc') != '1' ) {
 		$wrongSettingsTexts[] = 'PHP magic_quotes_gpc setting is `OFF` instead of `ON`';
 	}

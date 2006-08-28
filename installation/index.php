@@ -228,16 +228,17 @@ function view() {
 				
 				<?php
 				$wrongSettingsTexts = array();
+				
+				if ( ini_get('magic_quotes_gpc') != '1' ) {
+					$wrongSettingsTexts[] = 'PHP magic_quotes_gpc setting is `OFF` instead of `ON`';
+				}
 				if ( ini_get('register_globals') == '1' ) {
-					$wrongSettingsTexts[] = "PHP register_globals setting is `ON` instead of `OFF`";
+					$wrongSettingsTexts[] = 'PHP register_globals setting is `ON` instead of `OFF`';
 				}
 				if ( RG_EMULATION != 0 ) {
-					$wrongSettingsTexts[] = "Joomla! RG_EMULATION setting is `ON` instead of `OFF` in file globals.php <br /><span style=\"font-weight: normal; font-style: italic; color: black;\">`ON` by default for compatibility reasons</span>";
+					$wrongSettingsTexts[] = 'Joomla! RG_EMULATION setting is `ON` instead of `OFF` in file globals.php <br /><span style="font-weight: normal; font-style: italic; color: #666;">`ON` by default for compatibility reasons</span>';
 				}	
-				if ( ini_get('magic_quotes_gpc') != '1' ) {
-					$wrongSettingsTexts[] = "PHP magic_quotes_gpc setting is `OFF` instead of `ON`";
-				}
-				
+	
 				if ( count($wrongSettingsTexts) ) {
 					?>							
 					<h1>
@@ -259,11 +260,11 @@ function view() {
 							<table class="content">
 							<tr>
 								<td class="item">
-									<ul style="padding-left: 15px; text-align: left; padding-bottom: 20px;">
+									<ul style="margin: 0px; padding: 0px; padding-left: 5px; text-align: left; padding-bottom: 0px; list-style: none;">
 										<?php
 										foreach ($wrongSettingsTexts as $txt) {
 											?>	
-											<li style="color: red; font-weight: bold;">
+											<li style="min-height: 25px; padding-bottom: 5px; padding-left: 25px; color: red; font-weight: bold; background-image: url(../includes/js/ThemeOffice/warning.png); background-repeat: no-repeat; background-position: 0px 2px;" >
 												<?php
 												echo $txt;
 												?>

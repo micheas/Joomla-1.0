@@ -137,9 +137,6 @@ function showconfig( $option) {
 
 
 // SERVER SETTINGS
-/*
-	$lists['versioncheck'] = mosHTML::yesnoRadioList( 'config_versioncheck', 'class="inputbox"', $row->config_versioncheck );
-*/	
 	$lists['gzip'] = mosHTML::yesnoRadioList( 'config_gzip', 'class="inputbox"', $row->config_gzip );
 	
 	$session = array(

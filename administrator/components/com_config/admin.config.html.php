@@ -442,18 +442,6 @@ class HTML_config {
 				<td><strong><?php echo $row->config_secret; ?></strong></td>
 				<td>&nbsp;</td>
 			</tr>
-			<?php
-			/*
-			<tr>
-				<td>Version Check:</td>
-				<td>
-				<?php echo $lists['versioncheck']; ?>
-				<?php echo mosToolTip('Enable the Live AJAX Version Check functionality in the `Global Config` & `System Info` page'); ?>
-				</td>
-				<td>&nbsp;</td>
-			</tr>
-			*/
-			?>
 			<tr>
 				<td>GZIP Page Compression:</td>
 				<td>

@@ -284,8 +284,13 @@ function editMambot( $option, $uid, $client ) {
 
 	$lists['published'] = mosHTML::yesnoRadioList( 'published', 'class="inputbox"', $row->published );
 
+	$path = $mosConfig_absolute_path . "/mambots/$row->folder/$row->element.xml";
+	if (!file_exists( $path )) {
+		$path = '';
+	}
+
 	// get params definitions
-	$params = new mosParameters( $row->params, $mainframe->getPath( 'bot_xml', $row->folder.'/'.$row->element ), 'mambot' );
+	$params = new mosParameters( $row->params, $path, 'mambot' );
 
 	HTML_modules::editMambot( $row, $lists, $params, $option );
 }

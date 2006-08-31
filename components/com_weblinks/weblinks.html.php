@@ -201,7 +201,7 @@ class HTML_weblinks {
 				?>
 				<li>
 					<b>
-					<?php echo $cat->name;?>
+					<?php echo stripslashes( $cat->name );?>
 					</b>
 					&nbsp;
 					<span class="small">
@@ -214,7 +214,7 @@ class HTML_weblinks {
 				?>
 				<li>
 					<a href="<?php echo sefRelToAbs( $link ); ?>" class="category<?php echo $params->get( 'pageclass_sfx' ); ?>">
-					<?php echo $cat->name;?>
+					<?php echo stripslashes( $cat->name );?>
 					</a>
 					&nbsp;
 					<span class="small">

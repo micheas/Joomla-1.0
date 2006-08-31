@@ -52,6 +52,7 @@ code fixes.
  # Fixed [artf5766] : Bannerupload failt
  # Fixed [artf5229] : loadRowList($key) not working as expected
  # Fixed [artf5727] : mosTabs parent div class name error
+ # Fixed [artf5432] : slashes not stripped in WebLinks
  
 ----------------------------------------------------------------------------------------
 ---------------- 1.0.11 Stable Released -- [28-August-2006 20:00 UTC] ------------------

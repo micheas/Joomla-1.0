@@ -38,6 +38,13 @@ code fixes.
 ! -> Note
 
 
+
+
+
+31-August-2006 Marko Schmuck
+ # Fixed [artf5770] : $query variable not defined in functions in gacl.api.class.php
+
+
 ----------------------------------------------------------------------------------------
 ---------------- 1.0.11 Stable Released -- [28-August-2006 20:00 UTC] ------------------
 

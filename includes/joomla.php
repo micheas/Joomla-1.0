@@ -4294,7 +4294,7 @@ class mosTabs {
 	* @param string The Tab Pane Name
 	*/
 	function startPane($id){
-		echo "<div class=\"tab-page\" id=\"".$id."\">";
+		echo "<div class=\"tab-pane\" id=\"".$id."\">";
 		echo "<script type=\"text/javascript\">\n";
 		echo "	var tabPane1 = new WebFXTabPane( document.getElementById( \"".$id."\" ), ".$this->useCookies." )\n";
 		echo "</script>\n";

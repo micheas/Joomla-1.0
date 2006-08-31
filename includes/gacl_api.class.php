@@ -549,7 +549,7 @@ class gacl_api extends gacl {
 			}
 
 			$this->db->setQuery( 'UPDATE '. $table .' SET lft=lft+2 WHERE lft>'. $parent_rgt );
-			$rs = $this->db->query($query);
+			$rs = $this->db->query();
 
 			if (!$rs) {
 				$this->debug_db('add_group: make room for the new group - left');
@@ -559,7 +559,7 @@ class gacl_api extends gacl {
 		}
 
 		$this->db->setQuery( 'INSERT INTO '. $table .' (group_id,parent_id,name,lft,rgt) VALUES ('. $insert_id .','. $parent_id .',\''. $this->db->getEscaped($name) .'\','. $parent_rgt .','. ($parent_rgt + 1) .')' );
-		$rs = $this->db->query($query);
+		$rs = $this->db->query();
 
 		if (!$rs) {
 			$this->debug_db('add_group: insert record');
@@ -810,7 +810,7 @@ class gacl_api extends gacl {
 
 		// Get details of this group
 		$this->db->setQuery( 'SELECT group_id, parent_id, name, lft, rgt FROM '. $table .' WHERE group_id='. $group_id );
-		$group_details = $this->db->loadRow($query);
+		$group_details = $this->db->loadRow();
 
 		if (!is_array($group_details)) {
 			$this->debug_db('del_group: get group details');
@@ -830,7 +830,7 @@ class gacl_api extends gacl {
 		// prevent deletion of root group & reparent of children if it has more than one immediate child
 		if ($parent_id == 0) {
 			$this->db->setQuery( 'SELECT count(*) FROM '. $table .' WHERE parent_id='. $group_id );
-			$child_count = $this->db->loadResult($query);
+			$child_count = $this->db->loadResult();
 
 			if ($child_count > 1 && $reparent_children) {
 				$this->debug_text ('del_group (): You cannot delete the root group and reparent children, this would create multiple root groups.');

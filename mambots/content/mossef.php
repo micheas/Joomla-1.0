@@ -82,12 +82,14 @@ function botMosSef_replacer( &$matches ) {
 		$url = explode( '?option', $url );
 		
 		if (is_array($url) && isset($url[1])) {
-			$link = 'index.php?option'. $url[1] . $matches[1];
+			$link = 'index.php?option'. $url[1] ;
+			// convert url to SEF link
+			$link 		= sefRelToAbs( $link ) . $matches[1];
 		} else {
 			$link = $matches[1];
-		}		
-		// convert url to SEF link
-		$link 		= sefRelToAbs( $link );
+			// convert url to SEF link
+			$link 		= sefRelToAbs( $link );
+		}
 		// reconstruct html output
 		$replace 	= 'href="'. $link .'"';
 		
@@ -97,3 +99,4 @@ function botMosSef_replacer( &$matches ) {
 	}
 }
 ?>
+	

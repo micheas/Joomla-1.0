@@ -43,6 +43,7 @@ code fixes.
 
 31-August-2006 Marko Schmuck
  # Fixed [artf5770] : $query variable not defined in functions in gacl.api.class.php
+ # Fixed [artf3978] : mosBindArrayToObject ignore bug
 
 
 ----------------------------------------------------------------------------------------

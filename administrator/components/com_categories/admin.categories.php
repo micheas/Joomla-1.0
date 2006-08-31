@@ -432,7 +432,7 @@ function editCategory( $uid=0, $section='' ) {
 	. "\n WHERE section = '$row->section'"
 	. "\n ORDER BY ordering"
 	;
-	$lists['ordering'] 			= mosAdminMenus::SpecificOrdering( $row, $uid, $query );
+	$lists['ordering'] 			= stripslashes( mosAdminMenus::SpecificOrdering( $row, $uid, $query ));
 
 	// build the select list for the image positions
 	$active =  ( $row->image_position ? $row->image_position : 'left' );

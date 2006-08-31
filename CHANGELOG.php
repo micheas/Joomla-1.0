@@ -44,8 +44,10 @@ code fixes.
 31-August-2006 Marko Schmuck
  # Fixed [artf5770] : $query variable not defined in functions in gacl.api.class.php
  # Fixed [artf3978] : mosBindArrayToObject ignore bug
-
-
+ # Fixed [artf5169] : mosDBTable::publish hard coded key again
+ # Fixed [artf5280] : SEF drops anchors
+ 
+ 
 ----------------------------------------------------------------------------------------
 ---------------- 1.0.11 Stable Released -- [28-August-2006 20:00 UTC] ------------------
 

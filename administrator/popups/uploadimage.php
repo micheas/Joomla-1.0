@@ -41,6 +41,7 @@ function limitDirectory( &$directory ) {
 // limit access to functionality
 $option = strval( mosGetParam( $_SESSION, 'option', '' ) );
 $task 	= strval( mosGetParam( $_SESSION, 'task', '' ) );
+
 switch ($option) {
 	case 'com_banners':
 		break;		
@@ -49,7 +50,7 @@ switch ($option) {
 	case 'com_content':
 	case 'com_sections':
 	case 'com_typedcontent':
-		if ( $task != 'edit' && $task != 'editA'  ) {
+		if ( $task != 'edit' && $task != 'editA' && $task != 'new' ) {
 			echo _NOT_AUTH;
 			return;
 		}

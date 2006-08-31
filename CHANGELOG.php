@@ -39,7 +39,9 @@ code fixes.
 
 
 
-
+31-August-2006 Mateusz Krzeszowiec
+ # Fixed [artf5780] : lack of 'new' task in allowed tasks check
+ # Fixed [artf5779] : lack of 'com_typedcontent' option in allowed options check
 
 31-August-2006 Marko Schmuck
  # Fixed [artf5770] : $query variable not defined in functions in gacl.api.class.php

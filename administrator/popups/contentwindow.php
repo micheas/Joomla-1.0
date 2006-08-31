@@ -20,8 +20,10 @@ include_once ( $mosConfig_absolute_path . '/language/' . $mosConfig_lang . '.php
 // limit access to functionality
 $option = strval( mosGetParam( $_SESSION, 'option', '' ) );
 $task 	= strval( mosGetParam( $_SESSION, 'task', '' ) );
+
 switch ($option) {
 	case 'com_content':
+	case 'com_typedcontent':
 		if ( $task != 'edit' && $task != 'editA'  && $task != 'new' ) {
 			echo _NOT_AUTH;
 			return;

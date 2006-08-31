@@ -1236,21 +1236,22 @@ class mosDBTable {
 	 * @param integer The id of the user performnig the operation
 	 * @since 1.0.4
 	 */
-	function publish( $cid=null, $publish=1, $user_id=0 ) {
-		mosArrayToInts( $cid, array() );
+	function publish( $oid=null, $publish=1, $user_id=0 ) {
 		$user_id = intval( $user_id );
 		$publish = intval( $publish );
 
-		if (count( $cid ) < 1) {
+		$k = $this->_tbl_key;
+		if ($oid !== null) {
+			$this->$k = intval( $oid );
+		}
+		if ($this->$k == NULL) {
 			$this->_error = "No items selected.";
 			return false;
-		}
-
-		$cids = 'id=' . implode( ' OR id=', $cid );
+		}	
 
 		$query = "UPDATE $this->_tbl"
 		. "\n SET published = " . intval( $publish )
-		. "\n WHERE ($cids)"
+		. "\n WHERE $this->_tbl_key = '". $this->$k ."'"
 		. "\n AND (checked_out = 0 OR checked_out = $user_id)"
 		;
 		$this->_db->setQuery( $query );
@@ -1259,8 +1260,8 @@ class mosDBTable {
 			return false;
 		}
 
-		if (count( $cid ) == 1) {
-			$this->checkin( $cid[0] );
+		if (count( $oid ) == 1) {
+			$this->checkin( $oid[0] );
 		}
 		$this->_error = '';
 		return true;

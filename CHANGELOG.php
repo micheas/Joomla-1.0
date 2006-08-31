@@ -53,6 +53,8 @@ code fixes.
  # Fixed [artf5229] : loadRowList($key) not working as expected
  # Fixed [artf5727] : mosTabs parent div class name error
  # Fixed [artf5432] : slashes not stripped in WebLinks
+ # Fixed [artf5215][artf5412] : Successfully Saved Item: {title} ... slashes not stripped from title 
+ 
  
 ----------------------------------------------------------------------------------------
 ---------------- 1.0.11 Stable Released -- [28-August-2006 20:00 UTC] ------------------

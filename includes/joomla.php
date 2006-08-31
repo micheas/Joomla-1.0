@@ -3008,6 +3008,7 @@ function mosBindArrayToObject( $array, &$obj, $ignore='', $prefix=NULL, $checkSl
 		return (false);
 	}
 
+	$ignore = ' ' . $ignore . ' ';
 	foreach (get_object_vars($obj) as $k => $v) {
 		if( substr( $k, 0, 1 ) != '_' ) {			// internal attributes of an object are ignored
 			if (strpos( $ignore, $k) === false) {

@@ -72,7 +72,7 @@ $userfile_name	= (isset($_FILES['userfile']['name']) ? $_FILES['userfile']['name
 limitDirectory( $directory );
 
 // check to see if directory exists
-if ( $directory != '' && !is_dir($mosConfig_absolute_path .'/images/stories/'. $directory)) {
+if ( $directory != 'banners' && $directory != '' && !is_dir($mosConfig_absolute_path .'/images/stories/'. $directory)) {
 	$directory 	= '';
 }
 	

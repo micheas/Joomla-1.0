@@ -520,7 +520,7 @@ class database {
 			return null;
 		}
 		$array = array();
-		while ($row = mysql_fetch_row( $cur )) {
+		while ($row = mysql_fetch_array( $cur )) {
 			if ($key) {
 				$array[$row[$key]] = $row;
 			} else {

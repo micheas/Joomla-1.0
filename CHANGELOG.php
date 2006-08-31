@@ -46,6 +46,7 @@ code fixes.
  # Fixed [artf3978] : mosBindArrayToObject ignore bug
  # Fixed [artf5169] : mosDBTable::publish hard coded key again
  # Fixed [artf5280] : SEF drops anchors
+ # Fixed [topic,90725] : incorrect timezone values in config_offset_user dropdown
  
  
 ----------------------------------------------------------------------------------------

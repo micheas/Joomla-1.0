@@ -51,6 +51,7 @@ code fixes.
  # Fixed [topic,90725] : incorrect timezone values in config_offset_user dropdown
  # Fixed [artf5766] : Bannerupload failt
  # Fixed [artf5229] : loadRowList($key) not working as expected
+ # Fixed [artf5727] : mosTabs parent div class name error
  
 ----------------------------------------------------------------------------------------
 ---------------- 1.0.11 Stable Released -- [28-August-2006 20:00 UTC] ------------------

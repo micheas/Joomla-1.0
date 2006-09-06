@@ -1092,7 +1092,8 @@ class mosDBTable {
 			;
 			$this->_db->setQuery( $query );
 
-			if ($obj = $this->_db->loadObject()) {
+			$obj = null;
+			if (!$this->_db->loadObject($obj)) {
 				$this->_error = $this->_db->getErrorMsg();
 				return false;
 			}
@@ -1100,7 +1101,7 @@ class mosDBTable {
 			foreach( $joins as $table ) {
 				$k = $table['idfield'];
 				if ($obj->$k) {
-					$msg[] = $AppUI->_( $table['label'] );
+					$msg[] = $table['label'];
 				}
 			}
 

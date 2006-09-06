@@ -5011,7 +5011,7 @@ class mosAdminMenus {
 	* Also can be used in conjunction with the menulist param to create the chosen image
 	* load the default or use no image
 	*/
-	function ImageCheck( $file, $directory='/images/M_images/', $param=NULL, $param_directory='/images/M_images/', $alt=NULL, $name='image', $type=1, $align='middle', $title=NULL, $admin=NULL ) {
+	function ImageCheck( $file, $directory='/images/M_images/', $param=NULL, $param_directory='/images/M_images/', $alt=NULL, $name=NULL, $type=1, $align='middle', $title=NULL, $admin=NULL ) {
 		global $mosConfig_absolute_path, $mosConfig_live_site, $mainframe;
 
 		$cur_template = $mainframe->getTemplate();

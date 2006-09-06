@@ -37,6 +37,10 @@ code fixes.
 - -> Removed
 ! -> Note
 
+06-Sep-2006 Marko Schmuck
+ # Fixed [artf5367] : Better mysql statement in content.searchbot.php
+ # Fixed [artf5141] : image attribute name="image" breaks xhtml compliance when output multiple times
+
 06-Sep-2006 Andrew Eddie
  # Fixed [artf5799] : mysql_real_escape_string called incorrectly in database.php
  # Fixed [artf5581] : canDelete method doesn't work

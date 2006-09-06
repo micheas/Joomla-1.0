@@ -37,7 +37,9 @@ code fixes.
 - -> Removed
 ! -> Note
 
-
+06-Sep-2006 Andrew Eddie
+ # Fixed [artf5799] : mysql_real_escape_string called incorrectly in database.php
+ # Fixed [artf5581] : canDelete method doesn't work
 
 31-August-2006 Mateusz Krzeszowiec
  # Fixed [artf5780] : lack of 'new' task in allowed tasks check
@@ -50,7 +52,6 @@ code fixes.
  # Fixed [artf5280] : SEF drops anchors
  # Fixed [topic,90725] : incorrect timezone values in config_offset_user dropdown
  # Fixed [artf5766] : Bannerupload failt
- # Fixed [artf5229] : loadRowList($key) not working as expected
  # Fixed [artf5727] : mosTabs parent div class name error
  # Fixed [artf5432] : slashes not stripped in WebLinks
  # Fixed [artf5215][artf5412] : Successfully Saved Item: {title} ... slashes not stripped from title 

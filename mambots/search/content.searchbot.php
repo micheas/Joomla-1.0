@@ -63,11 +63,11 @@ function botSearchContent( $text, $phrase='', $ordering='' ) {
 	switch ($phrase) {
 		case 'exact':
 			$wheres2 	= array();
-			$wheres2[] 	= "LOWER(a.title) LIKE '%$text%'";
-			$wheres2[] 	= "LOWER(a.introtext) LIKE '%$text%'";
-			$wheres2[] 	= "LOWER(a.fulltext) LIKE '%$text%'";
-			$wheres2[] 	= "LOWER(a.metakey) LIKE '%$text%'";
-			$wheres2[] 	= "LOWER(a.metadesc) LIKE '%$text%'";
+			$wheres2[] 	= "LOWER(a.title) LIKE LOWER('%$text%')";
+			$wheres2[] 	= "LOWER(a.introtext) LIKE LOWER('%$text%')";
+			$wheres2[] 	= "LOWER(a.fulltext) LIKE LOWER('%$text%')";
+			$wheres2[] 	= "LOWER(a.metakey) LIKE LOWER('%$text%')";
+			$wheres2[] 	= "LOWER(a.metadesc) LIKE LOWER('%$text%')";
 			$where 		= '(' . implode( ') OR (', $wheres2 ) . ')';
 			break;
 			
@@ -78,11 +78,11 @@ function botSearchContent( $text, $phrase='', $ordering='' ) {
 			$wheres = array();
 			foreach ($words as $word) {
 				$wheres2 	= array();
-				$wheres2[] 	= "LOWER(a.title) LIKE '%$word%'";
-				$wheres2[] 	= "LOWER(a.introtext) LIKE '%$word%'";
-				$wheres2[] 	= "LOWER(a.fulltext) LIKE '%$word%'";
-				$wheres2[] 	= "LOWER(a.metakey) LIKE '%$word%'";
-				$wheres2[] 	= "LOWER(a.metadesc) LIKE '%$word%'";
+				$wheres2[] 	= "LOWER(a.title) LIKE LOWER('%$word%')";
+				$wheres2[] 	= "LOWER(a.introtext) LIKE LOWER('%$word%')";
+				$wheres2[] 	= "LOWER(a.fulltext) LIKE LOWER('%$word%')";
+				$wheres2[] 	= "LOWER(a.metakey) LIKE LOWER('%$word%')";
+				$wheres2[] 	= "LOWER(a.metadesc) LIKE LOWER('%$word%')";
 				$wheres[] 	= implode( ' OR ', $wheres2 );
 			}
 			$where = '(' . implode( ($phrase == 'all' ? ') AND (' : ') OR ('), $wheres ) . ')';

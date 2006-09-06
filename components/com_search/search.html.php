@@ -204,6 +204,7 @@ class search_html {
 				}
 				?>
 			</td>
+		</tr>	
 		<?php
 	}
 

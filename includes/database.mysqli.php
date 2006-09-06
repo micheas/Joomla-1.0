@@ -497,7 +497,7 @@ class database {
 			return null;
 		}
 		$array = array();
-		while ($row = mysqli_fetch_array( $cur )) {
+		while ($row = mysqli_fetch_row( $cur )) {
 			if ($key) {
 				$array[$row[$key]] = $row;
 			} else {
@@ -1231,23 +1231,23 @@ class mosDBTable {
 
 	/**
 	 * Generic Publish/Unpublish function
-	 * @param array An array of id numbers
-	 * @param integer 0 if unpublishing, 1 if publishing
-	 * @param integer The id of the user performnig the operation
-	 * @since 1.0.4
+	 * @param	array	An array of id numbers
+	 * @param	integer	0 if unpublishing, 1 if publishing
+	 * @param	integer	The id of the user performnig the operation
+	 * @since	1.0.4
 	 */
-	function publish( $oid=null, $publish=1, $user_id=0 ) {
-		$user_id = intval( $user_id );
-		$publish = intval( $publish );
+	function publish( $cid=null, $publish=1, $user_id=0 ) {
+		mosArrayToInts( $cid, array() );
+		$user_id	= (int) $user_id;
+		$publish	= (int) $publish;
+		$k			= $this->_tbl_key;
 
-		$k = $this->_tbl_key;
-		if ($oid !== null) {
-			$this->$k = intval( $oid );
-		}
-		if ($this->$k == NULL) {
+		if (count( $cid ) < 1) {
 			$this->_error = "No items selected.";
 			return false;
-		}	
+		}
+
+		$cids = $this->$k . '=' . implode( ' OR ' . $this->$k . '=', $cid );
 
 		$query = "UPDATE $this->_tbl"
 		. "\n SET published = " . intval( $publish )

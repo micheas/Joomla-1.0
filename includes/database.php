@@ -1017,21 +1017,24 @@ class mosDBTable {
 	function canDelete( $oid=null, $joins=null ) {
 		$k = $this->_tbl_key;
 		if ($oid) {
-			$this->$k = intval( $oid );
+			$this->$k = $oid;
 		}
 		if (is_array( $joins )) {
 			$select = $k;
 			$join = '';
 			foreach( $joins as $table ) {
-				$select .= ",\n COUNT(DISTINCT {$table['idfield']}) AS {$table['idfield']}";
-				$join .= "\n LEFT JOIN {$table['name']} ON {$table['joinfield']} = $k";
+				$tblName = $this->getEscaped( $table['name'] );
+				$idField = $this->getEscaped( $table['idfield'] );
+				$jnField = $this->getEscaped( $table['joinfield'] );
+				$select .= ",\n COUNT(DISTINCT `$tblName`.`$idField`) AS `count_".substr($tblName, 3)."_$idField`";
+				$join .= "\n LEFT JOIN `$tblName` ON `$tblName`.`$jnField` = `$this->_tbl`.`$k`";
 			}
 
 			$query = "SELECT $select"
-			. "\n FROM $this->_tbl"
+			. "\n FROM `$this->_tbl`"
 			. $join
-			. "\n WHERE $k = ". $this->$k
-			. "\n GROUP BY $k"
+			. "\n WHERE `$this->_tbl`.`$k` = ". (int) $this->$k
+			. "\n GROUP BY `$this->_tbl`.`$k`"
 			;
 			$this->_db->setQuery( $query );
 
@@ -1042,7 +1045,9 @@ class mosDBTable {
 			}
 			$msg = array();
 			foreach( $joins as $table ) {
-				$k = $table['idfield'];
+				$tblName = $this->getEscaped( $table['name'] );
+				$idField = $this->getEscaped( $table['idfield'] );
+				$k = 'count_'.substr($tblName, 3).'_'.$idField;
 				if ($obj->$k) {
 					$msg[] = $table['label'];
 				}

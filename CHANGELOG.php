@@ -40,6 +40,7 @@ code fixes.
 06-Sep-2006 Marko Schmuck
  # Fixed [artf5367] : Better mysql statement in content.searchbot.php
  # Fixed [artf5141] : image attribute name="image" breaks xhtml compliance when output multiple times
+ # Fixed [artf5811] : Search component generates invalid html
 
 06-Sep-2006 Andrew Eddie
  # Fixed [artf5799] : mysql_real_escape_string called incorrectly in database.php

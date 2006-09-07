@@ -5766,9 +5766,8 @@ function mosChmod($path) {
  */
 function mosArrayToInts( &$array, $default=null ) {
 	if (is_array( $array )) {
-		$n = count( $array );
-		for ($i = 0; $i < $n; $i++) {
-			$array[$i] = intval( $array[$i] );
+		foreach( $array as $key => $value ) {
+			$array[$key] = (int) $value;
 		}
 	} else {
 		if (is_null( $default )) {

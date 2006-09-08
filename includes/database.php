@@ -277,7 +277,7 @@ class database {
 		global $mosConfig_debug;
 		if ($this->_limit > 0 || $this->_offset > 0) {
 			$this->_sql .= "\nLIMIT $this->_offset, $this->_limit";
-		}		
+		}
 		if ($this->_debug) {
 			$this->_ticker++;
 	  		$this->_log[] = $this->_sql;
@@ -1158,8 +1158,8 @@ class mosDBTable {
 		}
 		if ($this->$k == NULL) {
 			return false;
-		}		
-		
+		}
+
 		$query = "UPDATE $this->_tbl"
 		. "\n SET checked_out = 0, checked_out_time = " . $this->_db->Quote( $nullDate )
 		. "\n WHERE $this->_tbl_key = " . $this->_db->Quote( $this->$k )
@@ -1277,6 +1277,7 @@ class mosDBTable {
 	 * @since	1.0.4
 	 */
 	function publish( $cid=null, $publish=1, $user_id=0 ) {
+		mosArrayToInts( $cid, array() );
 		$user_id	= (int) $user_id;
 		$publish	= (int) $publish;
 		$k			= $this->_tbl_key;
@@ -1286,7 +1287,6 @@ class mosDBTable {
 			return false;
 		}
 
-		mosArrayToInts( $cid, array() );
 		$cids = $this->$k . '=' . implode( ' OR ' . $this->$k . '=', $cid );
 
 		$query = "UPDATE $this->_tbl"

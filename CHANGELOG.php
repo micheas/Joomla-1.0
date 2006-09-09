@@ -37,6 +37,10 @@ code fixes.
 - -> Removed
 ! -> Note
 
+
+09-Sep-2006 Marko Schmuck
+ # Fixed [artf5753] : ampersand in action URL of showArchiveCategory form should be an entity
+
 06-Sep-2006 Marko Schmuck
  # Fixed [artf5367] : Better mysql statement in content.searchbot.php
  # Fixed [artf5141] : image attribute name="image" breaks xhtml compliance when output multiple times

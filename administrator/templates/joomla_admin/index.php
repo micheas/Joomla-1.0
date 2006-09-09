@@ -32,6 +32,16 @@ echo '<?xml version="1.0" encoding="'. $iso[1] .'"?' .'>';
 <?php
 include_once( $mosConfig_absolute_path . '/editor/editor.php' );
 initEditor();
+
+// Workaround to include custom head tags from components
+if (isset( $mainframe->_head['custom'] ))
+{
+	$head = array();
+	foreach ($mainframe->_head['custom'] as $html) {
+		$head[] = $html;
+	}
+	echo implode( "\n", $head ) . "\n";
+}
 ?>
 <meta http-equiv="Content-Type" content="text/html; <?php echo _ISO; ?>" />
 <meta name="Generator" content="Joomla! Content Management System" />

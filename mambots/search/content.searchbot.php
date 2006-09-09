@@ -213,7 +213,7 @@ function botSearchContent( $text, $phrase='', $ordering='' ) {
 		. "\n AND a.sectionid = 0"
 		. "\n AND ( a.publish_up = '$nullDate' OR a.publish_up <= '$now' )"
 		. "\n AND ( a.publish_down = '$nullDate' OR a.publish_down >= '$now' )"
-		. "\n ORDER BY $order"
+		. "\n ORDER BY ". ($morder ? $morder : $order)
 		;
 		$database->setQuery( $query, 0, $limit );
 		$list4 = $database->loadObjectList();

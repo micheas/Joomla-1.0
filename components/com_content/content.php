@@ -1107,8 +1107,8 @@ function showArchiveCategory( $id=0, $gid, &$access, $pop, $option, $year, $mont
 	}
 
 	// initiate form
-	$link = 'index.php?option=com_content&task=archivecategory&id='. $id .'&Itemid='. $Itemid;
- 	echo '<form action="'.sefRelToAbs( $link ).'" method="post">';
+	$link = ampReplace('index.php?option=com_content&task=archivecategory&id='. $id .'&Itemid='. $Itemid);
+	echo '<form action="'.sefRelToAbs( $link ).'" method="post">';
 
 	// Page Title
 	$mainframe->SetPageTitle( $menu->name );

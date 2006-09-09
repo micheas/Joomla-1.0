@@ -221,6 +221,6 @@ function botSearchContent( $text, $phrase='', $ordering='' ) {
 		$list4 = array();
 	}	
 
-	return array_merge( $list, $list2, $list3, $list4 );
+	return array_merge( $list, $list2, $list3, (array)$list4 );
 }
 ?>

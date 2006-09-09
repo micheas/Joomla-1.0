@@ -67,8 +67,8 @@ if (isset( $_POST['submit'] )) {
 	$query = "SELECT u.*, m.*"
 	. "\n FROM #__users AS u"
 	. "\n LEFT JOIN #__messages_cfg AS m ON u.id = m.user_id AND m.cfg_name = 'auto_purge'"
-	. "\n WHERE u.username = '$usrname'"
-	. "\n AND u.password = '$pass'"
+	. "\n WHERE u.username = '$usrname'" // Escaped earlier
+	. "\n AND u.password = " . $database->Quote( $pass ) // MD5, lets quote it anyway
 	. "\n AND u.block = 0"
 	;
 	$database->setQuery( $query );
@@ -93,7 +93,7 @@ if (isset( $_POST['submit'] )) {
 		
 		// add Session ID entry to DB
 		$query = "INSERT INTO #__session"
-		. "\n SET time = '$logintime', session_id = '$session_id', userid = $my->id, usertype = '$my->usertype', username = '$my->username'"
+		. "\n SET time = " . $database->Quote( $logintime ) . ", session_id = " . $database->Quote( $session_id ) . ", userid = " . (int) $my->id . ", usertype = " . $database->Quote( $my->usertype) . ", username = " . $database->Quote( $my->username )
 		;
 		$database->setQuery( $query );
 		if (!$database->query()) {
@@ -105,10 +105,10 @@ if (isset( $_POST['submit'] )) {
 		if ( $_VERSION->SITE == 1 ) {
 			// delete other open admin sessions for same account
 			$query = "DELETE FROM #__session"
-			. "\n WHERE userid = $my->id"
-			. "\n AND username = '$my->username'"
-			. "\n AND usertype = '$my->usertype'"
-			. "\n AND session_id != '$session_id'"
+			. "\n WHERE userid = " . (int) $my->id
+			. "\n AND username = ". $database->Quote( $my->username )
+			. "\n AND usertype = " . $database->Quote( $my->usertype )
+			. "\n AND session_id != " . $database->Quote( $session_id ) // MD5, lets quote it anyway
 			// this ensures that frontend sessions are not purged
 			. "\n AND guest = 1"
 			. "\n AND gid = 0"
@@ -169,10 +169,10 @@ if (isset( $_POST['submit'] )) {
 	
 			// save cleared expired page info to user data
 			$query = "UPDATE #__users"
-			. "\n SET params = '$saveparams'"
-			. "\n WHERE id = $my->id"
-			. "\n AND username = '$my->username'"
-			. "\n AND usertype = '$my->usertype'"
+			. "\n SET params = " . $database->Quote( $saveparams )
+			. "\n WHERE id = " . (int) $my->id
+			. "\n AND username = " . $database->Quote( $my->username )
+			. "\n AND usertype = " . $database->Quote( $my->usertype )
 			;
 			$database->setQuery( $query );
 			$database->query();
@@ -192,8 +192,8 @@ if (isset( $_POST['submit'] )) {
 		if ($purge != 0) {
 		// purge old messages at day set in message configuration
 			$query = "DELETE FROM #__messages"
-			. "\n WHERE date_time < '$past'"
-			. "\n AND user_id_to = $my->id"
+			. "\n WHERE date_time < " . $database->Quote( $past )
+			. "\n AND user_id_to = " . (int) $my->id
 			;
 			$database->setQuery( $query );
 			if (!$database->query()) {

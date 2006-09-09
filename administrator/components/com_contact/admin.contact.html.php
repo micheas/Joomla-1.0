@@ -36,7 +36,7 @@ class HTML_contact {
 			Filter:
 			</td>
 			<td>
-			<input type="text" name="search" value="<?php echo $search;?>" class="inputbox" onChange="document.adminForm.submit();" />
+			<input type="text" name="search" value="<?php echo htmlspecialchars( $search );?>" class="inputbox" onChange="document.adminForm.submit();" />
 			</td>
 			<td width="right">
 			<?php echo $lists['catid'];?>

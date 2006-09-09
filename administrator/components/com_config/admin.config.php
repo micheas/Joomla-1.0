@@ -316,7 +316,7 @@ function saveconfig( $task ) {
 	if ( $mosConfig_session_type != $row->config_session_type ) {
 		$past = time();
 		$query = "DELETE FROM #__session"
-		. "\n WHERE time < '$past'"
+		. "\n WHERE time < " . $database->Quote( $past )
 		. "\n AND ("
 		. "\n ( guest = 1 AND userid = 0 ) OR ( guest = 0 AND gid > 0 )" 
 		. "\n )"

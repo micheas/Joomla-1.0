@@ -215,12 +215,13 @@ function publishBanner( $cid, $publish=1 ) {
 		exit();
 	}
 
-	$cids = implode( ',', $cid );
+	mosArrayToInts( $cid );
+	$cids = 'bid=' . implode( ' OR bid=', $cid );
 
 	$query = "UPDATE #__banner"
-	. "\n SET showBanner = " . intval( $publish )
-	. "\n WHERE bid IN ( $cids )"
-	. "\n AND ( checked_out = 0 OR ( checked_out = $my->id ) )"
+	. "\n SET showBanner = " . (int) $publish
+	. "\n WHERE ( $cids )"
+	. "\n AND ( checked_out = 0 OR ( checked_out = " . (int) $my->id . " ) )"
 	;
 	$database->setQuery( $query );
 	if (!$database->query()) {
@@ -239,9 +240,10 @@ function publishBanner( $cid, $publish=1 ) {
 function removeBanner( $cid ) {
 	global $database;
 	if (count( $cid )) {
-		$cids = implode( ',', $cid );
+		mosArrayToInts( $cid );
+		$cids = 'bid=' . implode( ' OR bid=', $cid );
 		$query = "DELETE FROM #__banner"
-		. "\n WHERE bid IN ( $cids )"
+		. "\n WHERE ( $cids )"
 		;
 		$database->setQuery( $query );
 		if (!$database->query()) {
@@ -269,7 +271,7 @@ function viewBannerClients( $option ) {
 	require_once( $GLOBALS['mosConfig_absolute_path'] . '/administrator/includes/pageNavigation.php' );
 	$pageNav = new mosPageNav( $total, $limitstart, $limit );
 
-	$sql = "SELECT a.*,	count(b.bid) AS bid, u.name AS editor"
+	$sql = "SELECT a.*, count(b.bid) AS bid, u.name AS editor"
 	. "\n FROM #__bannerclient AS a"
 	. "\n LEFT JOIN #__banner AS b ON a.cid = b.cid"
 	. "\n LEFT JOIN #__users AS u ON u.id = a.checked_out"
@@ -339,7 +341,7 @@ function removeBannerClients( $cid, $option ) {
 	for ($i = 0; $i < count($cid); $i++) {
 		$query = "SELECT COUNT( bid )"
 		. "\n FROM #__banner"
-		. "\n WHERE cid = ".$cid[$i]
+		. "\n WHERE cid = " . (int) $cid[$i]
 		;
 		$database->setQuery($query);
 
@@ -352,13 +354,13 @@ function removeBannerClients( $cid, $option ) {
 			"Cannot delete client at this time as they have a banner still running" );
 		} else {
 			$query="DELETE FROM #__bannerfinish"
-			. "\n WHERE cid = ". $cid[$i]
+			. "\n WHERE cid = " . (int) $cid[$i]
 			;
 			$database->setQuery($query);
 			$database->query();
 
 			$query = "DELETE FROM #__bannerclient"
-			. "\n WHERE cid = ". $cid[$i]
+			. "\n WHERE cid = " . (int) $cid[$i]
 			;
 			$database->setQuery($query);
 			$database->query();

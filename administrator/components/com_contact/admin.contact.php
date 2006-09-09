@@ -84,13 +84,15 @@ function showContacts( $option ) {
 	$limit 		= intval( $mainframe->getUserStateFromRequest( "viewlistlimit", 'limit', $mosConfig_list_limit ) );
 	$limitstart = intval( $mainframe->getUserStateFromRequest( "view{$option}limitstart", 'limitstart', 0 ) );
 	$search 	= $mainframe->getUserStateFromRequest( "search{$option}", 'search', '' );
-	$search 	= $database->getEscaped( trim( strtolower( $search ) ) );
+	if (get_magic_quotes_gpc()) {
+		$search	= stripslashes( $search );
+	}
 
 	if ( $search ) {
-		$where[] = "cd.name LIKE '%$search%'";
+		$where[] = "cd.name LIKE '%" . $database->getEscaped( trim( strtolower( $search ) ) ) . "%'";
 	}
 	if ( $catid ) {
-		$where[] = "cd.catid = '$catid'";
+		$where[] = "cd.catid = " . (int) $catid;
 	}
 	if ( isset( $where ) ) {
 		$where = "\n WHERE ". implode( ' AND ', $where );
@@ -220,7 +222,7 @@ function saveContact( $option ) {
 	if ($row->default_con) {
 		$query = "UPDATE #__contact_details"
 		. "\n SET default_con = 0"
-		. "\n WHERE id != $row->id"
+		. "\n WHERE id != " . (int) $row->id
 		. "\n AND default_con = 1"
 		;
 		$database->setQuery( $query );
@@ -239,9 +241,10 @@ function removeContacts( &$cid, $option ) {
 	global $database;
 
 	if (count( $cid )) {
-		$cids = implode( ',', $cid );
+		mosArrayToInts( $cid );
+		$cids = 'id=' . implode( ' OR id=', $cid );
 		$query = "DELETE FROM #__contact_details"
-		. "\n WHERE id IN ( $cids )"
+		. "\n WHERE ( $cids )"
 		;
 		$database->setQuery( $query );
 		if (!$database->query()) {
@@ -267,12 +270,13 @@ function changeContact( $cid=null, $state=0, $option ) {
 		exit();
 	}
 
-	$cids = implode( ',', $cid );
+	mosArrayToInts( $cid );
+	$cids = 'id=' . implode( ' OR id=', $cid );
 
 	$query = "UPDATE #__contact_details"
-	. "\n SET published = " . intval( $state )
-	. "\n WHERE id IN ( $cids )"
-	. "\n AND ( checked_out = 0 OR ( checked_out = $my->id ) )"
+	. "\n SET published = " . (int) $state
+	. "\n WHERE ( $cids )"
+	. "\n AND ( checked_out = 0 OR ( checked_out = " . (int) $my->id . ") )"
 	;
 	$database->setQuery( $query );
 	if (!$database->query()) {

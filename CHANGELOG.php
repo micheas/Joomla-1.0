@@ -40,7 +40,7 @@ code fixes.
 
 09-Sep-2006 Marko Schmuck
  # Fixed [artf5753] : ampersand in action URL of showArchiveCategory form should be an entity
- # Fixed [artf5493] : Search error in PHP5
+ # Fixed [artf5493][topic,81903] : Search error in PHP5 arraymerge - search for static content without a menulink
  
 06-Sep-2006 Marko Schmuck
  # Fixed [artf5367] : Better mysql statement in content.searchbot.php

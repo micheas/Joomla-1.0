@@ -1287,7 +1287,7 @@ class mosDBTable {
 			return false;
 		}
 
-		$cids = $this->$k . '=' . implode( ' OR ' . $this->$k . '=', $cid );
+		$cids = $this->_tbl_key . '=' . implode( ' OR ' . $this->_tbl_key . '=', $cid );
 
 		$query = "UPDATE $this->_tbl"
 		. "\n SET published = " . (int) $publish

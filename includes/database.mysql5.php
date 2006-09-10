@@ -1344,11 +1344,11 @@ class mosDBTable {
 			return false;
 		}
 
-		$cids = $this->$k . '=' . implode( ' OR ' . $this->$k . '=', $cid );
+		$cids = $this->_tbl_key . '=' . implode( ' OR ' . $this->_tbl_key . '=', $cid );
 
 		$query = "UPDATE $this->_tbl"
 		. "\n SET published = " . (int) $publish
-		. "\n WHERE $this->_tbl_key = '". $this->$k ."'"
+		. "\n WHERE ($cids)"
 		. "\n AND (checked_out = 0 OR checked_out = " . (int) $user_id . ")"
 		;
 		$this->_db->setQuery( $query );
@@ -1357,8 +1357,8 @@ class mosDBTable {
 			return false;
 		}
 
-		if (count( $oid ) == 1) {
-			$this->checkin( $oid[0] );
+		if (count( $cid ) == 1) {
+			$this->checkin( $cid[0] );
 		}
 		$this->_error = '';
 		return true;

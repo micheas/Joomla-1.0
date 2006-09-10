@@ -133,7 +133,9 @@ function viewContent( $sectionid, $option ) {
 	$limit 				= intval( $mainframe->getUserStateFromRequest( "viewlistlimit", 'limit', $mosConfig_list_limit ) );
 	$limitstart 		= intval( $mainframe->getUserStateFromRequest( "view{$option}{$sectionid}limitstart", 'limitstart', 0 ) );
 	$search 			= $mainframe->getUserStateFromRequest( "search{$option}{$sectionid}", 'search', '' );
-	$search 			= $database->getEscaped( trim( strtolower( $search ) ) );
+	if (get_magic_quotes_gpc()) {
+		$search			= stripslashes( $search );
+	}
 	$redirect 			= $sectionid;
 	$filter 			= ''; //getting a undefined variable error
 
@@ -150,7 +152,7 @@ function viewContent( $sectionid, $option ) {
 		//$filter = "\n , #__sections AS s WHERE s.id = c.section";
 
 		if ($filter_sectionid > 0) {
-			$filter = "\n WHERE cc.section = $filter_sectionid";
+			$filter = "\n WHERE cc.section = '" . (int) $filter_sectionid . "'";
 		}
 		$section->title = 'All Content Items';
 		$section->id = 0;
@@ -160,28 +162,28 @@ function viewContent( $sectionid, $option ) {
 		"c.catid 	= cc.id",
 		"cc.section = s.id",
 		"s.scope 	= 'content'",
-		"c.sectionid = '$sectionid'"
+		"c.sectionid = " . (int) $sectionid
 		);
 		$order 		= "\n ORDER BY cc.ordering, cc.title, c.ordering";
 		$all 		= NULL;
-		$filter 	= "\n WHERE cc.section = '$sectionid'";
+		$filter 	= "\n WHERE cc.section = '" . (int) $sectionid . "'";
 		$section 	= new mosSection( $database );
 		$section->load( (int)$sectionid );
 	}
 
 	// used by filter
 	if ( $filter_sectionid > 0 ) {
-		$where[] = "c.sectionid = $filter_sectionid";
+		$where[] = "c.sectionid = " . (int) $filter_sectionid;
 	}
 	if ( $catid > 0 ) {
-		$where[] = "c.catid = $catid";
+		$where[] = "c.catid = " . (int) $catid;
 	}
 	if ( $filter_authorid > 0 ) {
-		$where[] = "c.created_by = $filter_authorid";
+		$where[] = "c.created_by = " . (int) $filter_authorid;
 	}
 
 	if ( $search ) {
-		$where[] = "LOWER( c.title ) LIKE '%$search%'";
+		$where[] = "LOWER( c.title ) LIKE '%" . $database->getEscaped( trim( strtolower( $search ) ) ) . "%'";
 	}
 
 	// get the total number of records
@@ -259,7 +261,9 @@ function viewArchive( $sectionid, $option ) {
 	$filter_authorid 	= intval( $mainframe->getUserStateFromRequest( "filter_authorid{$option}{$sectionid}", 'filter_authorid', 0 ) );
 	$filter_sectionid 	= intval( $mainframe->getUserStateFromRequest( "filter_sectionid{$option}{$sectionid}", 'filter_sectionid', 0 ) );
 	$search 			= $mainframe->getUserStateFromRequest( "searcharc{$option}{$sectionid}", 'search', '' );
-	$search 			= $database->getEscaped( trim( strtolower( $search ) ) );
+	if (get_magic_quotes_gpc()) {
+		$search			= stripslashes( $search );
+	}
 	$redirect 			= $sectionid;
 
 	if ( $sectionid == 0 ) {
@@ -277,24 +281,24 @@ function viewArchive( $sectionid, $option ) {
 		"c.catid	= cc.id",
 		"cc.section	= s.id",
 		"s.scope	= 'content'",
-		"c.sectionid= $sectionid"
+		"c.sectionid= " . (int) $sectionid
 		);
-		$filter = "\n WHERE section = '$sectionid'";
+		$filter = "\n WHERE section = '" . (int) $sectionid . "'";
 		$all = NULL;
 	}
 
 	// used by filter
 	if ( $filter_sectionid > 0 ) {
-		$where[] = "c.sectionid = $filter_sectionid";
+		$where[] = "c.sectionid = " . (int) $filter_sectionid;
 	}
 	if ( $filter_authorid > 0 ) {
-		$where[] = "c.created_by = $filter_authorid";
+		$where[] = "c.created_by = " . (int) $filter_authorid;
 	}
 	if ($catid > 0) {
-		$where[] = "c.catid = $catid";
+		$where[] = "c.catid = " . (int) $catid;
 	}
 	if ($search) {
-		$where[] = "LOWER( c.title ) LIKE '%$search%'";
+		$where[] = "LOWER( c.title ) LIKE '%" . $database->getEscaped( trim( strtolower( $search ) ) ) . "%'";
 	}
 
 	// get the total number of records
@@ -412,7 +416,7 @@ function editContent( $uid=0, $sectionid=0, $option ) {
 
 		$query = "SELECT name"
 		. "\n FROM #__users"
-		. "\n WHERE id = $row->created_by"
+		. "\n WHERE id = " . (int) $row->created_by
 		;
 		$database->setQuery( $query );
 		$row->creator = $database->loadResult();
@@ -423,7 +427,7 @@ function editContent( $uid=0, $sectionid=0, $option ) {
 		} else {
 			$query = "SELECT name"
 			. "\n FROM #__users"
-			. "\n WHERE id = $row->modified_by"
+			. "\n WHERE id = " . (int) $row->modified_by
 			;
 			$database->setQuery( $query );
 			$row->modifier = $database->loadResult();
@@ -431,7 +435,7 @@ function editContent( $uid=0, $sectionid=0, $option ) {
 
 		$query = "SELECT content_id"
 		. "\n FROM #__content_frontpage"
-		. "\n WHERE content_id = $row->id"
+		. "\n WHERE content_id = " . (int) $row->id
 		;
 		$database->setQuery( $query );
 		$row->frontpage = $database->loadResult();
@@ -499,11 +503,12 @@ function editContent( $uid=0, $sectionid=0, $option ) {
 	$sectioncategories 			= array();
 	$sectioncategories[-1] 		= array();
 	$sectioncategories[-1][] 	= mosHTML::makeOption( '-1', 'Select Category', 'id', 'name' );
-	$section_list 				= implode( '\', \'', $section_list );
+	mosArrayToInts( $section_list );
+	$section_list 				= 'section=' . implode( ' OR section=', $section_list );
 	
 	$query = "SELECT id, name, section"
 	. "\n FROM #__categories"
-	. "\n WHERE section IN ( '$section_list' )"
+	. "\n WHERE ( $section_list )"
 	. "\n ORDER BY ordering"
 	;
 	$database->setQuery( $query );
@@ -727,7 +732,7 @@ function saveContent( $sectionid, $task ) {
 		if (!$fp->load( (int)$row->id )) {
 			// new entry
 			$query = "INSERT INTO #__content_frontpage"
-			. "\n VALUES ( $row->id, 1 )"
+			. "\n VALUES ( " . (int) $row->id . ", 1 )"
 			;
 			$database->setQuery( $query );
 			if (!$database->query()) {
@@ -800,12 +805,13 @@ function changeContent( $cid=null, $state=0, $option ) {
 		exit;
 	}
 
+	mosArrayToInts( $cid );
 	$total = count ( $cid );
-	$cids = implode( ',', $cid );
+	$cids = 'id=' . implode( ' OR id=', $cid );
 
 	$query = "UPDATE #__content"
-	. "\n SET state = $state, modified = " . $database->Quote( date( 'Y-m-d H:i:s' ) )
-	. "\n WHERE id IN ( $cids ) AND ( checked_out = 0 OR (checked_out = $my->id ) )"
+	. "\n SET state = " . (int) $state . ", modified = " . $database->Quote( date( 'Y-m-d H:i:s' ) )
+	. "\n WHERE ( $cids ) AND ( checked_out = 0 OR (checked_out = " . (int) $my->id . ") )"
 	;
 	$database->setQuery( $query );
 	if (!$database->query()) {
@@ -881,7 +887,7 @@ function toggleFrontPage( $cid, $section, $option ) {
 		} else {
 			// new entry
 			$query = "INSERT INTO #__content_frontpage"
-			. "\n VALUES ( $id, 0 )"
+			. "\n VALUES ( " . (int) $id . ", 0 )"
 			;
 			$database->setQuery( $query );
 			if (!$database->query()) {
@@ -911,10 +917,11 @@ function removeContent( &$cid, $sectionid, $option ) {
 	$state = '-2';
 	$ordering = '0';
 	//seperate contentids
-	$cids = implode( ',', $cid );
+	mosArrayToInts( $cids );
+	$cids = 'id=' . implode( ' OR id=', $cid );
 	$query = "UPDATE #__content"
-	. "\n SET state = $state, ordering = $ordering"
-	. "\n WHERE id IN ( $cids )"
+	. "\n SET state = " . (int) $state . ", ordering = " . (int) $ordering
+	. "\n WHERE ( $cids )"
 	;
 	$database->setQuery( $query );
 	if ( !$database->query() ) {
@@ -953,7 +960,7 @@ function orderContent( $uid, $inc, $option ) {
 
 	$row = new mosContent( $database );
 	$row->load( (int)$uid );
-	$row->move( $inc, "catid = $row->catid AND state >= 0" );
+	$row->move( $inc, "catid = " . (int) $row->catid . " AND state >= 0" );
 
 	$redirect = mosGetParam( $_POST, 'redirect', $row->sectionid );
 	
@@ -975,11 +982,12 @@ function moveSection( $cid, $sectionid, $option ) {
 	}
 
 	//seperate contentids
-	$cids = implode( ',', $cid );
+	mosArrayToInts( $cids );
+	$cids = 'a.id=' . implode( ' OR a.id=', $cid );
 	// Content Items query
 	$query = 	"SELECT a.title"
 	. "\n FROM #__content AS a"
-	. "\n WHERE ( a.id IN ( $cids ) )"
+	. "\n WHERE ( $cids )"
 	. "\n ORDER BY a.title"
 	;
 	$database->setQuery( $query );
@@ -1018,7 +1026,7 @@ function moveSectionSave( &$cid, $sectionid, $option ) {
 	// find section name
 	$query = "SELECT a.name"
 	. "\n FROM #__sections AS a"
-	. "\n WHERE a.id = $newsect"
+	. "\n WHERE a.id = " . (int) $newsect
 	;
 	$database->setQuery( $query );
 	$section = $database->loadResult();
@@ -1026,13 +1034,12 @@ function moveSectionSave( &$cid, $sectionid, $option ) {
 	// find category name
 	$query = "SELECT  a.name"
 	. "\n FROM #__categories AS a"
-	. "\n WHERE a.id = $newcat"
+	. "\n WHERE a.id = " . (int) $newcat
 	;
 	$database->setQuery( $query );
 	$category = $database->loadResult();
 
 	$total = count( $cid );
-	$cids = implode( ',', $cid );
 
 	$row = new mosContent( $database );
 	// update old orders - put existing items in last place
@@ -1043,9 +1050,11 @@ function moveSectionSave( &$cid, $sectionid, $option ) {
 		$row->updateOrder( "catid = " . (int) $row->catid . " AND state >= 0" );
 	}
 
-	$query = "UPDATE #__content SET sectionid = $newsect, catid = $newcat"
-	. "\n WHERE id IN ( $cids )"
-	. "\n AND ( checked_out = 0 OR ( checked_out = $my->id ) )"
+	mosArrayToInts( $cids );
+	$cids = 'id=' . implode( ' OR id=', $cid );
+	$query = "UPDATE #__content SET sectionid = " . (int) $newsect . ", catid = " . (int) $newcat
+	. "\n WHERE ( $cids )"
+	. "\n AND ( checked_out = 0 OR ( checked_out = " . (int) $my->id . " ) )"
 	;
 	$database->setQuery( $query );
 	if ( !$database->query() ) {
@@ -1081,11 +1090,12 @@ function copyItem( $cid, $sectionid, $option ) {
 	}
 
 	//seperate contentids
-	$cids = implode( ',', $cid );
+	mosArrayToInts( $cids );
+	$cids = 'a.id=' . implode( ' OR a.id=', $cid );
 	## Content Items query
 	$query = "SELECT a.title"
 	. "\n FROM #__content AS a"
-	. "\n WHERE ( a.id IN ( $cids ) )"
+	. "\n WHERE ( $cids )"
 	. "\n ORDER BY a.title"
 	;
 	$database->setQuery( $query );
@@ -1125,7 +1135,7 @@ function copyItemSave( $cid, $sectionid, $option ) {
 	// find section name
 	$query = "SELECT a.name"
 	. "\n FROM #__sections AS a"
-	. "\n WHERE a.id = $newsect"
+	. "\n WHERE a.id = " . (int) $newsect
 	;
 	$database->setQuery( $query );
 	$section = $database->loadResult();
@@ -1133,7 +1143,7 @@ function copyItemSave( $cid, $sectionid, $option ) {
 	// find category name
 	$query = "SELECT a.name"
 	. "\n FROM #__categories AS a"
-	. "\n WHERE a.id = $newcat"
+	. "\n WHERE a.id = " . (int) $newcat
 	;
 	$database->setQuery( $query );
 	$category = $database->loadResult();
@@ -1145,7 +1155,7 @@ function copyItemSave( $cid, $sectionid, $option ) {
 		// main query
 		$query = "SELECT a.*"
 		. "\n FROM #__content AS a"
-		. "\n WHERE a.id = ". $cid[$i] .""
+		. "\n WHERE a.id = " . (int) $cid[$i]
 		;
 		$database->setQuery( $query );
 		$item = $database->loadObjectList();
@@ -1323,7 +1333,7 @@ function saveOrder( &$cid ) {
 				exit();
 			} // if
 			// remember to updateOrder this group
-			$condition = "catid = $row->catid AND state >= 0";
+			$condition = "catid = " . (int) $row->catid . " AND state >= 0";
 			$found = false;
 			foreach ( $conditions as $cond )
 				if ($cond[1]==$condition) {

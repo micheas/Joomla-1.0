@@ -4773,7 +4773,11 @@ class mosAdminMenus {
 			$pos[] = mosHTML::makeOption( '', _CMN_NONE );
 		}
 		if ( $center ) {
-			$pos[] = mosHTML::makeOption( 'center', _CMN_CENTER );
+			if ($name == '_align' OR $name == 'image_position') {
+				$pos[] = mosHTML::makeOption( 'middle', _CMN_CENTER );
+			} else {
+				$pos[] = mosHTML::makeOption( 'center', _CMN_CENTER );
+			}
 		}
 		if ( $left ) {
 			$pos[] = mosHTML::makeOption( 'left', _CMN_LEFT );

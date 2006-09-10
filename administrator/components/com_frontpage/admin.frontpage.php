@@ -86,7 +86,9 @@ function viewFrontPage( $option ) {
 	$limit 		= intval( $mainframe->getUserStateFromRequest( "viewlistlimit", 'limit', $mosConfig_list_limit ) );
 	$limitstart = intval( $mainframe->getUserStateFromRequest( "view{$option}limitstart", 'limitstart', 0 ) );
 	$search 	= $mainframe->getUserStateFromRequest( "search{$option}", 'search', '' );
-	$search 	= $database->getEscaped( trim( strtolower( $search ) ) );
+	if (get_magic_quotes_gpc()) {
+		$search	= stripslashes( $search );
+	}
 
 	$where = array(
 	"c.state >= 0"
@@ -94,17 +96,17 @@ function viewFrontPage( $option ) {
 
 	// used by filter
 	if ( $filter_sectionid > 0 ) {
-		$where[] = "c.sectionid = '$filter_sectionid'";
+		$where[] = "c.sectionid = " . (int) $filter_sectionid;
 	}
 	if ( $catid > 0 ) {
-		$where[] = "c.catid = '$catid'";
+		$where[] = "c.catid = " . (int) $catid;
 	}
 	if ( $filter_authorid > 0 ) {
-		$where[] = "c.created_by = $filter_authorid";
+		$where[] = "c.created_by = " . (int) $filter_authorid;
 	}
 
 	if ($search) {
-		$where[] = "LOWER( c.title ) LIKE '%$search%'";
+		$where[] = "LOWER( c.title ) LIKE '%" . $database->getEscaped( trim( strtolower( $search ) ) ) . "%'";
 	}
 
 	// get the total number of records
@@ -187,12 +189,13 @@ function changeFrontPage( $cid=null, $state=0, $option ) {
 		exit;
 	}
 
-	$cids = implode( ',', $cid );
+	mosArrayToInts( $cid );
+	$cids = 'id=' . implode( ' OR id=', $cid );
 
 	$query = "UPDATE #__content"
-	. "\n SET state = $state"
-	. "\n WHERE id IN ( $cids )"
-	. "\n AND ( checked_out = 0 OR ( checked_out = $my->id ) )"
+	. "\n SET state = " . (int) $state
+	. "\n WHERE ( $cids )"
+	. "\n AND ( checked_out = 0 OR ( checked_out = " . (int) $my->id . " ) )"
 	;
 	$database->setQuery( $query );
 	if (!$database->query()) {

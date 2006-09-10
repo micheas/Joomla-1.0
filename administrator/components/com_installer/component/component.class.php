@@ -214,7 +214,7 @@ class mosInstallerComponent extends mosInstaller {
 		$db_params			= '';
 
 		$query = "INSERT INTO #__components"
-		. "\n VALUES( '', '$db_name', '$db_link', $db_menuid, $db_parent, '$db_admin_menu_link', '$db_admin_menu_alt', '$db_option', $db_ordering, '$db_admin_menu_img', $db_iscore, '' )";
+		. "\n VALUES( '', " . $database->Quote( $db_name ) . ", " . $database->Quote( $db_link ) . ", " . (int) $db_menuid . ", " . (int) $db_parent . ", " . $database->Quote( $db_admin_menu_link ) . ", " . $database->Quote( $db_admin_menu_alt ) . ", " . $database->Quote( $db_option ) . ", " . (int) $db_ordering . ", " . $database->Quote( $db_admin_menu_img ) . ", " . (int) $db_iscore . ", '' )";
 		$database->setQuery( $query );
 		if(!$database->query())
 		{
@@ -237,7 +237,7 @@ class mosInstallerComponent extends mosInstaller {
 
 		$sql = "SELECT *"
 		. "\n FROM #__components"
-		. "\n WHERE id = $cid"
+		. "\n WHERE id = " . (int) $cid
 		;
 		$database->setQuery($sql);
 
@@ -256,7 +256,7 @@ class mosInstallerComponent extends mosInstaller {
 
 		// Delete entries in the DB
 		$sql = "DELETE FROM #__components"
-		. "\n WHERE parent = $row->id"
+		. "\n WHERE parent = " . (int) $row->id
 		;
 		$database->setQuery($sql);
 		if (!$database->query()) {
@@ -266,7 +266,7 @@ class mosInstallerComponent extends mosInstaller {
 		}
 
 		$sql = "DELETE FROM #__components"
-		. "\n WHERE id = $row->id"
+		. "\n WHERE id = " . (int) $row->id
 		;
 		$database->setQuery($sql);
 		if (!$database->query()) {

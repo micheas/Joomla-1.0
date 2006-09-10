@@ -74,8 +74,8 @@ class mosInstallerModule extends mosInstaller {
 		$client_id = intval( $client == 'admin' );
 		// Insert in module in DB
 		$query = "SELECT id FROM #__modules"
-		. "\n WHERE module = '". $this->elementSpecial() ."'"
-		. "\n AND client_id = $client_id"
+		. "\n WHERE module = " . $database->Quote( $this->elementSpecial() )
+		. "\n AND client_id = " . (int) $client_id
 		;
 		$database->setQuery( $query );
 		if (!$database->query()) {
@@ -100,7 +100,7 @@ class mosInstallerModule extends mosInstaller {
 			$row->store();
 
 			$query = "INSERT INTO #__modules_menu"
-			. "\n VALUES ( $row->id, 0 )"
+			. "\n VALUES ( " . (int) $row->id . ", 0 )"
 			;
 			$database->setQuery( $query );
 			if(!$database->query()) {
@@ -129,7 +129,7 @@ class mosInstallerModule extends mosInstaller {
 		$id = intval( $id );
 
 		$query = "SELECT module, iscore, client_id"
-		. "\n FROM #__modules WHERE id = $id"
+		. "\n FROM #__modules WHERE id = " . (int) $id
 		;
 		$database->setQuery( $query );
 		$row = null;
@@ -142,16 +142,17 @@ class mosInstallerModule extends mosInstaller {
 
 		$query = "SELECT id"
 		. "\n FROM #__modules"
-		. "\n WHERE module = '". $row->module ."' AND client_id = '". $row->client_id ."'"
+		. "\n WHERE module = " . $database->Quote( $row->module ) . " AND client_id = " . (int) $row->client_id
 		;
 		$database->setQuery( $query );
 		$modules = $database->loadResultArray();
 
 		if (count( $modules )) {
-            $modID = implode( ',', $modules );
+			mosArrayToInts( $modules );
+			$modID = 'moduleid=' . implode( ' OR moduleid=', $modules );
 
 			$query = "DELETE FROM #__modules_menu"
-			. "\n WHERE moduleid IN ('". $modID ."')"
+			. "\n WHERE ( $modID )"
 			;
 			$database->setQuery( $query );
 			if (!$database->query()) {
@@ -160,7 +161,7 @@ class mosInstallerModule extends mosInstaller {
 			}
 
     		$query = "DELETE FROM #__modules"
-    		. "\n WHERE module = '". $row->module ."' AND client_id = '". $row->client_id ."'"
+    		. "\n WHERE module = " . $database->Quote( $row->module ) . " AND client_id = " . (int) $row->client_id
     		;
     		$database->setQuery( $query );
     		if (!$database->query()) {

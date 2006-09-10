@@ -37,6 +37,8 @@ code fixes.
 - -> Removed
 ! -> Note
 
+10-Sep-2006 Marko Schmuck
+ # Fixed [artf5761] : single quote in sitename formats incorrectly with massmail
 
 09-Sep-2006 Marko Schmuck
  # Fixed [artf5753] : ampersand in action URL of showArchiveCategory form should be an entity

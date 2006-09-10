@@ -87,7 +87,9 @@ function viewMambots( $option, $client ) {
 	$limitstart 	= intval( $mainframe->getUserStateFromRequest( "view{$option}limitstart", 'limitstart', 0 ) );
 	$filter_type	= $mainframe->getUserStateFromRequest( "filter_type{$option}{$client}", 'filter_type', 1 );
 	$search 		= $mainframe->getUserStateFromRequest( "search{$option}{$client}", 'search', '' );
-	$search 		= $database->getEscaped( trim( strtolower( $search ) ) );
+	if (get_magic_quotes_gpc()) {
+		$search		= stripslashes( $search );
+	}
 
 	if ($client == 'admin') {
 		$where[] = "m.client_id = '1'";
@@ -99,10 +101,10 @@ function viewMambots( $option, $client ) {
 
 	// used by filter
 	if ( $filter_type != 1 ) {
-		$where[] = "m.folder = '$filter_type'";
+		$where[] = "m.folder = " . $database->Quote( $filter_type );
 	}
 	if ( $search ) {
-		$where[] = "LOWER( m.name ) LIKE '%$search%'";
+		$where[] = "LOWER( m.name ) LIKE '%" . $database->getEscaped( trim( strtolower( $search ) ) ) . "%'";
 	}
 
 	// get the total number of records
@@ -134,7 +136,7 @@ function viewMambots( $option, $client ) {
 	// get list of Positions for dropdown filter
 	$query = "SELECT folder AS value, folder AS text"
 	. "\n FROM #__mambots"
-	. "\n WHERE client_id = '$client_id'"
+	. "\n WHERE client_id = " . (int) $client_id
 	. "\n GROUP BY folder"
 	. "\n ORDER BY folder"
 	;
@@ -326,11 +328,12 @@ function publishMambot( $cid=null, $publish=1, $option, $client ) {
 		exit;
 	}
 
-	$cids = implode( ',', $cid );
+	mosArrayToInts( $cid );
+	$cids = 'id=' . implode( ' OR id=', $cid );
 
-	$query = "UPDATE #__mambots SET published = '". intval( $publish ) ."'"
-	. "\n WHERE id IN ( $cids )"
-	. "\n AND ( checked_out = 0 OR ( checked_out = $my->id ))"
+	$query = "UPDATE #__mambots SET published = " . (int) $publish
+	. "\n WHERE ( $cids )"
+	. "\n AND ( checked_out = 0 OR ( checked_out = " . (int) $my->id . " ) )"
 	;
 	$database->setQuery( $query );
 	if (!$database->query()) {
@@ -375,7 +378,7 @@ function orderMambot( $uid, $inc, $option, $client ) {
 	}
 	$row = new mosMambot( $database );
 	$row->load( (int)$uid );
-	$row->move( $inc, "folder='$row->folder' AND ordering > -10000 AND ordering < 10000 AND ($where)"  );
+	$row->move( $inc, "folder=" . $database->Quote( $row->folder ) . " AND ordering > -10000 AND ordering < 10000 AND ($where)"  );
 
 	mosRedirect( 'index2.php?option='. $option );
 }
@@ -434,7 +437,7 @@ function saveOrder( &$cid ) {
 				exit();
 			} // if
 			// remember to updateOrder this group
-			$condition = "folder = '$row->folder' AND ordering > -10000 AND ordering < 10000 AND client_id = $row->client_id";
+			$condition = "folder = " . $database->Quote( $row->folder ) . " AND ordering > -10000 AND ordering < 10000 AND client_id = " . (int) $row->client_id;
 			$found = false;
 			foreach ( $conditions as $cond )
 				if ($cond[1]==$condition) {

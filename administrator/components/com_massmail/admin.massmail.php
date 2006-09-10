@@ -81,16 +81,19 @@ function sendMail() {
 		// Get sending email address
 		$query = "SELECT email"
 		. "\n FROM #__users"
-		. "\n WHERE id = $my->id"
+		. "\n WHERE id = " . (int) $my->id
 		;
 		$database->setQuery( $query );
 		$my->email = $database->loadResult();
 
+		mosArrayToInts( $to['users'] );
+		$user_ids = 'id=' . implode( ' OR id=', $to['users'] );
+
 		// Get all users email and group except for senders
 		$query = "SELECT email"
 		. "\n FROM #__users"
-		. "\n WHERE id != $my->id"
-		. ( $gou !== '0' ? " AND id IN (" . implode( ',', $to['users'] ) . ")" : '' )
+		. "\n WHERE id != " . (int) $my->id
+		. ( $gou !== '0' ? " AND ( $user_ids )" : '' )
 		;
 		$database->setQuery( $query );
 		$rows = $database->loadObjectList();

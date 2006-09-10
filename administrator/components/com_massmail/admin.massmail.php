@@ -96,9 +96,9 @@ function sendMail() {
 		$rows = $database->loadObjectList();
 
 		// Build e-mail message format
-		$message_header 	= sprintf( _MASSMAIL_MESSAGE, $mosConfig_sitename );
+		$message_header 	= sprintf( _MASSMAIL_MESSAGE, html_entity_decode($mosConfig_sitename, ENT_QUOTES) );
 		$message 			= $message_header . $message_body;
-		$subject 			= $mosConfig_sitename. ' / '. stripslashes( $subject);
+		$subject 	= html_entity_decode($mosConfig_sitename, ENT_QUOTES) . ' / '. stripslashes( $subject);
 
 		//Send email
 		foreach ($rows as $row) {

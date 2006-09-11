@@ -115,7 +115,7 @@ function editPoll( $uid=0, $option='com_poll' ) {
 		$row->checkout( $my->id );
 		$query = "SELECT id, text"
 		. "\n FROM #__poll_data"
-		. "\n WHERE pollid = $uid"
+		. "\n WHERE pollid = " . (int) $uid
 		. "\n ORDER BY id"
 		;
 		$database->setQuery($query);
@@ -129,7 +129,7 @@ function editPoll( $uid=0, $option='com_poll' ) {
 	if ( $uid ) {
 		$query = "SELECT menuid AS value"
 		. "\n FROM #__poll_menu"
-		. "\n WHERE pollid = $row->id"
+		. "\n WHERE pollid = " . (int) $row->id
 		;
 		$database->setQuery( $query );
 		$lookup = $database->loadObjectList();
@@ -171,19 +171,23 @@ function savePoll( $option ) {
 	$options = mosGetParam( $_POST, 'polloption', array() );
 
 	foreach ($options as $i=>$text) {
-		$text = $database->Quote($text);
+		if (!get_magic_quotes_gpc()) {
+			// The poll module has always been this way, so we'll just stick with that and add
+			// additional backslashes if needed. They will be stripped upon display
+			$text = addslashes( $text );
+		}
 		if ($isNew) {
 			$query = "INSERT INTO #__poll_data"
 			. "\n ( pollid, text )"
-			. "\n VALUES ( $row->id, $text )"
+			. "\n VALUES ( " . (int) $row->id . ", " . $database->Quote( $text ) . " )"
 			;
 			$database->setQuery( $query );
 			$database->query();
 		} else {
 			$query = "UPDATE #__poll_data"
-			. "\n SET text = $text"
-			. "\n WHERE id = $i"
-			. "\n AND pollid = $row->id"
+			. "\n SET text = " . $database->Quote($text)
+			. "\n WHERE id = " . (int) $i
+			. "\n AND pollid = " . (int) $row->id
 			;
 			$database->setQuery( $query );
 			$database->query();
@@ -194,14 +198,14 @@ function savePoll( $option ) {
 	$selections = mosGetParam( $_POST, 'selections', array() );
 
 	$query = "DELETE FROM #__poll_menu"
-	. "\n WHERE pollid = $row->id"
+	. "\n WHERE pollid = " . (int) $row->id
 	;
 	$database->setQuery( $query );
 	$database->query();
 
 	for ($i=0, $n=count($selections); $i < $n; $i++) {
 		$query = "INSERT INTO #__poll_menu"
-		. "\n SET pollid = $row->id, menuid = ". $selections[$i]
+		. "\n SET pollid = " . (int) $row->id . ", menuid = " . (int) $selections[$i]
 		;
 		$database->setQuery( $query );
 		$database->query();
@@ -237,12 +241,13 @@ function publishPolls( $cid=null, $publish=1, $option ) {
 		exit;
 	}
 
-	$cids = implode( ',', $cid );
+	mosArrayToInts( $cid );
+	$cids = 'id=' . implode( ' OR id=', $cid );
 
 	$query = "UPDATE #__polls"
 	. "\n SET published = " . intval( $publish )
-	. "\n WHERE id IN ( $cids )"
-	. "\n AND ( checked_out = 0 OR ( checked_out = $my->id ) )"
+	. "\n WHERE ( $cids )"
+	. "\n AND ( checked_out = 0 OR ( checked_out = " . (int) $my->id  . " ) )"
 	;
 	$database->setQuery( $query );
 	if (!$database->query()) {

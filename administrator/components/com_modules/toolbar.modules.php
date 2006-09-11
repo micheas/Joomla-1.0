@@ -31,7 +31,7 @@ switch ($task) {
 		if ( $mid ) {
 			$query = "SELECT published"
 			. "\n FROM #__modules"
-			. "\n WHERE id = $mid"
+			. "\n WHERE id = " . (int) $mid
 			;
 			$database->setQuery( $query );
 			$published = $database->loadResult();

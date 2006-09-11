@@ -97,26 +97,30 @@ function viewModules( $option, $client ) {
 	$limit 				= intval( $mainframe->getUserStateFromRequest( "viewlistlimit", 'limit', $mosConfig_list_limit ) );
 	$limitstart 		= intval( $mainframe->getUserStateFromRequest( "view{$option}limitstart", 'limitstart', 0 ) );
 	$search 			= $mainframe->getUserStateFromRequest( "search{$option}{$client}", 'search', '' );
-	$search 			= $database->getEscaped( trim( strtolower( $search ) ) );
+	if (get_magic_quotes_gpc()) {
+		$search				= stripslashes( $search );
+		$filter_position	= stripslashes( $filter_position );
+		$filter_type		= stripslashes( $filter_type );
+	}
 
 	if ($client == 'admin') {
-		$where[] 	= "m.client_id = '1'";
+		$where[] 	= "m.client_id = 1";
 		$client_id 	= 1;
 	} else {
-		$where[] 	= "m.client_id = '0'";
+		$where[] 	= "m.client_id = 0";
 		$client_id 	= 0;
 		$client 	= '';
 	}
 
 	// used by filter
 	if ( $filter_position ) {
-		$where[] = "m.position = '$filter_position'";
+		$where[] = "m.position = " . $database->Quote( $filter_position );
 	}
 	if ( $filter_type ) {
-		$where[] = "m.module = '$filter_type'";
+		$where[] = "m.module = " . $database->Quote( $filter_type );
 	}
 	if ( $search ) {
-		$where[] = "LOWER( m.title ) LIKE '%$search%'";
+		$where[] = "LOWER( m.title ) LIKE '%" . $database->getEscaped( trim( strtolower( $search ) ) ) . "%'";
 	}
 
 	// get the total number of records
@@ -150,7 +154,7 @@ function viewModules( $option, $client ) {
 	$query = "SELECT t.position AS value, t.position AS text"
 	. "\n FROM #__template_positions as t"
 	. "\n LEFT JOIN #__modules AS m ON m.position = t.position"
-	. "\n WHERE m.client_id = $client_id"
+	. "\n WHERE m.client_id = " . (int) $client_id
 	. "\n GROUP BY t.position"
 	. "\n ORDER BY t.position"
 	;
@@ -162,7 +166,7 @@ function viewModules( $option, $client ) {
 	// get list of Positions for dropdown filter
 	$query = "SELECT module AS value, module AS text"
 	. "\n FROM #__modules"
-	. "\n WHERE client_id = $client_id"
+	. "\n WHERE client_id = " . (int) $client_id
 	. "\n GROUP BY module"
 	. "\n ORDER BY module"
 	;
@@ -208,14 +212,14 @@ function copyModule( $option, $uid, $client ) {
 
 	$query = "SELECT menuid"
 	. "\n FROM #__modules_menu"
-	. "\n WHERE moduleid = $uid"
+	. "\n WHERE moduleid = " . (int) $uid
 	;
 	$database->setQuery( $query );
 	$rows = $database->loadResultArray();
 
 	foreach($rows as $menuid) {
 		$query = "INSERT INTO #__modules_menu"
-		. "\n SET moduleid = $row->id, menuid = $menuid"
+		. "\n SET moduleid = " . (int) $row->id . ", menuid = " . (int) $menuid
 		;
 		$database->setQuery( $query );
 		$database->query();
@@ -268,7 +272,7 @@ function saveModule( $option, $client, $task ) {
 
 	// delete old module to menu item associations
 	$query = "DELETE FROM #__modules_menu"
-	. "\n WHERE moduleid = $row->id"
+	. "\n WHERE moduleid = " . (int) $row->id
 	;
 	$database->setQuery( $query );
 	$database->query();
@@ -278,7 +282,7 @@ function saveModule( $option, $client, $task ) {
 	if ( in_array( '0', $menus ) ) {
 		// assign new module to `all` menu item associations
 		$query = "INSERT INTO #__modules_menu"
-		. "\n SET moduleid = $row->id, menuid = 0"
+		. "\n SET moduleid = " . (int) $row->id . ", menuid = 0"
 		;
 		$database->setQuery( $query );
 		$database->query();
@@ -288,7 +292,7 @@ function saveModule( $option, $client, $task ) {
 			if ( $menuid != "-999" ) {
 				// assign new module to menu item associations
 				$query = "INSERT INTO #__modules_menu"
-				. "\n SET moduleid = $row->id, menuid = $menuid"
+				. "\n SET moduleid = " . (int) $row->id . ", menuid = " . (int) $menuid
 				;
 				$database->setQuery( $query );
 				$database->query();
@@ -402,7 +406,7 @@ function editModule( $option, $uid, $client ) {
 	if ( $uid ) {
 		$query = "SELECT menuid AS value"
 		. "\n FROM #__modules_menu"
-		. "\n WHERE moduleid = $row->id"
+		. "\n WHERE moduleid = " . (int) $row->id
 		;
 		$database->setQuery( $query );
 		$lookup = $database->loadObjectList();
@@ -464,10 +468,11 @@ function removeModule( &$cid, $option, $client ) {
 		exit;
 	}
 
-	$cids = implode( ',', $cid );
+	mosArrayToInts( $cid );
+	$cids = 'id=' . implode( ' OR id=', $cid );
 
 	$query = "SELECT id, module, title, iscore, params"
-	. "\n FROM #__modules WHERE id IN ( $cids )"
+	. "\n FROM #__modules WHERE ( $cids )"
 	;
 	$database->setQuery( $query );
 	if (!($rows = $database->loadObjectList())) {
@@ -493,17 +498,20 @@ function removeModule( &$cid, $option, $client ) {
 	}
 
 	if (count( $cid )) {
-		$cids = implode( ',', $cid );
+		mosArrayToInts( $cid );
+		$cids = 'id=' . implode( ' OR id=', $cid );
 		$query = "DELETE FROM #__modules"
-		. "\n WHERE id IN ( $cids )"
+		. "\n WHERE ( $cids )"
 		;
 		$database->setQuery( $query );
 		if (!$database->query()) {
 			echo "<script> alert('".$database->getErrorMsg()."'); window.history.go(-1); </script>\n";
 			exit;
 		}
+		// mosArrayToInts( $cid ); // just done a few lines earlier
+		$cids = 'moduleid=' . implode( ' OR moduleid=', $cid );
 		$query = "DELETE FROM #__modules_menu"
-		. "\n WHERE moduleid IN ( $cids )"
+		. "\n WHERE ( $cids )"
 		;
 		$database->setQuery( $query );
 		if (!$database->query()) {
@@ -540,12 +548,13 @@ function publishModule( $cid=null, $publish=1, $option, $client ) {
 		exit;
 	}
 
-	$cids = implode( ',', $cid );
+	mosArrayToInts( $cid );
+	$cids = 'id=' . implode( ' OR id=', $cid );
 
 	$query = "UPDATE #__modules"
-	. "\n SET published = " . intval( $publish )
-	. "\n WHERE id IN ( $cids )"
-	. "\n AND ( checked_out = 0 OR ( checked_out = $my->id ) )"
+	. "\n SET published = " . (int) $publish
+	. "\n WHERE ( $cids )"
+	. "\n AND ( checked_out = 0 OR ( checked_out = " . (int) $my->id . " ) )"
 	;
 	$database->setQuery( $query );
 	if (!$database->query()) {
@@ -595,7 +604,7 @@ function orderModule( $uid, $inc, $option ) {
 		$where = "client_id = 0";
 	}
 
-	$row->move( $inc, "position = '$row->position' AND ( $where )"  );
+	$row->move( $inc, "position = " . $database->Quote( $row->position ) . " AND ( $where )"  );
 	if ( $client ) {
 		$client = '&client=admin' ;
 	} else {
@@ -663,7 +672,7 @@ function saveOrder( &$cid, $client ) {
 				exit();
 			} // if
 			// remember to updateOrder this group
-			$condition = "position = '$row->position' AND client_id = $row->client_id";
+			$condition = "position = " . $database->Quote( $row->position ) . " AND client_id = " . (int) $row->client_id;
 			$found = false;
 			foreach ( $conditions as $cond )
 				if ($cond[1]==$condition) {

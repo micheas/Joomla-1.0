@@ -59,7 +59,7 @@ function editConfig( $option ) {
 
 	$query = "SELECT cfg_name, cfg_value"
 	. "\n FROM #__messages_cfg"
-	. "\n WHERE user_id = $my->id"
+	. "\n WHERE user_id = " . (int) $my->id
 	;
 	$database->setQuery( $query );
 	$data = $database->loadObjectList( 'cfg_name' );
@@ -78,7 +78,7 @@ function editConfig( $option ) {
 	$vars 					= array();
 	$vars['lock'] 			= mosHTML::yesnoSelectList( "vars[lock]", 'class="inputbox" size="1"', $data['lock']->cfg_value );
 	$vars['mail_on_new'] 	= mosHTML::yesnoSelectList( "vars[mail_on_new]", 'class="inputbox" size="1"', $data['mail_on_new']->cfg_value );
-	$vars['auto_purge'] 	= $data['auto_purge']->cfg_value;
+	$vars['auto_purge'] 	= (int) $data['auto_purge']->cfg_value;
 
 	HTML_messages::editConfig( $vars, $option );
 
@@ -88,17 +88,20 @@ function saveConfig( $option ) {
 	global $database, $my;
 
 	$query = "DELETE FROM #__messages_cfg"
-	. "\n WHERE user_id = $my->id"
+	. "\n WHERE user_id = " . (int) $my->id
 	;
 	$database->setQuery( $query );
 	$database->query();
 
 	$vars = mosGetParam( $_POST, 'vars', array() );
 	foreach ($vars as $k=>$v) {
-		$v = $database->getEscaped( $v );
+		if (get_magic_quotes_gpc()) {
+			$k = stripslashes( $k );
+			$v = stripslashes( $v );
+		}
 		$query = "INSERT INTO #__messages_cfg"
 		. "\n ( user_id, cfg_name, cfg_value )"
-		. "\n VALUES ( $my->id, '$k', '$v' )"
+		. "\n VALUES ( " . (int) $my->id . ", " . $database->Quote( $k ) . ", " . $database->Quote( $v ) . " )"
 		;
 		$database->setQuery( $query );
 		$database->query();
@@ -115,13 +118,15 @@ function newMessage( $option ) {
 	// get available backend user groups
 	$gid 	= $acl->get_group_id( 'Public Backend', 'ARO' );
 	$gids 	= $acl->get_group_children( $gid, 'ARO', 'RECURSE' );
-	$gids 	= implode( ',', $gids );
 
 	// get list of usernames
 	$recipients = array( mosHTML::makeOption( '0', '- Select User -' ) );
-	
+
+	mosArrayToInts( $gids );
+	$gids = 'gid=' . implode( ' OR gid=', $gids );
+
 	$query = "SELECT id AS value, username AS text FROM #__users"
-	. "\n WHERE gid IN ( $gids )"
+	. "\n WHERE ( $gids )"
 	. "\n ORDER BY name"
 	;
 	$database->setQuery( $query );
@@ -158,13 +163,16 @@ function showMessages( $option ) {
 	$limit 		= $mainframe->getUserStateFromRequest( "viewlistlimit", 'limit', $mosConfig_list_limit );
 	$limitstart = $mainframe->getUserStateFromRequest( "view{$option}limitstart", 'limitstart', 0 );
 	$search 	= $mainframe->getUserStateFromRequest( "search{$option}", 'search', '' );
-	$search 	= $database->getEscaped( trim( strtolower( $search ) ) );
+	if (get_magic_quotes_gpc()) {
+		$search			= stripslashes( $search );
+	}
 
 	$wheres = array();
-	$wheres[] = " a.user_id_to='$my->id'";
+	$wheres[] = " a.user_id_to = " . (int) $my->id;
 
 	if (isset($search) && $search!= "") {
-		$wheres[] = "( u.username LIKE '%$search%' OR email LIKE '%$search%' OR u.name LIKE '%$search%' )";
+		$searchEscaped = $database->getEscaped( trim( strtolower( $search ) ) );
+		$wheres[] = "( u.username LIKE '%$searchEscaped%' OR email LIKE '%$searchEscaped%' OR u.name LIKE '%$searchEscaped%' )";
 	}
 
 	$query = "SELECT COUNT(*)"
@@ -202,7 +210,7 @@ function viewMessage( $uid='0', $option ) {
 	$query = "SELECT a.*, u.name AS user_from"
 	. "\n FROM #__messages AS a"
 	. "\n INNER JOIN #__users AS u ON u.id = a.user_id_from"
-	. "\n WHERE a.message_id = $uid"
+	. "\n WHERE a.message_id = " . (int) $uid
 	. "\n ORDER BY date_time DESC"
 	;
 	$database->setQuery( $query );
@@ -210,7 +218,7 @@ function viewMessage( $uid='0', $option ) {
 
 	$query = "UPDATE #__messages"
 	. "\n SET state = 1"
-	. "\n WHERE message_id = $uid"
+	. "\n WHERE message_id = " . (int) $uid
 	;
 	$database->setQuery( $query );
 	$database->query();
@@ -226,9 +234,10 @@ function removeMessage( $cid, $option ) {
 		exit;
 	}
 	if (count( $cid )) {
-		$cids = implode( ',', $cid );
+		mosArrayToInts( $cid );
+		$cids = 'message_id=' . implode( ' OR message_id=', $cid );
 		$query = "DELETE FROM #__messages"
-		. "\n WHERE message_id IN ( $cids )"
+		. "\n WHERE ( $cids )"
 		;
 		$database->setQuery( $query );
 		if (!$database->query()) {

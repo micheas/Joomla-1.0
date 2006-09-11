@@ -27,7 +27,7 @@ switch ($task) {
 
 		$query = "SELECT published"
 		. "\n FROM #__polls"
-		. "\n WHERE id = $cid[0]"
+		. "\n WHERE id = " . (int) $cid[0]
 		;
 		$database->setQuery( $query );
 		$published = $database->loadResult();
@@ -42,7 +42,7 @@ switch ($task) {
 
 		$query = "SELECT published"
 		. "\n FROM #__polls"
-		. "\n WHERE id = $id"
+		. "\n WHERE id = " . (int) $id
 		;
 		$database->setQuery( $query );
 		$published = $database->loadResult();

@@ -87,7 +87,7 @@ function showNewsFeeds( $option ) {
 	// get the total number of records
 	$query = "SELECT COUNT(*)"
 	. "\n FROM #__newsfeeds"
-	. ( $catid ? "\n WHERE catid = $catid" : '' )
+	. ( $catid ? "\n WHERE catid = " . (int) $catid : '' )
 	;
 	$database->setQuery( $query );
 	$total = $database->loadResult();
@@ -100,7 +100,7 @@ function showNewsFeeds( $option ) {
 	. "\n FROM #__newsfeeds AS a"
 	. "\n LEFT JOIN #__categories AS c ON c.id = a.catid"
 	. "\n LEFT JOIN #__users AS u ON u.id = a.checked_out"
-	. ( $catid ? "\n WHERE a.catid = $catid" : '' )
+	. ( $catid ? "\n WHERE a.catid = " . (int) $catid : '' )
 	. "\n ORDER BY a.ordering"
 	;
 	$database->setQuery( $query, $pageNav->limitstart, $pageNav->limit );
@@ -203,12 +203,13 @@ function publishNewsFeeds( $cid, $publish, $option ) {
 		exit;
 	}
 
-	$cids = implode( ',', $cid );
+	mosArrayToInts( $cid );
+	$cids = 'id=' . implode( ' OR id=', $cid );
 
 	$query = "UPDATE #__newsfeeds"
 	. "\n SET published = ". intval( $publish )
-	. "\n WHERE id IN ( $cids )"
-	. "\n AND ( checked_out = 0 OR ( checked_out = $my->id ) )"
+	. "\n WHERE ( $cids )"
+	. "\n AND ( checked_out = 0 OR ( checked_out = " . (int) $my->id  . " ) )"
 	;
 	$database->setQuery( $query );
 	if (!$database->query()) {
@@ -237,9 +238,10 @@ function removeNewsFeeds( &$cid, $option ) {
 		exit;
 	}
 	if (count( $cid )) {
-		$cids = implode( ',', $cid );
+		mosArrayToInts( $cid );
+		$cids = 'id=' . implode( ' OR id=', $cid );
 		$query = "DELETE FROM #__newsfeeds"
-		. "\n WHERE id IN ( $cids )"
+		. "\n WHERE ( $cids )"
 		. "\n AND checked_out = 0"
 		;
 		$database->setQuery( $query );

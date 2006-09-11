@@ -31,6 +31,9 @@ $cid 	= mosGetParam( $_REQUEST, 'cid', array(0) );
 if (!is_array( $cid )) {
 	$cid = array(0);
 }
+if (get_magic_quotes_gpc()) {
+	$cid[0] = stripslashes( $cid[0] );
+}
 
 switch ($task) {
 	case 'new':
@@ -194,7 +197,7 @@ function viewTemplates( $option, $client ) {
 			$query = "SELECT COUNT(*)"
 			. "\n FROM #__templates_menu"
 			. "\n WHERE client_id = 0"
-			. "\n AND template = '$row->directory'"
+			. "\n AND template = " . $database->Quote( $row->directory )
 			. "\n AND menuid != 0"
 			;
 			$database->setQuery( $query );
@@ -229,7 +232,7 @@ function defaultTemplate( $p_tname, $option, $client ) {
 		$database->query();
 
 		$query = "INSERT INTO #__templates_menu"
-		. "\n SET client_id = 1, template = '$p_tname', menuid = 0"
+		. "\n SET client_id = 1, template = " . $database->Quote( $p_tname ) . ", menuid = 0"
 		;
 		$database->setQuery( $query );
 		$database->query();
@@ -242,7 +245,7 @@ function defaultTemplate( $p_tname, $option, $client ) {
 		$database->query();
 
 		$query = "INSERT INTO #__templates_menu"
-		. "\n SET client_id = 0, template = '$p_tname', menuid = 0"
+		. "\n SET client_id = 0, template = " . $database->Quote( $p_tname ) . ", menuid = 0"
 		;
 		$database->setQuery( $query );
 		$database->query();
@@ -263,7 +266,7 @@ function removeTemplate( $cid, $option, $client ) {
 
 	$query = "SELECT template"
 	. "\n FROM #__templates_menu"
-	. "\n WHERE client_id = $client_id"
+	. "\n WHERE client_id = " . (int) $client_id
 	. "\n AND menuid = 0"
 	;
 	$database->setQuery( $query );
@@ -275,8 +278,8 @@ function removeTemplate( $cid, $option, $client ) {
 
 	// Un-assign
 	$query = "DELETE FROM #__templates_menu"
-	. "\n WHERE template = '$cid'"
-	. "\n AND client_id = $client_id"
+	. "\n WHERE template = " . $database->Quote( $cid )
+	. "\n AND client_id = " . (int) $client_id
 	. "\n AND menuid != 0"
 	;
 	$database->setQuery( $query );
@@ -430,7 +433,7 @@ function assignTemplate( $p_tname, $option, $client ) {
 		$query = "SELECT menuid AS value"
 		. "\n FROM #__templates_menu"
 		. "\n WHERE client_id = 0"
-		. "\n AND template = '$p_tname'"
+		. "\n AND template = " . $database->Quote( $p_tname )
 		;
 		$database->setQuery( $query );
 		$lookup = $database->loadObjectList();
@@ -448,11 +451,11 @@ function saveTemplateAssign( $option, $client ) {
 
 	$menus 		= josGetArrayInts( 'selections' );
 	
-	$template 	= strval( mosGetParam( $_POST, 'template', '' ) );
+	$template 	= stripslashes( strval( mosGetParam( $_POST, 'template', '' ) ) );
 
 	$query = "DELETE FROM #__templates_menu"
 	. "\n WHERE client_id = 0"
-	. "\n AND template = '$template'"
+	. "\n AND template = " . $database->Quote( $template )
 	. "\n AND menuid != 0"
 	;
 	$database->setQuery( $query );
@@ -467,13 +470,13 @@ function saveTemplateAssign( $option, $client ) {
 				// check if there is already a template assigned to this menu item
 				$query = "DELETE FROM #__templates_menu"
 				. "\n WHERE client_id = 0"
-				. "\n AND menuid = $menuid"
+				. "\n AND menuid = " . (int) $menuid
 				;
 				$database->setQuery( $query );
 				$database->query();
 
 				$query = "INSERT INTO #__templates_menu"
-				. "\n SET client_id = 0, template = '$template', menuid = $menuid"
+				. "\n SET client_id = 0, template = " . $database->Quote( $template ) . ", menuid = " . (int) $menuid
 				;
 				$database->setQuery( $query );
 				$database->query();
@@ -512,12 +515,14 @@ function savePositions( $option ) {
 	$database->query();
 
 	foreach ($positions as $id=>$position) {
-		$position 		= trim( $database->getEscaped( $position ) );
-		$description 	= strval( mosGetParam( $descriptions, $id, '' ) );
+		$position 		= trim( $position );
+		if (get_magic_quotes_gpc()) {
+			$position = stripslashes( $position );
+		}
+		$description 	= stripslashes( strval( mosGetParam( $descriptions, $id, '' ) ) );
 		if ($position != '') {
-			$id = intval( $id );
 			$query = "INSERT INTO #__template_positions"
-			. "\n VALUES ( $id, '$position', '$description' )"
+			. "\n VALUES ( " . (int) $id . ", " . $database->Quote( $position ) . ", " . $database->Quote( $description ) . " )"
 			;
 			$database->setQuery( $query );
 			$database->query();

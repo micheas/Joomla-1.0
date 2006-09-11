@@ -917,7 +917,7 @@ function removeContent( &$cid, $sectionid, $option ) {
 	$state = '-2';
 	$ordering = '0';
 	//seperate contentids
-	mosArrayToInts( $cids );
+	mosArrayToInts( $cid );
 	$cids = 'id=' . implode( ' OR id=', $cid );
 	$query = "UPDATE #__content"
 	. "\n SET state = " . (int) $state . ", ordering = " . (int) $ordering

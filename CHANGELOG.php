@@ -38,6 +38,7 @@ code fixes.
 ! -> Note
 
 12-Sep-2006 Sam Moffatt
+ # Fixed [artf5866] : com_content uses corrupted global $id for page navigation
  # Fixed [artf5719] : header_version.png right top
 
 10-Sep-2006 Marko Schmuck

@@ -1330,15 +1330,15 @@ function BlogOutput ( &$rows, &$params, $gid, &$access, $pop, &$menu, $limitstar
 					
 					if (!$archive) {
 					// used when access via archive module
-						$id		= '&amp;id=0';
+						$pid		= '&amp;id=0';
 						$module	= '&amp;module=1';
 					} else {
 					// used when access via menu item
-						$id 	= '&amp;id='. $id;
+						$pid 	= '&amp;id='. $id;
 						$module	= '';
 					}
 					
-					$link 	= 'index.php?option=com_content&amp;task='. $task . $id . $Itemid_link .'&amp;year='. $year .'&amp;month='. $month . $module;
+					$link 	= 'index.php?option=com_content&amp;task='. $task . $pid . $Itemid_link .'&amp;year='. $year .'&amp;month='. $month . $module;
 				} else {
 					$link 	= 'index.php?option=com_content&amp;task='. $task .'&amp;id='. $id . $Itemid_link;
 				}

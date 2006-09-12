@@ -35,7 +35,7 @@ body {
         position: relative;
         width: 100%;
         background: url(header_version.png) no-repeat;
-        background-position: bottom right;
+        background-position: top right;
         margin: 0px;
         padding: 0px;
 }

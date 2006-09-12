@@ -37,6 +37,9 @@ code fixes.
 - -> Removed
 ! -> Note
 
+12-Sep-2006 Sam Moffatt
+ # Fixed [artf5719] : header_version.png right top
+
 10-Sep-2006 Marko Schmuck
  # Fixed [artf5761] : single quote in sitename formats incorrectly with massmail
  # Fixed [artf5249] : Image align="center" command is Invalid - Should be align="middle"

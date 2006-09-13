@@ -22,8 +22,8 @@ function mosCountAdminModules(  $position='left' ) {
 
 	$query = "SELECT COUNT( m.id )"
 	. "\n FROM #__modules AS m"
-	. "\n WHERE m.published = '1'"
-	. "\n AND m.position = '$position'"
+	. "\n WHERE m.published = 1"
+	. "\n AND m.position = " . $database->Quote( $position )
 	. "\n AND m.client_id = 1"
 	;
 	$database->setQuery( $query );
@@ -43,7 +43,7 @@ function mosLoadAdminModules( $position='left', $style=0 ) {
 	$query = "SELECT id, title, module, position, content, showtitle, params"
 	. "\n FROM #__modules AS m"
 	. "\n WHERE m.published = 1"
-	. "\n AND m.position = '$position'"
+	. "\n AND m.position = " . $database->Quote( $position )
 	. "\n AND m.client_id = 1"
 	. "\n ORDER BY m.ordering"
 	;

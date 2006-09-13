@@ -24,14 +24,14 @@ $css = mosGetParam( $_REQUEST, 't', '' );
 
 $query = "SELECT title"
 . "\n FROM #__polls"
-. "\n WHERE id = $pollid"
+. "\n WHERE id = " . (int) $pollid
 ;
 $database->setQuery( $query );
 $title = $database->loadResult();
 
 $query = "SELECT text"
 . "\n FROM #__poll_data"
-. "\n WHERE pollid = $pollid"
+. "\n WHERE pollid = " . (int) $pollid
 . "\n ORDER BY id"
 ;
 $database->setQuery( $query );

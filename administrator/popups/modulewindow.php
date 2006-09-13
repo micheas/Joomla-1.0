@@ -34,7 +34,7 @@ switch ($option) {
 		break;		
 }
 
-$title 	= mosGetParam( $_REQUEST, 'title', 0 );
+$title 	= stripslashes( mosGetParam( $_REQUEST, 'title', 0 ) );
 $css 	= mosGetParam( $_REQUEST, 't', '');
 $row 	= null;
 
@@ -43,7 +43,7 @@ $database->debug( $mosConfig_debug );
 
 $query = "SELECT *"
 . "\n FROM #__modules"
-. "\n WHERE title = '$title'"
+. "\n WHERE title = " . $database->Quote( $title )
 ;
 $database->setQuery( $query );
 $database->loadObject( $row );

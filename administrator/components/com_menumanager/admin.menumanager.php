@@ -22,9 +22,12 @@ if (!$acl->acl_check( 'administration', 'manage', 'users', $my->usertype, 'compo
 
 require_once( $mainframe->getPath( 'admin_html' ) );
 
-$menu 		= strval( mosGetParam( $_GET, 'menu', '' ) );
-$type 		= strval( mosGetParam( $_POST, 'type', '' ) );
+$menu 		= stripslashes( strval( mosGetParam( $_GET, 'menu', '' ) ) );
+$type 		= stripslashes( strval( mosGetParam( $_POST, 'type', '' ) ) );
 $cid 		= mosGetParam( $_POST, 'cid', '' );
+if (isset( $cid[0] ) && get_magic_quotes_gpc()) {
+	$cid[0] = stripslashes( $cid[0] );
+}
 
 switch ($task) {
 	case 'new':
@@ -87,7 +90,7 @@ function showMenu( $option ) {
 		$query = "SELECT count( id )"
 		. "\n FROM #__modules"
 		. "\n WHERE module = 'mod_mainmenu'"
-		. "\n AND params LIKE '%$a%'"
+		. "\n AND params LIKE '%" . $database->getEscaped( $a ) . "%'"
 		;
 		$database->setQuery( $query );
 		$modules = $database->loadResult();
@@ -198,8 +201,8 @@ function editMenu( $option, $menu ) {
 function saveMenu() {
 	global $database;
 
-	$menutype 		= strval( mosGetParam( $_POST, 'menutype', '' ) );
-	$old_menutype 	= strval( mosGetParam( $_POST, 'old_menutype', '' ) );
+	$menutype 		= stripslashes( strval( mosGetParam( $_POST, 'menutype', '' ) ) );
+	$old_menutype 	= stripslashes( strval( mosGetParam( $_POST, 'old_menutype', '' ) ) );
 	$new			= intval( mosGetParam( $_POST, 'new', 1 ) );
 
 	// block to stop renaming of 'mainmenu' menutype
@@ -269,7 +272,7 @@ function saveMenu() {
 			$query = "SELECT id"
 			. "\n FROM #__modules"
 			. "\n WHERE module = 'mod_mainmenu'"
-			. "\n AND params LIKE '%$old_menutype%'"
+			. "\n AND params LIKE '%" . $database->getEscaped( $old_menutype ) . "%'"
 			;
 			$database->setQuery( $query );
 			$modules = $database->loadResultArray();
@@ -310,8 +313,8 @@ function saveMenu() {
 		// change menutype of all menuitems using old menutype
 			if ( $menutype != $old_menutype ) {
 				$query = "UPDATE #__menu"
-				. "\n SET menutype = '$menutype'"
-				. "\n WHERE menutype = '$old_menutype'"
+				. "\n SET menutype = " . $database->Quote( $menutype )
+				. "\n WHERE menutype = " . $database->Quote( $old_menutype )
 				;
 				$database->setQuery( $query );
 				$database->query();
@@ -338,7 +341,7 @@ function deleteConfirm( $option, $type ) {
 	// list of menu items to delete
 	$query = "SELECT a.name, a.id"
 	. "\n FROM #__menu AS a"
-	. "\n WHERE ( a.menutype IN ( '$type' ) )"
+	. "\n WHERE a.menutype = " . $database->Quote( $type )
 	. "\n ORDER BY a.name"
 	;
 	$database->setQuery( $query );
@@ -348,7 +351,7 @@ function deleteConfirm( $option, $type ) {
 	$query = "SELECT id"
 	. "\n FROM #__modules"
 	. "\n WHERE module = 'mod_mainmenu'"
-	. "\n AND params LIKE '%$type%'"
+	. "\n AND params LIKE '%" . $database->getEscaped( $type ) . "%'"
 	;
 	$database->setQuery( $query );
 	$mods = $database->loadResultArray();
@@ -363,13 +366,18 @@ function deleteConfirm( $option, $type ) {
 		}
 	}
 
-	@$mids = implode( ',', $mid );
-	$query = "SELECT id, title"
-	. "\n FROM #__modules"
-	. "\n WHERE id IN ( $mids )"
-	;
-	$database->setQuery( $query );
-	@$modules = $database->loadObjectList();
+	mosArrayToInts( $mid );
+	if (count( $mid )) {
+		$mids = 'id=' . implode( ' OR id=', $mid );
+		$query = "SELECT id, title"
+		. "\n FROM #__modules"
+		. "\n WHERE ( $mids )"
+		;
+		$database->setQuery( $query );
+		$modules = $database->loadObjectList();
+	} else {
+		$modules = null;
+	}
 
 	HTML_menumanager::showDelete( $option, $type, $items, $modules );
 }
@@ -385,33 +393,28 @@ function deleteMenu( $option, $cid, $type ) {
 		exit();
 	}
 
-	$mids = mosGetParam( $_POST, 'mids', 0 );
-	if ( is_array( $mids ) ) {
-		mosArrayToInts( $mids );
-		$mids = implode( ',', $mids );
-	}
-	// delete menu items
-	$query = "DELETE FROM #__menu"
-	. "\n WHERE ( id IN ( $mids ) )"
-	;
-	$database->setQuery( $query );
-	if ( !$database->query() ) {
-		echo "<script> alert('". $database->getErrorMsg() ."');</script>\n";
-		exit;
-	}
-
-	if ( is_array( $cid ) ) {
-		mosArrayToInts( $cids );
-		$cids = implode( ',', $cid );
-	} else {
-		$cids = $cid;
+	$mid = mosGetParam( $_POST, 'mids' );
+	mosArrayToInts( $mid );
+	if (count( $mid )) {
+		// delete menu items
+		$mids = 'id=' . implode( ' OR id=', $mid );
+		$query = "DELETE FROM #__menu"
+		. "\n WHERE ( $mids )"
+		;
+		$database->setQuery( $query );
+		if ( !$database->query() ) {
+			echo "<script> alert('". $database->getErrorMsg() ."');</script>\n";
+			exit;
+		}
 	}
 
+	mosArrayToInts( $cid );
 	// checks whether any modules to delete
-	if ( $cids ) {
+	if (count( $cid )) {
 		// delete modules
+		$cids = 'id=' . implode( ' OR id=', $cid );
 		$query = "DELETE FROM #__modules"
-		. "\n WHERE id IN ( $cids )"
+		. "\n WHERE ( $cids )"
 		;
 		$database->setQuery( $query );
 		if ( !$database->query() ) {
@@ -419,8 +422,9 @@ function deleteMenu( $option, $cid, $type ) {
 			exit;
 		}
 		// delete all module entires in jos_modules_menu
+		$cids = 'moduleid=' . implode( ' OR moduleid=', $cid );
 		$query = "DELETE FROM #__modules_menu"
-		. "\n WHERE moduleid IN ( $cids )"
+		. "\n WHERE ( $cids )"
 		;
 		$database->setQuery( $query );
 		if ( !$database->query() ) {
@@ -452,7 +456,7 @@ function copyConfirm( $option, $type ) {
 	// Content Items query
 	$query = 	"SELECT a.name, a.id"
 	. "\n FROM #__menu AS a"
-	. "\n WHERE ( a.menutype IN ( '$type' ) )"
+	. "\n WHERE a.menutype = " . $database->Quote( $type )
 	. "\n ORDER BY a.name"
 	;
 	$database->setQuery( $query );
@@ -468,8 +472,8 @@ function copyConfirm( $option, $type ) {
 function copyMenu( $option, $cid, $type ) {
 	global $database;
 
-	$menu_name 		= strval( mosGetParam( $_POST, 'menu_name', 'New Menu' ) );
-	$module_name 	= strval( mosGetParam( $_POST, 'module_name', 'New Module' ) );
+	$menu_name 		= stripslashes( strval( mosGetParam( $_POST, 'menu_name', 'New Menu' ) ) );
+	$module_name 	= stripslashes( strval( mosGetParam( $_POST, 'module_name', 'New Module' ) ) );
 
 	// check for unique menutype for new menu copy
 	$query = "SELECT params"
@@ -534,7 +538,7 @@ function copyMenu( $option, $cid, $type ) {
 	$row->updateOrder( 'position=' . $database->Quote( $row->position ) );
 	// module assigned to show on All pages by default
 	// ToDO: Changed to become a Joomla! db-object
-	$query = "INSERT INTO #__modules_menu VALUES ( $row->id, 0 )";
+	$query = "INSERT INTO #__modules_menu VALUES ( " . (int) $row->id . ", 0 )";
 	$database->setQuery( $query );
 	if ( !$database->query() ) {
 		echo "<script> alert('".$database->getErrorMsg()."'); window.history.go(-1); </script>\n";

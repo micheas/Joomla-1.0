@@ -17,7 +17,7 @@ defined( '_VALID_MOS' ) or die( 'Restricted access' );
 $query = "SELECT COUNT(*)"
 . "\n FROM #__messages"
 . "\n WHERE state = 0"
-. "\n AND user_id_to = $my->id"
+. "\n AND user_id_to = " . (int) $my->id
 ;
 $database->setQuery( $query );
 $unread = $database->loadResult();

@@ -94,19 +94,23 @@ function showUsers( $option ) {
 	$limit 			= intval( $mainframe->getUserStateFromRequest( "viewlistlimit", 'limit', $mosConfig_list_limit ) );
 	$limitstart 	= intval( $mainframe->getUserStateFromRequest( "view{$option}limitstart", 'limitstart', 0 ) );
 	$search 		= $mainframe->getUserStateFromRequest( "search{$option}", 'search', '' );
-	$search 		= $database->getEscaped( trim( strtolower( $search ) ) );
+	if (get_magic_quotes_gpc()) {
+		$filter_type	= stripslashes( $filter_type );
+		$search			= stripslashes( $search );
+	}
 	$where 			= array();
 
 	if (isset( $search ) && $search!= "") {
-		$where[] = "(a.username LIKE '%$search%' OR a.email LIKE '%$search%' OR a.name LIKE '%$search%')";
+		$searchEscaped = $database->getEscaped( trim( strtolower( $search ) ) );
+		$where[] = "(a.username LIKE '%$searchEscaped%' OR a.email LIKE '%$searchEscaped%' OR a.name LIKE '%$searchEscaped%')";
 	}
 	if ( $filter_type ) {
 		if ( $filter_type == 'Public Frontend' ) {
-			$where[] = "a.usertype = 'Registered' OR a.usertype = 'Author' OR a.usertype = 'Editor'OR a.usertype = 'Publisher'";
+			$where[] = "(a.usertype = 'Registered' OR a.usertype = 'Author' OR a.usertype = 'Editor'OR a.usertype = 'Publisher')";
 		} else if ( $filter_type == 'Public Backend' ) {
-			$where[] = "a.usertype = 'Manager' OR a.usertype = 'Administrator' OR a.usertype = 'Super Administrator'";
+			$where[] = "(a.usertype = 'Manager' OR a.usertype = 'Administrator' OR a.usertype = 'Super Administrator')";
 		} else {
-			$where[] = "a.usertype = LOWER( '$filter_type' )";
+			$where[] = "a.usertype = LOWER( " . $database->Quote( $filter_type ) . " )";
 		}
 	}
 	if ( $filter_logged == 1 ) {
@@ -118,8 +122,9 @@ function showUsers( $option ) {
 	// exclude any child group id's for this user
 	$pgids = $acl->get_group_children( $my->gid, 'ARO', 'RECURSE' );
 
+	mosArrayToInts( $pgids );
 	if (is_array( $pgids ) && count( $pgids ) > 0) {
-		$where[] = "(a.gid NOT IN (" . implode( ',', $pgids ) . "))";
+		$where[] = '( a.gid != '  . implode( ' OR a.gid != ', $pgids ) . ' )';
 	}
 
 	$query = "SELECT COUNT(a.id)"
@@ -158,11 +163,11 @@ function showUsers( $option ) {
 		return false;
 	}
 
-	$template = 'SELECT COUNT(s.userid) FROM #__session AS s WHERE s.userid = %d';
+	$template = 'SELECT COUNT(s.userid) FROM #__session AS s WHERE s.userid = ';
 	$n = count( $rows );
 	for ($i = 0; $i < $n; $i++) {
 		$row = &$rows[$i];
-		$query = sprintf( $template, intval( $row->id ) );
+		$query = $template . (int) $row->id;
 		$database->setQuery( $query );
 		$row->loggedin = $database->loadResult();
 	}
@@ -207,7 +212,7 @@ function editUser( $uid='0', $option='users' ) {
 	if ( $uid ) {
 		$query = "SELECT *"
 		. "\n FROM #__contact_details"
-		. "\n WHERE user_id = $row->id"
+		. "\n WHERE user_id = " . (int) $row->id
 		;
 		$database->setQuery( $query );
 		$contact = $database->loadObjectList();
@@ -403,8 +408,8 @@ function saveUser( $task ) {
 		$aro_id = $database->loadResult();
 
 		$query = "UPDATE #__core_acl_groups_aro_map"
-		. "\n SET group_id = $row->gid"
-		. "\n WHERE aro_id = $aro_id"
+		. "\n SET group_id = " . (int) $row->gid
+		. "\n WHERE aro_id = " . (int) $aro_id
 		;
 		$database->setQuery( $query );
 		$database->query() or die( $database->stderr() );
@@ -589,11 +594,12 @@ function changeUserBlock( $cid=null, $block=1, $option ) {
 		exit;
 	}
 
-	$cids = implode( ',', $cid );
+	mosArrayToInts( $cid );
+	$cids = 'id=' . implode( ' OR id=', $cid );
 
 	$query = "UPDATE #__users"
-	. "\n SET block = $block"
-	. "\n WHERE id IN ( $cids )"
+	. "\n SET block = " . (int) $block
+	. "\n WHERE ( $cids )"
 	;
 	$database->setQuery( $query );
 	if (!$database->query()) {
@@ -665,8 +671,9 @@ function logoutUser( $cid=null, $option, $task ) {
 			if ( !( $my->gid == 24 && $temp->gid == 25 ) ) {
 				$id[] = $cidA;
 			}
-		}	
-		$ids = implode( ',', $id );		
+		}
+		mosArrayToInts( $cid );
+		$ids = 'userid=' . implode( ' OR userid=', $cid );
 	} else {
 		$temp = new mosUser( $database );
 		$temp->load( $cid );
@@ -676,11 +683,11 @@ function logoutUser( $cid=null, $option, $task ) {
 			echo "<script> alert('You cannot log out a Super Administrator'); window.history.go(-1); </script>\n";
 			exit();
 		}
-		$ids = $cid;
+		$ids = 'userid=' . (int) $cid;
 	}
 
 	$query = "DELETE FROM #__session"
- 	. "\n WHERE userid IN ( $ids )"
+ 	. "\n WHERE ( $ids )"
  	;
 	$database->setQuery( $query );
 	$database->query();
@@ -748,7 +755,7 @@ function getGIDSChildren($gid) {
 	$query = "SELECT g1.group_id, g1.name"
 	."\n FROM #__core_acl_aro_groups g1"
 	."\n LEFT JOIN #__core_acl_aro_groups g2 ON g2.lft >= g1.lft"
-	."\n WHERE g2.group_id = ". $gid
+	."\n WHERE g2.group_id = " . (int) $gid
 	."\n ORDER BY g1.name"
 	;
 	$database->setQuery( $query );
@@ -771,7 +778,7 @@ function getGIDSParents($gid) {
   	$query = "SELECT g1.group_id, g1.name"
 	."\n FROM #__core_acl_aro_groups g1"
 	."\n LEFT JOIN #__core_acl_aro_groups g2 ON g2.lft <= g1.lft"
-	."\n WHERE g2.group_id = ".$gid
+	."\n WHERE g2.group_id = " . (int) $gid
 	."\n ORDER BY g1.name"
 	;
    	$database->setQuery( $query );

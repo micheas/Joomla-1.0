@@ -90,26 +90,34 @@ function view( $option ) {
 	$limit 				= intval( $mainframe->getUserStateFromRequest( "viewlistlimit", 'limit', $mosConfig_list_limit ) );
 	$limitstart 		= intval( $mainframe->getUserStateFromRequest( "view{$option}limitstart", 'limitstart', 0 ) );
 	$search 			= $mainframe->getUserStateFromRequest( "search{$option}", 'search', '' );
-	$search 			= $database->getEscaped( trim( strtolower( $search ) ) );
+	if (get_magic_quotes_gpc()) {
+		$search			= stripslashes( $search );
+	}
 
 	// used by filter
 	if ( $search ) {
-		$search_query = "\n AND ( LOWER( c.title ) LIKE '%$search%' OR LOWER( c.title_alias ) LIKE '%$search%' )";
+		$searchEscaped = $database->getEscaped( trim( strtolower( $search ) ) );
+		$search_query = "\n AND ( LOWER( c.title ) LIKE '%$searchEscaped%' OR LOWER( c.title_alias ) LIKE '%$searchEscaped%' )";
 	} else {
 		$search_query = '';
 	}
 
 	$filter = '';
 	if ( $filter_authorid > 0 ) {
-		$filter = "\n AND c.created_by = '$filter_authorid'";
+		$filter = "\n AND c.created_by = " . (int) $filter_authorid;
+	}
+
+	$orderAllowed = array( 'c.ordering ASC', 'c.ordering DESC', 'c.id ASC', 'c.id DESC', 'c.title ASC', 'c.title DESC', 'c.created ASC', 'c.created DESC', 'z.name ASC', 'z.name DESC', 'c.state ASC', 'c.state DESC', 'c.access ASC', 'c.access DESC' );
+	if (!in_array( $order, $orderAllowed )) {
+		$order = 'c.ordering DESC';
 	}
 
 	// get the total number of records
 	$query = "SELECT count(*)"
 	. "\n FROM #__content AS c"
-	. "\n WHERE c.sectionid = '0'"
-	. "\n AND c.catid = '0'"
-	. "\n AND c.state != '-2'"
+	. "\n WHERE c.sectionid = 0"
+	. "\n AND c.catid = 0"
+	. "\n AND c.state != -2"
 	. $filter
 	;
 	$database->setQuery( $query );
@@ -141,7 +149,7 @@ function view( $option ) {
 	for( $i = 0; $i < $count; $i++ ) {
 		$query = "SELECT COUNT( id )"
 		. "\n FROM #__menu"
-		. "\n WHERE componentid = ". $rows[$i]->id
+		. "\n WHERE componentid = " . (int) $rows[$i]->id
 		. "\n AND type = 'content_typed'"
 		. "\n AND published != -2"
 		;
@@ -223,7 +231,7 @@ function edit( $uid, $option ) {
 
 		$query = "SELECT name"
 		. "\n FROM #__users"
-		. "\n WHERE id = $row->created_by"
+		. "\n WHERE id = " . (int) $row->created_by
 		;
 		$database->setQuery( $query );
 		$row->creator = $database->loadResult();
@@ -234,7 +242,7 @@ function edit( $uid, $option ) {
 		} else {
 			$query = "SELECT name"
 			. "\n FROM #__users"
-			. "\n WHERE id = $row->modified_by"
+			. "\n WHERE id = " . (int) $row->modified_by
 			;
 			$database->setQuery( $query );
 			$row->modifier = $database->loadResult();
@@ -412,10 +420,11 @@ function trash( &$cid, $option ) {
 	$state = '-2';
 	$ordering = '0';
 	//seperate contentids
-	$cids = implode( ',', $cid );
+	mosArrayToInts( $cid );
+	$cids = 'id=' . implode( ' OR id=', $cid );
 	$query = "UPDATE #__content"
-	. "\n SET state = $state, ordering = $ordering"
-	. "\n WHERE id IN ( $cids )"
+	. "\n SET state = " . (int) $state . ", ordering = " . (int) $ordering
+	. "\n WHERE ( $cids )"
 	;
 	$database->setQuery( $query );
 	if ( !$database->query() ) {
@@ -447,13 +456,14 @@ function changeState( $cid=null, $state=0, $option ) {
 		exit;
 	}
 
-	$total 	= count ( $cid );
-	$cids 	= implode( ',', $cid );
+	mosArrayToInts( $cid );
+	$total	= count ( $cid );
+	$cids	= 'id=' . implode( ' OR id=', $cid );
 
 	$query = "UPDATE #__content"
-	. "\n SET state = $state"
-	. "\n WHERE id IN ( $cids )"
-	. "\n AND ( checked_out = 0 OR ( checked_out = $my->id ) )"
+	. "\n SET state = " . (int) $state
+	. "\n WHERE ( $cids )"
+	. "\n AND ( checked_out = 0 OR ( checked_out = " . (int) $my->id . " ) )"
 	;
 	$database->setQuery( $query );
 	if (!$database->query()) {
@@ -612,7 +622,7 @@ function saveOrder( &$cid ) {
 				exit();
 			} // if
 			// remember to updateOrder this group
-			$condition = "catid='$row->catid' AND state >= 0";
+			$condition = "catid=" . (int) $row->catid . " AND state >= 0";
 			$found = false;
 			foreach ( $conditions as $cond )
 				if ($cond[1]==$condition) {

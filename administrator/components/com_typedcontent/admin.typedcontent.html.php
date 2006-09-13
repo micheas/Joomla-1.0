@@ -41,7 +41,7 @@ class HTML_typedcontent {
 			Filter:&nbsp;
 			</td>
 			<td>
-			<input type="text" name="search" value="<?php echo $search;?>" class="text_area" onChange="document.adminForm.submit();" />
+			<input type="text" name="search" value="<?php echo htmlspecialchars( $search );?>" class="text_area" onChange="document.adminForm.submit();" />
 			</td>
 			<td>
 			&nbsp;&nbsp;&nbsp;Order:&nbsp;

@@ -86,15 +86,17 @@ function showWeblinks( $option ) {
 	$limit 		= intval( $mainframe->getUserStateFromRequest( "viewlistlimit", 'limit', $mosConfig_list_limit ) );
 	$limitstart = intval( $mainframe->getUserStateFromRequest( "view{$option}limitstart", 'limitstart', 0 ) );
 	$search 	= $mainframe->getUserStateFromRequest( "search{$option}", 'search', '' );
-	$search 	= $database->getEscaped( trim( strtolower( $search ) ) );
+	if (get_magic_quotes_gpc()) {
+		$search	= stripslashes( $search );
+	}
 
 	$where = array();
 
 	if ($catid > 0) {
-		$where[] = "a.catid = $catid";
+		$where[] = "a.catid = " . (int) $catid;
 	}
 	if ($search) {
-		$where[] = "LOWER(a.title) LIKE '%$search%'";
+		$where[] = "LOWER(a.title) LIKE '%" . $database->getEscaped( trim( strtolower( $search ) ) ) . "%'";
 	}
 
 	// get the total number of records
@@ -227,9 +229,10 @@ function removeWeblinks( $cid, $option ) {
 		exit;
 	}
 	if (count( $cid )) {
-		$cids = implode( ',', $cid );
+		mosArrayToInts( $cid );
+		$cids = 'id=' . implode( ' OR id=', $cid );
 		$query = "DELETE FROM #__weblinks"
-		. "\n WHERE id IN ( $cids )"
+		. "\n WHERE ( $cids )"
 		;
 		$database->setQuery( $query );
 		if (!$database->query()) {
@@ -255,12 +258,13 @@ function publishWeblinks( $cid=null, $publish=1,  $option ) {
 		exit;
 	}
 
-	$cids = implode( ',', $cid );
+	mosArrayToInts( $cid );
+	$cids = 'id=' . implode( ' OR id=', $cid );
 
 	$query = "UPDATE #__weblinks"
-	. "\n SET published = " . intval( $publish )
-	. "\n WHERE id IN ( $cids )"
-	. "\n AND ( checked_out = 0 OR ( checked_out = $my->id ) )"
+	. "\n SET published = " . (int) $publish
+	. "\n WHERE ( $cids )"
+	. "\n AND ( checked_out = 0 OR ( checked_out = " . (int) $my->id . " ) )"
 	;
 	$database->setQuery( $query );
 	if (!$database->query()) {

@@ -39,6 +39,7 @@ code fixes.
 
 14-Sep-2006 Marko Schmuck
  # Fixed [artf5481] : Parameter values not made HTML safe in editing form input control
+ # Fixed [artf5906] : "New" icon missing in sections with categories but no content
 
 14-Sep-2006 Sam Moffatt
  # Fixed [artf5476] : Template media import broken. Cannot import media files.

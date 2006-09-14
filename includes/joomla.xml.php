@@ -310,7 +310,7 @@ class mosParameters {
 	function _form_text( $name, $value, &$node, $control_name ) {
 		$size = $node->getAttribute( 'size' );
 
-		return '<input type="text" name="'. $control_name .'['. $name .']" value="'. $value .'" class="text_area" size="'. $size .'" />';
+		return '<input type="text" name="'. $control_name .'['. $name .']" value="'. mosMakeHtmlSafe($value) .'" class="text_area" size="'. $size .'" />';
 	}
 	/**
 	* @param string The name of the form element
@@ -479,7 +479,7 @@ class mosParameters {
  		// convert <br /> tags so they are not visible when editing
  		$value 	= str_replace( '<br />', "\n", $value );
 
- 		return '<textarea name="' .$control_name.'['. $name .']" cols="'. $cols .'" rows="'. $rows .'" class="text_area">'. $value .'</textarea>';
+ 		return '<textarea name="' .$control_name.'['. $name .']" cols="'. $cols .'" rows="'. $rows .'" class="text_area">'. mosMakeHtmlSafe($value) .'</textarea>';
 	}
 
 	/**

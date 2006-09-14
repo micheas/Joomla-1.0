@@ -37,6 +37,9 @@ code fixes.
 - -> Removed
 ! -> Note
 
+14-Sep-2006 Sam Moffatt
+ # Fixed [artf5476] : Template media import broken. Cannot import media files.
+
 12-Sep-2006 Sam Moffatt
  # Fixed [artf5866] : com_content uses corrupted global $id for page navigation
  # Fixed [artf5719] : header_version.png right top

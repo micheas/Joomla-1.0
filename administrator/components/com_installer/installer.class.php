@@ -353,6 +353,10 @@ class mosInstaller {
 					$this->setError( 1, "There is already a file called $filedest - Are you trying to install the same CMT twice?" );
 					return false;
 				} else {
+                                        $path_info = pathinfo($_file);
+                                        if (!is_dir( $path_info['dirname'] )){
+                                                mosMakePath( $p_destdir, $path_info['dirname'] );
+                                        }
 					if( !( copy($filesource,$filedest) && mosChmod($filedest) ) ) {
 						$this->setError( 1, "Failed to copy file: $filesource to $filedest" );
 						return false;

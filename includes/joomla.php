@@ -5775,9 +5775,11 @@ function mosArrayToInts( &$array, $default=null ) {
 		}
 	} else {
 		if (is_null( $default )) {
-			return array();
+			$array = array();
+			return array(); // Kept for backwards compatibility
 		} else {
-			return array( $default );
+			$array = array( (int) $default );
+			return array( $default ); // Kept for backwards compatibility
 		}
 	}
 }

@@ -54,7 +54,7 @@ class content_item_link_menu {
 			. "\n FROM #__content AS a"
 			. "\n LEFT JOIN #__categories AS c ON a.catid = c.id"
 			. "\n LEFT JOIN #__sections AS s ON a.sectionid = s.id"
-			. "\n WHERE a.id = $temp[1]"
+			. "\n WHERE a.id = " . (int) $temp[1]
 			;
 			$database->setQuery( $query );
 			$content = $database->loadObjectlist();
@@ -105,14 +105,14 @@ class content_item_link_menu {
 				$query = "SELECT s.title"
 				. "\n FROM #__sections AS s"
 				. "\n WHERE s.scope = 'content'"
-				. "\n AND s.id = $content->sectionid"
+				. "\n AND s.id = " . (int) $content->sectionid
 				;
 				$database->setQuery( $query );
 				$section = $database->loadResult();
 
 				$query = "SELECT c.title"
 				. "\n FROM #__categories AS c"
-				. "\n WHERE c.id = $content->catid"
+				. "\n WHERE c.id = " . (int) $content->catid
 				;
 				$database->setQuery( $query );
 				$category = $database->loadResult();

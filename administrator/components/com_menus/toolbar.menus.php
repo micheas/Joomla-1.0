@@ -38,7 +38,7 @@ switch ($task) {
 		if ( $cid[0] ) {
 			$query = "SELECT type"
 			. "\n FROM #__menu"
-			. "\n WHERE id = $cid[0]"
+			. "\n WHERE id = " . (int) $cid[0]
 			;
 			$database->setQuery( $query );
 			$type = $database->loadResult();

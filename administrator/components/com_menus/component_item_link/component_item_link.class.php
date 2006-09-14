@@ -49,7 +49,7 @@ class component_item_link_menu {
 			$temp = explode( '&Itemid=', $menu->link );
 			 $query = "SELECT a.name"
 			. "\n FROM #__menu AS a"
-			. "\n WHERE a.link = '$temp[0]'"
+			. "\n WHERE a.link = " . $database->Quote( $temp[0] )
 			;
 			$database->setQuery( $query );
 			$components = $database->loadResult();

@@ -49,7 +49,7 @@ class contact_item_link_menu {
 			$temp = explode( 'contact_id=', $menu->link );
 			$query = "SELECT *"
 			. "\n FROM #__contact_details AS a"
-			. "\n WHERE a.id = $temp[1]"
+			. "\n WHERE a.id = " . (int) $temp[1]
 			;
 			$database->setQuery( $query );
 			$contact = $database->loadObjectlist();

@@ -42,11 +42,14 @@ class content_blog_category {
 			$params = new mosParameters( $menu->params );
 			$catids = $params->def( 'categoryid', '' );
 			if ( $catids ) {
+				$catidsArray = explode( ',', $catids );
+				mosArrayToInts( $catidsArray );
+				$catids = 'c.id=' . implode( ' OR c.id=', $catidsArray );
 				$query = "SELECT c.id AS `value`, c.section AS `id`, CONCAT_WS( ' / ', s.title, c.title) AS `text`"
 				. "\n FROM #__sections AS s"
 				. "\n INNER JOIN #__categories AS c ON c.section = s.id"
 				. "\n WHERE s.scope = 'content'"
-				. "\n AND c.id IN ( $catids )"
+				. "\n AND ( $catids )"
 				. "\n ORDER BY s.name,c.name"
 				;
 				$database->setQuery( $query );

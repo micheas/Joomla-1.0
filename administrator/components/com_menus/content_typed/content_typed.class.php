@@ -49,7 +49,7 @@ class content_typed_menu {
 			$temp = explode( 'id=', $menu->link );
 			 $query = "SELECT a.title, a.title_alias, a.id"
 			. "\n FROM #__content AS a"
-			. "\n WHERE a.id = $temp[1]"
+			. "\n WHERE a.id = " . (int) $temp[1]
 			;
 			$database->setQuery( $query );
 			$content = $database->loadObjectlist();

@@ -42,10 +42,13 @@ class content_blog_section {
 			$params = new mosParameters( $menu->params );
 			$secids = $params->def( 'sectionid', '' );
 			if ( $secids ) {
+				$secidsArray = explode( ',', $secids );
+				mosArrayToInts( $secidsArray );
+				$secids = 's.id=' . implode( ' OR s.id=', $secidsArray );
 				$query = "SELECT s.id AS `value`, s.id AS `id`, s.title AS `text`"
 				. "\n FROM #__sections AS s"
 				. "\n WHERE s.scope = 'content'"
-				. "\n AND s.id IN ( $secids )"
+				. "\n AND ( $secids )"
 				. "\n ORDER BY s.name"
 				;
 				$database->setQuery( $query );

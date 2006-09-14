@@ -19,9 +19,9 @@ require_once( $mainframe->getPath( 'admin_html' ) );
 
 $path 		= $mosConfig_absolute_path .'/administrator/components/com_menus/';
 
-$menutype 	= strval( mosGetParam( $_REQUEST, 'menutype', 'mainmenu' ) );
-$type 		= strval( mosGetParam( $_REQUEST, 'type', false ) );
-$menu 		= strval( mosGetParam( $_POST, 'menu', '' ) );
+$menutype 	= stripslashes( strval( mosGetParam( $_REQUEST, 'menutype', 'mainmenu' ) ) );
+$type 		= stripslashes( strval( mosGetParam( $_REQUEST, 'type', false ) ) );
+$menu 		= stripslashes( strval( mosGetParam( $_POST, 'menu', '' ) ) );
 
 $cid 		= josGetArrayInts( 'cid' );
 
@@ -111,7 +111,7 @@ switch ($task) {
 		break;
 
 	default:
-		$type = strval( mosGetParam( $_REQUEST, 'type' ) );
+		$type = stripslashes( strval( mosGetParam( $_REQUEST, 'type' ) ) );
 		if ($type) {
 			// adding a new item - type selection form
 			require_once( $path . $type .'/'. $type .'.menu.php' );
@@ -131,7 +131,9 @@ function viewMenuItems( $menutype, $option ) {
 	$limitstart = intval( $mainframe->getUserStateFromRequest( "view{$option}limitstart$menutype", 'limitstart', 0 ) );
 	$levellimit = intval( $mainframe->getUserStateFromRequest( "view{$option}limit$menutype", 'levellimit', 10 ) );
 	$search 	= $mainframe->getUserStateFromRequest( "search{$option}$menutype", 'search', '' );
-	$search 	= $database->getEscaped( trim( strtolower( $search ) ) );
+	if (get_magic_quotes_gpc()) {
+		$search	= stripslashes( $search );
+	}
 
 	// select the records
 	// note, since this is a tree we have to do the limits code-side
@@ -139,8 +141,8 @@ function viewMenuItems( $menutype, $option ) {
 		$query = "SELECT m.id"
 		. "\n FROM #__menu AS m"
 		//. "\n LEFT JOIN #__content AS c ON c.id = m.componentid AND type='content_typed'"
-		. "\n WHERE menutype = '$menutype'"
-		. "\n AND LOWER( m.name ) LIKE '%" . strtolower( $search ) . "%'"
+		. "\n WHERE menutype = " . $database->Quote( $menutype )
+		. "\n AND LOWER( m.name ) LIKE '%" . $database->getEscaped( trim( strtolower( $search ) ) ) . "%'"
 		;
 		$database->setQuery( $query );
 		$search_rows = $database->loadResultArray();
@@ -152,7 +154,7 @@ function viewMenuItems( $menutype, $option ) {
 	. "\n LEFT JOIN #__groups AS g ON g.id = m.access"
 	. "\n LEFT JOIN #__content AS c ON c.id = m.componentid AND m.type = 'content_typed'"
 	. "\n LEFT JOIN #__components AS com ON com.id = m.componentid AND m.type = 'components'"
-	. "\n WHERE m.menutype = '$menutype'"
+	. "\n WHERE m.menutype = " . $database->Quote( $menutype )
 	. "\n AND m.published != -2"
 	. "\n ORDER BY parent, ordering"
 	;
@@ -442,8 +444,8 @@ function TrashMenuSection( $cid=NULL, $menutype='mainmenu' ) {
 	
 	$query = "SELECT *"
 	. "\n FROM #__menu"
-	. "\n WHERE menutype = '$menutype'"
-	. "\n AND published != $state"
+	. "\n WHERE menutype = " . $database->Quote( $menutype )
+	. "\n AND published != " . (int) $state
 	. "\n ORDER BY menutype, parent, ordering"
 	;
 	$database->setQuery( $query );
@@ -460,12 +462,13 @@ function TrashMenuSection( $cid=NULL, $menutype='mainmenu' ) {
 	}	
 	$list 	= josMenuChildrenRecurse( $mitems, $children, $children );
 	$list 	= array_merge( $cid, $list );
-	
-	$ids 	= implode( ',', $list );	
+
+	mosArrayToInts( $list );
+	$ids = 'id=' . implode( ' OR id=', $list );
 	
 	$query = "UPDATE #__menu"
-	. "\n SET published = $state, ordering = 0, checked_out = 0, checked_out_time = '$nullDate'"
-	. "\n WHERE id IN ( $ids )"
+	. "\n SET published = " . (int) $state . ", ordering = 0, checked_out = 0, checked_out_time = " . $database->Quote( $nullDate )
+	. "\n WHERE ( $ids )"
 	;
 	$database->setQuery( $query );
 	if ( !$database->query() ) {
@@ -508,7 +511,7 @@ function orderMenu( $uid, $inc, $option ) {
 
 	$row = new mosMenu( $database );
 	$row->load( $uid );
-	$row->move( $inc, "menutype = '$row->menutype' AND parent = $row->parent" );
+	$row->move( $inc, "menutype = " . $database->Quote( $row->menutype ) . " AND parent = " . (int) $row->parent );
 	
 	// clean any existing cache files
 	mosCache::cleanCache( 'com_content' );
@@ -553,10 +556,11 @@ function moveMenu( $option, $cid, $menutype ) {
 	}
 
 	## query to list selected menu items
-	$cids = implode( ',', $cid );
+	mosArrayToInts( $cid );
+	$cids = 'a.id=' . implode( ' OR a.id=', $cid );
 	$query = "SELECT a.name"
 	. "\n FROM #__menu AS a"
-	. "\n WHERE a.id IN ( $cids )"
+	. "\n WHERE ( $cids )"
 	;
 	$database->setQuery( $query );
 	$items = $database->loadObjectList();
@@ -590,7 +594,7 @@ function addDescendants($id, &$cid) {
 
 	$query = "SELECT id"
 	. "\n FROM #__menu"
-	. "\n WHERE parent = $id"
+	. "\n WHERE parent = " . (int) $id
 	;
 	$database->setQuery( $query );
 	$rows = $database->loadObjectList();
@@ -670,10 +674,11 @@ function copyMenu( $option, $cid, $menutype ) {
 	}
 
 	## query to list selected menu items
-	$cids = implode( ',', $cid );
+	mosArrayToInts( $cid );
+	$cids = 'a.id=' . implode( ' OR a.id=', $cid );
 	$query = "SELECT a.name"
 	. "\n FROM #__menu AS a"
-	. "\n WHERE a.id IN ( $cids )"
+	. "\n WHERE ( $cids )"
 	;
 	$database->setQuery( $query );
 	$items = $database->loadObjectList();
@@ -791,7 +796,7 @@ function saveOrder( &$cid, $menutype ) {
 				exit();
 			}
 			// remember to updateOrder this group
-			$condition = "menutype = " . $database->Quote( $menutype ) . " AND parent = $row->parent AND published >= 0";
+			$condition = "menutype = " . $database->Quote( $menutype ) . " AND parent = " . (int) $row->parent . " AND published >= 0";
 			$found = false;
 			foreach ( $conditions as $cond )
 				if ($cond[1]==$condition) {

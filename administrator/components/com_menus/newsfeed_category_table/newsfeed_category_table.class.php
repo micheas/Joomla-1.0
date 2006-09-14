@@ -54,7 +54,7 @@ class newsfeed_category_table_menu {
 			. "\n FROM #__categories"
 			. "\n WHERE section = 'com_newsfeeds'"
 			. "\n AND published = 1"
-			. "\n AND id = ". $menu->componentid
+			. "\n AND id = " . (int) $menu->componentid
 			;
 			$database->setQuery( $query );
 			$category = $database->loadResult();

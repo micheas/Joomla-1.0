@@ -51,7 +51,7 @@ class newsfeed_link_menu {
 			$query = "SELECT *, c.title AS category"
 			. "\n FROM #__newsfeeds AS a"
 			. "\n INNER JOIN #__categories AS c ON a.catid = c.id"
-			. "\n WHERE a.id = $temp[1]"
+			. "\n WHERE a.id = " . (int) $temp[1]
 			;
 			$database->setQuery( $query );
 			$newsfeed = $database->loadObjectlist();

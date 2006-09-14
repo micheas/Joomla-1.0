@@ -77,12 +77,12 @@ foreach ($tables as $tn) {
 
 		if ($foundE) {
 			$query = "UPDATE $tn"
-			. "\n SET checked_out = 0, checked_out_time = '$nullDate', editor = NULL"
+			. "\n SET checked_out = 0, checked_out_time = " . $database->Quote( $nullDate ) . ", editor = NULL"
 			. "\n WHERE checked_out > 0"
 			;
 		} else {
 			$query = "UPDATE $tn"
-			. "\n SET checked_out = 0, checked_out_time = '$nullDate'"
+			. "\n SET checked_out = 0, checked_out_time = " . $database->Quote( $nullDate )
 			. "\n WHERE checked_out > 0"
 			;
 		}

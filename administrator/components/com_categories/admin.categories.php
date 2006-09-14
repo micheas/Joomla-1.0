@@ -20,7 +20,7 @@ require_once( $mainframe->getPath( 'admin_html' ) );
 define( 'COM_IMAGE_BASE', $mosConfig_absolute_path . DIRECTORY_SEPARATOR . 'images' . DIRECTORY_SEPARATOR . 'stories' );
 
 // get parameters from the URL or submitted form
-$section 	= strval( mosGetParam( $_REQUEST, 'section', 'content' ) );
+$section 	= stripslashes( strval( mosGetParam( $_REQUEST, 'section', 'content' ) ) );
 
 $cid 		= josGetArrayInts( 'cid' );
 
@@ -111,7 +111,7 @@ switch ($task) {
 * @param string The name of the category section
 */
 function showCategories( $section, $option ) {
-	global $database, $mainframe, $mosConfig_list_limit, $mosConfig_absolute_path;
+	global $database, $mainframe, $mosConfig_list_limit, $mosConfig_absolute_path, $mosConfig_dbprefix;
 
 	$sectionid 		= intval( $mainframe->getUserStateFromRequest( "sectionid{$option}{$section}", 'sectionid', 0 ) );
 	$limit 			= intval( $mainframe->getUserStateFromRequest( "viewlistlimit", 'limit', $mosConfig_list_limit ) );
@@ -126,22 +126,23 @@ function showCategories( $section, $option ) {
 
 		$query = "SELECT name"
 		. "\n FROM #__sections"
-		. "\n WHERE id = $section";
+		. "\n WHERE id = " . (int) $section
+		;
 		$database->setQuery( $query );
 		$section_name = $database->loadResult();
 		$section_name = 'Content: '. $section_name;
-		$where 	= "\n WHERE c.section = '$section'";
+		$where 	= "\n WHERE c.section = " . $database->Quote( $section );
 		$type 	= 'content';
 	} else if (strpos( $section, 'com_' ) === 0) {
 		$table = substr( $section, 4 );
 
 		$query = "SELECT name"
 		. "\n FROM #__components"
-		. "\n WHERE link = 'option=$section'"
+		. "\n WHERE link = 'option=" . $database->getEscaped( $section ) . "'"
 		;
 		$database->setQuery( $query );
 		$section_name = $database->loadResult();
-		$where 	= "\n WHERE c.section = '$section'";
+		$where 	= "\n WHERE c.section = " . $database->Quote( $section );
 		$type 	= 'other';
 		// special handling for contact component
 		if ( $section == 'com_contact_details' ) {
@@ -150,14 +151,14 @@ function showCategories( $section, $option ) {
 		$section_name = 'Component: '. $section_name;
 	} else {
 		$table 	= $section;
-		$where 	= "\n WHERE c.section = '$section'";
+		$where 	= "\n WHERE c.section = " . $database->Quote( $section );
 		$type 	= 'other';
 	}
 	
 	// get the total number of records
 	$query = "SELECT COUNT(*)"
 	. "\n FROM #__categories"
-	. "\n WHERE section = '$section'"
+	. "\n WHERE section = " . $database->Quote( $section )
 	;
 	$database->setQuery( $query );
 	$total = $database->loadResult();
@@ -176,7 +177,7 @@ function showCategories( $section, $option ) {
 		. "\n FROM #__categories"
 		. "\n INNER JOIN #__sections AS s ON s.id = section";
 		if ( $sectionid > 0 ) {
-			$query .= "\n WHERE section = '$sectionid'";
+			$query .= "\n WHERE section = " . $database->Quote( $sectionid );
 		}
 		$database->setQuery( $query );
 		$total = $database->loadResult();
@@ -185,7 +186,7 @@ function showCategories( $section, $option ) {
 
 	// used by filter
 	if ( $sectionid > 0 ) {
-		$filter = "\n AND c.section = '$sectionid'";
+		$filter = "\n AND c.section = " . $database->Quote( $sectionid );
 	} else {
 		$filter = '';
 	}
@@ -193,13 +194,17 @@ function showCategories( $section, $option ) {
 	require_once( $mosConfig_absolute_path . '/administrator/includes/pageNavigation.php' );
 	$pageNav = new mosPageNav( $total, $limitstart, $limit );
 
+	$tablesAllowed = $database->getTableList();
+	if (!in_array( $mosConfig_dbprefix . $table, $tablesAllowed )) {
+		$table = 'content';
+	}
 	$query = "SELECT  c.*, c.checked_out as checked_out_contact_category, g.name AS groupname, u.name AS editor,"
 	. "COUNT( DISTINCT s2.checked_out ) AS checked_out"
 	. $content_add
 	. "\n FROM #__categories AS c"
 	. "\n LEFT JOIN #__users AS u ON u.id = c.checked_out"
 	. "\n LEFT JOIN #__groups AS g ON g.id = c.access"
-	. "\n LEFT JOIN #__$table AS s2 ON s2.catid = c.id AND s2.checked_out > 0"
+	. "\n LEFT JOIN `#__$table` AS s2 ON s2.catid = c.id AND s2.checked_out > 0"
 	. $content_join
 	. $where
 	. $filter
@@ -219,7 +224,7 @@ function showCategories( $section, $option ) {
 	for ( $i = 0; $i < $count; $i++ ) {
 		$query = "SELECT COUNT( a.id )"
 		. "\n FROM #__content AS a"
-		. "\n WHERE a.catid = ". $rows[$i]->id
+		. "\n WHERE a.catid = " . (int) $rows[$i]->id
 		. "\n AND a.state != -2"
 		;
 		$database->setQuery( $query );
@@ -230,7 +235,7 @@ function showCategories( $section, $option ) {
 	for ( $i = 0; $i < $count; $i++ ) {
 		$query = "SELECT COUNT( a.id )"
 		. "\n FROM #__content AS a"
-		. "\n WHERE a.catid = ". $rows[$i]->id
+		. "\n WHERE a.catid = " . (int) $rows[$i]->id
 		. "\n AND a.state = -2"
 		;
 		$database->setQuery( $query );
@@ -312,7 +317,7 @@ function editCategory( $uid=0, $section='' ) {
 		if ( $row->section > 0 ) {
 			$query = "SELECT *"
 			. "\n FROM #__menu"
-			. "\n WHERE componentid = ". $row->id
+			. "\n WHERE componentid = " . (int) $row->id
 			. "\n AND ( type = 'content_archive_category' OR type = 'content_blog_category' OR type = 'content_category' )"
 			;
 			$database->setQuery( $query );
@@ -352,7 +357,7 @@ function editCategory( $uid=0, $section='' ) {
 		} else {
 			$query = "SELECT *"
 			. "\n FROM #__menu"
-			. "\n WHERE componentid = ". $row->id
+			. "\n WHERE componentid = " . (int) $row->id
 			. $and
 			;
 			$database->setQuery( $query );
@@ -380,7 +385,7 @@ function editCategory( $uid=0, $section='' ) {
 	$order = array();
 	$query = "SELECT COUNT(*)"
 	. "\n FROM #__categories"
-	. "\n WHERE section = '$row->section'"
+	. "\n WHERE section = " . $database->Quote( $row->section )
 	;
 	$database->setQuery( $query );
 	$max = intval( $database->loadResult() ) + 1;
@@ -429,7 +434,7 @@ function editCategory( $uid=0, $section='' ) {
 	// build the html select list for ordering
 	$query = "SELECT ordering AS value, title AS text"
 	. "\n FROM #__categories"
-	. "\n WHERE section = '$row->section'"
+	. "\n WHERE section = " . $database->Quote( $row->section )
 	. "\n ORDER BY ordering"
 	;
 	$lists['ordering'] 			= stripslashes( mosAdminMenus::SpecificOrdering( $row, $uid, $query ));
@@ -478,7 +483,7 @@ function saveCategory( $task ) {
 	$menu 		= strval( mosGetParam( $_POST, 'menu', 'mainmenu' ) );
 	$menuid		= intval( mosGetParam( $_POST, 'menuid', 0 ) );
 	$redirect 	= strval( mosGetParam( $_POST, 'redirect', '' ) );
-	$oldtitle 	= strval( mosGetParam( $_POST, 'oldtitle', null ) );
+	$oldtitle 	= stripslashes( strval( mosGetParam( $_POST, 'oldtitle', null ) ) );
 
 	$row = new mosCategory( $database );
 	if (!$row->bind( $_POST, 'folders' )) {
@@ -586,27 +591,31 @@ function saveCategory( $task ) {
 * @param array An array of unique category id numbers
 */
 function removeCategories( $section, $cid ) {
-	global $database;
+	global $database, $mosConfig_dbprefix;
 
 	if (count( $cid ) < 1) {
 		echo "<script> alert('Select a category to delete'); window.history.go(-1);</script>\n";
 		exit;
 	}
 
-	$cids = implode( ',', $cid );
-
 	if (intval( $section ) > 0) {
 		$table = 'content';
 	} else if (strpos( $section, 'com_' ) === 0) {
-		$table = $database->getEscaped( substr( $section, 4 ) );
+		$table = substr( $section, 4 );
 	} else {
-		$table = $database->getEscaped( $section );
+		$table = $section;
 	}
 
+	$tablesAllowed = $database->getTableList();
+	if (!in_array( $mosConfig_dbprefix . $table, $tablesAllowed )) {
+		$table = 'content';
+	}
+	mosArrayToInts( $cid );
+	$cids = 'c.id=' . implode( ' OR c.id=', $cid );
 	$query = "SELECT c.id, c.name, COUNT( s.catid ) AS numcat"
 	. "\n FROM #__categories AS c"
-	. "\n LEFT JOIN #__$table AS s ON s.catid = c.id"
-	. "\n WHERE c.id IN ( $cids )"
+	. "\n LEFT JOIN `#__$table` AS s ON s.catid = c.id"
+	. "\n WHERE ( $cids )"
 	. "\n GROUP BY c.id"
 	;
 	$database->setQuery( $query );
@@ -626,9 +635,10 @@ function removeCategories( $section, $cid ) {
 	}
 
 	if (count( $cid )) {
-		$cids = implode( ',', $cid );
+		mosArrayToInts( $cid );
+		$cids = 'id=' . implode( ' OR id=', $cid );
 		$query = "DELETE FROM #__categories"
-		. "\n WHERE id IN ( $cids )"
+		. "\n WHERE ( $cids )"
 		;
 		$database->setQuery( $query );
 		if (!$database->query()) {
@@ -674,12 +684,13 @@ function publishCategories( $section, $categoryid=null, $cid=null, $publish=1 ) 
 		exit;
 	}
 
-	$cids = implode( ',', $cid );
+	mosArrayToInts( $cid );
+	$cids = 'id=' . implode( ' OR id=', $cid );
 
 	$query = "UPDATE #__categories"
-	. "\n SET published = " . intval( $publish )
-	. "\n WHERE id IN ( $cids )"
-	. "\n AND ( checked_out = 0 OR ( checked_out = $my->id ) )"
+	. "\n SET published = " . (int) $publish
+	. "\n WHERE ( $cids )"
+	. "\n AND ( checked_out = 0 OR ( checked_out = " . (int) $my->id . " ) )"
 	;
 	$database->setQuery( $query );
 	if (!$database->query()) {
@@ -726,7 +737,7 @@ function orderCategory( $uid, $inc ) {
 
 	$row = new mosCategory( $database );
 	$row->load( (int)$uid );
-	$row->move( $inc, "section = '$row->section'" );
+	$row->move( $inc, "section = " . $database->Quote( $row->section ) );
 	
 	// clean any existing cache files
 	mosCache::cleanCache( 'com_content' );
@@ -748,18 +759,21 @@ function moveCategorySelect( $option, $cid, $sectionOld ) {
 	}
 
 	## query to list selected categories
-	$cids = implode( ',', $cid );
+	mosArrayToInts( $cid );
+	$cids = 'a.id=' . implode( ' OR a.id=', $cid );
 	$query = "SELECT a.name, a.section"
 	. "\n FROM #__categories AS a"
-	. "\n WHERE a.id IN ( $cids )"
+	. "\n WHERE ( $cids )"
 	;
 	$database->setQuery( $query );
 	$items = $database->loadObjectList();
 
 	## query to list items from categories
+	// mosArrayToInts( $cid ); // Just done a few lines earlier
+	$cids = 'a.catid=' . implode( ' OR a.catid=', $cid );
 	$query = "SELECT a.title"
 	. "\n FROM #__content AS a"
-	. "\n WHERE a.catid IN ( $cids )"
+	. "\n WHERE ( $cids )"
 	. "\n ORDER BY a.catid, a.title"
 	;
 	$database->setQuery( $query );
@@ -787,23 +801,31 @@ function moveCategorySelect( $option, $cid, $sectionOld ) {
 function moveCategorySave( $cid, $sectionOld ) {
 	global $database;
 
-	$sectionMove = strval( mosGetParam( $_REQUEST, 'sectionmove', '' ) );
+	if (!is_array( $cid ) || count( $cid ) < 1) {
+		echo "<script> alert('Select an item to move'); window.history.go(-1);</script>\n";
+		exit;
+	}
 
-	$cids = implode( ',', $cid );
+	$sectionMove = stripslashes( strval( mosGetParam( $_REQUEST, 'sectionmove', '' ) ) );
+
 	$total = count( $cid );
 
+	mosArrayToInts( $cid );
+	$cids = 'id=' . implode( ' OR id=', $cid );
 	$query = "UPDATE #__categories"
-	. "\n SET section = '$sectionMove'"
-	. "WHERE id IN ( $cids )"
+	. "\n SET section = " . $database->Quote( $sectionMove )
+	. "\n WHERE ( $cids )"
 	;
 	$database->setQuery( $query );
 	if ( !$database->query() ) {
 		echo "<script> alert('". $database->getErrorMsg() ."'); window.history.go(-1); </script>\n";
 		exit();
 	}
+	// mosArrayToInts( $cid ); // Just done a few lines earlier
+	$cids = 'catid=' . implode( ' OR catid=', $cid );
 	$query = "UPDATE #__content"
-	. "\n SET sectionid = '$sectionMove'"
-	. "\n WHERE catid IN ( $cids )"
+	. "\n SET sectionid = " . $database->Quote( $sectionMove )
+	. "\n WHERE ( $cids )"
 	;
 	$database->setQuery( $query );
 	if ( !$database->query() ) {
@@ -836,18 +858,21 @@ function copyCategorySelect( $option, $cid, $sectionOld ) {
 	}
 
 	## query to list selected categories
-	$cids = implode( ',', $cid );
+	mosArrayToInts( $cid );
+	$cids = 'a.id=' . implode( ' OR a.id=', $cid );
 	$query = "SELECT a.name, a.section"
 	. "\n FROM #__categories AS a"
-	. "\n WHERE a.id IN ( $cids )"
+	. "\n WHERE ( $cids )"
 	;
 	$database->setQuery( $query );
 	$items = $database->loadObjectList();
 
 	## query to list items from categories
+	// mosArrayToInts( $cid ); // Just done a few lines earlier
+	$cids = 'a.catid=' . implode( ' OR a.catid=', $cid );
 	$query = "SELECT a.title, a.id"
 	. "\n FROM #__content AS a"
-	. "\n WHERE a.catid IN ( $cids )"
+	. "\n WHERE ( $cids )"
 	. "\n ORDER BY a.catid, a.title"
 	;
 	$database->setQuery( $query );
@@ -972,7 +997,7 @@ function menuLink( $id ) {
 	$category->checkin();
 
 	$redirect	= strval( mosGetParam( $_POST, 'redirect', '' ) );
-	$menu 		= strval( mosGetParam( $_POST, 'menuselect', '' ) );
+	$menu 		= stripslashes( strval( mosGetParam( $_POST, 'menuselect', '' ) ) );
 	$name 		= strval( mosGetParam( $_POST, 'link_name', '' ) );
 	$sectionid	= mosGetParam( $_POST, 'sectionid', '' );
 	$type 		= strval( mosGetParam( $_POST, 'link_type', '' ) );
@@ -1033,7 +1058,7 @@ function menuLink( $id ) {
 		exit();
 	}
 	$row->checkin();
-	$row->updateOrder( "menutype = '$menu'" );
+	$row->updateOrder( "menutype = " . $database->Quote( $menu ) );
 	
 	if ($redirect == 'content') {
 		// clean any existing cache files
@@ -1063,7 +1088,7 @@ function saveOrder( &$cid, $section ) {
 				exit();
 			} // if
 			// remember to updateOrder this group
-			$condition = "section='$row->section'";
+			$condition = "section=" . $database->Quote( $row->section );
 			$found = false;
 			foreach ( $conditions as $cond )
 				if ($cond[1]==$condition) {

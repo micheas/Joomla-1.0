@@ -25,7 +25,7 @@ class HTML_content {
 	* Draws a Content List
 	* Used by Content Category & Content Section
 	*/
-	function showContentList( $title, &$items, &$access, $id=0, $sectionid=NULL, $gid, &$params, &$pageNav, $other_categories, &$lists, $order ) {
+	function showContentList( $title, &$items, &$access, $id=0, $sectionid=NULL, $gid, &$params, &$pageNav, $other_categories, &$lists, $order, $categories_exist ) {
 		global $Itemid, $mosConfig_live_site;
 
 		if ( $sectionid ) {
@@ -82,7 +82,7 @@ class HTML_content {
 				<?php
 			}
 			// New Content Icon
-			if ( ( $access->canEdit || $access->canEditOwn ) && count( $other_categories ) > 0 ) {
+			if ( ( $access->canEdit || $access->canEditOwn ) && $categories_exist ) {
 				$link = sefRelToAbs( 'index.php?option=com_content&amp;task=new&amp;sectionid='. $id .'&amp;Itemid='. $Itemid );
 				?>
 				<a href="<?php echo $link; ?>">

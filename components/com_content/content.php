@@ -286,10 +286,10 @@ function showSection( $id, $gid, &$access, $now ) {
 		$xwhere = '';
 		if ( $params->get( 'unpublished' ) ) {
 		// shows unpublished items for publishers and above
-			$xwhere2 = "\n AND b.state >= 0";
+			$xwhere2 = "\n AND (b.state >= 0 or b.state is null)";
 		} else {
 		// unpublished items NOT shown for publishers and above
-			$xwhere2 = "\n AND b.state = 1";
+			$xwhere2 = "\n AND (b.state = 1 or b.state is null)";
 		}
 	} else {
 		$xwhere = "\n AND a.published = 1";
@@ -335,6 +335,16 @@ function showSection( $id, $gid, &$access, $now ) {
 	$database->setQuery( $query );
 	$categories = $database->loadObjectList();
 	
+	// If categories exist, the "new content" icon may be displayed
+	if ( $access->canEdit ) {
+		$query = "SELECT count(*) as numCategories"
+		. "\n FROM #__categories as a"
+		. "\n WHERE a.section = '$section->id'"
+		. $access_check;
+		$database->setQuery ( $query );
+		$categories_exist = ($database->loadResult()) > 0;
+	}
+	
 	// remove slashes
 	$section->name = stripslashes($section->name);
 
@@ -342,7 +352,7 @@ function showSection( $id, $gid, &$access, $now ) {
 	$mainframe->SetPageTitle( $menu->name );
 
 	$null = null;
-	HTML_content::showContentList( $section, $null, $access, $id, $null,  $gid, $params, $null, $categories, $null, $null );
+	HTML_content::showContentList( $section, $null, $access, $id, $null,  $gid, $params, $null, $categories, $null, $null, $categories_exist );
 }
 
 
@@ -611,7 +621,7 @@ function showCategory( $id, $gid, &$access, $sectionid, $limit, $selected, $limi
 	// Dynamic Page Title
 	$mainframe->SetPageTitle( $pagetitle );
 
-	HTML_content::showContentList( $category, $items, $access, $id, $sectionid, $gid, $params, $pageNav, $other_categories, $lists, $selected );
+	HTML_content::showContentList( $category, $items, $access, $id, $sectionid, $gid, $params, $pageNav, $other_categories, $lists, $selected, true );
 } // showCategory
 
 

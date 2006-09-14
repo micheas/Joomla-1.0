@@ -37,6 +37,9 @@ code fixes.
 - -> Removed
 ! -> Note
 
+14-Sep-2006 Marko Schmuck
+ # Fixed [artf5481] : Parameter values not made HTML safe in editing form input control
+
 14-Sep-2006 Sam Moffatt
  # Fixed [artf5476] : Template media import broken. Cannot import media files.
 

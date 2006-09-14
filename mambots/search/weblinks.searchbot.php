@@ -108,7 +108,7 @@ function botSearchWeblinks( $text, $phrase='', $ordering='' ) {
 	$query = "SELECT a.title AS title,"
 	. "\n a.description AS text,"
 	. "\n a.date AS created,"
-	. "\n CONCAT_WS( ' / ', '$section', b.title ) AS section,"
+	. "\n CONCAT_WS( ' / ', " . $database->Quote( $section ) . ", b.title ) AS section,"
 	. "\n '1' AS browsernav,"
 	. "\n a.url AS href"
 	. "\n FROM #__weblinks AS a"
@@ -116,7 +116,7 @@ function botSearchWeblinks( $text, $phrase='', $ordering='' ) {
 	. "\n WHERE ($where)"
 	. "\n AND a.published = 1"
 	. "\n AND b.published = 1"
-	. "\n AND b.access <= $my->gid"
+	. "\n AND b.access <= " . (int) $my->gid
 	. "\n ORDER BY $order"
 	;
 	$database->setQuery( $query, 0, $limit );

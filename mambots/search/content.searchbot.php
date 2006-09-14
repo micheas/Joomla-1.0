@@ -129,11 +129,11 @@ function botSearchContent( $text, $phrase='', $ordering='' ) {
 	. "\n AND a.state = 1"
 	. "\n AND u.published = 1"
 	. "\n AND b.published = 1"
-	. "\n AND a.access <= $my->gid"
-	. "\n AND b.access <= $my->gid"
-	. "\n AND u.access <= $my->gid"
-	. "\n AND ( a.publish_up = '$nullDate' OR a.publish_up <= '$now' )"
-	. "\n AND ( a.publish_down = '$nullDate' OR a.publish_down >= '$now' )"
+	. "\n AND a.access <= " . (int) $my->gid
+	. "\n AND b.access <= " . (int) $my->gid
+	. "\n AND u.access <= " . (int) $my->gid
+	. "\n AND ( a.publish_up = " . $database->Quote( $nullDate ) . " OR a.publish_up <= " . $database->Quote( $now ) . " )"
+	. "\n AND ( a.publish_down = " . $database->Quote( $nullDate ) . " OR a.publish_down >= " . $database->Quote( $now ) . " )"
 	. "\n GROUP BY a.id"
 	. "\n ORDER BY $order"
 	;
@@ -144,7 +144,7 @@ function botSearchContent( $text, $phrase='', $ordering='' ) {
 	$query = "SELECT a.title AS title,"
 	. "\n a.created AS created,"
 	. "\n a.introtext AS text,"
-	. "\n '". _STATIC_CONTENT ."' AS section,"
+	. "\n " . $database->Quote( _STATIC_CONTENT ) . " AS section,"
 	. "\n CONCAT( 'index.php?option=com_content&task=view&id=', a.id, '&Itemid=', m.id ) AS href,"
 	. "\n '2' AS browsernav," 
 	. "\n a.id"
@@ -152,10 +152,10 @@ function botSearchContent( $text, $phrase='', $ordering='' ) {
 	. "\n LEFT JOIN #__menu AS m ON m.componentid = a.id"
 	. "\n WHERE ($where)"
 	. "\n AND a.state = 1"
-	. "\n AND a.access <= $my->gid"
+	. "\n AND a.access <= " . (int) $my->gid
 	. "\n AND m.type = 'content_typed'"
-	. "\n AND ( a.publish_up = '$nullDate' OR a.publish_up <= '$now' )"
-	. "\n AND ( a.publish_down = '$nullDate' OR a.publish_down >= '$now' )"
+	. "\n AND ( a.publish_up = " . $database->Quote( $nullDate ) . " OR a.publish_up <= " . $database->Quote( $now ) . " )"
+	. "\n AND ( a.publish_down = " . $database->Quote( $nullDate ) . " OR a.publish_down >= " . $database->Quote( $now ) . " )"
 	. "\n ORDER BY ". ($morder ? $morder : $order)
 	;
 	$database->setQuery( $query, 0, $limit );
@@ -165,7 +165,7 @@ function botSearchContent( $text, $phrase='', $ordering='' ) {
 	$query = "SELECT a.title AS title,"
 	. "\n a.created AS created,"
 	. "\n a.introtext AS text,"
-	. "\n CONCAT_WS( '/', '". _SEARCH_ARCHIVED ." ', u.title, b.title ) AS section,"
+	. "\n CONCAT_WS( '/', " . $database->Quote( _SEARCH_ARCHIVED ) . ", u.title, b.title ) AS section,"
 	. "\n CONCAT('index.php?option=com_content&task=view&id=',a.id) AS href,"
 	. "\n '2' AS browsernav,"
 	. "\n 'content' AS type"
@@ -176,11 +176,11 @@ function botSearchContent( $text, $phrase='', $ordering='' ) {
 	. "\n AND a.state = -1"
 	. "\n AND u.published = 1"
 	. "\n AND b.published = 1"
-	. "\n AND a.access <= $my->gid"
-	. "\n AND b.access <= $my->gid"
-	. "\n AND u.access <= $my->gid"
-	. "\n AND ( a.publish_up = '$nullDate' OR a.publish_up <= '$now' )"
-	. "\n AND ( a.publish_down = '$nullDate' OR a.publish_down >= '$now' )"
+	. "\n AND a.access <= " . (int) $my->gid
+	. "\n AND b.access <= " . (int) $my->gid
+	. "\n AND u.access <= " . (int) $my->gid
+	. "\n AND ( a.publish_up = " . $database->Quote( $nullDate ) . " OR a.publish_up <= " . $database->Quote( $now ) . " )"
+	. "\n AND ( a.publish_down = " . $database->Quote( $nullDate ) . " OR a.publish_down >= " . $database->Quote( $now ) . " )"
 	. "\n ORDER BY $order"
 	;
 	$database->setQuery( $query, 0, $limit );
@@ -193,26 +193,26 @@ function botSearchContent( $text, $phrase='', $ordering='' ) {
 		$ids = null;
 		if(count($list2)) {
 			foreach($list2 as $static) {
-				$ids[] = $static->id;
+				$ids[] = (int) $static->id;
 			}
-			$ids = implode( '\',\'', $ids );
+			$ids = "a.id != " . implode( " OR a.id != ", $ids );
 		}
 	
 		// search static content not connected to a menu
 		$query = "SELECT a.title AS title,"
 		. "\n a.created AS created,"
 		. "\n a.introtext AS text,"
-		. "\n '2' as browsernav, '". _STATIC_CONTENT ."' AS section,"
+		. "\n '2' as browsernav, " . $database->Quote( _STATIC_CONTENT ) . " AS section,"
 		. "\n CONCAT( 'index.php?option=com_content&task=view&id=', a.id ) AS href,"
 		. "\n a.id"
 		. "\n FROM #__content AS a"
 		. "\n WHERE ($where)"
-		. "\n AND a.id NOT IN ( '$ids' )"
+		. (($ids) ? "\n AND ( $ids )" : '')
 		. "\n AND a.state = 1"
-		. "\n AND a.access <= $my->gid"
+		. "\n AND a.access <= " . (int) $my->gid
 		. "\n AND a.sectionid = 0"
-		. "\n AND ( a.publish_up = '$nullDate' OR a.publish_up <= '$now' )"
-		. "\n AND ( a.publish_down = '$nullDate' OR a.publish_down >= '$now' )"
+		. "\n AND ( a.publish_up = " . $database->Quote( $nullDate ) . " OR a.publish_up <= " . $database->Quote( $now ) . " )"
+		. "\n AND ( a.publish_down = " . $database->Quote( $nullDate ) . " OR a.publish_down >= " . $database->Quote( $now ) . " )"
 		. "\n ORDER BY ". ($morder ? $morder : $order)
 		;
 		$database->setQuery( $query, 0, $limit );

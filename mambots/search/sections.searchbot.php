@@ -79,7 +79,7 @@ function botSearchSections( $text, $phrase='', $ordering='' ) {
 	. "\n OR a.title LIKE '%$text%'"
 	. "\n OR a.description LIKE '%$text%' )"
 	. "\n AND a.published = 1"
-	. "\n AND a.access <= $my->gid"
+	. "\n AND a.access <= " . (int) $my->gid
 	. "\n AND ( m.type = 'content_section' OR m.type = 'content_blog_section' )"
 	. "\n GROUP BY a.id"
 	. "\n ORDER BY $order"

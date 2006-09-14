@@ -99,7 +99,7 @@ function botSearchNewsfeedslinks( $text, $phrase='', $ordering='' ) {
 	$query = "SELECT a.name AS title,"
 	. "\n '' AS created,"
 	. "\n a.link AS text,"
-	. "\n CONCAT_WS( ' / ','". _SEARCH_NEWSFEEDS ."', b.title )AS section,"
+	. "\n CONCAT_WS( ' / '," . $database->Quote( _SEARCH_NEWSFEEDS ) . ", b.title )AS section,"
 	. "\n CONCAT( 'index.php?option=com_newsfeeds&task=view&feedid=', a.id ) AS href,"
 	. "\n '1' AS browsernav"
 	. "\n FROM #__newsfeeds AS a"
@@ -107,7 +107,7 @@ function botSearchNewsfeedslinks( $text, $phrase='', $ordering='' ) {
 	. "\n WHERE ( $where )"
 	. "\n AND a.published = 1"
 	. "\n AND b.published = 1"
-	. "\n AND b.access <= $my->gid"
+	. "\n AND b.access <= " . (int) $my->gid
 	. "\n ORDER BY $order"
 	;
 	$database->setQuery( $query, 0, $limit );

@@ -33,12 +33,12 @@ function dofreePDF() {
 	. "\n FROM #__content AS a"
 	. "\n LEFT JOIN #__categories AS cc ON cc.id = a.catid"
 	. "\n LEFT JOIN #__sections AS s ON s.id = cc.section AND s.scope = 'content'"
-	. "\n WHERE a.id = $id"
+	. "\n WHERE a.id = " . (int) $id
 	. "\n AND a.state = 1"
-	. "\n AND a.access <= $gid"
-	. "\n AND ( a.publish_up = '$nullDate' OR a.publish_up <= '$now' )"
-	. "\n AND ( a.publish_down = '$nullDate' OR a.publish_down >= '$now' )"	
-	;	
+	. "\n AND a.access <= " . (int) $gid
+	. "\n AND ( a.publish_up = " . $database->Quote( $nullDate ) . " OR a.publish_up <= " . $database->Quote( $now ) . " )"
+	. "\n AND ( a.publish_down = " . $database->Quote( $nullDate ) . " OR a.publish_down >= " . $database->Quote( $now ) . " )"	
+	;
 	$database->setQuery( $query );
 	$row = NULL;
 	

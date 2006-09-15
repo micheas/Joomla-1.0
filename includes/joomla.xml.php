@@ -391,14 +391,14 @@ class mosParameters {
 			. "\n FROM #__categories AS c"
 			. "\n LEFT JOIN #__sections AS s ON s.id=c.section"
 			. "\n WHERE c.published = 1"
-			. "\n AND s.scope = '$scope'"
+			. "\n AND s.scope = " . $database->Quote( $scope )
 			. "\n ORDER BY c.title"
 			;
 		} else {
 			$query 	= "SELECT c.id, c.title"
 				. "\n FROM #__categories AS c"
 				. "\n WHERE c.published = 1"
-				. "\n AND c.section = '$scope'"
+				. "\n AND c.section = " . $database->Quote( $scope )
 				. "\n ORDER BY c.title"
 				;
 		}

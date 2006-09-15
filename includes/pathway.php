@@ -37,7 +37,7 @@ function showPathway( $Itemid ) {
 	$query = "SELECT id, name, link, parent, type, menutype, access"
 	. "\n FROM #__menu"
 	. "\n WHERE published = 1"
-	. "\n AND access <= $my->gid"
+	. "\n AND access <= " . (int) $my->gid
 	. "\n ORDER BY menutype, parent, ordering"
 	;
 	$database->setQuery( $query );
@@ -73,17 +73,17 @@ function showPathway( $Itemid ) {
 				if ($task=='blogsection'){
 					$query = "SELECT title, id"
 					. "\n FROM #__sections"
-					. "\n WHERE id = $id"
+					. "\n WHERE id = " . (int) $id
 					;
 				} else if ( $task=='blogcategory' ) {
 					$query = "SELECT title, id"
 					. "\n FROM #__categories"
-					. "\n WHERE id = $id"
+					. "\n WHERE id = " . (int) $id
 					;
 				} else {
 					$query = "SELECT title, catid, id"
 					. "\n FROM #__content"
-					. "\n WHERE id = $id"
+					. "\n WHERE id = " . (int) $id
 					;
 				}
 				$database->setQuery( $query );
@@ -119,8 +119,8 @@ function showPathway( $Itemid ) {
 					if ($id) {
 						$query = "SELECT title, id"
 						. "\n FROM #__categories"
-						. "\n WHERE id = $id"
-						. "\n AND access <= $my->id"
+						. "\n WHERE id = " . (int) $id
+						. "\n AND access <= " . (int) $my->id
 						;
 						$database->setQuery( $query );
 						$title = $database->loadResult();
@@ -143,7 +143,7 @@ function showPathway( $Itemid ) {
 						// load the content item name and category
 						$query = "SELECT title, catid, id, access"
 						. "\n FROM #__content"
-						. "\n WHERE id = $id"
+						. "\n WHERE id = " . (int) $id
 						;
 						$database->setQuery( $query );
 						$row = null;
@@ -155,7 +155,7 @@ function showPathway( $Itemid ) {
 						. "\n LEFT JOIN #__sections AS s"
 						. "\n ON c.section = s.id"
 						. "\n WHERE c.id = " . (int) $row->catid
-						. "\n AND c.access <= $my->id"
+						. "\n AND c.access <= " . (int) $my->id
 						;
 						$database->setQuery( $query );
 						$result = $database->loadObjectList();
@@ -202,8 +202,8 @@ function showPathway( $Itemid ) {
 						// load the content item name and category
 						$query = "SELECT title, catid, id"
 						. "\n FROM #__content"
-						. "\n WHERE id = $id"
-						. "\n AND access <= $my->id"
+						. "\n WHERE id = " . (int) $id
+						. "\n AND access <= " . (int) $my->id
 						;
 						$database->setQuery( $query );
 						$row = null;
@@ -238,8 +238,8 @@ function showPathway( $Itemid ) {
 		
 						$query = "SELECT title, catid, id"
 						. "\n FROM #__content"
-						. "\n WHERE id = $id"
-						. "\n AND access <= $my->id"
+						. "\n WHERE id = " . (int) $id
+						. "\n AND access <= " . (int) $my->id
 						;
 						$database->setQuery( $query );
 						$row = null;

@@ -76,7 +76,7 @@ function &initModules() {
 		$Itemid 		= intval($Itemid);
 		$check_Itemid 	= '';
 		if ($Itemid) {
-			$check_Itemid = "OR mm.menuid = '". (int) $Itemid ."'";
+			$check_Itemid = "OR mm.menuid = " . (int) $Itemid;
 		}
 		
 		$query = "SELECT id, title, module, position, content, showtitle, params"

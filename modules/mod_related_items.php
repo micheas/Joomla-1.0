@@ -25,7 +25,7 @@ if ($option == 'com_content' && $task == 'view' && $id) {
 	// select the meta keywords from the item
 	$query = "SELECT metakey"
 	. "\n FROM #__content"
-	. "\n WHERE id = $id"
+	. "\n WHERE id = " . (int) $id
 	;
 	$database->setQuery( $query );
 	if ($metakey = trim( $database->loadResult() )) {
@@ -48,12 +48,12 @@ if ($option == 'com_content' && $task == 'view' && $id) {
 			. "\n LEFT JOIN #__content_frontpage AS f ON f.content_id = a.id"
 			. "\n LEFT JOIN #__categories AS cc ON cc.id = a.catid"
 			. "\n LEFT JOIN #__sections AS s ON s.id = a.sectionid"
-			. "\n WHERE a.id != $id"
+			. "\n WHERE a.id != " . (int) $id
 			. "\n AND a.state = 1"
-			. "\n AND a.access <= $my->gid"
+			. "\n AND a.access <= " . (int) $my->gid
 			. "\n AND ( a.metakey LIKE '%" . implode( "%' OR a.metakey LIKE '%", $likes ) ."%' )"
-			. "\n AND ( a.publish_up = '$nullDate' OR a.publish_up <= '$now' )"
-			. "\n AND ( a.publish_down = '$nullDate' OR a.publish_down >= '$now' )"
+			. "\n AND ( a.publish_up = " . $database->Quote( $nullDate ) . " OR a.publish_up <= " . $database->Quote( $now ) . " )"
+			. "\n AND ( a.publish_down = " . $database->Quote( $nullDate ) . " OR a.publish_down >= " . $database->Quote( $now ) . " )"
 			;
 			$database->setQuery( $query );
 			$temp = $database->loadObjectList();

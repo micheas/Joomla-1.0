@@ -66,10 +66,10 @@ $query = "SELECT a.id, a.introtext, a.fulltext , a.images, a.attribs, a.title, a
 ."\n INNER JOIN #__categories AS cc ON cc.id = a.catid"
 ."\n INNER JOIN #__sections AS s ON s.id = a.sectionid"
 ."\n WHERE a.state = 1"
-. ( $noauth ? "\n AND a.access <= $my->gid AND cc.access <= $my->gid AND s.access <= $my->gid" : '' )
-."\n AND (a.publish_up = '$nullDate' OR a.publish_up <= '$now' ) "
-."\n AND (a.publish_down = '$nullDate' OR a.publish_down >= '$now' )"
-."\n AND a.catid = $catid"
+. ( $noauth ? "\n AND a.access <= " . (int) $my->gid . " AND cc.access <= " . (int) $my->gid . " AND s.access <= " . (int) $my->gid : '' )
+."\n AND (a.publish_up = " . $database->Quote( $nullDate ) . " OR a.publish_up <= " . $database->Quote( $now ) . " ) "
+."\n AND (a.publish_down = " . $database->Quote( $nullDate ) . " OR a.publish_down >= " . $database->Quote( $now ) . " )"
+."\n AND a.catid = " . (int) $catid
 ."\n AND cc.published = 1"
 ."\n AND s.published = 1"
 ."\n ORDER BY a.ordering"

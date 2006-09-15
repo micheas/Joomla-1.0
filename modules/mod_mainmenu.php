@@ -197,11 +197,11 @@ if (!defined( '_MOS_MAINMENU_MODULE' )) {
 
 		$and = '';
 		if ( !$mosConfig_shownoauth ) {
-			$and = "\n AND access <= $my->gid";
+			$and = "\n AND access <= " . (int) $my->gid;
 		}		
 		$sql = "SELECT m.*"
 		. "\n FROM #__menu AS m"
-		. "\n WHERE menutype = '". $params->get( 'menutype' ) ."'"
+		. "\n WHERE menutype = " . $database->Quote( $params->get( 'menutype' ) )
 		. "\n AND published = 1"
 		. $and
 		. "\n ORDER BY parent, ordering";
@@ -322,11 +322,11 @@ if (!defined( '_MOS_MAINMENU_MODULE' )) {
 
 		$and = '';
 		if ( !$mosConfig_shownoauth ) {
-			$and = "\n AND access <= $my->gid";
+			$and = "\n AND access <= " . (int) $my->gid;
 		}
 		$sql = "SELECT m.*"
 		. "\n FROM #__menu AS m"
-		. "\n WHERE menutype = '". $params->get( 'menutype' ) ."'"
+		. "\n WHERE menutype = " . $database->Quote( $params->get( 'menutype' ) )
 		. "\n AND published = 1"
 		. $and
 		. "\n AND parent = 0"

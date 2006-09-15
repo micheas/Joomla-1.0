@@ -59,7 +59,7 @@ if (!defined( '_JOS_POLL_MODULE' )) {
 
 				$query = "SELECT id, text"
 				. "\n FROM #__poll_data"
-				. "\n WHERE pollid = $poll->id"
+				. "\n WHERE pollid = " . (int) $poll->id
 				. "\n AND text != ''"
 				. "\n ORDER BY id";
 				$database->setQuery($query);

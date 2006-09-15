@@ -23,12 +23,12 @@ $nullDate 	= $database->getNullDate();
 $query = "SELECT a.id AS id, a.title AS title, COUNT(b.id) as cnt"
 . "\n FROM #__sections as a"
 . "\n LEFT JOIN #__content as b ON a.id = b.sectionid"
-. ( $access ? "\n AND b.access <= $my->gid" : '' )
-. "\n AND ( b.publish_up = '$nullDate' OR b.publish_up <= '$now' )"
-. "\n AND ( b.publish_down = '$nullDate' OR b.publish_down >= '$now' )"
+. ( $access ? "\n AND b.access <= " . (int) $my->gid : '' )
+. "\n AND ( b.publish_up = " . $database->Quote( $nullDate ) . " OR b.publish_up <= " . $database->Quote( $now ) . " )"
+. "\n AND ( b.publish_down = " . $database->Quote( $nullDate ) . " OR b.publish_down >= " . $database->Quote( $now ) . " )"
 . "\n WHERE a.scope = 'content'"
 . "\n AND a.published = 1"
-. ( $access ? "\n AND a.access <= $my->gid" : '' )
+. ( $access ? "\n AND a.access <= " . (int) $my->gid : '' )
 . "\n GROUP BY a.id"
 . "\n HAVING COUNT( b.id ) > 0"
 . "\n ORDER BY a.ordering"

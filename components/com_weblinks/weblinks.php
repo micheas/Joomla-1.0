@@ -64,7 +64,7 @@ function listWeblinks( $catid ) {
 		// url links info for category
 		$query = "SELECT id, url, title, description, date, hits, params"
 		. "\n FROM #__weblinks"
-		. "\n WHERE catid = $catid"
+		. "\n WHERE catid = " . (int) $catid
 		. "\n AND published = 1"
 		. "\n AND archived = 0"
 		. "\n ORDER BY ordering"
@@ -75,9 +75,9 @@ function listWeblinks( $catid ) {
 		// current cate info
 		$query = "SELECT *"
 		. "\n FROM #__categories"
-		. "\n WHERE id = $catid"
+		. "\n WHERE id = " . (int) $catid
 		. "\n AND published = 1"
-		. "\n AND access <= $my->gid"
+		. "\n AND access <= " . (int) $my->gid
 		;
 		$database->setQuery( $query );
 		$database->loadObject( $currentcat );
@@ -98,7 +98,7 @@ function listWeblinks( $catid ) {
 	. "\n WHERE a.published = 1"
 	. "\n AND section = 'com_weblinks'"
 	. "\n AND cc.published = 1"
-	. "\n AND cc.access <= $my->gid"
+	. "\n AND cc.access <= " . (int) $my->gid
 	. "\n GROUP BY cc.id"
 	. "\n ORDER BY cc.ordering"
 	;
@@ -203,7 +203,7 @@ function showItem ( $id ) {
 	// Record the hit
 	$query = "UPDATE #__weblinks"
 	. "\n SET hits = hits + 1"
-	. "\n WHERE id = $id"
+	. "\n WHERE id = " . (int) $id
 	;
 	$database->setQuery( $query );
 	$database->query();
@@ -339,7 +339,7 @@ function saveWeblink( $option ) {
 	// list of admins	
 	$query = "SELECT email, name"
 	. "\n FROM #__users"
-	. "\n WHERE gid = $gid"
+	. "\n WHERE gid = " . (int) $gid
 	. "\n AND sendEmail = 1"
 	;
 	$database->setQuery( $query );

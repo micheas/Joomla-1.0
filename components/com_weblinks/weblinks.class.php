@@ -81,16 +81,12 @@ class mosWeblink extends mosDBTable {
 		if ( !( eregi( 'http://', $this->url ) || ( eregi( 'https://',$this->url ) )  || ( eregi( 'ftp://',$this->url ) ) ) ) {
 			$this->url = 'http://'.$this->url;
 		}
-		
-		// SQL injection protection
-		$this->catid = intval($this->catid);
-		$this->title = $this->_db->getEscaped( $this->title );
 
 		/** check for existing name */
 		$query = "SELECT id"
 		. "\n FROM #__weblinks "
-		. "\n WHERE title = '$this->title'"
-		. "\n AND catid = $this->catid"
+		. "\n WHERE title = " . $this->_db->Quote( $this->title )
+		. "\n AND catid = " . (int) $this->catid
 		;
 		$this->_db->setQuery( $query );
 

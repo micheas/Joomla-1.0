@@ -57,7 +57,7 @@ switch ( $task ) {
 
 	case 'category':
 		$selected 	= strval( mosGetParam( $_REQUEST, 'order', '' ) );
-		$filter 	= strval( mosGetParam( $_REQUEST, 'filter', '' ) );	
+		$filter 	= stripslashes( strval( mosGetParam( $_REQUEST, 'filter', '' ) ) );	
 
 		$cache->call( 'showCategory', $id, $gid, $access, $sectionid, $limit, NULL, $limitstart, 0, $selected, $filter );
 		break;
@@ -131,12 +131,11 @@ switch ( $task ) {
 function findKeyItem( $gid, $access, $pop, $option, $now ) {
 	global $database;
 	
-	$keyref = strval( mosGetParam( $_REQUEST, 'keyref', '' ) );
-	$keyref = $database->getEscaped( $keyref );
+	$keyref = stripslashes( strval( mosGetParam( $_REQUEST, 'keyref', '' ) ) );
 
 	$query = "SELECT id"
 	. "\n FROM #__content"
-	. "\n WHERE attribs LIKE '%keyref=$keyref%'"
+	. "\n WHERE attribs LIKE '%keyref=" . $database->getEscaped( $keyref ) . "%'"
 	;
 	$database->setQuery( $query );
 	$id = $database->loadResult();
@@ -294,8 +293,8 @@ function showSection( $id, $gid, &$access, $now ) {
 	} else {
 		$xwhere = "\n AND a.published = 1";
 		$xwhere2 = "\n AND b.state = 1"
-		. "\n AND ( b.publish_up = '$nullDate' OR b.publish_up <= '$now' )"
-		. "\n AND ( b.publish_down = '$nullDate' OR b.publish_down >= '$now' )"
+		. "\n AND ( b.publish_up = " . $database->Quote( $nullDate ) . " OR b.publish_up <= " . $database->Quote( $now ) . " )"
+		. "\n AND ( b.publish_down = " . $database->Quote( $nullDate ) . " OR b.publish_down >= " . $database->Quote( $now ) . " )"
 		;
 	}
 
@@ -316,7 +315,7 @@ function showSection( $id, $gid, &$access, $now ) {
 
 	$access_check = '';
 	if ($noauth) {
-		$access_check = "\n AND a.access <= $gid";
+		$access_check = "\n AND a.access <= " . (int) $gid;
 	}
 
 	// Query of categories within section
@@ -324,7 +323,7 @@ function showSection( $id, $gid, &$access, $now ) {
 	. "\n FROM #__categories AS a"
 	. "\n LEFT JOIN #__content AS b ON b.catid = a.id"
 	. $xwhere2
-	. "\n WHERE a.section = '$section->id'"
+	. "\n WHERE a.section = '" . (int) $section->id . "'"
 	. $xwhere
 	. $access_check
 	. "\n GROUP BY a.id"
@@ -339,7 +338,7 @@ function showSection( $id, $gid, &$access, $now ) {
 	if ( $access->canEdit ) {
 		$query = "SELECT count(*) as numCategories"
 		. "\n FROM #__categories as a"
-		. "\n WHERE a.section = '$section->id'"
+		. "\n WHERE a.section = '" . (int) $section->id . "'"
 		. $access_check;
 		$database->setQuery ( $query );
 		$categories_exist = ($database->loadResult()) > 0;
@@ -475,8 +474,8 @@ function showCategory( $id, $gid, &$access, $sectionid, $limit, $selected, $limi
 	} else {
 		$xwhere = "\n AND c.published = 1";
 		$xwhere2 = "\n AND b.state = 1"
-		. "\n AND ( b.publish_up = '$nullDate' OR b.publish_up <= '$now' )"
-		. "\n AND ( b.publish_down = '$nullDate' OR b.publish_down >= '$now' )"
+		. "\n AND ( b.publish_up = " . $database->Quote( $nullDate ) . " OR b.publish_up <= " . $database->Quote( $now ) . " )"
+		. "\n AND ( b.publish_down = " . $database->Quote( $nullDate ) . " OR b.publish_down >= " . $database->Quote( $now ) . " )"
 		;
 	}
 
@@ -495,10 +494,10 @@ function showCategory( $id, $gid, &$access, $sectionid, $limit, $selected, $limi
 	. "\n FROM #__categories AS c"
 	. "\n LEFT JOIN #__content AS b ON b.catid = c.id "
 	. $xwhere2
-	. ( $noauth ? "\n AND b.access <= $gid" : '' )
-	. "\n WHERE c.section = '$category->section'"
+	. ( $noauth ? "\n AND b.access <= " . (int) $gid : '' )
+	. "\n WHERE c.section = '" . (int) $category->section . "'"
 	. $xwhere
-	. ( $noauth ? "\n AND c.access <= $gid" : '' )
+	. ( $noauth ? "\n AND c.access <= " . (int) $gid : '' )
 	. "\n GROUP BY c.id"
 	. $empty
 	. "\n ORDER BY c.ordering"
@@ -516,15 +515,15 @@ function showCategory( $id, $gid, &$access, $sectionid, $limit, $selected, $limi
 			
 			switch ( $params->get( 'filter_type' ) ) {
 				case 'title':
-					$and = "\n AND LOWER( a.title ) LIKE '%$filter%'";
+					$and = "\n AND LOWER( a.title ) LIKE '%" . $database->getEscaped( $filter ) . "%'";
 					break;
 	
 				case 'author':
-					$and = "\n AND ( ( LOWER( u.name ) LIKE '%$filter%' ) OR ( LOWER( a.created_by_alias ) LIKE '%$filter%' ) )";
+					$and = "\n AND ( ( LOWER( u.name ) LIKE '%" . $database->getEscaped( $filter ) . "%' ) OR ( LOWER( a.created_by_alias ) LIKE '%" . $database->getEscaped( $filter ) . "%' ) )";
 					break;
 	
 				case 'hits':
-					$and = "\n AND a.hits LIKE '%$filter%'";
+					$and = "\n AND a.hits LIKE '%" . $database->getEscaped( $filter ) . "%'";
 					break;
 			}
 		}
@@ -540,8 +539,8 @@ function showCategory( $id, $gid, &$access, $sectionid, $limit, $selected, $limi
 		}
 	} else {
 		$xwhere = "\n AND a.state = 1"
-		. "\n AND ( publish_up = '$nullDate' OR publish_up <= '$now' )"
-		. "\n AND ( publish_down = '$nullDate' OR publish_down >= '$now' )"
+		. "\n AND ( publish_up = " . $database->Quote( $nullDate ) . " OR publish_up <= " . $database->Quote( $now ) . " )"
+		. "\n AND ( publish_down = " . $database->Quote( $nullDate ) . " OR publish_down >= " . $database->Quote( $now ) . " )"
 		;
 	}
 
@@ -550,10 +549,10 @@ function showCategory( $id, $gid, &$access, $sectionid, $limit, $selected, $limi
 	. "\n FROM #__content AS a"
 	. "\n LEFT JOIN #__users AS u ON u.id = a.created_by"
 	. "\n LEFT JOIN #__groups AS g ON a.access = g.id"
-	. "\n WHERE a.catid = $category->id"
+	. "\n WHERE a.catid = " . (int) $category->id
 	. $xwhere
-	. ( $noauth ? "\n AND a.access <= $gid" : '' )
-	. "\n AND $category->access <= $gid"
+	. ( $noauth ? "\n AND a.access <= " . (int) $gid : '' )
+	. "\n AND " . (int) $category->access . " <= " . (int) $gid
 	. $and
 	. "\n ORDER BY $orderby"
 	;
@@ -574,10 +573,10 @@ function showCategory( $id, $gid, &$access, $sectionid, $limit, $selected, $limi
 	. "\n FROM #__content AS a"
 	. "\n LEFT JOIN #__users AS u ON u.id = a.created_by"
 	. "\n LEFT JOIN #__groups AS g ON a.access = g.id"
-	. "\n WHERE a.catid = $category->id"
+	. "\n WHERE a.catid = " . (int) $category->id
 	. $xwhere
-	. ( $noauth ? "\n AND a.access <= $gid" : '' )
-	. "\n AND $category->access <= $gid"
+	. ( $noauth ? "\n AND a.access <= " . (int) $gid : '' )
+	. "\n AND " . (int) $category->access . " <= " . (int) $gid
 	. $and
 	. "\n ORDER BY $orderby"
 	;
@@ -888,7 +887,7 @@ function showArchiveSection( $id=NULL, $gid, &$access, $pop, $option, $year, $mo
 	if ( $id == 0 ) {
 		$check = '';
 	} else {
-		$check = "\n AND a.sectionid = $id";
+		$check = "\n AND a.sectionid = " . (int) $id;
 	}
 	// query to determine if there are any archived entries for the section
 	$query = 	"SELECT a.id"
@@ -1001,7 +1000,7 @@ function showArchiveCategory( $id=0, $gid, &$access, $pop, $option, $year, $mont
 	if ( $module ) {
 		$check = '';
 	} else {
-		$check = "\n AND a.catid = $id";
+		$check = "\n AND a.catid = " . (int) $id;
 	}
 
 	if ( $Itemid ) {
@@ -1399,8 +1398,8 @@ function showItem( $uid, $gid, &$access, $pop, $option='com_content', $now ) {
 		$xwhere = '';
 	} else {
 		$xwhere = " AND ( a.state = 1 OR a.state = -1 )"
-		. "\n AND ( a.publish_up = '$nullDate' OR a.publish_up <= '$now' )"
-		. "\n AND ( a.publish_down = '$nullDate' OR a.publish_down >= '$now' )"
+		. "\n AND ( a.publish_up = " . $database->Quote( $nullDate ) . " OR a.publish_up <= " . $database->Quote( $now ) . " )"
+		. "\n AND ( a.publish_down = " . $database->Quote( $nullDate ) . " OR a.publish_down >= " . $database->Quote( $now ) . " )"
 		;
 	}
 
@@ -1413,9 +1412,9 @@ function showItem( $uid, $gid, &$access, $pop, $option='com_content', $now ) {
 	. "\n LEFT JOIN #__sections AS s ON s.id = cc.section AND s.scope = 'content'"
 	. "\n LEFT JOIN #__users AS u ON u.id = a.created_by"
 	. "\n LEFT JOIN #__groups AS g ON a.access = g.id"
-	. "\n WHERE a.id = $uid"
+	. "\n WHERE a.id = " . (int) $uid
 	. $xwhere
-	. "\n AND a.access <= $gid"
+	. "\n AND a.access <= " . (int) $gid
 	;
 	$database->setQuery( $query );
 	$row = NULL;
@@ -1590,7 +1589,7 @@ function show( $row, $params, $gid, &$access, $pop, $option='com_content', $Item
 		$query = "SELECT ROUND( v.rating_sum / v.rating_count ) AS rating, v.rating_count"
 		. "\n FROM #__content AS a"
 		. "\n LEFT JOIN #__content_rating AS v ON a.id = v.content_id"
-		. "\n WHERE a.id = $row->id"
+		. "\n WHERE a.id = " . (int) $row->id
 		;
 		$database->setQuery( $query );
 		$database->loadObject($voting);
@@ -1613,7 +1612,7 @@ function show( $row, $params, $gid, &$access, $pop, $option='com_content', $Item
 				. "\n FROM #__menu"
 				. "\n WHERE published = 1"
 				. "\n AND type IN ( 'content_section', 'content_blog_section' )"
-				. "\n AND componentid = $row->sectionid"
+				. "\n AND componentid = " . (int) $row->sectionid
 				. "\n ORDER BY type DESC, ordering"
 				;
 				$database->setQuery( $query );
@@ -1751,7 +1750,7 @@ function editItem( $uid, $gid, &$access, $sectionid=0, $task, $Itemid ){
 		
 		if ( $Itemid == 0 || $Itemid == 99999999 ) {
 			// security check to see if link exists in a menu
-			$link = 'index.php?option=com_content&task=new&sectionid='. $sectionid;
+			$link = 'index.php?option=com_content&task=new&sectionid=' . (int) $sectionid;
 			$query = "SELECT id"
 			. "\n FROM #__menu"
 			. "\n WHERE link LIKE '%$link%'"
@@ -1774,7 +1773,7 @@ function editItem( $uid, $gid, &$access, $sectionid=0, $task, $Itemid ){
 
 	// get the type name - which is a special category
 	$query = "SELECT name FROM #__sections"
-	. "\n WHERE id = $sectionid"
+	. "\n WHERE id = " . (int) $sectionid
 	;
 	$database->setQuery( $query );
 	$section = $database->loadResult();
@@ -1803,7 +1802,7 @@ function editItem( $uid, $gid, &$access, $sectionid=0, $task, $Itemid ){
 		
 		$query = "SELECT name"
 		. "\n FROM #__users"
-		. "\n WHERE id = $row->created_by"
+		. "\n WHERE id = " . (int) $row->created_by
 		;
 		$database->setQuery( $query	);
 		$row->creator = $database->loadResult();
@@ -1814,7 +1813,7 @@ function editItem( $uid, $gid, &$access, $sectionid=0, $task, $Itemid ){
 		} else {
 			$query = "SELECT name"
 			. "\n FROM #__users"
-			. "\n WHERE id = '$row->modified_by'"
+			. "\n WHERE id = " . (int) $row->modified_by
 			;
 			$database->setQuery( $query );
 			$row->modifier = $database->loadResult();
@@ -1822,7 +1821,7 @@ function editItem( $uid, $gid, &$access, $sectionid=0, $task, $Itemid ){
 
 		$query = "SELECT content_id"
 		. "\n FROM #__content_frontpage"
-		. "\n WHERE content_id = $row->id"
+		. "\n WHERE content_id = " . (int) $row->id
 		;
 		$database->setQuery( $query );
 		$row->frontpage = $database->loadResult();
@@ -2008,7 +2007,7 @@ function saveContent( &$access, $task ) {
 		// For existing items keep existing state - author is not allowed to change status
 			$query = "SELECT state"
 			. "\n FROM #__content"
-			. "\n WHERE id = $row->id"
+			. "\n WHERE id = " . (int) $row->id
 			;
 			$database->setQuery( $query);
 			$state = $database->loadResult();          
@@ -2041,7 +2040,7 @@ function saveContent( &$access, $task ) {
 		if (!$fp->load( (int)$row->id )) {
 			// new entry
 			$query = "INSERT INTO #__content_frontpage"
-			. "\n VALUES ( $row->id, 1 )"
+			. "\n VALUES ( " . (int) $row->id . ", 1 )"
 			;
 			$database->setQuery( $query );
 			if (!$database->query()) {
@@ -2181,11 +2180,11 @@ function emailContentForm( $uid, $gid ) {
 	. "\n FROM #__content AS a"
 	. "\n LEFT JOIN #__categories AS cc ON cc.id = a.catid"
 	. "\n LEFT JOIN #__sections AS s ON s.id = cc.section AND s.scope = 'content'"
-	. "\n WHERE a.id = $uid"
+	. "\n WHERE a.id = " . (int) $uid
 	. "\n AND a.state = 1"
-	. "\n AND a.access <= $gid"
-	. "\n AND ( a.publish_up = '$nullDate' OR a.publish_up <= '$now' )"
-	. "\n AND ( a.publish_down = '$nullDate' OR a.publish_down >= '$now' )"	
+	. "\n AND a.access <= " . (int) $gid
+	. "\n AND ( a.publish_up = " . $database->Quote( $nullDate ) . " OR a.publish_up <= " . $database->Quote( $now ) . " )"
+	. "\n AND ( a.publish_down = " . $database->Quote( $nullDate ) . " OR a.publish_down >= " . $database->Quote( $now ) . " )"	
 	;	
 	$database->setQuery( $query );
 	$row = NULL;
@@ -2271,12 +2270,12 @@ function emailContentSend( $uid, $gid ) {
 	. "\n FROM #__content AS a"
 	. "\n LEFT JOIN #__categories AS cc ON cc.id = a.catid"
 	. "\n LEFT JOIN #__sections AS s ON s.id = cc.section AND s.scope = 'content'"
-	. "\n WHERE a.id = $uid"
+	. "\n WHERE a.id = " . (int) $uid
 	. "\n AND a.state = 1"
-	. "\n AND a.access <= $gid"
-	. "\n AND ( a.publish_up = '$nullDate' OR a.publish_up <= '$now' )"
-	. "\n AND ( a.publish_down = '$nullDate' OR a.publish_down >= '$now' )"	
-	;	
+	. "\n AND a.access <= " . (int) $gid
+	. "\n AND ( a.publish_up = " . $database->Quote( $nullDate ) . " OR a.publish_up <= " . $database->Quote( $now ) . " )"
+	. "\n AND ( a.publish_down = " . $database->Quote( $nullDate ) . " OR a.publish_down >= " . $database->Quote( $now ) . " )"	
+	;
 	$database->setQuery( $query );
 	$row = NULL;
 	
@@ -2369,20 +2368,20 @@ function recordVote() {
 
 		$query = "SELECT *"
 		. "\n FROM #__content_rating"
-		. "\n WHERE content_id = $cid"
+		. "\n WHERE content_id = " . (int) $cid
 		;
 		$database->setQuery( $query );
 		$votesdb = NULL;
 		if ( !( $database->loadObject( $votesdb ) ) ) {
 			$query = "INSERT INTO #__content_rating ( content_id, lastip, rating_sum, rating_count )"
-			. "\n VALUES ( $cid, '$currip', $user_rating, 1 )";
+			. "\n VALUES ( " . (int) $cid . ", " . $database->Quote( $currip ) . ", " . (int) $user_rating . ", 1 )";
 			$database->setQuery( $query );
 			$database->query() or die( $database->stderr() );;
 		} else {
 			if ($currip != ($votesdb->lastip)) {
 				$query = "UPDATE #__content_rating"
-				. "\n SET rating_count = rating_count + 1, rating_sum = rating_sum + $user_rating, lastip = '$currip'"
-				. "\n WHERE content_id = $cid"
+				. "\n SET rating_count = rating_count + 1, rating_sum = rating_sum + " . (int) $user_rating . ", lastip = " . $database->Quote( $currip )
+				. "\n WHERE content_id = " . (int) $cid
 				;
 				$database->setQuery( $query );
 				$database->query() or die( $database->stderr() );
@@ -2493,24 +2492,26 @@ function _where( $type=1, &$access, &$noauth, $gid, $id, $now=NULL, $year=NULL, 
 				$where[] = "a.state >= 0";
 			} else {
 				$where[] = "a.state = 1";
-				$where[] = "( a.publish_up = '$nullDate' OR a.publish_up <= '$now' )";
-				$where[] = "( a.publish_down = '$nullDate' OR a.publish_down >= '$now' )";
+				$where[] = "( a.publish_up = " . $database->Quote( $nullDate ) . " OR a.publish_up <= " . $database->Quote( $now ) . " )";
+				$where[] = "( a.publish_down = " . $database->Quote( $nullDate ) . " OR a.publish_down >= " . $database->Quote( $now ) . " )";
 			}
 		} else {
 		// unpublished items NOT shown for publishers and above		
 			$where[] = "a.state = 1";
 			//if ( !$access->canEdit ) {
-				$where[] = "( a.publish_up = '$nullDate' OR a.publish_up <= '$now' )";
-				$where[] = "( a.publish_down = '$nullDate' OR a.publish_down >= '$now' )";
+				$where[] = "( a.publish_up = " . $database->Quote( $nullDate ) . " OR a.publish_up <= " . $database->Quote( $now ) . " )";
+				$where[] = "( a.publish_down = " . $database->Quote( $nullDate ) . " OR a.publish_down >= " . $database->Quote( $now ) . " )";
 			//}
 		}	
 
 		// add query checks for category or section ids		
 		if ( $id > 0 ) {
+			$ids = explode( ',', $id );
+			mosArrayToInts( $ids );
 			if ( $type == 1 ) {
-				$where[] = "a.sectionid IN ( $id ) ";
+				$where[] = '( a.sectionid=' . implode( ' OR a.sectionid=', $ids ) . ' )';
 			} else if ( $type == 2 ) {
-				$where[] = "a.catid IN ( $id ) ";
+				$where[] = '( a.catid=' . implode( ' OR a.catid=', $ids ) . ' )';
 			}
 		}
 	}
@@ -2519,16 +2520,16 @@ function _where( $type=1, &$access, &$noauth, $gid, $id, $now=NULL, $year=NULL, 
 	if ( $type < 0 ) {
 		$where[] = "a.state = -1";
 		if ( $year ) {
-			$where[] = "YEAR( a.created ) = '$year'";
+			$where[] = "YEAR( a.created ) = " . $database->Quote( $year );
 		}
 		if ( $month ) {
-			$where[] = "MONTH( a.created ) = '$month'";
+			$where[] = "MONTH( a.created ) = " . $database->Quote( $month );
 		}
 		if ( $id > 0 ) {
 			if ( $type == -1 ) {
-				$where[] = "a.sectionid = $id";
+				$where[] = "a.sectionid = " . (int) $id;
 			} else if ( $type == -2) {
-				$where[] = "a.catid = $id";
+				$where[] = "a.catid = " . (int) $id;
 			}
 		}
 	}
@@ -2536,9 +2537,9 @@ function _where( $type=1, &$access, &$noauth, $gid, $id, $now=NULL, $year=NULL, 
 	$where[] = "s.published = 1";
 	$where[] = "cc.published = 1";
 	if ( $noauth ) {
-		$where[] = "a.access <= $gid";
-		$where[] = "s.access <= $gid";
-		$where[] = "cc.access <= $gid";
+		$where[] = "a.access <= " . (int) $gid;
+		$where[] = "s.access <= " . (int) $gid;
+		$where[] = "cc.access <= " . (int) $gid;
 	}
 	
 	return $where;

@@ -693,6 +693,9 @@ function saveContent( $sectionid, $task ) {
 	if (is_array( $params )) {
 		$txt = array();
 		foreach ( $params as $k=>$v) {
+			if (get_magic_quotes_gpc()) {
+				$v = stripslashes( $v );
+			}
 			$txt[] = "$k=$v";
 		}
 		$row->attribs = implode( "\n", $txt );

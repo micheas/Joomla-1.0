@@ -60,8 +60,8 @@ function listContacts( $option, $catid ) {
 	. "\n WHERE a.published = 1"
 	. "\n AND cc.section = 'com_contact_details'"
 	. "\n AND cc.published = 1"
-	. "\n AND a.access <= $my->gid"
-	. "\n AND cc.access <= $my->gid"
+	. "\n AND a.access <= " . (int) $my->gid
+	. "\n AND cc.access <= " . (int) $my->gid
 	. "\n GROUP BY cc.id"
 	. "\n ORDER BY cc.ordering"
 	;
@@ -116,9 +116,9 @@ function listContacts( $option, $catid ) {
 			// url links info for category
 			$query = "SELECT *"
 			. "\n FROM #__contact_details"
-			. "\n WHERE catid = $catid"
-			 . "\n AND published =1"
-			 . "\n AND access <= $my->gid"
+			. "\n WHERE catid = " . (int) $catid
+			. "\n AND published =1"
+			. "\n AND access <= " . (int) $my->gid
 			. "\n ORDER BY ordering"
 			;
 			$database->setQuery( $query );
@@ -127,9 +127,9 @@ function listContacts( $option, $catid ) {
 			// current category info
 			$query = "SELECT id, name, description, image, image_position"
 			. "\n FROM #__categories"
-			. "\n WHERE id = $catid"
+			. "\n WHERE id = " . (int) $catid
 			. "\n AND published = 1"
-			. "\n AND access <= $my->gid"
+			. "\n AND access <= " . (int) $my->gid
 			;
 			$database->setQuery( $query );
 			$database->loadObject( $currentcat );
@@ -191,7 +191,7 @@ function contactpage( $contact_id ) {
 	. "\n LEFT JOIN #__categories AS cc ON cc.id = a.catid"
 	. "\n WHERE a.published = 1"
 	. "\n AND cc.published = 1"
-	. "\n AND a.access <= $my->gid"
+	. "\n AND a.access <= " . (int) $my->gid
 	. "\n ORDER BY a.default_con DESC, a.ordering ASC"
 	;
 	$database->setQuery( $query );
@@ -207,8 +207,8 @@ function contactpage( $contact_id ) {
 		. "\n FROM #__contact_details AS a"
 		. "\n LEFT JOIN #__categories AS cc ON cc.id = a.catid"
 		. "\n WHERE a.published = 1"
-		. "\n AND a.id = $contact_id"
-		. "\n AND a.access <= $my->gid"
+		. "\n AND a.id = " . (int) $contact_id
+		. "\n AND a.access <= " . (int) $my->gid
 		;
 		$database->SetQuery($query);
 		$contacts = $database->LoadObjectList();
@@ -360,7 +360,7 @@ function sendmail( $con_id, $option ) {
 	
 	$query = "SELECT *"
 	. "\n FROM #__contact_details"
-	. "\n WHERE id = $con_id"
+	. "\n WHERE id = " . (int) $con_id
 	;
 	$database->setQuery( $query );
 	$contact 	= $database->loadObjectList();

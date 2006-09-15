@@ -68,7 +68,7 @@ class mosMessage extends mosDBTable {
 
 		$query = "SELECT cfg_name, cfg_value"
 		. "\n FROM #__messages_cfg"
-		. "\n WHERE user_id = $to_id"
+		. "\n WHERE user_id = " . (int) $to_id
 		;
 		$database->setQuery( $query );
 		$config = $database->loadObjectList( 'cfg_name' );
@@ -87,7 +87,7 @@ class mosMessage extends mosDBTable {
 				if ($domail) {
 					$query = "SELECT email"
 					. "\n FROM #__users"
-					. "\n WHERE id = $to_id"
+					. "\n WHERE id = " . (int) $to_id
 					;
 					$database->setQuery( $query );
 					$recipient = $database->loadResult();

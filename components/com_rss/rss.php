@@ -241,8 +241,8 @@ function feedFrontpage( $showFeed ) {
 	. "\n AND a.access = 0"
 	. "\n AND cat.access = 0"
 	. "\n AND sec.access = 0"
-	. "\n AND ( a.publish_up = '$nullDate' OR a.publish_up <= '$now' )"
-	. "\n AND ( a.publish_down = '$nullDate' OR a.publish_down >= '$now' )"
+	. "\n AND ( a.publish_up = " . $database->Quote( $nullDate ) . " OR a.publish_up <= " . $database->Quote( $now ) . " )"
+	. "\n AND ( a.publish_down = " . $database->Quote( $nullDate ) . " OR a.publish_down >= " . $database->Quote( $now ) . " )"
 	. "\n ORDER BY $orderby"
 	;
 	$database->setQuery( $query, 0, $info[ 'count' ] );

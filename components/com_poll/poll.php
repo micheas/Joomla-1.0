@@ -97,7 +97,7 @@ function pollAddVote( $uid ) {
 	$now = _CURRENT_SERVER_TIME;
 	
 	$query = "INSERT INTO #__poll_date"
-	. "\n SET date = '$now', vote_id = ". (int) $voteid .", poll_id = ".(int) $poll->id
+	. "\n SET date = " . $database->Quote( $now ) . ", vote_id = ". (int) $voteid .", poll_id = ".(int) $poll->id
 	;
 	$database->setQuery( $query );
 	$database->query();
@@ -141,7 +141,7 @@ function pollresult( $uid ) {
 		
 		$query = "SELECT MIN( date ) AS mindate, MAX( date ) AS maxdate"
 		. "\n FROM #__poll_date"
-		. "\n WHERE poll_id = $poll->id"
+		. "\n WHERE poll_id = " . (int) $poll->id
 		;
 		$database->setQuery( $query );
 		$dates = $database->loadObjectList();
@@ -154,7 +154,7 @@ function pollresult( $uid ) {
 		$query = "SELECT a.id, a.text, a.hits, b.voters"
 		. "\n FROM #__poll_data AS a"
 		. "\n INNER JOIN #__polls AS b ON b.id = a.pollid"
-		. "\n WHERE a.pollid = $poll->id"
+		. "\n WHERE a.pollid = " . (int) $poll->id
 		. "\n AND a.text != ''"
 		. "\n AND b.published = 1"
 		;

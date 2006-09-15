@@ -58,7 +58,7 @@ class mosPoll extends mosDBTable {
 		// check for existing title
 		$query = "SELECT id"
 		. "\n FROM #__polls"
-		. "\n WHERE title = '$this->title'"
+		. "\n WHERE title = " . $this->_db->Quote( $this->title )
 		;
 		$this->_db->setQuery( $query );
 
@@ -80,7 +80,7 @@ class mosPoll extends mosDBTable {
 
 		if (mosDBTable::delete( $oid )) {
 			$query = "DELETE FROM #__poll_data"
-			. "\n WHERE pollid = ". $this->$k
+			. "\n WHERE pollid = " . (int) $this->$k
 			;
 			$this->_db->setQuery( $query );
 			if ( !$this->_db->query() ) {
@@ -88,7 +88,7 @@ class mosPoll extends mosDBTable {
 			}
 
 			$query = "DELETE FROM #__poll_date"
-			. "\n WHERE pollid = ". $this->$k
+			. "\n WHERE poll_id = " . (int) $this->$k
 			;
 			$this->_db->setQuery( $query );
 			if ( !$this->_db->query() ) {
@@ -96,7 +96,7 @@ class mosPoll extends mosDBTable {
 			}
 
 			$query = "DELETE from #__poll_menu"
-			. "\n WHERE pollid = ". $this->$k
+			. "\n WHERE pollid = " . (int) $this->$k
 			;
 			$this->_db->setQuery( $query );
 			if ( !$this->_db->query() ) {

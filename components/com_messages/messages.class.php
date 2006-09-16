@@ -57,7 +57,7 @@ class mosMessage extends mosDBTable {
 	}
 	
 	function send( $from_id=null, $to_id=null, $subject=null, $message=null ) {
-		global $database;
+		global $database, $mosConfig_mailfrom, $mosConfig_fromname;
 
 		if (is_object( $this )) {
 			$from_id 	= $from_id ? $from_id : $this->user_id_from;

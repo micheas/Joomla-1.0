@@ -781,7 +781,7 @@ class mosMainFrame {
 				// purge expired admin sessions only		
 				$past = time() - $session_life_admin;
 				$query = "DELETE FROM #__session"
-				. "\n WHERE time < '$past'"
+				. "\n WHERE time < '" . (int) $past . "'"
 				. "\n AND guest = 1"
 				. "\n AND gid = 0"
 				. "\n AND userid <> 0"
@@ -792,8 +792,8 @@ class mosMainFrame {
 				// update session timestamp
 				$current_time = time();
 				$query = "UPDATE #__session"
-				. "\n SET time = '$current_time'"
-				. "\n WHERE session_id = '$session_id'"
+				. "\n SET time = " . $this->_db->Quote( $current_time )
+				. "\n WHERE session_id = " . $this->_db->Quote( $session_id )
 				;
 				$this->_db->setQuery( $query );
 				$this->_db->query();
@@ -804,7 +804,7 @@ class mosMainFrame {
 				// check against db record of session
 				$query = "SELECT COUNT( session_id )"
 				. "\n FROM #__session"
-				. "\n WHERE session_id = '$session_id'"
+				. "\n WHERE session_id = " . $this->_db->Quote( $session_id )
 				. "\n AND username = ". $this->_db->Quote( $my->username )
 				. "\n AND userid = ". intval( $my->id )
 				;
@@ -843,10 +843,10 @@ class mosMainFrame {
 						
 						// save expired page info to user data
 						$query = "UPDATE #__users"
-						. "\n SET params = '$saveparams'"
-						. "\n WHERE id = $my->id"
-						. "\n AND username = '$my->username'"
-						. "\n AND usertype = '$my->usertype'"
+						. "\n SET params = ". $this->_db->Quote( $saveparams )
+						. "\n WHERE id = " . (int) $my->id
+						. "\n AND username = ". $this->_db->Quote( $my->username )
+						. "\n AND usertype = ". $this->_db->Quote( $my->usertype )
 						;
 						$this->_db->setQuery( $query );
 						$this->_db->query();
@@ -994,8 +994,8 @@ class mosMainFrame {
 		
 		// if no username and password passed from function, then function is being called from login module/component
 		if (!$username || !$passwd) {
-			$username 	= strval( mosGetParam( $_POST, 'username', '' ) );
-			$passwd 	= strval( mosGetParam( $_POST, 'passwd', '' ) );
+			$username 	= stripslashes( strval( mosGetParam( $_POST, 'username', '' ) ) );
+			$passwd 	= stripslashes( strval( mosGetParam( $_POST, 'passwd', '' ) ) );
 			$passwd 	= md5( $passwd );
 			
 			$bypost 	= 1;
@@ -1025,7 +1025,7 @@ class mosMainFrame {
 				
 				$query = "SELECT id, name, username, password, usertype, block, gid"
 				. "\n FROM #__users"
-				. "\n WHERE id = $userid"
+				. "\n WHERE id = " . (int) $userid
 				;
 				$this->_db->setQuery( $query );
 				$this->_db->loadObject($user);
@@ -1040,8 +1040,8 @@ class mosMainFrame {
 			// query used for login via login module
 				$query = "SELECT id, name, username, password, usertype, block, gid"
 				. "\n FROM #__users"
-				. "\n WHERE username = '$username'"
-				. "\n AND password = '$passwd'"
+				. "\n WHERE username = ". $this->_db->Quote( $username )
+				. "\n AND password = ". $this->_db->Quote( $passwd )
 				;
 				$this->_db->setQuery( $query );
 				$this->_db->loadObject( $row );
@@ -1076,22 +1076,22 @@ class mosMainFrame {
 				if ( $_VERSION->SITE ) {
 					// delete any old front sessions to stop duplicate sessions
 					$query = "DELETE FROM #__session"
-					. "\n WHERE session_id != '$session->session_id'"
-					. "\n AND username = '$row->username'"
-					. "\n AND userid = $row->id"
-					. "\n AND gid = $row->gid"
+					. "\n WHERE session_id != ". $this->_db->Quote( $session->session_id )
+					. "\n AND username = ". $this->_db->Quote( $row->username )
+					. "\n AND userid = " . (int) $row->id
+					. "\n AND gid = " . (int) $row->gid
 					. "\n AND guest = 0"
 					;
 					$this->_db->setQuery( $query );
-					$this->_db->query();	
+					$this->_db->query();
 				}
 				
 				// update user visit data
 				$currentDate = date("Y-m-d\TH:i:s");
 				
 				$query = "UPDATE #__users"
-				. "\n SET lastvisitDate = '$currentDate'"
-				. "\n WHERE id = $session->userid"
+				. "\n SET lastvisitDate = ". $this->_db->Quote( $currentDate )
+				. "\n WHERE id = " . (int) $session->userid
 				;
 				$this->_db->setQuery($query);
 				if (!$this->_db->query()) {
@@ -1161,7 +1161,7 @@ class mosMainFrame {
 		if ($user->id) {
 			$query = "SELECT id, name, email, block, sendEmail, registerDate, lastvisitDate, activation, params"
 			. "\n FROM #__users"
-			. "\n WHERE id = ". intval( $user->id )
+			. "\n WHERE id = " . (int) $user->id
 			;
 			$database->setQuery( $query );
 			$database->loadObject( $my );
@@ -1208,7 +1208,7 @@ class mosMainFrame {
 				$cur_template = 'joomla_admin';
 			}
 		} else {
-			$assigned = ( !empty( $Itemid ) ? " OR menuid = $Itemid" : '' );
+			$assigned = ( !empty( $Itemid ) ? " OR menuid = " . (int) $Itemid : '' );
 
 			$query = "SELECT template"
 			. "\n FROM #__templates_menu"
@@ -1431,21 +1431,21 @@ class mosMainFrame {
 
 			$query = "SELECT COUNT(*)"
 			. "\n FROM #__stats_agents"
-			. "\n WHERE agent = '$browser'"
+			. "\n WHERE agent = " . $this->_db->Quote( $browser )
 			. "\n AND type = 0"
 			;
 			$this->_db->setQuery( $query );
 			if ($this->_db->loadResult()) {
 				$query = "UPDATE #__stats_agents"
 				. "\n SET hits = ( hits + 1 )"
-				. "\n WHERE agent = '$browser'"
+				. "\n WHERE agent = " . $this->_db->Quote( $browser )
 				. "\n AND type = 0"
 				;
 				$this->_db->setQuery( $query );
 			} else {
 				$query = "INSERT INTO #__stats_agents"
 				. "\n ( agent, type )"
-				. "\n VALUES ( '$browser', 0 )"
+				. "\n VALUES ( " . $this->_db->Quote( $browser ) . ", 0 )"
 				;
 				$this->_db->setQuery( $query );
 			}
@@ -1455,21 +1455,21 @@ class mosMainFrame {
 
 			$query = "SELECT COUNT(*)"
 			. "\n FROM #__stats_agents"
-			. "\n WHERE agent = '$os'"
+			. "\n WHERE agent = " . $this->_db->Quote( $os )
 			. "\n AND type = 1"
 			;
 			$this->_db->setQuery( $query );
 			if ($this->_db->loadResult()) {
 				$query = "UPDATE #__stats_agents"
 				. "\n SET hits = ( hits + 1 )"
-				. "\n WHERE agent = '$os'"
+				. "\n WHERE agent = " . $this->_db->Quote( $os )
 				. "\n AND type = 1"
 				;
 				$this->_db->setQuery( $query );
 			} else {
 				$query = "INSERT INTO #__stats_agents"
 				. "\n ( agent, type )"
-				. "\n VALUES ( '$os', 1 )"
+				. "\n VALUES ( " . $this->_db->Quote( $os ) . ", 1 )"
 				;
 				$this->_db->setQuery( $query );
 			}
@@ -1485,21 +1485,21 @@ class mosMainFrame {
 
 			$query = "SELECT COUNT(*)"
 			. "\n FROM #__stats_agents"
-			. "\n WHERE agent = '$tldomain'"
+			. "\n WHERE agent = " . $this->_db->Quote( $tldomain )
 			. "\n AND type = 2"
 			;
 			$this->_db->setQuery( $query );
 			if ($this->_db->loadResult()) {
 				$query = "UPDATE #__stats_agents"
 				. "\n SET hits = ( hits + 1 )"
-				. "\n WHERE agent = '$tldomain'"
+				. "\n WHERE agent = " . $this->_db->Quote( $tldomain )
 				. "\n AND type = 2"
 				;
 				$this->_db->setQuery( $query );
 			} else {
 				$query = "INSERT INTO #__stats_agents"
 				. "\n ( agent, type )"
-				. "\n VALUES ( '$tldomain', 2 )"
+				. "\n VALUES ( " . $this->_db->Quote( $tldomain ) . ", 2 )"
 				;
 				$this->_db->setQuery( $query );
 			}
@@ -1532,7 +1532,7 @@ class mosMainFrame {
 				. "\n FROM #__menu"
 				. "\n WHERE type = 'content_typed'"
 				. "\n AND published = 1"
-				. "\n AND link = 'index.php?option=com_content&task=view&id=$id'"
+				. "\n AND link = 'index.php?option=com_content&task=view&id=" . (int) $id . "'"
 				;
 				$this->_db->setQuery( $query );
 				// pull existing query storage into temp variable
@@ -1563,7 +1563,7 @@ class mosMainFrame {
 				."\n FROM #__menu"
 				."\n WHERE type = 'content_item_link'"
 				. "\n AND published = 1"
-				. "\n AND link = 'index.php?option=com_content&task=view&id=$id'"
+				. "\n AND link = 'index.php?option=com_content&task=view&id=" . (int) $id . "'"
 				;
 				$this->_db->setQuery( $query );
 				// pull existing query storage into temp variable
@@ -1596,7 +1596,7 @@ class mosMainFrame {
 				. "\n LEFT JOIN #__categories AS c ON i.catid = c.id"
 				. "\n LEFT JOIN #__menu AS mc ON mc.componentid = c.id "
 				. "\n WHERE ( ms.type IN ( 'content_section', 'content_blog_section' ) OR mc.type IN ( 'content_blog_category', 'content_category' ) )"
-				. "\n AND i.id = $id"
+				. "\n AND i.id = " . (int) $id
 				. "\n ORDER BY ms.type DESC, mc.type DESC, ms.id, mc.id"
 				;
 				$this->_db->setQuery( $query );
@@ -2405,8 +2405,8 @@ class mosCategory extends mosDBTable {
 		// check for existing name
 		$query = "SELECT id"
 		. "\n FROM #__categories "
-		. "\n WHERE name = '$this->name'"
-		. "\n AND section = '$this->section'"
+		. "\n WHERE name = " . $this->_db->Quote( $this->name )
+		. "\n AND section = " . $this->_db->Quote( $this->section )
 		;
 		$this->_db->setQuery( $query );
 
@@ -2471,8 +2471,8 @@ class mosSection extends mosDBTable {
 		// check for existing name
 		$query = "SELECT id"
 		. "\n FROM #__sections "
-		. "\n WHERE name = '$this->name'"
-		. "\n AND scope = '$this->scope'"
+		. "\n WHERE name = " . $this->_db->Quote( $this->name )
+		. "\n AND scope = " . $this->_db->Quote( $this->scope )
 		;
 		$this->_db->setQuery( $query );
 
@@ -2592,21 +2592,21 @@ class mosContent extends mosDBTable {
 		if ($mapKeysToText) {
 			$query = "SELECT name"
 			. "\n FROM #__sections"
-			. "\n WHERE id = $this->sectionid"
+			. "\n WHERE id = " . (int) $this->sectionid
 			;
 			$database->setQuery( $query );
 			$this->sectionid = $database->loadResult();
 
 			$query = "SELECT name"
 			. "\n FROM #__categories"
-			. "\n WHERE id $this->catid"
+			. "\n WHERE id = " . (int) $this->catid
 			;
 			$database->setQuery( $query );
 			$this->catid = $database->loadResult();
 
 			$query = "SELECT name"
 			. "\n FROM #__users"
-			. "\n WHERE id = $this->created_by"
+			. "\n WHERE id = " . (int) $this->created_by
 			;
 			$database->setQuery( $query );
 			$this->created_by = $database->loadResult();
@@ -2760,7 +2760,7 @@ class mosUser extends mosDBTable {
 		// check for existing username
 		$query = "SELECT id"
 		. "\n FROM #__users "
-		. "\n WHERE username = '$this->username'"
+		. "\n WHERE username = " . $this->_db->Quote( $this->username )
 		. "\n AND id != " . (int)$this->id
 		;
 		$this->_db->setQuery( $query );
@@ -2774,8 +2774,8 @@ class mosUser extends mosDBTable {
 			// check for existing email
 			$query = "SELECT id"
 			. "\n FROM #__users "
-			. "\n WHERE email = '$this->email'"
-			. "\n AND id != " . (int)$this->id
+			. "\n WHERE email = " . $this->_db->Quote( $this->email )
+			. "\n AND id != " . (int) $this->id
 			;
 			$this->_db->setQuery( $query );
 			$xid = intval( $this->_db->loadResult() );
@@ -2832,7 +2832,7 @@ class mosUser extends mosDBTable {
 //		$acl->del_object( $aro_id, 'ARO', true );
 
 		$query = "DELETE FROM $this->_tbl"
-		. "\n WHERE $this->_tbl_key = '". $this->$k ."'"
+		. "\n WHERE $this->_tbl_key = " . (int) $this->$k
 		;
 		$this->_db->setQuery( $query );
 
@@ -2841,7 +2841,7 @@ class mosUser extends mosDBTable {
 
 			// :: private messaging
 			$query = "DELETE FROM #__messages_cfg"
-			. "\n WHERE user_id = ". $this->$k .""
+			. "\n WHERE user_id = " . (int) $this->$k
 			;
 			$this->_db->setQuery( $query );
 			if (!$this->_db->query()) {
@@ -2849,7 +2849,7 @@ class mosUser extends mosDBTable {
 				return false;
 			}
 			$query = "DELETE FROM #__messages"
-			. "\n WHERE user_id_to = ". $this->$k .""
+			. "\n WHERE user_id_to = " . (int) $this->$k
 			;
 			$this->_db->setQuery( $query );
 			if (!$this->_db->query()) {
@@ -2881,6 +2881,7 @@ class mosUser extends mosDBTable {
 		$objects = $acl->get_group_objects( $group_id, 'ARO', 'RECURSE');
 
 		if (isset( $objects['users'] )) {
+			mosArrayToInts( $objects['users'] );
 			$gWhere = '(id =' . implode( ' OR id =', $objects['users'] ) . ')';
 
 			$query = "SELECT id AS value, name AS text"
@@ -3387,7 +3388,7 @@ class mosSession extends mosDBTable {
 			if ($randnum != '') {
 				$query = "SELECT $this->_tbl_key"
 				. "\n FROM $this->_tbl"
-				. "\n WHERE $this->_tbl_key = '$new_session_id'"
+				. "\n WHERE $this->_tbl_key = " . $this->_db->Quote( $new_session_id )
 				;
 				$this->_db->setQuery( $query );
 				if(!$result = $this->_db->query()) {
@@ -3425,12 +3426,12 @@ class mosSession extends mosDBTable {
 			$query = "DELETE FROM $this->_tbl"
 			. "\n WHERE ("
 			// purging expired logged sessions
-			. "\n ( time < '$past_logged' )"
+			. "\n ( time < '" . (int) $past_logged . "' )"
 			. "\n AND guest = 0"
 			. "\n AND gid > 0"
 			. "\n ) OR ("
 			// purging expired guest sessions
-			. "\n ( time < '$past_guest' )"
+			. "\n ( time < '" . (int) $past_guest . "' )"
 			. "\n AND guest = 1"
 			. "\n AND userid = 0"
 			. "\n )"
@@ -3439,7 +3440,7 @@ class mosSession extends mosDBTable {
 		// kept for backward compatability
 			$past = time() - $inc;
 			$query = "DELETE FROM $this->_tbl"
-			. "\n WHERE ( time < '$past' )"
+			. "\n WHERE ( time < '" . (int) $past . "' )"
 			. $and
 			;
 		}
@@ -3597,13 +3598,13 @@ function mosMenuCheck( $Itemid, $menu_option, $task, $gid ) {
 	if ( $Itemid != '' && $Itemid != 0 && $Itemid != 99999999 ) {
 		$query = "SELECT *"
 		. "\n FROM #__menu"
-		. "\n WHERE id = $Itemid"
+		. "\n WHERE id = " . (int) $Itemid
 		;
 	} else {
-		$dblink = "index.php?option=$menu_option";
+		$dblink = "index.php?option=" . $database->getEscaped( $menu_option );
 		
 		if ($task != '') {
-			$dblink	.= "&task=$task";
+			$dblink	.= "&task=" . $database->getEscaped( $task );
 		}
 		
 		$query = "SELECT *"
@@ -4111,7 +4112,7 @@ class mosMambotHandler {
 	
 					$query = "SELECT folder, element, published, params"
 					. "\n FROM #__mambots"
-					. "\n WHERE access <= $gid"
+					. "\n WHERE access <= " . (int) $gid
 					. "\n AND folder = 'content'"
 					. "\n ORDER BY ordering"
 					;
@@ -4132,8 +4133,8 @@ class mosMambotHandler {
 				$query = "SELECT folder, element, published, params"
 				. "\n FROM #__mambots"
 				. "\n WHERE published >= 1"
-				. "\n AND access <= $gid"
-				. "\n AND folder = '$group'"
+				. "\n AND access <= " . (int) $gid
+				. "\n AND folder = " . $database->Quote( $group )
 				. "\n ORDER BY ordering"
 				;
 				$database->setQuery( $query );
@@ -4342,8 +4343,8 @@ class mosAdminMenus {
 		if ( $id ) {
 			$query = "SELECT ordering AS value, name AS text"
 			. "\n FROM #__menu"
-			. "\n WHERE menutype = '$row->menutype'"
-			. "\n AND parent = $row->parent"
+			. "\n WHERE menutype = " . $database->Quote ( $row->menutype )
+			. "\n AND parent = " . (int) $row->parent
 			. "\n AND published != -2"
 			. "\n ORDER BY ordering"
 			;
@@ -4380,14 +4381,14 @@ class mosAdminMenus {
 
 		$id = '';
 		if ( $row->id ) {
-			$id = "\n AND id != $row->id";
+			$id = "\n AND id != " . (int) $row->id;
 		}
 		
 		// get a list of the menu items
 		// excluding the current menu item and its child elements
 		$query = "SELECT m.*"
 		. "\n FROM #__menu m"
-		. "\n WHERE menutype = '$row->menutype'"
+		. "\n WHERE menutype = " . $database->Quote( $row->menutype )
 		. "\n AND published != -2"
 		. $id
 		. "\n ORDER BY parent, ordering"
@@ -4795,7 +4796,7 @@ class mosAdminMenus {
 
 		$query = "SELECT id AS value, name AS text"
 		. "\n FROM #__categories"
-		. "\n WHERE section = '$section'"
+		. "\n WHERE section = " . $database->Quote( $section )
 		. "\n AND published = 1"
 		. "\n ORDER BY $order"
 		;
@@ -4844,7 +4845,7 @@ class mosAdminMenus {
 
 		$query = "SELECT *"
 		. "\n FROM #__menu"
-		. "\n WHERE type = '$type'"
+		. "\n WHERE type = " . $database->Quote( $type )
 		. "\n AND published = 1"
 		. $and
 		;

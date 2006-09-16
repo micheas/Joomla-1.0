@@ -158,7 +158,7 @@ function editContact( $id, $option ) {
 	$query = "SELECT ordering AS value, name AS text"
 	. "\n FROM #__contact_details"
 	. "\n WHERE published >= 0"
-	. "\n AND catid = '$row->catid'"
+	. "\n AND catid = " . (int) $row->catid
 	. "\n ORDER BY ordering"
 	;
 	$lists['ordering'] 			= mosAdminMenus::SpecificOrdering( $row, $id, $query, 1 );

@@ -239,7 +239,7 @@ function editMambot( $option, $uid, $client ) {
 			// build the html select list for ordering
 			$query = "SELECT ordering AS value, name AS text"
 			. "\n FROM #__mambots"
-			. "\n WHERE folder = '$row->folder'"
+			. "\n WHERE folder = " . $database->Quote ( $row->folder )
 			. "\n AND published > 0"
 			. "\n AND $where"
 			. "\n AND ordering > -10000"

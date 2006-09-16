@@ -249,7 +249,7 @@ function edit( $uid, $option ) {
 		}
 
 		// get list of links to this item
-		$and 	= "\n AND componentid = ". $row->id;
+		$and 	= "\n AND componentid = " . (int) $row->id;
 		$menus 	= mosAdminMenus::Links2Menu( 'content_typed', $and );
 	} else {
 		// initialise values for a new item

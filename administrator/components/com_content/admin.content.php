@@ -441,7 +441,7 @@ function editContent( $uid=0, $sectionid=0, $option ) {
 		$row->frontpage = $database->loadResult();
 
 		// get list of links to this item
-		$and = "\n AND componentid = $row->id";
+		$and = "\n AND componentid = " . (int) $row->id;
 		$menus = mosAdminMenus::Links2Menu( 'content_item_link', $and );
 	} else {
 		if ( !$sectionid && @$_POST['filter_sectionid'] ) {

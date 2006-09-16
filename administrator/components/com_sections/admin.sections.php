@@ -259,7 +259,7 @@ function editSection( $uid=0, $scope='', $option ) {
 	// build the html select list for ordering
 	$query = "SELECT ordering AS value, title AS text"
 	. "\n FROM #__sections"
-	. "\n WHERE scope='$row->scope' ORDER BY ordering"
+	. "\n WHERE scope=" . $database->Quote( $row->scope ) . " ORDER BY ordering"
 	;
 	$lists['ordering'] 			= mosAdminMenus::SpecificOrdering( $row, $uid, $query );
 

@@ -244,7 +244,7 @@ class gacl_api extends gacl {
 			return false;
 		}
 
-		$this->db->setQuery( "SELECT group_id FROM $table WHERE name='$name'" );
+		$this->db->setQuery( "SELECT group_id FROM $table WHERE name=" . $this->db->Quote( $name ) );
 
 		$rows = $this->db->loadRowList();
 		if ($this->db->getErrorNum()) {
@@ -295,7 +295,7 @@ class gacl_api extends gacl {
 			return false;
 		}
 
-		$this->db->setQuery( "SELECT name FROM $table WHERE group_id='$group_id'" );
+		$this->db->setQuery( "SELECT name FROM $table WHERE group_id=" . (int) $group_id );
 
 		$rows = $this->db->loadRowList();
 		if ($this->db->getErrorNum()) {
@@ -352,11 +352,11 @@ class gacl_api extends gacl {
 			case 'RECURSE':
 				$query .= '
 				LEFT JOIN 	'. $table .' g2 ON g2.lft<g1.lft AND g2.rgt>g1.rgt
-				WHERE		g2.group_id='. $group_id;
+				WHERE		g2.group_id='. (int) $group_id;
 				break;
 			default:
 				$query .= '
-				WHERE		g1.parent_id='. $group_id;
+				WHERE		g1.parent_id='. (int) $group_id;
 		}
 
 		$query .= '
@@ -408,17 +408,17 @@ class gacl_api extends gacl {
 			case 'RECURSE':
 				$query .= '
 				LEFT JOIN 	'. $table .' g2 ON g1.lft > g2.lft AND g1.lft < g2.rgt
-				WHERE		g1.group_id='. $group_id;
+				WHERE		g1.group_id='. (int) $group_id;
 				break;
 			case 'RECURSE_INCL':
 				// inclusive resurse
 				$query .= '
 				LEFT JOIN 	'. $table .' g2 ON g1.lft >= g2.lft AND g1.lft <= g2.rgt
-				WHERE		g1.group_id='. $group_id;
+				WHERE		g1.group_id='. (int) $group_id;
 				break;
 			default:
 				$query .= '
-				WHERE		g1.parent_id='. $group_id;
+				WHERE		g1.parent_id='. (int) $group_id;
 		}
 
 		$query .= '
@@ -520,7 +520,7 @@ class gacl_api extends gacl {
 			}
 
 			// grab parent details from database
-			$this->db->setQuery( 'SELECT group_id, lft, rgt FROM '. $table .' WHERE group_id='. $parent_id );
+			$this->db->setQuery( 'SELECT group_id, lft, rgt FROM '. $table .' WHERE group_id='. (int) $parent_id );
 			$rows = $this->db->loadRowList();
 
 			if (!is_array($rows) OR $this->db->getErrorNum() > 0) {
@@ -539,7 +539,7 @@ class gacl_api extends gacl {
 			$parent_rgt = &$row[2];
 
 			// make room for the new group
-			$this->db->setQuery( 'UPDATE '. $table .' SET rgt=rgt+2 WHERE rgt>='. $parent_rgt );
+			$this->db->setQuery( 'UPDATE '. $table .' SET rgt=rgt+2 WHERE rgt>='. (int) $parent_rgt );
 			$rs = $this->db->query();
 
 			if (!$rs) {
@@ -548,7 +548,7 @@ class gacl_api extends gacl {
 				return FALSE;
 			}
 
-			$this->db->setQuery( 'UPDATE '. $table .' SET lft=lft+2 WHERE lft>'. $parent_rgt );
+			$this->db->setQuery( 'UPDATE '. $table .' SET lft=lft+2 WHERE lft>'. (int) $parent_rgt );
 			$rs = $this->db->query();
 
 			if (!$rs) {
@@ -558,7 +558,7 @@ class gacl_api extends gacl {
 			}
 		}
 
-		$this->db->setQuery( 'INSERT INTO '. $table .' (group_id,parent_id,name,lft,rgt) VALUES ('. $insert_id .','. $parent_id .',\''. $this->db->getEscaped($name) .'\','. $parent_rgt .','. ($parent_rgt + 1) .')' );
+		$this->db->setQuery( 'INSERT INTO '. $table .' (group_id,parent_id,name,lft,rgt) VALUES ('. (int) $insert_id .','. (int) $parent_id .',\''. $this->db->getEscaped($name) .'\','. (int) $parent_rgt .','. (int) ($parent_rgt + 1) .')' );
 		$rs = $this->db->query();
 
 		if (!$rs) {
@@ -612,10 +612,10 @@ class gacl_api extends gacl {
 			$query .= '
 				LEFT JOIN	'. $group_table .' g1 ON g1.group_id=gm.group_id
 				LEFT JOIN	'. $group_table .' g2 ON g2.lft<=g1.lft AND g2.rgt>=g1.rgt
-				WHERE		g2.group_id='. $group_id;
+				WHERE		g2.group_id='. (int) $group_id;
 		} else {
 			$query .= '
-				WHERE		gm.group_id='. $group_id;
+				WHERE		gm.group_id='. (int) $group_id;
 		}
 
 		$this->db->setQuery( $query );
@@ -703,7 +703,7 @@ class gacl_api extends gacl {
 
 		$object_id = $row[1];
 
-		$this->db->setQuery( 'INSERT INTO '. $table .' (group_id,'. $group_type .'_id) VALUES ('. (int) $group_id .','. $object_id .')' );
+		$this->db->setQuery( 'INSERT INTO '. $table .' (group_id,'. $group_type .'_id) VALUES ('. (int) $group_id .','. (int) $object_id .')' );
 
 		if (!$this->db->query()) {
 			$this->debug_db('add_group_object');
@@ -752,7 +752,7 @@ class gacl_api extends gacl {
 			return FALSE;
 		}
 
-		$this->db->setQuery( 'DELETE FROM '. $table .' WHERE group_id='. $group_id .' AND '. $group_type .'_id='. $object_id );
+		$this->db->setQuery( 'DELETE FROM '. $table .' WHERE group_id='. (int) $group_id .' AND '. $group_type .'_id='. (int) $object_id );
 		$this->db->query();
 
 		if ($this->db->getErrorNum()) {
@@ -809,7 +809,7 @@ class gacl_api extends gacl {
 		}
 
 		// Get details of this group
-		$this->db->setQuery( 'SELECT group_id, parent_id, name, lft, rgt FROM '. $table .' WHERE group_id='. $group_id );
+		$this->db->setQuery( 'SELECT group_id, parent_id, name, lft, rgt FROM '. $table .' WHERE group_id='. (int) $group_id );
 		$group_details = $this->db->loadRow();
 
 		if (!is_array($group_details)) {
@@ -829,7 +829,7 @@ class gacl_api extends gacl {
 
 		// prevent deletion of root group & reparent of children if it has more than one immediate child
 		if ($parent_id == 0) {
-			$this->db->setQuery( 'SELECT count(*) FROM '. $table .' WHERE parent_id='. $group_id );
+			$this->db->setQuery( 'SELECT count(*) FROM '. $table .' WHERE parent_id='. (int) $group_id );
 			$child_count = $this->db->loadResult();
 
 			if ($child_count > 1 && $reparent_children) {
@@ -857,7 +857,7 @@ class gacl_api extends gacl {
 				}*/
 
 				// remove group object maps
-				$this->db->setQuery( 'DELETE FROM '. $groups_object_map_table .' WHERE group_id='. $group_id );
+				$this->db->setQuery( 'DELETE FROM '. $groups_object_map_table .' WHERE group_id='. (int) $group_id );
 				$rs = $this->db->query();
 
 				if (!$rs) {
@@ -865,7 +865,7 @@ class gacl_api extends gacl {
 				}
 
 				// remove group
-				$this->db->setQuery( 'DELETE FROM '. $table .' WHERE group_id='. $group_id );
+				$this->db->setQuery( 'DELETE FROM '. $table .' WHERE group_id='. (int) $group_id );
 				$rs = $this->db->query();
 
 				if (!$rs) {
@@ -873,14 +873,14 @@ class gacl_api extends gacl {
 				}
 
 				// move all groups right of deleted group left by width of deleted group
-				$this->db->setQuery( 'UPDATE '. $table .' SET lft=lft-'. ($right-$left+1) .' WHERE lft>'. $right );
+				$this->db->setQuery( 'UPDATE '. $table .' SET lft=lft-'. (int) ($right-$left+1) .' WHERE lft>'. (int) $right );
 				$rs = $this->db->query();
 
 				if (!$rs) {
 					break;
 				}
 
-				$this->db->setQuery( 'UPDATE '. $table .' SET rgt=rgt-'. ($right-$left+1) .' WHERE rgt>'. $right );
+				$this->db->setQuery( 'UPDATE '. $table .' SET rgt=rgt-'. (int) ($right-$left+1) .' WHERE rgt>'. (int) $right );
 				$rs = $this->db->query();
 
 				if (!$rs) {
@@ -900,7 +900,7 @@ class gacl_api extends gacl {
 				}*/
 
 				// remove group object maps
-				$this->db->setQuery( 'DELETE FROM '. $groups_object_map_table .' WHERE group_id='. $group_id );
+				$this->db->setQuery( 'DELETE FROM '. $groups_object_map_table .' WHERE group_id='. (int) $group_id );
 				$rs = $this->db->query();
 
 				if (!$rs) {
@@ -908,7 +908,7 @@ class gacl_api extends gacl {
 				}
 
 				// remove group
-				$this->db->setQuery( 'DELETE FROM '. $table .' WHERE group_id='. $group_id );
+				$this->db->setQuery( 'DELETE FROM '. $table .' WHERE group_id='. (int) $group_id );
 				$rs = $this->db->query();
 
 				if (!$rs) {
@@ -916,7 +916,7 @@ class gacl_api extends gacl {
 				}
 
 				// set parent of immediate children to parent group
-				$this->db->setQuery( 'UPDATE '. $table .' SET parent_id='. $parent_id .' WHERE parent_id='. $group_id );
+				$this->db->setQuery( 'UPDATE '. $table .' SET parent_id='. (int) $parent_id .' WHERE parent_id='. (int) $group_id );
 				$rs = $this->db->query();
 
 				if (!$rs) {
@@ -924,7 +924,7 @@ class gacl_api extends gacl {
 				}
 
 				// move all children left by 1
-				$this->db->setQuery( 'UPDATE '. $table .' SET lft=lft-1, rgt=rgt-1 WHERE lft>'. $left .' AND rgt<'. $right );
+				$this->db->setQuery( 'UPDATE '. $table .' SET lft=lft-1, rgt=rgt-1 WHERE lft>'. (int) $left .' AND rgt<'. (int) $right );
 				$rs = $this->db->query();
 
 				if (!$rs) {
@@ -932,14 +932,14 @@ class gacl_api extends gacl {
 				}
 
 				// move all groups right of deleted group left by 2
-				$this->db->setQuery( 'UPDATE '. $table .' SET lft=lft-2 WHERE lft>'. $right );
+				$this->db->setQuery( 'UPDATE '. $table .' SET lft=lft-2 WHERE lft>'. (int) $right );
 				$rs = $this->db->query();
 
 				if (!$rs) {
 					break;
 				}
 
-				$this->db->setQuery( 'UPDATE '. $table .' SET rgt=rgt-2 WHERE rgt>'. $right );
+				$this->db->setQuery( 'UPDATE '. $table .' SET rgt=rgt-2 WHERE rgt>'. (int) $right );
 				$rs = $this->db->query();
 
 				if (!$rs) {
@@ -963,6 +963,7 @@ class gacl_api extends gacl {
 				}*/
 
 				// remove group object maps
+				mosArrayToInts( $group_ids );
 				$this->db->setQuery( 'DELETE FROM '. $groups_object_map_table .' WHERE group_id IN ('. implode (',', $group_ids) .')' );
 				$rs = $this->db->query();
 
@@ -979,14 +980,14 @@ class gacl_api extends gacl {
 				}
 
 				// move all groups right of deleted group left by width of deleted group
-				$this->db->setQuery( 'UPDATE '. $table .' SET lft=lft-'. ($right - $left + 1) .' WHERE lft>'. $right );
+				$this->db->setQuery( 'UPDATE '. $table .' SET lft=lft-'. (int) ($right - $left + 1) .' WHERE lft>'. (int) $right );
 				$rs = $this->db->query();
 
 				if (!$rs) {
 					break;
 				}
 
-				$this->db->setQuery( 'UPDATE '. $table .' SET rgt=rgt-'. ($right - $left + 1) .' WHERE rgt>'. $right );
+				$this->db->setQuery( 'UPDATE '. $table .' SET rgt=rgt-'. (int) ($right - $left + 1) .' WHERE rgt>'. (int) $right );
 				$rs = $this->db->query();
 
 				if (!$rs) {
@@ -1305,7 +1306,7 @@ class gacl_api extends gacl {
 		}
 
 		$insert_id = $this->db->GenID($this->_db_table_prefix.$object_type.'_seq',10);
-		$this->db->setQuery( "INSERT INTO $table ({$object_type}_id,section_value,value,order_value,name,hidden) VALUES($insert_id,'$section_value','$value','$order','$name',$hidden)" );
+		$this->db->setQuery( "INSERT INTO $table ({$object_type}_id,section_value,value,order_value,name,hidden) VALUES(" . (int) $insert_id . "," . $this->db->Quote( $section_value ) . "," . $this->db->Quote( $value )  . "," . $this->db->Quote( $order ) . "," . $this->db->Quote( $name ) . "," . (int) $hidden . ")" );
 
 		if (!$this->db->query()) {
 			$this->debug_db('add_object');
@@ -1363,17 +1364,17 @@ class gacl_api extends gacl {
 		}
 
 		//Get old value incase it changed, before we do the update.
-		$this->db->setQuery( 'SELECT value, section_value FROM '. $table .' WHERE '. $object_type .'_id='. $object_id );
+		$this->db->setQuery( 'SELECT value, section_value FROM '. $table .' WHERE '. $object_type .'_id='. (int) $object_id );
 		$old = $this->db->loadRow();
 
 		$this->db->setQuery( '
 			UPDATE	'. $table .'
 			SET		section_value=\''. $this->db->getEscaped($section_value) .'\',
-					value='. $this->db->getEscaped($value) .',
-					order_value='. $this->db->getEscaped($order) .',
+					value=\''. $this->db->getEscaped($value) .'\',
+					order_value=\''. $this->db->getEscaped($order) .'\',
 					name=\''. $this->db->getEscaped($name) .'\',
-					hidden='. $hidden .'
-			WHERE	'. $object_type .'_id='. $object_id
+					hidden='. (int) $hidden .'
+			WHERE	'. $object_type .'_id='. (int) $object_id
 		);
 		$this->db->query();
 
@@ -1392,7 +1393,7 @@ class gacl_api extends gacl {
 				SET		value=\''. $this->db->getEscaped($value) .'\',
 						section_value=\''. $this->db->getEscaped($section_value) .'\'
 				WHERE	section_value=\''. $this->db->getEscaped($old[1]) .'\'
-					AND	value='. $this->db->getEscaped($old[0])
+					AND	value=\''. $this->db->getEscaped($old[0]) . '\''
 			);
 			$this->db->query();
 
@@ -1455,7 +1456,7 @@ class gacl_api extends gacl {
 		// <mos> $this->db->BeginTrans();
 
 		// Get Object section_value/value (needed to look for referencing objects)
-		$this->db->setQuery( 'SELECT section_value,value FROM '. $table .' WHERE '. $object_type .'_id='. $object_id );
+		$this->db->setQuery( 'SELECT section_value,value FROM '. $table .' WHERE '. $object_type .'_id='. (int) $object_id );
 		$object = $this->db->loadRow();
 
 		if (empty($object)) {
@@ -1467,7 +1468,7 @@ class gacl_api extends gacl {
 		$value = $object[1];
 
 		// Get ids of acl referencing the Object (if any)
-		$this->db->setQuery( "SELECT acl_id FROM $object_map_table WHERE value='$value' AND section_value='$section_value'" );
+		$this->db->setQuery( "SELECT acl_id FROM $object_map_table WHERE value=" . $this->db->Quote( $value ) . " AND section_value=" . $this->db->Quote( $section_value ) );
 		$acl_ids = $this->db->loadResultArray();
 
 		if ($erase) {
@@ -1481,7 +1482,7 @@ class gacl_api extends gacl {
 				// ACO might me "groupable" too
 
 				// Get rid of groups_map referencing the Object
-				$this->db->setQuery( 'DELETE FROM '. $object_group_table .' WHERE '. $object_type .'_id='. $object_id );
+				$this->db->setQuery( 'DELETE FROM '. $object_group_table .' WHERE '. $object_type .'_id='. (int) $object_id );
 				$rs = $this->db->query();
 
 				if (!$rs) {
@@ -1513,7 +1514,7 @@ class gacl_api extends gacl {
 					// In these cases the acl MUST NOT be deleted
 
 					// Get rid of $object_id map referencing erased objects
-					$this->db->setQuery( "DELETE FROM $object_map_table WHERE section_value='$section_value' AND value='$value'" );
+					$this->db->setQuery( "DELETE FROM $object_map_table WHERE section_value=" . $this->db->Quote( $section_value ) . " AND value=" . $this->db->Quote( $value ) );
 					$rs = $this->db->query();
 
 					if (!$rs) {
@@ -1525,6 +1526,7 @@ class gacl_api extends gacl {
 					// Find the "orphaned" acl. I mean acl referencing the erased Object (map)
 					// not referenced anymore by other objects
 
+					mosArrayToInts( $acl_ids );
 					$sql_acl_ids = implode(",", $acl_ids);
 
 					$this->db->setQuery( '
@@ -1551,7 +1553,7 @@ class gacl_api extends gacl {
 			} // End of if ($acl_ids)
 
 			// Finally delete the Object itself
-			$this->db->setQuery( "DELETE FROM $table WHERE {$object_type}_id='$object_id'" );
+			$this->db->setQuery( "DELETE FROM $table WHERE {$object_type}_id=" . (int) $object_id );
 			$rs = $this->db->query();
 
 			if (!$rs) {
@@ -1575,7 +1577,7 @@ class gacl_api extends gacl {
 			// you must explicitly remove the object from its groups before
 			// deleting it (don't know if this is really needed, anyway it's safer ;-)
 
-			$this->db->setQuery( 'SELECT group_id FROM '. $object_group_table .' WHERE '. $object_type .'_id='. $object_id );
+			$this->db->setQuery( 'SELECT group_id FROM '. $object_group_table .' WHERE '. $object_type .'_id='. (int) $object_id );
 			$groups_ids = $this->db->loadResultArray();
 		}
 
@@ -1588,7 +1590,7 @@ class gacl_api extends gacl {
 		} else {
 			// The Object is NOT referenced anywhere, delete it
 
-			$this->db->setQuery( "DELETE FROM $table WHERE {$object_type}_id='$object_id'" );
+			$this->db->setQuery( "DELETE FROM $table WHERE {$object_type}_id=" . (int) $object_id );
 			$this->db->query();
 
 			if ( $this->db->getErrorNum() ) {
@@ -1659,25 +1661,25 @@ class gacl_api extends gacl {
 			$this->db->setQuery( "SELECT COUNT(*)"
 				. "\nFROM $table AS g1"
 				. "\nLEFT JOIN $table AS g2 ON g1.lft > g2.lft AND g1.lft < g2.rgt"
-				. "\nWHERE g1.group_id=$grp_src AND g2.group_id=$grp_tgt"
+				. "\nWHERE g1.group_id=" . (int) $grp_src . " AND g2.group_id=" . (int) $grp_tgt
 			);
 		} else if (is_string( $grp_src ) && is_string($grp_tgt)) {
 			$this->db->setQuery( "SELECT COUNT(*)"
 				. "\nFROM $table AS g1"
 				. "\nLEFT JOIN $table AS g2 ON g1.lft > g2.lft AND g1.lft < g2.rgt"
-				. "\nWHERE g1.name='$grp_src' AND g2.name='$grp_tgt'"
+				. "\nWHERE g1.name=" . $this->db->Quote( $grp_src ) . " AND g2.name=" . $this->db->Quote( $grp_tgt )
 			);
 		} else if (is_int( $grp_src ) && is_string($grp_tgt)) {
 			$this->db->setQuery( "SELECT COUNT(*)"
 				. "\nFROM $table AS g1"
 				. "\nLEFT JOIN $table AS g2 ON g1.lft > g2.lft AND g1.lft < g2.rgt"
-				. "\nWHERE g1.group_id='$grp_src' AND g2.name='$grp_tgt'"
+				. "\nWHERE g1.group_id=" . (int) $grp_src . " AND g2.name=" . $this->db->Quote( $grp_tgt )
 			);
 		} else {
 			$this->db->setQuery( "SELECT COUNT(*)"
 				. "\nFROM $table AS g1"
 				. "\nLEFT JOIN $table AS g2 ON g1.lft > g2.lft AND g1.lft < g2.rgt"
-				. "\nWHERE g1.name=$grp_src AND g2.group_id='$grp_tgt'"
+				. "\nWHERE g1.name=" . $this->db->Quote( $grp_src ) . " AND g2.group_id=" . (int) $grp_tgt
 			);
 		}
 
@@ -1695,7 +1697,7 @@ class gacl_api extends gacl {
 			. "\nFROM #__core_acl_{$type}_groups AS g"
 			. "\nINNER JOIN #__core_acl_groups_{$type}_map AS gm ON gm.group_id = g.group_id"
 			. "\nINNER JOIN #__core_acl_{$type} AS ao ON ao.{$type}_id = gm.{$type}_id"
-			. "\nWHERE ao.value='$value'"
+			. "\nWHERE ao.value=" . $this->db->Quote( $value )
 		);
 		$obj = null;
 		$database->loadObject( $obj );
@@ -1714,16 +1716,16 @@ class gacl_api extends gacl {
 
 		if ($root_id) {
 		} else if ($root_name) {
-			$database->setQuery( "SELECT lft, rgt FROM $table WHERE name='$root_name'" );
+			$database->setQuery( "SELECT lft, rgt FROM $table WHERE name=" . $this->db->Quote( $root_name ) );
 			$database->loadObject( $root );
 		}
 
 		$where = '';
 		if ($root->lft+$root->rgt != 0) {
 			if ($inclusive) {
-				$where = "WHERE g1.lft BETWEEN $root->lft AND $root->rgt";
+				$where = "WHERE g1.lft BETWEEN " . (int) $root->lft . " AND " . (int) $root->rgt;
 			} else {
-				$where = "WHERE g1.lft BETWEEN $root->lft+1 AND $root->rgt-1";
+				$where = "WHERE g1.lft BETWEEN " . (int) ($root->lft+1) . " AND " . (int) ($root->rgt-1);
 			}
 		}
 

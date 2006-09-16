@@ -64,16 +64,13 @@ function sendNewPass( $option ) {
 	$_live_site = $mosConfig_live_site;
 	$_sitename 	= $mosConfig_sitename;
 
-	// ensure no malicous sql gets past
-	$checkusername	= mosGetParam( $_POST, 'checkusername', '' );
-	$checkusername	= $database->getEscaped( $checkusername );
-	$confirmEmail	= mosGetParam( $_POST, 'confirmEmail', '');
-	$confirmEmail	= $database->getEscaped( $confirmEmail );
+	$checkusername	= stripslashes( mosGetParam( $_POST, 'checkusername', '' ) );
+	$confirmEmail	= stripslashes( mosGetParam( $_POST, 'confirmEmail', '') );
 
 	$query = "SELECT id"
 	. "\n FROM #__users"
-	. "\n WHERE username = '$checkusername'"
-	. "\n AND email = '$confirmEmail'"
+	. "\n WHERE username = " . $database->Quote( $checkusername )
+	. "\n AND email = " . $database->Quote( $confirmEmail )
 	;
 	$database->setQuery( $query );
 	if (!($user_id = $database->loadResult()) || !$checkusername || !$confirmEmail) {
@@ -90,8 +87,8 @@ function sendNewPass( $option ) {
 
 	$newpass = md5( $newpass );
 	$sql = "UPDATE #__users"
-	. "\n SET password = '$newpass'"
-	. "\n WHERE id = $user_id"
+	. "\n SET password = " . $database->Quote( $newpass )
+	. "\n WHERE id = " . (int) $user_id
 	;
 	$database->setQuery( $sql );
 	if (!$database->query()) {
@@ -239,8 +236,7 @@ function activate( $option ) {
 		return;
 	}
 
-	$activation = mosGetParam( $_REQUEST, 'activation', '' );
-	$activation = $database->getEscaped( $activation );
+	$activation = stripslashes( mosGetParam( $_REQUEST, 'activation', '' ) );
 
 	if (empty( $activation )) {
 		echo _REG_ACTIVATE_NOT_FOUND;
@@ -249,7 +245,7 @@ function activate( $option ) {
 
 	$query = "SELECT id"
 	. "\n FROM #__users"
-	. "\n WHERE activation = '$activation'"
+	. "\n WHERE activation = " . $database->Quote( $activation )
 	. "\n AND block = 1"
 	;
 	$database->setQuery( $query );
@@ -258,7 +254,7 @@ function activate( $option ) {
 	if ($result) {
 		$query = "UPDATE #__users"
 		. "\n SET block = 0, activation = ''"
-		. "\n WHERE activation = '$activation'"
+		. "\n WHERE activation = " . $database->Quote( $activation )
 		. "\n AND block = 1"
 		;
 		$database->setQuery( $query );

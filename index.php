@@ -59,8 +59,8 @@ if ($option == '') {
 		$query = "SELECT id, link"
 		. "\n FROM #__menu"
 		. "\n WHERE menutype = 'mainmenu'"
-		. "\n AND id = '$Itemid'"
-		. "\n AND published = '1'"
+		. "\n AND id = " . (int) $Itemid
+		. "\n AND published = 1"
 		;
 		$database->setQuery( $query );
 	} else {

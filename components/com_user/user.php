@@ -207,10 +207,10 @@ function userSave( $option, $uid) {
 	if ( $orig_username != $row->username ) {
 		// change username value in session table
 		$query = "UPDATE #__session"
-		. "\n SET username = '$row->username'"
-		. "\n WHERE username = '$orig_username'"
-		. "\n AND userid = $my->id"
-		. "\n AND gid = $my->gid"
+		. "\n SET username = " . $database->Quote( $row->username )
+		. "\n WHERE username = " . $database->Quote( $orig_username )
+		. "\n AND userid = " . (int) $my->id
+		. "\n AND gid = " . (int) $my->gid
 		. "\n AND guest = 0"
 		;
 		$database->setQuery( $query );
@@ -270,16 +270,16 @@ function CheckIn( $userid, $access, $option ){
 		if ($checked_out) {
 			if ($editor) {
 				$query = "SELECT checked_out, editor"
-				. "\n FROM $tn"
+				. "\n FROM `$tn`"
 				. "\n WHERE checked_out > 0"
-				. "\n AND checked_out = $userid"
+				. "\n AND checked_out = " . (int) $userid
 				;
 				$database->setQuery( $query );
 			} else {
 				$query = "SELECT checked_out"
-				. "\n FROM $tn"
+				. "\n FROM `$tn`"
 				. "\n WHERE checked_out > 0"
-				. "\n AND checked_out = $userid"
+				. "\n AND checked_out = " . (int) $userid
 				;
 				$database->setQuery( $query );
 			}
@@ -287,14 +287,14 @@ function CheckIn( $userid, $access, $option ){
 			$num = $database->getNumRows( $res );
 
 			if ($editor) {
-				$query = "UPDATE $tn"
-				. "\n SET checked_out = 0, checked_out_time = '$nullDate', editor = NULL"
+				$query = "UPDATE `$tn`"
+				. "\n SET checked_out = 0, checked_out_time = " . $database->Quote( $nullDate ) . ", editor = NULL"
 				. "\n WHERE checked_out > 0"
 				;
 				$database->setQuery( $query );
 			} else {
-				$query = "UPDATE $tn"
-				. "\n SET checked_out = 0, checked_out_time = '$nullDate'"
+				$query = "UPDATE `$tn`"
+				. "\n SET checked_out = 0, checked_out_time = " . $database->Quote( $nullDate )
 				. "\n WHERE checked_out > 0"
 				;
 				$database->setQuery( $query );

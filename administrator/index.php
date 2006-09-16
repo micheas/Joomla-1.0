@@ -38,8 +38,8 @@ $mainframe = new mosMainFrame( $database, $option, '..', true );
 
 if (isset( $_POST['submit'] )) {
 	/** escape and trim to minimise injection of malicious sql */
-	$usrname 	= $database->getEscaped( mosGetParam( $_POST, 'usrname', NULL ) );
-	$pass 		= $database->getEscaped( mosGetParam( $_POST, 'pass', NULL ) );
+	$usrname 	= stripslashes( mosGetParam( $_POST, 'usrname', NULL ) );
+	$pass 		= stripslashes( mosGetParam( $_POST, 'pass', NULL ) );
 
 	if($pass == NULL) {
 		echo "<script>alert('Please enter a password'); document.location.href='index.php?mosmsg=Please enter a password'</script>\n";
@@ -67,8 +67,8 @@ if (isset( $_POST['submit'] )) {
 	$query = "SELECT u.*, m.*"
 	. "\n FROM #__users AS u"
 	. "\n LEFT JOIN #__messages_cfg AS m ON u.id = m.user_id AND m.cfg_name = 'auto_purge'"
-	. "\n WHERE u.username = '$usrname'" // Escaped earlier
-	. "\n AND u.password = " . $database->Quote( $pass ) // MD5, lets quote it anyway
+	. "\n WHERE u.username = " . $database->Quote( $usrname )
+	. "\n AND u.password = " . $database->Quote( $pass )
 	. "\n AND u.block = 0"
 	;
 	$database->setQuery( $query );
@@ -106,9 +106,9 @@ if (isset( $_POST['submit'] )) {
 			// delete other open admin sessions for same account
 			$query = "DELETE FROM #__session"
 			. "\n WHERE userid = " . (int) $my->id
-			. "\n AND username = ". $database->Quote( $my->username )
+			. "\n AND username = " . $database->Quote( $my->username )
 			. "\n AND usertype = " . $database->Quote( $my->usertype )
-			. "\n AND session_id != " . $database->Quote( $session_id ) // MD5, lets quote it anyway
+			. "\n AND session_id != " . $database->Quote( $session_id )
 			// this ensures that frontend sessions are not purged
 			. "\n AND guest = 1"
 			. "\n AND gid = 0"

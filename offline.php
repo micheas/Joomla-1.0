@@ -37,7 +37,7 @@ if (!defined( '_INSTALL_CHECK' )) {
 		if ($session_id == md5( $admin->id . $admin->username . $admin->usertype . $logintime )) {
 			$query = "SELECT *"
 			. "\n FROM #__session"
-			. "\n WHERE session_id = '$session_id'"
+			. "\n WHERE session_id = " . $database->Quote( $session_id )
 			. "\n AND username = " . $database->Quote( $admin->username )
 			. "\n AND userid = " . intval( $admin->id )
 			;

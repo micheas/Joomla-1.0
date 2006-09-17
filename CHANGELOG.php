@@ -38,6 +38,9 @@ code fixes.
 ! -> Note
 
 17-Sep-2006 Enno Klasing
+ # Full scale audit of all database queries
+ # Altered mosArrayToInts to allow arrays with non-numeric indexes
+ # Added check to com_categories if requested table exists
  # Fixed [artf5961] : mosMessage::send() uses noninitialized variables
 
 14-Sep-2006 Marko Schmuck

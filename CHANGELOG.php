@@ -37,6 +37,9 @@ code fixes.
 - -> Removed
 ! -> Note
 
+18-Sep-2006 Mateusz Krzeszowiec
+ # Fixed [artf5848] : Poll component not displaying info, XML file moved to proper directory
+
 18-Sep-2006 Sam Moffatt
  # Fixed [artf5887] : mosMakePath mkdir with trailing slash not working (when using hardened PHP)
 

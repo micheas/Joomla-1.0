@@ -283,6 +283,9 @@ function mosMakePath($base, $path='', $mode = NULL) {
 	$n = count( $parts );
 	$ret = true;
 	if ($n < 1) {
+		if (substr( $base, -1, 1 ) == '/') {
+			$base = substr( $base, 0, -1 );
+		}
 		$ret = @mkdir($base, $mode);
 	} else {
 		$path = $base;

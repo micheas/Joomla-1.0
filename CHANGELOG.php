@@ -37,6 +37,9 @@ code fixes.
 - -> Removed
 ! -> Note
 
+18-Sep-2006 Sam Moffatt
+ # Fixed [artf5887] : mosMakePath mkdir with trailing slash not working (when using hardened PHP)
+
 17-Sep-2006 Enno Klasing
  # Full scale audit of all database queries
  # Altered mosArrayToInts to allow arrays with non-numeric indexes

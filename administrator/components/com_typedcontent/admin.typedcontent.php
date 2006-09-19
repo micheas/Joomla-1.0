@@ -118,6 +118,7 @@ function view( $option ) {
 	. "\n WHERE c.sectionid = 0"
 	. "\n AND c.catid = 0"
 	. "\n AND c.state != -2"
+	. $search_query
 	. $filter
 	;
 	$database->setQuery( $query );
@@ -213,21 +214,21 @@ function edit( $uid, $option ) {
 		}
 
 		$row->checkout( $my->id );
-		
+
 		if (trim( $row->images )) {
 			$row->images = explode( "\n", $row->images );
 		} else {
 			$row->images = array();
 		}
-		
+
 		$row->created 		= mosFormatDate( $row->created, _CURRENT_SERVER_TIME_FORMAT );
 		$row->modified 		= $row->modified == $nullDate ? '' : mosFormatDate( $row->modified, _CURRENT_SERVER_TIME_FORMAT );
 		$row->publish_up 	= mosFormatDate( $row->publish_up, _CURRENT_SERVER_TIME_FORMAT );
-		
+
 		if (trim( $row->publish_down ) == $nullDate || trim( $row->publish_down ) == '' || trim( $row->publish_down ) == '-' ) {
 			$row->publish_down = 'Never';
 		}
-		$row->publish_down 	= mosFormatDate( $row->publish_down, _CURRENT_SERVER_TIME_FORMAT );		
+		$row->publish_down 	= mosFormatDate( $row->publish_down, _CURRENT_SERVER_TIME_FORMAT );
 
 		$query = "SELECT name"
 		. "\n FROM #__users"
@@ -323,19 +324,19 @@ function save( $option, $task ) {
 		$row->modified 		= date( 'Y-m-d H:i:s' );
 		$row->modified_by 	= $my->id;
 	}
-	
+
 	$row->created_by 	= $row->created_by ? $row->created_by : $my->id;
-	
+
 	if ($row->created && strlen(trim( $row->created )) <= 10) {
 		$row->created 	.= ' 00:00:00';
 	}
 	$row->created 		= $row->created ? mosFormatDate( $row->created, _CURRENT_SERVER_TIME_FORMAT, -$mosConfig_offset ) : date( 'Y-m-d H:i:s' );
-	
+
 	if (strlen(trim( $row->publish_up )) <= 10) {
 		$row->publish_up .= ' 00:00:00';
 	}
 	$row->publish_up = mosFormatDate($row->publish_up, _CURRENT_SERVER_TIME_FORMAT, -$mosConfig_offset );
-	
+
 	if (trim( $row->publish_down ) == 'Never' || trim( $row->publish_down ) == '') {
 		$row->publish_down = $nullDate;
 	} else {
@@ -344,7 +345,7 @@ function save( $option, $task ) {
 		}
 		$row->publish_down = mosFormatDate( $row->publish_down, _CURRENT_SERVER_TIME_FORMAT, -$mosConfig_offset );
 	}
-	
+
 	$row->state = intval( mosGetParam( $_REQUEST, 'published', 0 ) );
 
 	// Save Parameters
@@ -361,7 +362,7 @@ function save( $option, $task ) {
 	$row->introtext = str_replace( '<br>', '<br />', $row->introtext );
 
 	$row->title = ampReplace( $row->title );
-	
+
 	if (!$row->check()) {
 		echo "<script> alert('".$row->getError()."'); window.history.go(-1); </script>\n";
 		exit();
@@ -371,7 +372,7 @@ function save( $option, $task ) {
 		exit();
 	}
 	$row->checkin();
-	
+
 	// clean any existing cache files
 	mosCache::cleanCache( 'com_content' );
 
@@ -431,7 +432,7 @@ function trash( &$cid, $option ) {
 		echo "<script> alert('".$database->getErrorMsg()."'); window.history.go(-1); </script>\n";
 		exit();
 	}
-	
+
 	// clean any existing cache files
 	mosCache::cleanCache( 'com_content' );
 
@@ -475,7 +476,7 @@ function changeState( $cid=null, $state=0, $option ) {
 		$row = new mosContent( $database );
 		$row->checkin( $cid[0] );
 	}
-	
+
 	// clean any existing cache files
 	mosCache::cleanCache( 'com_content' );
 
@@ -504,7 +505,7 @@ function changeAccess( $id, $access, $option  ) {
 	if ( !$row->store() ) {
 		return $row->getError();
 	}
-	
+
 	// clean any existing cache files
 	mosCache::cleanCache( 'com_content' );
 
@@ -548,7 +549,7 @@ function menuLink( $option, $id ) {
 	$link 	= strval( mosGetParam( $_POST, 'link_name', '' ) );
 
 	$link	= stripslashes( ampReplace($link) );
-	
+
 	$row 				= new mosMenu( $database );
 	$row->menutype 		= $menu;
 	$row->name 			= $link;
@@ -568,7 +569,7 @@ function menuLink( $option, $id ) {
 	}
 	$row->checkin();
 	$row->updateOrder( "menutype=" . $database->Quote( $row->menutype ) . " AND parent=" . (int) $row->parent );
-	
+
 	// clean any existing cache files
 	mosCache::cleanCache( 'com_content' );
 
@@ -608,7 +609,7 @@ function saveOrder( &$cid ) {
 
 	$total		= count( $cid );
 	$order 		= josGetArrayInts( 'order' );
-	
+
 	$row 		= new mosContent( $database );
 	$conditions = array();
 

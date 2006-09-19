@@ -51,7 +51,7 @@ function showPathway( $Itemid ) {
 			break;
 		}
 	}
-	
+
 	$optionstring = '';
 	if ( isset( $_SERVER['REQUEST_URI'] ) ) {
 		$optionstring = $_SERVER['REQUEST_URI'];
@@ -69,7 +69,7 @@ function showPathway( $Itemid ) {
 		switch ($option) {
 			case 'content':
 				$id = intval( mosGetParam( $_REQUEST, 'id', 0 ) );
-				
+
 				if ($task=='blogsection'){
 					$query = "SELECT title, id"
 					. "\n FROM #__sections"
@@ -87,12 +87,12 @@ function showPathway( $Itemid ) {
 					;
 				}
 				$database->setQuery( $query );
-	
+
 				$row = null;
 				$database->loadObject( $row );
-	
+
 				$id = max( array_keys( $mitems ) ) + 1;
-	
+
 				// add the content item
 				$mitem2 = pathwayMakeLink(
 					$Itemid,
@@ -102,7 +102,7 @@ function showPathway( $Itemid ) {
 				);
 				$mitems[$id] = $mitem2;
 				$Itemid = $id;
-	
+
 				$home = '<a href="'. sefRelToAbs( 'index.php' ) .'" class="pathway">'. $home .'</a>';
 				break;
 		}
@@ -113,7 +113,7 @@ function showPathway( $Itemid ) {
 		// menu item = List - Content Section
 		case 'content_section':
 			$id = intval( mosGetParam( $_REQUEST, 'id', 0 ) );
-	
+
 			switch ($task) {
 				case 'category':
 					if ($id) {
@@ -124,7 +124,7 @@ function showPathway( $Itemid ) {
 						;
 						$database->setQuery( $query );
 						$title = $database->loadResult();
-		
+
 						$id = max( array_keys( $mitems ) ) + 1;
 						$mitem = pathwayMakeLink(
 							$id,
@@ -132,12 +132,12 @@ function showPathway( $Itemid ) {
 							'index.php?option='. $option .'&task='. $task .'&id='. $id .'&Itemid='. $Itemid,
 							$Itemid
 						);
-		
+
 						$mitems[$id] = $mitem;
 						$Itemid = $id;
 					}
 					break;
-	
+
 				case 'view':
 					if ($id) {
 						// load the content item name and category
@@ -148,7 +148,7 @@ function showPathway( $Itemid ) {
 						$database->setQuery( $query );
 						$row = null;
 						$database->loadObject( $row );
-		
+
 						// load and add the category
 						$query = "SELECT c.title AS title, s.id AS sectionid, c.id AS id, c.access AS cat_access"
 						. "\n FROM #__categories AS c"
@@ -159,10 +159,10 @@ function showPathway( $Itemid ) {
 						;
 						$database->setQuery( $query );
 						$result = $database->loadObjectList();
-		
+
 						$title 		= $result[0]->title;
 						$sectionid 	= $result[0]->sectionid;
-		
+
 						$id 	= max( array_keys( $mitems ) ) + 1;
 						$mitem1 = pathwayMakeLink(
 							$Itemid,
@@ -170,9 +170,9 @@ function showPathway( $Itemid ) {
 							'index.php?option='. $option .'&task=category&sectionid='. $sectionid .'&id='. $row->catid,
 							$Itemid
 						);
-		
+
 						$mitems[$id] = $mitem1;
-		
+
 						if ( $row->access <= $my->gid ) {
 							// add the final content item
 							$id++;
@@ -182,11 +182,11 @@ function showPathway( $Itemid ) {
 								'',
 								$id-1
 							);
-			
+
 							$mitems[$id] = $mitem2;
 						}
 						$Itemid = $id;
-		
+
 					}
 					break;
 			}
@@ -195,8 +195,8 @@ function showPathway( $Itemid ) {
 		// menu item = Table - Content Category
 		case 'content_category':
 			$id = intval( mosGetParam( $_REQUEST, 'id', 0 ) );
-			
-			switch ($task) {	
+
+			switch ($task) {
 				case 'view':
 					if ($id) {
 						// load the content item name and category
@@ -208,7 +208,7 @@ function showPathway( $Itemid ) {
 						$database->setQuery( $query );
 						$row = null;
 						$database->loadObject( $row );
-		
+
 						$id = max( array_keys( $mitems ) ) + 1;
 						// add the final content item
 						$mitem2 = pathwayMakeLink(
@@ -217,10 +217,10 @@ function showPathway( $Itemid ) {
 							'',
 							$Itemid
 						);
-		
+
 						$mitems[$id] = $mitem2;
 						$Itemid = $id;
-		
+
 					}
 					break;
 			}
@@ -232,10 +232,10 @@ function showPathway( $Itemid ) {
 		case 'content_blog_section':
 			switch ($task) {
 				case 'view':
-					$id = intval( mosGetParam( $_REQUEST, 'id', 0 ) );		
+					$id = intval( mosGetParam( $_REQUEST, 'id', 0 ) );
 					if ($id) {
 						// load the content item name and category
-		
+
 						$query = "SELECT title, catid, id"
 						. "\n FROM #__content"
 						. "\n WHERE id = " . (int) $id
@@ -244,7 +244,7 @@ function showPathway( $Itemid ) {
 						$database->setQuery( $query );
 						$row = null;
 						$database->loadObject( $row );
-		
+
 						$id = max( array_keys( $mitems ) ) + 1;
 						$mitem2 = pathwayMakeLink(
 							$Itemid,
@@ -254,7 +254,7 @@ function showPathway( $Itemid ) {
 						);
 						$mitems[$id] = $mitem2;
 						$Itemid = $id;
-		
+
 					}
 					break;
 			}
@@ -285,7 +285,7 @@ function showPathway( $Itemid ) {
 		$itemname = stripslashes( $item->name );
 
 		// if it is the current page, then display a non hyperlink
-		if ($item->id == $Itemid || empty( $mid ) || empty($item->link)) {
+		if (($item->id == $Itemid && !$mainframe->getCustomPathWay()) || empty( $mid ) || empty($item->link)) {
 			$newlink = "  $itemname";
 		} else if (isset($item->type) && $item->type == 'url') {
 			$correctLink = eregi( 'http://', $item->link);
@@ -328,7 +328,7 @@ function showPathway( $Itemid ) {
 if (!defined( '_JOS_PATHWAY' )) {
 	// ensure that functions are declared only once
 	define( '_JOS_PATHWAY', 1 );
-	
+
 	showPathway( $Itemid );
 }
 ?>

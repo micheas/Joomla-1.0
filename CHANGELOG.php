@@ -39,6 +39,7 @@ code fixes.
 
 20-Sep-2006 Emir Sakic
  # Fixed [artf5202] : administrator typed content search pagination problem
+ # Fixed [artf5908] : Menu Item in Pathway not linked when custom pathway appended
 
 18-Sep-2006 Mateusz Krzeszowiec
  # Fixed [artf5848] : Poll component not displaying info, XML file moved to proper directory

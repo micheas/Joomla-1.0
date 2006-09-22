@@ -43,6 +43,7 @@ code fixes.
  # Fixed [artf5934] : Mail sent via "Email a friend" has bad link
  # Fixed [artf6011] : HTML entities appearing in plain-text emails from com_content
  # Fixed [artf5986] : mosMail and empty sender information
+ # Fixed [artf6075] : "CheckIn My Items" checks in all Items
 
 22-Sep-2006 Marko Schmuck
  # Fixed [artf5507] : "&" character in Global Site Meta Description field results in "&amp;amp;"

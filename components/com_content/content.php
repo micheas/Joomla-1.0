@@ -2342,7 +2342,7 @@ function emailContentSend( $uid, $gid ) {
 		$link = sefRelToAbs( 'index.php?option=com_content&task=view&id='. $uid . $_itemid );
 	
 		// message text
-		$msg = sprintf( _EMAIL_MSG, $mosConfig_sitename, $yourname, $youremail, $link );
+		$msg = sprintf( _EMAIL_MSG, html_entity_decode( $mosConfig_sitename ), $yourname, $youremail, $link );
 	
 		// mail function
 		$success = mosMail( $youremail, $yourname, $email, $subject, $msg );

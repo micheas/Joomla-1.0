@@ -335,6 +335,7 @@ function showSection( $id, $gid, &$access, $now ) {
 	$categories = $database->loadObjectList();
 	
 	// If categories exist, the "new content" icon may be displayed
+	$categories_exist = false;
 	if ( $access->canEdit ) {
 		$query = "SELECT count(*) as numCategories"
 		. "\n FROM #__categories as a"
@@ -1723,7 +1724,7 @@ function show( $row, $params, $gid, &$access, $pop, $option='com_content', $Item
 
 function editItem( $uid, $gid, &$access, $sectionid=0, $task, $Itemid ){
 	global $database, $my, $mainframe;
-	global $mosConfig_absolute_path, $mosConfig_live_site;
+	global $mosConfig_absolute_path, $mosConfig_live_site, $mosConfig_offset;
 
 	$nullDate = $database->getNullDate();
 	$row = new mosContent( $database );

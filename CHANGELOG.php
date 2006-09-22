@@ -37,6 +37,8 @@ code fixes.
 - -> Removed
 ! -> Note
 
+22-Sep-2006 Enno Klasing
+ # Fixed [artf5983] : Undefined variables in com_content
 
 22-Sep-2006 Marko Schmuck
  # Fixed [artf5507] : "&" character in Global Site Meta Description field results in "&amp;amp;"

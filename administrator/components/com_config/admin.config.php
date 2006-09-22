@@ -334,9 +334,7 @@ function saveconfig( $task ) {
 	
 	// handling of special characters
 	$row->config_sitename			= htmlspecialchars( $row->config_sitename, ENT_QUOTES );	
-	$row->config_MetaDesc			= htmlspecialchars( $row->config_MetaDesc, ENT_QUOTES );	
-	$row->config_MetaKeys			= htmlspecialchars( $row->config_MetaKeys, ENT_QUOTES );	
-
+	
 	// handling of quotes (double and single) and amp characters
 	// htmlspecialchars not used to preserve ability to insert other html characters
 	$row->config_offline_message	= ampReplace( $row->config_offline_message );	

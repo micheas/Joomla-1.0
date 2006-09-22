@@ -3801,7 +3801,15 @@ function mosCreateMail( $from='', $fromname='', $subject, $body ) {
 * @return boolean
 */
 function mosMail( $from, $fromname, $recipient, $subject, $body, $mode=0, $cc=NULL, $bcc=NULL, $attachment=NULL, $replyto=NULL, $replytoname=NULL ) {
-	global $mosConfig_debug;
+	global $mosConfig_mailfrom, $mosConfig_fromname, $mosConfig_debug;
+
+	// Allow empty $from and $fromname settings (backwards compatibility)
+	if ($from == '') {
+		$from = $mosConfig_mailfrom;
+	}
+	if ($fromname == '') {
+		$fromname = $mosConfig_fromname;
+	}
 
 	// Filter from, fromname and subject
 	if (!JosIsValidEmail( $from ) || !JosIsValidName( $fromname ) || !JosIsValidName( $subject )) {

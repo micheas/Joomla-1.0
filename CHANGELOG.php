@@ -39,6 +39,7 @@ code fixes.
 
 22-Sep-2006 Enno Klasing
  # Fixed [artf5983] : Undefined variables in com_content
+ # Fixed [artf5985] : Missing htmlspecialchars for module title
 
 22-Sep-2006 Marko Schmuck
  # Fixed [artf5507] : "&" character in Global Site Meta Description field results in "&amp;amp;"

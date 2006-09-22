@@ -300,7 +300,7 @@ class modules_html {
 			?>
 			<tr>
 				<th valign="top">
-					<?php echo $module->title; ?>
+					<?php echo htmlspecialchars( $module->title ); ?>
 				</th>
 			</tr>
 			<?php
@@ -356,7 +356,7 @@ class modules_html {
 				//echo $number;
 				?>
 				<h3>
-					<?php echo $module->title; ?>
+					<?php echo htmlspecialchars( $module->title ); ?>
 				</h3>
 				<?php
 			}
@@ -388,7 +388,7 @@ class modules_html {
 					<div>
 						<?php
 						if ($module->showtitle != 0) {
-							echo "<h3>$module->title</h3>";
+							echo "<h3>" . htmlspecialchars( $module->title ) . "</h3>";
 						}
 
 						if ( $type ) {

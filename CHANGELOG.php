@@ -37,6 +37,10 @@ code fixes.
 - -> Removed
 ! -> Note
 
+
+22-Sep-2006 Marko Schmuck
+ # Fixed [artf5507] : "&" character in Global Site Meta Description field results in "&amp;amp;"
+
 20-Sep-2006 Emir Sakic
  # Fixed [artf5202] : administrator typed content search pagination problem
  # Fixed [artf5908] : Menu Item in Pathway not linked when custom pathway appended

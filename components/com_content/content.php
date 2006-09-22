@@ -1598,14 +1598,13 @@ function show( $row, $params, $gid, &$access, $pop, $option='com_content', $Item
 		$row->rating 		= $voting->rating;
 		$row->rating_count 	= $voting->rating_count;
 	}
-	
 	if ( $params->get( 'section_link' ) || $params->get( 'category_link' ) ) {
 		// loads the link for Section name
-		if ( $params->get( 'section_link' ) || $params->get( 'category_link' ) ) {
+		if ( $params->get( 'section_link' ) && $row->sectionid ) {
 			// pull values from mainframe
 			$secLinkID 	= $mainframe->get( 'secID_'. $row->sectionid, -1 );
 			$secLinkURL = $mainframe->get( 'secURL_'. $row->sectionid );
-			
+	
 			// check if values have already been placed into mainframe memory
 			if ( $secLinkID == -1 ) {
 				$query = "SELECT id, link"
@@ -1621,7 +1620,7 @@ function show( $row, $params, $gid, &$access, $pop, $option='com_content', $Item
 				
 				$secLinkID 	= $result[0];
 				$secLinkURL = $result[1];
-				
+								
 				if ($secLinkID == null) {
 					$secLinkID = 0;
 					// save 0 query result to mainframe
@@ -1639,6 +1638,7 @@ function show( $row, $params, $gid, &$access, $pop, $option='com_content', $Item
 				$_Itemid = '&amp;Itemid='. $secLinkID;
 			}
 			if ($secLinkURL) {
+				$secLinkURL = ampReplace($secLinkURL);
 				$link 			= sefRelToAbs( $secLinkURL . $_Itemid );
 			} else {
 				$link 			= sefRelToAbs( 'index.php?option=com_content&amp;task=section&amp;id='. $row->sectionid . $_Itemid );

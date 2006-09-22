@@ -2339,7 +2339,7 @@ function emailContentSend( $uid, $gid ) {
 		}
 		
 		// link sent in email
-		$link = sefRelToAbs( $mosConfig_live_site .'/index.php?option=com_content&task=view&id='. $uid . $_itemid );
+		$link = sefRelToAbs( 'index.php?option=com_content&task=view&id='. $uid . $_itemid );
 	
 		// message text
 		$msg = sprintf( _EMAIL_MSG, $mosConfig_sitename, $yourname, $youremail, $link );

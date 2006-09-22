@@ -40,6 +40,7 @@ code fixes.
 
 22-Sep-2006 Marko Schmuck
  # Fixed [artf5507] : "&" character in Global Site Meta Description field results in "&amp;amp;"
+ # Fixed [artf5788] : Frontpage content item category links enable section links, and section links generate '&' and not '&amp;' in their html
 
 20-Sep-2006 Emir Sakic
  # Fixed [artf5202] : administrator typed content search pagination problem

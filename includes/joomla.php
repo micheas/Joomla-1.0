@@ -4036,7 +4036,7 @@ function mosMakePassword($length=8) {
 	$makepass	= '';
 	mt_srand(10000000*(double)microtime());
 	for ($i = 0; $i < $length; $i++)
-		$makepass .= $salt[mt_rand(0,62)];
+		$makepass .= $salt[mt_rand(0,61)];
 	return $makepass;
 }
 

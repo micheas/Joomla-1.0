@@ -156,6 +156,7 @@ function botSearchContent( $text, $phrase='', $ordering='' ) {
 	. "\n AND m.type = 'content_typed'"
 	. "\n AND ( a.publish_up = " . $database->Quote( $nullDate ) . " OR a.publish_up <= " . $database->Quote( $now ) . " )"
 	. "\n AND ( a.publish_down = " . $database->Quote( $nullDate ) . " OR a.publish_down >= " . $database->Quote( $now ) . " )"
+	. "\n GROUP BY a.id"
 	. "\n ORDER BY ". ($morder ? $morder : $order)
 	;
 	$database->setQuery( $query, 0, $limit );

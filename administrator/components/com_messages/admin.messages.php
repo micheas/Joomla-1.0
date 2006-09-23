@@ -125,7 +125,7 @@ function newMessage( $option ) {
 	mosArrayToInts( $gids );
 	$gids = 'gid=' . implode( ' OR gid=', $gids );
 
-	$query = "SELECT id AS value, username AS text FROM #__users"
+	$query = "SELECT id AS value, name AS text FROM #__users"
 	. "\n WHERE ( $gids )"
 	. "\n ORDER BY name"
 	;

@@ -37,6 +37,11 @@ code fixes.
 - -> Removed
 ! -> Note
 
+23-Sep-2006 Mateusz Krzeszowiec
+ # Fixed [artf6004] : Search results include several hits for the same document
+ # Fixed [artf6041] : username when sending PM instead of name
+ # Fixed [artf5989] : not optimal mosMakePassword()
+
 22-Sep-2006 Enno Klasing
  # Fixed [artf5983] : Undefined variables in com_content
  # Fixed [artf5985] : Missing htmlspecialchars for module title

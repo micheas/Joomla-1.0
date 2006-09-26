@@ -28,4 +28,25 @@ if (!function_exists( 'array_change_key_case' )) {
 		return $array;
 	}
 }
+/**
+ * Add functionanlity of html_entity_decode() to PHP under 4.3
+ *
+ * @category	PHP
+ * @package	 PHP_Compat
+ * @link		http://php.net/function.html_entity_decode
+ * @since		PHP 4.3
+ * @require	 PHP 4.0.1 
+ */
+if (!function_exists('html_entity_decode')) {
+	function html_entity_decode($string)
+	{
+   		// Replace numeric
+   		$string = preg_replace('~&#x([0-9a-f]+);~ei', 'chr(hexdec("\\1"))', $string);
+   		$string = preg_replace('~&#([0-9]+);~e', 'chr(\\1)', $string);
+   		
+   		$trans_tbl = get_html_translation_table(HTML_ENTITIES);
+   		$trans_tbl = array_flip($trans_tbl);
+   		return strtr($string, $trans_tbl);
+	}
+}
 ?>

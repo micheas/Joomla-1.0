@@ -45,7 +45,7 @@
 			<option value="0">Hide</option>
 			<option value="1">Show</option>
 		</param>
-		<param name="description_text" type="textarea" default="" label="Description Text" rows="5" cols="30" description="Description for page, if left blank it will load _WEBLINKS_DESC from your language file"/>
+		<param name="description_text" type="textarea" default="" label="Description Text" rows="5" cols="30" description="Description for page, if left blank it will load _CONTACTS_DESC from your language file"/>
 		<param name="image" type="imagelist" directory="/images/stories" hide_default="1" default="-1" label="Image" description="Image for page, must be located in the /images/stories folder. Default will load web_links.jpg, No image will mean an image is not loaded" />
 		<param name="image_align" type="radio" default="right" label="Image Align" description="Alignment of the image">
 			<option value="left">Left</option>

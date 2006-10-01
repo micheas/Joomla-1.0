@@ -3609,7 +3609,8 @@ function mosMenuCheck( $Itemid, $menu_option, $task, $gid ) {
 
 		$query = "SELECT *"
 		. "\n FROM #__menu"
-		. "\n WHERE link LIKE '$dblink%'"
+		. "\n WHERE published = 1 AND" 
+		. "\n link LIKE '$dblink%'"
 		;
 	}
 	$database->setQuery( $query );

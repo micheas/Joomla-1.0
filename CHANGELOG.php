@@ -37,6 +37,11 @@ code fixes.
 - -> Removed
 ! -> Note
 
+1-Oct-2006 Mateusz Krzeszowiec
+ # Fixed [artf6074] : Joomla! using trashed menu item permission level in some cases
+ # Fixed [artf6084] : com_content division by zero warning
+ # Fixed [artf6153] : Invalid constant in field description
+
 23-Sep-2006 Mateusz Krzeszowiec
  # Fixed [artf6004] : Search results include several hits for the same document
  # Fixed [artf6041] : username when sending PM instead of name

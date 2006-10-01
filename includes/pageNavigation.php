@@ -69,7 +69,7 @@ class mosPageNav {
 		if ($this->total > 0) {
 			$txt .= _PN_RESULTS." $from_result - $to_result "._PN_OF." $this->total";
 		}
-		return $txt;
+		return $to_result ? $txt : '';
 	}
 
 	/**
@@ -92,8 +92,8 @@ class mosPageNav {
 		$txt = '';
 
 		$displayed_pages = 10;
-		$total_pages = ceil( $this->total / $this->limit );
-		$this_page = ceil( ($this->limitstart+1) / $this->limit );
+		$total_pages = $this->limit ? ceil( $this->total / $this->limit ) : 0;
+		$this_page = $this->limit ? ceil( ($this->limitstart+1) / $this->limit ) : 1;
 		$start_loop = (floor(($this_page-1)/$displayed_pages))*$displayed_pages+1;
 		if ($start_loop + $displayed_pages - 1 < $total_pages) {
 			$stop_loop = $start_loop + $displayed_pages - 1;

@@ -37,6 +37,9 @@ code fixes.
 - -> Removed
 ! -> Note
 
+3-Oct-2006 Mateusz Krzeszowiec
+# Fixed [artf5926] : Incorrect determination of Itemid for content items links in Blog - Content Section, look in tracker for details
+
 1-Oct-2006 Mateusz Krzeszowiec
  # Fixed [artf6074] : Joomla! using trashed menu item permission level in some cases
  # Fixed [artf6084] : com_content division by zero warning

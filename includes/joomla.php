@@ -1639,33 +1639,6 @@ class mosMainFrame {
 
 		if ($_Itemid == '') {
 			$exists = 0;
-			foreach( $this->get( '_ContentBlogSection', array() ) as $key => $value ) {
-				// check if id has been tested before, if it is pull from class variable store
-				if ( $key == $id ) {
-					$_Itemid 	= $value;
-					$exists 	= 1;
-					break;
-				}
-			}
-			// if id hasnt been checked before initaite query
-			if ( !$exists ) {
-				if (!isset($content_blog_section)) {
-					$content_blog_section = null;
-				}
-
-				// pull existing query storage into temp variable
-				$ContentBlogSection 		= $this->get( '_ContentBlogSection', array() );
-				// add query result to temp array storage
-				$ContentBlogSection[$id] 	= $content_blog_section;
-				// save temp array to main array storage
-				$this->set( '_ContentBlogSection', $ContentBlogSection );
-
-				$_Itemid = $ContentBlogSection[$id];
-			}
-		}
-
-		if ($_Itemid == '') {
-			$exists = 0;
 			foreach( $this->get( '_ContentBlogCategory', array() ) as $key => $value ) {
 				// check if id has been tested before, if it is pull from class variable store
 				if ( $key == $id ) {
@@ -1708,6 +1681,33 @@ class mosMainFrame {
 			}
 
 			$_Itemid = $this->get( '_GlobalBlogSection' );
+		}
+
+		if ($_Itemid == '') {
+			$exists = 0;
+			foreach( $this->get( '_ContentBlogSection', array() ) as $key => $value ) {
+				// check if id has been tested before, if it is pull from class variable store
+				if ( $key == $id ) {
+					$_Itemid 	= $value;
+					$exists 	= 1;
+					break;
+				}
+			}
+			// if id hasnt been checked before initaite query
+			if ( !$exists ) {
+				if (!isset($content_blog_section)) {
+					$content_blog_section = null;
+				}
+
+				// pull existing query storage into temp variable
+				$ContentBlogSection 		= $this->get( '_ContentBlogSection', array() );
+				// add query result to temp array storage
+				$ContentBlogSection[$id] 	= $content_blog_section;
+				// save temp array to main array storage
+				$this->set( '_ContentBlogSection', $ContentBlogSection );
+
+				$_Itemid = $ContentBlogSection[$id];
+			}
 		}
 
 		if ($_Itemid == '') {

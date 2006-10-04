@@ -77,12 +77,13 @@ class mosPageNav {
 	*/
 	function writeLeafsCounter() {
 		$txt = '';
-		$page = $this->limitstart+1;
+		$page = ceil( ($this->limitstart + 1) / $this->limit );
 		if ($this->total > 0) {
-			$txt .= _PN_PAGE." $page "._PN_OF." $this->total";
+			$total_pages = ceil( $this->total / $this->limit );
+			$txt .= _PN_PAGE." $page "._PN_OF." $total_pages";
 		}
 		return $txt;
-	}
+	}	
 
 	/**
 	* Writes the html links for pages, eg, previous, next, 1 2 3 ... x

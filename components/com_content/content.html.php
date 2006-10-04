@@ -120,6 +120,7 @@ class HTML_content {
 	* Display links to categories
 	*/
 	function showCategories( &$params, &$items, $gid, &$other_categories, $catid, $id, $Itemid ) {
+		if(!count($other_categories)) return;
 		?>
 		<ul>
 		<?php

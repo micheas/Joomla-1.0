@@ -41,6 +41,7 @@ code fixes.
 # Fixed [artf5955] : get_group_parents() with default $recurse parameter
 # Fixed [artf6181] : Search: Itemid in com_search also gets wrong Itemid's
 # Fixed [artf6172] : (FRONTEND)mosPageNavigation::writeLeafsCounter doesn't diplay correct page numbers
+# Fixed [artf6169] : showCategories produces non w3c valid list
 
 3-Oct-2006 Mateusz Krzeszowiec
 # Fixed [artf5926] : Incorrect determination of Itemid for content items links in Blog - Content Section, look in tracker for details

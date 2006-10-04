@@ -418,13 +418,12 @@ class gacl_api extends gacl {
 				break;
 			default:
 				$query .= '
-				WHERE		g1.parent_id='. (int) $group_id;
+				LEFT JOIN '. $table .' g2 ON g1.parent_id = g2.group_id
+				WHERE		g1.group_id='. (int) $group_id;
 		}
 
 		$query .= '
 				ORDER BY	g2.lft';
-
-
 		$this->db->setQuery( $query );
 		return $this->db->loadResultArray();
 	}

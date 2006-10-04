@@ -39,6 +39,7 @@ code fixes.
 
 4-Oct-2006 Sam Moffatt
 # Fixed [artf5955] : get_group_parents() with default $recurse parameter
+# Fixed [artf6181] : Search: Itemid in com_search also gets wrong Itemid's
 
 3-Oct-2006 Mateusz Krzeszowiec
 # Fixed [artf5926] : Incorrect determination of Itemid for content items links in Blog - Content Section, look in tracker for details

@@ -37,6 +37,10 @@ code fixes.
 - -> Removed
 ! -> Note
 
+10-Oct-2006 Emir Sakic
+^ Refactored admin trash manager to be consistent with other managers
+# Fixed [artf6141] : com_trash administrative component navigation problem
+
 4-Oct-2006 Sam Moffatt
 # Fixed [artf5955] : get_group_parents() with default $recurse parameter
 # Fixed [artf6181] : Search: Itemid in com_search also gets wrong Itemid's

@@ -54,66 +54,79 @@ switch ($task) {
 */
 function viewTrash( $option ) {
 	global $database, $mainframe, $mosConfig_list_limit;
-	
+
+	$catid 		= $mainframe->getUserStateFromRequest( "catid{$option}", 'catid', 'content' );
 	$limit 		= intval( $mainframe->getUserStateFromRequest( "viewlistlimit", 'limit', $mosConfig_list_limit ) );
-	$limitstart = intval( $mainframe->getUserStateFromRequest( "view{$option}limitstart", 'limitstart', 10 ) );
+	$limitstart = intval( $mainframe->getUserStateFromRequest( "view{$option}limitstart", 'limitstart', 0 ) );
 
 	require_once( $GLOBALS['mosConfig_absolute_path'] . '/administrator/includes/pageNavigation.php' );
-	
-	// get the total number of content
-	$query = "SELECT count(*)"
-	. "\n FROM #__content AS c"
-	. "\n LEFT JOIN #__categories AS cc ON cc.id = c.catid"
-	. "\n LEFT JOIN #__sections AS s ON s.id = cc.section AND s.scope = 'content'"
-	. "\n WHERE c.state = -2"
-	;
-	$database->setQuery( $query );
-	$total_content 		= $database->loadResult();
-	$pageNav_content 	= new mosPageNav( $total_content, $limitstart, $limit );
 
-	// Query content items
-	$query = 	"SELECT c.*, g.name AS groupname, cc.name AS catname, s.name AS sectname"
-	. "\n FROM #__content AS c"
-	. "\n LEFT JOIN #__categories AS cc ON cc.id = c.catid"
-	. "\n LEFT JOIN #__sections AS s ON s.id = cc.section AND s.scope='content'"
-	. "\n INNER JOIN #__groups AS g ON g.id = c.access"
-	. "\n LEFT JOIN #__users AS u ON u.id = c.checked_out"
-	. "\n WHERE c.state = -2"
-	. "\n ORDER BY s.name, cc.name, c.title"
-	;
-	$database->setQuery( $query, $pageNav_content->limitstart, $pageNav_content->limit );
-	$contents = $database->loadObjectList();
+	if ($catid=="content") {
+		// get the total number of content
+		$query = "SELECT count(*)"
+		. "\n FROM #__content AS c"
+		. "\n LEFT JOIN #__categories AS cc ON cc.id = c.catid"
+		. "\n LEFT JOIN #__sections AS s ON s.id = cc.section AND s.scope = 'content'"
+		. "\n WHERE c.state = -2"
+		;
+		$database->setQuery( $query );
+		$total 		= $database->loadResult();
+		$pageNav 	= new mosPageNav( $total, $limitstart, $limit );
 
-	$query = "SELECT count(*)"
-	. "\n FROM #__menu AS m"
-	. "\n LEFT JOIN #__users AS u ON u.id = m.checked_out"
-	. "\n WHERE m.published = -2"
-	;
-	$database->setQuery( $query );
-	$total_menu 	= $database->loadResult();
-	$pageNav_menu 	= new mosPageNav( $total_menu, $limitstart, $limit );
+		// Query content items
+		$query = 	"SELECT c.*, g.name AS groupname, cc.name AS catname, s.name AS sectname"
+		. "\n FROM #__content AS c"
+		. "\n LEFT JOIN #__categories AS cc ON cc.id = c.catid"
+		. "\n LEFT JOIN #__sections AS s ON s.id = cc.section AND s.scope='content'"
+		. "\n INNER JOIN #__groups AS g ON g.id = c.access"
+		. "\n LEFT JOIN #__users AS u ON u.id = c.checked_out"
+		. "\n WHERE c.state = -2"
+		. "\n ORDER BY s.name, cc.name, c.title"
+		;
+		$database->setQuery( $query, $pageNav->limitstart, $pageNav->limit );
+		$content = $database->loadObjectList();
 
-	// Query menu items
-	$query = 	"SELECT m.*"
-	. "\n FROM #__menu AS m"
-	. "\n LEFT JOIN #__users AS u ON u.id = m.checked_out"
-	. "\n WHERE m.published = -2"
-	. "\n ORDER BY m.menutype, m.ordering, m.ordering, m.name"
-	;
-	$database->setQuery( $query, $pageNav_menu->limitstart, $pageNav_menu->limit );
-	$menus = $database->loadObjectList();
-
-	$num = $total_content;
-	if ( $limit < $total_content ) {
-		$num = $limit;
-	}	
-	for ( $i = 0; $i < $num; $i++ ) {
-		if ( ( $contents[$i]->sectionid == 0 ) && ( $contents[$i]->catid == 0 ) ) {
-			$contents[$i]->sectname = 'Static Content';
+		$num = $total;
+		if ( $limit < $total ) {
+			$num = $limit;
 		}
+		for ( $i = 0; $i < $num; $i++ ) {
+			if ( ( $content[$i]->sectionid == 0 ) && ( $content[$i]->catid == 0 ) ) {
+				$content[$i]->sectname = 'Static Content';
+			}
+		}
+	} else {
+		// get the total number of menu
+		$query = "SELECT count(*)"
+		. "\n FROM #__menu AS m"
+		. "\n LEFT JOIN #__users AS u ON u.id = m.checked_out"
+		. "\n WHERE m.published = -2"
+		;
+		$database->setQuery( $query );
+		$total 	= $database->loadResult();
+
+		$pageNav 	= new mosPageNav( $total, $limitstart, $limit );
+
+		// Query menu items
+		$query = 	"SELECT m.name AS title, m.menutype AS sectname, m.type AS catname, m.id AS id"
+		. "\n FROM #__menu AS m"
+		. "\n LEFT JOIN #__users AS u ON u.id = m.checked_out"
+		. "\n WHERE m.published = -2"
+		. "\n ORDER BY m.menutype, m.ordering, m.ordering, m.name"
+		;
+		$database->setQuery( $query, $pageNav->limitstart, $pageNav->limit );
+		$content = $database->loadObjectList();
 	}
 
-	HTML_trash::showList( $option, $contents, $menus, $pageNav_content, $pageNav_menu );
+	// Build the select list
+	$listselect = array();
+	$listselect[] = mosHTML::makeOption( 'content', 'Content Items' );
+	$listselect[] = mosHTML::makeOption( 'menu', 'Menu Items' );
+	$selected = "all";
+
+	$list = mosHTML::selectList( $listselect, 'catid', 'class="inputbox" size="1" ' . 'onchange="document.adminForm.submit();"', 'value', 'text', $catid );
+
+	HTML_trash::showList( $option, $content, $pageNav, $list );
 }
 
 
@@ -160,7 +173,7 @@ function viewdeleteTrash( $cid, $mid, $option ) {
 */
 function deleteTrash( $cid, $option ) {
 	global $database;
-	
+
 	$type 	= mosGetParam( $_POST, 'type', array(0) );
 
 	$total 	= count( $cid );
@@ -229,7 +242,7 @@ function viewrestoreTrash( $cid, $mid, $option ) {
 */
 function restoreTrash( $cid, $option ) {
 	global $database;
-	
+
 	$type = mosGetParam( $_POST, 'type', array(0) );
 
 	$total = count( $cid );
@@ -250,7 +263,7 @@ function restoreTrash( $cid, $option ) {
 		if ( !$database->query() ) {
 			echo "<script> alert('".$database->getErrorMsg()."'); window.history.go(-1); </script>\n";
 			exit();
-		}					
+		}
 	} else if ( $type == 'menu' ) {
 		sort( $cid );
 
@@ -258,7 +271,7 @@ function restoreTrash( $cid, $option ) {
 			$check = 1;
 			$row = new mosMenu( $database );
 			$row->load( $id );
-			
+
 			// check if menu item is a child item
 			if ( $row->parent != 0 ) {
 				$query = "SELECT id"
@@ -268,7 +281,7 @@ function restoreTrash( $cid, $option ) {
 				;
 				$database->setQuery( $query );
 				$check = $database->loadResult();
-				
+
 				if ( !$check ) {
 				// if menu items parent is not found that are published/unpublished make it a root menu item
 					$query  = "UPDATE #__menu"
@@ -277,23 +290,23 @@ function restoreTrash( $cid, $option ) {
 					;
 				}
 			}
-			
+
 			if ( $check ) {
 			// query to restore menu items
 				$query  = "UPDATE #__menu"
 				. "\n SET published = " . (int) $state . ", ordering = 9999"
 				. "\n WHERE id = " . (int) $id
 				;
-			}	
-			
+			}
+
 			$database->setQuery( $query );
 			if ( !$database->query() ) {
 				echo "<script> alert('".$database->getErrorMsg()."'); window.history.go(-1); </script>\n";
 				exit();
-			}	
+			}
 		}
-	}	
-	
+	}
+
 	$msg = $total. " Item(s) successfully Restored";
 	mosRedirect( "index2.php?option=$option&mosmsg=". $msg ."" );
 }

@@ -90,7 +90,7 @@ function viewTrash( $option ) {
 		if ( $limit < $total ) {
 			$num = $limit;
 		}
-		for ( $i = 0; $i < $num; $i++ ) {
+		for ( $i = 0; $i < $num-1; $i++ ) {
 			if ( ( $content[$i]->sectionid == 0 ) && ( $content[$i]->catid == 0 ) ) {
 				$content[$i]->sectname = 'Static Content';
 			}
@@ -126,7 +126,7 @@ function viewTrash( $option ) {
 
 	$list = mosHTML::selectList( $listselect, 'catid', 'class="inputbox" size="1" ' . 'onchange="document.adminForm.submit();"', 'value', 'text', $catid );
 
-	HTML_trash::showList( $option, $content, $pageNav, $list );
+	HTML_trash::showList( $option, $content, $pageNav, $list, $catid );
 }
 
 

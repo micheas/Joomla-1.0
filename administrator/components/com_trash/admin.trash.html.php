@@ -24,7 +24,7 @@ class HTML_trash {
 	/**
 	* Writes a list of the Trash items
 	*/
-	function showList( $option, $content, $pageNav, $list ) {
+	function showList( $option, $content, $pageNav, $list, $catid ) {
 		global $my;
 		?>
 		<script language="javascript" type="text/javascript">
@@ -73,10 +73,10 @@ class HTML_trash {
 			Title
 			</th>
 			<th>
-			Section
+			<?php echo ($catid=="content") ? "Section" : "Menu"; ?>
 			</th>
 			<th>
-			Category
+			<?php echo ($catid=="content") ? "Category" : "Type"; ?>
 			</th>
 			<th width="70px">
 			ID
@@ -92,7 +92,13 @@ class HTML_trash {
 				<td align="center" width="30px">
 				<?php echo $i + 1 + $pageNav->limitstart;?>
 				</td>
-				<td width="20px" align="center"><?php echo mosHTML::idBox( $i, $row->id ); ?></td>
+				<td width="20px" align="center"><?php
+				if ($catid=="content") {
+					echo mosHTML::idBox( $i, $row->id );
+				} else {
+					echo "<input type=\"checkbox\" id=\"cb1$i\" name=\"mid[]\" value=\"$row->id\" onclick=\"isChecked(this.checked);\" />";
+				}
+				?></td>
 				<td width="20px"></td>
 				<td nowrap>
 				<?php

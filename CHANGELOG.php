@@ -37,6 +37,9 @@ code fixes.
 - -> Removed
 ! -> Note
 
+11-Oct-2006 Emir Sakic
+# Fixed [artf6141] : check all in com_trash for menu items
+
 10-Oct-2006 Emir Sakic
 ^ Refactored admin trash manager to be consistent with other managers
 # Fixed [artf6141] : com_trash administrative component navigation problem

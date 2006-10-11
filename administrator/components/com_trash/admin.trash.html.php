@@ -86,6 +86,7 @@ class HTML_trash {
 		$k = 0;
 		$i = 0;
 		$n = count( $content );
+
 		foreach ( $content as $row ) {
 			?>
 			<tr class="<?php echo "row". $k; ?>">
@@ -96,7 +97,7 @@ class HTML_trash {
 				if ($catid=="content") {
 					echo mosHTML::idBox( $i, $row->id );
 				} else {
-					echo "<input type=\"checkbox\" id=\"cb1$i\" name=\"mid[]\" value=\"$row->id\" onclick=\"isChecked(this.checked);\" />";
+					echo "<input type=\"checkbox\" id=\"cb$i\" name=\"mid[]\" value=\"$row->id\" onclick=\"isChecked(this.checked);\" />";
 				}
 				?></td>
 				<td width="20px"></td>

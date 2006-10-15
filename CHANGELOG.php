@@ -37,6 +37,9 @@ code fixes.
 - -> Removed
 ! -> Note
 
+15-Oct-2006 Emir Sakic
+# Fixed [artf5760] : 'more' functionality in blogs showing links even though they shouldn't
+
 11-Oct-2006 Emir Sakic
 # Fixed [artf6141] : check all in com_trash for menu items
 

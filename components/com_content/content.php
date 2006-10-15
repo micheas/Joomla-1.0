@@ -352,7 +352,7 @@ function showSection( $id, $gid, &$access, $now ) {
 	$mainframe->SetPageTitle( $menu->name );
 
 	$null = null;
-	HTML_content::showContentList( $section, $null, $access, $id, $null,  $gid, $params, $null, $categories, $null, $null, $categories_exist );
+	HTML_content::showContentList( $section, $null, $access, $id, $null, $gid, $params, $null, $categories, $null, $null, $categories_exist );
 }
 
 

@@ -125,6 +125,7 @@ class HTML_content {
 		<ul>
 		<?php
 		foreach ( $other_categories as $row ) {
+			$row->name = stripslashes(ampReplace($row->name));
 			if ( $catid != $row->id ) {
 				?>
 				<li>

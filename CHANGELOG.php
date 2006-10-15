@@ -37,6 +37,9 @@ code fixes.
 - -> Removed
 ! -> Note
 
+15-Oct-2006 Enno Klasing
+ # Fixed [artf6430] : htaccess tweak
+
 15-Oct-2006 Emir Sakic
 # Fixed [artf5760] : 'more' functionality in blogs showing links even though they shouldn't
 # Fixed [artf6058] : Apostrophes not stripslashed in Category names

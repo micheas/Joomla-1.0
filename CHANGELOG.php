@@ -37,6 +37,9 @@ code fixes.
 - -> Removed
 ! -> Note
 
+16-Oct-2006 Alex Kempkens
+ ^ little query issue for multilingual support (frontpage/search bot)
+
 15-Oct-2006 Enno Klasing
  # Fixed [artf6430] : htaccess tweak
 

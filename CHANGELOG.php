@@ -37,6 +37,9 @@ code fixes.
 - -> Removed
 ! -> Note
 
+18-Oct-2006 Marko Schmuck
+ # Fixed [artf5229] : database.php: loadRowList($key) not working as expected
+
 16-Oct-2006 Alex Kempkens
  ^ little query issue for multilingual support (frontpage/search bot)
 

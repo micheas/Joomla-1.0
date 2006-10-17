@@ -510,18 +510,18 @@ class database {
 	}
 	/**
 	* Load a list of database rows (numeric column indexing)
-	* @param string The field name of a primary key
+	* @param int Value of the primary key
 	* @return array If <var>key</var> is empty as sequential list of returned records.
 	* If <var>key</var> is not empty then the returned array is indexed by the value
 	* the database key.  Returns <var>null</var> if the query fails.
 	*/
-	function loadRowList( $key='' ) {
+	function loadRowList( $key=null ) {
 		if (!($cur = $this->query())) {
 			return null;
 		}
 		$array = array();
 		while ($row = mysql_fetch_row( $cur )) {
-			if ($key) {
+			if ( !is_null( $key ) ) {
 				$array[$row[$key]] = $row;
 			} else {
 				$array[] = $row;

@@ -37,6 +37,9 @@ code fixes.
 - -> Removed
 ! -> Note
 
+19-Oct-2006 Enno Klasing
+ # Fixed [artf6470] : pageNavigation/php - minor bug/improvement
+
 18-Oct-2006 Marko Schmuck
  # Fixed [artf5229] : database.php: loadRowList($key) not working as expected
 

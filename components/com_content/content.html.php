@@ -392,7 +392,7 @@ class HTML_content {
 		<ul>
 		<?php
 		for ( $z = 0; $z < $links; $z++ ) {
-			if ( $i >= $total ) {
+			if (!isset( $rows[$i] )) {
 				// stops loop if total number of items is less than the number set to display as intro + leading
 				break;
 			}

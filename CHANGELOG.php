@@ -37,6 +37,9 @@ code fixes.
 - -> Removed
 ! -> Note
 
+21-Oct-2006 Enno Klasing
+ # Fixed [artf6253] : Content Blog Section, several notices
+
 19-Oct-2006 Enno Klasing
  # Fixed [artf6470] : pageNavigation/php - minor bug/improvement
  # Fixed [artf5890] : Content item count incorrect (public/registered)

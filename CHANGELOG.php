@@ -39,6 +39,7 @@ code fixes.
 
 21-Oct-2006 Enno Klasing
  # Fixed [artf6253] : Content Blog Section, several notices
+ # Fixed [artf6440] : Menu name htmlentitized when toggling published/unpublished
 
 19-Oct-2006 Enno Klasing
  # Fixed [artf6470] : pageNavigation/php - minor bug/improvement

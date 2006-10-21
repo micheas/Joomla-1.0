@@ -86,7 +86,7 @@ class content_archive_category_menu_html {
 				<tr>
 					<td width="10%" align="right" valign="top">Name:</td>
 					<td width="200px">
-					<input type="text" name="name" size="30" maxlength="100" class="inputbox" value="<?php echo $menu->name; ?>"/>
+					<input type="text" name="name" size="30" maxlength="100" class="inputbox" value="<?php echo htmlspecialchars( $menu->name, ENT_QUOTES ); ?>"/>
 					</td>
 					<td>
 					<?php

@@ -82,7 +82,7 @@ class content_blog_section_html {
 				<tr>
 					<td width="10%" align="right">Name:</td>
 					<td width="200px">
-					<input class="inputbox" type="text" name="name" size="30" maxlength="100" value="<?php echo $menu->name; ?>" />
+					<input class="inputbox" type="text" name="name" size="30" maxlength="100" value="<?php echo htmlspecialchars( $menu->name, ENT_QUOTES ); ?>" />
 					</td>
 					<td>
 					</td>

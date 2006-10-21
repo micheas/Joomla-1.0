@@ -68,7 +68,7 @@ class component_item_link_menu_html {
 					Name:
 					</td>
 					<td width="80%">
-					<input class="inputbox" type="text" name="name" size="50" maxlength="100" value="<?php echo $menu->name; ?>" />
+					<input class="inputbox" type="text" name="name" size="50" maxlength="100" value="<?php echo htmlspecialchars( $menu->name, ENT_QUOTES ); ?>" />
 					</td>
 				</tr>
 				<tr>

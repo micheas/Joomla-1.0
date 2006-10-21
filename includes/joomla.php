@@ -2668,12 +2668,6 @@ class mosMenu extends mosDBTable {
 		$this->params = (string) trim( $this->params . ' ' );
 		return true;
 	}
-
-	function load( $id=null ) {
-		parent::load( $id );
-
-		$this->name = htmlspecialchars( $this->name, ENT_QUOTES );
-	}
 }
 
 /**

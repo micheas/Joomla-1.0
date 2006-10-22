@@ -806,14 +806,17 @@ function moveCategorySave( $cid, $sectionOld ) {
 		exit;
 	}
 
-	$sectionMove = stripslashes( strval( mosGetParam( $_REQUEST, 'sectionmove', '' ) ) );
+	$sectionMove 	= intval( mosGetParam( $_REQUEST, 'sectionmove', '' ) );
+	if ( !$sectionMove ) {
+		mosRedirect( 'index.php?option=com_categories&mosmsg=An error has occurred' );
+	}
 
 	$total = count( $cid );
 
 	mosArrayToInts( $cid );
 	$cids = 'id=' . implode( ' OR id=', $cid );
 	$query = "UPDATE #__categories"
-	. "\n SET section = " . $database->Quote( $sectionMove )
+	. "\n SET section = " . $sectionMove 
 	. "\n WHERE ( $cids )"
 	;
 	$database->setQuery( $query );
@@ -824,7 +827,7 @@ function moveCategorySave( $cid, $sectionOld ) {
 	// mosArrayToInts( $cid ); // Just done a few lines earlier
 	$cids = 'catid=' . implode( ' OR catid=', $cid );
 	$query = "UPDATE #__content"
-	. "\n SET sectionid = " . $database->Quote( $sectionMove )
+	. "\n SET sectionid = " . $sectionMove 
 	. "\n WHERE ( $cids )"
 	;
 	$database->setQuery( $query );
@@ -900,7 +903,10 @@ function copyCategorySelect( $option, $cid, $sectionOld ) {
 function copyCategorySave( $cid, $sectionOld ) {
 	global $database;
 
-	$sectionMove 	= strval( mosGetParam( $_REQUEST, 'sectionmove', '' ) );
+	$sectionMove 	= intval( mosGetParam( $_REQUEST, 'sectionmove', '' ) );
+	if ( !$sectionMove ) {
+		mosRedirect( 'index.php?option=com_categories&mosmsg=An error has occurred' );
+	}
 	
 	$contentid		= josGetArrayInts( 'item', $_REQUEST );
 	$total 			= count( $contentid  );

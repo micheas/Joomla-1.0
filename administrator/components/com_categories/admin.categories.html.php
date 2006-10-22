@@ -533,6 +533,22 @@ class categories_html {
 		</table>
 
 		<br />
+		<script language="javascript" type="text/javascript">
+		function submitbutton(pressbutton) {
+			var form = document.adminForm;
+			if (pressbutton == 'cancel') {
+				submitform( pressbutton );
+				return;
+			}
+
+			// do field validation
+			if (!getSelectedValue( 'adminForm', 'sectionmove' )) {
+				alert( "Please select a Section to move the Category to" );
+			} else {
+				submitform( pressbutton );
+			}
+		}
+		</script>		
 		<table class="adminform">
 		<tr>
 			<td width="3%"></td>
@@ -606,6 +622,22 @@ class categories_html {
 		</table>
 
 		<br />
+		<script language="javascript" type="text/javascript">
+		function submitbutton(pressbutton) {
+			var form = document.adminForm;
+			if (pressbutton == 'cancel') {
+				submitform( pressbutton );
+				return;
+			}
+
+			// do field validation
+			if (!getSelectedValue( 'adminForm', 'sectionmove' )) {
+				alert( "Please select a Section to copy the Category to" );
+			} else {
+				submitform( pressbutton );
+			}
+		}
+		</script>
 		<table class="adminform">
 		<tr>
 			<td width="3%"></td>

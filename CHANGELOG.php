@@ -39,6 +39,9 @@ code fixes.
 
 22-Oct-2006 Mateusz Krzeszowiec
  # Fixed [artf6441] : Incorrect spelling Poll
+ # Fixed [artf6160] : Admin, copy category issues
+ # Fixed : Admin, move category issues
+ # Fixed : Small security issue in com_categories - no input validation
 
 21-Oct-2006 Enno Klasing
  # Fixed [artf6253] : Content Blog Section, several notices

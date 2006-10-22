@@ -37,6 +37,9 @@ code fixes.
 - -> Removed
 ! -> Note
 
+22-Oct-2006 Mateusz Krzeszowiec
+ # Fixed [artf6441] : Incorrect spelling Poll
+
 21-Oct-2006 Enno Klasing
  # Fixed [artf6253] : Content Blog Section, several notices
  # Fixed [artf6440] : Menu name htmlentitized when toggling published/unpublished

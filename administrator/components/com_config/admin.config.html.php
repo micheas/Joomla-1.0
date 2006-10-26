@@ -23,7 +23,7 @@ class HTML_config {
 
 	function showconfig( &$row, &$lists, $option) {
 		global $mosConfig_absolute_path, $mosConfig_live_site, $mosConfig_session_type, $mainframe;
-		
+
 		$tabs = new mosTabs(0);
 		?>
 		<script type="text/javascript">
@@ -98,7 +98,7 @@ class HTML_config {
 		}
 		function submitbutton(pressbutton) {
 			var form = document.adminForm;
-			
+
 			// do field validation
 			if (form.config_session_type.value != <?php echo $row->config_session_type; ?> ){
 				if ( confirm('Are you sure you wish to change the `Session Authentication Method`? \n\n This will cause all existing frontend sessions to be deleted \n\n') ) {
@@ -250,7 +250,7 @@ class HTML_config {
 				<?php
 				$tip = 'If left blank or the file cannot be found, the default favicon.ico will be used.';
 				echo mosToolTip( $tip, 'Favourite Icon' );
-				?>			
+				?>
 				</td>
 			</tr>
 			</table>
@@ -270,7 +270,7 @@ class HTML_config {
 				<?php
 				$tip = "Current date/time configured to display: " . mosCurrentDate(_DATE_FORMAT_LC2);
 				echo mosToolTip($tip);
-				?>			
+				?>
 				</td>
 			</tr>
 			<tr>
@@ -359,11 +359,11 @@ class HTML_config {
 					echo mosToolTip('Option not available as /media directory not writable');
 					echo "</td>";
 				} else {
-					?>				
+					?>
 					<td>&nbsp;</td>
 					<?php
 				}
-				?>		
+				?>
 			</tr>
 			<tr>
 				<td>Print Icon:</td>
@@ -747,7 +747,7 @@ class HTML_config {
 				} else {
 					echo mosWarning('The cache directory is UNWRITEABLE - please set this directory to CHMOD755 before turning on the cache');
 				}
-				?>			
+				?>
 				</td>
 				<td>&nbsp;</td>
 			</tr>
@@ -802,14 +802,11 @@ class HTML_config {
 			<?php
 		$tabs->endTab();
 		$tabs->endPane();
-		
-		// show version check
-		josVersionCheck();
-		
+
 		// show security setting check
 		josSecurityCheck();
 		?>
-		
+
 		<input type="hidden" name="option" value="<?php echo $option; ?>"/>
 		<input type="hidden" name="config_absolute_path" value="<?php echo $row->config_absolute_path; ?>"/>
 		<input type="hidden" name="config_live_site" value="<?php echo $row->config_live_site; ?>"/>

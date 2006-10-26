@@ -227,7 +227,7 @@ CREATE TABLE `#__content_rating` (
 #
 # Table structure for table `#__core_log_items`
 #
-# To be implemented in Version 4.6
+# To be implemented
 
 CREATE TABLE `#__core_log_items` (
   `time_stamp` date NOT NULL default '0000-00-00',
@@ -239,7 +239,7 @@ CREATE TABLE `#__core_log_items` (
 #
 # Table structure for table `#__core_log_searches`
 #
-# To be implemented in Version 4.6
+# To be implemented
 
 CREATE TABLE `#__core_log_searches` (
   `search_term` varchar(128) NOT NULL default '',

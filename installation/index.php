@@ -28,13 +28,13 @@ view();
 /*
  * Added 1.0.11
  */
-function view() {	
+function view() {
 	$sp 		= ini_get( 'session.save_path' );
-	
-	$_VERSION 		= new joomlaVersion();				 	
+
+	$_VERSION 		= new joomlaVersion();
 	$versioninfo 	= $_VERSION->RELEASE .'.'. $_VERSION->DEV_LEVEL .' '. $_VERSION->DEV_STATUS;
 	$version 		= $_VERSION->PRODUCT .' '. $_VERSION->RELEASE .'.'. $_VERSION->DEV_LEVEL .' '. $_VERSION->DEV_STATUS.' [ '.$_VERSION->CODENAME .' ] '. $_VERSION->RELDATE .' '. $_VERSION->RELTIME .' '. $_VERSION->RELTZ;
-	
+
 	echo "<?xml version=\"1.0\" encoding=\"iso-8859-1\"?".">";
 	?>
 	<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -46,7 +46,7 @@ function view() {
 	<link rel="stylesheet" href="install.css" type="text/css" />
 	</head>
 	<body>
-	
+
 	<div id="wrapper">
 		<div id="header">
 			<div id="joomla">
@@ -54,7 +54,7 @@ function view() {
 			</div>
 		</div>
 	</div>
-	
+
 	<div id="ctr" align="center">
 		<div class="install">
 			<div id="stepbar">
@@ -65,36 +65,36 @@ function view() {
 				<div class="step-off">step 3</div>
 				<div class="step-off">step 4</div>
 			</div>
-	
+
 			<div id="right">
 				<div id="step">pre-installation check</div>
-	
+
 				<div class="far-right">
 					<input name="Button2" type="submit" class="button" value="Next >>" onclick="window.location='install.php';" />
 					<br/>
 					<br/>
 					<input type="button" class="button" value="Check Again" onclick="window.location=window.location" />
 				</div>
-				<div class="clr"></div>				
-					
+				<div class="clr"></div>
+
 				<h1 style="text-align: center; border-bottom: 0px;">
 					<?php echo $version; ?>
 				</h1>
-	
+
 				<h1>
 					Required Settings Check:
 				</h1>
-				
+
 				<div class="install-text">
 					<p>
-						If any of these items are highlighted in red then please take actions to correct them. 
+						If any of these items are highlighted in red then please take actions to correct them.
 					</p>
 					<p>
 						Failure to do so could lead to your Joomla! installation not functioning correctly.
 					</p>
 					<div class="ctr"></div>
 				</div>
-	
+
 				<div class="install-form">
 					<div class="form-block">
 						<table class="content">
@@ -142,7 +142,7 @@ function view() {
 									echo '<b><font color="green">Writeable</font></b>';
 								} else {
 									echo '<b><font color="red">Unwriteable</font></b><br /><span class="small">You can still continue the install as the configuration will be displayed at the end, just copy & paste this and upload.</span>';
-								} 
+								}
 								?>
 							</td>
 						</tr>
@@ -165,70 +165,10 @@ function view() {
 					</div>
 				</div>
 				<div class="clr"></div>
-				
-				<h1>
-					Version Check:
-				</h1>
-				
-				<div class="install-text">
-					<p>
-						It is important to Always install the latest Stable version of Joomla!
-					</p>
-					<p>
-						More information can always be found at <a href="http://www.joomla.org" target="_blank">www.joomla.org</a>						
-					</p>
-					<div class="ctr"></div>
-				</div>
-						
-				<div class="install-form">
-					<div class="form-block" style="text-align: center;">
-						<table class="content">
-						<tr>
-							<td class="item">
-								<?php
-								$link 			= 'http://www.joomla.org/content/blogcategory/32/66/';
-								$status 		= 'status=yes,toolbar=yes,scrollbars=yes,titlebar=yes,menubar=yes,resizable=yes,directories=yes,location=yes';
-								
-								$release 		= strtotime($_VERSION->RELDATE);
-								$now	 		= strtotime('now');
-								$age			= ($now - $release) / 86400;	
-								$age			= round($age);		
-								?>
-								<div style="clear: both; margin: 3px; padding: 0px 0px; display: block; float: left;">
-									<table cellpadding="0" cellspacing="0" border="0" width="100%" class="adminheading">
-									<tr>
-										<td colspan="2" style="text-align: center;">
-											<h3 style="font-size: 12px;">
-												<?php
-												if ($age > 1) {							
-													?>
-													<p style="font-weight: normal; padding: 0px; margin: 0px; font-size: 11px;">
-														This version of Joomla! [ <?php echo $versioninfo; ?> ] is  
-													</p>
-													<div style="font-size: 13px; color: #cc0000;">
-														<?php echo $age; ?> days old
-													</div>
-													<?php
-												}
-												?>
-												<div style="margin-top: 10px;">
-													<input name="Button3" type="submit" value="Check for newer version" onclick="window.open('<?php echo $link; ?>','win2','<?php echo $status; ?>'); return false;" />							
-												</div>
-											</h3>
-										</td>
-									</tr>
-								    </table>
-								</div>
-							</td>
-						</tr>
-						</table>
-					</div>
-				</div>	
-				<div class="clr"></div>		
-				
+
 				<?php
 				$wrongSettingsTexts = array();
-				
+
 				if ( ini_get('magic_quotes_gpc') != '1' ) {
 					$wrongSettingsTexts[] = 'PHP magic_quotes_gpc setting is `OFF` instead of `ON`';
 				}
@@ -237,14 +177,14 @@ function view() {
 				}
 				if ( RG_EMULATION != 0 ) {
 					$wrongSettingsTexts[] = 'Joomla! RG_EMULATION setting is `ON` instead of `OFF` in file globals.php <br /><span style="font-weight: normal; font-style: italic; color: #666;">`ON` by default for compatibility reasons</span>';
-				}	
-	
+				}
+
 				if ( count($wrongSettingsTexts) ) {
-					?>							
+					?>
 					<h1>
 						Security Check:
 					</h1>
-					
+
 					<div class="install-text">
 						<p>
 							Following PHP Server Settings are not optimal for <strong>Security</strong> and it is recommended to change them:
@@ -254,7 +194,7 @@ function view() {
 						</p>
 						<div class="ctr"></div>
 					</div>
-							
+
 					<div class="install-form">
 						<div class="form-block" style=" border: 1px solid #cc0000; background: #ffffcc;">
 							<table class="content">
@@ -263,7 +203,7 @@ function view() {
 									<ul style="margin: 0px; padding: 0px; padding-left: 5px; text-align: left; padding-bottom: 0px; list-style: none;">
 										<?php
 										foreach ($wrongSettingsTexts as $txt) {
-											?>	
+											?>
 											<li style="min-height: 25px; padding-bottom: 5px; padding-left: 25px; color: red; font-weight: bold; background-image: url(../includes/js/ThemeOffice/warning.png); background-repeat: no-repeat; background-position: 0px 2px;" >
 												<?php
 												echo $txt;
@@ -282,25 +222,25 @@ function view() {
 					<?php
 				}
 				?>
-												
+
 				<h1>
 					Recommended Settings Check:
 				</h1>
-				
+
 				<div class="install-text">
 					<p>
 						These settings are recommended for PHP in order to ensure full
 						compatibility with Joomla!.
-					</p>					
+					</p>
 					<p>
 						However, Joomla! will still operate if your settings do not quite match the recommended
 					</p>
 					<div class="ctr"></div>
 				</div>
-		
+
 				<div class="install-form">
 					<div class="form-block">
-		
+
 						<table class="content">
 						<tr>
 							<td class="toggle" width="500px">
@@ -323,7 +263,7 @@ function view() {
 							array ('Output Buffering','output_buffering','OFF'),
 							array ('Session auto start','session.auto_start','OFF'),
 						);
-						
+
 						foreach ($php_recommended_settings as $phprec) {
 							?>
 							<tr>
@@ -382,14 +322,14 @@ function view() {
 					</div>
 				</div>
 				<div class="clr"></div>
-		
+
 				<h1>
 					Directory and File Permissions Check:
 				</h1>
-				
+
 				<div class="install-text">
 					<p>
-						In order for Joomla! to function correctly it needs to be able to access or write to certain files or directories. 
+						In order for Joomla! to function correctly it needs to be able to access or write to certain files or directories.
 					</p>
 					<p>
 						If you see "Unwriteable" you need to change the permissions on the file or directory to allow Joomla! to write to it.
@@ -397,9 +337,9 @@ function view() {
 					<div class="clr">&nbsp;&nbsp;</div>
 					<div class="ctr"></div>
 				</div>
-		
+
 				<div class="install-form">
-					<div class="form-block">	
+					<div class="form-block">
 						<table class="content">
 						<?php
 						writableCell( 'administrator/backups' );
@@ -426,18 +366,18 @@ function view() {
 					</div>
 					<div class="clr"></div>
 				</div>
-	
-				
+
+
 				<div class="clr"></div>
 			</div>
 			<div class="clr"></div>
 		</div>
 	</div>
-	
+
 	<div class="ctr">
 		<a href="http://www.joomla.org" target="_blank">Joomla!</a> is Free Software released under the GNU/GPL License.
 	</div>
-	
+
 	</body>
 	</html>
 	<?php
@@ -451,7 +391,7 @@ function get_php_setting($val) {
 function writableCell( $folder, $relative=1, $text='' ) {
 	$writeable 		= '<b><font color="green">Writeable</font></b>';
 	$unwriteable 	= '<b><font color="red">Unwriteable</font></b>';
-	
+
 	echo '<tr>';
 	echo '<td class="item">' . $folder . '/</td>';
 	echo '<td align="right">';

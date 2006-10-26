@@ -13,10 +13,6 @@
 		<filename module="mod_quickicon">mod_quickicon.php</filename>
 	</files>
 	<params>
-		<param name="versioncheck" type="radio" default="1" label="Version Age" description="Select whether to show the Version Age">
-			<option value="0">Hide</option>
-			<option value="1">Show</option>
-		</param>
 		<param name="securitycheck" type="radio" default="1" label="Security Check" description="Select whether to show the Security Check warning">
 			<option value="0">Hide</option>
 			<option value="1">Show</option>

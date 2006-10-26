@@ -37,6 +37,9 @@ code fixes.
 - -> Removed
 ! -> Note
 
+26-Oct-2006 Emir Sakic
+ ^ Removed version check - [artf6486] : Remove "Your Joomla! Installation is ... days old" messages
+
 22-Oct-2006 Mateusz Krzeszowiec
  # Fixed [artf6441] : Incorrect spelling Poll
  # Fixed [artf6160] : Admin, copy category issues

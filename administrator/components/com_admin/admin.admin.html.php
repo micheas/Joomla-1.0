@@ -528,9 +528,6 @@ class HTML_admin_misc {
 							<a href="<?php echo $mosConfig_live_site;?>/administrator/index3.php?option=com_admin&task=sysinfo" target="helpFrame">
 								System Info</a>
 							|
-							<a href="<?php echo $mosConfig_live_site;?>/administrator/index3.php?option=com_admin&task=versioncheck" target="helpFrame">
-								Version Check</a>
-							|
 							<a href="http://www.joomla.org/content/blogcategory/32/66/" target="_blank">
 								Latest Version Info</a>
 						</td>

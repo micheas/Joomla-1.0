@@ -495,7 +495,7 @@ CREATE TABLE `#__newsfeeds` (
 CREATE TABLE `#__poll_data` (
   `id` int(11) NOT NULL auto_increment,
   `pollid` int(4) NOT NULL default '0',
-  `text` text NOT NULL default '',
+  `text` text NOT NULL,
   `hits` int(11) NOT NULL default '0',
   PRIMARY KEY  (`id`),
   KEY `pollid` (`pollid`,`text`(1))

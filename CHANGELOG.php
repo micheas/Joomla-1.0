@@ -42,6 +42,7 @@ code fixes.
  # Fixed templates/madeyourweb/images/indent1.png and indent2.png file size
  # Fixed [artf6160] : Admin, copy category issues, changed message after copy
  # Fixed : Admin, move category issues, changed message after move
+ # Fixed [artf6581] : #__poll_data install SQL incorrect
 
 26-Oct-2006 Emir Sakic
  ^ Removed version check - [artf6486] : Remove "Your Joomla! Installation is ... days old" messages

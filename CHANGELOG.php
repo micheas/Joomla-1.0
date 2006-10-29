@@ -40,6 +40,8 @@ code fixes.
 29-Oct-2006 Mateusz Krzeszowiec
  # Fixed [artf6132] : Admin Session not completely emptied on logout, also removed some code (doublecheck) in administrator/logout.php
  # Fixed templates/madeyourweb/images/indent1.png and indent2.png file size
+ # Fixed [artf6160] : Admin, copy category issues, changed message after copy
+ # Fixed : Admin, move category issues, changed message after move
 
 26-Oct-2006 Emir Sakic
  ^ Removed version check - [artf6486] : Remove "Your Joomla! Installation is ... days old" messages

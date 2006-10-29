@@ -842,8 +842,8 @@ function moveCategorySave( $cid, $sectionOld ) {
 		// clean any existing cache files
 		mosCache::cleanCache( 'com_content' );
 	}
-	
-	$msg = $total ." Categories moved to ". $sectionNew->name;
+
+	$msg = ( (count($cid) - 1) ? 'Categories' : 'Category' ) .' moved to '. $sectionNew->name;		
 	mosRedirect( 'index2.php?option=com_categories&section='. $sectionOld .'&mosmsg='. $msg );
 }
 
@@ -965,7 +965,7 @@ function copyCategorySave( $cid, $sectionOld ) {
 		mosCache::cleanCache( 'com_content' );
 	}
 	
-	$msg = $total .' Categories copied to '. $sectionNew->name;
+	$msg = ( (count($cid) - 1) ? 'Categories' : 'Category' ) .' copied to '. $sectionNew->name;
 	mosRedirect( 'index2.php?option=com_categories&section='. $sectionOld .'&mosmsg='. $msg );
 }
 

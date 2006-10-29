@@ -59,21 +59,7 @@ session_unregister( 'session_username' );
 session_unregister( 'session_usertype' );
 session_unregister( 'session_logintime' );
 
-if (session_is_registered( 'session_id' )) {
-	session_destroy();
-}
-if (session_is_registered( 'session_user_id' )) {
-	session_destroy();
-}
-if (session_is_registered( 'session_username' )) {
-	session_destroy();
-}
-if (session_is_registered( 'session_usertype' )) {
-	session_destroy();
-}
-if (session_is_registered( 'session_logintime' )) {
-	session_destroy();
-}
+session_destroy();
 
 // return to site homepage
 mosRedirect( '../index.php' );

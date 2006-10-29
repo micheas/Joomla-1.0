@@ -37,6 +37,9 @@ code fixes.
 - -> Removed
 ! -> Note
 
+29-Oct-2006 Mateusz Krzeszowiec
+ # Fixed [artf6132] : Admin Session not completely emptied on logout, also removed some code (doublecheck) in administrator/logout.php
+
 26-Oct-2006 Emir Sakic
  ^ Removed version check - [artf6486] : Remove "Your Joomla! Installation is ... days old" messages
 

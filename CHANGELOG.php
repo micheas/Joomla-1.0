@@ -37,6 +37,9 @@ code fixes.
 - -> Removed
 ! -> Note
 
+30-Oct-2006 Mateusz Krzeszowiec
+ # Fixed [artf6132] : Admin Session not completely emptied on logout, also removed some code (doublecheck) in administrator/logout.php continued
+
 29-Oct-2006 Mateusz Krzeszowiec
  # Fixed [artf6132] : Admin Session not completely emptied on logout, also removed some code (doublecheck) in administrator/logout.php
  # Fixed templates/madeyourweb/images/indent1.png and indent2.png file size

@@ -38,7 +38,7 @@ code fixes.
 ! -> Note
 
 01-Nov-2006 Emir Sakic
- ^ Changed new version links to universal ones with redirects on joomla.org
+ ^ Changed new version and forum security links to universal ones with redirects on joomla.org
  # Fixed [artf6131] : UNC support in Joomla
  # Fixed wrong align of drop-down lists in admin content item manager
 

@@ -346,7 +346,7 @@ function josSecurityCheck($width='95%') {
 				?>
 			</ul>
 			<p style="color: #666;">
-				Please check <a href="http://forum.joomla.org/index.php/topic,81058.0.html" target="_blank" style="color: blue; text-decoration: underline">the Official Joomla! Server Security post</a> for more information.
+				Please check <a href="http://www.joomla.org/security10" target="_blank" style="color: blue; text-decoration: underline">the Official Joomla! Server Security post</a> for more information.
 			</p>
 		</div>
 		<?php

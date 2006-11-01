@@ -284,7 +284,7 @@ if (!defined( '_JOS_FULLMENU_MODULE' )) {
 		*/
 	?>			_cmSplit,
 	  			[null,'System',null,null,'System Management',
-	  				['<img src="../includes/js/ThemeOffice/joomla_16x16.png" />', 'Version Check', 'http://www.joomla.org/content/blogcategory/32/66/', '_blank','Version Check'], 				
+	  				['<img src="../includes/js/ThemeOffice/joomla_16x16.png" />', 'Version Check', 'http://www.joomla.org/latest10', '_blank','Version Check'], 				
 	  				['<img src="../includes/js/ThemeOffice/sysinfo.png" />', 'System Info', 'index2.php?option=com_admin&task=sysinfo', null,'System Information'],
 	<?php
 	  		if ($canConfig) {

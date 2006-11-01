@@ -37,6 +37,9 @@ code fixes.
 - -> Removed
 ! -> Note
 
+01-Nov-2006 Emir Sakic
+ ^ Changed new version links to universal ones with redirects on joomla.org
+
 30-Oct-2006 Mateusz Krzeszowiec
  # Fixed [artf6132] : Admin Session not completely emptied on logout, also removed some code (doublecheck) in administrator/logout.php continued
 

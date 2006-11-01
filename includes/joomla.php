@@ -3167,8 +3167,17 @@ function mosPathName($p_path,$p_addtrailingslash = true) {
 				$retval .= '\\';
 			}
 		}
+
+		// Check if UNC path
+		$unc = substr($retval,0,2) == '\\\\' ? 1 : 0;
+
 		// Remove double \\
 		$retval = str_replace( '\\\\', '\\', $retval );
+
+		// If UNC path, we have to add one \ in front or everything breaks!
+		if ( $unc == 1 ) {
+			$retval = '\\'.$retval;
+		}
 	} else {
 		$retval = str_replace( '\\', '/', $p_path );
 		if ($p_addtrailingslash) {
@@ -3176,8 +3185,17 @@ function mosPathName($p_path,$p_addtrailingslash = true) {
 				$retval .= '/';
 			}
 		}
+
+		// Check if UNC path
+		$unc = substr($retval,0,2) == '//' ? 1 : 0;
+
 		// Remove double //
 		$retval = str_replace('//','/',$retval);
+
+		// If UNC path, we have to add one / in front or everything breaks!
+		if ( $unc == 1 ) {
+			$retval = '/'.$retval;
+		}
 	}
 
 	return $retval;
@@ -3603,7 +3621,7 @@ function mosMenuCheck( $Itemid, $menu_option, $task, $gid ) {
 
 		$query = "SELECT *"
 		. "\n FROM #__menu"
-		. "\n WHERE published = 1 AND" 
+		. "\n WHERE published = 1 AND"
 		. "\n link LIKE '$dblink%'"
 		;
 	}

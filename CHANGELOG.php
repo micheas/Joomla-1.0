@@ -40,6 +40,7 @@ code fixes.
 01-Nov-2006 Emir Sakic
  ^ Changed new version links to universal ones with redirects on joomla.org
  # Fixed [artf6131] : UNC support in Joomla
+ # Fixed wrong align of drop-down lists in admin content item manager
 
 30-Oct-2006 Mateusz Krzeszowiec
  # Fixed [artf6132] : Admin Session not completely emptied on logout, also removed some code (doublecheck) in administrator/logout.php continued

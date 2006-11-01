@@ -50,16 +50,16 @@ class HTML_content {
 			<?php
 			if ( $all ) {
 				?>
-				<td width="right" rowspan="2" valign="top">
+				<td align="right" rowspan="2" valign="top">
 				<?php echo $lists['sectionid'];?>
 				</td>
 				<?php
 			}
 			?>
-			<td width="right" valign="top">
+			<td align="right" valign="top">
 			<?php echo $lists['catid'];?>
 			</td>
-			<td width="right" valign="top">
+			<td valign="top">
 			<?php echo $lists['authorid'];?>
 			</td>
 		</tr>
@@ -153,13 +153,13 @@ class HTML_content {
 				$img = 'publish_x.png';
 				$alt = 'Unpublished';
 			}
-			
+
 			// correct times to include server offset info
-			$row->publish_up 	= mosFormatDate( $row->publish_up, _CURRENT_SERVER_TIME_FORMAT );			
+			$row->publish_up 	= mosFormatDate( $row->publish_up, _CURRENT_SERVER_TIME_FORMAT );
 			if (trim( $row->publish_down ) == $nullDate || trim( $row->publish_down ) == '' || trim( $row->publish_down ) == '-' ) {
 				$row->publish_down = 'Never';
 			}
-			$row->publish_down 	= mosFormatDate( $row->publish_down, _CURRENT_SERVER_TIME_FORMAT );		
+			$row->publish_down 	= mosFormatDate( $row->publish_down, _CURRENT_SERVER_TIME_FORMAT );
 
 			$times = '';
 			if ($row->publish_up == $nullDate) {
@@ -328,16 +328,16 @@ class HTML_content {
 			<?php
 			if ( $all ) {
 				?>
-				<td width="right" rowspan="2" valign="top">
+				<td align="right" rowspan="2" valign="top">
 				<?php echo $lists['sectionid'];?>
 				</td>
 				<?php
 			}
 			?>
-			<td width="right">
+			<td align="right" valign="top">
 			<?php echo $lists['catid'];?>
 			</td>
-			<td width="right">
+			<td valign="top">
 			<?php echo $lists['authorid'];?>
 			</td>
 		</tr>
@@ -459,10 +459,10 @@ class HTML_content {
 		global $database;
 
 		mosMakeHtmlSafe( $row );
-		
+
 		$nullDate 		= $database->getNullDate();
 		$create_date 	= null;
-		
+
 		if ( $row->created != $nullDate ) {
 			$create_date 	= mosFormatDate( $row->created, '%A, %d %B %Y %H:%M', '0' );
 		}
@@ -470,7 +470,7 @@ class HTML_content {
 		if ( $row->modified != $nullDate ) {
 			$mod_date 		= mosFormatDate( $row->modified, '%A, %d %B %Y %H:%M', '0' );
 		}
-		
+
 		$tabs = new mosTabs(1);
 
 		// used to hide "Reset Hits" when hits = 0
@@ -660,7 +660,7 @@ class HTML_content {
 					Access Level:
 					</td>
 					<td>
-					<?php echo $lists['access']; ?> 
+					<?php echo $lists['access']; ?>
 					</td>
 				</tr>
 				<tr>
@@ -676,13 +676,13 @@ class HTML_content {
 					Change Creator:
 					</td>
 					<td>
-					<?php echo $lists['created_by']; ?> 
+					<?php echo $lists['created_by']; ?>
 					</td>
 				</tr>
 				<tr>
 					<td valign="top" align="right">Ordering:</td>
 					<td>
-					<?php echo $lists['ordering']; ?> 
+					<?php echo $lists['ordering']; ?>
 					</td>
 				</tr>
 				<tr>

@@ -260,8 +260,10 @@ function activate( $option ) {
 		$database->setQuery( $query );
 		if (!$database->query()) {
 			echo "SQL error" . $database->stderr(true);
+			echo _REG_ACTIVATE_FAILURE;
+		} else {
+			echo _REG_ACTIVATE_COMPLETE;
 		}
-		echo _REG_ACTIVATE_COMPLETE;
 	} else {
 		echo _REG_ACTIVATE_NOT_FOUND;
 	}

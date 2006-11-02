@@ -37,6 +37,9 @@ code fixes.
 - -> Removed
 ! -> Note
 
+02-Nov-2006 Samuel Moffatt
+ # Fixed [artf6484] : com_registration bug
+
 01-Nov-2006 Emir Sakic
  ^ Changed new version and forum security links to universal ones with redirects on joomla.org
  # Fixed [artf6131] : UNC support in Joomla

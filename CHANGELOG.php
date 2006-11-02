@@ -39,6 +39,7 @@ code fixes.
 
 03-Nov-2006 Enno Klasing
  # Fixed [artf6589] : Missing index.html files
+ # Fixed [artf6500] : media manager too easily classifies a file as a mediafile
 
 02-Nov-2006 Samuel Moffatt
  # Fixed [artf6484] : com_registration bug

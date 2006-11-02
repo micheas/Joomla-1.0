@@ -270,7 +270,7 @@ function listImages($listdir) {
 		$images 	= array();
 		$folders 	= array();
 		$docs 		= array();
-		$allowable 	= 'xcf|odg|gif|jpg|png|bmp';
+		$allowable 	= '\.xcf$|\.odg$|\.gif$|\.jpg$|\.png$|\.bmp$';
 
 		while (false !== ($entry = $d->read())) {
 			$img_file = $entry;

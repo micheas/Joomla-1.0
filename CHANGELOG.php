@@ -37,6 +37,9 @@ code fixes.
 - -> Removed
 ! -> Note
 
+03-Nov-2006 Enno Klasing
+ # Fixed [artf6589] : Missing index.html files
+
 02-Nov-2006 Samuel Moffatt
  # Fixed [artf6484] : com_registration bug
 

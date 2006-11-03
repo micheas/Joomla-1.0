@@ -204,7 +204,7 @@ class HTML_config {
 				<td>
 					<?php echo $lists['frontend_login']; ?>
 					<?php
-					$tip = 'If `No`, disables the Frontend login page even when not associated with a menu item. Will also disable Registration functionality';
+					$tip = 'If `No`, disables the Frontend login page and module even when associated with a menu item. Will also disable Registration functionality';
 					echo mosToolTip( $tip );
 					?>
 				</td>

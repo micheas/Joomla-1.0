@@ -37,6 +37,9 @@ code fixes.
 - -> Removed
 ! -> Note
 
+3-Nov-2006 Mateusz Krzeszowiec
+ # Fixed [artf6542] : Quotes in User Name lost when editing
+
 03-Nov-2006 Enno Klasing
  # Fixed [artf6589] : Missing index.html files
  # Fixed [artf6500] : media manager too easily classifies a file as a mediafile

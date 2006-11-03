@@ -39,6 +39,7 @@ code fixes.
 
 3-Nov-2006 Mateusz Krzeszowiec
  # Fixed [artf6542] : Quotes in User Name lost when editing
+ # Fixed [artf6522] : Quotes in User Name breaks checkedOut overlib 
 
 03-Nov-2006 Enno Klasing
  # Fixed [artf6589] : Missing index.html files

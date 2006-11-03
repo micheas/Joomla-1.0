@@ -130,6 +130,8 @@ class HTML_content {
 		for ($i=0, $n=count( $rows ); $i < $n; $i++) {
 			$row = &$rows[$i];
 
+			mosMakeHtmlSafe($row);
+			
 			$link 	= 'index2.php?option=com_content&sectionid='. $redirect .'&task=edit&hidemainmenu=1&id='. $row->id;
 
 			$row->sect_link 	= 'index2.php?option=com_sections&task=editA&hidemainmenu=1&id='. $row->sectionid;
@@ -207,7 +209,7 @@ class HTML_content {
 				} else {
 					?>
 					<a href="<?php echo $link; ?>" title="Edit Content">
-					<?php echo htmlspecialchars($row->title, ENT_QUOTES); ?>
+					<?php echo $row->title; ?>
 					</a>
 					<?php
 				}

@@ -39,6 +39,7 @@ code fixes.
 
 03-Nov-2006 Alex Kempkens
  # Fixed [artf6415] : Tooltip or function is not correct in Global Configuration
+ # Fixed [artf6650] : Flyover help not translated in com_content
 
 3-Nov-2006 Mateusz Krzeszowiec
  # Fixed [artf6542] : Quotes in User Name lost when editing

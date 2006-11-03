@@ -1193,9 +1193,9 @@ class HTML_content {
 					<input class="button" type="button" value="<?php echo _E_INSERT; ?>" onclick="addSelectedToList('adminForm','imagefiles','imagelist')" />
 				</td>
 				<td width="2%">
-					<input class="button" type="button" value=">>" onclick="addSelectedToList('adminForm','imagefiles','imagelist')" title="Add"/>
+					<input class="button" type="button" value=">>" onclick="addSelectedToList('adminForm','imagefiles','imagelist')" title="<?php echo _E_ADD; ?>"/>
 					<br/>
-					<input class="button" type="button" value="<<" onclick="delSelectedFromList('adminForm','imagelist')" title="Remove"/>
+					<input class="button" type="button" value="<<" onclick="delSelectedFromList('adminForm','imagelist')" title="<?php echo _E_REMOVE; ?>"/>
 				</td>
 				<td valign="top">
 					<?php echo $lists['imagelist'];?>

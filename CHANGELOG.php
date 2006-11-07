@@ -39,6 +39,7 @@ code fixes.
 
 08-Nov-2006 Enno Klasing
  # Fixed [artf6528] : Wrong markup in two admin modules
+ # Fixed [artf6350] : overDiv not created in proper place
 
 03-Nov-2006 Alex Kempkens
  # Fixed [artf6415] : Tooltip or function is not correct in Global Configuration

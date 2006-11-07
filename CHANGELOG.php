@@ -37,6 +37,9 @@ code fixes.
 - -> Removed
 ! -> Note
 
+08-Nov-2006 Enno Klasing
+ # Fixed [artf6528] : Wrong markup in two admin modules
+
 03-Nov-2006 Alex Kempkens
  # Fixed [artf6415] : Tooltip or function is not correct in Global Configuration
  # Fixed [artf6650] : Flyover help not translated in com_content

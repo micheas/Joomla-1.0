@@ -41,48 +41,54 @@ function botTinymceEditorInit() {
 		$theme = 'advanced';
 	}
 	
-	$toolbar 			= $params->def( 'toolbar', 'top' );
-	$html_height		= $params->def( 'html_height', '550' );
-	$html_width			= $params->def( 'html_width', '750' );
-	$text_direction		= $params->def( 'text_direction', 'ltr' );
-	$content_css		= $params->def( 'content_css', 1 );
-	$content_css_custom	= $params->def( 'content_css_custom', '' );
-	$invalid_elements	= $params->def( 'invalid_elements', 'script,applet,iframe' );
-	$newlines			= $params->def( 'newlines', 0 );
-	$cleanup			= $params->def( 'cleanup', 1 );
-	$cleanup_startup	= $params->def( 'cleanup_startup', 0 );
-	$compressed			= $params->def( 'compressed', 0 );
-	$relative_urls		= $params->def( 'relative_urls', 0 );
+	$toolbar 			= $params->def( 'toolbar', 				'top' );
+	$html_height		= $params->def( 'html_height', 			'550' );
+	$html_width			= $params->def( 'html_width', 			'750' );
+	$text_direction		= $params->def( 'text_direction', 		'ltr' );
+	$content_css		= $params->def( 'content_css', 			1 );
+	$content_css_custom	= $params->def( 'content_css_custom', 	'' );
+	$invalid_elements	= $params->def( 'invalid_elements', 	'script,applet,iframe' );
+	$newlines			= $params->def( 'newlines', 			0 );
+	$cleanup			= $params->def( 'cleanup', 				1 );
+	$cleanup_startup	= $params->def( 'cleanup_startup', 		0 );
+	$compressed			= $params->def( 'compressed', 			0 );
+	$relative_urls		= $params->def( 'relative_urls', 		0 );
 	
 	// Plugins
 	// preview
-	$preview			= $params->def( 'preview', 1 );
-	$preview_height		= $params->def( 'preview_height', '550' );
-	$preview_width		= $params->def( 'preview_width', '750' );
+	$preview			= $params->def( 'preview', 				1 );
+	$preview_height		= $params->def( 'preview_height', 		'550' );
+	$preview_width		= $params->def( 'preview_width', 		'750' );
 	// insert date
-	$insertdate			= $params->def( 'insertdate', 1 );
-	$format_date		= $params->def( 'format_date', '%Y-%m-%d' );
+	$insertdate			= $params->def( 'insertdate', 			1 );
+	$format_date		= $params->def( 'format_date', 			'%Y-%m-%d' );
 	// insert time
-	$inserttime			= $params->def( 'inserttime', 1 );
-	$format_time		= $params->def( 'format_time', '%H:%M:%S' );
+	$inserttime			= $params->def( 'inserttime', 			1 );
+	$format_time		= $params->def( 'format_time', 			'%H:%M:%S' );
 	// search & replace
-	$searchreplace		=  $params->def( 'searchreplace', 1 );
+	$searchreplace		=  $params->def( 'searchreplace', 		1 );
 	// emotions
-	$smilies			=  $params->def( 'smilies', 1 );
+	$smilies			=  $params->def( 'smilies', 			1 );
 	// flash
-	$flash				=  $params->def( 'flash', 1 );
+	$flash				=  $params->def( 'flash', 				1 );
 	// table
-	$table				=  $params->def( 'table', 1 );
+	$table				=  $params->def( 'table', 				1 );
 	// horizontal line
-	$hr					=  $params->def( 'hr', 1 );
+	$hr					=  $params->def( 'hr', 					1 );
 	// fullscreen
-	$fullscreen			=  $params->def( 'fullscreen', 1 );
+	$fullscreen			=  $params->def( 'fullscreen', 			1 );
 	// autosave
-	$autosave			= $params->def( 'autosave', 0 );
+	$autosave			= $params->def( 'autosave', 			0 );
 	// layer
-	$layer				= $params->def( 'layer', 1 );
+	$layer				= $params->def( 'layer', 				1 );
 	// style
-	$style				= $params->def( 'style', 1 );
+	$style				= $params->def( 'style', 				1 );
+	// visualchars
+	$visualchars		= $params->def( 'visualchars', 			1 );
+	// media
+	$media				= $params->def( 'media', 				1 );
+	// nonbreaking
+	$nonbreaking		= $params->def( 'nonbreaking', 			1 );
 
 	if ( $relative_urls ) {
 		$relative_urls = 'true';
@@ -144,9 +150,20 @@ function botTinymceEditorInit() {
 	
 	// Tiny Compressed mode
 	if ( $compressed ) {		
-		$load = '<script type="text/javascript" src="'. $mosConfig_live_site .'/mambots/editors/tinymce/jscripts/tiny_mce/tiny_mce_gzip.php"></script>';
+		$load 				= '<script type="text/javascript" src="'. $mosConfig_live_site .'/mambots/editors/tinymce/jscripts/tiny_mce/tiny_mce_gzip.js"></script>';
+		$load_init 			= '
+		<script type="text/javascript">
+		tinyMCE_GZ.init({
+			plugins : \'style,layer,table,save,advhr,advimage,advlink,emotions,insertdatetime,preview,media,searchreplace,print,contextmenu,paste,directionality,fullscreen,noneditable,visualchars,nonbreaking\',
+			themes : \'simple,advanced\',
+			languages : \'en\',
+			disk_cache : true,
+			debug : false
+		});
+		</script>';
 	} else {
-		$load = '<script type="text/javascript" src="'. $mosConfig_live_site .'/mambots/editors/tinymce/jscripts/tiny_mce/tiny_mce_src.js"></script>';
+		$load 				= '<script type="text/javascript" src="'. $mosConfig_live_site .'/mambots/editors/tinymce/jscripts/tiny_mce/tiny_mce_src.js"></script>';
+		$load_init 			= '';
 	}
 
 	// preview
@@ -214,6 +231,21 @@ function botTinymceEditorInit() {
 		$plugins[]	= 'style';
 		$buttons3[]	= 'styleprops';
 	}
+	// visualchars
+	if ( $visualchars ) {
+		$plugins[]	= 'visualchars';
+		$buttons3[]	= 'visualchars';
+	}
+	// media
+	if ( $media ) {
+		$plugins[]	= 'media';
+		$buttons3[]	= 'media';
+	}
+	// nonbreaking
+	if ( $nonbreaking ) {
+		$plugins[]			= 'nonbreaking';
+		$buttons3[]			= 'nonbreaking';
+	}
 
 	$buttons2 	= implode( ', ', $buttons2 );
 	$buttons3 	= implode( ', ', $buttons3 );
@@ -222,6 +254,7 @@ function botTinymceEditorInit() {
 	
 return <<<EOD
 	$load	
+	$load_init	
 	<script type="text/javascript">
 	tinyMCE.init({
 		theme : "$theme",
@@ -251,6 +284,8 @@ return <<<EOD
 		plugin_preview_width : "$preview_width",
 		plugin_preview_height : "$preview_height",
 		extended_valid_elements : "a[name|href|target|title|onclick], img[class|src|border=0|alt|title|hspace|vspace|width|height|align|onmouseover|onmouseout|name], $elements",
+		disk_cache : true,
+		debug : false,	
 		fullscreen_settings : {
 			theme_advanced_path_location : "top"
 		}
@@ -266,8 +301,7 @@ return <<<EOD
 			vHTML = tinyMCE.regexpReplace(vHTML, 'mce_real_href\s*=\s*"?', '', 'gi');
 		}
 		return vHTML;
-	}
-	
+	}	
 </script>
 EOD;
 }

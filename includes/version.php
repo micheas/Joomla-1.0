@@ -46,7 +46,7 @@ class joomlaVersion {
 	/** @var string Whether site has restricted functionality mostly used for demo sites: 0 is default */
 	var $RESTRICT	= 0;
 	/** @var string Whether site is still in development phase (disables checks for /installation folder) - should be set to 0 for package release: 0 is default */
-	var $SVN		= 0;
+	var $SVN		= 1;
 
 	
 	/**

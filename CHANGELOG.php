@@ -37,32 +37,49 @@ code fixes.
 - -> Removed
 ! -> Note
 
+
+----------------------------------------------------------------------------------------
+---------------- 1.0.12 In Development -- [**-***-**** **:** UTC] ------------------
+
+
+08-Nov-2006 Rey Gigataras
+ # Fixed [artf6689] : TinyMCE updated to 2.0.8
+ # Fixed [artf6689] : TinyMCE GZip compressors updated to 1.0.9 
+ 
+
 08-Nov-2006 Enno Klasing
  # Fixed [artf6528] : Wrong markup in two admin modules
  # Fixed [artf6350] : overDiv not created in proper place
+
 
 03-Nov-2006 Alex Kempkens
  # Fixed [artf6415] : Tooltip or function is not correct in Global Configuration
  # Fixed [artf6650] : Flyover help not translated in com_content
 
-3-Nov-2006 Mateusz Krzeszowiec
+
+03-Nov-2006 Mateusz Krzeszowiec
  # Fixed [artf6542] : Quotes in User Name lost when editing
  # Fixed [artf6522] : Quotes in User Name breaks checkedOut overlib 
+
 
 03-Nov-2006 Enno Klasing
  # Fixed [artf6589] : Missing index.html files
  # Fixed [artf6500] : media manager too easily classifies a file as a mediafile
 
+
 02-Nov-2006 Samuel Moffatt
  # Fixed [artf6484] : com_registration bug
+
 
 01-Nov-2006 Emir Sakic
  ^ Changed new version and forum security links to universal ones with redirects on joomla.org
  # Fixed [artf6131] : UNC support in Joomla
  # Fixed wrong align of drop-down lists in admin content item manager
 
+
 30-Oct-2006 Mateusz Krzeszowiec
  # Fixed [artf6132] : Admin Session not completely emptied on logout, also removed some code (doublecheck) in administrator/logout.php continued
+
 
 29-Oct-2006 Mateusz Krzeszowiec
  # Fixed [artf6132] : Admin Session not completely emptied on logout, also removed some code (doublecheck) in administrator/logout.php
@@ -71,8 +88,10 @@ code fixes.
  # Fixed : Admin, move category issues, changed message after move
  # Fixed [artf6581] : #__poll_data install SQL incorrect
 
+
 26-Oct-2006 Emir Sakic
  ^ Removed version check - [artf6486] : Remove "Your Joomla! Installation is ... days old" messages
+
 
 22-Oct-2006 Mateusz Krzeszowiec
  # Fixed [artf6441] : Incorrect spelling Poll
@@ -80,52 +99,65 @@ code fixes.
  # Fixed : Admin, move category issues
  # Fixed : Small security issue in com_categories - no input validation
 
+
 21-Oct-2006 Enno Klasing
  # Fixed [artf6253] : Content Blog Section, several notices
  # Fixed [artf6440] : Menu name htmlentitized when toggling published/unpublished
+
 
 19-Oct-2006 Enno Klasing
  # Fixed [artf6470] : pageNavigation/php - minor bug/improvement
  # Fixed [artf5890] : Content item count incorrect (public/registered)
 
+
 18-Oct-2006 Marko Schmuck
  # Fixed [artf5229] : database.php: loadRowList($key) not working as expected
+
 
 16-Oct-2006 Alex Kempkens
  ^ little query issue for multilingual support (frontpage/search bot)
 
+
 15-Oct-2006 Enno Klasing
  # Fixed [artf6430] : htaccess tweak
+
 
 15-Oct-2006 Emir Sakic
 # Fixed [artf5760] : 'more' functionality in blogs showing links even though they shouldn't
 # Fixed [artf6058] : Apostrophes not stripslashed in Category names
 
+
 11-Oct-2006 Emir Sakic
 # Fixed [artf6141] : check all in com_trash for menu items
+
 
 10-Oct-2006 Emir Sakic
 ^ Refactored admin trash manager to be consistent with other managers
 # Fixed [artf6141] : com_trash administrative component navigation problem
 
-4-Oct-2006 Sam Moffatt
+
+04-Oct-2006 Sam Moffatt
 # Fixed [artf5955] : get_group_parents() with default $recurse parameter
 # Fixed [artf6181] : Search: Itemid in com_search also gets wrong Itemid's
 # Fixed [artf6172] : (FRONTEND)mosPageNavigation::writeLeafsCounter doesn't diplay correct page numbers
 # Fixed [artf6169] : showCategories produces non w3c valid list
 
-3-Oct-2006 Mateusz Krzeszowiec
+
+03-Oct-2006 Mateusz Krzeszowiec
 # Fixed [artf5926] : Incorrect determination of Itemid for content items links in Blog - Content Section, look in tracker for details
 
-1-Oct-2006 Mateusz Krzeszowiec
+
+01-Oct-2006 Mateusz Krzeszowiec
  # Fixed [artf6074] : Joomla! using trashed menu item permission level in some cases
  # Fixed [artf6084] : com_content division by zero warning
  # Fixed [artf6153] : Invalid constant in field description
+
 
 23-Sep-2006 Mateusz Krzeszowiec
  # Fixed [artf6004] : Search results include several hits for the same document
  # Fixed [artf6041] : username when sending PM instead of name
  # Fixed [artf5989] : not optimal mosMakePassword()
+
 
 22-Sep-2006 Enno Klasing
  # Fixed [artf5983] : Undefined variables in com_content
@@ -135,19 +167,24 @@ code fixes.
  # Fixed [artf5986] : mosMail and empty sender information
  # Fixed [artf6075] : "CheckIn My Items" checks in all Items
 
+
 22-Sep-2006 Marko Schmuck
  # Fixed [artf5507] : "&" character in Global Site Meta Description field results in "&amp;amp;"
  # Fixed [artf5788] : Frontpage content item category links enable section links, and section links generate '&' and not '&amp;' in their html
+
 
 20-Sep-2006 Emir Sakic
  # Fixed [artf5202] : administrator typed content search pagination problem
  # Fixed [artf5908] : Menu Item in Pathway not linked when custom pathway appended
 
+
 18-Sep-2006 Mateusz Krzeszowiec
  # Fixed [artf5848] : Poll component not displaying info, XML file moved to proper directory
 
+
 18-Sep-2006 Sam Moffatt
  # Fixed [artf5887] : mosMakePath mkdir with trailing slash not working (when using hardened PHP)
+
 
 17-Sep-2006 Enno Klasing
  # Full scale audit of all database queries
@@ -155,38 +192,47 @@ code fixes.
  # Added check to com_categories if requested table exists
  # Fixed [artf5961] : mosMessage::send() uses noninitialized variables
 
+
 14-Sep-2006 Marko Schmuck
  # Fixed [artf5481] : Parameter values not made HTML safe in editing form input control
  # Fixed [artf5906] : "New" icon missing in sections with categories but no content
  # Fixed [artf5166] : Server Time offset issue, while submitting news
 
+
 14-Sep-2006 Sam Moffatt
  # Fixed [artf5476] : Template media import broken. Cannot import media files.
+
 
 12-Sep-2006 Sam Moffatt
  # Fixed [artf5866] : com_content uses corrupted global $id for page navigation
  # Fixed [artf5719] : header_version.png right top
 
+
 10-Sep-2006 Marko Schmuck
  # Fixed [artf5761] : single quote in sitename formats incorrectly with massmail
  # Fixed [artf5249] : Image align="center" command is Invalid - Should be align="middle"
 
+
 09-Sep-2006 Marko Schmuck
  # Fixed [artf5753] : ampersand in action URL of showArchiveCategory form should be an entity
  # Fixed [artf5493][topic,81903] : Search error in PHP5 arraymerge - search for static content without a menulink
+
 
 06-Sep-2006 Marko Schmuck
  # Fixed [artf5367] : Better mysql statement in content.searchbot.php
  # Fixed [artf5141] : image attribute name="image" breaks xhtml compliance when output multiple times
  # Fixed [artf5811] : Search component generates invalid html
 
+
 06-Sep-2006 Andrew Eddie
  # Fixed [artf5799] : mysql_real_escape_string called incorrectly in database.php
  # Fixed [artf5581] : canDelete method doesn't work
 
+
 31-August-2006 Mateusz Krzeszowiec
  # Fixed [artf5780] : lack of 'new' task in allowed tasks check
  # Fixed [artf5779] : lack of 'com_typedcontent' option in allowed options check
+
 
 31-August-2006 Marko Schmuck
  # Fixed [artf5770] : $query variable not defined in functions in gacl.api.class.php

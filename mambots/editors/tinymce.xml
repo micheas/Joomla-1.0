@@ -68,6 +68,10 @@
  			<option value="0">Hide</option>
  			<option value="1">Show</option>
  		</param>
+ 		<param name="media" type="radio" default="1" label="Media" description="Show/Hide the Media button. Allows embedding embedded media such as QuickTime, Flash, ShockWave, RealPlayer and Windows Media Player. Only works in `Advanced` mode">
+ 			<option value="0">Hide</option>
+ 			<option value="1">Show</option>
+ 		</param>
  		<param name="hr" type="radio" default="1" label="Horizontal Rule" description="Show/Hide the Horizontal Rule button">
  			<option value="0">Hide</option>
  			<option value="1">Show</option>
@@ -80,7 +84,15 @@
  			<option value="0">Hide</option>
  			<option value="1">Show</option>
  		</param>
- 		<param name="@spacer" type="spacer" default="" label="" description="" />
+ 		<param name="visualchars" type="radio" default="1" label="View Inivisible Chars" description="Show/Hide the View Inivisible Chars button. Allow possibility to see invisible characters like nonbreaking spaces. Only works in `Advanced` mode">
+ 			<option value="0">Hide</option>
+ 			<option value="1">Show</option>
+ 		</param>
+ 		<param name="nonbreaking" type="radio" default="1" label="Nonbreaking Space" description="Show/Hide the Nonbreaking space button. Insert nonbreaking space entities at the current carent location. Only works in `Advanced` mode">
+ 			<option value="0">Hide</option>
+ 			<option value="1">Show</option>
+ 		</param>
+  		<param name="@spacer" type="spacer" default="" label="" description="" />
  		<param name="fullscreen" type="radio" default="1" label="Fullscreen" description="Show/Hide the Fullscreen button. Only works in `Advanced` mode">
  			<option value="0">Hide</option>
  			<option value="1">Show</option>

@@ -674,7 +674,6 @@ class database {
 *
 * Parent classes to all database derived objects.  Customisation will generally
 * not involve tampering with this object.
-* @package Joomla
 * @author Andrew Eddie <eddieajau@users.sourceforge.net
 */
 class mosDBTable {

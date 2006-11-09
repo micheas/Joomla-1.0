@@ -41,11 +41,13 @@ code fixes.
 ----------------------------------------------------------------------------------------
 ---------------- 1.0.12 In Development -- [**-***-**** **:** UTC] ------------------
 
+09-Nov-2006 Emir Sakic
+ # Fixed [artf6175] : Javascript - Error in function previewImage()
 
 08-Nov-2006 Rey Gigataras
  # Fixed [artf6689] : TinyMCE updated to 2.0.8
- # Fixed [artf6689] : TinyMCE GZip compressors updated to 1.0.9 
- 
+ # Fixed [artf6689] : TinyMCE GZip compressors updated to 1.0.9
+
 
 08-Nov-2006 Enno Klasing
  # Fixed [artf6528] : Wrong markup in two admin modules
@@ -59,7 +61,7 @@ code fixes.
 
 03-Nov-2006 Mateusz Krzeszowiec
  # Fixed [artf6542] : Quotes in User Name lost when editing
- # Fixed [artf6522] : Quotes in User Name breaks checkedOut overlib 
+ # Fixed [artf6522] : Quotes in User Name breaks checkedOut overlib
 
 
 03-Nov-2006 Enno Klasing

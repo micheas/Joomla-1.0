@@ -268,8 +268,9 @@ function previewImage( list, image, base_path ) {
 	form = document.adminForm;
 	srcList = eval( "form." + list );
 	srcImage = eval( "document." + image );
-	var fileName = srcList.options[srcList.selectedIndex].text;
-	var fileName2 = srcList.options[srcList.selectedIndex].value;
+	var srcOption = srcList.options[(srcList.selectedIndex < 0) ? 0 : srcList.selectedIndex];
+	var fileName = srcOption.text;
+	var fileName2 = srcOption.value;
 	if (fileName.length == 0 || fileName2.length == 0) {
 		srcImage.src = 'images/blank.gif';
 	} else {

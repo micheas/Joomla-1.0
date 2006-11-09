@@ -44,6 +44,7 @@ code fixes.
 09-Nov-2006 Emir Sakic
  # Fixed [artf6175] : Javascript - Error in function previewImage()
 
+
 08-Nov-2006 Rey Gigataras
  # Fixed [artf6689] : TinyMCE updated to 2.0.8
  # Fixed [artf6689] : TinyMCE GZip compressors updated to 1.0.9

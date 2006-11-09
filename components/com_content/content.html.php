@@ -41,7 +41,7 @@ class HTML_content {
 		if ( $params->get( 'page_title' ) ) {
 			?>
 			<div class="componentheading<?php echo $params->get( 'pageclass_sfx' ); ?>">
-			<?php echo $title->name; ?>
+			<?php echo htmlspecialchars( $title->name, ENT_QUOTES ); ?>
 			</div>
 			<?php
 		}
@@ -125,7 +125,7 @@ class HTML_content {
 		<ul>
 		<?php
 		foreach ( $other_categories as $row ) {
-			$row->name = stripslashes(ampReplace($row->name));
+			$row->name = htmlspecialchars( stripslashes( ampReplace( $row->name ) ), ENT_QUOTES );
 			if ( $catid != $row->id ) {
 				?>
 				<li>

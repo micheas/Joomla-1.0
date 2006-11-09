@@ -1603,6 +1603,8 @@ function show( $row, $params, $gid, &$access, $pop, $option='com_content', $Item
 		$row->rating 		= $voting->rating;
 		$row->rating_count 	= $voting->rating_count;
 	}
+
+	$row->category = htmlspecialchars( stripslashes( $row->category ), ENT_QUOTES );
 	if ( $params->get( 'section_link' ) || $params->get( 'category_link' ) ) {
 		// loads the link for Section name
 		if ( $params->get( 'section_link' ) && $row->sectionid ) {
@@ -2082,6 +2084,7 @@ function saveContent( &$access, $task ) {
 	;
 	$database->setQuery( $query	);
 	$category = $database->loadResult();
+	$category = stripslashes( $category );
 
 	if ( $isNew ) {
 		// messaging for new items

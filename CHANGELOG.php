@@ -41,6 +41,10 @@ code fixes.
 ----------------------------------------------------------------------------------------
 ---------------- 1.0.12 In Development -- [**-***-**** **:** UTC] ------------------
 
+09-Nov-2006 Enno Klasing
+ # Fixed [artf6058] : Apostrophes not stripslashed in Category names
+
+
 09-Nov-2006 Emir Sakic
  # Fixed [artf6175] : Javascript - Error in function previewImage()
 

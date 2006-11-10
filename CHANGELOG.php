@@ -44,6 +44,7 @@ code fixes.
 10-Nov-2006 Emir Sakic
  # Fixed [artf6709] : Media Manager Error for uploading a file, without select anything
 
+
 09-Nov-2006 Enno Klasing
  # Fixed [artf6058] : Apostrophes not stripslashed in Category names
 

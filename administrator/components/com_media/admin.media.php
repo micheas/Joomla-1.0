@@ -78,7 +78,7 @@ switch ($task) {
 	case 'cancel':
 		mosRedirect( 'index2.php' );
 		break;
-	
+
 	default:
 		showMedia( $listdir );
 		break;
@@ -142,7 +142,7 @@ function upload() {
 	if (isset($_FILES['upload']) && is_array($_FILES['upload']) && isset($_POST['dirPath'])) {
 		$dirPathPost 	= $_POST['dirPath'];
 		$file 			= $_FILES['upload'];
-		
+
 		if (strlen($dirPathPost) > 0) {
 			if (substr($dirPathPost,0,1) == '/') {
 				$IMG_ROOT .= $dirPathPost;
@@ -162,10 +162,13 @@ function upload() {
 function do_upload($file, $dest_dir) {
 	global $clearUploads;
 
-	if (file_exists($dest_dir.$file['name'])) {
-		mosRedirect( "index2.php?option=com_media&listdir=".$_POST['dirPath'], "Upload FAILED.File already exists" );
+	if (empty($file['name'])) {
+		mosRedirect( "index2.php?option=com_media&listdir=".$_POST['dirPath'], "Upload file not selected" );
 	}
-	
+	if (file_exists($dest_dir.$file['name'])) {
+		mosRedirect( "index2.php?option=com_media&listdir=".$_POST['dirPath'], "Upload FAILED. File already exists" );
+	}
+
 	$format = substr( $file['name'], -3 );
 
 	$allowable = array (

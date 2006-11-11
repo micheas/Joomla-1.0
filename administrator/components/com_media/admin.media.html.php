@@ -20,11 +20,6 @@ defined( '_VALID_MOS' ) or die( 'Restricted access' );
 class HTML_Media {
 	function showMedia($dirPath,$listdir ) {
 		?>
-		<head>
-		<style type="text/css">
-
-		</style>
-		</head>
 		<script language="javascript" type="text/javascript">
 		function dirup(){
 			var urlquery=frames['imgManager'].location.search.substring(1);
@@ -40,7 +35,6 @@ class HTML_Media {
 			frames['imgManager'].location.href='index3.php?option=com_media&task=list&listdir=' + dir;
 		}
 		</script>
-		<body>
 
 		<form action="index2.php" name="adminForm" method="post" enctype="multipart/form-data" >
 		<table width="100%" align="center">
@@ -130,8 +124,6 @@ class HTML_Media {
 		<input type="hidden" name="task" value="" />
 		<input type="hidden" name="cb1" id="cb1" value="0" />
 		</form>
-		</body>
-		</html>
 		<?php
 	}
 
@@ -428,9 +420,8 @@ class HTML_Media {
 
 			return false;
 		}
+		updateDir();
 		</script>
-		</head>
-		<body onload="updateDir()">
 		<style type="text/css">
 		<!--
 		div.imgTotal {

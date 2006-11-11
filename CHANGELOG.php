@@ -41,6 +41,10 @@ code fixes.
 ----------------------------------------------------------------------------------------
 ---------------- 1.0.12 In Development -- [**-***-**** **:** UTC] ------------------
 
+11-Nov-2006 Enno Klasing
+ # Fixed [artf6720] : Wrong markup on com_media
+
+
 10-Nov-2006 Emir Sakic
  # Fixed [artf6709] : Media Manager Error for uploading a file, without select anything
 

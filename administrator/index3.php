@@ -61,8 +61,8 @@ initGzip();
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <title><?php echo $mosConfig_sitename; ?> - Administration [Joomla]</title>
-<link rel="stylesheet" href="templates/<?php echo $mainframe->getTemplate(); ?>/css/template_css.css" type="text/css">
-<link rel="stylesheet" href="templates/<?php echo $mainframe->getTemplate(); ?>/css/theme.css" type="text/css">
+<link rel="stylesheet" href="templates/<?php echo $mainframe->getTemplate(); ?>/css/template_css.css" type="text/css" />
+<link rel="stylesheet" href="templates/<?php echo $mainframe->getTemplate(); ?>/css/theme.css" type="text/css" />
 <script language="JavaScript" src="../includes/js/JSCookMenu_mini.js" type="text/javascript"></script>
 <script language="JavaScript" src="includes/js/ThemeOffice/theme.js" type="text/javascript"></script>
 <script language="JavaScript" src="../includes/js/joomla.javascript.js" type="text/javascript"></script>

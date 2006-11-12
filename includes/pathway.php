@@ -277,7 +277,7 @@ function showPathway( $Itemid ) {
 	}
 
 	while ($i--) {
-		if (!$mid || empty( $mitems[$mid] ) || $mid == 1 || !eregi("option", $optionstring)) {
+		if (!$mid || empty( $mitems[$mid] ) || $Itemid == $home_menu->id || !eregi("option", $optionstring)) {
 			break;
 		}
 		$item =& $mitems[$mid];

@@ -41,6 +41,9 @@ code fixes.
 ----------------------------------------------------------------------------------------
 ---------------- 1.0.12 In Development -- [**-***-**** **:** UTC] ------------------
 
+12-Nov-2006 Alex Kempkens
+ # Fixed [artf6713] : double title in the pathway
+
 12-Nov-2006 Mateusz Krzeszowiec
  # Fixed [artf6611] : Admin, copy section issues
 

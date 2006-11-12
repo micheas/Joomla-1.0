@@ -1,7 +1,7 @@
 <?xml version="1.0" ?>
 <mosinstall version="1.0.0" type="mambot" group="editors">
 	<name>TinyMCE</name>
-	<version>2.0 RC2</version>
+	<version>2.0.8</version>
 	<creationDate>2005</creationDate>
 	<author>Moxiecode Systems AB</author>
 	<authorEmail>N/A</authorEmail>

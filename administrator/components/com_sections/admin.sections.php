@@ -593,95 +593,73 @@ function copySectionSave( $sectionid ) {
 	global $database;
 
 	$title 		= stripslashes( strval( mosGetParam( $_REQUEST, 'title', '' ) ) );
-	$contentid 	= mosGetParam( $_REQUEST, 'content', '' );
-	$categoryid = mosGetParam( $_REQUEST, 'category', '' );
-
-	// copy section
+	$categories = josGetArrayInts( 'category', $_REQUEST, array(0) );
+	$items 		= josGetArrayInts( 'content', $_REQUEST, array(0) );
+		
+	// create new section
+	
 	$section = new mosSection ( $database );
-	foreach( $sectionid as $id ) {
-		$section->load( $id );
-		$section->id 	= NULL;
-		$section->title = $title;
-		$section->name 	= $title;
-		if ( !$section->check() ) {
-			echo "<script> alert('".$section->getError()."'); window.history.go(-1); </script>\n";
-			exit();
-		}
-
-		if ( !$section->store() ) {
-			echo "<script> alert('".$section->getError()."'); window.history.go(-1); </script>\n";
-			exit();
-		}
-		$section->checkin();
-		$section->updateOrder( "section = " . $database->Quote( $section->id ) );
-		// stores original catid
-		$newsectids[]["old"] = $id;
-		// pulls new catid
-		$newsectids[]["new"] = $section->id;
+	$section->id = null;
+	$section->title = $title;
+	$section->name 	= $title;
+	$section->scope = 'content';
+	$section->published = 1;
+	if ( !$section->check() ) {
+		echo "<script> alert('".$section->getError()."'); window.history.go(-1); </script>\n";
+		exit();
 	}
-	$sectionMove = $section->id;
-
-	// copy categories
-	$category = new mosCategory ( $database );
-	foreach( $categoryid as $id ) {
-		$category->load( $id );
-		$category->id = NULL;
-		$category->section = $sectionMove;
-		foreach( $newsectids as $newsectid ) {
-			if ( $category->section == $newsectid["old"] ) {
-				$category->section = $newsectid["new"];
-			}
-		}
+	if ( !$section->store() ) {
+		echo "<script> alert('".$section->getError()."'); window.history.go(-1); </script>\n";
+		exit();
+	}
+	$section->checkin();
+	$newSectionId = $section->id;	
+	
+	
+	// new section created, now copy categories
+	
+	// old/new category lookup array
+	$newOldCatLookup = array();
+	
+	foreach( $categories as $categoryId ) {
+		$category = new mosCategory( $database );
+		$category->load( $categoryId );
+		$category->id = null;
+		$category->section = $newSectionId;
+		
 		if (!$category->check()) {
 			echo "<script> alert('".$category->getError()."'); window.history.go(-1); </script>\n";
 			exit();
 		}
-
 		if (!$category->store()) {
 			echo "<script> alert('".$category->getError()."'); window.history.go(-1); </script>\n";
 			exit();
 		}
 		$category->checkin();
-		$category->updateOrder( "section = " . $database->Quote( $category->section ) );
-		// stores original catid
-		$newcatids[]["old"] = $id;
-		// pulls new catid
-		$newcatids[]["new"] = $category->id;
+		$newOldCatLookup[$categoryId] = $category->id;
 	}
-
-	$content = new mosContent ( $database );
-	foreach( $contentid as $id) {
-		$content->load( $id );
-		$content->id = NULL;
-		$content->hits = 0;
-		foreach( $newsectids as $newsectid ) {
-			if ( $content->sectionid == $newsectid["old"] ) {
-				$content->sectionid = $newsectid["new"];
-			}
-		}
-		foreach( $newcatids as $newcatid ) {
-			if ( $content->catid == $newcatid["old"] ) {
-				$content->catid = $newcatid["new"];
-			}
-		}
-		if (!$content->check()) {
-			echo "<script> alert('".$content->getError()."'); window.history.go(-1); </script>\n";
-			exit();
-		}
-
-		if (!$content->store()) {
-			echo "<script> alert('".$content->getError()."'); window.history.go(-1); </script>\n";
-			exit();
-		}
-		$content->checkin();
-	}
-	$sectionOld = new mosSection ( $database );
-	$sectionOld->load( $sectionMove );
 	
-	// clean any existing cache files
-	mosCache::cleanCache( 'com_content' );
-
-	$msg = 'Section '. $sectionOld-> name .' and all its Categories and Items have been copied as '. $title;
+	// categories copied, now copy content items
+	
+	foreach( $items as $itemId ) {
+		$item = new mosContent( $database );
+		$item->load( $itemId );
+		
+		$item->id = null;
+		$item->catid = $newOldCatLookup[$item->catid];
+		$item->sectionid = $newSectionId;
+		if (!$item->check()) {
+			echo "<script> alert('".$item->getError()."'); window.history.go(-1); </script>\n";
+			exit();
+		}
+		if (!$item->store()) {
+			echo "<script> alert('".$item->getError()."'); window.history.go(-1); </script>\n";
+			exit();
+		}
+		$item->checkin();
+	}
+	
+	$msg = 'Selected sections content copied into '. $title .' section.';
 	mosRedirect( 'index2.php?option=com_sections&scope=content&mosmsg='. $msg );
 }
 

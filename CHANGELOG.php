@@ -41,6 +41,9 @@ code fixes.
 ----------------------------------------------------------------------------------------
 ---------------- 1.0.12 In Development -- [**-***-**** **:** UTC] ------------------
 
+12-Nov-2006 Mateusz Krzeszowiec
+ # Fixed [artf6611] : Admin, copy section issues
+
 11-Nov-2006 Enno Klasing
  # Fixed [artf6720] : Wrong markup on com_media
 

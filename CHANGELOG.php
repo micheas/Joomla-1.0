@@ -41,6 +41,9 @@ code fixes.
 ----------------------------------------------------------------------------------------
 ---------------- 1.0.12 In Development -- [**-***-**** **:** UTC] ------------------
 
+13-Nov-2006 Enno Klasing
+ # Fixed [artf5924] : JavaScript and HTML-Error in mod_wrapper
+
 12-Nov-2006 Alex Kempkens
  # Fixed [artf6713] : double title in the pathway
 

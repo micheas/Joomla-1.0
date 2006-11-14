@@ -40,8 +40,8 @@ $css = mosGetParam( $_REQUEST, 't', '' );
 
 // css file handling
 // check to see if template exists
-if ( $css != '' && !is_dir($mosConfig_absolute_path .'/administrator/templates/'. $css .'/css/template_css.css' )) {
-	$css 	= 'rhuk_solarflare_ii';
+if ( $css != '' && is_dir($mosConfig_absolute_path .'/templates/'. $css .'/css/template_css.css' )) {
+	$css 	= $css;
 } else if ( $css == '' ) {
 	$css 	= 'rhuk_solarflare_ii';
 }

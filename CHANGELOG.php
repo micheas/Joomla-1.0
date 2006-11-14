@@ -41,6 +41,9 @@ code fixes.
 ----------------------------------------------------------------------------------------
 ---------------- 1.0.12 In Development -- [**-***-**** **:** UTC] ------------------
 
+14-Nov-2006 Marko Schmuck
+ # Fixed : css file handling in content backend preview 
+
 13-Nov-2006 Enno Klasing
  # Fixed [artf5924] : JavaScript and HTML-Error in mod_wrapper
 

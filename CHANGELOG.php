@@ -41,6 +41,9 @@ code fixes.
 ----------------------------------------------------------------------------------------
 ---------------- 1.0.12 In Development -- [**-***-**** **:** UTC] ------------------
 
+15-Nov-2006 Enno Klasing
+ # Fixed [artf6613] : User rating, second rating, incorrect message
+
 15-Nov-2006 Mateusz Krzeszowiec
  # Fixed [artf5926] : Few other Itemid issues solved
 

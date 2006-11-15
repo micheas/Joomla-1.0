@@ -289,7 +289,7 @@ DEFINE('_ORDER_DROPDOWN_O','Ordering');
 
 /** poll.php */
 DEFINE('_ALERT_ENABLED','Cookies must be enabled!');
-DEFINE('_ALREADY_VOTE','You have already voted in this poll today!');
+DEFINE('_ALREADY_VOTE','You already voted for this item today.');
 DEFINE('_NO_SELECTION','No selection has been made, please try again');
 DEFINE('_THANKS','Thanks for your vote!');
 DEFINE('_SELECT_POLL','Select Poll from the list');

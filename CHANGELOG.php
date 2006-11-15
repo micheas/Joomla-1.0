@@ -41,6 +41,9 @@ code fixes.
 ----------------------------------------------------------------------------------------
 ---------------- 1.0.12 In Development -- [**-***-**** **:** UTC] ------------------
 
+15-Nov-2006 Marko Schmuck
+ # Fixed [artf6763] : Joomla.php - build the multiple select list
+
 15-Nov-2006 Enno Klasing
  # Fixed [artf6613] : User rating, second rating, incorrect message
 

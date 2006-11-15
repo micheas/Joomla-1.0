@@ -4576,7 +4576,7 @@ class mosAdminMenus {
 			// adds space, in select box which is not saved
 			$mitems[] = mosHTML::makeOption( -999, '----' );
 		}
-		if ( $none ) {
+		if ( $unassigned ) {
 			// prepare an array with 'all' as the first item
 			$mitems[] = mosHTML::makeOption( 99999999, 'Unassigned' );
 			// adds space, in select box which is not saved

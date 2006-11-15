@@ -41,6 +41,9 @@ code fixes.
 ----------------------------------------------------------------------------------------
 ---------------- 1.0.12 In Development -- [**-***-**** **:** UTC] ------------------
 
+15-Nov-2006 Mateusz Krzeszowiec
+ # Fixed [artf5926] : Few other Itemid issues solved
+
 14-Nov-2006 Marko Schmuck
  # Fixed : css file handling in content backend preview 
 

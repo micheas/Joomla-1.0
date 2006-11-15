@@ -377,7 +377,7 @@ class HTML_content {
 	* Display links to content items
 	*/
 	function showLinks( &$rows, $links, $total, $i=0, $show=1, $ItemidCount=NULL ) {
-		global $mainframe;
+		global $mainframe, $Itemid;
 
 		if ( $show ) {
 			?>
@@ -397,7 +397,7 @@ class HTML_content {
 				break;
 			}
 
-			$_Itemid = $mainframe->getItemid( $rows[$i]->id, 0, 0  );
+			$_Itemid = $Itemid;
 
 			if ( $_Itemid && $_Itemid != 99999999 ) {
 			// where Itemid value is returned, do not add Itemid to url
@@ -553,14 +553,8 @@ class HTML_content {
 	*/
 	function _Itemid( &$row ) {
 		global $task, $Itemid, $mainframe;
-
-		if ( $task != 'view' && $task != 'category' ) {
-			$row->_Itemid = $mainframe->getItemid( $row->id, 0, 0 );
-		} else {
-			// when viewing a content item, it is not necessary to calculate the Itemid
-			$row->_Itemid = $Itemid;
-		}
-
+		$row->_Itemid = $Itemid;
+		
 		if ( $row->_Itemid && $row->_Itemid != 99999999 ) {
 			// where Itemid value is returned, do not add Itemid to url
 			$row->Itemid_link = '&amp;Itemid='. $row->_Itemid;

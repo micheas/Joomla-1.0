@@ -43,6 +43,7 @@ code fixes.
 
 15-Nov-2006 Marko Schmuck
  # Fixed [artf6763] : Joomla.php - build the multiple select list
+ # Fixed [artf6752] : mms:// not resolving in menus
 
 15-Nov-2006 Enno Klasing
  # Fixed [artf6613] : User rating, second rating, incorrect message

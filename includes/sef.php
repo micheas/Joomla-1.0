@@ -530,11 +530,7 @@ function sefRelToAbs( $string ) {
 				$url_schemes 	= explode( ', ', _URL_SCHEMES );
 				$url_schemes[] 	= 'http:';
 				$url_schemes[] 	= 'https:';
-				$url_schemes[] 	= 'ftp:';
-				$url_schemes[] 	= 'file:';
-				$url_schemes[] 	= 'mailto:';
-				$url_schemes[] 	= 'mms:';
-
+				
 				foreach ( $url_schemes as $url ) {
 					if ( strpos( $string, $url ) === 0 ) {
 						$check = 0;

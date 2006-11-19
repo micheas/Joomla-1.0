@@ -41,6 +41,9 @@ code fixes.
 ----------------------------------------------------------------------------------------
 ---------------- 1.0.12 In Development -- [**-***-**** **:** UTC] ------------------
 
+19-Nov-2006 Enno Klasing
+ # Fixed [artf6764] : IE7 Table Alignment Bug
+
 15-Nov-2006 Marko Schmuck
  # Fixed [artf6763] : Joomla.php - build the multiple select list
  # Fixed [artf6752] : mms:// not resolving in menus

@@ -287,9 +287,11 @@ table.adminlist th a:hover {
 
 table.adminlist tr.row0 {
 	background-color: #F9F9F9;
+	text-align: left;
 }
 table.adminlist tr.row1 {
 	background-color: #FFF;
+	text-align: left;
 }
 table.adminlist td {
 	border-bottom: 1px solid #e5e5e5;

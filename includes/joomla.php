@@ -5967,7 +5967,9 @@ function josSpoofCheck( $header=NULL, $alt=NULL ) {
 		// one of the $badStrings:
 		foreach ($_POST as $k => $v){
 			foreach ($badStrings as $v2) {
-				if (strpos( $v, $v2 ) !== false) {
+				if (is_array($v)) {
+					patHTML::_josSpoofCheck($v, $badStrings);
+				} else if (strpos( $v, $v2 ) !== false) {
 					header( "HTTP/1.0 403 Forbidden" );
 					mosErrorAlert( _NOT_AUTH );
 					return;
@@ -5978,6 +5980,20 @@ function josSpoofCheck( $header=NULL, $alt=NULL ) {
 		// Made it past spammer test, free up some memory
 		// and continue rest of script:
 		unset($k, $v, $v2, $badStrings);
+	}
+}
+
+function _josSpoofCheck($array, $badStrings) {
+	foreach ($array as $k => $v) {
+		foreach ($badStrings as $v2) {
+			if (is_array($v)) {
+				patHTML::_josSpoofCheck($v, $badStrings);
+			} else if (strpos( $v, $v2 ) !== false) {
+				header( "HTTP/1.0 403 Forbidden" );
+				mosErrorAlert( _NOT_AUTH );
+				return;
+			}
+		}
 	}
 }
 

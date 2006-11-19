@@ -41,6 +41,9 @@ code fixes.
 ----------------------------------------------------------------------------------------
 ---------------- 1.0.12 In Development -- [**-***-**** **:** UTC] ------------------
 
+20-Nov-2006 Enno Klasing
+ # Fixed [artf6816] : Hit counter not correct if caching is enabled
+
 19-Nov-2006 Enno Klasing
  # Fixed [artf6764] : IE7 Table Alignment Bug
 

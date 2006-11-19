@@ -47,8 +47,11 @@ switch ( $task ) {
 		break;
 
 	case 'view':
-		$cache->call( 'showItem', $id, $gid, $access, $pop, $option, 0, $limit, $limitstart );
-		//showItem( $id, $gid, $access, $pop, $option, 0 );
+		if ($mosConfig_enable_stats) {
+			showItem( $id, $gid, $access, $pop, $option, 0 );
+		} else {
+			$cache->call( 'showItem', $id, $gid, $access, $pop, $option, 0, $limit, $limitstart );
+		}
 		break;
 
 	case 'section':

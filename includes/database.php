@@ -78,7 +78,7 @@ class database {
 					exit();
 				}
 			}
-		} else {		
+		} else {
 			if (!($this->_resource = @mysql_connect( $host, $user, $pass, true ))) {
 				$mosSystemError = 2;
 				if ($goOffline) {
@@ -135,7 +135,7 @@ class database {
 		} else 	{
 			$string = mysql_real_escape_string($text, $this->_resource);
 		}
-		
+
 		return $string;
 	}
 	/**
@@ -792,13 +792,13 @@ class mosDBTable {
 	*/
 	function load( $oid=null ) {
 		$k = $this->_tbl_key;
-		
+
 		if ($oid !== null) {
 			$this->$k = $oid;
 		}
-		
+
 		$oid = $this->$k;
-		
+
 		if ($oid === null) {
 			return false;
 		}
@@ -819,13 +819,13 @@ class mosDBTable {
 		}
 
 		$this->reset();
-		
+
 		$query = "SELECT *"
 		. "\n FROM $this->_tbl"
 		. "\n WHERE $this->_tbl_key = " . $this->_db->Quote( $oid )
 		;
 		$this->_db->setQuery( $query );
-		
+
 		return $this->_db->loadObject( $this );
 	}
 
@@ -849,7 +849,7 @@ class mosDBTable {
 	function store( $updateNulls=false ) {
 		$k = $this->_tbl_key;
 
-		if ($this->$k) {
+		if ($k) {
 			$ret = $this->_db->updateObject( $this->_tbl, $this, $this->_tbl_key, $updateNulls );
 		} else {
 			$ret = $this->_db->insertObject( $this->_tbl, $this, $this->_tbl_key );
@@ -1148,7 +1148,7 @@ class mosDBTable {
 			$this->_error = "WARNING: ".strtolower(get_class( $this ))." does not support checkin.";
 			return false;
 		}
-		
+
 		$k 			= $this->_tbl_key;
 		$nullDate 	= $this->_db->getNullDate();
 
@@ -1252,7 +1252,7 @@ class mosDBTable {
 		if (!$this->checkin()) {
 			return false;
 		}
-		
+
 		if ($order_filter) {
 			$filter_value = $this->$order_filter;
 			$this->updateOrder( $order_filter ? "`$order_filter` = " . $this->_db->Quote( $filter_value ) : '' );

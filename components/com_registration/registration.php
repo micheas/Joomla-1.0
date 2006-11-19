@@ -59,8 +59,8 @@ function sendNewPass( $option ) {
 	global $mosConfig_mailfrom, $mosConfig_fromname;
 
 	// simple spoof check security
-	josSpoofCheck();	
-	
+	josSpoofCheck();
+
 	$_live_site = $mosConfig_live_site;
 	$_sitename 	= $mosConfig_sitename;
 
@@ -122,8 +122,8 @@ function saveRegistration() {
 	}
 
 	// simple spoof check security
-	josSpoofCheck();	
-	
+	josSpoofCheck();
+
 	$row = new mosUser( $database );
 
 	if (!$row->bind( $_POST, 'usertype' )) {
@@ -156,13 +156,13 @@ function saveRegistration() {
 	}
 	$row->checkin();
 
-	$name 		= $row->name;
-	$email 		= $row->email;
-	$username 	= $row->username;
+	$name 		= trim($row->name);
+	$email 		= trim($row->email);
+	$username 	= trim($row->username);
 
 	$subject 	= sprintf (_SEND_SUB, $name, $mosConfig_sitename);
 	$subject 	= html_entity_decode($subject, ENT_QUOTES);
-	
+
 	if ($mosConfig_useractivation == 1){
 		$message = sprintf (_USEND_MSG_ACTIVATE, $name, $mosConfig_sitename, $mosConfig_live_site."/index.php?option=com_registration&task=activate&activation=".$row->activation, $mosConfig_live_site, $username, $pwd);
 	} else {
@@ -170,7 +170,7 @@ function saveRegistration() {
 	}
 
 	$message = html_entity_decode($message, ENT_QUOTES);
-	
+
 	// check if Global Config `mailfrom` and `fromname` values exist
 	if ($mosConfig_mailfrom != '' && $mosConfig_fromname != '') {
 		$adminName2 	= $mosConfig_fromname;
@@ -185,7 +185,7 @@ function saveRegistration() {
 		$database->setQuery( $query );
 		$rows = $database->loadObjectList();
 		$row2 			= $rows[0];
-		
+
 		$adminName2 	= $row2->name;
 		$adminEmail2 	= $row2->email;
 	}
@@ -208,12 +208,12 @@ function saveRegistration() {
 	;
 	$database->setQuery( $query );
 	$admins = $database->loadObjectList();
-	
+
 	foreach ( $admins as $admin ) {
 		// send email to admin & super admin set to recieve system emails
 		mosMail($adminEmail2, $adminName2, $admin->email, $subject2, $message2);
 	}
-		
+
 	if ( $mosConfig_useractivation == 1 ){
 		echo _REG_COMPLETE_ACTIVATE;
 	} else {
@@ -229,7 +229,7 @@ function activate( $option ) {
 		// They're already logged in, so redirect them to the home page
 		mosRedirect( 'index.php' );
 	}
-		
+
 
 	if ($mosConfig_allowUserRegistration == '0' || $mosConfig_useractivation == '0') {
 		mosNotAuth();

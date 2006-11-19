@@ -121,11 +121,11 @@ function userEdit( $option, $uid, $submitvalue) {
 	;
 	$database->setQuery( $query );
 	$exists = $database->loadResult();
-	if ( !$exists ) {						
+	if ( !$exists ) {
 		mosNotAuth();
 		return;
-	}		
-	
+	}
+
 	require_once( $mosConfig_absolute_path .'/administrator/components/com_users/users.class.php' );
 
 	if ($uid == 0) {
@@ -151,14 +151,14 @@ function userSave( $option, $uid) {
 	if ($uid == 0 || $user_id == 0 || $user_id != $uid) {
 		mosNotAuth();
 		return;
-	}	
-	
+	}
+
 	// simple spoof check security
-	josSpoofCheck();	
-	
+	josSpoofCheck();
+
 	$row = new mosUser( $database );
-	$row->load( (int)$user_id );	
-	
+	$row->load( (int)$user_id );
+
 	$orig_password = $row->password;
 	$orig_username = $row->username;
 
@@ -166,12 +166,12 @@ function userSave( $option, $uid) {
 		echo "<script> alert('".$row->getError()."'); window.history.go(-1); </script>\n";
 		exit();
 	}
-	
+
 	mosMakeHtmlSafe($row);
 
 	if (isset($_POST['password']) && $_POST['password'] != '') {
 		if (isset($_POST['verifyPass']) && ($_POST['verifyPass'] == $_POST['password'])) {
-			$row->password = md5( $row->password );
+			$row->password = md5($row->password);
 		} else {
 			echo "<script> alert(\""._PASS_MATCH."\"); window.history.go(-1); </script>\n";
 			exit();
@@ -202,19 +202,19 @@ function userSave( $option, $uid) {
 		echo "<script> alert('".$row->getError()."'); window.history.go(-1); </script>\n";
 		exit();
 	}
-	
+
 	// check if username has been changed
 	if ( $orig_username != $row->username ) {
 		// change username value in session table
 		$query = "UPDATE #__session"
-		. "\n SET username = " . $database->Quote( $row->username )
+		. "\n SET username = " . $database->Quote(trim($row->username))
 		. "\n WHERE username = " . $database->Quote( $orig_username )
 		. "\n AND userid = " . (int) $my->id
 		. "\n AND gid = " . (int) $my->gid
 		. "\n AND guest = 0"
 		;
 		$database->setQuery( $query );
-		$database->query();		
+		$database->query();
 	}
 
 	mosRedirect( 'index.php', _USER_DETAILS_SAVE );
@@ -239,11 +239,11 @@ function CheckIn( $userid, $access, $option ){
 	;
 	$database->setQuery( $query );
 	$exists = $database->loadResult();
-	if ( !$exists ) {						
+	if ( !$exists ) {
 		mosNotAuth();
 		return;
-	}		
-	
+	}
+
 	$lt = mysql_list_tables($mosConfig_db);
 	$k = 0;
 	echo "<table cellpadding=\"0\" cellspacing=\"0\" border=\"0\">";

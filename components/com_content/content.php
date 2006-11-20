@@ -1210,7 +1210,7 @@ function BlogOutput ( &$rows, &$params, $gid, &$access, $pop, &$menu, $limitstar
 		echo '<br />';
 		echo mosHTML::monthSelectList( 'month', 'size="1" class="inputbox"', $params->get( 'month' ) );
 		echo mosHTML::integerSelectList( 2000, 2010, 1, 'year', 'size="1" class="inputbox"', $params->get( 'year' ), "%04d" );
-		echo '<input type="submit" class="button" />';
+		echo '<input type="submit" class="button" value="'._SUBMIT_BUTTON.'" />';
 	}
 
 	// checks to see if there are there any items to display

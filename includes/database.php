@@ -849,7 +849,7 @@ class mosDBTable {
 	function store( $updateNulls=false ) {
 		$k = $this->_tbl_key;
 
-		if ($k) {
+		if ($this->k) {
 			$ret = $this->_db->updateObject( $this->_tbl, $this, $this->_tbl_key, $updateNulls );
 		} else {
 			$ret = $this->_db->insertObject( $this->_tbl, $this, $this->_tbl_key );

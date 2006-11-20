@@ -332,14 +332,17 @@ class HTML_bannerClient {
 			<th width="20">
 			<input type="checkbox" name="toggle" value="" onclick="checkAll(<?php echo count( $rows ); ?>);" />
 			</th>
-			<th align="left" nowrap>
+			<th align="left" nowrap="nowrap">
 			Client Name
 			</th>
-			<th align="left" nowrap>
+			<th align="left" nowrap="nowrap">
 			Contact
 			</th>
-			<th align="center" nowrap>
+			<th align="center" nowrap="nowrap">
 			No. of Active Banners
+			</th>
+			<th align="center" nowrap="nowrap">
+			Client ID
 			</th>
 		</tr>
 		<?php
@@ -359,7 +362,7 @@ class HTML_bannerClient {
 				<td width="20">
 				<?php echo $checked; ?>
 				</td>
-				<td width="40%">
+				<td width="35%">
 				<?php
 				if ( $row->checked_out && ( $row->checked_out != $my->id ) ) {
 					echo $row->name;
@@ -372,11 +375,14 @@ class HTML_bannerClient {
 				}
 				?>
 				</td>
-				<td width="40%">
+				<td width="35%">
 				<?php echo $row->contact;?>
 				</td>
-				<td width="20%" align="center">
+				<td width="15%" align="center">
 				<?php echo $row->bid;?>
+				</td>
+				<td width="15%" align="center">
+				<?php echo $row->cid; ?>
 				</td>
 			</tr>
 			<?php

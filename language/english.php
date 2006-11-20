@@ -113,6 +113,7 @@ DEFINE('_SEL_TYPE','- Select Type -');
 DEFINE('_EMPTY_CATEGORY','This Category is currently empty');
 DEFINE('_EMPTY_BLOG','There are no items to display');
 DEFINE('_NOT_EXIST','The page you are trying to access does not exist.<br />Please select a page from the main menu.');
+DEFINE('_SUBMIT_BUTTON','Submit');
 
 /** classes/html/modules.php */
 DEFINE('_BUTTON_VOTE','Vote');

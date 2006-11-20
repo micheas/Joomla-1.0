@@ -849,13 +849,14 @@ class mosDBTable {
 	function store( $updateNulls=false ) {
 		$k = $this->_tbl_key;
 
-		if ($this->k) {
-			$ret = $this->_db->updateObject( $this->_tbl, $this, $this->_tbl_key, $updateNulls );
+		if ($this->$k != 0) {
+			$ret = $this->_db->updateObject($this->_tbl, $this, $this->_tbl_key, $updateNulls);
 		} else {
-			$ret = $this->_db->insertObject( $this->_tbl, $this, $this->_tbl_key );
+			$ret = $this->_db->insertObject($this->_tbl, $this, $this->_tbl_key);
 		}
-		if( !$ret ) {
-			$this->_error = strtolower(get_class( $this ))."::store failed <br />" . $this->_db->getErrorMsg();
+
+		if (!$ret) {
+			$this->_error = strtolower(get_class($this))."::store failed <br />" . $this->_db->getErrorMsg();
 			return false;
 		} else {
 			return true;

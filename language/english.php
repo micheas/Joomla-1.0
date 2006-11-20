@@ -18,6 +18,10 @@ defined( '_VALID_MOS' ) or die( 'Restricted access' );
 define( '_404', 'We\'re sorry but the page you requested could not be found.' );
 define( '_404_RTS', 'Return to site' );
 
+define( '_SYSERR1', 'The database adapter is not available' );
+define( '_SYSERR2', 'Could not connect to the database server' );
+define( '_SYSERR3', 'Could not connect to the database' );
+
 // common
 DEFINE('_LANGUAGE','en');
 DEFINE('_NOT_AUTH','You are not authorized to view this resource.');

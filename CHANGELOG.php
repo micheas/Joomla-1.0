@@ -41,6 +41,9 @@ code fixes.
 ----------------------------------------------------------------------------------------
 ---------------- 1.0.12 In Development -- [**-***-**** **:** UTC] ------------------
 
+21-Nov-2006 Andrew Eddie
+ # Added 3 new language constants for systems errors (namely database issues)
+
 20-Nov-2006 Marko Schmuck
  # Fixed [artf6673] : Untranslated submit button, content component
 

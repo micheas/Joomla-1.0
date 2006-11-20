@@ -41,6 +41,9 @@ code fixes.
 ----------------------------------------------------------------------------------------
 ---------------- 1.0.12 In Development -- [**-***-**** **:** UTC] ------------------
 
+20-Nov-2006 Marko Schmuck
+ # Fixed [artf6673 : Untranslated submit button, content component
+
 20-Nov-2006 Enno Klasing
  # Fixed [artf6816] : Hit counter not correct if caching is enabled
  # Fixed [artf6753] : add banner client ID in admin view

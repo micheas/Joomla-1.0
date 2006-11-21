@@ -41,6 +41,9 @@ code fixes.
 ----------------------------------------------------------------------------------------
 ---------------- 1.0.12 In Development -- [**-***-**** **:** UTC] ------------------
 
+21-Nov-2006 Marko Schmuck
+ # Fixed [artf6828] : Poorly formed HTML in admin.contact.html.php
+
 21-Nov-2006 Andrew Eddie
  # Added 3 new language constants for systems errors (namely database issues)
 

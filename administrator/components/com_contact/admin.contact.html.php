@@ -299,7 +299,6 @@ class HTML_contact {
 					<textarea name="misc" rows="5" cols="50" class="inputbox"><?php echo $row->misc; ?></textarea>
 					</td>
 				</tr>
-				<tr>
 				</table>
 			</td>
 			<td width="40%" valign="top">

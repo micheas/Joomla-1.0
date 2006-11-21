@@ -276,7 +276,7 @@ class HTML_config {
 			<tr>
 				<td width="185">Server Offset:</td>
 				<td>
-				<input class="text_area" type="text" name="config_offset" size="15" value="<?php echo $row->config_offset; ?>" disabled="true"/>
+				<input class="text_area" type="text" name="config_offset" size="15" value="<?php echo $row->config_offset; ?>" disabled="disabled" />
 				</td>
 			</tr>
 			<tr>

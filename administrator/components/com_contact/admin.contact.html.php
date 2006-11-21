@@ -55,7 +55,7 @@ class HTML_contact {
 			<th class="title">
 			Name
 			</th>
-			<th width="5%" class="title" nowrap="true">
+			<th width="5%" class="title" nowrap="nowrap">
 			Published
 			</th>
 			<th colspan="2" nowrap="nowrap" width="5%">
@@ -173,7 +173,7 @@ class HTML_contact {
 		}
 		//-->
 		</script>
-		
+
 		<form action="index2.php" method="post" name="adminForm">
 		<table class="adminheading">
 		<tr>

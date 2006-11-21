@@ -34,7 +34,7 @@ class HTML_content {
 
 		<table class="adminheading">
 		<tr>
-			<th class="edit" rowspan="2" nowrap>
+			<th class="edit" rowspan="2" nowrap="nowrap">
 			<?php
 			if ( $all ) {
 				?>
@@ -131,7 +131,7 @@ class HTML_content {
 			$row = &$rows[$i];
 
 			mosMakeHtmlSafe($row);
-			
+
 			$link 	= 'index2.php?option=com_content&sectionid='. $redirect .'&task=edit&hidemainmenu=1&id='. $row->id;
 
 			$row->sect_link 	= 'index2.php?option=com_sections&task=editA&hidemainmenu=1&id='. $row->sectionid;

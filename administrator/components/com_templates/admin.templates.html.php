@@ -58,7 +58,7 @@ class HTML_templates {
 			<th class="templates">
 			Template Manager <small><small>[ <?php echo $client == 'admin' ? 'Administrator' : 'Site';?> ]</small></small>
 			</th>
-			<td align="right" nowrap="true">
+			<td align="right" nowrap="nowrap">
 			Preview Template
 			</td>
 			<td align="right">

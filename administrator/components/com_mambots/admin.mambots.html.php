@@ -61,7 +61,7 @@ class HTML_modules {
 			<th nowrap="nowrap" width="10%">
 	  		Published
 			</th>
-			<th colspan="2" nowrap="true" width="5%">
+			<th colspan="2" nowrap="nowrap" width="5%">
 			Reorder
 			</th>
 			<th width="2%">
@@ -124,10 +124,10 @@ class HTML_modules {
 				<td align="center">
 				<?php echo $access;?>
 				</td>
-				<td align="left" nowrap="true">
+				<td align="left" nowrap="nowrap">
 				<?php echo $row->folder;?>
 				</td>
-				<td align="left" nowrap="true">
+				<td align="left" nowrap="nowrap">
 				<?php echo $row->element;?>
 				</td>
 			</tr>

@@ -105,7 +105,7 @@ class categories_html {
 				<?php
 			}
 			?>
-			<th width="5%" nowrap>
+			<th width="5%" nowrap="nowrap">
 			Category ID
 			</th>
 			<?php
@@ -496,8 +496,8 @@ class categories_html {
 						<td colspan="2">
 						<?php echo $lists['folders']; ?>
 						</td>
-					<tr>	
-					</table>		
+					<tr>
+					</table>
 					<?php
 				}
 				?>
@@ -548,7 +548,7 @@ class categories_html {
 				submitform( pressbutton );
 			}
 		}
-		</script>		
+		</script>
 		<table class="adminform">
 		<tr>
 			<td width="3%"></td>

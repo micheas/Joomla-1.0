@@ -116,7 +116,7 @@ class HTML_config {
 		<div id="overDiv" style="position:absolute; visibility:hidden; z-index:10000;"></div>
 		<table cellpadding="1" cellspacing="1" border="0" width="100%">
 		<tr>
-			<td width="250"><table class="adminheading"><tr><th nowrap class="config">Global Configuration</th></tr></table></td>
+			<td width="250"><table class="adminheading"><tr><th nowrap="nowrap" class="config">Global Configuration</th></tr></table></td>
 			<td width="270">
 				<span class="componentheading">configuration.php is :
 				<?php echo is_writable( '../configuration.php' ) ? '<b><font color="green"> Writeable</font></b>' : '<b><font color="red"> Unwriteable</font></b>' ?>

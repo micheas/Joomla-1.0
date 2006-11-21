@@ -48,7 +48,7 @@ class HTML_installer {
 			<th class="install">
 			<?php echo $title;?>
 			</th>
-			<td align="right" nowrap="true">
+			<td align="right" nowrap="nowrap">
 			<?php echo $backLink;?>
 			</td>
 		</tr>

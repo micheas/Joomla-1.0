@@ -32,7 +32,7 @@ class HTML_menusections {
 			<th class="menus">
 			Menu Manager <small><small>[ <?php echo $menutype;?> ]</small></small>
 			</th>
-			<td nowrap="true">
+			<td nowrap="nowrap">
 			Max Levels
 			</td>
 			<td>
@@ -49,7 +49,7 @@ class HTML_menusections {
 		if ( $menutype == 'mainmenu' ) {
 			?>
 			<tr>
-				<td align="right" nowrap style="color: red; font-weight: normal;" colspan="5">
+				<td align="right" nowrap="nowrap" style="color: red; font-weight: normal;" colspan="5">
 				<?php echo _MAINMENU_DEL; ?>
 				<br/>
 				<span style="color: black;">
@@ -198,7 +198,7 @@ class HTML_menusections {
 			<th class="menus">
 			New Menu Item
 			</th>
-			<td valign="bottom" nowrap style="color: red;">
+			<td valign="bottom" nowrap="nowrap" style="color: red;">
 			<?php //echo _MENU_GROUP; ?>
 			* Note that some menu types appear in more than one grouping, but they are still the same menu type.
 			</td>
@@ -218,9 +218,9 @@ class HTML_menusections {
 						$row = &$types_content[$i];
 
 						$link = 'index2.php?option=com_menus&menutype='. $menutype .'&task=edit&type='. $row->type .'&hidemainmenu=1';
-						
+
 						HTML_menusections::htmlOptions( $row, $link, $k, $i );
-						
+
 						$k = 1 - $k;
 					}
 					?>
@@ -236,9 +236,9 @@ class HTML_menusections {
 						$row = &$types_other[$i];
 
 						$link = 'index2.php?option=com_menus&menutype='. $menutype .'&task=edit&type='. $row->type.'&hidemainmenu=1';
-						
+
 						HTML_menusections::htmlOptions( $row, $link, $k, $i );
-							
+
 						$k = 1 - $k;
 					}
 					?>
@@ -254,9 +254,9 @@ class HTML_menusections {
 						$row = &$types_submit[$i];
 
 						$link = 'index2.php?option=com_menus&menutype='. $menutype .'&task=edit&type='. $row->type.'&hidemainmenu=1';
-						
+
 						HTML_menusections::htmlOptions( $row, $link, $k, $i );
-							
+
 						$k = 1 - $k;
 					}
 					?>
@@ -274,9 +274,9 @@ class HTML_menusections {
 						$row = &$types_component[$i];
 
 						$link = 'index2.php?option=com_menus&menutype='. $menutype .'&task=edit&type='. $row->type.'&hidemainmenu=1';
-						
+
 						HTML_menusections::htmlOptions( $row, $link, $k, $i );
-							
+
 						$k = 1 - $k;
 					}
 					?>
@@ -292,9 +292,9 @@ class HTML_menusections {
 						$row = &$types_link[$i];
 
 						$link = 'index2.php?option=com_menus&menutype='. $menutype .'&task=edit&type='. $row->type.'&hidemainmenu=1';
-						
+
 						HTML_menusections::htmlOptions( $row, $link, $k, $i );
-							
+
 						$k = 1 - $k;
 					}
 					?>
@@ -331,7 +331,7 @@ class HTML_menusections {
 			<td width="20">
 			</td>
 		</tr>
-		<?php		
+		<?php
 	}
 
 	/**

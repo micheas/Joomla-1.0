@@ -43,22 +43,22 @@ class HTML_banners {
 			<th width="20">
 			<input type="checkbox" name="toggle" value="" onclick="checkAll(<?php echo count( $rows ); ?>);" />
 			</th>
-			<th align="left" nowrap>
+			<th align="left" nowrap="nowrap">
 			Banner Name
 			</th>
-			<th width="10%" nowrap>
+			<th width="10%" nowrap="nowrap">
 			Published
 			</th>
-			<th width="11%" nowrap>
+			<th width="11%" nowrap="nowrap">
 			Impressions Made
 			</th>
-			<th width="11%" nowrap>
+			<th width="11%" nowrap="nowrap">
 			Impressions Left
 			</th>
 			<th width="8%">
 			Clicks
 			</th>
-			<th width="8%" nowrap>
+			<th width="8%" nowrap="nowrap">
 			% Clicks
 			</th>
 		</tr>
@@ -391,7 +391,7 @@ class HTML_bannerClient {
 		?>
 		</table>
 		<?php echo $pageNav->getListFooter(); ?>
-		
+
 		<input type="hidden" name="option" value="<?php echo $option; ?>" />
 		<input type="hidden" name="task" value="listclients" />
 		<input type="hidden" name="boxchecked" value="0" />

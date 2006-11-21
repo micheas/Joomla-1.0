@@ -41,6 +41,9 @@ code fixes.
 ----------------------------------------------------------------------------------------
 ---------------- 1.0.12 In Development -- [**-***-**** **:** UTC] ------------------
 
+21-Nov-2006 Emir sakic
+ # Fixed [artf6847] : XHTML syntax incompliance
+
 21-Nov-2006 Marko Schmuck
  # Fixed [artf6828] : Poorly formed HTML in admin.contact.html.php
 
@@ -68,7 +71,7 @@ code fixes.
  # Fixed [artf5926] : Few other Itemid issues solved
 
 14-Nov-2006 Marko Schmuck
- # Fixed : css file handling in content backend preview 
+ # Fixed : css file handling in content backend preview
 
 13-Nov-2006 Enno Klasing
  # Fixed [artf5924] : JavaScript and HTML-Error in mod_wrapper

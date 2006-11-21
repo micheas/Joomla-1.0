@@ -65,16 +65,16 @@ class sections_html {
 			<th width="8%">
 			Access
 			</th>
-			<th width="12%" nowrap>
+			<th width="12%" nowrap="nowrap">
 			Section ID
 			</th>
-			<th width="12%" nowrap>
+			<th width="12%" nowrap="nowrap">
 			# Categories
 			</th>
-			<th width="12%" nowrap>
+			<th width="12%" nowrap="nowrap">
 			# Active
 			</th>
-			<th width="12%" nowrap>
+			<th width="12%" nowrap="nowrap">
 			# Trash
 			</th>
 
@@ -173,7 +173,7 @@ class sections_html {
 	*/
 	function edit( &$row, $option, &$lists, &$menus ) {
 		global $mosConfig_live_site;
-		
+
 		if ( $row->name != '' ) {
 			$name = $row->name;
 		} else {
@@ -182,7 +182,7 @@ class sections_html {
 		if ($row->image == "") {
 			$row->image = 'blank.png';
 		}
-		
+
 		mosMakeHtmlSafe( $row, ENT_QUOTES, 'description' );
 		?>
 		<script language="javascript" type="text/javascript">
@@ -429,8 +429,8 @@ class sections_html {
 					<td colspan="2">
 					<?php echo $lists['folders']; ?>
 					</td>
-				<tr>	
-				</table>		
+				<tr>
+				</table>
 			</td>
 		</tr>
 		</table>

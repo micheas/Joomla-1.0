@@ -101,7 +101,7 @@ class HTML_trash {
 				}
 				?></td>
 				<td width="20px"></td>
-				<td nowrap>
+				<td nowrap="nowrap">
 				<?php
 				echo $row->title;
 				?>

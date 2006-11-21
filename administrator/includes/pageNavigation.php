@@ -135,9 +135,9 @@ class mosPageNav {
 		$html = '<table class="adminlist"><tr><th colspan="3">';
 		$html .= $this->getPagesLinks();
 		$html .= '</th></tr><tr>';
-		$html .= '<td nowrap="true" width="48%" align="right">Display #</td>';
+		$html .= '<td nowrap="nowrap" width="48%" align="right">Display #</td>';
 		$html .= '<td>' .$this->getLimitBox() . '</td>';
-		$html .= '<td nowrap="true" width="48%" align="left">' . $this->getPagesCounter() . '</td>';
+		$html .= '<td nowrap="nowrap" width="48%" align="left">' . $this->getPagesCounter() . '</td>';
 		$html .= '</tr></table>';
   		return $html;
 	}

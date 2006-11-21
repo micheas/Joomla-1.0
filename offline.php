@@ -103,7 +103,7 @@ if (!defined( '_ADMIN_OFFLINE' ) || defined( '_INSTALL_CHECK' )) {
 					<h2>
 						<?php echo $mosConfig_error_message; ?>
 					</h2>
-					<?php echo $mosSystemError; ?>
+					<span class="err"><?php echo defined( '_SYSERR'.$mosSystemError ) ? constant( '_SYSERR'.$mosSystemError ) : $mosSystemError; ?></span>
 				</td>
 			</tr>
 			<?php

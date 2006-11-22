@@ -43,6 +43,7 @@ code fixes.
 
 21-Nov-2006 Emir sakic
  # Fixed [artf6847] : XHTML syntax incompliance
+ # Fixed [artf6833] : Javascript alert messages on IE display without proper encoding in Internet Explorer
 
 21-Nov-2006 Marko Schmuck
  # Fixed [artf6828] : Poorly formed HTML in admin.contact.html.php

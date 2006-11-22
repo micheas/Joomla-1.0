@@ -1016,7 +1016,7 @@ class mosMainFrame {
 
 		$row = null;
 		if (!$username || !$passwd) {
-			echo "<script> alert(\""._LOGIN_INCOMPLETE."\"); window.history.go(-1); </script>\n";
+			mosErrorAlert( _LOGIN_INCOMPLETE );
 			exit();
 		} else {
 			if ( $remember && strlen($username) == 32 && strlen($passwd) == 32 && $userid ) {
@@ -3110,6 +3110,7 @@ function mosErrorAlert( $text, $action='window.history.go(-1);', $mode=1 ) {
 
 		case 1:
 		default:
+			echo "<meta http-equiv=\"Content-Type\" content=\"text/html; "._ISO."\" />";
 			echo "<script>alert('$text'); $action</script> \n";
 			//echo '<noscript>';
 			//mosRedirect( @$_SERVER['HTTP_REFERER'], $text );

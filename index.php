@@ -31,6 +31,18 @@ if( isset( $http_host[1] ) && $http_host[1] == 443 && substr( $mosConfig_live_si
 
 require_once( 'includes/joomla.php' );
 
+//Installation sub folder check, removed for work with SVN
+if (file_exists( 'installation/index.php' ) && $_VERSION->SVN == 0) {
+	define( '_INSTALL_CHECK', 1 );
+	include ( $mosConfig_absolute_path .'/offline.php');
+	exit();
+}
+
+// displays offline/maintanance page or bar
+if ($mosConfig_offline == 1) {
+	require( $mosConfig_absolute_path .'/offline.php' );
+}
+
 // load system bot group
 $_MAMBOTS->loadBotGroup( 'system' );
 
@@ -188,18 +200,6 @@ $gid = intval( $my->gid );
 // gets template for page
 $cur_template = $mainframe->getTemplate();
 /** temp fix - this feature is currently disabled */
-
-//Installation sub folder check, removed for work with SVN
-if (file_exists( 'installation/index.php' ) && $_VERSION->SVN == 0) {
-	define( '_INSTALL_CHECK', 1 );
-	include ( $mosConfig_absolute_path .'/offline.php');
-	exit();
-}
-
-// displays offline/maintanance page or bar
-if ($mosConfig_offline == 1) {
-	require( $mosConfig_absolute_path .'/offline.php' );
-}
 
 /** @global A places to store information from processing of the component */
 $_MOS_OPTION = array();

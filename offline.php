@@ -55,7 +55,16 @@ if (!defined( '_INSTALL_CHECK' )) {
 if (!defined( '_ADMIN_OFFLINE' ) || defined( '_INSTALL_CHECK' )) {
 	@include_once ('language/' . $mosConfig_lang . '.php' );
 
-	if (empty($cur_template)) {
+	// get default frontend template
+	$query = "SELECT template"
+	. "\n FROM #__templates_menu"
+	. "\n WHERE client_id = 0"
+	. "\n AND menuid = 0"
+	;
+	$database->setQuery( $query );
+	$cur_template = $database->loadResult();
+	$path = "$mosConfig_absolute_path/templates/$cur_template/index.php";
+	if (!file_exists( $path )) {
 		$cur_template = 'rhuk_solarflare_ii';
 	}
 

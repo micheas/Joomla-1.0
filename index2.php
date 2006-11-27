@@ -24,6 +24,11 @@ if( isset( $http_host[1] ) && $http_host[1] == 443 && substr( $mosConfig_live_si
 
 require_once( 'includes/joomla.php' );
 
+// displays offline/maintanance page or bar
+if ($mosConfig_offline == 1) {
+	require( $mosConfig_absolute_path .'/offline.php' );
+}
+
 // load system bot group
 $_MAMBOTS->loadBotGroup( 'system' );
 
@@ -85,11 +90,6 @@ $mainframe->detect();
 $gid = intval( $my->gid );
 
 $cur_template = $mainframe->getTemplate();
-
-// displays offline/maintanance page or bar
-if ($mosConfig_offline == 1) {
-	require( $mosConfig_absolute_path .'/offline.php' );
-}
 
 // precapture the output of the component
 require_once( $mosConfig_absolute_path . '/editor/editor.php' );

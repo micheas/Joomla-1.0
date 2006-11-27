@@ -40,10 +40,14 @@ code fixes.
 
 ----------------------------------------------------------------------------------------
 ---------------- 1.0.12 In Development -- [**-***-**** **:** UTC] ------------------
+
+27-Nov-2006 Emir Sakic
+ # Fixed [artf6865] : Relocate <script> element below <title> and <meta> elements for XHTML compliance
+
 25-Nov-2006 Rastin Mehr
  # Fixed [artf6439] : https switchover not working (as did in mambo 4.5.2 and early joomla)
 
-21-Nov-2006 Emir sakic
+21-Nov-2006 Emir Sakic
  # Fixed [artf6847] : XHTML syntax incompliance
  # Fixed [artf6833] : Javascript alert messages on IE display without proper encoding in Internet Explorer
 

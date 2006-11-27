@@ -21,19 +21,19 @@ function mosMainBody() {
 	$mosmsg = strval( mosGetParam( $_REQUEST, 'mosmsg', '' ) );
 
 	$popMessages = false;
-	
+
 	// Browser Check
 	$browserCheck = 0;
 	if ( isset( $_SERVER['HTTP_USER_AGENT'] ) && isset( $_SERVER['HTTP_REFERER'] ) && strpos($_SERVER['HTTP_REFERER'], $mosConfig_live_site) !== false ) {
 		$browserCheck = 1;
 	}
-	
+
 	// Session Check
 	$sessionCheck = 0;
 	// Session Cookie `name`
-	$sessionCookieName 	= mosMainFrame::sessionCookieName();		
+	$sessionCookieName 	= mosMainFrame::sessionCookieName();
 	// Get Session Cookie `value`
-	$sessioncookie 		= mosGetParam( $_COOKIE, $sessionCookieName, null );				
+	$sessioncookie 		= mosGetParam( $_COOKIE, $sessionCookieName, null );
 	if ( (strlen($sessioncookie) == 32 || $sessioncookie == '-') ) {
 		$sessionCheck = 1;
 	}
@@ -42,7 +42,7 @@ function mosMainBody() {
 	if ( strlen( $mosmsg ) > 150 ) {
 		$mosmsg = substr( $mosmsg, 0, 150 );
 	}
-	
+
 	// mosmsg outputed within html
 	if ($mosmsg && !$popMessages && $browserCheck && $sessionCheck) {
 		echo "\n<div class=\"message\">$mosmsg</div>";
@@ -78,7 +78,7 @@ function &initModules() {
 		if ($Itemid) {
 			$check_Itemid = "OR mm.menuid = " . (int) $Itemid;
 		}
-		
+
 		$query = "SELECT id, title, module, position, content, showtitle, params"
 		. "\n FROM #__modules AS m"
 		. "\n INNER JOIN #__modules_menu AS mm ON mm.moduleid = m.id"
@@ -90,7 +90,7 @@ function &initModules() {
 
 		$database->setQuery( $query );
 		$modules = $database->loadObjectList();
-		
+
 		foreach ($modules as $module) {
 			$GLOBALS['_MOS_MODULES'][$module->position][] = $module;
 		}
@@ -176,7 +176,7 @@ function mosLoadModules( $position='left', $style=0 ) {
 		}
 
 		echo $postpend;
-		
+
 		$count++;
 	}
 	if ($style == 1) {
@@ -190,12 +190,6 @@ function mosShowHead() {
 	global $database, $option, $my, $mainframe, $_VERSION, $task, $id;
 	global $mosConfig_MetaDesc, $mosConfig_MetaKeys, $mosConfig_live_site, $mosConfig_sef, $mosConfig_absolute_path, $mosConfig_sitename, $mosConfig_favicon;
 
-	if ($my->id || $mainframe->get( 'joomlaJavascript' )) {
-		?>
-		<script language="JavaScript" src="<?php echo $mosConfig_live_site;?>/includes/js/joomla.javascript.js" type="text/javascript"></script>
-		<?php
-	}
-
 	$mainframe->appendMetaTag( 'description', $mosConfig_MetaDesc );
 	$mainframe->appendMetaTag( 'keywords', $mosConfig_MetaKeys );
 	$mainframe->addMetaTag( 'Generator', $_VERSION->PRODUCT . ' - ' . $_VERSION->COPYRIGHT);
@@ -203,7 +197,7 @@ function mosShowHead() {
 
 	// cache activation
 	if (isset($_SERVER['QUERY_STRING']) && !empty($_SERVER['QUERY_STRING'])) {
-		$cache =& mosCache::getCache('com_content');	
+		$cache =& mosCache::getCache('com_content');
 		echo $cache->call('mainframe->getHead', @$_SERVER['QUERY_STRING'], $id);
 	} else {
 		echo $mainframe->getHead();
@@ -211,6 +205,12 @@ function mosShowHead() {
 
 	if ( isset($mosConfig_sef) && $mosConfig_sef ) {
 		echo "<base href=\"$mosConfig_live_site/\" />\r\n";
+	}
+
+	if ($my->id || $mainframe->get( 'joomlaJavascript' )) {
+		?>
+		<script src="<?php echo $mosConfig_live_site;?>/includes/js/joomla.javascript.js" type="text/javascript"></script>
+		<?php
 	}
 
 	$row = new mosComponent( $database );
@@ -221,36 +221,36 @@ function mosShowHead() {
 	;
 	$database->setQuery( $query );
 	$database->loadObject( $row );
-	
+
 	// get params definitions
 	$syndicateParams = new mosParameters( $row->params, $mainframe->getPath( 'com_xml', $row->option ), 'component' );
-	
+
 	// needed to reduce query
 	$GLOBALS['syndicateParams'] = $syndicateParams;
 
 	$live_bookmark = $syndicateParams->get( 'live_bookmark', 0 );
-	
+
 	// and to allow disabling/enabling of selected feed types
 	switch ( $live_bookmark ) {
-		case 'RSS0.91':			
+		case 'RSS0.91':
 			if ( !$syndicateParams->get( 'rss091', 1 ) ) {
 				$live_bookmark = 0;
 			}
 			break;
-		
-		case 'RSS1.0':			
+
+		case 'RSS1.0':
 			if ( !$syndicateParams->get( 'rss10', 1 ) ) {
 				$live_bookmark = 0;
 			}
 			break;
-		
-		case 'RSS2.0':			
+
+		case 'RSS2.0':
 			if ( !$syndicateParams->get( 'rss20', 1 ) ) {
 				$live_bookmark = 0;
 			}
 			break;
-		
-		case 'ATOM0.3':			
+
+		case 'ATOM0.3':
 			if ( !$syndicateParams->get( 'atom03', 1 ) ) {
 				$live_bookmark = 0;
 			}
@@ -280,8 +280,8 @@ function mosShowHead() {
 			$check = $database->loadResultArray();
 			if(empty($check)) {
 				$show = 0;
-			}			
-		}			
+			}
+		}
 		// outputs link tag for page
 		if ($show) {
 			// test if security check is enbled

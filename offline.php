@@ -23,7 +23,7 @@ if (!defined( '_INSTALL_CHECK' )) {
 	// this method is different from 1.1 because the session handling is not the same
 	session_name( md5( $mosConfig_live_site ) );
 	session_start();
-	
+
 	if (class_exists( 'mosUser' )) {
 		// restore some session variables
 		$admin 				= new mosUser( $database );
@@ -32,7 +32,7 @@ if (!defined( '_INSTALL_CHECK' )) {
 		$admin->usertype 	= strval( mosGetParam( $_SESSION, 'session_usertype', '' ) );
 		$session_id 		= mosGetParam( $_SESSION, 'session_id', '' );
 		$logintime 			= mosGetParam( $_SESSION, 'session_logintime', '' );
-	
+
 		// check against db record of session
 		if ($session_id == md5( $admin->id . $admin->username . $admin->usertype . $logintime )) {
 			$query = "SELECT *"
@@ -54,8 +54,11 @@ if (!defined( '_INSTALL_CHECK' )) {
 
 if (!defined( '_ADMIN_OFFLINE' ) || defined( '_INSTALL_CHECK' )) {
 	@include_once ('language/' . $mosConfig_lang . '.php' );
-	$cur_template = 'rhuk_solarflare_ii';
-	
+
+	if (empty($cur_template)) {
+		$cur_template = 'rhuk_solarflare_ii';
+	}
+
 	// needed to seperate the ISO number from the language file constant _ISO
 	$iso = split( '=', _ISO );
 	// xml prolog
@@ -65,12 +68,32 @@ if (!defined( '_ADMIN_OFFLINE' ) || defined( '_INSTALL_CHECK' )) {
 	<html xmlns="http://www.w3.org/1999/xhtml">
 	<head>
 		<title><?php echo $mosConfig_sitename; ?> - Offline</title>
+<?php
+	if ( file_exists("$mosConfig_absolute_path/templates/$cur_template/css/template_css.css") ) {
+?>
+		<link rel="stylesheet" href="<?php echo $mosConfig_live_site; ?>/templates/<?php echo $cur_template; ?>/css/template_css.css" type="text/css" />
+<?php
+	}
+?>
 		<link rel="stylesheet" href="<?php echo $mosConfig_live_site; ?>/templates/css/offline.css" type="text/css" />
-		<link rel="shortcut icon" href="<?php echo $mosConfig_live_site; ?>/images/favicon.ico" />
+<?php
+	// favourites icon
+	if ( !$mosConfig_favicon ) {
+		$mosConfig_favicon = 'favicon.ico';
+	}
+	$icon = $mosConfig_absolute_path .'/images/'. $mosConfig_favicon;
+	// checks to see if file exists
+	if ( !file_exists( $icon ) ) {
+		$icon = $mosConfig_live_site .'/images/favicon.ico';
+	} else {
+		$icon = $mosConfig_live_site .'/images/' .$mosConfig_favicon;
+	}
+?>
+		<link rel="shortcut icon" href="<?php echo $icon; ?>" />
 		<meta http-equiv="Content-Type" content="text/html; <?php echo _ISO; ?>" />
 	</head>
 	<body>
-	
+
 		<p>&nbsp;</p>
 		<table width="550" align="center" class="outline">
 		<tr>
@@ -120,7 +143,7 @@ if (!defined( '_ADMIN_OFFLINE' ) || defined( '_INSTALL_CHECK' )) {
 		}
 		?>
 		</table>
-	
+
 	</body>
 	</html>
 	<?php

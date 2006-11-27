@@ -31,18 +31,6 @@ if( isset( $http_host[1] ) && $http_host[1] == 443 && substr( $mosConfig_live_si
 
 require_once( 'includes/joomla.php' );
 
-//Installation sub folder check, removed for work with SVN
-if (file_exists( 'installation/index.php' ) && $_VERSION->SVN == 0) {
-	define( '_INSTALL_CHECK', 1 );
-	include ( $mosConfig_absolute_path .'/offline.php');
-	exit();
-}
-
-// displays offline/maintanance page or bar
-if ($mosConfig_offline == 1) {
-	require( $mosConfig_absolute_path .'/offline.php' );
-}
-
 // load system bot group
 $_MAMBOTS->loadBotGroup( 'system' );
 
@@ -156,7 +144,7 @@ if ($option == 'login') {
 	}
 
 	if ( $return && !( strpos( $return, 'com_registration' ) || strpos( $return, 'com_login' ) ) ) {
-	// checks for the presence of a return url 
+	// checks for the presence of a return url
 	// and ensures that this url is not the registration or login pages
 		mosRedirect( $return );
 	} else {
@@ -178,7 +166,7 @@ if ($option == 'login') {
 	}
 
 	if ( $return && !( strpos( $return, 'com_registration' ) || strpos( $return, 'com_login' ) ) ) {
-	// checks for the presence of a return url 
+	// checks for the presence of a return url
 	// and ensures that this url is not the registration or logout pages
 		mosRedirect( $return );
 	} else {
@@ -201,6 +189,18 @@ $gid = intval( $my->gid );
 $cur_template = $mainframe->getTemplate();
 /** temp fix - this feature is currently disabled */
 
+//Installation sub folder check, removed for work with SVN
+if (file_exists( 'installation/index.php' ) && $_VERSION->SVN == 0) {
+	define( '_INSTALL_CHECK', 1 );
+	include ( $mosConfig_absolute_path .'/offline.php');
+	exit();
+}
+
+// displays offline/maintanance page or bar
+if ($mosConfig_offline == 1) {
+	require( $mosConfig_absolute_path .'/offline.php' );
+}
+
 /** @global A places to store information from processing of the component */
 $_MOS_OPTION = array();
 
@@ -212,7 +212,7 @@ ob_start();
 if ($path = $mainframe->getPath( 'front' )) {
 	$task 	= strval( mosGetParam( $_REQUEST, 'task', '' ) );
 	$ret 	= mosMenuCheck( $Itemid, $option, $task, $gid );
-	
+
 	if ($ret) {
 		require_once( $path );
 	} else {

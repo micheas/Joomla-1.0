@@ -40,6 +40,8 @@ code fixes.
 
 ----------------------------------------------------------------------------------------
 ---------------- 1.0.12 In Development -- [**-***-**** **:** UTC] ------------------
+25-Nov-2006 Rastin Mehr
+ # Fixed [artf6439] : https switchover not working (as did in mambo 4.5.2 and early joomla)
 
 21-Nov-2006 Emir sakic
  # Fixed [artf6847] : XHTML syntax incompliance

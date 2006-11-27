@@ -30,11 +30,11 @@ function limitDirectory( &$directory ) {
 	if ( strpos($directory, '..\\') !== false ) {
 		$directory = str_replace('..\\', '', $directory);
 	}
-	
+
 	if ( strpos($directory, ':') !== false ) {
 		$directory = str_replace(':', '', $directory);
 	}
-	
+
 	return $directory;
 }
 
@@ -44,8 +44,8 @@ $task 	= strval( mosGetParam( $_SESSION, 'task', '' ) );
 
 switch ($option) {
 	case 'com_banners':
-		break;		
-		
+		break;
+
 	case 'com_categories':
 	case 'com_content':
 	case 'com_sections':
@@ -54,12 +54,12 @@ switch ($option) {
 			echo _NOT_AUTH;
 			return;
 		}
-		break;		
-		
+		break;
+
 	default:
 		echo _NOT_AUTH;
 		return;
-		break;		
+		break;
 }
 
 $directory	= mosGetParam( $_REQUEST, 'directory', '');
@@ -76,7 +76,7 @@ limitDirectory( $directory );
 if ( $directory != 'banners' && $directory != '' && !is_dir($mosConfig_absolute_path .'/images/stories/'. $directory)) {
 	$directory 	= '';
 }
-	
+
 if (isset($_FILES['userfile'])) {
 	if ($directory == 'banners') {
 		$base_Dir = "../../images/banners/";
@@ -140,6 +140,7 @@ echo '<?xml version="1.0" encoding="'. $iso[1] .'"?' .'>';
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <title>Upload a file</title>
+<meta http-equiv="Content-Type" content="text/html; <?php echo _ISO; ?>" />
 </head>
 <body>
 
@@ -148,7 +149,7 @@ echo '<?xml version="1.0" encoding="'. $iso[1] .'"?' .'>';
 
 <table class="adminform">
 <tr>
-	<th class="title"> 
+	<th class="title">
 		File Upload : <?php echo $directory; ?>
 	</th>
 </tr>

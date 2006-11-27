@@ -28,12 +28,12 @@ switch ($option) {
 			echo _NOT_AUTH;
 			return;
 		}
-		break;		
-		
+		break;
+
 	default:
 		echo _NOT_AUTH;
 		return;
-		break;		
+		break;
 }
 
 $css = mosGetParam( $_REQUEST, 't', '' );
@@ -82,6 +82,7 @@ echo '<?xml version="1.0" encoding="'. $iso[1] .'"?' .'>';
 			alltext += temp[i] + temp2[i+1];
 		}
 	</script>
+<meta http-equiv="Content-Type" content="text/html; <?php echo _ISO; ?>" />
 </head>
 <body style="background-color:#FFFFFF">
 <table align="center" width="90%" cellspacing="2" cellpadding="2" border="0">

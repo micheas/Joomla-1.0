@@ -47,6 +47,7 @@ code fixes.
 27-Nov-2006 Emir Sakic
  # Fixed [artf6865] : Relocate <script> element below <title> and <meta> elements for XHTML compliance
  # Fixed [artf6863] : Extra CSS include for styling offline.php
+ # Fixed [artf6858] : Encoding/Template issues on backend
 
 25-Nov-2006 Rastin Mehr
  # Fixed [artf6439] : https switchover not working (as did in mambo 4.5.2 and early joomla)

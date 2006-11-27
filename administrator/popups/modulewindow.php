@@ -26,12 +26,12 @@ switch ($option) {
 			echo _NOT_AUTH;
 			return;
 		}
-		break;		
-		
+		break;
+
 	default:
 		echo _NOT_AUTH;
 		return;
-		break;		
+		break;
 }
 
 $title 	= stripslashes( mosGetParam( $_REQUEST, 'title', 0 ) );
@@ -88,6 +88,7 @@ content = content.replace('src=\"images', 'src=\"../../images');
 title = title.replace('src=\"images', 'src=\"../../images');
 content = content.replace('src=\"images', 'src=\"../../images');
 </script>
+<meta http-equiv="Content-Type" content="text/html; <?php echo _ISO; ?>" />
 </head>
 
 <body style="background-color:#FFFFFF">

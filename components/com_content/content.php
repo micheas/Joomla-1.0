@@ -1760,10 +1760,11 @@ function editItem( $uid, $gid, &$access, $sectionid=0, $task, $Itemid ){
 
 		if ( $Itemid == 0 || $Itemid == 99999999 ) {
 			// security check to see if link exists in a menu
+
 			$link = 'index.php?option=com_content&task=new&sectionid=' . (int) $sectionid;
 			$query = "SELECT id"
 			. "\n FROM #__menu"
-			. "\n WHERE link LIKE '%$link%'"
+			. "\n WHERE (link LIKE '%$link' OR link LIKE '%$link&%')"
 			. "\n AND published = 1"
 			;
 			$database->setQuery( $query );

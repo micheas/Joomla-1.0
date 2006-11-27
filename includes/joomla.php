@@ -861,8 +861,12 @@ class mosMainFrame {
 				}
 			}
 		} else if ($session_id == '') {
-			// no session_id as user has person has not attempted to login
-			echo "<script>document.location.href='index.php?mosmsg=You need to login'</script>\n";
+			// no session_id as user has not attempted to login, or session.auto_start is switched on
+			if (ini_get( 'session.auto_start' ) || !ini_get( 'session.use_cookies' )) {
+				echo "<script>document.location.href='index.php?mosmsg=You need to login. If PHP\'s session.auto_start setting is on or session.use_cookies setting is off, you may need to correct this before you will be able to login.'</script>\n";
+			} else {
+				echo "<script>document.location.href='index.php?mosmsg=You need to login'</script>\n";
+			}
 			exit();
 		} else {
 			// session id does not correspond to required session format

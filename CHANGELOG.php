@@ -41,6 +41,9 @@ code fixes.
 ----------------------------------------------------------------------------------------
 ---------------- 1.0.12 In Development -- [**-***-**** **:** UTC] ------------------
 
+27-Nov-2006 Enno Klasing
+ # Fixed [artf6860] : Admin Login and PHP's session.auto_start
+
 27-Nov-2006 Emir Sakic
  # Fixed [artf6865] : Relocate <script> element below <title> and <meta> elements for XHTML compliance
  # Fixed [artf6863] : Extra CSS include for styling offline.php

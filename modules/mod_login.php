@@ -21,26 +21,10 @@ if ( $mosConfig_frontend_login != NULL && ($mosConfig_frontend_login === 0 || $m
 }
 
 // url of current page that user will be returned to after login
-$url = mosGetParam( $_SERVER, 'REQUEST_URI', null );
-// if return link does not contain https:// & http:// and to url
-if ( strpos($url, 'http:') !== 0 && strpos($url, 'https:') !== 0 ) {
-	// check to see if url has a starting slash
-	if (strpos($url, '/') !== 0) {
-		// adding starting slash to url
-		$url = '/'. $url;
-	}
-	
-	$url = mosGetParam( $_SERVER, 'HTTP_HOST', null ) . $url;
-
-	// check if link is https://
-	if ( isset( $_SERVER['HTTPS'] ) && ( !empty( $_SERVER['HTTPS'] ) && $_SERVER['HTTPS'] != 'off' ) ) {
-		$return = 'https://'. $url;
-	} else {
-	// normal http:// link
-		$return = 'http://'. $url;
-	}
+if ($query_string = mosGetParam( $_SERVER, 'QUERY_STRING', '' )) {
+	$return = 'index.php?' . $query_string;
 } else {
-	$return = $url;
+	$return = 'index.php';
 }
 // converts & to &amp; for xtml compliance
 $return 				= str_replace( '&', '&amp;', $return );
@@ -147,6 +131,7 @@ if ( $my->id ) {
 	<input type="hidden" name="lang" value="<?php echo $mosConfig_lang; ?>" />
 	<input type="hidden" name="return" value="<?php echo sefRelToAbs( $login ); ?>" />
 	<input type="hidden" name="message" value="<?php echo $message_login; ?>" />
+	<input type="hidden" name="force_session" value="1" />
 	<input type="hidden" name="<?php echo $validate; ?>" value="1" />
 	</form>
 	<?php

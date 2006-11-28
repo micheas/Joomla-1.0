@@ -1004,14 +1004,9 @@ class mosMainFrame {
 
 			$bypost 	= 1;
 
-			// Session Cookie `name`
-			$sessionCookieName 	= mosMainFrame::sessionCookieName();
-			// Get Session Cookie `value`
-			$sessioncookie 		= strval( mosGetParam( $_COOKIE, $sessionCookieName, null ) );
 			// extra check to ensure that Joomla! sessioncookie exists
-			if (!($sessioncookie == '-' || strlen($sessioncookie) == 32)) {
-				header( 'HTTP/1.0 403 Forbidden' );
-				mosErrorAlert( _NOT_AUTH );
+			if (!$this->_session->session_id) {
+				mosErrorAlert( _ALERT_ENABLED );
 				return;
 			}
 

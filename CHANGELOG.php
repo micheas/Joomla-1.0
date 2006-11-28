@@ -41,6 +41,11 @@ code fixes.
 ----------------------------------------------------------------------------------------
 ---------------- 1.0.12 In Development -- [**-***-**** **:** UTC] ------------------
 
+28-Nov-2006 Enno Klasing
+ # Fixed [artf6766] : Login form; you are not authorized...
+ # Fixed [artf6765] : Login form problem
+ # Fixed [artf6567] : Change error message for cookie test failure
+
 27-Nov-2006 Enno Klasing
  # Fixed [artf6860] : Admin Login and PHP's session.auto_start
 

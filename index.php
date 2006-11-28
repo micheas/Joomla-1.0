@@ -158,9 +158,15 @@ if ($option == 'login') {
 	if ( $return && !( strpos( $return, 'com_registration' ) || strpos( $return, 'com_login' ) ) ) {
 	// checks for the presence of a return url
 	// and ensures that this url is not the registration or login pages
+		// Also include a cookie-check after the login process
+		if (strpos( $return, '?' )) {
+			$return .= '&jcookiecheck=1';
+		} else {
+			$return .= '?jcookiecheck=1';
+		}
 		mosRedirect( $return );
 	} else {
-		mosRedirect( $mosConfig_live_site .'/index.php' );
+		mosRedirect( $mosConfig_live_site .'/index.php?jcookiecheck=1' );
 	}
 
 } else if ($option == 'logout') {
@@ -184,6 +190,10 @@ if ($option == 'login') {
 	} else {
 		mosRedirect( $mosConfig_live_site.'/index.php' );
 	}
+}
+// Extra check to ensure that cookies are enabled in the browser. Triggered after login.
+if (mosGetParam( $_GET, 'jcookiecheck', false ) && !isset( $_COOKIE[mosMainFrame::sessionCookieName()] )) {
+	mosErrorAlert( _ALERT_ENABLED );
 }
 
 /** get the information about the current user from the sessions table */

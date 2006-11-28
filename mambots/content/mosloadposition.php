@@ -26,7 +26,7 @@ function botMosLoadPosition( $published, &$row, &$params, $page=0 ) {
 	if ( strpos( $row->text, 'mosloadposition' ) === false ) {
 		return true;
 	}
-	
+
  	// expression to search for
  	$regex = '/{mosloadposition\s*.*?}/i';
 
@@ -35,7 +35,7 @@ function botMosLoadPosition( $published, &$row, &$params, $page=0 ) {
 		$row->text = preg_replace( $regex, '', $row->text );
 		return true;
 	}
-	
+
 	// find all instances of mambot and put in $matches
 	preg_match_all( $regex, $row->text, $matches );
 
@@ -54,14 +54,14 @@ function botMosLoadPosition( $published, &$row, &$params, $page=0 ) {
 			;
 			$database->setQuery( $query );
 			$database->loadObject($mambot);
-					
+
 			// save query to class variable
 			$_MAMBOTS->_content_mambot_params['mosloadposition'] = $mambot;
 		}
-		
+
 		// pull query data from class variable
 		$mambot = $_MAMBOTS->_content_mambot_params['mosloadposition'];
-		
+
 	 	$botParams = new mosParameters( $mambot->params );
 
 	 	$style	= $botParams->def( 'style', -2 );
@@ -89,7 +89,7 @@ function processPositions ( &$row, &$matches, $count, $regex, $style ) {
 		foreach ( $positions as $position ) {
 	 		if ( $position == @$load ) {
 				$modules	= loadPosition( $load, $style );
-				$row->text 	= preg_replace( '{'. $matches[0][$i] .'}', $modules, $row->text );
+				$row->text 	= str_replace($matches[0][$i], $modules, $row->text);
 				break;
 	 		}
  		}

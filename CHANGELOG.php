@@ -41,6 +41,9 @@ code fixes.
 ----------------------------------------------------------------------------------------
 ---------------- 1.0.12 In Development -- [**-***-**** **:** UTC] ------------------
 
+29-Nov-2006 Mateusz Krzeszowiec
+ # Fixed [artf6749] : bot mosloadposition stippes $
+
 28-Nov-2006 Enno Klasing
  # Fixed [artf6766] : Login form; you are not authorized...
  # Fixed [artf6765] : Login form problem

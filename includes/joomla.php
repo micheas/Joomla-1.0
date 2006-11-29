@@ -2822,7 +2822,7 @@ class mosUser extends mosDBTable {
 			$this->$k = intval( $oid );
 		}
 		$aro_id = $acl->get_object_id( 'users', $this->$k, 'ARO' );
-//		$acl->del_object( $aro_id, 'ARO', true );
+		$acl->del_object( $aro_id, 'ARO', true );
 
 		$query = "DELETE FROM $this->_tbl"
 		. "\n WHERE $this->_tbl_key = " . (int) $this->$k

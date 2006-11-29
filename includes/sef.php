@@ -54,7 +54,7 @@ if ($mosConfig_sef) {
 			$filter					= str_replace( 'filter,', '', $url_array[$pos+6] );
 			$limit 					= $url_array[$pos+7];
 			$limitstart 			= $url_array[$pos+8];
-			
+
 			// pass data onto global variables
 			$_GET['task'] 			= $task;
 			$_REQUEST['task'] 		= $task;
@@ -72,7 +72,7 @@ if ($mosConfig_sef) {
 			$_REQUEST['limit'] 		= $limit;
 			$_GET['limitstart'] 	= $limitstart;
 			$_REQUEST['limitstart'] = $limitstart;
-			
+
 			$QUERY_STRING = "option=com_content&task=$task&sectionid=$sectionid&id=$id&Itemid=$Itemid&order=$order&filter=$filter&limit=$limit&limitstart=$limitstart";
 		} else if (isset($url_array[$pos+7]) && $url_array[$pos+7] != '' && $url_array[$pos+5] > 1000 && ( in_array('archivecategory', $url_array) || in_array('archivesection', $url_array) ) ) {
 			// $option/$task/$id/$limit/$limitstart/year/month/module
@@ -100,7 +100,7 @@ if ($mosConfig_sef) {
 			$_GET['module']			= $module;
 			$_REQUEST['module']		= $module;
 
-			$QUERY_STRING = "option=com_content&task=$task&id=$id&limit=$limit&limitstart=$limitstart&year=$year&month=$month&module=$module";			
+			$QUERY_STRING = "option=com_content&task=$task&id=$id&limit=$limit&limitstart=$limitstart&year=$year&month=$month&module=$module";
 		} else if (isset($url_array[$pos+7]) && $url_array[$pos+7] != '' && $url_array[$pos+6] > 1000 && ( in_array('archivecategory', $url_array) || in_array('archivesection', $url_array) ) ) {
 			// $option/$task/$id/$Itemid/$limit/$limitstart/year/month
 			$task 					= $url_array[$pos+1];
@@ -127,7 +127,7 @@ if ($mosConfig_sef) {
 			$_GET['month'] 			= $month;
 			$_REQUEST['month'] 		= $month;
 
-			$QUERY_STRING = "option=com_content&task=$task&id=$id&Itemid=$Itemid&limit=$limit&limitstart=$limitstart&year=$year&month=$month";			
+			$QUERY_STRING = "option=com_content&task=$task&id=$id&Itemid=$Itemid&limit=$limit&limitstart=$limitstart&year=$year&month=$month";
 		} else if (isset($url_array[$pos+7]) && $url_array[$pos+7] != '' && in_array('category', $url_array) && ( strpos( $url_array[$pos+5], 'order,' ) !== false )) {
 			// $option/$task/$sectionid/$id/$Itemid/$order/$limit/$limitstart
 			$task 					= $url_array[$pos+1];
@@ -153,7 +153,7 @@ if ($mosConfig_sef) {
 			$_REQUEST['limit'] 		= $limit;
 			$_GET['limitstart'] 	= $limitstart;
 			$_REQUEST['limitstart'] = $limitstart;
-			
+
 			$QUERY_STRING = "option=com_content&task=$task&sectionid=$sectionid&id=$id&Itemid=$Itemid&order=$order&limit=$limit&limitstart=$limitstart";
 		} else if (isset($url_array[$pos+6]) && $url_array[$pos+6] != '') {
 		// $option/$task/$sectionid/$id/$Itemid/$limit/$limitstart
@@ -206,7 +206,7 @@ if ($mosConfig_sef) {
 			$year 					= $url_array[$pos+2];
 			$month 					= $url_array[$pos+3];
 			$module 				= $url_array[$pos+4];
-			
+
 			// pass data onto global variables
 			$_GET['task'] 			= $task;
 			$_REQUEST['task'] 		= $task;
@@ -216,7 +216,7 @@ if ($mosConfig_sef) {
 			$_REQUEST['month'] 		= $month;
 			$_GET['module'] 		= $module;
 			$_REQUEST['module']		= $module;
-			
+
 			$QUERY_STRING = "option=com_content&task=$task&year=$year&month=$month&module=$module";
 		} else if (!(isset($url_array[$pos+5]) && $url_array[$pos+5] != '') && isset($url_array[$pos+4]) && $url_array[$pos+4] != '') {
 		// $option/$task/$sectionid/$id/$Itemid
@@ -290,14 +290,14 @@ if ($mosConfig_sef) {
 		$uri = explode('component/', $_SERVER['REQUEST_URI']);
 		$uri_array = explode('/', $uri[1]);
 		$QUERY_STRING = '';
-		
+
 		// needed for check if component exists
 		$path 		= $mosConfig_absolute_path .'/components';
 		$dirlist 	= array();
 		if ( is_dir( $path ) ) {
-			$base = opendir( $path );	
+			$base = opendir( $path );
 			while (false !== ( $dir = readdir($base) ) ) {
-				if (is_dir($path .'/'. $dir) && $dir !== '.' && $dir !== '..' && strtolower($dir) !== 'cvs' && strtolower($dir) !== '.svn') {
+				if ($dir !== '.' && $dir !== '..' && is_dir($path .'/'. $dir) && strtolower($dir) !== 'cvs' && strtolower($dir) !== '.svn') {
 					$dirlist[] = $dir;
 				}
 			}
@@ -309,7 +309,7 @@ if ($mosConfig_sef) {
 			if (isset($temp[0]) && $temp[0]!='' && isset($temp[1]) && $temp[1]!='') {
 				$_GET[$temp[0]] 	= $temp[1];
 				$_REQUEST[$temp[0]] = $temp[1];
-				
+
 				// check to ensure component actually exists
 				if ( $temp[0] == 'option' ) {
 					$check = '';
@@ -328,7 +328,7 @@ if ($mosConfig_sef) {
 						exit( 404 );
 					}
 				}
-				
+
 				if ( $QUERY_STRING == '' ) {
 					$QUERY_STRING .= "$temp[0]=$temp[1]";
 				} else {
@@ -336,7 +336,7 @@ if ($mosConfig_sef) {
 				}
 			}
 		}
-		
+
 		$_SERVER['QUERY_STRING'] 	= $QUERY_STRING;
 		$REQUEST_URI 				= $uri[0].'index.php?'.$QUERY_STRING;
 		$_SERVER['REQUEST_URI'] 	= $REQUEST_URI;
@@ -350,7 +350,7 @@ if ($mosConfig_sef) {
 			}
 			// Don't allow config vars to be passed as global
 			include( 'configuration.php' );
-			
+
 			// SSL check - $http_host returns <live site url>:<port number if it is 443>
 			$http_host = explode(':', $_SERVER['HTTP_HOST'] );
 			if( isset( $http_host[1] ) && $http_host[1] == 443 && substr( $mosConfig_live_site, 0, 8 ) != 'https://' )
@@ -365,7 +365,7 @@ if ($mosConfig_sef) {
 		*/
 		$jdir = str_replace( 'index.php', '', $_SERVER['PHP_SELF'] );
 		$juri = str_replace( $jdir, '', $_SERVER['REQUEST_URI'] );
-		
+
 		if ($juri != '' && $juri != '/' && !eregi( "index\.php", $_SERVER['REQUEST_URI'] ) && !eregi( "index2\.php", $_SERVER['REQUEST_URI'] ) && !eregi( "/\?", $_SERVER['REQUEST_URI'] ) && $_SERVER['QUERY_STRING'] == '' ) {
 			header( 'HTTP/1.0 404 Not Found' );
 			require_once( $mosConfig_absolute_path . '/templates/404.php' );
@@ -397,7 +397,7 @@ function sefRelToAbs( $string ) {
 		if ($string == 'index.php') {
 			$string = '';
 		}
-		
+
 		// break link into url component parts
 		$url = parse_url( $string );
 
@@ -417,7 +417,7 @@ function sefRelToAbs( $string ) {
 			// clean possible xss attacks
 			$url['query'] = preg_replace( "'%3Cscript[^%3E]*%3E.*?%3C/script%3E'si", '', $url['query'] );
 
-			// break url into component parts			
+			// break url into component parts
 			parse_str( $url['query'], $parts );
 
 			// special handling for javascript
@@ -433,74 +433,74 @@ function sefRelToAbs( $string ) {
 			if ( ( ( isset($parts['option']) && ( $parts['option'] == 'com_content' || $parts['option'] == 'content' ) ) ) && ( $parts['task'] != 'new' ) && ( $parts['task'] != 'edit' ) ) {
 			// index.php?option=com_content [&task=$task] [&sectionid=$sectionid] [&id=$id] [&Itemid=$Itemid] [&limit=$limit] [&limitstart=$limitstart] [&year=$year] [&month=$month] [&module=$module]
 				$sefstring .= 'content/';
-				
-				// task 
+
+				// task
 				if ( isset( $parts['task'] ) ) {
-					$sefstring .= $parts['task'].'/';					
+					$sefstring .= $parts['task'].'/';
 				}
-				// sectionid 
+				// sectionid
 				if ( isset( $parts['sectionid'] ) ) {
-					$sefstring .= $parts['sectionid'].'/';					
+					$sefstring .= $parts['sectionid'].'/';
 				}
-				// id 
+				// id
 				if ( isset( $parts['id'] ) ) {
-					$sefstring .= $parts['id'].'/';					
+					$sefstring .= $parts['id'].'/';
 				}
-				// Itemid 
+				// Itemid
 				if ( isset( $parts['Itemid'] ) ) {
 					//only add Itemid value if it does not correspond with the 'unassigned' Itemid value
 					if ( $parts['Itemid'] != 99999999 && $parts['Itemid'] != 0 ) {
-						$sefstring .= $parts['Itemid'].'/';					
+						$sefstring .= $parts['Itemid'].'/';
 					}
 				}
 				// order
 				if ( isset( $parts['order'] ) ) {
-					$sefstring .= 'order,'. $parts['order'].'/';	
+					$sefstring .= 'order,'. $parts['order'].'/';
 				}
 				// filter
 				if ( isset( $parts['filter'] ) ) {
-					$sefstring .= 'filter,'. $parts['filter'].'/';	
+					$sefstring .= 'filter,'. $parts['filter'].'/';
 				}
 				// limit
 				if ( isset( $parts['limit'] ) ) {
-					$sefstring .= $parts['limit'].'/';	
+					$sefstring .= $parts['limit'].'/';
 				}
 				// limitstart
 				if ( isset( $parts['limitstart'] ) ) {
-					$sefstring .= $parts['limitstart'].'/';					
+					$sefstring .= $parts['limitstart'].'/';
 				}
 				// year
 				if ( isset( $parts['year'] ) ) {
-					$sefstring .= $parts['year'].'/';					
+					$sefstring .= $parts['year'].'/';
 				}
 				// month
 				if ( isset( $parts['month'] ) ) {
-					$sefstring .= $parts['month'].'/';					
+					$sefstring .= $parts['month'].'/';
 				}
 				// module
 				if ( isset( $parts['module'] ) ) {
-					$sefstring .= $parts['module'].'/';					
+					$sefstring .= $parts['module'].'/';
 				}
 				// lang
 				if ( isset( $parts['lang'] ) ) {
-					$sefstring .= 'lang,'. $parts['lang'].'/';					
+					$sefstring .= 'lang,'. $parts['lang'].'/';
 				}
 
 				$string = $sefstring;
-				
+
 			// all other components
 			// index.php?option=com_xxxx &...
 			} else if ( isset($parts['option']) && ( strpos($parts['option'], 'com_' ) !== false ) ) {
-				// do not SEF where com_content - `edit` or `new` task link				
+				// do not SEF where com_content - `edit` or `new` task link
 				if ( !( ( $parts['option'] == 'com_content' ) && ( ( isset($parts['task']) == 'new' ) || ( isset($parts['task']) == 'edit' ) ) ) ) {
 					$sefstring 	= 'component/';
-					
+
 					foreach($parts as $key => $value) {
 						// remove slashes automatically added by parse_str
 						$value		= stripslashes($value);
 						$sefstring .= $key .','. $value.'/';
 					}
-					
+
 					$string = str_replace( '=', ',', $sefstring );
 				}
 			}
@@ -511,8 +511,8 @@ function sefRelToAbs( $string ) {
 		return $mosConfig_live_site .'/'. $string . $fragment;
 
 		// allows SEF without mod_rewrite
-		// uncomment Line 512 and comment out Line 514	
-	
+		// uncomment Line 512 and comment out Line 514
+
 		// uncomment line below if you dont have mod_rewrite
 		// return $mosConfig_live_site .'/index.php/'. $string . $fragment;
 		// If the above doesnt work - try uncommenting this line instead
@@ -526,28 +526,28 @@ function sefRelToAbs( $string ) {
 				// splits http(s)://xx.xx/yy/zz..." into [1]="http(s)://xx.xx" and [2]="/yy/zz...":
 				$live_site_parts = array();
 				eregi("^(https?:[\/]+[^\/]+)(.*$)", $mosConfig_live_site, $live_site_parts);
-				
+
 				$string = $live_site_parts[1] . $string;
 			} else {
 				$check = 1;
-				
+
 				// array list of non http/https	URL schemes
 				$url_schemes 	= explode( ', ', _URL_SCHEMES );
 				$url_schemes[] 	= 'http:';
 				$url_schemes[] 	= 'https:';
-				
+
 				foreach ( $url_schemes as $url ) {
 					if ( strpos( $string, $url ) === 0 ) {
 						$check = 0;
 					}
 				}
-				
+
 				if ( $check ) {
 					$string = $mosConfig_live_site .'/'. $string;
 				}
 			}
 		}
-		
+
 		return $string;
 	}
 }

@@ -219,7 +219,7 @@ function recursive_listdir( $base ) {
 	if(is_dir($base)) {
 		$dh = opendir($base);
 		while (false !== ($dir = readdir($dh))) {
-			if (is_dir($base .'/'. $dir) && $dir !== '.' && $dir !== '..' && strtolower($dir) !== 'cvs' && strtolower($dir) !== '.svn') {
+			if ($dir !== '.' && $dir !== '..' && is_dir($base .'/'. $dir) && strtolower($dir) !== 'cvs' && strtolower($dir) !== '.svn') {
 				$subbase = $base .'/'. $dir;
 				$dirlist[] = $subbase;
 				$subdirlist = recursive_listdir($subbase);

@@ -43,6 +43,7 @@ code fixes.
 
 29-Nov-2006 Mateusz Krzeszowiec
  # Fixed [artf6749] : bot mosloadposition stippes $
+ # Fixed [artf1527] : "open_basedir restriction" warning
 
 28-Nov-2006 Enno Klasing
  # Fixed [artf6766] : Login form; you are not authorized...

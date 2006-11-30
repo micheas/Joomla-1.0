@@ -43,6 +43,7 @@ code fixes.
 
 30-Nov-2006 Emir Sakic
  # Fixed [artf6841] : Submit Contact Form doesn't work with deactivated cookies
+ # Fixed [artf6846] : Error with new document - without categories
 
 30-Nov-2006 Mateusz Krzeszowiec
  # Fixed [artf6786] : sef.php and multilingual config

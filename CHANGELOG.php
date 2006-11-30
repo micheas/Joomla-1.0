@@ -41,6 +41,9 @@ code fixes.
 ----------------------------------------------------------------------------------------
 ---------------- 1.0.12 In Development -- [**-***-**** **:** UTC] ------------------
 
+30-Nov-2006 Emir Sakic
+ # Fixed [artf6841] : Submit Contact Form doesn't work with deactivated cookies
+
 30-Nov-2006 Mateusz Krzeszowiec
  # Fixed [artf6786] : sef.php and multilingual config
 

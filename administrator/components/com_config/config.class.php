@@ -237,6 +237,14 @@ class mosConfig {
 			if (isset( $GLOBALS[$k] ))
 				$this->$v = $GLOBALS[$k];
 		}
+		
+		/*
+		*	Maintain the value of $mosConfig_live_site even if 
+		*	user signs in with https:// 
+		*/
+		require('../configuration.php');
+		if( $mosConfig_live_site != $this->config_live_site )
+			$this->config_live_site = $mosConfig_live_site;	
 	}
 }
 ?>

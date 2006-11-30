@@ -206,7 +206,6 @@ if ($siteUrl) {
 	$config .= "\$mosConfig_fileperms = '".$configArray['filePerms']."';\n";
 	$config .= "\$mosConfig_dirperms = '".$configArray['dirPerms']."';\n";
 	$config .= "\$mosConfig_helpurl = 'http://help.joomla.org';\n";
-	$config .= "\$mosConfig_mbf_content = '0';\n";
 	$config .= "\$mosConfig_editor = 'tinymce';\n";
 	$config .= "\$mosConfig_admin_expired = '1';\n";
 	$config .= "\$mosConfig_frontend_login = '1';\n";

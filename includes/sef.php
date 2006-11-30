@@ -380,11 +380,11 @@ if ($mosConfig_sef) {
  * @return string
  */
 function sefRelToAbs( $string ) {
-	global $mosConfig_live_site, $mosConfig_sef, $mosConfig_mbf_content, $mosConfig_multilingual_support;
+	global $mosConfig_live_site, $mosConfig_sef, $mosConfig_multilingual_support;
 	global $iso_client_lang;
 
 	//multilingual code url support
-	if( $mosConfig_sef && ($mosConfig_mbf_content || $mosConfig_multilingual_support) && $string!='index.php' && !eregi("^(([^:/?#]+):)",$string) && !strcasecmp(substr($string,0,9),'index.php') && !eregi('lang=', $string) ) {
+	if( $mosConfig_sef && $mosConfig_multilingual_support && $string!='index.php' && !eregi("^(([^:/?#]+):)",$string) && !strcasecmp(substr($string,0,9),'index.php') && !eregi('lang=', $string) ) {
 		$string .= '&amp;lang='. $iso_client_lang;
 	}
 

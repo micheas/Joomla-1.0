@@ -41,6 +41,9 @@ code fixes.
 ----------------------------------------------------------------------------------------
 ---------------- 1.0.12 In Development -- [**-***-**** **:** UTC] ------------------
 
+30-Nov-2006 Mateusz Krzeszowiec
+ # Fixed [artf6786] : sef.php and multilingual config
+
 30-Nov-2006 Marko Schmuck
  # Fixed [artf6921] : [patch] fixing a bug on modules/mod_archive.php
  # Fixed [artf6876] : Orphan user information in phpGACL tables after user was deleted

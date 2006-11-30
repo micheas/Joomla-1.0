@@ -41,28 +41,35 @@ code fixes.
 ----------------------------------------------------------------------------------------
 ---------------- 1.0.12 In Development -- [**-***-**** **:** UTC] ------------------
 
+
 30-Nov-2006 Emir Sakic
  # Fixed [artf6841] : Submit Contact Form doesn't work with deactivated cookies
  # Fixed [artf6846] : Error with new document - without categories
 
+
 30-Nov-2006 Mateusz Krzeszowiec
  # Fixed [artf6786] : sef.php and multilingual config
+
 
 30-Nov-2006 Marko Schmuck
  # Fixed [artf6921] : [patch] fixing a bug on modules/mod_archive.php
  # Fixed [artf6876] : Orphan user information in phpGACL tables after user was deleted
 
+
 29-Nov-2006 Mateusz Krzeszowiec
  # Fixed [artf6749] : bot mosloadposition stippes $
  # Fixed [artf1527] : "open_basedir restriction" warning
+
 
 28-Nov-2006 Enno Klasing
  # Fixed [artf6766] : Login form; you are not authorized...
  # Fixed [artf6765] : Login form problem
  # Fixed [artf6567] : Change error message for cookie test failure
 
+
 27-Nov-2006 Enno Klasing
  # Fixed [artf6860] : Admin Login and PHP's session.auto_start
+
 
 27-Nov-2006 Emir Sakic
  # Fixed [artf6865] : Relocate <script> element below <title> and <meta> elements for XHTML compliance
@@ -70,50 +77,65 @@ code fixes.
  # Fixed [artf6858] : Encoding/Template issues on backend
  # Fixed [artf6859] : Bug in com_content security check for new content
 
+
 25-Nov-2006 Rastin Mehr
  # Fixed [artf6439] : https switchover not working (as did in mambo 4.5.2 and early joomla)
+
 
 21-Nov-2006 Emir Sakic
  # Fixed [artf6847] : XHTML syntax incompliance
  # Fixed [artf6833] : Javascript alert messages on IE display without proper encoding in Internet Explorer
 
+
 21-Nov-2006 Marko Schmuck
  # Fixed [artf6828] : Poorly formed HTML in admin.contact.html.php
+
 
 21-Nov-2006 Andrew Eddie
  # Added 3 new language constants for systems errors (namely database issues)
 
+
 20-Nov-2006 Marko Schmuck
  # Fixed [artf6673] : Untranslated submit button, content component
+
 
 20-Nov-2006 Enno Klasing
  # Fixed [artf6816] : Hit counter not correct if caching is enabled
  # Fixed [artf6753] : add banner client ID in admin view
 
+
 19-Nov-2006 Enno Klasing
  # Fixed [artf6764] : IE7 Table Alignment Bug
+
 
 15-Nov-2006 Marko Schmuck
  # Fixed [artf6763] : Joomla.php - build the multiple select list
  # Fixed [artf6752] : mms:// not resolving in menus
 
+
 15-Nov-2006 Enno Klasing
  # Fixed [artf6613] : User rating, second rating, incorrect message
+
 
 15-Nov-2006 Mateusz Krzeszowiec
  # Fixed [artf5926] : Few other Itemid issues solved
 
+
 14-Nov-2006 Marko Schmuck
  # Fixed : css file handling in content backend preview
+
 
 13-Nov-2006 Enno Klasing
  # Fixed [artf5924] : JavaScript and HTML-Error in mod_wrapper
 
+
 12-Nov-2006 Alex Kempkens
  # Fixed [artf6713] : double title in the pathway
 
+
 12-Nov-2006 Mateusz Krzeszowiec
  # Fixed [artf6611] : Admin, copy section issues
+
 
 11-Nov-2006 Enno Klasing
  # Fixed [artf6720] : Wrong markup on com_media

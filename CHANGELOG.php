@@ -46,6 +46,7 @@ code fixes.
  # Fixed [artf6903] : Anchors to Frontpage in SEF-URLs
  # Fixed [artf6901] : LIMIT in MySQL queries
  # Fixed [artf6844] : Javascript escape bug for poll.php
+ # Fixed [artf5788] : Frontpage content item category links enable section links
 
 
 30-Nov-2006 Rastin Mehr

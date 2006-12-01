@@ -1693,7 +1693,7 @@ function show( $row, $params, $gid, &$access, $pop, $option='com_content', $Item
 			// use Itemid for category found in query
 			if ($catLinkID != -1 && $catLinkID) {
 				$_Itemid = '&amp;Itemid='. $catLinkID;
-			} else if ($secLinkID != -1 && $secLinkID) {
+			} else if (isset( $secLinkID ) && $secLinkID != -1 && $secLinkID) {
 			// use Itemid for section found in query
 				$_Itemid = '&amp;Itemid='. $secLinkID;
 			}

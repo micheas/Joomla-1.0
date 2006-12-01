@@ -275,7 +275,9 @@ class database {
 	*/
 	function query() {
 		global $mosConfig_debug;
-		if ($this->_limit > 0 || $this->_offset > 0) {
+		if ($this->_limit > 0 && $this->_offset == 0) {
+			$this->_sql .= "\nLIMIT $this->_limit";
+		} else if ($this->_limit > 0 || $this->_offset > 0) {
 			$this->_sql .= "\nLIMIT $this->_offset, $this->_limit";
 		}
 		if ($this->_debug) {

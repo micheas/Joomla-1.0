@@ -44,6 +44,7 @@ code fixes.
 
 01-Dec-2006 Enno Klasing
  # Fixed [artf6903] : Anchors to Frontpage in SEF-URLs
+ # Fixed [artf6901] : LIMIT in MySQL queries
 
 
 30-Nov-2006 Emir Sakic

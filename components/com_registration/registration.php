@@ -130,6 +130,11 @@ function saveRegistration() {
 		mosErrorAlert( $row->getError() );
 	}
 
+	$row->name		= trim( $row->name );
+	$row->email		= trim( $row->email );
+	$row->username	= trim( $row->username );
+	$row->password	= trim( $row->password );
+
 	mosMakeHtmlSafe($row);
 
 	$row->id 		= 0;

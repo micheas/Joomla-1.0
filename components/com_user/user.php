@@ -135,6 +135,10 @@ function userEdit( $option, $uid, $submitvalue) {
 	$row = new mosUser( $database );
 	$row->load( (int)$uid );
 	$row->orig_password = $row->password;
+	
+	$row->name = trim( $row->name );
+	$row->email = trim( $row->email );
+	$row->username = trim( $row->username );
 
 	$file 	= $mainframe->getPath( 'com_xml', 'com_users' );
 	$params =& new mosUserParameters( $row->params, $file, 'component' );
@@ -167,11 +171,15 @@ function userSave( $option, $uid) {
 		exit();
 	}
 
+	$row->name = trim($row->name);
+	$row->email = trim($row->email);
+	$row->username = trim($row->username);
+	
 	mosMakeHtmlSafe($row);
 
 	if (isset($_POST['password']) && $_POST['password'] != '') {
 		if (isset($_POST['verifyPass']) && ($_POST['verifyPass'] == $_POST['password'])) {
-			$row->password = md5($row->password);
+			$row->password = md5(trim($row->password));
 		} else {
 			echo "<script> alert(\""._PASS_MATCH."\"); window.history.go(-1); </script>\n";
 			exit();
@@ -207,7 +215,7 @@ function userSave( $option, $uid) {
 	if ( $orig_username != $row->username ) {
 		// change username value in session table
 		$query = "UPDATE #__session"
-		. "\n SET username = " . $database->Quote(trim($row->username))
+		. "\n SET username = " . $database->Quote($row->username)
 		. "\n WHERE username = " . $database->Quote( $orig_username )
 		. "\n AND userid = " . (int) $my->id
 		. "\n AND gid = " . (int) $my->gid

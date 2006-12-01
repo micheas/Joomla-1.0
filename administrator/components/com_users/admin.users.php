@@ -216,6 +216,12 @@ function editUser( $uid='0', $option='users' ) {
 		;
 		$database->setQuery( $query );
 		$contact = $database->loadObjectList();
+		
+		$row->name = trim( $row->name );
+		$row->email = trim( $row->email );
+		$row->username = trim( $row->username );
+		$row->password = trim( $row->password );
+		
 	} else {
 		$contact 	= NULL;
 		$row->block = 0;
@@ -284,6 +290,10 @@ function saveUser( $task ) {
 		echo "<script> alert('".$row->getError()."'); window.history.go(-1); </script>\n";
 		exit();
 	}
+	
+	$row->name = trim( $row->name );
+	$row->email = trim( $row->email );
+	$row->username = trim( $row->username );
 
 	// sanitise fields
 	$row->id 	= (int) $row->id;
@@ -300,8 +310,8 @@ function saveUser( $task ) {
 			$pwd 			= mosMakePassword();
 			$row->password 	= md5( $pwd );
 		} else {
-			$pwd 			= $row->password;
-			$row->password 	= md5( $row->password );
+			$pwd 			= trim( $row->password );
+			$row->password 	= md5( trim( $row->password ) );
 		}
 		$row->registerDate 	= date( 'Y-m-d H:i:s' );
 	} else {
@@ -313,7 +323,7 @@ function saveUser( $task ) {
 			// password set to null if empty
 			$row->password = null;
 		} else {
-			$row->password = md5( $row->password );
+			$row->password = md5( trim( $row->password ) );
 		}
 		
 		// if group has been changed and where original group was a Super Admin

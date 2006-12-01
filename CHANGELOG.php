@@ -47,6 +47,10 @@ code fixes.
  # Fixed [artf6901] : LIMIT in MySQL queries
 
 
+30-Nov-2006 Rastin Mehr
+ # Fixed [artf6577] : Registration name, username & email cleanups: spaces not allowed
+
+
 30-Nov-2006 Emir Sakic
  # Fixed [artf6841] : Submit Contact Form doesn't work with deactivated cookies
  # Fixed [artf6846] : Error with new document - without categories

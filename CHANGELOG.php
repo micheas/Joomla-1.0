@@ -42,6 +42,10 @@ code fixes.
 ---------------- 1.0.12 In Development -- [**-***-**** **:** UTC] ------------------
 
 
+01-Dec-2006 Enno Klasing
+ # Fixed [artf6903] : Anchors to Frontpage in SEF-URLs
+
+
 30-Nov-2006 Emir Sakic
  # Fixed [artf6841] : Submit Contact Form doesn't work with deactivated cookies
  # Fixed [artf6846] : Error with new document - without categories

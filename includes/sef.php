@@ -504,6 +504,10 @@ function sefRelToAbs( $string ) {
 					$string = str_replace( '=', ',', $sefstring );
 				}
 			}
+		// no query given. Empty $string to get only the fragment
+		// index.php#anchor or index.php?#anchor
+		} else {
+			$string = '';
 		}
 
 		// allows SEF without mod_rewrite

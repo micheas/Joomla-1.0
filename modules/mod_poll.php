@@ -102,7 +102,7 @@ if (!defined( '_JOS_POLL_MODULE' )) {
 			var check 		= 0;
 
 			if ( '<?php echo $voted; ?>' != 'z' ) {
-				alert('<?php echo _ALREADY_VOTE; ?>');
+				alert('<?php echo addslashes( _ALREADY_VOTE ); ?>');
 				return;
 			}
 			for(var i = 0; i < radioLength; i++) {
@@ -112,7 +112,7 @@ if (!defined( '_JOS_POLL_MODULE' )) {
 				}
 			}		
 			if (check == 0) {
-				alert('<?php echo _NO_SELECTION; ?>');
+				alert('<?php echo addslashes( _NO_SELECTION ); ?>');
 			}
 		}		
 		//-->

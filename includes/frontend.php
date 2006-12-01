@@ -18,7 +18,7 @@ defined( '_VALID_MOS' ) or die( 'Restricted access' );
 function mosMainBody() {
 	global $mosConfig_live_site;
 	// message passed via the url
-	$mosmsg = strval( mosGetParam( $_REQUEST, 'mosmsg', '' ) );
+	$mosmsg = stripslashes( strval( mosGetParam( $_REQUEST, 'mosmsg', '' ) ) );
 
 	$popMessages = false;
 

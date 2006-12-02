@@ -267,7 +267,6 @@ function activate( $option ) {
 			if(!defined(_REG_ACTIVATE_FAILURE)) {
 				DEFINE('_REG_ACTIVATE_FAILURE', '<div class="componentheading">Activation Failed!</div><br />The system was unable to activate your account, please contact the site administrator.');
 			}
-			echo "SQL error" . $database->stderr(true);
 			echo _REG_ACTIVATE_FAILURE;
 		} else {
 			echo _REG_ACTIVATE_COMPLETE;

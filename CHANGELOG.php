@@ -41,6 +41,8 @@ code fixes.
 ----------------------------------------------------------------------------------------
 ---------------- 1.0.12 In Development -- [**-***-**** **:** UTC] ------------------
 
+02-Dec-2006 Sam Moffatt
+ # Fixed [artf6484] : com_registration bug (removed SQL error message)
 
 01-Dec-2006 Enno Klasing
  # Fixed [artf6903] : Anchors to Frontpage in SEF-URLs

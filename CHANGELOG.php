@@ -41,6 +41,9 @@ code fixes.
 ----------------------------------------------------------------------------------------
 ---------------- 1.0.12 In Development -- [**-***-**** **:** UTC] ------------------
 
+06-Dec-2006 Mateusz Krzeszowiec
+ # Fixed [artf6832]: getItemid() function in joomla.php will not return correct $Itemid
+
 02-Dec-2006 Sam Moffatt
  # Fixed [artf6484] : com_registration bug (removed SQL error message)
 

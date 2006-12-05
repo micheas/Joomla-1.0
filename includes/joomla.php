@@ -1759,7 +1759,7 @@ class mosMainFrame {
 		if ( $_Itemid != '' ) {
 		// if Itemid value discovered by queries, return this value
 			return $_Itemid;
-		} else if ( $Itemid != 99999999 && $Itemid === 0 ) {
+		} else if ( $Itemid != 99999999 && $Itemid > 0 ) {
 		// if queries do not return Itemid value, return Itemid of page - if it is not 99999999
 			return $Itemid;
 		}

@@ -41,6 +41,9 @@ code fixes.
 ----------------------------------------------------------------------------------------
 ---------------- 1.0.12 In Development -- [**-***-**** **:** UTC] ------------------
 
+06-Dec-2006 Marko Schmuck
+ # Fixed [artf6884] : mosimage align=right causes problems in IE6
+
 06-Dec-2006 Enno Klasing
  # Fixed [artf6922] : Registration not working as expected (JavaScript popups)
 

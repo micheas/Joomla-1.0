@@ -32,7 +32,7 @@ if (!defined( '_MOS_MAINMENU_MODULE' )) {
 				break;
 				
 			case 'url':
-				if ( eregi( 'index.php\?', $mitem->link ) ) {
+				if ( eregi( 'index.php\?', $mitem->link ) && !eregi( 'http', $mitem->link ) && !eregi( 'https', $mitem->link ) ) {
 					if ( !eregi( 'Itemid=', $mitem->link ) ) {
 						$mitem->link .= '&Itemid='. $mitem->id;
 					}

@@ -5965,33 +5965,23 @@ function josSpoofCheck( $header=NULL, $alt=NULL ) {
 
 		// Loop through each POST'ed value and test if it contains
 		// one of the $badStrings:
-		foreach ($_POST as $k => $v){
-			foreach ($badStrings as $v2) {
-				if (is_array($v)) {
-					patHTML::_josSpoofCheck($v, $badStrings);
-				} else if (strpos( $v, $v2 ) !== false) {
-					header( "HTTP/1.0 403 Forbidden" );
-					mosErrorAlert( _NOT_AUTH );
-					return;
-				}
-			}
-		}
-
-		// Made it past spammer test, free up some memory
-		// and continue rest of script:
-		unset($k, $v, $v2, $badStrings);
+		_josSpoofCheck( $_POST, $badStrings );
 	}
 }
 
-function _josSpoofCheck($array, $badStrings) {
-	foreach ($array as $k => $v) {
-		foreach ($badStrings as $v2) {
-			if (is_array($v)) {
-				patHTML::_josSpoofCheck($v, $badStrings);
-			} else if (strpos( $v, $v2 ) !== false) {
-				header( "HTTP/1.0 403 Forbidden" );
-				mosErrorAlert( _NOT_AUTH );
-				return;
+function _josSpoofCheck( $array, $badStrings ) {
+	// Loop through each $array value and test if it contains
+	// one of the $badStrings
+	foreach( $array as $v ) {
+		if (is_array( $v )) {
+			_josSpoofCheck( $v, $badStrings );
+		} else {
+			foreach ( $badStrings as $v2 ) {
+				if ( stripos( $v, $v2 ) !== false ) {
+					header( 'HTTP/1.0 403 Forbidden' );
+					mosErrorAlert( _NOT_AUTH );
+					exit(); // mosErrorAlert dies anyway, double check just to make sure
+				}
 			}
 		}
 	}

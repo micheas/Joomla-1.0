@@ -41,6 +41,9 @@ code fixes.
 ----------------------------------------------------------------------------------------
 ---------------- 1.0.12 In Development -- [**-***-**** **:** UTC] ------------------
 
+07-Dec-2006 Enno Klasing
+ # Fixed [artf6296] : josSpoofCheck does not check arrays and generates php warning
+
 06-Dec-2006 Marko Schmuck
  # Fixed [artf6884] : mosimage align=right causes problems in IE6
  # Fixed [artf6779] : Link-URL containing character ] breaks

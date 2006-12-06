@@ -170,7 +170,11 @@ function processImages ( &$row, &$params, &$introCount ) {
 			$image = '<img src="'. $mosConfig_live_site .'/images/stories/'. $attrib[0] .'"'. $size;
 			// no aligment variable - if caption detected
 			if ( !$attrib[4] ) {
-				$image .= $attrib[1] ? ' align="'. $attrib[1] .'"' : '';
+				if ($attrib[1] == 'left' OR $attrib[1] == 'right') {
+					$image .= ' style="float: '. $attrib[1] .';"';
+				} else {
+					$image .= $attrib[1] ? ' align="middle"' : '';
+				}
 			}
 			$image .=' hspace="6" alt="'. $attrib[2] .'" title="'. $attrib[2] .'" border="'. $border .'" />';
 

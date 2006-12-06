@@ -128,7 +128,7 @@ function showconfig( $option) {
 	$lists['list_limit'] = mosHTML::selectList( $listLimit, 'config_list_limit', 'class="inputbox" size="1"', 'value', 'text', ( $row->config_list_limit ? $row->config_list_limit : 50 ) );
 
 	$lists['frontend_login'] = mosHTML::yesnoRadioList( 'config_frontend_login', 'class="inputbox"', $row->config_frontend_login );
-	
+
 // DEBUG
 
 	$lists['debug'] = mosHTML::yesnoRadioList( 'config_debug', 'class="inputbox"', $row->config_debug );
@@ -138,13 +138,13 @@ function showconfig( $option) {
 
 // SERVER SETTINGS
 	$lists['gzip'] = mosHTML::yesnoRadioList( 'config_gzip', 'class="inputbox"', $row->config_gzip );
-	
+
 	$session = array(
 		mosHTML::makeOption( 0, 'Level 3 Security- Default & Highest' ),
 		mosHTML::makeOption( 1, 'Level 2 Security - Allow for proxy IPs' ),
 		mosHTML::makeOption( 2, 'Level 1 Security - Backward Compatibility' )
 	);
-	
+
 	$lists['session_type'] = mosHTML::selectList( $session, 'config_session_type', 'class="inputbox" size="1"', 'value', 'text', $row->config_session_type );
 
 	$errors = array(
@@ -155,14 +155,14 @@ function showconfig( $option) {
 	);
 
 	$lists['error_reporting'] = mosHTML::selectList( $errors, 'config_error_reporting', 'class="inputbox" size="1"', 'value', 'text', $row->config_error_reporting );
-	
+
 	$lists['admin_expired'] = mosHTML::yesnoRadioList( 'config_admin_expired', 'class="inputbox"', $row->config_admin_expired );
 
 // LOCALE SETTINGS
 
 	$lists['lang'] = mosHTML::selectList( $langs, 'config_lang', 'class="inputbox" size="1"', 'value', 'text', $row->config_lang );
-	
-	$timeoffset = array(	
+
+	$timeoffset = array(
 		mosHTML::makeOption( -12, '(UTC -12:00) International Date Line West'),
 		mosHTML::makeOption( -11, '(UTC -11:00) Midway Island, Samoa'),
 		mosHTML::makeOption( -10, '(UTC -10:00) Hawaii'),
@@ -203,7 +203,7 @@ function showconfig( $option) {
 		mosHTML::makeOption( 13, '(UTC +13:00) Tonga'),
 		mosHTML::makeOption( 14, '(UTC +14:00) Kiribati'),
 	);
-	
+
 	$lists['offset'] = mosHTML::selectList( $timeoffset, 'config_offset_user', 'class="inputbox" size="1"', 'value', 'text', $row->config_offset_user );
 
 // MAIL SETTINGS
@@ -232,7 +232,7 @@ function showconfig( $option) {
 	$lists['uniquemail'] 			= mosHTML::yesnoRadioList( 'config_uniquemail', 'class="inputbox"',	$row->config_uniquemail );
 
 	$lists['shownoauth'] 			= mosHTML::yesnoRadioList( 'config_shownoauth', 'class="inputbox"', $row->config_shownoauth );
-	
+
 	$lists['frontend_userparams']	= mosHTML::yesnoRadioList( 'config_frontend_userparams', 'class="inputbox"', $row->config_frontend_userparams );
 
 // META SETTINGS
@@ -292,8 +292,6 @@ function showconfig( $option) {
 
 	$lists['item_navigation'] 		= mosHTML::RadioList( $show_hide_r, 'config_item_navigation', 'class="inputbox"', $row->config_item_navigation, 'value', 'text' );
 
-	$lists['ml_support'] 			= mosHTML::yesnoRadioList( 'config_ml_support', 'class="inputbox" onclick="javascript: if (document.adminForm.config_ml_support[1].checked) { alert(\'Remember to install the JoomFish component.\') }"', $row->config_ml_support );
-
 	$lists['multipage_toc'] 		= mosHTML::RadioList( $show_hide_r, 'config_multipage_toc', 'class="inputbox"', $row->config_multipage_toc, 'value', 'text' );
 
 // SHOW EDIT FORM
@@ -311,41 +309,41 @@ function saveconfig( $task ) {
 	if (!$row->bind( $_POST )) {
 		mosRedirect( 'index2.php', $row->getError() );
 	}
-	
+
 	// if Session Authentication Type changed, delete all old Frontend sessions only - which used old Authentication Type
 	if ( $mosConfig_session_type != $row->config_session_type ) {
 		$past = time();
 		$query = "DELETE FROM #__session"
 		. "\n WHERE time < " . $database->Quote( $past )
 		. "\n AND ("
-		. "\n ( guest = 1 AND userid = 0 ) OR ( guest = 0 AND gid > 0 )" 
+		. "\n ( guest = 1 AND userid = 0 ) OR ( guest = 0 AND gid > 0 )"
 		. "\n )"
 		;
 		$database->setQuery( $query );
 		$database->query();
 	}
-	
+
 	$server_time 			= date( 'O' ) / 100;
 	$offset 				= $_POST['config_offset_user'] - $server_time;
-	$row->config_offset 	= $offset;	
-	
+	$row->config_offset 	= $offset;
+
 	//override any possible database password change
 	$row->config_password 	= $mosConfig_password;
-	
+
 	// handling of special characters
-	$row->config_sitename			= htmlspecialchars( $row->config_sitename, ENT_QUOTES );	
-	
+	$row->config_sitename			= htmlspecialchars( $row->config_sitename, ENT_QUOTES );
+
 	// handling of quotes (double and single) and amp characters
 	// htmlspecialchars not used to preserve ability to insert other html characters
-	$row->config_offline_message	= ampReplace( $row->config_offline_message );	
-	$row->config_offline_message	= str_replace( '"', '&quot;', $row->config_offline_message );	
-	$row->config_offline_message	= str_replace( "'", '&#039;', $row->config_offline_message );	
-	
+	$row->config_offline_message	= ampReplace( $row->config_offline_message );
+	$row->config_offline_message	= str_replace( '"', '&quot;', $row->config_offline_message );
+	$row->config_offline_message	= str_replace( "'", '&#039;', $row->config_offline_message );
+
 	// handling of quotes (double and single) and amp characters
 	// htmlspecialchars not used to preserve ability to insert other html characters
-	$row->config_error_message		= ampReplace( $row->config_error_message );	
-	$row->config_error_message		= str_replace( '"', '&quot;', $row->config_error_message );	
-	$row->config_error_message		= str_replace( "'", '&#039;', $row->config_error_message );	
+	$row->config_error_message		= ampReplace( $row->config_error_message );
+	$row->config_error_message		= str_replace( '"', '&quot;', $row->config_error_message );
+	$row->config_error_message		= str_replace( "'", '&#039;', $row->config_error_message );
 
 	$config = "<?php \n";
 	$config .= $row->getVarText();

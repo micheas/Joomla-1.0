@@ -180,7 +180,7 @@ class mosConfig {
 	/** @var int */
 	var $config_item_navigation	= 0;
 	/** @var int */
-	var $config_ml_support		= 0;
+	var $config_multilingual_support = 0;
 	/** @var int */
 	var $config_multipage_toc	= 0;
 
@@ -237,14 +237,14 @@ class mosConfig {
 			if (isset( $GLOBALS[$k] ))
 				$this->$v = $GLOBALS[$k];
 		}
-		
+
 		/*
-		*	Maintain the value of $mosConfig_live_site even if 
-		*	user signs in with https:// 
+		*	Maintain the value of $mosConfig_live_site even if
+		*	user signs in with https://
 		*/
 		require('../configuration.php');
 		if( $mosConfig_live_site != $this->config_live_site )
-			$this->config_live_site = $mosConfig_live_site;	
+			$this->config_live_site = $mosConfig_live_site;
 	}
 }
 ?>

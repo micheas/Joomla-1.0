@@ -54,6 +54,7 @@ code fixes.
 06-Dec-2006 Mateusz Krzeszowiec
  # Fixed [artf6832] : getItemid() function in joomla.php will not return correct $Itemid
  # Fixed [artf6522] : Quotes in User Name breaks checkedOut overlib, continued
+ # Fixed [artf6786] : sef.php and multilingual config
 
 
 05-Dec-2006 Rastin Mehr

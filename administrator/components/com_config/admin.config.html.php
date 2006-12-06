@@ -396,7 +396,7 @@ class HTML_config {
 				<td>&nbsp;</td>
 			</tr>
 			</table>
-			<input type="hidden" name="config_ml_support" value="<?php echo $row->config_ml_support?>">
+			<input type="hidden" name="config_multilingual_support" value="<?php echo $row->config_multilingual_support?>">
 			<?php
 		$tabs->endTab();
 		$tabs->startTab("Database","db-page");

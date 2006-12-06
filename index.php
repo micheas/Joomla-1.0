@@ -149,7 +149,7 @@ if ($option == 'login') {
 		?>
 		<script language="javascript" type="text/javascript">
 		<!--//
-		alert( "<?php echo _LOGIN_SUCCESS; ?>" );
+		alert( "<?php echo addslashes( _LOGIN_SUCCESS ); ?>" );
 		//-->
 		</script>
 		<?php
@@ -177,7 +177,7 @@ if ($option == 'login') {
 		?>
 		<script language="javascript" type="text/javascript">
 		<!--//
-		alert( "<?php echo _LOGOUT_SUCCESS; ?>" );
+		alert( "<?php echo addslashes( _LOGOUT_SUCCESS ); ?>" );
 		//-->
 		</script>
 		<?php

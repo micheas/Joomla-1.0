@@ -52,7 +52,7 @@ function mosMainBody() {
 
 	// mosmsg outputed in JS Popup
 	if ($mosmsg && $popMessages && $browserCheck && $sessionCheck) {
-		echo "\n<script language=\"javascript\">alert('$mosmsg');</script>";
+		echo "\n<script language=\"javascript\">alert('" . addslashes( $mosmsg ) . "');</script>";
 	}
 }
 /**

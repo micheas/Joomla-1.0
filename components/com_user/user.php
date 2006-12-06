@@ -70,12 +70,12 @@ function saveUpload( $_dbprefix, $uid, $option, $userfile, $userfile_name, $type
 	$checksize	= filesize($userfile);
 
 	if ($checksize > 50000) {
-		echo "<script> alert(\""._UP_SIZE."\"); window.history.go(-1); </script>\n";
+		echo "<script> alert(\"".addslashes( _UP_SIZE )."\"); window.history.go(-1); </script>\n";
 	} else {
 		if (file_exists($base_Dir.$userfile_name)) {
 			$message=_UP_EXISTS;
 			eval ("\$message = \"$message\";");
-			print "<script> alert('$message'); window.history.go(-1);</script>\n";
+			print "<script> alert('" . addslashes( $message ) . "'); window.history.go(-1);</script>\n";
 		} else {
 			if ((!strcasecmp(substr($userfile_name,-4),".gif")) || (!strcasecmp(substr($userfile_name,-4),".jpg"))) {
 				if (!move_uploaded_file($userfile, $base_Dir.$userfile_name))
@@ -102,7 +102,7 @@ function saveUpload( $_dbprefix, $uid, $option, $userfile, $userfile_name, $type
 					echo "<script>window.close(); </script>";
 				}
 			} else {
-				echo "<script> alert(\""._UP_TYPE_WARN."\"); window.history.go(-1); </script>\n";
+				echo "<script> alert(\"".addslashes( _UP_TYPE_WARN )."\"); window.history.go(-1); </script>\n";
 			}
 		}
 	}
@@ -181,7 +181,7 @@ function userSave( $option, $uid) {
 		if (isset($_POST['verifyPass']) && ($_POST['verifyPass'] == $_POST['password'])) {
 			$row->password = md5(trim($row->password));
 		} else {
-			echo "<script> alert(\""._PASS_MATCH."\"); window.history.go(-1); </script>\n";
+			echo "<script> alert(\"".addslashes( _PASS_MATCH )."\"); window.history.go(-1); </script>\n";
 			exit();
 		}
 	} else {

@@ -1007,13 +1007,13 @@ class HTML_content {
 			catch(e){}
 			// do field validation
 			if (form.title.value == "") {
-				alert ( "<?php echo _E_WARNTITLE; ?>" );
+				alert ( "<?php echo addslashes( _E_WARNTITLE ); ?>" );
 			} else if (parseInt('<?php echo $row->sectionid;?>')) {
 				// for content items
 				if (getSelectedValue('adminForm','catid') < 1) {
-					alert ( "<?php echo _E_WARNCAT; ?>" );
+					alert ( "<?php echo addslashes( _E_WARNCAT ); ?>" );
 				//} else if (form.introtext.value == "") {
-				//	alert ( "<?php echo _E_WARNTEXT; ?>" );
+				//	alert ( "<?php echo addslashes( _E_WARNTEXT ); ?>" );
 				} else {
 					<?php
 					getEditorContents( 'editor1', 'introtext' );
@@ -1022,7 +1022,7 @@ class HTML_content {
 					submitform(pressbutton);
 				}
 			//} else if (form.introtext.value == "") {
-			//	alert ( "<?php echo _E_WARNTEXT; ?>" );
+			//	alert ( "<?php echo addslashes( _E_WARNTEXT ); ?>" );
 			} else {
 				// for static content
 				<?php
@@ -1038,7 +1038,7 @@ class HTML_content {
 
 		function WarnUser(){
 			if (document.adminForm.goodexit.value==0) {
-				alert('<?php echo _E_WARNUSER;?>');
+				alert('<?php echo addslashes( _E_WARNUSER );?>');
 				window.location="<?php echo sefRelToAbs("index.php?option=com_content&task=".$task."&sectionid=".$sectionid."&id=".$row->id."&Itemid=".$Itemid); ?>";
 			}
 		}

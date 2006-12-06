@@ -83,7 +83,7 @@ class sections_html {
 		$k = 0;
 		for ( $i=0, $n=count( $rows ); $i < $n; $i++ ) {
 			$row = &$rows[$i];
-
+			mosMakeHtmlSafe($row);
 			$link = 'index2.php?option=com_sections&scope=content&task=editA&hidemainmenu=1&id='. $row->id;
 
 			$access 	= mosCommonHTML::AccessProcessing( $row, $i );

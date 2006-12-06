@@ -96,6 +96,7 @@ class HTML_typedcontent {
 		$nullDate = $database->getNullDate();
 		for ($i=0, $n=count( $rows ); $i < $n; $i++) {
 			$row = &$rows[$i];
+			mosMakeHtmlSafe($row);
 
 			$now = _CURRENT_SERVER_TIME;
 			if ( $now <= $row->publish_up && $row->state == 1 ) {
@@ -115,14 +116,14 @@ class HTML_typedcontent {
 				$img = 'publish_x.png';
 				$alt = 'Unpublished';
 			}
-			
+
 			// correct times to include server offset info
-			$row->publish_up 	= mosFormatDate( $row->publish_up, _CURRENT_SERVER_TIME_FORMAT );			
+			$row->publish_up 	= mosFormatDate( $row->publish_up, _CURRENT_SERVER_TIME_FORMAT );
 			if (trim( $row->publish_down ) == $nullDate || trim( $row->publish_down ) == '' || trim( $row->publish_down ) == '-' ) {
 				$row->publish_down = 'Never';
 			}
-			$row->publish_down 	= mosFormatDate( $row->publish_down, _CURRENT_SERVER_TIME_FORMAT );		
-			
+			$row->publish_down 	= mosFormatDate( $row->publish_down, _CURRENT_SERVER_TIME_FORMAT );
+
 			$times = '';
 			if ($row->publish_up == $nullDate) {
 				$times .= "<tr><td>Start: Always</td></tr>";
@@ -246,20 +247,20 @@ class HTML_typedcontent {
 
 	function edit( &$row, &$images, &$lists, &$params, $option, &$menus ) {
 		global $database;
-		
+
 		mosMakeHtmlSafe( $row );
-		
+
 		$create_date 	= null;
 		$mod_date 		= null;
 		$nullDate 		= $database->getNullDate();
-		
+
 		if ( $row->created != $nullDate ) {
 			$create_date 	= mosFormatDate( $row->created, '%A, %d %B %Y %H:%M', '0' );
 		}
 		if ( $row->modified != $nullDate ) {
 			$mod_date 		= mosFormatDate( $row->modified, '%A, %d %B %Y %H:%M', '0' );
 		}
-		
+
 		$tabs = new mosTabs( 1 );
 		// used to hide "Reset Hits" when hits = 0
 		if ( !$row->hits ) {

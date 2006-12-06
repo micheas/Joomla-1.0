@@ -72,7 +72,7 @@ class HTML_contact {
 		$k = 0;
 		for ($i=0, $n=count($rows); $i < $n; $i++) {
 			$row = $rows[$i];
-
+			mosMakeHtmlSafe($row);
 			$link 	= 'index2.php?option=com_contact&task=editA&hidemainmenu=1&id='. $row->id;
 
 			$img 	= $row->published ? 'tick.png' : 'publish_x.png';

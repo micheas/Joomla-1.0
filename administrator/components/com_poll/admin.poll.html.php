@@ -58,7 +58,7 @@ class HTML_poll {
 		$k = 0;
 		for ($i=0, $n=count( $rows ); $i < $n; $i++) {
 			$row = &$rows[$i];
-
+			mosMakeHtmlSafe($row);
 			$link 	= 'index2.php?option=com_poll&task=editA&hidemainmenu=1&id='. $row->id;
 
 			$task 	= $row->published ? 'unpublish' : 'publish';

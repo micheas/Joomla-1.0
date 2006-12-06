@@ -69,7 +69,7 @@ class HTML_newsfeeds {
 		$k = 0;
 		for ($i=0, $n=count( $rows ); $i < $n; $i++) {
 			$row = &$rows[$i];
-
+			mosMakeHtmlSafe($row);
 			$link 	= 'index2.php?option=com_newsfeeds&task=editA&hidemainmenu=1&id='. $row->id;
 
 			$img 	= $row->published ? 'tick.png' : 'publish_x.png';
@@ -132,7 +132,7 @@ class HTML_newsfeeds {
 		?>
 		</table>
 		<?php echo $pageNav->getListFooter(); ?>
-		
+
 		<table class="adminform">
 		<tr>
 			<td>

@@ -101,7 +101,7 @@ class HTML_modules {
 		$k = 0;
 		for ($i=0, $n=count( $rows ); $i < $n; $i++) {
 			$row 	= &$rows[$i];
-			$row->title = htmlspecialchars( $row->title );
+			mosMakeHtmlSafe($row);
 
 			$link = 'index2.php?option=com_modules&client='. $client .'&task=editA&hidemainmenu=1&id='. $row->id;
 
@@ -349,7 +349,7 @@ class HTML_modules {
 					</td>
 				</tr>
 				</table>
-				
+
 				<?php
 				if ($row->module == "") {
 					?>
@@ -371,7 +371,7 @@ class HTML_modules {
 					</table>
 					<?php
 				}
-				?>				
+				?>
 			</td>
 			<td width="40%" >
 				<table width="100%" class="adminform">

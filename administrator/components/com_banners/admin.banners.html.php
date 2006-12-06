@@ -66,7 +66,7 @@ class HTML_banners {
 		$k = 0;
 		for ($i=0, $n=count( $rows ); $i < $n; $i++) {
 			$row = &$rows[$i];
-
+			mosMakeHtmlSafe($row);
 			$row->id 	= $row->bid;
 			$link 		= 'index2.php?option=com_banners&task=editA&hidemainmenu=1&id='. $row->id;
 
@@ -349,7 +349,7 @@ class HTML_bannerClient {
 		$k = 0;
 		for ($i=0, $n=count( $rows ); $i < $n; $i++) {
 			$row = &$rows[$i];
-
+			mosMakeHtmlSafe($row);
 			$row->id 	= $row->cid;
 			$link 		= 'index2.php?option=com_banners&task=editclientA&hidemainmenu=1&id='. $row->id;
 

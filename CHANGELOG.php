@@ -43,6 +43,7 @@ code fixes.
 
 06-Dec-2006 Marko Schmuck
  # Fixed [artf6884] : mosimage align=right causes problems in IE6
+ # Fixed [artf6779] : Link-URL containing character ] breaks
 
 06-Dec-2006 Enno Klasing
  # Fixed [artf6922] : Registration not working as expected (JavaScript popups)

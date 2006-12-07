@@ -41,6 +41,9 @@ code fixes.
 ----------------------------------------------------------------------------------------
 ---------------- 1.0.12 In Development -- [**-***-**** **:** UTC] ------------------
 
+07-Dec-2006 Rob Schley
+ # Fixed [artf6863] : Changed the include file from template_css.css to offline.css to avoid conflicting styles
+
 07-Dec-2006 Enno Klasing
  # Fixed [artf6296] : josSpoofCheck does not check arrays and generates php warning
 

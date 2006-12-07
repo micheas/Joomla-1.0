@@ -77,14 +77,16 @@ if (!defined( '_ADMIN_OFFLINE' ) || defined( '_INSTALL_CHECK' )) {
 	<html xmlns="http://www.w3.org/1999/xhtml">
 	<head>
 		<title><?php echo $mosConfig_sitename; ?> - Offline</title>
+
+		<link rel="stylesheet" href="<?php echo $mosConfig_live_site; ?>/templates/css/offline.css" type="text/css" />
 <?php
-	if ( file_exists("$mosConfig_absolute_path/templates/$cur_template/css/template_css.css") ) {
+	if ( file_exists("$mosConfig_absolute_path/templates/$cur_template/css/offline.css") ) {
 ?>
-		<link rel="stylesheet" href="<?php echo $mosConfig_live_site; ?>/templates/<?php echo $cur_template; ?>/css/template_css.css" type="text/css" />
+		<link rel="stylesheet" href="<?php echo $mosConfig_live_site; ?>/templates/<?php echo $cur_template; ?>/css/offline.css" type="text/css" />
 <?php
 	}
 ?>
-		<link rel="stylesheet" href="<?php echo $mosConfig_live_site; ?>/templates/css/offline.css" type="text/css" />
+
 <?php
 	// favourites icon
 	if ( !$mosConfig_favicon ) {

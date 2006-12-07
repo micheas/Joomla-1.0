@@ -24,17 +24,17 @@ class joomlaVersion {
 	/** @var int Main Release Level */
 	var $RELEASE 	= '1.0';
 	/** @var string Development Status */
-	var $DEV_STATUS = 'Stable';
+	var $DEV_STATUS = 'Beta';
 	/** @var int Sub Release Level */
-	var $DEV_LEVEL 	= '11';
+	var $DEV_LEVEL 	= '12';
 	/** @var int build Number */
 	var $BUILD	 	= '$Revision$';
 	/** @var string Codename */
-	var $CODENAME 	= 'Sunbow';
+	var $CODENAME 	= 'Sunfire';
 	/** @var string Date */
-	var $RELDATE 	= '28 August 2006';
+	var $RELDATE 	= '7 December 2006';
 	/** @var string Time */
-	var $RELTIME 	= '20:00';
+	var $RELTIME 	= '02:00';
 	/** @var string Timezone */
 	var $RELTZ 		= 'UTC';
 	/** @var string Copyright Text */
@@ -46,9 +46,9 @@ class joomlaVersion {
 	/** @var string Whether site has restricted functionality mostly used for demo sites: 0 is default */
 	var $RESTRICT	= 0;
 	/** @var string Whether site is still in development phase (disables checks for /installation folder) - should be set to 0 for package release: 0 is default */
-	var $SVN		= 1;
+	var $SVN		= 0;
 
-	
+
 	/**
 	 * @return string Long format version
 	 */

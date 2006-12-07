@@ -158,15 +158,19 @@ if ($option == 'login') {
 	if ( $return && !( strpos( $return, 'com_registration' ) || strpos( $return, 'com_login' ) ) ) {
 	// checks for the presence of a return url
 	// and ensures that this url is not the registration or login pages
-		// Also include a cookie-check after the login process
-		if (strpos( $return, '?' )) {
-			$return .= '&jcookiecheck=1';
+		// If a sessioncookie exists, redirect to the given page. Otherwise, take an extra round for a cookiecheck
+		if (isset( $_COOKIE[mosMainFrame::sessionCookieName()] )) {
+			mosRedirect( $return );
 		} else {
-			$return .= '?jcookiecheck=1';
+			mosRedirect( $mosConfig_live_site .'/index.php?option=cookiecheck&return=' . urlencode( $return ) );
 		}
-		mosRedirect( $return );
 	} else {
-		mosRedirect( $mosConfig_live_site .'/index.php?jcookiecheck=1' );
+		// If a sessioncookie exists, redirect to the start page. Otherwise, take an extra round for a cookiecheck
+		if (isset( $_COOKIE[mosMainFrame::sessionCookieName()] )) {
+			mosRedirect( $mosConfig_live_site .'/index.php' );
+		} else {
+			mosRedirect( $mosConfig_live_site .'/index.php?option=cookiecheck&return=' . urlencode( $mosConfig_live_site .'/index.php' ) );
+		}
 	}
 
 } else if ($option == 'logout') {
@@ -190,10 +194,13 @@ if ($option == 'login') {
 	} else {
 		mosRedirect( $mosConfig_live_site.'/index.php' );
 	}
-}
-// Extra check to ensure that cookies are enabled in the browser. Triggered after login.
-if (mosGetParam( $_GET, 'jcookiecheck', false ) && !isset( $_COOKIE[mosMainFrame::sessionCookieName()] )) {
-	mosErrorAlert( _ALERT_ENABLED );
+} else if ($option == 'cookiecheck') {
+	// No cookie was set upon login. If it is set now, redirect to the given page. Otherwise, show error message.
+	if (isset( $_COOKIE[mosMainFrame::sessionCookieName()] )) {
+		mosRedirect( $return );
+	} else {
+		mosErrorAlert( _ALERT_ENABLED );
+	}
 }
 
 /** get the information about the current user from the sessions table */

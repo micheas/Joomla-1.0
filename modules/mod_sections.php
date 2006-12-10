@@ -36,20 +36,35 @@ $query = "SELECT a.id AS id, a.title AS title, COUNT(b.id) as cnt"
 $database->setQuery( $query, 0, $count );
 $rows = $database->loadObjectList();
 
-$bs 	= $mainframe->getBlogSectionCount();
-$bc 	= $mainframe->getBlogCategoryCount();
-$gbs 	= $mainframe->getGlobalBlogSectionCount();
-
 if ( $rows ) {
+	// list of sectionids, used to find corresponding Itemids
+	for( $i=0, $n=count( $rows ); $i<$n; $i++ ) {
+		$sids[] = (int) $rows[$i]->id;
+	}
+	// add 0 to the list, to get the Itemid of a global blog section item as a fallback
+	$sids[] = 0;
+	
+	// get Itemids of sections
+	$query = "SELECT m.id AS Itemid, m.componentid AS sectionid"
+	. "\n FROM #__menu AS m"
+	. "\n WHERE ( m.type = 'content_section' OR m.type = 'content_blog_section' )"
+	. "\n AND m.published = 1"
+	. ( $access ? "\n AND m.access <= " . (int) $my->gid : '' )
+	. "\n AND ( m.componentid=" . implode( " OR m.componentid=", $sids ) . " )"
+	. "\n ORDER BY m.type DESC, m.id DESC"
+	;
+	$database->setQuery( $query );
+	$itemids = $database->loadObjectList( 'sectionid' );
 	?>
 	<ul>
 	<?php
 		foreach ($rows as $row) {
-			$_Itemid 	= $mainframe->getItemid( $row->id, 0, 0, $bs, $bc, $gbs );
-			if ( $Itemid == $_Itemid ) {
-				$link 		= sefRelToAbs( "index.php?option=com_content&task=blogsection&id=". $row->id );
+			if (isset( $itemids[$row->id] )) {
+				$link = sefRelToAbs( "index.php?option=com_content&task=blogsection&id=". $row->id . "&Itemid=" . $itemids[$row->id]->Itemid );
+			} else if (isset( $itemids[0] )) {
+				$link = sefRelToAbs( "index.php?option=com_content&task=blogsection&id=". $row->id . "&Itemid=" . $itemids[0]->Itemid );
 			} else {
-				$link 		= sefRelToAbs( "index.php?option=com_content&task=blogsection&id=". $row->id ."&Itemid=". $_Itemid );
+				$link = sefRelToAbs( "index.php?option=com_content&task=blogsection&id=". $row->id );
 			}
 			?>
 			<li>

@@ -41,6 +41,9 @@ code fixes.
 ----------------------------------------------------------------------------------------
 ---------------- 1.0.12 In Development -- [**-***-**** **:** UTC] ------------------
 
+10-Dec-2006 Enno Klasing
+ # Fixed [artf6762] : mos_section showing unexpected behavior
+
 07-Dec-2006 Rob Schley
  # Fixed [artf6863] : Changed the include file from template_css.css to offline.css to avoid conflicting styles
 

@@ -48,6 +48,7 @@ code fixes.
 
 10-Dec-2006 Enno Klasing
  # Fixed [artf6762] : mos_section showing unexpected behavior
+ # Fixed IE7 display bug in the toolbar of the polls component
 
 07-Dec-2006 Rob Schley
  # Fixed [artf6863] : Changed the include file from template_css.css to offline.css to avoid conflicting styles

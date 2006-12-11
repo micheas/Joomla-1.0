@@ -41,6 +41,9 @@ code fixes.
 ----------------------------------------------------------------------------------------
 ---------------- 1.0.12 In Development -- [**-***-**** **:** UTC] ------------------
 
+11-Dec-2006 Enno Klasing
+ # Fixed [artf7021] : Bug with com_messages and message titles including a single quote
+
 10-Dec-2006 Rob Schley
  # Fixed grammar problems in SQL data.
  # Fixed grammar problem in com_config.

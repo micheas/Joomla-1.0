@@ -113,7 +113,7 @@ function newMessage( $option ) {
 	global $database, $acl;
 	
 	$user 		= intval( mosGetParam( $_REQUEST, 'userid', 0 ) );
-	$subject 	= strval( mosGetParam( $_REQUEST, 'subject', '' ) );
+	$subject 	= stripslashes( strval( mosGetParam( $_REQUEST, 'subject', '' ) ) );
 	
 	// get available backend user groups
 	$gid 	= $acl->get_group_id( 'Public Backend', 'ARO' );

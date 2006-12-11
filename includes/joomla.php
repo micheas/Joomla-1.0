@@ -2719,12 +2719,12 @@ class mosUser extends mosDBTable {
 
 		// Validate user information
 		if (trim( $this->name ) == '') {
-			$this->_error = _REGWARN_NAME;
+			$this->_error = addslashes( _REGWARN_NAME );
 			return false;
 		}
 
 		if (trim( $this->username ) == '') {
-			$this->_error = _REGWARN_UNAME;
+			$this->_error = addslashes( _REGWARN_UNAME );
 			return false;
 		}
 
@@ -2741,12 +2741,12 @@ class mosUser extends mosDBTable {
 		}
 
 		if (eregi( "[\<|\>|\"|\'|\%|\;|\(|\)|\&|\+|\-]", $this->username) || strlen( $this->username ) < 3) {
-			$this->_error = sprintf( _VALID_AZ09, _PROMPT_UNAME, 2 );
+			$this->_error = sprintf( addslashes( _VALID_AZ09 ), addslashes( _PROMPT_UNAME ), 2 );
 			return false;
 		}
 
 		if ((trim($this->email == "")) || (preg_match("/[\w\.\-]+@\w+[\w\.\-]*?\.\w{1,4}/", $this->email )==false)) {
-			$this->_error = _REGWARN_MAIL;
+			$this->_error = addslashes( _REGWARN_MAIL );
 			return false;
 		}
 
@@ -2759,7 +2759,7 @@ class mosUser extends mosDBTable {
 		$this->_db->setQuery( $query );
 		$xid = intval( $this->_db->loadResult() );
 		if ($xid && $xid != intval( $this->id )) {
-			$this->_error = _REGWARN_INUSE;
+			$this->_error = addslashes( _REGWARN_INUSE );
 			return false;
 		}
 
@@ -2773,7 +2773,7 @@ class mosUser extends mosDBTable {
 			$this->_db->setQuery( $query );
 			$xid = intval( $this->_db->loadResult() );
 			if ($xid && $xid != intval( $this->id )) {
-				$this->_error = _REGWARN_EMAIL_INUSE;
+				$this->_error = addslashes( _REGWARN_EMAIL_INUSE );
 				return false;
 			}
 		}

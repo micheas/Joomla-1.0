@@ -52,7 +52,7 @@ echo "<?xml version=\"1.0\" encoding=\"iso-8859-1\"?".">";
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<title>Joomla - Web Installer</title>
+<title>Joomla! - Web Installer</title>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 <link rel="shortcut icon" href="../images/favicon.ico" />
 <link rel="stylesheet" href="install.css" type="text/css" />
@@ -114,7 +114,7 @@ function changeDirPermsMode(mode)
 <body onload="document.form.siteUrl.focus();">
 <div id="wrapper">
 	<div id="header">
-		<div id="joomla"><img src="header_install.png" alt="Joomla Installation" /></div>
+		<div id="joomla"><img src="header_install.png" alt="Joomla! Installation" /></div>
 	</div>
 </div>
 <div id="ctr" align="center">
@@ -149,8 +149,8 @@ function changeDirPermsMode(mode)
 				  Enter your e-mail address, this will be the e-mail address of the site
 				  SuperAdministrator.<br />
 				  <br/>
-				  The permission settings will be used while installing Joomla itself, by
-				  the Joomla addon-installers and by the media manager. If you are unsure
+				  The permission settings will be used while installing Joomla! itself, by
+				  the Joomla! addon-installers and by the media manager. If you are unsure
 				  what flags shall be set, leave the default settings at the moment.
 				  You can still change these flags later in the site global configuration.</p>
 			</div>

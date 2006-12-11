@@ -31,7 +31,7 @@ echo "<?xml version=\"1.0\" encoding=\"iso-8859-1\"?".">";
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<title>Joomla - Web Installer</title>
+<title>Joomla! - Web Installer</title>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 <link rel="shortcut icon" href="../images/favicon.ico" />
 <link rel="stylesheet" href="install.css" type="text/css" />
@@ -54,14 +54,14 @@ function check() {
 		f.DBname.focus();
 		formValid=false;
 	} else if ( f.DBPrefix.value == '' ) {
-		alert('You must enter a MySQL Table Prefix for Joomla to operate correctly.');
+		alert('You must enter a MySQL Table Prefix for Joomla! to operate correctly.');
 		f.DBPrefix.focus();
 		formValid=false;
 	} else if ( f.DBPrefix.value == 'old_' ) {
-		alert('You cannot use "old_" as the MySQL Table Prefix because Joomla uses this prefix for backup tables.');
+		alert('You cannot use "old_" as the MySQL Table Prefix because Joomla! uses this prefix for backup tables.');
 		f.DBPrefix.focus();
 		formValid=false;
-	} else if ( confirm('Are you sure these settings are correct? \nJoomla will now attempt to populate a Database with the settings you have supplied')) {
+	} else if ( confirm('Are you sure these settings are correct? \nJoomla! will now attempt to populate a Database with the settings you have supplied')) {
 		formValid=true;
 	}
 
@@ -73,7 +73,7 @@ function check() {
 <body onload="document.form.DBhostname.focus();">
 <div id="wrapper">
 	<div id="header">
-		<div id="joomla"><img src="header_install.png" alt="Joomla Installation" /></div>
+		<div id="joomla"><img src="header_install.png" alt="Joomla! Installation" /></div>
 	</div>
 </div>
 <div id="ctr" align="center">
@@ -109,9 +109,9 @@ function check() {
   			<div class="clr"></div>
   			<h1>MySQL database configuration:</h1>
 	  		<div class="install-text">
-  				<p>Setting up Joomla to run on your server involves 4 simple steps...</p>
-  				<p>Please enter the hostname of the server Joomla is to be installed on.</p>
-				<p>Enter the MySQL username, password and database name you wish to use with Joomla.</p>
+  				<p>Setting up Joomla! to run on your server involves 4 simple steps...</p>
+  				<p>Please enter the hostname of the server Joomla! is to be installed on.</p>
+				<p>Enter the MySQL username, password and database name you wish to use with Joomla!</p>
 				<p>Enter a table name prefix to be used by this Joomla! install and select what
 					to do with existing tables from former installations.</p>
 				<p>Install the sample data unless you are an experienced Joomla! User wanting to start with a completely empty site.</p>
@@ -161,7 +161,7 @@ function check() {
   							<input class="inputbox" type="text" name="DBname" value="<?php echo "$DBname"; ?>" />
   						</td>
 			  			<td>
-			  				<em>Some hosts allow only a certain DB name per site. Use table prefix in this case for distinct Joomla sites.</em>
+			  				<em>Some hosts allow only a certain DB name per site. Use table prefix in this case for distinct Joomla! sites.</em>
 			  			</td>
   					</tr>
   		  			<tr>
@@ -194,7 +194,7 @@ function check() {
 							<label for="DBBackup">Backup Old Tables</label>
 						</td>
   						<td>
-  							<em>Any existing backup tables from former Joomla installations will be replaced</em>
+  							<em>Any existing backup tables from former Joomla! installations will be replaced</em>
   						</td>
 			  		</tr>
   		  			<tr>

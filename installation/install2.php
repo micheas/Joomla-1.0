@@ -41,7 +41,7 @@ if (!$DBcreated){
 	if($DBPrefix == '') {
 		db_err ('stepBack','You have not entered a database prefix.');
 	}
-	
+
 	$database = new database( $DBhostname, $DBuserName, $DBpassword, '', '', false );
 	$test = $database->getErrorMsg();
 
@@ -119,7 +119,7 @@ function db_err($step, $alert) {
 	<input type=\"hidden\" name=\"DBname\" value=\"$DBname\">
 	</form>\n";
 	//echo "<script>alert(\"$alert\"); window.history.go(-1);</script>";
-	echo "<script>alert(\"$alert\"); document.location.href='install1.php';</script>";  
+	echo "<script>alert(\"$alert\"); document.location.href='install1.php';</script>";
 	exit();
 }
 
@@ -190,7 +190,7 @@ echo "<?xml version=\"1.0\" encoding=\"iso-8859-1\"?".">";
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<title>Joomla - Web Installer</title>
+<title>Joomla! - Web Installer</title>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 <link rel="shortcut icon" href="../images/favicon.ico" />
 <link rel="stylesheet" href="install.css" type="text/css" />
@@ -213,7 +213,7 @@ function check() {
 <body onload="document.form.sitename.focus();">
 <div id="wrapper">
 	<div id="header">
-	  <div id="joomla"><img src="header_install.png" alt="Joomla Installation" /></div>
+	  <div id="joomla"><img src="header_install.png" alt="Joomla! Installation" /></div>
 	</div>
 </div>
 
@@ -243,7 +243,7 @@ function check() {
 	  		<div id="step">step 2</div>
   			<div class="clr"></div>
 
-  			<h1>Enter the name of your Joomla site:</h1>
+  			<h1>Enter the name of your Joomla! site:</h1>
 			<div class="install-text">
 <?php if ($isErr) { ?>
 			Looks like there have been some errors with inserting data into your database!<br />
@@ -252,7 +252,7 @@ function check() {
 			SUCCESS!
 			<br/>
 			<br/>
-  			Type in the name for your Joomla site. This
+  			Type in the name for your Joomla! site. This
 			name is used in email messages so make it something meaningful.
 <?php } ?>
   		</div>
@@ -279,7 +279,7 @@ function check() {
   				</tr>
   				<tr>
   					<td width="100">&nbsp;</td>
-  					<td align="center" class="small">e.g. The Home of Joomla</td>
+  					<td align="center" class="small">e.g. The Home of Joomla!</td>
   				</tr>
   				</table>
 <?php

@@ -23,7 +23,7 @@ echo '<?xml version="1.0" encoding="'. $iso[1] .'"?' .'>';
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<title><?php echo $mosConfig_sitename; ?> - Administration [Joomla]</title>
+<title><?php echo $mosConfig_sitename; ?> - Administration [Joomla!]</title>
 <link rel="stylesheet" href="templates/joomla_admin/css/template_css.css" type="text/css" />
 <link rel="stylesheet" href="templates/joomla_admin/css/theme.css" type="text/css" />
 <script language="JavaScript" src="<?php echo $mosConfig_live_site; ?>/includes/js/JSCookMenu_mini.js" type="text/javascript"></script>
@@ -103,7 +103,7 @@ if (isset( $mainframe->_head['custom'] ))
 				<?php echo $version; ?>
 				<br />
 				<a href="http://www.joomla.org/latest10" target="_blank">Check for latest Version</a>
-			</div>			
+			</div>
 			<?php
 			if ( $mosConfig_debug ) {
 				echo '<div class="smallgrey">';
@@ -112,7 +112,7 @@ if (isset( $mainframe->_head['custom'] ))
 				printf ("Page was generated in %f seconds", $totaltime);
 				echo '</div>';
 			}
-			?>			
+			?>
 		</td>
 	</tr>
 	</table>

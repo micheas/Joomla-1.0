@@ -269,7 +269,7 @@ if ($siteUrl) {
 			$chmod_report = 'File and directory permissions successfully changed.';
 		} else {
 			$chmod_report = 'File and directory permissions could not be changed.<br />'.
-							'Please CHMOD Joomla files and directories manually.';
+							'Please CHMOD Joomla! files and directories manually.';
 		}
 	} // if chmod wanted
 } else {
@@ -296,7 +296,7 @@ echo "<?xml version=\"1.0\" encoding=\"iso-8859-1\"?".">";
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<title>Joomla - Web Installer</title>
+<title>Joomla! - Web Installer</title>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 <link rel="shortcut icon" href="../images/favicon.ico" />
 <link rel="stylesheet" href="install.css" type="text/css" />
@@ -304,7 +304,7 @@ echo "<?xml version=\"1.0\" encoding=\"iso-8859-1\"?".">";
 <body>
 <div id="wrapper">
 	<div id="header">
-		<div id="joomla"><img src="header_install.png" alt="Joomla Installation" /></div>
+		<div id="joomla"><img src="header_install.png" alt="Joomla! Installation" /></div>
 	</div>
 </div>
 <div id="ctr" align="center">
@@ -339,9 +339,9 @@ echo "<?xml version=\"1.0\" encoding=\"iso-8859-1\"?".">";
 ?>/>
 			</div>
 			<div class="clr"></div>
-			<h1>Congratulations! Joomla is installed</h1>
+			<h1>Congratulations! Joomla! is installed</h1>
 			<div class="install-text">
-				<p>Click the "View Site" button to start Joomla site or "Administration"
+				<p>Click the "View Site" button to start Joomla! site or "Administration"
 					to take you to administrator login.</p>
 			</div>
 			<div class="install-form">

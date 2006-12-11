@@ -40,7 +40,7 @@ function view() {
 	<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 	<html xmlns="http://www.w3.org/1999/xhtml">
 	<head>
-	<title>Joomla - Web Installer</title>
+	<title>Joomla! - Web Installer</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 	<link rel="shortcut icon" href="../images/favicon.ico" />
 	<link rel="stylesheet" href="install.css" type="text/css" />
@@ -50,7 +50,7 @@ function view() {
 	<div id="wrapper">
 		<div id="header">
 			<div id="joomla">
-				<img src="header_install.png" alt="Joomla Installation" />
+				<img src="header_install.png" alt="Joomla! Installation" />
 			</div>
 		</div>
 	</div>

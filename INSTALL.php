@@ -18,7 +18,7 @@ defined( '_VALID_MOS' ) or die( 'Restricted access' );
 REQUIREMENTS
 ------------
 
-First you must have the base environment for Joomla.
+First you must have the base environment for Joomla!.
 We have thoroughly tested Joomla! on: Linux, Free BSD, Mac OS X and Windows NT/2000.
 Linux or one of the BSD's are recommended, but anything else that can run the
 3 pieces of software listed below should do it.
@@ -32,7 +32,7 @@ SERVER CONFIGURATION
 --------------------
 
 You MUST ensure that PHP has been compiled with support for MySQL and Zlib
-in order to successfully run Joomla.
+in order to successfully run Joomla!.
 
 While we have reports that Joomla! works on IIS server we recommend Apache
 for running Joomla! on Windows.
@@ -48,7 +48,7 @@ use local .htaccess files.
 INSTALLATION
 ------------
 
-1. DOWNLOAD Joomla
+1. DOWNLOAD Joomla!
 
 	You can obtain the latest Joomla! release from:
 		http://www.joomla.org
@@ -117,7 +117,7 @@ INSTALLATION
 	and then enter '\q' to exit MySQL.
 
 	Alternatively you can use your web control panel or phpMyAdmin to
-	create a database for Joomla.
+	create a database for Joomla!.
 
 
 3. WEB INSTALLER
@@ -126,7 +126,7 @@ Finally point your web browser to http://www.mysite.com where the Joomla! web
 based installer will guide you through the rest of the installation.
 
 
-4. CONFIGURE Joomla
+4. CONFIGURE Joomla!
 
 You can now launch your browser and point it to your Joomla! site e.g.
 
@@ -140,7 +140,7 @@ password that was generated or you chose during the web based install.
 Joomla! ADMINISTRATION
 ----------------------
 
-Upon a new installation, your JoomlaS website defaults to a very basic
+Upon a new installation, your Joomla! website defaults to a very basic
 configuration with only a few active components, modules and templates
 (CMTs).
 

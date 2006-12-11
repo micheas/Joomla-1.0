@@ -13,9 +13,9 @@
 # The line just below this section: 'Options +FollowSymLinks' may cause problems
 # with some server configurations.  It is required for use of mod_rewrite, but may already
 # be set by your server administrator in a way that dissallows changing it in
-# your .htaccess file.  If using it causes your server to error out, comment it out (add # to 
+# your .htaccess file.  If using it causes your server to error out, comment it out (add # to
 # beginning of line), reload your site in your browser and test your sef url's.  If they work,
-# it has been set by your server administrator and you do not need it set here. 
+# it has been set by your server administrator and you do not need it set here.
 #
 # Only use one of the two SEF sections that follow.  Lines that can be uncommented
 # (and thus used) have only one #.  Lines with two #'s should not be uncommented
@@ -36,9 +36,9 @@
 #
 # In both the 'Standard SEF', and '3rd Party or Core SEF' sections the line:
 # RewriteCond %{REQUEST_URI} ^(/component/option,com) [NC,OR] ##optional - see notes##
-# May need to be uncommented.  If you are running your Joomla/Mambo from
+# May need to be uncommented.  If you are running your Joomla!/Mambo from
 # a subdirectory the name of the subdirectory will need to be inserted into this
-# line.  For example, if your Joomla/Mambo is in a subdirectory called '/test/',
+# line.  For example, if your Joomla!/Mambo is in a subdirectory called '/test/',
 # change this:
 # RewriteCond %{REQUEST_URI} ^(/component/option,com) [NC,OR] ##optional - see notes##
 # to this:
@@ -58,7 +58,7 @@ RewriteEngine On
 
 #  Uncomment following line if your webserver's URL
 #  is not directly related to physical file paths.
-#  Update Your Joomla/MamboDirectory (just / for root)
+#  Update Your Joomla!/MamboDirectory (just / for root)
 
 # RewriteBase /
 
@@ -94,8 +94,8 @@ RewriteRule ^(content/|component/) index.php
 
 ########## Begin - Rewrite rules to block out some common exploits
 ## If you experience problems on your site block out the operations listed below
-## This attempts to block the most common type of exploit `attempts` to Joomla! 
-#                              
+## This attempts to block the most common type of exploit `attempts` to Joomla!
+#
 # Block out any script trying to set a mosConfig value through the URL
 RewriteCond %{QUERY_STRING} mosConfig_[a-zA-Z_]{1,21}(=|\%3D) [OR]
 # Block out any script trying to base64_encode crap to send via URL
@@ -108,5 +108,5 @@ RewriteCond %{QUERY_STRING} GLOBALS(=|\[|\%[0-9A-Z]{0,2}) [OR]
 RewriteCond %{QUERY_STRING} _REQUEST(=|\[|\%[0-9A-Z]{0,2})
 # Send all blocked request to homepage with 403 Forbidden error!
 RewriteRule ^(.*)$ index.php [F,L]
-# 
+#
 ########## End - Rewrite rules to block out some common exploits

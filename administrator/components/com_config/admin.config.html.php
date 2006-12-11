@@ -171,7 +171,7 @@ class HTML_config {
 				<td><input class="text_area" type="text" name="config_sitename" size="50" value="<?php echo $row->config_sitename; ?>"/></td>
 			</tr>
 			<tr>
-				<td>Show UnAuthorized Links:</td>
+				<td>Show Unauthorised Links:</td>
 				<td><?php echo $lists['shownoauth']; ?><?php
 					$tip = 'If yes, will show links to content to registered content even if you are not logged in.  The user will need to login to see the item in full.';
 					echo mosToolTip( $tip );

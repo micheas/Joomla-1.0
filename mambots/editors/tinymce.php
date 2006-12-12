@@ -50,7 +50,7 @@ function botTinymceEditorInit() {
 	$invalid_elements	= $params->def( 'invalid_elements', 	'script,applet,iframe' );
 	$newlines			= $params->def( 'newlines', 			0 );
 	$cleanup			= $params->def( 'cleanup', 				1 );
-	$cleanup_startup	= $params->def( 'cleanup_startup', 		0 );
+	$cleanup_startup	= $params->set( 'cleanup_startup', 		0 ); // Currently disabled due to bugs in TinyMCE
 	$compressed			= $params->def( 'compressed', 			0 );
 	$relative_urls		= $params->def( 'relative_urls', 		0 );
 	

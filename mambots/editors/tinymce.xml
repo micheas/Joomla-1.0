@@ -19,10 +19,13 @@
  			<option value="0">Off</option>
  			<option value="1">On</option>
  		</param>
+		<!--
+		Currently disabled due to bugs in TinyMCE
  		<param name="cleanup_startup" type="radio" default="0" label="Code Cleanup on startup" description="Cleans code on editor load">
  			<option value="0">Off</option>
  			<option value="1">On</option>
  		</param>
+		-->
  		<param name="autosave" type="radio" default="0" label="Save Warning" description="Save warning - gives warning if you cancel without saving changes">
  			<option value="0">Off</option>
  			<option value="1">On</option>

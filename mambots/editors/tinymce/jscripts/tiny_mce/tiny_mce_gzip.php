@@ -60,6 +60,8 @@
 	}
 
 	// Check if it supports gzip
+	$encodings = array();
+	$supportsGzip = false;
 	if (isset($_SERVER['HTTP_ACCEPT_ENCODING']))
 		$encodings = explode(',', strtolower(preg_replace("/\s+/", "", $_SERVER['HTTP_ACCEPT_ENCODING'])));
 

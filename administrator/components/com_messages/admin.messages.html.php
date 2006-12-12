@@ -215,7 +215,7 @@ class HTML_messages {
 		<input type="hidden" name="boxchecked" value="1" />
 		<input type="hidden" name="cid[]" value="<?php echo $row->message_id; ?>" />
 		<input type="hidden" name="userid" value="<?php echo $row->user_id_from; ?>" />
-		<input type="hidden" name="subject" value="Re: <?php echo htmlspecialchars( $row->subject, ENT_QUOTES ); ?>" />
+		<input type="hidden" name="subject" value="<?php echo ( substr( $row->subject, 0, 4 ) != 'Re: ' ? 'Re: ' : '' ) . htmlspecialchars( $row->subject, ENT_QUOTES ); ?>" />
 		<input type="hidden" name="hidemainmenu" value="0" />
 		</form>
 		<?php 

@@ -43,6 +43,7 @@ code fixes.
 
 12-Dec-2006 Enno Klasing
  # Fixed bug in TinyMCE: help screen disabled
+ # Fixed IE7 display bug with mosTabs
 
 11-Dec-2006 Enno Klasing
  # Fixed [artf7021] : Bug with com_messages and message titles including a single quote

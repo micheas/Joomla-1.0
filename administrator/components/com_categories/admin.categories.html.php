@@ -134,7 +134,9 @@ class categories_html {
 			$row->sect_link = 'index2.php?option=com_sections&task=editA&hidemainmenu=1&id='. $row->section;
 
 			$link = 'index2.php?option=com_categories&section='. $section .'&task=editA&hidemainmenu=1&id='. $row->id;
-
+			if ($row->checked_out_contact_category) {
+				$row->checked_out = $row->checked_out_contact_category;
+			}
 			$access 	= mosCommonHTML::AccessProcessing( $row, $i );
 			$checked 	= mosCommonHTML::CheckedOutProcessing( $row, $i );
 			$published 	= mosCommonHTML::PublishedProcessing( $row, $i );

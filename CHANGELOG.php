@@ -44,6 +44,7 @@ code fixes.
 13-Dec-2006 Enno Klasing
  + Added security warning message to the installer component
  # Fixed [artf6522] : Quotes in User Name breaks checkedOut overlib
+ # SECURITY A1 [ ??? Level ] : Removed unneeded legacy functions
 
 12-Dec-2006 Enno Klasing
  # Fixed bug in TinyMCE: help screen disabled

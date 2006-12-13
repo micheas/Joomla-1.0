@@ -23,15 +23,6 @@ $access->canEditOwn = $acl->acl_check( 'action', 'edit', 'users', $my->usertype,
 require_once ( $mainframe->getPath( 'front_html' ) );
 
 switch( $task ) {
-	case 'saveUpload':
-		// check to see if functionality restricted for use as demo site
-		if ( $_VERSION->RESTRICT == 1 ) {
-			mosRedirect( 'index.php?mosmsg=Functionality Restricted' );
-		} else {
-			saveUpload( $mosConfig_dbprefix, $uid, $option, $userfile, $userfile_name, $type, $existingImage );
-		}
-		break;
-
 	case 'UserDetails':
 		userEdit( $option, $my->id, _UPDATE );
 		break;
@@ -56,56 +47,6 @@ switch( $task ) {
 	default:
 		HTML_user::frontpage();
 		break;
-}
-
-function saveUpload( $_dbprefix, $uid, $option, $userfile, $userfile_name, $type, $existingImage ) {
-	global $database;
-
-	if ($uid == 0) {
-		mosNotAuth();
-		return;
-	}
-
-	$base_Dir 	= 'images/stories/';
-	$checksize	= filesize($userfile);
-
-	if ($checksize > 50000) {
-		echo "<script> alert(\"".addslashes( _UP_SIZE )."\"); window.history.go(-1); </script>\n";
-	} else {
-		if (file_exists($base_Dir.$userfile_name)) {
-			$message=_UP_EXISTS;
-			eval ("\$message = \"$message\";");
-			print "<script> alert('" . addslashes( $message ) . "'); window.history.go(-1);</script>\n";
-		} else {
-			if ((!strcasecmp(substr($userfile_name,-4),".gif")) || (!strcasecmp(substr($userfile_name,-4),".jpg"))) {
-				if (!move_uploaded_file($userfile, $base_Dir.$userfile_name))
-				{
-					echo _UP_COPY_FAIL." $userfile_name";
-				} else {
-					echo "<script>window.opener.focus;</script>";
-					if ($type=="news") {
-						$op="UserNews";
-					} elseif ($type=="articles") {
-						$op="UserArticle";
-					}
-
-					if ($existingImage!="") {
-						if (file_exists($base_Dir.$existingImage)) {
-							//delete the exisiting file
-							unlink($base_Dir.$existingImage);
-						}
-					}
-					echo "<script>window.opener.document.adminForm.ImageName.value='$userfile_name';</script>";
-					echo "<script>window.opener.document.adminForm.ImageName2.value='$userfile_name';</script>";
-					echo "<script>window.opener.document.adminForm.imagelib.src=null;</script>";
-					echo "<script>window.opener.document.adminForm.imagelib.src='images/stories/$userfile_name';</script>";
-					echo "<script>window.close(); </script>";
-				}
-			} else {
-				echo "<script> alert(\"".addslashes( _UP_TYPE_WARN )."\"); window.history.go(-1); </script>\n";
-			}
-		}
-	}
 }
 
 function userEdit( $option, $uid, $submitvalue) {

@@ -41,40 +41,54 @@ code fixes.
 ----------------------------------------------------------------------------------------
 ---------------- 1.0.12 In Development -- [**-***-**** **:** UTC] ------------------
 
+13-Dec-2006 Rob Schley
+ # Fixed spelling error in com_menus
+ # Fixed changelog formatting.
+
+
 13-Dec-2006 Enno Klasing
  + Added security warning message to the installer component
  # Fixed [artf6522] : Quotes in User Name breaks checkedOut overlib
- # SECURITY A1 [ ??? Level ] : Removed unneeded legacy functions
+ # SECURITY A1 [ Medium Level ] : Removed unneeded legacy functions
+
 
 12-Dec-2006 Enno Klasing
  # Fixed bug in TinyMCE: help screen disabled
  # Fixed IE7 display bug with mosTabs
  # Fixed [artf7028] : Two bugs in TinyMCE
 
+
 11-Dec-2006 Enno Klasing
  # Fixed [artf7021] : Bug with com_messages and message titles including a single quote
+
 
 10-Dec-2006 Rob Schley
  # Fixed grammar problems in SQL data.
  # Fixed grammar problem in com_config.
  # Fixed usages of "Joomla!" missing the exclamation point.
 
+
 10-Dec-2006 Enno Klasing
  # Fixed [artf6762] : mos_section showing unexpected behavior
  # Fixed IE7 display bug in the toolbar of the polls component
 
+
 07-Dec-2006 Rob Schley
  # Fixed [artf6863] : Changed the include file from template_css.css to offline.css to avoid conflicting styles
 
+
 07-Dec-2006 Enno Klasing
  # Fixed [artf6296] : josSpoofCheck does not check arrays and generates php warning
+
 
 06-Dec-2006 Marko Schmuck
  # Fixed [artf6884] : mosimage align=right causes problems in IE6
  # Fixed [artf6779] : Link-URL containing character ] breaks
 
+
 06-Dec-2006 Enno Klasing
  # Fixed [artf6922] : Registration not working as expected (JavaScript popups)
+
 
 06-Dec-2006 Mateusz Krzeszowiec
  # Fixed [artf6832] : getItemid() function in joomla.php will not return correct $Itemid
@@ -86,8 +100,10 @@ code fixes.
  # Fixed [artf6751] : Banner upload target directory bug
  # Fixed [artf6522] : Quotes in User Name breaks checkedOut overlib, fixed similiar bugs from another report
 
+
 02-Dec-2006 Sam Moffatt
  # Fixed [artf6484] : com_registration bug (removed SQL error message)
+
 
 01-Dec-2006 Enno Klasing
  # Fixed [artf6903] : Anchors to Frontpage in SEF-URLs

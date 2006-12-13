@@ -42,7 +42,7 @@ code fixes.
 ---------------- 1.0.12 In Development -- [**-***-**** **:** UTC] ------------------
 
 13-Dec-2006 Rob Schley
- # Fixed spelling error in com_menus
+ # Fixed spelling and grammar errors in com_menus
  # Fixed changelog formatting.
 
 

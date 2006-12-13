@@ -89,7 +89,7 @@ class content_blog_section_html {
 				</tr>
 				<tr>
 					<td valign="top" align="right">
-					section:
+					Section:
 					</td>
 					<td>
 					<?php echo $lists['sectionid']; ?>

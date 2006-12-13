@@ -5415,8 +5415,9 @@ class mosCommonHTML {
 		if ( $overlib ) {
 			$date 				= mosFormatDate( $row->checked_out_time, '%A, %d %B %Y' );
 			$time				= mosFormatDate( $row->checked_out_time, '%H:%M' );
+			$editor				= addslashes( htmlspecialchars( html_entity_decode( $row->editor, ENT_QUOTES ) ) );
 			$checked_out_text 	= '<table>';
-			$checked_out_text 	.= '<tr><td>'. $row->editor .'</td></tr>';
+			$checked_out_text 	.= '<tr><td>'. $editor .'</td></tr>';
 			$checked_out_text 	.= '<tr><td>'. $date .'</td></tr>';
 			$checked_out_text 	.= '<tr><td>'. $time .'</td></tr>';
 			$checked_out_text 	.= '</table>';

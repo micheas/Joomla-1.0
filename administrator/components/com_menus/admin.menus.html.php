@@ -103,7 +103,7 @@ class HTML_menusections {
 		$i = 0;
 		$n = count( $rows );
 		foreach ($rows as $row) {
-			mosMakeHtmlSafe($row);
+			mosMakeHtmlSafe( $row, ENT_QUOTES, 'treename' );
 			$access 	= mosCommonHTML::AccessProcessing( $row, $i );
 			$checked 	= mosCommonHTML::CheckedOutProcessing( $row, $i );
 			$published 	= mosCommonHTML::PublishedProcessing( $row, $i );

@@ -41,11 +41,14 @@ code fixes.
 ----------------------------------------------------------------------------------------
 ---------------- 1.0.12 In Development -- [**-***-**** **:** UTC] ------------------
 
+13-Dec-2006 Enno Klasing
+ + Added security warning message to the installer component
+ # Fixed [artf6522] : Quotes in User Name breaks checkedOut overlib
+
 12-Dec-2006 Enno Klasing
  # Fixed bug in TinyMCE: help screen disabled
  # Fixed IE7 display bug with mosTabs
  # Fixed [artf7028] : Two bugs in TinyMCE
- + Added security warning message to the installer component
 
 11-Dec-2006 Enno Klasing
  # Fixed [artf7021] : Bug with com_messages and message titles including a single quote

@@ -29,7 +29,13 @@ function writableCell( $folder ) {
 class HTML_installer {
 
 	function showInstallForm( $title, $option, $element, $client = "", $p_startdir = "", $backLink="" ) {
+		if (!defined( '_INSTALL_3PD_WARN' )) {
+			define( '_INSTALL_3PD_WARN', 'Warning: Installing 3rd party extensions may compromise your server\'s security. Upgrading your Joomla! installation will not update your 3rd party extensions.<br />For more information on keeping your site secure, please see the <a href="http://forum.joomla.org/index.php/board,267.0.html" target="_blank" style="color: blue; text-decoration: underline;">Joomla! Security Forum</a>.' );
+		}
 		?>
+		<div style="margin: 10px 0px; padding: 5px 15px 5px 35px; min-height: 25px; border: 1px solid #cc0000; background: #ffffcc; text-align: left; color: red; font-weight: bold; background-image: url(../includes/js/ThemeOffice/warning.png); background-repeat: no-repeat; background-position: 10px 50%;">
+			<?php echo _INSTALL_3PD_WARN; ?>
+		</div>
 		<script language="javascript" type="text/javascript">
 		function submitbutton3(pressbutton) {
 			var form = document.adminForm_dir;

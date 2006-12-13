@@ -96,6 +96,7 @@ DEFINE('_MESSAGE_FAILED','The user has locked their mailbox. Message failed.');
 
 DEFINE('_CMN_IFRAMES', 'This option will not work correctly.  Unfortunately, your browser does not support Inline Frames');
 
+DEFINE('_INSTALL_3PD_WARN','Warning: Installing 3rd party extensions may compromise your server\'s security. Upgrading your Joomla! installation will not update your 3rd party extensions.<br />For more information on keeping your site secure, please see the <a href="http://forum.joomla.org/index.php/board,267.0.html" target="_blank" style="color: blue; text-decoration: underline;">Joomla! Security Forum</a>.');
 DEFINE('_INSTALL_WARN','For your security please completely remove the installation directory including all files and sub-folders  - then refresh this page');
 DEFINE('_TEMPLATE_WARN','<font color=\"red\"><b>Template File Not Found! Looking for template:</b></font>');
 DEFINE('_NO_PARAMS','There are no Parameters for this item');

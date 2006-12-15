@@ -16,7 +16,7 @@ define( '_VALID_MOS', 1 );
 
 // checks for configuration file, if none found loads installation page
 if (!file_exists( 'configuration.php' ) || filesize( 'configuration.php' ) < 10) {
-	$self = str_replace( '/index.php','', strtolower( $_SERVER['PHP_SELF'] ) ). '/';
+	$self = rtrim( dirname( $_SERVER['PHP_SELF'] ), '/\\' ) . '/';
 	header("Location: http://" . $_SERVER['HTTP_HOST'] . $self . "installation/index.php" );
 	exit();
 }

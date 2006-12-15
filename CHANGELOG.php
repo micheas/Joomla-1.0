@@ -43,6 +43,7 @@ code fixes.
 
 15-Dec-2006 Enno Klasing
  # Fixed sample data: removed (nonexistent) RSS feed from OSM
+ # Fixed redirect to installation directory: removed need for lowercase directory names
 
 
 13-Dec-2006 Rob Schley

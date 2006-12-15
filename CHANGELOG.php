@@ -41,6 +41,10 @@ code fixes.
 ----------------------------------------------------------------------------------------
 ---------------- 1.0.12 In Development -- [**-***-**** **:** UTC] ------------------
 
+15-Dec-2006 Enno Klasing
+ # Fixed sample data: removed (nonexistent) RSS feed from OSM
+
+
 13-Dec-2006 Rob Schley
  # Fixed spelling and grammar errors in com_menus
  # Fixed changelog formatting.

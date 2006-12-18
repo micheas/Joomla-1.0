@@ -41,6 +41,10 @@ code fixes.
 ----------------------------------------------------------------------------------------
 ---------------- 1.0.12 In Development -- [**-***-**** **:** UTC] ------------------
 
+18-Dec-2006 Enno Klasing
+ # Fixed [artf5166] : Server Time offset issue, while submitting news
+
+
 18-Dec-2006 Rob Schley
  # Fixed bug in offline.php when using the database class without a working database connection.
 

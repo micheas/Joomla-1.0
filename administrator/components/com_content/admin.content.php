@@ -461,7 +461,7 @@ function editContent( $uid=0, $sectionid=0, $option ) {
 		$row->state 		= 1;
 		$row->ordering 		= 0;
 		$row->images 		= array();
-		$row->publish_up 	= date( 'Y-m-d H:i:s', time() - ( $mosConfig_offset * 60 * 60 ) );
+		$row->publish_up 	= date( 'Y-m-d H:i:s', time() + ( $mosConfig_offset * 60 * 60 ) );
 		$row->publish_down 	= 'Never';
 		$row->creator 		= '';
 		$row->modified 		= $nullDate;

@@ -353,8 +353,9 @@ if ($mosConfig_sef) {
 
 			// SSL check - $http_host returns <live site url>:<port number if it is 443>
 			$http_host = explode(':', $_SERVER['HTTP_HOST'] );
-			if( !empty( $_SERVER['HTTPS'] ) || isset( $http_host[1] ) && $http_host[1] == 443 && substr( $mosConfig_live_site, 0, 8 ) != 'https://' )
+			if( (!empty( $_SERVER['HTTPS'] ) && strtolower( $_SERVER['HTTPS'] ) != 'off' || isset( $http_host[1] ) && $http_host[1] == 443) && substr( $mosConfig_live_site, 0, 8 ) != 'https://' ) {
 				$mosConfig_live_site = 'https://'.substr( $mosConfig_live_site, 7 );
+			}
 		}
 
 	} else {

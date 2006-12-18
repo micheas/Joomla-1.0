@@ -43,6 +43,7 @@ code fixes.
 
 18-Dec-2006 Enno Klasing
  # Fixed [artf5166] : Server Time offset issue, while submitting news
+ # Fixed [artf6439] : https switchover
 
 
 18-Dec-2006 Rob Schley

@@ -47,6 +47,7 @@ code fixes.
 
 18-Dec-2006 Rob Schley
  # Fixed bug in offline.php when using the database class without a working database connection.
+ # Fixed spelling and grammar mistakes in english.php as per suggestions.
 
 
 15-Dec-2006 Enno Klasing

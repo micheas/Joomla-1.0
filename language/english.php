@@ -24,7 +24,7 @@ define( '_SYSERR3', 'Could not connect to the database' );
 
 // common
 DEFINE('_LANGUAGE','en');
-DEFINE('_NOT_AUTH','You are not authorized to view this resource.');
+DEFINE('_NOT_AUTH','You are not authorised to view this resource.');
 DEFINE('_DO_LOGIN','You need to login.');
 DEFINE('_VALID_AZ09',"Please enter a valid %s.  No spaces, more than %d characters and contain 0-9,a-z,A-Z");
 DEFINE('_VALID_AZ09_USER',"Please enter a valid %s.  More than %d characters and contain 0-9,a-z,A-Z");
@@ -83,21 +83,21 @@ DEFINE('_CMN_CONTINUE','Continue');
 
 DEFINE('_STATIC_CONTENT','Static Content');
 
-DEFINE('_CMN_NEW_ITEM_LAST','New items default to the last place. Ordering can be changed after this item is saved.');
-DEFINE('_CMN_NEW_ITEM_FIRST','New items default to the first place. Ordering can be changed after this item is saved.');
+DEFINE('_CMN_NEW_ITEM_LAST','New Items default to the last place. Ordering can be changed after this Item is saved.');
+DEFINE('_CMN_NEW_ITEM_FIRST','New Items default to the first place. Ordering can be changed after this Item is saved.');
 DEFINE('_LOGIN_INCOMPLETE','Please complete the username and password fields.');
 DEFINE('_LOGIN_BLOCKED','Your login has been blocked. Please contact the administrator.');
 DEFINE('_LOGIN_INCORRECT','Incorrect username or password. Please try again.');
 DEFINE('_LOGIN_NOADMINS','You cannot login. There are no administrators set up.');
-DEFINE('_CMN_JAVASCRIPT','!Warning! Javascript must be enabled for proper operation.');
+DEFINE('_CMN_JAVASCRIPT','!Warning! JavaScript must be enabled for proper operation.');
 
 DEFINE('_NEW_MESSAGE','A new private message has arrived');
-DEFINE('_MESSAGE_FAILED','The user has locked their mailbox. Message failed.');
+DEFINE('_MESSAGE_FAILED','The User has locked their mailbox. Message failed.');
 
 DEFINE('_CMN_IFRAMES', 'This option will not work correctly.  Unfortunately, your browser does not support Inline Frames');
 
 DEFINE('_INSTALL_3PD_WARN','Warning: Installing 3rd party extensions may compromise your server\'s security. Upgrading your Joomla! installation will not update your 3rd party extensions.<br />For more information on keeping your site secure, please see the <a href="http://forum.joomla.org/index.php/board,267.0.html" target="_blank" style="color: blue; text-decoration: underline;">Joomla! Security Forum</a>.');
-DEFINE('_INSTALL_WARN','For your security please completely remove the installation directory including all files and sub-folders  - then refresh this page');
+DEFINE('_INSTALL_WARN','For your security please completely remove the installation directory including all files and sub-folders - then refresh this page.');
 DEFINE('_TEMPLATE_WARN','<font color=\"red\"><b>Template File Not Found! Looking for template:</b></font>');
 DEFINE('_NO_PARAMS','There are no Parameters for this item');
 DEFINE('_HANDLER','Handler not defined for type');
@@ -109,14 +109,14 @@ DEFINE('_TOC_JUMPTO','Article Index');
 DEFINE('_READ_MORE','Read more...');
 DEFINE('_READ_MORE_REGISTER','Register to read more...');
 DEFINE('_MORE','More...');
-DEFINE('_ON_NEW_CONTENT', "A new content item has been submitted by [ %s ]  titled [ %s ]  from section [ %s ]  and category  [ %s ]" );
+DEFINE('_ON_NEW_CONTENT', "A new Content Item has been submitted by [ %s ]  titled [ %s ]  from Section [ %s ]  and Category  [ %s ]" );
 DEFINE('_SEL_CATEGORY','- Select Category -');
 DEFINE('_SEL_SECTION','- Select Section -');
 DEFINE('_SEL_AUTHOR','- Select Author -');
 DEFINE('_SEL_POSITION','- Select Position -');
 DEFINE('_SEL_TYPE','- Select Type -');
 DEFINE('_EMPTY_CATEGORY','This Category is currently empty');
-DEFINE('_EMPTY_BLOG','There are no items to display');
+DEFINE('_EMPTY_BLOG','There are no Items to display');
 DEFINE('_NOT_EXIST','The page you are trying to access does not exist.<br />Please select a page from the main menu.');
 DEFINE('_SUBMIT_BUTTON','Submit');
 
@@ -142,18 +142,18 @@ DEFINE('_ENQUIRY_TEXT','This is an enquiry e-mail via %s from:');
 DEFINE('_COPY_TEXT','This is a copy of the following message you sent to %s via %s ');
 DEFINE('_COPY_SUBJECT','Copy of: ');
 DEFINE('_THANK_MESSAGE','Thank you for your e-mail');
-DEFINE('_CLOAKING','This email address is being protected from spam bots, you need Javascript enabled to view it');
+DEFINE('_CLOAKING','This e-mail address is being protected from spam bots, you need JavaScript enabled to view it');
 DEFINE('_CONTACT_HEADER_NAME','Name');
 DEFINE('_CONTACT_HEADER_POS','Position');
 DEFINE('_CONTACT_HEADER_EMAIL','Email');
 DEFINE('_CONTACT_HEADER_PHONE','Phone');
 DEFINE('_CONTACT_HEADER_FAX','Fax');
-DEFINE('_CONTACTS_DESC','The Contact list for this Website.');
-DEFINE('_CONTACT_MORE_THAN','You cannot enter more than one email address.');
+DEFINE('_CONTACTS_DESC','The Contact list for this Web site.');
+DEFINE('_CONTACT_MORE_THAN','You cannot enter more than one e-mail address.');
 
 /** classes/html/contact.php */
 DEFINE('_CONTACT_TITLE','Contact');
-DEFINE('_EMAIL_DESCRIPTION','Send an Email to this Contact:');
+DEFINE('_EMAIL_DESCRIPTION','Send an e-mail to this Contact:');
 DEFINE('_NAME_PROMPT',' Enter your name:');
 DEFINE('_EMAIL_PROMPT',' E-mail address:');
 DEFINE('_MESSAGE_PROMPT',' Enter your message:');
@@ -162,15 +162,15 @@ DEFINE('_CONTACT_FORM_NC','Please make sure the form is complete and valid.');
 DEFINE('_CONTACT_TELEPHONE','Telephone: ');
 DEFINE('_CONTACT_MOBILE','Mobile: ');
 DEFINE('_CONTACT_FAX','Fax: ');
-DEFINE('_CONTACT_EMAIL','Email: ');
+DEFINE('_CONTACT_EMAIL','E-mail: ');
 DEFINE('_CONTACT_NAME','Name: ');
 DEFINE('_CONTACT_POSITION','Position: ');
 DEFINE('_CONTACT_ADDRESS','Address: ');
 DEFINE('_CONTACT_MISC','Information: ');
 DEFINE('_CONTACT_SEL','Select Contact:');
 DEFINE('_CONTACT_NONE','There are no Contact Details listed.');
-DEFINE('_CONTACT_ONE_EMAIL','You cannot enter more than one email address.');
-DEFINE('_EMAIL_A_COPY','Email a copy of this message to your own address');
+DEFINE('_CONTACT_ONE_EMAIL','You cannot enter more than one e-mail address.');
+DEFINE('_EMAIL_A_COPY','E-mail a copy of this message to your own address');
 DEFINE('_CONTACT_DOWNLOAD_AS','Download information as a');
 DEFINE('_VCARD','VCard');
 
@@ -189,16 +189,16 @@ DEFINE('_PN_RESULTS','Results');
 /** emailfriend */
 DEFINE('_EMAIL_TITLE','E-mail a friend');
 DEFINE('_EMAIL_FRIEND','E-mail this to a friend.');
-DEFINE('_EMAIL_FRIEND_ADDR',"Your friend's E-mail:");
+DEFINE('_EMAIL_FRIEND_ADDR',"Your friend's e-mail:");
 DEFINE('_EMAIL_YOUR_NAME','Your Name:');
-DEFINE('_EMAIL_YOUR_MAIL','Your E-mail:');
+DEFINE('_EMAIL_YOUR_MAIL','Your e-mail:');
 DEFINE('_SUBJECT_PROMPT',' Message subject:');
 DEFINE('_BUTTON_SUBMIT_MAIL','Send e-mail');
 DEFINE('_BUTTON_CANCEL','Cancel');
 DEFINE('_EMAIL_ERR_NOINFO','You must enter your valid e-mail and the valid e-mail to send to.');
-DEFINE('_EMAIL_MSG','The following page from the "%s" website has been sent to you by %s ( %s ).
+DEFINE('_EMAIL_MSG','The following page from the "%s" web site has been sent to you by %s ( %s ).
 
-You can access it at the following url:
+You can access it at the following URL:
 %s');
 DEFINE('_EMAIL_INFO','Item sent by');
 DEFINE('_EMAIL_SENT','This item has been sent to');
@@ -219,9 +219,9 @@ DEFINE('_HEADER_HITS','Hits');
 DEFINE('_E_EDIT','Edit');
 DEFINE('_E_ADD','Add');
 DEFINE('_E_WARNUSER','Please either Cancel or Save the current change');
-DEFINE('_E_WARNTITLE','Content item must have a title');
-DEFINE('_E_WARNTEXT','Content item must have intro text');
-DEFINE('_E_WARNCAT','Please select a category');
+DEFINE('_E_WARNTITLE','Content Item must have a title');
+DEFINE('_E_WARNTEXT','Content Item must have intro text');
+DEFINE('_E_WARNCAT','Please select a Category');
 DEFINE('_E_CONTENT','Content');
 DEFINE('_E_TITLE','Title:');
 DEFINE('_E_CATEGORY','Category:');
@@ -322,8 +322,8 @@ DEFINE('_SEL_POLL','Select Poll:');
 DEFINE('_NO_RESULTS','There are no results for this poll.');
 
 /** registration.php */
-DEFINE('_ERROR_PASS','Sorry, no corresponding user was found');
-DEFINE('_NEWPASS_MSG','The user account $checkusername has this email associated with it.\n'
+DEFINE('_ERROR_PASS','Sorry, no corresponding User was found');
+DEFINE('_NEWPASS_MSG','The User account $checkusername has this e-mail associated with it.\n'
 .'A web user from $mosConfig_live_site has just requested that a new password be sent.\n\n'
 .' Your New Password is: $newpass\n\nIf you didn\'t ask for this, don\'t worry.'
 .' You are seeing this message, not them. If this was an error just login with your'
@@ -331,13 +331,13 @@ DEFINE('_NEWPASS_MSG','The user account $checkusername has this email associated
 DEFINE('_NEWPASS_SUB','$_sitename :: New password for - $checkusername');
 DEFINE('_NEWPASS_SENT','New User Password created and sent!');
 DEFINE('_REGWARN_NAME','Please enter your name.');
-DEFINE('_REGWARN_UNAME','Please enter a user name.');
+DEFINE('_REGWARN_UNAME','Please enter a User name.');
 DEFINE('_REGWARN_MAIL','Please enter a valid e-mail address.');
 DEFINE('_REGWARN_PASS','Please enter a valid password.  No spaces, more than 6 characters and contain 0-9,a-z,A-Z');
 DEFINE('_REGWARN_VPASS1','Please verify the password.');
 DEFINE('_REGWARN_VPASS2','Password and verification do not match, please try again.');
 DEFINE('_REGWARN_INUSE','This username/password already in use. Please try another.');
-DEFINE('_REGWARN_EMAIL_INUSE', 'This e-mail is already registered. If you forgot the password click on "Lost your Password" and new password will be sent to you.');
+DEFINE('_REGWARN_EMAIL_INUSE', 'This e-mail is already registered. If you forgot the password click on "Lost your Password" and a new password will be sent to you.');
 DEFINE('_SEND_SUB','Account details for %s at %s');
 DEFINE('_USEND_MSG_ACTIVATE', 'Hello %s,
 
@@ -359,11 +359,11 @@ DEFINE('_USEND_MSG_NOPASS','Hello $name,\n\nYou have been added as a user to $mo
 .'Please do not respond to this message as it is automatically generated and is for information purposes only\n');
 DEFINE('_ASEND_MSG','Hello %s,
 
-A new user has registered at %s.
-This email contains their details:
+A new User has registered at %s.
+This e-mail contains their details:
 
 Name - %s
-e-mail - %s
+E-mail - %s
 Username - %s
 
 Please do not respond to this message as it is automatically generated and is for information purposes only');
@@ -412,7 +412,7 @@ DEFINE('_SEARCH_MESSAGE','Search term must be a minimum of 3 characters and a ma
 DEFINE('_SEARCH_ARCHIVED','Archived');
 DEFINE('_SEARCH_CATBLOG','Category Blog');
 DEFINE('_SEARCH_CATLIST','Category List');
-DEFINE('_SEARCH_NEWSFEEDS','Newsfeeds');
+DEFINE('_SEARCH_NEWSFEEDS','News Feeds	');
 DEFINE('_SEARCH_SECLIST','Section List');
 DEFINE('_SEARCH_SECBLOG','Section Blog');
 
@@ -444,7 +444,7 @@ DEFINE('_UP_EXISTS','Image $userfile_name already exists. Please rename the file
 DEFINE('_UP_COPY_FAIL','Failed to copy');
 DEFINE('_UP_TYPE_WARN','You may only upload a gif, or jpg image.');
 DEFINE('_MAIL_SUB','User Submitted');
-DEFINE('_MAIL_MSG','Hello $adminName,\n\n\nA user submitted $type:\n [ $title ]\n has been just been submitted by user:\n [ $author ]\n'
+DEFINE('_MAIL_MSG','Hello $adminName,\n\n\nA User submitted $type:\n [ $title ]\n has been just been submitted by User:\n [ $author ]\n'
 .' for $mosConfig_live_site.\n\n\n\n'
 .'Please go to $mosConfig_live_site/administrator to view and approve this $type.\n\n'
 .'Please do not respond to this message as it is automatically generated and is for information purposes only\n');
@@ -465,7 +465,7 @@ DEFINE('_VPASS','Verify Password:');
 DEFINE('_SUBMIT_SUCCESS','Submission Success!');
 DEFINE('_SUBMIT_SUCCESS_DESC','Your item has been successfully submitted to our administrators. It will be reviewed before being published on this site.');
 DEFINE('_WELCOME','Welcome!');
-DEFINE('_WELCOME_DESC','Welcome to the user section of our site');
+DEFINE('_WELCOME_DESC','Welcome to the User section of our site');
 DEFINE('_CONF_CHECKED_IN','Checked out items have now been all checked in');
 DEFINE('_CHECK_TABLE','Checking table');
 DEFINE('_CHECKED_IN','Checked in ');
@@ -473,13 +473,13 @@ DEFINE('_CHECKED_IN_ITEMS',' items');
 DEFINE('_PASS_MATCH','Passwords do not match');
 
 /** components/com_banners */
-DEFINE('_BNR_CLIENT_NAME','You must select a name for the client.');
-DEFINE('_BNR_CONTACT','You must select a contact for the client.');
-DEFINE('_BNR_VALID_EMAIL','You must select a valid email for the client.');
-DEFINE('_BNR_CLIENT','You must select a client,');
-DEFINE('_BNR_NAME','You must select a name for the banner.');
-DEFINE('_BNR_IMAGE','You must select a image for the banner.');
-DEFINE('_BNR_URL','You must select a URL/Custom banner code for the banner.');
+DEFINE('_BNR_CLIENT_NAME','You must select a name for the Client.');
+DEFINE('_BNR_CONTACT','You must select a contact for the Client.');
+DEFINE('_BNR_VALID_EMAIL','You must select a valid e-mail for the Client.');
+DEFINE('_BNR_CLIENT','You must select a Client,');
+DEFINE('_BNR_NAME','You must select a name for the Banner.');
+DEFINE('_BNR_IMAGE','You must select an image for the Banner.');
+DEFINE('_BNR_URL','You must select a URL/Custom banner code for the Banner.');
 
 /** components/com_login */
 DEFINE('_ALREADY_LOGIN','You are already logged in!');
@@ -488,7 +488,7 @@ DEFINE('_LOGIN_TEXT','Use the login and password fields opposite to gain full ac
 DEFINE('_LOGIN_SUCCESS','You have successfully Logged In');
 DEFINE('_LOGOUT_SUCCESS','You have successfully Logged Out');
 DEFINE('_LOGIN_DESCRIPTION','To access the Private area of this site please Login');
-DEFINE('_LOGOUT_DESCRIPTION','You are currently Logged in to the private area of this site');
+DEFINE('_LOGOUT_DESCRIPTION','You are currently Logged In to the private area of this site');
 
 
 /** components/com_weblinks */
@@ -501,7 +501,7 @@ DEFINE('_SUBMIT_LINK','Submit A Web Link');
 DEFINE('_URL','URL:');
 DEFINE('_URL_DESC','Description:');
 DEFINE('_NAME','Name:');
-DEFINE('_WEBLINK_EXIST','There is a weblink already with that name, please try again.');
+DEFINE('_WEBLINK_EXIST','There is a Web Link already with that name, please try again.');
 DEFINE('_WEBLINK_TITLE','Your Weblink must contain a title.');
 
 /** components/com_newfeeds */
@@ -527,12 +527,12 @@ DEFINE('_TIME_STAT','Time');
 DEFINE('_MEMBERS_STAT','Members');
 DEFINE('_HITS_STAT','Hits');
 DEFINE('_NEWS_STAT','News');
-DEFINE('_LINKS_STAT','WebLinks');
+DEFINE('_LINKS_STAT','Web Links');
 DEFINE('_VISITORS','Visitors');
 
 /** /adminstrator/components/com_menus/admin.menus.html.php */
-DEFINE('_MAINMENU_HOME','* The 1st Published item in this menu [mainmenu] is the default `Homepage` for the site *');
-DEFINE('_MAINMENU_DEL','* You cannot `delete` this menu as it is required for the proper operation of Joomla! *');
+DEFINE('_MAINMENU_HOME','* The 1st Published item in this Menu [mainmenu] is the default `Home page` for the site *');
+DEFINE('_MAINMENU_DEL','* You cannot `delete` this Menu as it is required for the proper operation of Joomla! *');
 DEFINE('_MENU_GROUP','* Some `Menu Types` appear in more than one group *');
 
 
@@ -541,9 +541,9 @@ DEFINE('_NEW_USER_MESSAGE_SUBJECT', 'New User Details' );
 DEFINE('_NEW_USER_MESSAGE', 'Hello %s,
 
 
-You have been added as a user to %s by an Administrator.
+You have been added as a User to %s by an Administrator.
 
-This email contains your username and password to log into the %s
+This e-mail contains your username and password to log into the %s
 
 Username - %s
 Password - %s
@@ -552,7 +552,7 @@ Password - %s
 Please do not respond to this message as it is automatically generated and is for information purposes only');
 
 /** administrators/components/com_massmail */
-DEFINE('_MASSMAIL_MESSAGE', "This is an email from '%s'
+DEFINE('_MASSMAIL_MESSAGE', "This is an e-mail from '%s'
 
 Message:
 " );

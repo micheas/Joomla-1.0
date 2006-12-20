@@ -106,7 +106,7 @@ class submit_content_menu_html {
 				</tr>
 				<tr>
 					<td align="right">
-					Url:
+					URL:
 					</td>
 					<td colspan="2">
                     <?php echo ampReplace($lists['link']); ?>

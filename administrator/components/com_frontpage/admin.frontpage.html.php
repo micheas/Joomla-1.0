@@ -34,7 +34,7 @@ class HTML_content {
 		<table class="adminheading">
 		<tr>
 			<th class="frontpage" rowspan="2">
-			Frontpage Manager
+			Front Page Manager
 			</th>
 			<td width="right">
 			<?php echo $lists['sectionid'];?>

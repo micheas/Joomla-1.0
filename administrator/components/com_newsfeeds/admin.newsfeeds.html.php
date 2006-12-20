@@ -30,7 +30,7 @@ class HTML_newsfeeds {
 		<table class="adminheading">
 		<tr>
 			<th>
-			Newsfeed Manager
+			News Feed Manager
 			</th>
 			<td width="right">
 			<?php echo $lists['category'];?>
@@ -96,7 +96,7 @@ class HTML_newsfeeds {
 					<?php
 				} else {
 					?>
-					<a href="<?php echo $link; ?>" title="Edit Newsfeed">
+					<a href="<?php echo $link; ?>" title="Edit News Feed">
 					<?php echo $row->name; ?>
 					</a>
 					<?php
@@ -193,7 +193,7 @@ class HTML_newsfeeds {
 		<table class="adminheading">
 		<tr>
 			<th class="edit">
-			Newsfeed: <small><?php echo $row->id ? 'Edit' : 'New';?></small> <small><small>[ <?php echo $row->name;?> ]</small></small>
+			News Feed: <small><?php echo $row->id ? 'Edit' : 'New';?></small> <small><small>[ <?php echo $row->name;?> ]</small></small>
 			</th>
 		</tr>
 		</table>

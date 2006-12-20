@@ -643,7 +643,7 @@ class HTML_content {
 				</tr>
 				<tr>
 					<td valign="top" align="right" width="120">
-					Show on Frontpage:
+					Show on Front Page:
 					</td>
 					<td>
 					<input type="checkbox" name="frontpage" value="1" <?php echo $row->frontpage ? 'checked="checked"' : ''; ?> />

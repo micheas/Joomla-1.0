@@ -41,6 +41,12 @@ code fixes.
 ----------------------------------------------------------------------------------------
 ---------------- 1.0.12 In Development -- [**-***-**** **:** UTC] ------------------
 
+19-Dec-2006 Rob Schley
+ + Added 119 help screen files.
+ ^ Changed 20 help screen titles.
+ # Fixed several grammar problems throughtout the Joomla! core
+
+
 18-Dec-2006 Enno Klasing
  # Fixed [artf5166] : Server Time offset issue, while submitting news
  # Fixed [artf6439] : https switchover

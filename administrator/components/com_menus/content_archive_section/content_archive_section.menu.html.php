@@ -105,7 +105,7 @@ class content_archive_section_menu_html {
 					</td>
 				</tr>
 				<tr>
-					<td align="right">Url:</td>
+					<td align="right">URL:</td>
 					<td colspan="2">
                     <?php echo ampReplace($lists['link']); ?>
 					</td>

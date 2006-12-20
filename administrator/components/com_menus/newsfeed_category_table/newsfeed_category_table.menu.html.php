@@ -67,7 +67,7 @@ class newsfeed_category_table_menu_html {
 		<table class="adminheading">
 		<tr>
 			<th>
-			<?php echo $menu->id ? 'Edit' : 'Add';?> Menu Item :: Table - Newsfeed Category
+			<?php echo $menu->id ? 'Edit' : 'Add';?> Menu Item :: Table - News Feed Category
 			</th>
 		</tr>
 		</table>
@@ -106,7 +106,7 @@ class newsfeed_category_table_menu_html {
 				</tr>
 				<tr>
 					<td align="right">
-					Url:
+					URL:
 					</td>
 					<td colspan="2">
                     <?php echo ampReplace($lists['link']); ?>

@@ -417,7 +417,7 @@ class HTML_bannerClient {
 			} else if (form.contact.value == "") {
 				alert( "Please fill in the Contact Name." );
 			} else if (form.email.value == "") {
-				alert( "Please fill in the Contact Email." );
+				alert( "Please fill in the Contact E-mail." );
 			} else {
 				submitform( pressbutton );
 			}
@@ -460,7 +460,7 @@ class HTML_bannerClient {
 		</tr>
 		<tr>
 			<td width="10%">
-			Contact Email:
+			Contact E-mail:
 			</td>
 			<td>
 			<input class="inputbox" type="text" name="email" size="30" maxlength="60" value="<?php echo $row->email; ?>" />

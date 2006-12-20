@@ -54,7 +54,7 @@ class HTML_component {
 				Date
 				</th>
 				<th width="15%" align="left">
-				Author Email
+				Author E-mail
 				</th>
 				<th width="15%" align="left">
 				Author URL

@@ -57,7 +57,7 @@ class HTML_languages {
 			Author
 			</th>
 			<th width="25%">
-			Author Email
+			Author E-mail
 			</th>
 		</tr>
 		<?php

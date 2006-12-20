@@ -101,7 +101,7 @@ class HTML_config {
 
 			// do field validation
 			if (form.config_session_type.value != <?php echo $row->config_session_type; ?> ){
-				if ( confirm('Are you sure you wish to change the `Session Authentication Method`? \n\n This will cause all existing frontend sessions to be deleted \n\n') ) {
+				if ( confirm('Are you sure you wish to change the `Session Authentication Method`? \n\n This will cause all existing front-end sessions to be deleted \n\n') ) {
 					submitform( pressbutton );
 				} else {
 					return;
@@ -193,28 +193,28 @@ class HTML_config {
 				?></td>
 			</tr>
 			<tr>
-				<td>Require Unique Email:</td>
+				<td>Require Unique E-mail:</td>
 				<td><?php echo $lists['uniquemail']; ?><?php
-					$tip = 'If yes, users cannot share the same email address';
+					$tip = 'If yes, users cannot share the same e-mail address';
 					echo mosToolTip( $tip );
 				?></td>
 			</tr>
 			<tr>
-				<td>Frontend Login:</td>
+				<td>Front-end Login:</td>
 				<td>
 					<?php echo $lists['frontend_login']; ?>
 					<?php
-					$tip = 'If `No`, disables the Frontend login page and module even when associated with a menu item. Will also disable Registration functionality';
+					$tip = 'If `No`, disables the Front-end login page and module even when associated with a menu item. Will also disable Registration functionality';
 					echo mosToolTip( $tip );
 					?>
 				</td>
 			</tr>
 			<tr>
-				<td>Frontend User Params:</td>
+				<td>Front-end User Params:</td>
 				<td>
 					<?php echo $lists['frontend_userparams']; ?>
 					<?php
-					$tip = 'If `No`, disables the frontend User params functionality';
+					$tip = 'If `No`, disables the front-end User params functionality';
 					echo mosToolTip( $tip );
 					?>
 				</td>
@@ -371,14 +371,14 @@ class HTML_config {
 				<td>&nbsp;</td>
 			</tr>
 			<tr>
-				<td>Email Icon:</td>
+				<td>E-mail Icon:</td>
 				<td><?php echo $lists['hideEmail']; ?></td>
 				<td>&nbsp;</td>
 			</tr>
 			<tr>
 				<td>Icons:</td>
 				<td><?php echo $lists['icons']; ?></td>
-				<td><?php echo mosToolTip('Print, PDF and Email will utilise Icons or Text'); ?></td>
+				<td><?php echo mosToolTip('Print, PDF and E-mail will utilise Icons or Text'); ?></td>
 			</tr>
 			<tr>
 				<td>Table of Contents on multi-page items:</td>
@@ -455,7 +455,7 @@ class HTML_config {
 				<td>
 				<input class="text_area" type="text" name="config_lifetime" size="10" value="<?php echo $row->config_lifetime; ?>"/>
 				&nbsp;seconds&nbsp;
-				<?php echo mosWarning('Auto logout after this time of inactivity for <strong>site/frontend</strong> users. The higher the value the greater the security risk!'); ?>
+				<?php echo mosWarning('Auto logout after this time of inactivity for <strong>site/front-end</strong> users. The higher the value the greater the security risk!'); ?>
 				</td>
 				<td>&nbsp;</td>
 			</tr>
@@ -464,7 +464,7 @@ class HTML_config {
 				<td>
 				<input class="text_area" type="text" name="config_session_life_admin" size="10" value="<?php echo $row->config_session_life_admin; ?>"/>
 				&nbsp;seconds&nbsp;
-				<?php echo mosWarning('Auto logout after this time of inactivity for <strong>admin/backend</strong> users. The higher the value the greater the security risk!'); ?>
+				<?php echo mosWarning('Auto logout after this time of inactivity for <strong>admin/back-end</strong> users. The higher the value the greater the security risk!'); ?>
 				</td>
 				<td>&nbsp;</td>
 			</tr>

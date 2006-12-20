@@ -80,7 +80,7 @@ class component_item_link_menu_html {
 					</td>
 				</tr>
 				<tr>
-					<td width="10%" align="right">Url:</td>
+					<td width="10%" align="right">URL:</td>
 					<td width="80%">
                     <?php echo ampReplace($lists['link']); ?>
 					</td>

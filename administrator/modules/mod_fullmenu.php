@@ -30,10 +30,10 @@ if (!defined( '_JOS_FULLMENU_MODULE' )) {
 		function show( $usertype='' ) {
 			global $acl, $database;
 			global $mosConfig_live_site, $mosConfig_enable_stats, $mosConfig_caching;
-	
+
 			// cache some acl checks
 			$canConfig 			= $acl->acl_check( 'administration', 'config', 'users', $usertype );
-	
+
 			$manageTemplates 	= $acl->acl_check( 'administration', 'manage', 'users', $usertype, 'components', 'com_templates' );
 			$manageTrash 		= $acl->acl_check( 'administration', 'manage', 'users', $usertype, 'components', 'com_trash' );
 			$manageMenuMan 		= $acl->acl_check( 'administration', 'manage', 'users', $usertype, 'components', 'com_menumanager' );
@@ -46,7 +46,7 @@ if (!defined( '_JOS_FULLMENU_MODULE' )) {
 			$editAllComponents 	= $acl->acl_check( 'administration', 'edit', 'users', $usertype, 'components', 'all' );
 			$canMassMail 		= $acl->acl_check( 'administration', 'manage', 'users', $usertype, 'components', 'com_massmail' );
 			$canManageUsers 	= $acl->acl_check( 'administration', 'manage', 'users', $usertype, 'components', 'com_users' );
-	
+
 			$query = "SELECT a.id, a.title, a.name"
 			. "\n FROM #__sections AS a"
 			. "\n WHERE a.scope = 'content'"
@@ -55,7 +55,7 @@ if (!defined( '_JOS_FULLMENU_MODULE' )) {
 			;
 			$database->setQuery( $query );
 			$sections = $database->loadObjectList();
-			
+
 			$menuTypes = mosAdminMenus::menutypes();
 			?>
 			<div id="myMenuID"></div>
@@ -157,7 +157,7 @@ if (!defined( '_JOS_FULLMENU_MODULE' )) {
 	  				['<img src="../includes/js/ThemeOffice/add_section.png" />','Section Manager','index2.php?option=com_sections&scope=content',null,'Manage Content Sections'],
 					['<img src="../includes/js/ThemeOffice/add_section.png" />','Category Manager','index2.php?option=com_categories&section=content',null,'Manage Content Categories'],
 					_cmSplit,
-	  				['<img src="../includes/js/ThemeOffice/home.png" />','Frontpage Manager','index2.php?option=com_frontpage',null,'Manage Frontpage Items'],
+	  				['<img src="../includes/js/ThemeOffice/home.png" />','Front Page Manager','index2.php?option=com_frontpage',null,'Manage Front Page Items'],
 	  				['<img src="../includes/js/ThemeOffice/edit.png" />','Archive Manager','index2.php?option=com_content&task=showarchive&sectionid=0',null,'Manage Archive Items'],
 	  				['<img src="../includes/js/ThemeOffice/globe3.png" />', 'Page Impressions', 'index2.php?option=com_statistics&task=pageimp', null, 'Page Impressions'],
 				],
@@ -278,18 +278,18 @@ if (!defined( '_JOS_FULLMENU_MODULE' )) {
 		/*
 	?>			_cmSplit,
 	  			[null,'System',null,null,'System Management',
-	  				['<img src="../includes/js/ThemeOffice/joomla_16x16.png" />', 'Version Check', 'index2.php?option=com_admin&task=versioncheck', null,'Version Check'], 				
+	  				['<img src="../includes/js/ThemeOffice/joomla_16x16.png" />', 'Version Check', 'index2.php?option=com_admin&task=versioncheck', null,'Version Check'],
 	  				['<img src="../includes/js/ThemeOffice/sysinfo.png" />', 'System Info', 'index2.php?option=com_admin&task=sysinfo', null,'System Information'],
 	<?php
 		*/
 	?>			_cmSplit,
 	  			[null,'System',null,null,'System Management',
-	  				['<img src="../includes/js/ThemeOffice/joomla_16x16.png" />', 'Version Check', 'http://www.joomla.org/latest10', '_blank','Version Check'], 				
+	  				['<img src="../includes/js/ThemeOffice/joomla_16x16.png" />', 'Version Check', 'http://www.joomla.org/latest10', '_blank','Version Check'],
 	  				['<img src="../includes/js/ThemeOffice/sysinfo.png" />', 'System Info', 'index2.php?option=com_admin&task=sysinfo', null,'System Information'],
 	<?php
 	  		if ($canConfig) {
-	?>				
-					['<img src="../includes/js/ThemeOffice/checkin.png" />', 'Global Checkin', 'index2.php?option=com_checkin', null,'Check-in all checked-out items'],					
+	?>
+					['<img src="../includes/js/ThemeOffice/checkin.png" />', 'Global Checkin', 'index2.php?option=com_checkin', null,'Check-in all checked-out items'],
 	<?php
 				if ($mosConfig_caching) {
 	?>				['<img src="../includes/js/ThemeOffice/config.png" />','Clean Content Cache','index2.php?option=com_admin&task=clean_cache',null,'Clean the content items cache'],
@@ -309,15 +309,15 @@ if (!defined( '_JOS_FULLMENU_MODULE' )) {
 			</script>
 	<?php
 		}
-	
-	
+
+
 		/**
 		* Show an disbaled version of the menu, used in edit pages
 		* @param string The current user type
 		*/
 		function showDisabled( $usertype='' ) {
 			global $acl;
-	
+
 			$canConfig 			= $acl->acl_check( 'administration', 'config', 'users', $usertype );
 			$installModules 	= $acl->acl_check( 'administration', 'install', 'users', $usertype, 'modules', 'all' );
 			$editAllModules 	= $acl->acl_check( 'administration', 'edit', 'users', $usertype, 'modules', 'all' );
@@ -327,7 +327,7 @@ if (!defined( '_JOS_FULLMENU_MODULE' )) {
 			$editAllComponents 	= $acl->acl_check( 'administration', 'edit', 'users', $usertype, 'components', 'all' );
 			$canMassMail 		= $acl->acl_check( 'administration', 'manage', 'users', $usertype, 'components', 'com_massmail' );
 			$canManageUsers 	= $acl->acl_check( 'administration', 'manage', 'users', $usertype, 'components', 'com_users' );
-	
+
 			$text = 'Menu inactive for this Page';
 			?>
 			<div id="myMenuID" class="inactive"></div>
@@ -386,8 +386,8 @@ if (!defined( '_JOS_FULLMENU_MODULE' )) {
 					<?php
 				} // if ( $installMambots | $editAllMambots)
 				?>
-	
-	
+
+
 				<?php
 		/* Installer Sub-Menu */
 				if ( $installModules) {
@@ -410,7 +410,7 @@ if (!defined( '_JOS_FULLMENU_MODULE' )) {
 					<?php
 				}
 				?>
-	
+
 				<?php
 		/* System Sub-Menu */
 				if ( $canConfig) {

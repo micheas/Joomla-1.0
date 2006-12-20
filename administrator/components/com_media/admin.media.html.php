@@ -57,12 +57,12 @@ class HTML_Media {
 						</tr>
 						<tr>
 							<td align="right" style="padding-right:10px;;white-space:nowrap">
-								Image/Url Code
+								Image/URL Code
 							</td>
 							<td>
 								<input class="inputbox" type="text" name="imagecode" style="width:400px" />
 							</td>
-						</tr>						
+						</tr>
 						</table>
 					</td>
 				</tr>
@@ -91,7 +91,7 @@ class HTML_Media {
 									File Upload <small>[ Max = <?php echo ini_get( 'post_max_size' );?> ]</small>
 									&nbsp;&nbsp;&nbsp;&nbsp;
 									<input class="inputbox" type="file" name="upload" id="upload" size="63" />&nbsp;
-								</td>							
+								</td>
 							</tr>
 							</table>
 						</td>
@@ -202,7 +202,7 @@ class HTML_Media {
 		} else {
 			$img_dimensions = 'width="'. $info[0] .'" height="'. $info[1] .'"';
 		}
-		
+
 		$overlib = '<table>';
 		$overlib .= '<tr>';
 		$overlib .= '<td>';
@@ -250,7 +250,7 @@ class HTML_Media {
 						<img src="components/com_media/images/edit_trash.gif" width="15" height="15" border="0" alt="Delete" /></a>
 					<a href="#" onclick="javascript:window.top.document.forms[0].imagecode.value = '<img src=&quot;<?php echo $img_url_link;?>&quot; align=&quot;left&quot; hspace=&quot;6&quot; alt=&quot;Image&quot; />';" title="Image Code">
 						<img src="components/com_media/images/edit_pencil.gif" width="15" height="15" border="0" alt="Code" /></a>
-				</div>					
+				</div>
 			</div>
 		</div>
 		<?php
@@ -258,7 +258,7 @@ class HTML_Media {
 
 	function show_dir( $path, $dir, $listdir ) {
 		$count = HTML_Media::num_files( COM_MEDIA_BASE . $listdir . $path );
-		
+
 		$num_files 	= $count[0];
 		$num_dir 	= $count[1];
 
@@ -267,7 +267,7 @@ class HTML_Media {
 		}
 
 		$link = 'index3.php?option=com_media&amp;task=list&amp;listdir='. $listdir . $path;
-		
+
 		$overlib = '<table>';
 		$overlib .= '<tr>';
 		$overlib .= '<td>';
@@ -313,7 +313,7 @@ class HTML_Media {
 		$doc_url_link 	= COM_MEDIA_BASEURL . $listdir  .'/'. rawurlencode( $doc );
 
 		$overlib = 'Filesize: '. $size;
-		$overlib .= '<br/><br/> *Click for Url*';
+		$overlib .= '<br/><br/> *Click for URL*';
 		?>
 		<div style="float:left; padding: 5px">
 			<div class="imgTotal" onmouseover="return overlib( '<?php echo $overlib; ?>', CAPTION, '<?php echo $doc; ?>', BELOW, RIGHT, WIDTH, 200 );" onmouseout="return nd();">
@@ -373,7 +373,7 @@ class HTML_Media {
 
 		if(is_dir($dir)) {
 			$d = dir($dir);
-			
+
 			while ( false !== ($entry = $d->read()) ) {
 				if ( substr($entry,0,1) != '.' && is_file($dir . DIRECTORY_SEPARATOR . $entry) && strpos( $entry, '.html' ) === false && strpos( $entry, '.php' ) === false ) {
 					$total_file++;
@@ -382,10 +382,10 @@ class HTML_Media {
 					$total_dir++;
 				}
 			}
-			
+
 			$d->close();
 		}
-		
+
 		return array( $total_file, $total_dir );
 	}
 

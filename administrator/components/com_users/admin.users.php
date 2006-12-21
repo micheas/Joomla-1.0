@@ -259,7 +259,7 @@ function editUser( $uid='0', $option='users' ) {
 		}
 
 		$lists['gid'] 		= mosHTML::selectList( $gtree, 'gid', 'size="10"', 'value', 'text', $row->gid );
-	}
+	} 
 
 	// build the html select list
 	$lists['block'] 		= mosHTML::yesnoRadioList( 'block', 'class="inputbox" size="1"', $row->block );
@@ -372,7 +372,7 @@ function saveUser( $task ) {
 		exit();
 	}
 		
-	// save usertype to usetype column
+	// save usertype to usertype column
 	$query = "SELECT name"
 	. "\n FROM #__core_acl_aro_groups"
 	. "\n WHERE group_id = " . (int) $row->gid

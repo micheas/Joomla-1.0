@@ -39,7 +39,14 @@ code fixes.
 
 
 ----------------------------------------------------------------------------------------
----------------- 1.0.12 In Development -- [**-***-**** **:** UTC] ------------------
+--------------- 1.0.12 Stable Released -- [25-December-2006 00:00 UTC] -----------------
+
+24-Dec-2006 Rob Schley
+ # Fixed two hard coded alt tags
+ + Added new language constant _BANNER_ALT
+ ^ Preparations for Stable packaging
+ # Removed local help screen content and replaced it with links to the online versions
+
 
 19-Dec-2006 Rob Schley
  + Added 119 help screen files.
@@ -70,7 +77,7 @@ code fixes.
 13-Dec-2006 Enno Klasing
  + Added security warning message to the installer component
  # Fixed [artf6522] : Quotes in User Name breaks checkedOut overlib
- # SECURITY A1 [ Medium Level ] : Removed unneeded legacy functions
+ * SECURITY A1 [ Medium Level ] : Removed unneeded legacy functions
 
 
 12-Dec-2006 Enno Klasing

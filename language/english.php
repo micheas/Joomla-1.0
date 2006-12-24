@@ -519,6 +519,9 @@ DEFINE('_MEMBERS_COUNT','%s members');
 DEFINE('_ONLINE',' online');
 DEFINE('_NONE','No Users Online');
 
+/** modules/mod_banners */
+DEFINE('_BANNER_ALT','Advertisement');
+
 /** modules/mod_random_image */
 DEFINE('_NO_IMAGES','No Images');
 

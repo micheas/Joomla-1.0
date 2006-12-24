@@ -24,7 +24,7 @@ class joomlaVersion {
 	/** @var int Main Release Level */
 	var $RELEASE 	= '1.0';
 	/** @var string Development Status */
-	var $DEV_STATUS = 'RC 2';
+	var $DEV_STATUS = 'Stable';
 	/** @var int Sub Release Level */
 	var $DEV_LEVEL 	= '12';
 	/** @var int build Number */
@@ -32,9 +32,9 @@ class joomlaVersion {
 	/** @var string Codename */
 	var $CODENAME 	= 'Sunfire';
 	/** @var string Date */
-	var $RELDATE 	= '20 December 2006';
+	var $RELDATE 	= '25 December 2006';
 	/** @var string Time */
-	var $RELTIME 	= '20:00';
+	var $RELTIME 	= '00:00';
 	/** @var string Timezone */
 	var $RELTZ 		= 'UTC';
 	/** @var string Copyright Text */

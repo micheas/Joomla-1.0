@@ -249,7 +249,7 @@ class HTML_contact {
 	function viewcontact( &$contact, &$params, $count, &$list, &$menu_params ) {
 		global $mosConfig_live_site;
 		global $mainframe, $Itemid;
-		
+
 		$template 		= $mainframe->getTemplate();
 		$sitename 		= $mainframe->getCfg( 'sitename' );
 		$hide_js 		= intval( mosGetParam($_REQUEST,'hide_js', 0 ) );
@@ -260,7 +260,7 @@ class HTML_contact {
 			if ( ( document.emailForm.text.value == "" ) || ( document.emailForm.email.value.search("@") == -1 ) || ( document.emailForm.email.value.search("[.*]" ) == -1 ) ) {
 				alert( "<?php echo addslashes( _CONTACT_FORM_NC ); ?>" );
 			} else if ( ( document.emailForm.email.value.search(";") != -1 ) || ( document.emailForm.email.value.search(",") != -1 ) || ( document.emailForm.email.value.search(" ") != -1 ) ) {
-				alert( "<?php echo addslashes( _CONTACT_ONE_EMAIL ); ?>" );			
+				alert( "<?php echo addslashes( _CONTACT_ONE_EMAIL ); ?>" );
 			} else {
 				document.emailForm.action = "<?php echo sefRelToAbs("index.php?option=com_contact&Itemid=$Itemid"); ?>"
 				document.emailForm.submit();
@@ -398,7 +398,7 @@ class HTML_contact {
 	*/
 	function _writeContactName( &$contact, &$params, &$menu_params ) {
 		global $Itemid, $hide_js, $mosConfig_live_site;
-		
+
 		if ( $contact->name ||  $contact->con_position ) {
 			if ( $contact->name && $params->get( 'name' ) ) {
 				?>
@@ -442,11 +442,11 @@ class HTML_contact {
 	*/
 	function _writeImage( &$contact, &$params ) {
 		global $mosConfig_live_site;
-		
+
 		if ( $contact->image && $params->get( 'image' ) ) {
 			?>
 			<div style="float: right;">
-			<img src="<?php echo $mosConfig_live_site;?>/images/stories/<?php echo $contact->image; ?>" align="middle" alt="Contact" />
+			<img src="<?php echo $mosConfig_live_site;?>/images/stories/<?php echo $contact->image; ?>" align="middle" alt="<?php echo _CONTACT_TITLE; ?>" />
 			</div>
 			<?php
 		}
@@ -646,7 +646,7 @@ class HTML_contact {
 	*/
 	function _writeEmailForm( &$contact, &$params, $sitename, &$menu_params ) {
 		global $Itemid;
-		
+
 		if ( $contact->email_to && !$params->get( 'popup' ) && $params->get( 'email_form' ) ) {
 			// used for spoof hardening
 			$validate = josSpoofValue();

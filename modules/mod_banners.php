@@ -84,6 +84,7 @@ if ($numrows){
 		} else if (eregi( "(\.bmp|\.gif|\.jpg|\.jpeg|\.png)$", $banner->imageurl )) {
 			$imageurl 	= $mosConfig_live_site .'/images/banners/'. $banner->imageurl;
 			$link		= sefRelToAbs( 'index.php?option=com_banners&amp;task=click&amp;bid='. $banner->bid );
+			if( !defined('_BANNER_ALT') ) DEFINE('_BANNER_ALT','Advertisement');
 			echo '<a href="'. $link .'" target="_blank"><img src="'. $imageurl .'" border="0" alt="Advertisement" /></a>';
 
 		} else if (eregi("\.swf$", $banner->imageurl)) {

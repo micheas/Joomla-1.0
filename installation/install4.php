@@ -211,6 +211,7 @@ if ($siteUrl) {
 	$config .= "\$mosConfig_admin_expired = '1';\n";
 	$config .= "\$mosConfig_frontend_login = '1';\n";
 	$config .= "\$mosConfig_frontend_userparams = '1';\n";
+	$config .= "\$mosConfig_itemid_compat = '0';\n";
 	$config .= "setlocale (LC_TIME, \$mosConfig_locale);\n";
 	$config .= "?>";
 

@@ -38,6 +38,9 @@ code fixes.
 ! -> Note
 
 
+16-Apr-2007 Enno Klasing
+ # Re-enabled Itemid behaviour of 1.0.11 (optional, default is behaviour of 1.0.12)
+
 ----------------------------------------------------------------------------------------
 --------------- 1.0.12 Stable Released -- [25-December-2006 01:00 UTC] -----------------
 

@@ -395,6 +395,11 @@ class HTML_config {
 				<td><?php echo $lists['item_navigation']; ?></td>
 				<td>&nbsp;</td>
 			</tr>
+			<tr>
+				<td>Itemid Compatibility Mode:</td>
+				<td><?php echo $lists['itemid_compat']; ?></td>
+				<td>&nbsp;</td>
+			</tr>
 			</table>
 			<input type="hidden" name="config_multilingual_support" value="<?php echo $row->config_multilingual_support?>">
 			<?php

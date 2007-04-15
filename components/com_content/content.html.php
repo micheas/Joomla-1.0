@@ -379,6 +379,9 @@ class HTML_content {
 	function showLinks( &$rows, $links, $total, $i=0, $show=1, $ItemidCount=NULL ) {
 		global $mainframe, $Itemid;
 
+		// getItemid compatibility mode, holds maintenance version number
+		$compat = (int) $mainframe->getCfg('itemid_compat');
+
 		if ( $show ) {
 			?>
 			<div>
@@ -397,7 +400,11 @@ class HTML_content {
 				break;
 			}
 
-			$_Itemid = $Itemid;
+			if ($compat > 0 && $compat <= 11) {
+				$_Itemid = $mainframe->getItemid( $rows[$i]->id, 0, 0  );
+			} else {
+				$_Itemid = $Itemid;
+			}
 
 			if ( $_Itemid && $_Itemid != 99999999 ) {
 			// where Itemid value is returned, do not add Itemid to url
@@ -553,8 +560,17 @@ class HTML_content {
 	*/
 	function _Itemid( &$row ) {
 		global $task, $Itemid, $mainframe;
-		$row->_Itemid = $Itemid;
-		
+
+		// getItemid compatibility mode, holds maintenance version number
+		$compat = (int) $mainframe->getCfg('itemid_compat');
+
+		if ( ($compat > 0 && $compat <= 11) && $task != 'view' && $task != 'category' ) {
+			$row->_Itemid = $mainframe->getItemid( $row->id, 0, 0 );
+		} else {
+			// when viewing a content item, it is not necessary to calculate the Itemid
+			$row->_Itemid = $Itemid;
+		}
+
 		if ( $row->_Itemid && $row->_Itemid != 99999999 ) {
 			// where Itemid value is returned, do not add Itemid to url
 			$row->Itemid_link = '&amp;Itemid='. $row->_Itemid;

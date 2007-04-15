@@ -1512,6 +1512,10 @@ class mosMainFrame {
 	function getItemid( $id, $typed=1, $link=1, $bs=1, $bc=1, $gbs=1 ) {
 		global $Itemid;
 
+		// getItemid compatibility mode, holds maintenance version number
+		$compat = (int) $this->getCfg('itemid_compat');
+		$compat = ($compat == 0)? 12 : $compat;
+
 		$_Itemid = '';
 
 		if ($_Itemid == '' && $typed && $this->getStaticContentCount()) {
@@ -1636,6 +1640,33 @@ class mosMainFrame {
 			}
 		}
 
+		if ( $compat <= 11 && $_Itemid == '') {
+			$exists = 0;
+			foreach( $this->get( '_ContentBlogSection', array() ) as $key => $value ) {
+				// check if id has been tested before, if it is pull from class variable store
+				if ( $key == $id ) {
+					$_Itemid 	= $value;
+					$exists 	= 1;
+					break;
+				}
+			}
+			// if id hasnt been checked before initaite query
+			if ( !$exists ) {
+				if (!isset($content_blog_section)) {
+					$content_blog_section = null;
+				}
+				
+				// pull existing query storage into temp variable
+				$ContentBlogSection 		= $this->get( '_ContentBlogSection', array() );
+				// add query result to temp array storage
+				$ContentBlogSection[$id] 	= $content_blog_section;	
+				// save temp array to main array storage
+				$this->set( '_ContentBlogSection', $ContentBlogSection );
+				
+				$_Itemid = $ContentBlogSection[$id];
+			}
+		}
+
 		if ($_Itemid == '') {
 			$exists = 0;
 			foreach( $this->get( '_ContentBlogCategory', array() ) as $key => $value ) {
@@ -1682,7 +1713,7 @@ class mosMainFrame {
 			$_Itemid = $this->get( '_GlobalBlogSection' );
 		}
 
-		if ($_Itemid == '') {
+		if ($compat >= 12 && $_Itemid == '') {
 			$exists = 0;
 			foreach( $this->get( '_ContentBlogSection', array() ) as $key => $value ) {
 				// check if id has been tested before, if it is pull from class variable store
@@ -1759,7 +1790,10 @@ class mosMainFrame {
 		if ( $_Itemid != '' ) {
 		// if Itemid value discovered by queries, return this value
 			return $_Itemid;
-		} else if ( $Itemid != 99999999 && $Itemid > 0 ) {
+		} else if ( $compat >= 12 && $Itemid != 99999999 && $Itemid > 0 ) {
+		// if queries do not return Itemid value, return Itemid of page - if it is not 99999999
+			return $Itemid;
+		} else if ( $compat <= 11 && $Itemid === 0 ) {
 		// if queries do not return Itemid value, return Itemid of page - if it is not 99999999
 			return $Itemid;
 		}

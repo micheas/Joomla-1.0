@@ -97,5 +97,6 @@ $mosConfig_editor = 'tinymce';
 $mosConfig_admin_expired = '1';
 $mosConfig_frontend_login = '1';
 $mosConfig_frontend_userparams = '1';
+$mosConfig_itemid_compat = '0';
 setlocale (LC_ALL, $mosConfig_locale);			// Country locale
 ?>

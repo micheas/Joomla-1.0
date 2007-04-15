@@ -183,6 +183,8 @@ class mosConfig {
 	var $config_multilingual_support = 0;
 	/** @var int */
 	var $config_multipage_toc	= 0;
+	/** var int getItemid compatibility mode, 0 for latest version, or specific maintenance version number */
+	var $config_itemid_compat	= 0;
 
 	/**
 	 * @return array An array of the public vars in the class

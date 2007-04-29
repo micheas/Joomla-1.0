@@ -37,6 +37,12 @@ code fixes.
 - -> Removed
 ! -> Note
 
+28-Apr-2007 Rob Schley
+ # Fixed cookie naming conventions to not break when using HTTPS
+ # Optimzed queries for menu creation to improve performance.
+ * SECURITY A4 [ LOW Level ]: XSS issue in com_search and com_content
+ * SECURITY A4 [ LOW Level ]: XSS vulnerability in mod_login
+
 
 16-Apr-2007 Enno Klasing
  # Re-enabled Itemid behaviour of 1.0.11 (optional, default is behaviour of 1.0.12)

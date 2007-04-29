@@ -60,6 +60,7 @@ switch ( $task ) {
 
 	case 'category':
 		$selected 	= strval( mosGetParam( $_REQUEST, 'order', '' ) );
+		$selected	= preg_replace( '/[^a-z]/i', '', $selected );
 		$filter 	= stripslashes( strval( mosGetParam( $_REQUEST, 'filter', '' ) ) );
 
 		$cache->call( 'showCategory', $id, $gid, $access, $sectionid, $limit, NULL, $limitstart, 0, $selected, $filter );

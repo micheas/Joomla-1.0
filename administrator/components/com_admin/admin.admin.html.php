@@ -332,9 +332,12 @@ class HTML_admin_misc {
 						$cf[$k] = '$mosConfig_password = \'xxxxxx\'';
 					} else if (eregi( 'mosConfig_db ', $v)) {
 						$cf[$k] = '$mosConfig_db = \'xxxxxx\'';
-					} else if (eregi( '<?php', $v)) {
-						$cf[$k] = '&lt;?php';
 					}
+				}
+				foreach ($cf as $k=>$v) {
+					$k = htmlspecialchars( $k );
+					$v = htmlspecialchars( $v );
+					$cf[$k]=$v;
 				}
 				echo implode( "<br />", $cf );
 				?>

@@ -32,10 +32,10 @@ function viewSearch() {
 	global $mosConfig_list_limit;
 
 	$restriction = 0;
-	
+
 	// try to find search component's Itemid
 	// Only search if we don't have a valid Itemid (e.g. from module)
-	if(!intval($Itemid) || intval($Itemid) == 99999999) {	 
+	if(!intval($Itemid) || intval($Itemid) == 99999999) {
 		$query = "SELECT id"
 			. "\n FROM #__menu"
 			. "\n WHERE type = 'components'"
@@ -44,11 +44,11 @@ function viewSearch() {
 			;
 		$database->setQuery( $query );
 		$_Itemid = $database->loadResult();
-	
+
 		if ($_Itemid != "") {
 			$Itemid = $_Itemid;
 		}
-	} 
+	}
 
 	$gid = $my->gid;
 
@@ -73,13 +73,13 @@ function viewSearch() {
 
 	$searchword = strval( mosGetParam( $_REQUEST, 'searchword', '' ) );
 	$searchword = trim( stripslashes( $searchword ) );
-	
+
 	// limit searchword to 20 characters
 	if ( strlen( $searchword ) > 20 ) {
 		$searchword 	= substr( $searchword, 0, 19 );
 		$restriction 	= 1;
 	}
-	
+
 	// searchword must contain a minimum of 3 characters
 	if ( $searchword && strlen( $searchword ) < 3 ) {
 		$searchword 	= '';
@@ -95,11 +95,13 @@ function viewSearch() {
 	$orders[] = mosHTML::makeOption( 'popular', _SEARCH_POPULAR );
 	$orders[] = mosHTML::makeOption( 'alpha', _SEARCH_ALPHABETICAL );
 	$orders[] = mosHTML::makeOption( 'category', _SEARCH_CATEGORY );
-	$ordering = strtolower( strval( mosGetParam( $_REQUEST, 'ordering', 'newest') ) );
+	$ordering = mosGetParam( $_REQUEST, 'ordering', 'newest');
+	$ordering = preg_replace( '/[^a-z]/', '', strtolower( $ordering ) );
 	$lists = array();
 	$lists['ordering'] = mosHTML::selectList( $orders, 'ordering', 'id="search_ordering" class="inputbox"', 'value', 'text', $ordering );
 
-	$searchphrase = strtolower( strval( mosGetParam( $_REQUEST, 'searchphrase', 'any' ) ) );
+	$searchphrase = mosGetParam( $_REQUEST, 'searchphrase', 'any' );
+	$searchphrase = preg_replace( '/[^a-z]/', '', strtolower( $searchphrase ) );
 	$searchphrases = array();
 
 	$phrase = new stdClass();
@@ -135,23 +137,21 @@ function viewSearch() {
 		// html output
 		search_html::message( _IGNOREKEYWORD, $params );
 	} else {
-		// html output		
-		
+		// html output
+
 		if ( $restriction ) {
 			// html output
 			search_html::message( _SEARCH_MESSAGE, $params );
 		}
-		
+
 		$searchword_clean = htmlspecialchars( $searchword );
-		
+
 		search_html::searchintro( $searchword_clean, $params );
 
 		mosLogSearch( $searchword );
-		$phrase 	= strval( mosGetParam( $_REQUEST, 'searchphrase', '' ) );
-		$ordering 	= strval( mosGetParam( $_REQUEST, 'ordering', '' ) );
 
 		$_MAMBOTS->loadBotGroup( 'search' );
-		$results 	= $_MAMBOTS->trigger( 'onSearch', array( $database->getEscaped( $searchword ), $phrase, $ordering ) );
+		$results 	= $_MAMBOTS->trigger( 'onSearch', array( $database->getEscaped( $searchword ), $searchphrase, $ordering ) );
 		$totalRows 	= 0;
 
 		$rows = array();
@@ -163,21 +163,21 @@ function viewSearch() {
 
 		for ($i=0; $i < $totalRows; $i++) {
 			$text = &$rows[$i]->text;
-			
-			if ($phrase == 'exact') {
+
+			if ($searchphrase == 'exact') {
 				$searchwords 	= array($searchword);
 				$needle 		= $searchword;
 			} else {
 				$searchwords 	= explode(' ', $searchword);
 				$needle 		= $searchwords[0];
 			}
-			
+
 			$text = mosPrepareSearchContent( $text, 200, $needle );
-	
+
 		  	foreach ($searchwords as $hlword) {
-				$text = preg_replace( '/' . preg_quote( $hlword, '/' ) . '/i', '<span class="highlight">\0</span>', $text ); 
+				$text = preg_replace( '/' . preg_quote( $hlword, '/' ) . '/i', '<span class="highlight">\0</span>', $text );
 			}
-			
+
 			if ( strpos( $rows[$i]->href, 'http' ) == false ) {
 				$url = parse_url( $rows[$i]->href );
 				parse_str( @$url['query'], $link );
@@ -186,11 +186,11 @@ function viewSearch() {
 				if ( isset($rows[$i]->type) && @$link['task'] == 'view' && isset($link['id']) && !isset($link['Itemid']) ) {
 					$itemid 	= '';
 					$_itemid = $mainframe->getItemid( $link['id'], 0 );
-					
+
 					if ($_itemid) {
-						$itemid = '&amp;Itemid='. $_itemid; 
+						$itemid = '&amp;Itemid='. $_itemid;
 					}
-					
+
 					$rows[$i]->href = $rows[$i]->href . $itemid;
 				}
 			}
@@ -198,13 +198,14 @@ function viewSearch() {
 
 		$mainframe->setPageTitle( _SEARCH_TITLE );
 
-		$total 		= $totalRows;
-		$limit		= intval( mosGetParam( $_GET, 'limit', $mosConfig_list_limit ) );
+		$total 	= $totalRows;
+		$limit	= intval( mosGetParam( $_GET, 'limit', $mosConfig_list_limit ) );
+		$limit	= ( $limit ? $limit : $mosConfig_list_limit );
 		$limitstart = intval( mosGetParam( $_GET, 'limitstart', 0 ) );
-		
+
 		// prepares searchword for proper display in url
 		$searchword_clean = urlencode( $searchword_clean );
-		
+
 		if ( $n ) {
 		// html output
 			require_once( $GLOBALS['mosConfig_absolute_path'] . '/includes/pageNavigation.php' );

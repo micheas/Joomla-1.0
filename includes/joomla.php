@@ -899,9 +899,17 @@ class mosMainFrame {
 	* Deperciated 1.1
 	*/
 	function sessionCookieName() {
-		global $mainframe;
+		global $mainframe, $mosConfig_live_site;
 
-		return md5( 'site' . $mainframe->getCfg( 'live_site' ) );
+		if( substr( $mosConfig_live_site, 0, 7 ) == 'http://' ) {
+			$hash = md5( 'site' . substr( $mosConfig_live_site, 7 ) );
+		} elseif( substr( $mosConfig_live_site, 0, 8 ) == 'https://' ) {
+			$hash = md5( 'site' . substr( $mosConfig_live_site, 8 ) );
+		} else {
+			$hash = md5( 'site' . $mainframe->getCfg( 'live_site' ) );
+		}
+
+		return $hash;
 	}
 
 	/*
@@ -1655,14 +1663,14 @@ class mosMainFrame {
 				if (!isset($content_blog_section)) {
 					$content_blog_section = null;
 				}
-				
+
 				// pull existing query storage into temp variable
 				$ContentBlogSection 		= $this->get( '_ContentBlogSection', array() );
 				// add query result to temp array storage
-				$ContentBlogSection[$id] 	= $content_blog_section;	
+				$ContentBlogSection[$id] 	= $content_blog_section;
 				// save temp array to main array storage
 				$this->set( '_ContentBlogSection', $ContentBlogSection );
-				
+
 				$_Itemid = $ContentBlogSection[$id];
 			}
 		}

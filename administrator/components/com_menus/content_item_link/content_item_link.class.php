@@ -91,38 +91,15 @@ class content_item_link_menu {
 			$contents = '';
 			$lists['content'] .= '<input type="hidden" name="content_item_link" value="'. $temp[1] .'" />';
 		} else {
-			$query = "SELECT a.id AS value, a.title AS text, a.sectionid, a.catid "
-			. "\n FROM #__content AS a"
-			. "\n INNER JOIN #__categories AS c ON a.catid = c.id"
-			. "\n INNER JOIN #__sections AS s ON a.sectionid = s.id"
-			. "\n WHERE a.state = 1"
-			. "\n ORDER BY a.sectionid, a.catid, a.title"
-			;
-			$database->setQuery( $query );
-			$contents = $database->loadObjectList( );
-
-			foreach ( $contents as $content ) {
-				$query = "SELECT s.title"
-				. "\n FROM #__sections AS s"
-				. "\n WHERE s.scope = 'content'"
-				. "\n AND s.id = " . (int) $content->sectionid
-				;
-				$database->setQuery( $query );
-				$section = $database->loadResult();
-
-				$query = "SELECT c.title"
-				. "\n FROM #__categories AS c"
-				. "\n WHERE c.id = " . (int) $content->catid
-				;
-				$database->setQuery( $query );
-				$category = $database->loadResult();
-
-				$value = $content->value;
-				$text = $section ." - ". $category ." / ". $content->text ."&nbsp;&nbsp;&nbsp;&nbsp;";
-
-				$temp[] = mosHTML::makeOption( $value, $text );
-				$contents = $temp;
-			}
+			$query	= "SELECT a.id AS value,"
+					. "\n CONCAT(s.title, ' - ',c.title,' / ',a.title, '&nbsp;&nbsp;&nbsp;&nbsp;') AS text"
+					. "\n FROM #__content AS a"
+					. "\n INNER JOIN #__categories AS c ON a.catid = c.id"
+					. "\n INNER JOIN #__sections AS s ON a.sectionid = s.id AND s.scope = 'content'"
+					. "\n WHERE a.state = 1"
+					. "\n ORDER BY a.sectionid, a.catid, a.title";
+			$database->setQuery($query);
+			$contents = $database->loadObjectList();
 
 			//	Create a list of links
 			$lists['content'] = mosHTML::selectList( $contents, 'content_item_link', 'class="inputbox" size="10"', 'value', 'text', '' );

@@ -26,8 +26,6 @@ if ($query_string = mosGetParam( $_SERVER, 'QUERY_STRING', '' )) {
 } else {
 	$return = 'index.php';
 }
-// converts & to &amp; for xtml compliance
-$return 				= str_replace( '&', '&amp;', $return );
 
 $registration_enabled 	= $mainframe->getCfg( 'allowUserRegistration' );
 $message_login 			= $params->def( 'login_message', 	0 );
@@ -46,9 +44,9 @@ if ( $my->id ) {
 		$name = $my->name;
 	} else {
 		$name = $my->username;
-	}	
+	}
 	?>
-	<form action="<?php echo sefRelToAbs( 'index.php?option=logout' ); ?>" method="post" name="logout">	
+	<form action="<?php echo sefRelToAbs( 'index.php?option=logout' ); ?>" method="post" name="logout">
 	<?php
 	if ( $greeting ) {
 		echo _HI;
@@ -56,7 +54,7 @@ if ( $my->id ) {
 	}
 	?>
 	<br />
-	
+
 	<div align="center">
 		<input type="submit" name="Submit" class="button" value="<?php echo _BUTTON_LOGOUT; ?>" />
 	</div>
@@ -64,8 +62,8 @@ if ( $my->id ) {
 	<input type="hidden" name="option" value="logout" />
 	<input type="hidden" name="op2" value="logout" />
 	<input type="hidden" name="lang" value="<?php echo $mosConfig_lang; ?>" />
-	<input type="hidden" name="return" value="<?php echo sefRelToAbs( $logout ); ?>" />
-	<input type="hidden" name="message" value="<?php echo $message_logout; ?>" />
+	<input type="hidden" name="return" value="<?php echo htmlspecialchars( sefRelToAbs( $logout ) ); ?>" />
+	<input type="hidden" name="message" value="<?php echo htmlspecialchars( $message_logout ); ?>" />
 	</form>
 	<?php
 } else {
@@ -78,7 +76,7 @@ if ( $my->id ) {
 	<?php
 	echo $pretext;
 	?>
-	
+
 	<table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">
 	<tr>
 		<td>
@@ -129,8 +127,8 @@ if ( $my->id ) {
 	<input type="hidden" name="option" value="login" />
 	<input type="hidden" name="op2" value="login" />
 	<input type="hidden" name="lang" value="<?php echo $mosConfig_lang; ?>" />
-	<input type="hidden" name="return" value="<?php echo sefRelToAbs( $login ); ?>" />
-	<input type="hidden" name="message" value="<?php echo $message_login; ?>" />
+	<input type="hidden" name="return" value="<?php echo htmlspecialchars( sefRelToAbs( $login ) ); ?>" />
+	<input type="hidden" name="message" value="<?php echo htmlspecialchars( $message_login ); ?>" />
 	<input type="hidden" name="force_session" value="1" />
 	<input type="hidden" name="<?php echo $validate; ?>" value="1" />
 	</form>

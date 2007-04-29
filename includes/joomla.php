@@ -737,7 +737,7 @@ class mosMainFrame {
 	/*
 	* Function used to conduct admin session duties
 	* Added as of 1.0.8
-	* Deperciated 1.1
+	* Deprecated 1.1
 	*/
 	function initSessionAdmin($option, $task) {
 		global $_VERSION, $mosConfig_admin_expired;
@@ -881,7 +881,7 @@ class mosMainFrame {
 	* Function used to set Session Garbage Cleaning
 	* garbage cleaning set at configured session time + 600 seconds
 	* Added as of 1.0.8
-	* Deperciated 1.1
+	* Deprecated 1.1
 	*/
 	function setSessionGarbageClean() {
 		/** ensure that funciton is only called once */
@@ -896,7 +896,7 @@ class mosMainFrame {
 	/*
 	* Static Function used to generate the Session Cookie Name
 	* Added as of 1.0.8
-	* Deperciated 1.1
+	* Deprecated 1.1
 	*/
 	function sessionCookieName() {
 		global $mainframe, $mosConfig_live_site;
@@ -915,7 +915,7 @@ class mosMainFrame {
 	/*
 	* Static Function used to generate the Session Cookie Value
 	* Added as of 1.0.8
-	* Deperciated 1.1
+	* Deprecated 1.1
 	*/
 	function sessionCookieValue( $id=null ) {
 		global $mainframe;

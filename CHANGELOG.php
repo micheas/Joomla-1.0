@@ -37,9 +37,16 @@ code fixes.
 - -> Removed
 ! -> Note
 
+
+14-May-2007 Rob Schley
+ # Fixed [topic,153233] : "Mail to Friend" parameter checks not checking content item setings
+ # Fixed [topic,126371] : IE7 left align problem
+ # Fixed [topic,167745] : Added JavaScript alert for empty category title
+
+
 28-Apr-2007 Rob Schley
- # Fixed cookie naming conventions to not break when using HTTPS
- # Optimzed queries for menu creation to improve performance.
+ ^ Changed cookie naming conventions to not break when using HTTPS
+ # Fixed [topic,156116] : Optimzed queries for menu creation to improve performance.
  * SECURITY A4 [ LOW Level ]: XSS issue in com_search and com_content
  * SECURITY A4 [ LOW Level ]: XSS vulnerability in mod_login
 

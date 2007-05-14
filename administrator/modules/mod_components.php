@@ -77,15 +77,15 @@ foreach ($comps as $row) {
 								<td align="center" style="text-align: center; font-weight: bold;">
 									<a href="index2.php?option=com_admin&task=listcomponents">Full Component List</a>
 								</td>
-							</tr>		
-							</table>					
+							</tr>
+							</table>
 							</div>
 							<?php
 							$i = 1000;
 						} // if
 					} else {
 						?>
-						<table width="50%" class="adminlist" border="1">						
+						<table width="50%" class="adminlist" border="1" style="text-align: left">
 						<?php
 						if ($i < $topLevelLimit ) {
 							$i++;
@@ -147,12 +147,12 @@ foreach ($comps as $row) {
 							} // if
 						} // if
 						?>
-						</table>											
+						</table>
 						<?php
 					} // if else
 				} // if
 			} // if
-			
+
 			$z++;
 		} // foreach
 		?>

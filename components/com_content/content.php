@@ -2177,7 +2177,19 @@ function cancelContent( &$access ) {
 function emailContentForm( $uid, $gid ) {
 	global $database, $mosConfig_hideEmail;
 
-	if ($mosConfig_hideEmail) {
+	$id	= intval( mosGetParam( $_REQUEST, 'id', 0 ) );
+
+	if ( $id ) {
+		$query	= 'SELECT attribs FROM #__content WHERE `id`=' . $id;
+		$database->setQuery( $query );
+		$params = new mosParameters( $database->loadResult() );
+	} else {
+		$params = new mosParameters( '' );
+	}
+
+	$email = intval( $params->get( 'email', 0 ) );
+
+	if ($mosConfig_hideEmail && !$email ) {
 		echo _NOT_AUTH;
 		return;
 	}
@@ -2255,7 +2267,19 @@ function emailContentSend( $uid, $gid ) {
 	global $database, $mainframe;
 	global $mosConfig_live_site, $mosConfig_sitename, $mosConfig_hideEmail;
 
-	if ($mosConfig_hideEmail) {
+	$id	= intval( mosGetParam( $_REQUEST, 'id', 0 ) );
+
+	if ( $id ) {
+		$query	= 'SELECT attribs FROM #__content WHERE `id`=' . $id;
+		$database->setQuery( $query );
+		$params = new mosParameters( $database->loadResult() );
+	} else {
+		$params = new mosParameters( '' );
+	}
+
+	$paramEmail = intval( $params->get( 'email', 0 ) );
+
+	if ($mosConfig_hideEmail && !$paramEmail ) {
 		echo _NOT_AUTH;
 		return;
 	}

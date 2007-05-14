@@ -24,7 +24,7 @@ class joomlaVersion {
 	/** @var int Main Release Level */
 	var $RELEASE 	= '1.0';
 	/** @var string Development Status */
-	var $DEV_STATUS = 'Beta';
+	var $DEV_STATUS = 'RC';
 	/** @var int Sub Release Level */
 	var $DEV_LEVEL 	= '13';
 	/** @var int build Number */
@@ -32,13 +32,13 @@ class joomlaVersion {
 	/** @var string Codename */
 	var $CODENAME 	= 'Sunday';
 	/** @var string Date */
-	var $RELDATE 	= '28 April 2007';
+	var $RELDATE 	= '15 May 2007';
 	/** @var string Time */
-	var $RELTIME 	= '01:00';
+	var $RELTIME 	= '00:00';
 	/** @var string Timezone */
 	var $RELTZ 		= 'UTC';
 	/** @var string Copyright Text */
-	var $COPYRIGHT 	= "Copyright (C) 2005 - 2006 Open Source Matters. All rights reserved.";
+	var $COPYRIGHT 	= "Copyright (C) 2005 - 2007 Open Source Matters. All rights reserved.";
 	/** @var string URL */
 	var $URL 		= '<a href="http://www.joomla.org">Joomla!</a> is Free Software released under the GNU/GPL License.';
 	/** @var string Whether site is a production = 1 or demo site = 0: 1 is default */

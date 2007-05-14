@@ -278,6 +278,8 @@ class categories_html {
 
 			if ( form.name.value == "" ) {
 				alert("Category must have a name");
+			} else if (form.title.value ==""){
+				alert("Category must have a title");
 			} else {
 				<?php getEditorContents( 'editor1', 'description' ) ; ?>
 				submitform(pressbutton);

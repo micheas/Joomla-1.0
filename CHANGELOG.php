@@ -38,6 +38,10 @@ code fixes.
 ! -> Note
 
 
+15-May-2007 Rob Schley
+ # Fixed [topic,170296] : Typos in Search Mambot configurations
+
+
 14-May-2007 Rob Schley
  # Fixed [topic,153233] : "Mail to Friend" parameter checks not checking content item setings
  # Fixed [topic,126371] : IE7 left align problem

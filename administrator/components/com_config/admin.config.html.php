@@ -656,7 +656,33 @@ class HTML_config {
 					</fieldset>
 				</td>
 				<td>&nbsp;</td>
-			  </tr>
+			</tr>
+			<tr>
+				<?php
+				$rgmode = 0;
+				if( defined( 'RG_EMULATION' ) ) {
+					$rgmode = RG_EMULATION;
+				}
+				?>
+				<td valign="top">Register Globals Emulation:</td>
+				<td>
+					<fieldset><legend>Register Globals Emulation</legend>
+						<table cellpadding="1" cellspacing="1" border="0">
+							<tr>
+								<td><input type="radio" id="rgemulation" name="rgemulation" value="0"<?php if (!$rgmode) echo ' checked="checked"'; ?>/></td>
+								<td><label for="rgemulation">OFF - more secure and the preferred setting</label></td>
+							</tr>
+							<tr>
+								<td><input type="radio" id="rgemulation" name="rgemulation" value="1"<?php if ($rgmode) echo ' checked="checked"'; ?>/></td>
+								<td><label for="rgemulation">ON - better compatibility but less secure</label></td>
+							</tr>
+							</tr>
+						</table>
+					</fieldset>
+				</td>
+				<td>&nbsp;</td>
+			</tr>
+
 			</table>
 			<?php
 		$tabs->endTab();

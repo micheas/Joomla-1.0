@@ -38,6 +38,10 @@ code fixes.
 ! -> Note
 
 
+17-May-2007 Rob Schley
+ ^ Moved register globals emulation controls into Global Configuration
+
+
 15-May-2007 Rob Schley
  # Fixed [topic,170296] : Typos in Search Mambot configurations
 

@@ -141,6 +141,7 @@ if ($siteUrl) {
 	$configArray['dirPerms']=$dirPerms;
 
 	$config = "<?php\n";
+	$config .= "if(!defined('RG_EMULATION')) { define( 'RG_EMULATION', 0 ); }\n";
 	$config .= "\$mosConfig_offline = '0';\n";
 	$config .= "\$mosConfig_host = '{$configArray['DBhostname']}';\n";
 	$config .= "\$mosConfig_user = '{$configArray['DBuserName']}';\n";

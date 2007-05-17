@@ -175,9 +175,6 @@ function view() {
 				if ( ini_get('register_globals') == '1' ) {
 					$wrongSettingsTexts[] = 'PHP register_globals setting is `ON` instead of `OFF`';
 				}
-				if ( RG_EMULATION != 0 ) {
-					$wrongSettingsTexts[] = 'Joomla! RG_EMULATION setting is `ON` instead of `OFF` in file globals.php <br /><span style="font-weight: normal; font-style: italic; color: #666;">`ON` by default for compatibility reasons</span>';
-				}
 
 				if ( count($wrongSettingsTexts) ) {
 					?>
@@ -294,30 +291,6 @@ function view() {
 							<?php
 						}
 						?>
-						<tr>
-							<td class="item">
-								Register Globals Emulation:
-							</td>
-							<td class="toggle">
-								OFF:
-							</td>
-							<td>
-								<?php
-								if ( RG_EMULATION ) {
-									?>
-									<font color="red"><b>
-									<?php
-								} else {
-									?>
-									<font color="green"><b>
-									<?php
-								}
-								echo ((RG_EMULATION) ? 'ON' : 'OFF');
-								?>
-								</b>
-								</font>
-							<td>
-						</tr>
 						</table>
 					</div>
 				</div>

@@ -352,6 +352,11 @@ function saveconfig( $task ) {
 	$row->config_error_message		= str_replace( "'", '&#039;', $row->config_error_message );
 
 	$config = "<?php \n";
+
+	$RGEmulation = intval( mosGetParam( $_POST, 'rgemulation', 0 ) );
+	$config .= "if(!defined('RG_EMULATION')) { define( 'RG_EMULATION', $RGEmulation ); }\n";
+
+
 	$config .= $row->getVarText();
 	$config .= "setlocale (LC_TIME, \$mosConfig_locale);\n";
 	$config .= '?>';

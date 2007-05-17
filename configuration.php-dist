@@ -34,6 +34,7 @@ $mosConfig_dbprefix = 'jos_';	// Do not change unless you need to!
 * Site specific configuration
 * -------------------------------------------------------------------------
 */
+if(!defined('RG_EMULATION')) { define( 'RG_EMULATION', 0 ); }	// Off by default for security
 $mosConfig_lang = 'english';				// Site language
 $mosConfig_absolute_path = '/path/to/joomla/install';	// No trailing slash
 $mosConfig_live_site = 'http://your_joomla_site.com';	// No trailing slash

@@ -13,15 +13,20 @@
 defined( '_VALID_MOS' ) or die( 'Restricted access' );
 
 /**
- * Use 1 to emulate register_globals = on
- * WARNING: SETTING TO 1 MAY BE REQUIRED FOR BACKWARD COMPATIBILITY
- * OF SOME THIRD-PARTY COMPONENTS BUT IS NOT RECOMMENDED
- * 
- * Use 0 to emulate regsiter_globals = off
- * NOTE: THIS IS THE RECOMMENDED SETTING FOR YOUR SITE BUT YOU MAY
- * EXPERIENCE PROBLEMS WITH SOME THIRD-PARTY COMPONENTS
+ * Register Globals Emulation is no longer configured
+ * in this file.  It is not configured via Joomla!'s
+ * Global Configuration screen in the Administrator site.
  */
-define( 'RG_EMULATION', 1 );
+if( defined( 'RG_EMULATION' ) === false ) {
+	if( file_exists( dirname(__FILE__).'/configuration.php' ) ) {
+		require( dirname(__FILE__).'/configuration.php' );
+	}
+
+	if( defined( 'RG_EMULATION' ) === false ) {
+		// The configuration file is old so default to on
+		define( 'RG_EMULATION', 1 );
+	}
+}
 
 /**
  * Adds an array to the GLOBALS array and checks that the GLOBALS variable is
@@ -34,7 +39,7 @@ function checkInputArray( &$array, $globalise=false ) {
 
 	foreach ($array as $key => $value) {
 		$intval = intval( $key );
-		// PHP GLOBALS injection bug 
+		// PHP GLOBALS injection bug
 		$failed = in_array( strtolower( $key ), $banned );
 		// PHP Zend_Hash_Del_Key_Or_Index bug
 		$failed |= is_numeric( $key );
@@ -115,7 +120,11 @@ function registerGlobals() {
 
 if (RG_EMULATION == 0) {
 	// force register_globals = off
-	unregisterGlobals();	
+	unregisterGlobals();
+
+	if( file_exists( dirname(__FILE__).'/configuration.php' ) ) {
+		require( dirname(__FILE__).'/configuration.php' );
+	}
 } else if (ini_get('register_globals') == 0) {
 	// php.ini has register_globals = off and emulate = on
 	registerGlobals();
@@ -133,4 +142,5 @@ if (RG_EMULATION == 0) {
 		checkInputArray( $_SESSION );
 	}
 }
+
 ?>

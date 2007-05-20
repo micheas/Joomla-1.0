@@ -38,7 +38,7 @@ class TOOLBAR_users {
 			mosMenuBar::cancel();
 		}
 		mosMenuBar::spacer();
-		mosMenuBar::help( 'screen.users.edit' );
+		mosMenuBar::help( 'screen.users' );
 		mosMenuBar::endTable();
 	}
 

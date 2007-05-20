@@ -38,6 +38,11 @@ code fixes.
 ! -> Note
 
 
+20-May-2007
+ # Fixed key reference lookups to match whole results only
+ # Fixed two help screen naming issues.
+
+
 17-May-2007 Rob Schley
  ^ Moved register globals emulation controls into Global Configuration
 

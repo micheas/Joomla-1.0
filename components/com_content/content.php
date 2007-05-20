@@ -139,7 +139,7 @@ function findKeyItem( $gid, $access, $pop, $option, $now ) {
 
 	$query = "SELECT id"
 	. "\n FROM #__content"
-	. "\n WHERE attribs LIKE '%keyref=" . $database->getEscaped( $keyref ) . "%'"
+	. "\n WHERE attribs LIKE '%keyref=" . $database->getEscaped( $keyref ) . "\n%'"
 	;
 	$database->setQuery( $query );
 	$id = $database->loadResult();

@@ -52,7 +52,7 @@ if (isset( $_POST['submit'] )) {
 		echo "<script>alert('Please enter a password'); document.location.href='index.php?mosmsg=Please enter a password'</script>\n";
 		exit();
 	} else {
-		$pass = md5( $pass );
+		$pass = trim( $pass );
 	}
 
 	$query = "SELECT COUNT(*)"
@@ -75,7 +75,6 @@ if (isset( $_POST['submit'] )) {
 	. "\n FROM #__users AS u"
 	. "\n LEFT JOIN #__messages_cfg AS m ON u.id = m.user_id AND m.cfg_name = 'auto_purge'"
 	. "\n WHERE u.username = " . $database->Quote( $usrname )
-	. "\n AND u.password = " . $database->Quote( $pass )
 	. "\n AND u.block = 0"
 	;
 	$database->setQuery( $query );
@@ -87,7 +86,27 @@ if (isset( $_POST['submit'] )) {
 		$my->gid 		= $grp->group_id;
 		$my->usertype 	= $grp->name;
 
-		if ( strcmp( $my->password, $pass ) || !$acl->acl_check( 'administration', 'login', 'users', $my->usertype ) ) {
+		// Conversion to new type
+		if ((strpos($my->password, ':') === false) && $my->password == md5($pass)) {
+			// Old password hash storage but authentic ... lets convert it
+			$salt = mosMakePassword(16);
+			$crypt = md5($pass.$salt);
+			$row->password = $crypt.':'.$salt;
+
+			// Now lets store it in the database
+			$query = 'UPDATE #__users ' .
+					'SET password = '.$database->Quote($my->password) .
+					'WHERE id = '.(int)$row->id;
+			$database->setQuery($query);
+			if (!$database->query()) {
+				// This is an error but not sure what to do with it ... we'll still work for now
+			}
+		}
+
+		list($hash, $salt) = explode(':', $my->password);
+		$cryptpass = md5($pass.$salt);
+
+		if ( strcmp( $hash, $cryptpass ) || !$acl->acl_check( 'administration', 'login', 'users', $my->usertype ) ) {
 			mosErrorAlert("Incorrect Username, Password, or Access Level.  Please try again", "document.location.href='index.php'");
 		}
 
@@ -97,7 +116,7 @@ if (isset( $_POST['submit'] )) {
 		// construct Session ID
 		$logintime 	= time();
 		$session_id = md5( $my->id . $my->username . $my->usertype . $logintime );
-		
+
 		// add Session ID entry to DB
 		$query = "INSERT INTO #__session"
 		. "\n SET time = " . $database->Quote( $logintime ) . ", session_id = " . $database->Quote( $session_id ) . ", userid = " . (int) $my->id . ", usertype = " . $database->Quote( $my->usertype) . ", username = " . $database->Quote( $my->username )
@@ -105,9 +124,9 @@ if (isset( $_POST['submit'] )) {
 		$database->setQuery( $query );
 		if (!$database->query()) {
 			echo $database->stderr();
-		}		
+		}
 
-		// check if site designated as a production site 
+		// check if site designated as a production site
 		// for a demo site allow multiple logins with same user account
 		if ( $_VERSION->SITE == 1 ) {
 			// delete other open admin sessions for same account
@@ -123,9 +142,9 @@ if (isset( $_POST['submit'] )) {
 			$database->setQuery( $query );
 			if (!$database->query()) {
 				echo $database->stderr();
-			}	
+			}
 		}
-		
+
 		$_SESSION['session_id'] 			= $session_id;
 		$_SESSION['session_user_id'] 		= $my->id;
 		$_SESSION['session_username'] 		= $my->username;
@@ -136,27 +155,27 @@ if (isset( $_POST['submit'] )) {
 		$_SESSION['session_userstate'] 		= array();
 
 		session_write_close();
-		
+
 		$expired = 'index2.php';
-		
-		// check if site designated as a production site 
+
+		// check if site designated as a production site
 		// for a demo site disallow expired page functionality
 		if ( $_VERSION->SITE == 1 && @$mosConfig_admin_expired === '1' ) {
 			$file 	= $mainframe->getPath( 'com_xml', 'com_users' );
 			$params =& new mosParameters( $my->params, $file, 'component' );
-			
+
 			$now 	= time();
 
 			// expired page functionality handling
 			$expired 		= $params->def( 'expired', '' );
 			$expired_time 	= $params->def( 'expired_time', '' );
-	
-			// if now expired link set or expired time is more than half the admin session life set, simply load normal admin homepage 	
-			$checktime = ( $mosConfig_session_life_admin ? $mosConfig_session_life_admin : 1800 ) / 2;	
+
+			// if now expired link set or expired time is more than half the admin session life set, simply load normal admin homepage
+			$checktime = ( $mosConfig_session_life_admin ? $mosConfig_session_life_admin : 1800 ) / 2;
 			if (!$expired || ( ( $now - $expired_time ) > $checktime ) ) {
 				$expired = 'index2.php';
 			}
-			// link must also be a Joomla link to stop malicious redirection			
+			// link must also be a Joomla link to stop malicious redirection
 			if ( strpos( $expired, 'index2.php?option=com_' ) !== 0 ) {
 				$expired = 'index2.php';
 			}
@@ -164,7 +183,7 @@ if (isset( $_POST['submit'] )) {
 			// clear any existing expired page data
 			$params->set( 'expired', '' );
 			$params->set( 'expired_time', '' );
-	
+
 			// param handling
 			if (is_array( $params->toArray() )) {
 				$txt = array();
@@ -173,7 +192,7 @@ if (isset( $_POST['submit'] )) {
 				}
 				$saveparams = implode( "\n", $txt );
 			}
-	
+
 			// save cleared expired page info to user data
 			$query = "UPDATE #__users"
 			. "\n SET params = " . $database->Quote( $saveparams )
@@ -194,7 +213,7 @@ if (isset( $_POST['submit'] )) {
 		}
 		// calculation of past date
 		$past = date( 'Y-m-d H:i:s', time() - $purge * 60 * 60 * 24 );
-		
+
 		// if purge value is not 0, then allow purging of old messages
 		if ($purge != 0) {
 		// purge old messages at day set in message configuration
@@ -205,9 +224,9 @@ if (isset( $_POST['submit'] )) {
 			$database->setQuery( $query );
 			if (!$database->query()) {
 				echo $database->stderr();
-			}	
-		}		
-		
+			}
+		}
+
 		/** cannot using mosredirect as this stuffs up the cookie in IIS */
 		// redirects page to admin homepage by default or expired page
 		echo "<script>document.location.href='$expired';</script>\n";

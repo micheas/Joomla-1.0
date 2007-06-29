@@ -223,7 +223,9 @@ if ($siteUrl) {
 		$canWrite = false;
 	} // if
 
-	$cryptpass=md5( $adminPassword );
+	$salt = mosMakePassword(16);
+	$crypt = md5($adminPassword.$salt);
+	$cryptpass = $crypt.':'.$salt;
 
 	$database = new database( $DBhostname, $DBuserName, $DBpassword, $DBname, $DBPrefix );
 	$nullDate = $database->getNullDate();

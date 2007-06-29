@@ -76,7 +76,7 @@ function userEdit( $option, $uid, $submitvalue) {
 	$row = new mosUser( $database );
 	$row->load( (int)$uid );
 	$row->orig_password = $row->password;
-	
+
 	$row->name = trim( $row->name );
 	$row->email = trim( $row->email );
 	$row->username = trim( $row->username );
@@ -115,12 +115,15 @@ function userSave( $option, $uid) {
 	$row->name = trim($row->name);
 	$row->email = trim($row->email);
 	$row->username = trim($row->username);
-	
+
 	mosMakeHtmlSafe($row);
 
 	if (isset($_POST['password']) && $_POST['password'] != '') {
 		if (isset($_POST['verifyPass']) && ($_POST['verifyPass'] == $_POST['password'])) {
-			$row->password = md5(trim($row->password));
+			$row->password = trim($row->password);
+			$salt = mosMakePassword(16);
+			$crypt = md5($row->password.$salt);
+			$row->password = $crypt.':'.$salt;
 		} else {
 			echo "<script> alert(\"".addslashes( _PASS_MATCH )."\"); window.history.go(-1); </script>\n";
 			exit();

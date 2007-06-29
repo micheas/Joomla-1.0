@@ -85,7 +85,10 @@ function sendNewPass( $option ) {
 
 	mosMail($mosConfig_mailfrom, $mosConfig_fromname, $confirmEmail, $subject, $message);
 
-	$newpass = md5( $newpass );
+	$salt = mosMakePassword(16);
+	$crypt = md5($newpass.$salt);
+	$newpass = $crypt.':'.$salt;
+
 	$sql = "UPDATE #__users"
 	. "\n SET password = " . $database->Quote( $newpass )
 	. "\n WHERE id = " . (int) $user_id
@@ -152,7 +155,11 @@ function saveRegistration() {
 	}
 
 	$pwd 				= $row->password;
-	$row->password 		= md5( $row->password );
+
+	$salt				= mosMakePassword(16);
+	$crypt				= md5($row->password.$salt);
+	$row->password		= $crypt.':'.$salt;
+
 	$row->registerDate 	= date( 'Y-m-d H:i:s' );
 
 	if (!$row->store()) {

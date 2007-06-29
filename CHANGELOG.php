@@ -38,6 +38,11 @@ code fixes.
 ! -> Note
 
 
+29-May-2007 Louis Landry
+ ^ Hardened password storage mechanism to use a random salt
+ ! Remember Me cookie's will be invalid and require a re-login
+
+
 20-May-2007
  # Fixed key reference lookups to match whole results only
  # Fixed two help screen naming issues.

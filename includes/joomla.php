@@ -1003,12 +1003,12 @@ class mosMainFrame {
 		global $acl, $_VERSION;
 
 		$bypost = 0;
+		$valid_remember = false;
 
 		// if no username and password passed from function, then function is being called from login module/component
 		if (!$username || !$passwd) {
 			$username 	= stripslashes( strval( mosGetParam( $_POST, 'username', '' ) ) );
 			$passwd 	= stripslashes( strval( mosGetParam( $_POST, 'passwd', '' ) ) );
-			$passwd 	= md5( $passwd );
 
 			$bypost 	= 1;
 
@@ -1026,7 +1026,7 @@ class mosMainFrame {
 			mosErrorAlert( _LOGIN_INCOMPLETE );
 			exit();
 		} else {
-			if ( $remember && strlen($username) == 32 && strlen($passwd) == 32 && $userid ) {
+			if ( $remember && strlen($username) == 32 && $userid ) {
 			// query used for remember me cookie
 				$harden = mosHash( @$_SERVER['HTTP_USER_AGENT'] );
 
@@ -1037,19 +1037,23 @@ class mosMainFrame {
 				$this->_db->setQuery( $query );
 				$this->_db->loadObject($user);
 
+				list($hash, $salt) = explode(':', $user->password);
+
 				$check_username = md5( $user->username . $harden );
-				$check_password = md5( $user->password . $harden );
+				$check_password = md5( $hash . $harden );
 
 				if ( $check_username == $username && $check_password == $passwd ) {
 					$row = $user;
+					$valid_remember = true;
 				}
 			} else {
 			// query used for login via login module
 				$query = "SELECT id, name, username, password, usertype, block, gid"
 				. "\n FROM #__users"
 				. "\n WHERE username = ". $this->_db->Quote( $username )
-				. "\n AND password = ". $this->_db->Quote( $passwd )
 				;
+
+
 				$this->_db->setQuery( $query );
 				$this->_db->loadObject( $row );
 			}
@@ -1058,6 +1062,37 @@ class mosMainFrame {
 				// user blocked from login
 				if ($row->block == 1) {
 					mosErrorAlert(_LOGIN_BLOCKED);
+				}
+
+				if (!$valid_remember) {
+					// Conversion to new type
+					if ((strpos($row->password, ':') === false) && $row->password == md5(trim($passwd))) {
+						// Old password hash storage but authentic ... lets convert it
+						$salt = mosMakePassword(16);
+						$crypt = md5(trim($passwd).$salt);
+						$row->password = $crypt.':'.$salt;
+
+						// Now lets store it in the database
+						$query = 'UPDATE #__users ' .
+								'SET password = '.$this->_db->Quote($row->password) .
+								'WHERE id = '.(int)$row->id;
+						$this->_db->setQuery($query);
+						if (!$this->_db->query()) {
+							// This is an error but not sure what to do with it ... we'll still work for now
+						}
+					}
+
+					list($hash, $salt) = explode(':', $row->password);
+					$cryptpass = md5(trim($passwd).$salt);
+					if ($hash != $cryptpass) {
+						if ( $bypost ) {
+							mosErrorAlert(_LOGIN_INCORRECT);
+						} else {
+							$this->logout();
+							mosRedirect('index.php');
+						}
+						exit();
+					}
 				}
 
 				// fudge the group stuff
@@ -1111,7 +1146,7 @@ class mosMainFrame {
 					// cookie lifetime of 365 days
 					$lifetime 		= time() + 365*24*60*60;
 					$remCookieName 	= mosMainFrame::remCookieName_User();
-					$remCookieValue = mosMainFrame::remCookieValue_User( $row->username ) . mosMainFrame::remCookieValue_Pass( $row->password ) . $row->id;
+					$remCookieValue = mosMainFrame::remCookieValue_User( $row->username ) . mosMainFrame::remCookieValue_Pass( $hash ) . $row->id;
 					setcookie( $remCookieName, $remCookieValue, $lifetime, '/' );
 				}
 				mosCache::cleanCache();

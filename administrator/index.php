@@ -91,12 +91,12 @@ if (isset( $_POST['submit'] )) {
 			// Old password hash storage but authentic ... lets convert it
 			$salt = mosMakePassword(16);
 			$crypt = md5($pass.$salt);
-			$row->password = $crypt.':'.$salt;
+			$my->password = $crypt.':'.$salt;
 
 			// Now lets store it in the database
 			$query = 'UPDATE #__users ' .
 					'SET password = '.$database->Quote($my->password) .
-					'WHERE id = '.(int)$row->id;
+					'WHERE id = '.(int)$my->id;
 			$database->setQuery($query);
 			if (!$database->query()) {
 				// This is an error but not sure what to do with it ... we'll still work for now

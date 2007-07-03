@@ -323,7 +323,7 @@ function josSecurityCheck($width='95%') {
 		$wrongSettingsTexts[] = 'PHP register_globals setting is `ON` instead of `OFF`';
 	}
 	if ( RG_EMULATION != 0 ) {
-		$wrongSettingsTexts[] = 'Joomla! RG_EMULATION setting is `ON` instead of `OFF` in file globals.php <br /><span style="font-weight: normal; font-style: italic; color: #666;">`ON` by default for compatibility reasons</span>';
+		$wrongSettingsTexts[] = 'Joomla! &quot;Register Globals Emulation&quot; setting is `ON`. &nbsp; To disable Register Globals Emulation, navigate to Site -> Global Configuration -> Server, select `OFF`, and save.<br /><span style="font-weight: normal; font-style: italic; color: #666;">Register Globals Emulation is `ON` by default for backward compatibility.</span>';
 	}
 
 	if ( count($wrongSettingsTexts) ) {

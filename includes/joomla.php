@@ -764,11 +764,11 @@ class mosMainFrame {
 		$my->gid 		= intval( mosGetParam( $_SESSION, 'session_gid', '' ) );
 		$my->params		= mosGetParam( $_SESSION, 'session_user_params', '' );
 
-		$session_id 	= mosGetParam( $_SESSION, 'session_id', '' );
+		$old_session_id	= mosGetParam( $_SESSION, 'session_id', '' );
 		$logintime 		= mosGetParam( $_SESSION, 'session_logintime', '' );
 
 		// check to see if session id corresponds with correct format
-		if ( $session_id == md5( $my->id . $my->username . $my->usertype . $logintime ) ) {
+		if (strlen($old_session_id) == 32) {
 			// if task action is to `save` or `apply` complete action before doing session checks.
 			if ($task != 'save' && $task != 'apply') {
 				// test for session_life_admin
@@ -789,11 +789,24 @@ class mosMainFrame {
 				$this->_db->setQuery( $query );
 				$this->_db->query();
 
+				// destroy the old session
+				$oldSession	= $_SESSION;
+				session_destroy();
+
+				// create a clean session
+				session_start();
+				session_regenerate_id();
+
+				// restore the old session state with a new id
+				$_SESSION				= $oldSession;
+				$_SESSION['session_id'] = session_id();
+
 				// update session timestamp
 				$current_time = time();
 				$query = "UPDATE #__session"
 				. "\n SET time = " . $this->_db->Quote( $current_time )
-				. "\n WHERE session_id = " . $this->_db->Quote( $session_id )
+				. "\n , session_id = " . $this->_db->Quote( session_id() )
+				. "\n WHERE session_id = " . $this->_db->Quote( $old_session_id )
 				;
 				$this->_db->setQuery( $query );
 				$this->_db->query();
@@ -804,7 +817,7 @@ class mosMainFrame {
 				// check against db record of session
 				$query = "SELECT COUNT( session_id )"
 				. "\n FROM #__session"
-				. "\n WHERE session_id = " . $this->_db->Quote( $session_id )
+				. "\n WHERE session_id = " . $this->_db->Quote( session_id() )
 				. "\n AND username = ". $this->_db->Quote( $my->username )
 				. "\n AND userid = ". intval( $my->id )
 				;
@@ -860,7 +873,7 @@ class mosMainFrame {
 					$_SESSION['task'] 	= $task;
 				}
 			}
-		} else if ($session_id == '') {
+		} else if ($old_session_id == '') {
 			// no session_id as user has not attempted to login, or session.auto_start is switched on
 			if (ini_get( 'session.auto_start' ) || !ini_get( 'session.use_cookies' )) {
 				echo "<script>document.location.href='index.php?mosmsg=You need to login. If PHP\'s session.auto_start setting is on or session.use_cookies setting is off, you may need to correct this before you will be able to login.'</script>\n";
@@ -2478,6 +2491,9 @@ class mosCategory extends mosDBTable {
 			return false;
 		}
 
+		$ignoreList = array('description');
+		$this->filter($ignoreList);
+
 		// check for existing name
 		$query = "SELECT id"
 		. "\n FROM #__categories "
@@ -2544,6 +2560,10 @@ class mosSection extends mosDBTable {
 			$this->_error = "Your Section must have a name.";
 			return false;
 		}
+
+		$ignoreList = array('description');
+		$this->filter($ignoreList);
+
 		// check for existing name
 		$query = "SELECT id"
 		. "\n FROM #__sections "
@@ -2742,6 +2762,10 @@ class mosMenu extends mosDBTable {
 	function check() {
 		$this->id = (int) $this->id;
 		$this->params = (string) trim( $this->params . ' ' );
+
+		$ignoreList = array( 'link' );
+		$this->filter( $ignoreList );
+
 		return true;
 	}
 }
@@ -3151,6 +3175,10 @@ function mosRedirect( $url, $msg='' ) {
 	if (!empty($msg)) {
 		$msg = $iFilter->process( $msg );
 	}
+
+	// Strip out any line breaks and throw away the rest
+	$url = preg_split("/[\r\n]/", $url);
+	$url = $url[0];
 
 	if ($iFilter->badAttributeValue( array( 'href', $url ))) {
 		$url = $GLOBALS['mosConfig_live_site'];

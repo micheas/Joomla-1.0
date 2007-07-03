@@ -38,14 +38,21 @@ code fixes.
 ! -> Note
 
 
-29-May-2007 Louis Landry
+02-Jul-2007 Rob Schley
+ * SECURITY A6 [LOW Level]: Fixed [#5630] HRS attack on variable "url"
+ * SECURITY A1 [LOW Level]: Fixed [#5654] Multiple fields subjected to cross-site scripting vulnerabilities
+ * SECURITY A7 [LOW Level]: Fixed possible session fixation vulnerability in administrator application
+
+
+29-Jun-2007 Louis Landry
  ^ Hardened password storage mechanism to use a random salt
- ! Remember Me cookie's will be invalid and require a re-login
+ ! Remember Me cookies will be invalid and require a re-login
 
 
-20-May-2007
+20-May-2007 Rob Schley
  # Fixed key reference lookups to match whole results only
  # Fixed two help screen naming issues.
+ ^ Changed RG_EMULATION warning message to refer to Global Configuration Setting
 
 
 17-May-2007 Rob Schley

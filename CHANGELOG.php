@@ -37,6 +37,9 @@ code fixes.
 - -> Removed
 ! -> Note
 
+04-Jul-2007 Rob Schley
+ # Fixed a bug in the administrator login system that prevented users from logging in
+
 
 02-Jul-2007 Rob Schley
  * SECURITY A6 [LOW Level]: Fixed [#5630] HRS attack on variable "url"

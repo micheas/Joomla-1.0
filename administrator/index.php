@@ -114,6 +114,7 @@ if (isset( $_POST['submit'] )) {
 		session_start();
 
 		// construct Session ID
+		$logintime	= time();
 		$session_id = session_id();
 
 		// add Session ID entry to DB

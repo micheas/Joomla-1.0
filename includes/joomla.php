@@ -768,7 +768,7 @@ class mosMainFrame {
 		$logintime 		= mosGetParam( $_SESSION, 'session_logintime', '' );
 
 		// check to see if session id corresponds with correct format
-		if (strlen($old_session_id) == 32) {
+		if (strlen($old_session_id)) {
 			// if task action is to `save` or `apply` complete action before doing session checks.
 			if ($task != 'save' && $task != 'apply') {
 				// test for session_life_admin

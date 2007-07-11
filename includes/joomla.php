@@ -2895,7 +2895,7 @@ class mosUser extends mosDBTable {
 			// single group handled at the moment
 			// trivial to expand to multiple groups
 			$groups = $acl->get_object_groups( $section_value, $this->$k, 'ARO' );
-			$acl->del_group_object( $groups[0], $section_value, $this->$k, 'ARO' );
+			if(isset($groups[0])) $acl->del_group_object( $groups[0], $section_value, $this->$k, 'ARO' );
 			$acl->add_group_object( $this->gid, $section_value, $this->$k, 'ARO' );
 
 			$object_id = $acl->get_object_id( $section_value, $this->$k, 'ARO' );

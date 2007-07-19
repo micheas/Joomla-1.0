@@ -764,11 +764,11 @@ class mosMainFrame {
 		$my->gid 		= intval( mosGetParam( $_SESSION, 'session_gid', '' ) );
 		$my->params		= mosGetParam( $_SESSION, 'session_user_params', '' );
 
-		$old_session_id	= mosGetParam( $_SESSION, 'session_id', '' );
+		$session_id		= mosGetParam( $_SESSION, 'session_id', '' );
 		$logintime 		= mosGetParam( $_SESSION, 'session_logintime', '' );
 
 		// check to see if session id corresponds with correct format
-		if (strlen($old_session_id)) {
+		if ($session_id == md5( $my->id . $my->username . $my->usertype . $logintime )) {
 			// if task action is to `save` or `apply` complete action before doing session checks.
 			if ($task != 'save' && $task != 'apply') {
 				// test for session_life_admin
@@ -794,19 +794,21 @@ class mosMainFrame {
 				session_destroy();
 
 				// create a clean session
+				$current_time	= time();
+				$new_session_id = md5( $my->id . $my->username . $my->usertype . $current_time );
+				session_id($new_session_id);
 				session_start();
-				session_regenerate_id();
 
 				// restore the old session state with a new id
-				$_SESSION				= $oldSession;
-				$_SESSION['session_id'] = session_id();
+				$_SESSION						= $oldSession;
+				$_SESSION['session_id'] 		= $new_session_id;
+				$_SESSION['session_logintime']	= $current_time;
 
 				// update session timestamp
-				$current_time = time();
 				$query = "UPDATE #__session"
 				. "\n SET time = " . $this->_db->Quote( $current_time )
-				. "\n , session_id = " . $this->_db->Quote( session_id() )
-				. "\n WHERE session_id = " . $this->_db->Quote( $old_session_id )
+				. "\n , session_id = " . $this->_db->Quote( $new_session_id )
+				. "\n WHERE session_id = " . $this->_db->Quote( $session_id )
 				;
 				$this->_db->setQuery( $query );
 				$this->_db->query();
@@ -817,7 +819,7 @@ class mosMainFrame {
 				// check against db record of session
 				$query = "SELECT COUNT( session_id )"
 				. "\n FROM #__session"
-				. "\n WHERE session_id = " . $this->_db->Quote( session_id() )
+				. "\n WHERE session_id = " . $this->_db->Quote( $new_session_id )
 				. "\n AND username = ". $this->_db->Quote( $my->username )
 				. "\n AND userid = ". intval( $my->id )
 				;
@@ -873,7 +875,7 @@ class mosMainFrame {
 					$_SESSION['task'] 	= $task;
 				}
 			}
-		} else if ($old_session_id == '') {
+		} else if ($session_id == '') {
 			// no session_id as user has not attempted to login, or session.auto_start is switched on
 			if (ini_get( 'session.auto_start' ) || !ini_get( 'session.use_cookies' )) {
 				echo "<script>document.location.href='index.php?mosmsg=You need to login. If PHP\'s session.auto_start setting is on or session.use_cookies setting is off, you may need to correct this before you will be able to login.'</script>\n";

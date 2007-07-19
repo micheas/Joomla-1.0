@@ -115,7 +115,8 @@ if (isset( $_POST['submit'] )) {
 
 		// construct Session ID
 		$logintime	= time();
-		$session_id = session_id();
+		$session_id = md5( $my->id . $my->username . $my->usertype . $logintime );
+
 
 		// add Session ID entry to DB
 		$query = "INSERT INTO #__session"

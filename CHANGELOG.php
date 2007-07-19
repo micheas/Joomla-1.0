@@ -37,8 +37,13 @@ code fixes.
 - -> Removed
 ! -> Note
 
+18-Jul-2007 Rob Schley
+ # Fixed admin session problems with immediate logout after login.
+
+
 11-Jul-2007 Sam Moffatt
  ^ Removed assumption that a group exists for a user (may not actually be true)
+
 
 04-Jul-2007 Rob Schley
  # Fixed a bug in the administrator login system that prevented users from logging in

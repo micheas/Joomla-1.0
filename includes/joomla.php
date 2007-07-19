@@ -1014,7 +1014,7 @@ class mosMainFrame {
 	* table. A successful validation updates the current session record with
 	* the users details.
 	*/
-	function login( $username=null,$passwd=null, $remember=0, $userid=NULL ) {
+	function login( $username=null, $passwd=null, $remember=0, $userid=NULL ) {
 		global $acl, $_VERSION;
 
 		$bypost = 0;
@@ -1068,7 +1068,6 @@ class mosMainFrame {
 				. "\n WHERE username = ". $this->_db->Quote( $username )
 				;
 
-
 				$this->_db->setQuery( $query );
 				$this->_db->loadObject( $row );
 			}
@@ -1081,16 +1080,16 @@ class mosMainFrame {
 
 				if (!$valid_remember) {
 					// Conversion to new type
-					if ((strpos($row->password, ':') === false) && $row->password == md5(trim($passwd))) {
+					if ((strpos($row->password, ':') === false) && $row->password == md5($passwd)) {
 						// Old password hash storage but authentic ... lets convert it
 						$salt = mosMakePassword(16);
-						$crypt = md5(trim($passwd).$salt);
+						$crypt = md5($passwd.$salt);
 						$row->password = $crypt.':'.$salt;
 
 						// Now lets store it in the database
-						$query = 'UPDATE #__users ' .
-								'SET password = '.$this->_db->Quote($row->password) .
-								'WHERE id = '.(int)$row->id;
+						$query	= 'UPDATE #__users'
+								. ' SET password = '.$this->_db->Quote($row->password)
+								. ' WHERE id = '.(int)$row->id;
 						$this->_db->setQuery($query);
 						if (!$this->_db->query()) {
 							// This is an error but not sure what to do with it ... we'll still work for now
@@ -1098,7 +1097,7 @@ class mosMainFrame {
 					}
 
 					list($hash, $salt) = explode(':', $row->password);
-					$cryptpass = md5(trim($passwd).$salt);
+					$cryptpass = md5($passwd.$salt);
 					if ($hash != $cryptpass) {
 						if ( $bypost ) {
 							mosErrorAlert(_LOGIN_INCORRECT);
@@ -6118,6 +6117,23 @@ function josSpoofValue($alt=NULL) {
 	$validate 	= 'j' . mosHash( $mainframe->getCfg( 'db' ) . $random );
 
 	return $validate;
+}
+
+/**
+ * A simple helper function to salt and hash a clear-text password.
+ *
+ * @since	1.0.13
+ * @param	string	$password	A plain-text password
+ * @return	string	An md5 hashed password with salt
+ */
+function josHashPassword($password)
+{
+	// Salt and hash the password
+	$salt	= mosMakePassword(16);
+	$crypt	= md5($password.$salt);
+	$hash	= $crypt.':'.$salt;
+
+	return $hash;
 }
 
 // ----- NO MORE CLASSES OR FUNCTIONS PASSED THIS POINT -----

@@ -44,15 +44,12 @@ $option = strtolower( strval( mosGetParam( $_REQUEST, 'option', NULL ) ) );
 $mainframe = new mosMainFrame( $database, $option, '..', true );
 
 if (isset( $_POST['submit'] )) {
-	/** escape and trim to minimise injection of malicious sql */
 	$usrname 	= stripslashes( mosGetParam( $_POST, 'usrname', NULL ) );
 	$pass 		= stripslashes( mosGetParam( $_POST, 'pass', NULL ) );
 
 	if($pass == NULL) {
 		echo "<script>alert('Please enter a password'); document.location.href='index.php?mosmsg=Please enter a password'</script>\n";
 		exit();
-	} else {
-		$pass = trim( $pass );
 	}
 
 	$query = "SELECT COUNT(*)"
@@ -233,7 +230,7 @@ if (isset( $_POST['submit'] )) {
 		echo "<script>document.location.href='$expired';</script>\n";
 		exit();
 	} else {
-		mosErrorAlert("Incorrect Username, Password.  Please try again", "document.location.href='index.php?mosmsg=Incorrect Username, Password. Please try again'");
+		mosErrorAlert("Incorrect Username, Password, or Access Level.  Please try again", "document.location.href='index.php?mosmsg=Incorrect Username, Password, or Access Level. Please try again'");
 	}
 } else {
 	initGzip();

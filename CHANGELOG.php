@@ -39,6 +39,7 @@ code fixes.
 
 18-Jul-2007 Rob Schley
  # Fixed admin session problems with immediate logout after login.
+ # Fixed a few misc. bugs.
 
 
 11-Jul-2007 Sam Moffatt

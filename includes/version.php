@@ -24,17 +24,17 @@ class joomlaVersion {
 	/** @var int Main Release Level */
 	var $RELEASE 	= '1.0';
 	/** @var string Development Status */
-	var $DEV_STATUS = 'RC 3';
+	var $DEV_STATUS = 'Stable';
 	/** @var int Sub Release Level */
 	var $DEV_LEVEL 	= '13';
 	/** @var int build Number */
 	var $BUILD	 	= '$Revision$';
 	/** @var string Codename */
-	var $CODENAME 	= 'Sunday';
+	var $CODENAME 	= 'Sunglow';
 	/** @var string Date */
-	var $RELDATE 	= '4 July 2007';
+	var $RELDATE 	= '21 July 2007';
 	/** @var string Time */
-	var $RELTIME 	= '00:00';
+	var $RELTIME 	= '16:00';
 	/** @var string Timezone */
 	var $RELTZ 		= 'UTC';
 	/** @var string Copyright Text */
@@ -46,7 +46,7 @@ class joomlaVersion {
 	/** @var string Whether site has restricted functionality mostly used for demo sites: 0 is default */
 	var $RESTRICT	= 0;
 	/** @var string Whether site is still in development phase (disables checks for /installation folder) - should be set to 0 for package release: 0 is default */
-	var $SVN		= 1;
+	var $SVN		= 0;
 
 
 	/**

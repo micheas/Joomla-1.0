@@ -37,6 +37,9 @@ code fixes.
 - -> Removed
 ! -> Note
 
+21-Jul-2007 Robin Muilwijk
+ ^ (version.php) preparation for release
+ 
 18-Jul-2007 Rob Schley
  # Fixed admin session problems with immediate logout after login.
  # Fixed a few misc. bugs.

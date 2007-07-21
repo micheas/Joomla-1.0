@@ -30,7 +30,7 @@ class joomlaVersion {
 	/** @var int build Number */
 	var $BUILD	 	= '$Revision$';
 	/** @var string Codename */
-	var $CODENAME 	= 'Wednesday';
+	var $CODENAME 	= 'Sunday';
 	/** @var string Date */
 	var $RELDATE 	= '4 July 2007';
 	/** @var string Time */

@@ -107,13 +107,13 @@ if (isset( $_POST['submit'] )) {
 			mosErrorAlert("Incorrect Username, Password, or Access Level.  Please try again", "document.location.href='index.php'");
 		}
 
-		session_name( md5( $mosConfig_live_site ) );
-		session_start();
-
 		// construct Session ID
 		$logintime	= time();
 		$session_id = md5( $my->id . $my->username . $my->usertype . $logintime );
 
+		session_name( md5( $mosConfig_live_site ) );
+		session_id( $session_id );
+		session_start();
 
 		// add Session ID entry to DB
 		$query = "INSERT INTO #__session"

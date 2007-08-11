@@ -37,9 +37,15 @@ code fixes.
 - -> Removed
 ! -> Note
 
+10-Aug-2007 Rob Schley
+ * SECURITY A4 [LOW Level]: XSS issue in com_search
+ # Fixed [topic,193707] Joomla! 1.0.13 Admin session dies for certain $task values
+
+
 21-Jul-2007 Robin Muilwijk
  ^ (version.php) preparation for release
- 
+
+
 18-Jul-2007 Rob Schley
  # Fixed admin session problems with immediate logout after login.
  # Fixed a few misc. bugs.

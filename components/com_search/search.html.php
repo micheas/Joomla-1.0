@@ -104,7 +104,8 @@ class search_html {
 		$c 			= count ($rows);
 		$image 		= mosAdminMenus::ImageCheck( 'google.png', '/images/M_images/', NULL, NULL, 'Google', 'Google', 1 );
 		$searchword = urldecode( $searchword );
-		
+		$searchword	= htmlspecialchars($searchword, ENT_QUOTES);
+
 				// number of matches found
 				echo '<br/>';
 				eval ('echo "'._CONCLUSION.'";');
@@ -115,16 +116,16 @@ class search_html {
 			</td>
 		</tr>
 		</table>
-		
+
 		<br />
-		
+
 		<div align="center">
 			<?php
 			echo $pageNav->writePagesCounter();
 
 			$ordering 		= strtolower( strval( mosGetParam( $_REQUEST, 'ordering', 'newest' ) ) );
 			$searchphrase 	= strtolower( strval( mosGetParam( $_REQUEST, 'searchphrase', 'any' ) ) );
-			
+
 			$searchphrase	= htmlspecialchars($searchphrase);
 
 			$link = $mosConfig_live_site ."/index.php?option=$option&amp;Itemid=$Itemid&amp;searchword=$searchword&amp;searchphrase=$searchphrase&amp;ordering=$ordering";
@@ -204,18 +205,18 @@ class search_html {
 				}
 				?>
 			</td>
-		</tr>	
+		</tr>
 		<?php
 	}
 
 	function conclusion( $searchword, $pageNav ) {
 		global $mosConfig_live_site, $option, $Itemid;
-		
+
 		$ordering 		= strtolower( strval( mosGetParam( $_REQUEST, 'ordering', 'newest' ) ) );
-		$searchphrase 	= strtolower( strval( mosGetParam( $_REQUEST, 'searchphrase', 'any' ) ) );	
-		
+		$searchphrase 	= strtolower( strval( mosGetParam( $_REQUEST, 'searchphrase', 'any' ) ) );
+
 		$searchphrase	= htmlspecialchars($searchphrase);
-		
+
 		$link 			= $mosConfig_live_site ."/index.php?option=$option&Itemid=$Itemid&searchword=$searchword&searchphrase=$searchphrase&ordering=$ordering";
 		?>
 		<tr>

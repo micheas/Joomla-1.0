@@ -767,6 +767,12 @@ class mosMainFrame {
 		$session_id		= mosGetParam( $_SESSION, 'session_id', '' );
 		$logintime 		= mosGetParam( $_SESSION, 'session_logintime', '' );
 
+		if ($session_id != session_id()) {
+			// session id does not correspond to required session format
+			echo "<script>document.location.href='index.php?mosmsg=Invalid Session'</script>\n";
+			exit();
+		}
+
 		// check to see if session id corresponds with correct format
 		if ($session_id == md5( $my->id . $my->username . $my->usertype . $logintime )) {
 			// if task action is to `save` or `apply` complete action before doing session checks.
@@ -789,25 +795,11 @@ class mosMainFrame {
 				$this->_db->setQuery( $query );
 				$this->_db->query();
 
-				// destroy the old session
-				$oldSession	= $_SESSION;
-				session_destroy();
-
-				// create a clean session
 				$current_time	= time();
-				$new_session_id = md5( $my->id . $my->username . $my->usertype . $current_time );
-				session_id($new_session_id);
-				session_start();
-
-				// restore the old session state with a new id
-				$_SESSION						= $oldSession;
-				$_SESSION['session_id'] 		= $new_session_id;
-				$_SESSION['session_logintime']	= $current_time;
 
 				// update session timestamp
 				$query = "UPDATE #__session"
 				. "\n SET time = " . $this->_db->Quote( $current_time )
-				. "\n , session_id = " . $this->_db->Quote( $new_session_id )
 				. "\n WHERE session_id = " . $this->_db->Quote( $session_id )
 				;
 				$this->_db->setQuery( $query );
@@ -819,7 +811,7 @@ class mosMainFrame {
 				// check against db record of session
 				$query = "SELECT COUNT( session_id )"
 				. "\n FROM #__session"
-				. "\n WHERE session_id = " . $this->_db->Quote( $new_session_id )
+				. "\n WHERE session_id = " . $this->_db->Quote( $session_id )
 				. "\n AND username = ". $this->_db->Quote( $my->username )
 				. "\n AND userid = ". intval( $my->id )
 				;

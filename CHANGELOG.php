@@ -41,6 +41,8 @@ code fixes.
  * SECURITY A4 [LOW Level]: XSS issue in com_search
  # Fixed [topic,193707] Joomla! 1.0.13 Admin session dies for certain $task values
 
+----------------------------------------------------------------------------------------
+--------------- 1.0.13 Stable Released -- [21-July-2007 16:00 UTC] ---------------------
 
 21-Jul-2007 Robin Muilwijk
  ^ (version.php) preparation for release

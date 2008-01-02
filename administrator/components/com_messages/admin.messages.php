@@ -233,6 +233,8 @@ function viewMessage( $uid='0', $option ) {
 function removeMessage( $cid, $option ) {
 	global $database;
 
+	josSpoofCheck();
+
 	if (!is_array( $cid ) || count( $cid ) < 1) {
 		echo "<script> alert('Select an item to delete'); window.history.go(-1);</script>\n";
 		exit;

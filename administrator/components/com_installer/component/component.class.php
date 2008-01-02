@@ -235,6 +235,8 @@ class mosInstallerComponent extends mosInstaller {
 	function uninstall( $cid, $option, $client=0 ) {
 		global $database,$mosConfig_absolute_path;
 
+		josSpoofCheck();
+
 		$uninstallret = '';
 
 		$sql = "SELECT *"

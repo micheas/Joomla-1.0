@@ -129,6 +129,8 @@ class mosInstallerModule extends mosInstaller {
 	function uninstall( $id, $option, $client=0 ) {
 		global $database, $mosConfig_absolute_path;
 
+		josSpoofCheck();
+
 		$id = intval( $id );
 
 		$query = "SELECT module, iscore, client_id"

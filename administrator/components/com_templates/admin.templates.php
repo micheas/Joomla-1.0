@@ -264,6 +264,8 @@ function defaultTemplate( $p_tname, $option, $client ) {
 function removeTemplate( $cid, $option, $client ) {
 	global $database;
 
+	josSpoofCheck();
+
 	$client_id = $client=='admin' ? 1 : 0;
 
 	$query = "SELECT template"

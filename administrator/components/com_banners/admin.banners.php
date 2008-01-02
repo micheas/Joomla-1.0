@@ -340,6 +340,9 @@ function saveBannerClient( $option ) {
 
 function cancelEditClient( $option ) {
 	global $database;
+
+	josSpoofCheck();
+
 	$row = new mosBannerClient( $database );
 	$row->bind( $_POST );
 	$row->checkin();

@@ -311,6 +311,8 @@ function showconfig( $option) {
 function saveconfig( $task ) {
 	global $database, $mosConfig_absolute_path, $mosConfig_password, $mosConfig_session_type;
 
+	josSpoofCheck();
+
 	$row = new mosConfig();
 	if (!$row->bind( $_POST )) {
 		mosRedirect( 'index2.php', $row->getError() );

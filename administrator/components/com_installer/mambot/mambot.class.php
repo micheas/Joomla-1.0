@@ -26,6 +26,9 @@ class mosInstallerMambot extends mosInstaller {
 	* @param boolean True if installing from directory
 	*/
 	function install( $p_fromdir = null ) {
+		
+		josSpoofCheck();
+	
 		global $mosConfig_absolute_path, $database;
 
 		if (!$this->preInstallCheck( $p_fromdir, 'mambot' )) {

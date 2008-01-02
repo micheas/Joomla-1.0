@@ -86,6 +86,8 @@ function editConfig( $option ) {
 
 function saveConfig( $option ) {
 	global $database, $my;
+	
+	josSpoofCheck();
 
 	$query = "DELETE FROM #__messages_cfg"
 	. "\n WHERE user_id = " . (int) $my->id
@@ -139,6 +141,8 @@ function newMessage( $option ) {
 
 function saveMessage( $option ) {
 	global $database, $mainframe, $my;
+	
+	josSpoofCheck();
 
 	$row = new mosMessage( $database );
 	if (!$row->bind( $_POST )) {

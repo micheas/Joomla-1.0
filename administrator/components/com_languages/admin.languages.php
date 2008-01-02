@@ -153,6 +153,8 @@ function viewLanguages( $option ) {
 */
 function publishLanguage( $p_lname, $option ) {
 	global $mosConfig_lang;
+	
+	josSpoofCheck();
 
 	$config = '';
 
@@ -182,6 +184,8 @@ function publishLanguage( $p_lname, $option ) {
 */
 function removeLanguage( $cid, $option, $client = 'admin' ) {
 	global $mosConfig_lang;
+	
+	josSpoofCheck();
 
 	$client_id = $client=='admin' ? 1 : 0;
 
@@ -218,6 +222,9 @@ function editLanguageSource( $p_lname, $option) {
 }
 
 function saveLanguageSource( $option ) {
+	
+	josSpoofCheck();
+	
 	$language 		= mosGetParam( $_POST, 'language', '' );
 	$filecontent 	= mosGetParam( $_POST, 'filecontent', '', _MOS_ALLOWHTML );
 

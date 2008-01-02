@@ -75,6 +75,7 @@ class HTML_syndicate {
 		<input type="hidden" name="option" value="<?php echo $option; ?>" />
 		<input type="hidden" name="task" value="" />
 		<input type="hidden" name="boxchecked" value="0" />
+		<input type="hidden" name="<?php echo josSpoofValue(); ?>" value="1" />
 		</form>
 		<script language="Javascript" src="<?php echo $mosConfig_live_site;?>/includes/js/overlib_mini.js"></script>
 		<?php

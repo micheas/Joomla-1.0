@@ -55,6 +55,8 @@ function sendMail() {
 	global $database, $my, $acl;
 	global $mosConfig_sitename;
 	global $mosConfig_mailfrom, $mosConfig_fromname;
+	
+	josSpoofCheck();
 
 	$mode				= intval( mosGetParam( $_POST, 'mm_mode', 0 ) );
 	$subject			= strval( mosGetParam( $_POST, 'mm_subject', '' ) );

@@ -113,6 +113,7 @@ class HTML_module {
 		<input type="hidden" name="boxchecked" value="0" />
 		<input type="hidden" name="option" value="com_installer" />
 		<input type="hidden" name="element" value="module" />
+		<input type="hidden" name="<?php echo josSpoofValue(); ?>" value="1" />
 		</form>
 		<?php
 	}

@@ -201,6 +201,8 @@ function editMenu( $option, $menu ) {
 function saveMenu() {
 	global $database;
 
+	josSpoofCheck();
+	
 	$menutype 		= stripslashes( strval( mosGetParam( $_POST, 'menutype', '' ) ) );
 	$old_menutype 	= stripslashes( strval( mosGetParam( $_POST, 'old_menutype', '' ) ) );
 	$new			= intval( mosGetParam( $_POST, 'new', 1 ) );
@@ -387,6 +389,8 @@ function deleteConfirm( $option, $type ) {
 */
 function deleteMenu( $option, $cid, $type ) {
 	global $database;
+	
+	josSpoofCheck();
 
 	if ( $type == 'mainmenu' ) {
 		echo "<script> alert('You cannot delete the \'mainmenu\' menu as it is core menu'); window.history.go(-1); </script>\n";
@@ -471,6 +475,8 @@ function copyConfirm( $option, $type ) {
 */
 function copyMenu( $option, $cid, $type ) {
 	global $database;
+	
+	josSpoofCheck();
 
 	$menu_name 		= stripslashes( strval( mosGetParam( $_POST, 'menu_name', 'New Menu' ) ) );
 	$module_name 	= stripslashes( strval( mosGetParam( $_POST, 'module_name', 'New Module' ) ) );

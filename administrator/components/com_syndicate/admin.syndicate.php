@@ -67,6 +67,8 @@ function showSyndicate( $option ) {
 */
 function saveSyndicate( $option ) {
 	global $database;
+	
+	josSpoofCheck();
 
 	$params = mosGetParam( $_POST, 'params', '' );
 	if (is_array( $params )) {

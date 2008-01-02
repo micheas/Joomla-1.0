@@ -133,6 +133,7 @@ class HTML_trash {
 		<input type="hidden" name="option" value="com_trash" />
 		<input type="hidden" name="task" value="" />
 		<input type="hidden" name="boxchecked" value="0" />
+		<input type="hidden" name="<?php echo josSpoofValue(); ?>" value="1" />
 		</form>
 		<?php
 	}
@@ -198,6 +199,7 @@ class HTML_trash {
 			echo "\n<input type=\"hidden\" name=\"cid[]\" value=\"$id\" />";
 		}
 		?>
+		<input type="hidden" name="<?php echo josSpoofValue(); ?>" value="1" />
 		</form>
 		<?php
 	}
@@ -263,6 +265,7 @@ class HTML_trash {
 			echo "\n<input type=\"hidden\" name=\"cid[]\" value=\"$id\" />";
 		}
 		?>
+		<input type="hidden" name="<?php echo josSpoofValue(); ?>" value="1" />
 		</form>
 		<?php
 	}

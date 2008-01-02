@@ -121,7 +121,8 @@ class HTML_mambot {
 			<input type="hidden" name="boxchecked" value="0" />
 			<input type="hidden" name="option" value="com_installer" />
 			<input type="hidden" name="element" value="mambot" />
-			</form>
+			<input type="hidden" name="<?php echo josSpoofValue(); ?>" value="1" />
+		</form>
 			<?php
 		} else {
 			?>

@@ -163,6 +163,8 @@ function editBanner( $bannerid, $option ) {
 function saveBanner( $task ) {
 	global $database;
 
+	josSpoofCheck();
+
 	$row = new mosBanner($database);
 
 	$msg = 'Saved Banner info';
@@ -199,6 +201,8 @@ function saveBanner( $task ) {
 function cancelEditBanner() {
 	global $database;
 
+	josSpoofCheck();
+	
 	$row = new mosBanner($database);
 	$row->bind( $_POST );
 	$row->checkin();
@@ -208,6 +212,8 @@ function cancelEditBanner() {
 
 function publishBanner( $cid, $publish=1 ) {
 	global $database, $my;
+
+	josSpoofCheck();
 
 	if (!is_array( $cid ) || count( $cid ) < 1) {
 		$action = $publish ? 'publish' : 'unpublish';
@@ -239,6 +245,9 @@ function publishBanner( $cid, $publish=1 ) {
 
 function removeBanner( $cid ) {
 	global $database;
+
+	josSpoofCheck();
+
 	if (count( $cid )) {
 		mosArrayToInts( $cid );
 		$cids = 'bid=' . implode( ' OR bid=', $cid );
@@ -309,6 +318,8 @@ function editBannerClient( $clientid, $option ) {
 function saveBannerClient( $option ) {
 	global $database;
 
+	josSpoofCheck();
+
 	$row = new mosBannerClient( $database );
 	if (!$row->bind( $_POST )) {
 		echo "<script> alert('".$row->getError()."'); window.history.go(-1); </script>\n";
@@ -337,6 +348,8 @@ function cancelEditClient( $option ) {
 
 function removeBannerClients( $cid, $option ) {
 	global $database;
+
+	josSpoofCheck();
 
 	for ($i = 0; $i < count($cid); $i++) {
 		$query = "SELECT COUNT( bid )"

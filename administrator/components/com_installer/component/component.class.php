@@ -39,6 +39,8 @@ class mosInstallerComponent extends mosInstaller {
 	function install($p_fromdir = null) {
 		global $mosConfig_absolute_path,$database;
 
+		josSpoofCheck();
+
 		if (!$this->preInstallCheck( $p_fromdir, 'component' )) {
 			return false;
 		}

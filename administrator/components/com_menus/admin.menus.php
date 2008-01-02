@@ -261,6 +261,8 @@ function viewMenuItems( $menutype, $option ) {
 */
 function addMenuItem( &$cid, $menutype, $option, $task ) {
 	global $mosConfig_absolute_path;
+	
+	josSpoofCheck();
 
 	$types 	= array();
 
@@ -349,6 +351,8 @@ function addMenuItem( &$cid, $menutype, $option, $task ) {
 */
 function saveMenu( $option, $task='save' ) {
 	global $database;
+	
+	josSpoofCheck();
 
 	$params = mosGetParam( $_POST, 'params', '' );
 	if (is_array( $params )) {
@@ -490,6 +494,8 @@ function TrashMenuSection( $cid=NULL, $menutype='mainmenu' ) {
 */
 function cancelMenu( $option ) {
 	global $database;
+	
+	josSpoofCheck();
 
 	$menu = new mosMenu( $database );
 	$menu->bind( $_POST );
@@ -779,6 +785,8 @@ function ReadMenuXML( $type, $component=-1 ) {
 
 function saveOrder( &$cid, $menutype ) {
 	global $database;
+	
+	josSpoofCheck();
 
 	$total		= count( $cid );
 	$order 		= josGetArrayInts( 'order' );

@@ -137,6 +137,7 @@ class HTML_users {
 		<input type="hidden" name="task" value="" />
 		<input type="hidden" name="boxchecked" value="0" />
 		<input type="hidden" name="hidemainmenu" value="0" />
+		<input type="hidden" name="<?php echo josSpoofValue(); ?>" value="1" />
 		</form>
 		<?php
 	}
@@ -440,6 +441,7 @@ class HTML_users {
 			<?php
 		}
 		?>
+		<input type="hidden" name="<?php echo josSpoofValue(); ?>" value="1" />
 		</form>
 		<?php
 	}

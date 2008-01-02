@@ -153,6 +153,8 @@ function viewMambots( $option, $client ) {
 */
 function saveMambot( $option, $client, $task ) {
 	global $database;
+	
+	josSpoofCheck();
 
 	$params = mosGetParam( $_POST, 'params', '' );
 	if (is_array( $params )) {
@@ -305,6 +307,8 @@ function editMambot( $option, $uid, $client ) {
 */
 function removeMambot( &$cid, $option, $client ) {
 	global $database, $my;
+	
+	josSpoofCheck();
 
 	if (count( $cid ) < 1) {
 		echo "<script> alert('Select a module to delete'); window.history.go(-1);</script>\n";
@@ -321,6 +325,8 @@ function removeMambot( &$cid, $option, $client ) {
 */
 function publishMambot( $cid=null, $publish=1, $option, $client ) {
 	global $database, $my;
+	
+	josSpoofCheck();
 
 	if (count( $cid ) < 1) {
 		$action = $publish ? 'publish' : 'unpublish';
@@ -354,6 +360,8 @@ function publishMambot( $cid=null, $publish=1, $option, $client ) {
 */
 function cancelMambot( $option, $client ) {
 	global $database;
+	
+	josSpoofCheck();
 
 	$row = new mosMambot( $database );
 	$row->bind( $_POST );
@@ -369,6 +377,8 @@ function cancelMambot( $option, $client ) {
 */
 function orderMambot( $uid, $inc, $option, $client ) {
 	global $database;
+	
+	josSpoofCheck();
 
 	// Currently Unsupported
 	if ($client == 'admin') {
@@ -389,6 +399,8 @@ function orderMambot( $uid, $inc, $option, $client ) {
 */
 function accessMenu( $uid, $access, $option, $client ) {
 	global $database;
+	
+	josSpoofCheck();
 
 	switch ( $access ) {
 		case 'accesspublic':
@@ -420,6 +432,8 @@ function accessMenu( $uid, $access, $option, $client ) {
 
 function saveOrder( &$cid ) {
 	global $database;
+	
+	josSpoofCheck();
 
 	$total		= count( $cid );
 	$order 		= josGetArrayInts( 'order' );

@@ -79,6 +79,7 @@ class HTML_installer {
 		<input type="hidden" name="option" value="<?php echo $option;?>"/>
 		<input type="hidden" name="element" value="<?php echo $element;?>"/>
 		<input type="hidden" name="client" value="<?php echo $client;?>"/>
+		<input type="hidden" name="<?php echo josSpoofValue(); ?>" value="1" />
 		</form>
 		<br />
 
@@ -102,6 +103,7 @@ class HTML_installer {
 		<input type="hidden" name="option" value="<?php echo $option;?>"/>
 		<input type="hidden" name="element" value="<?php echo $element;?>"/>
 		<input type="hidden" name="client" value="<?php echo $client;?>"/>
+		<input type="hidden" name="<?php echo josSpoofValue(); ?>" value="1" />
 		</form>
 		<?php
 	}

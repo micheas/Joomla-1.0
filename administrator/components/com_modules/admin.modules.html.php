@@ -184,6 +184,7 @@ class HTML_modules {
 		<input type="hidden" name="client" value="<?php echo $client;?>" />
 		<input type="hidden" name="boxchecked" value="0" />
 		<input type="hidden" name="hidemainmenu" value="0" />
+		<input type="hidden" name="<?php echo josSpoofValue(); ?>" value="1" />
 		</form>
 		<?php
 	}
@@ -430,6 +431,7 @@ class HTML_modules {
 			echo '<input type="hidden" name="client" value="admin" />';
 		}
 		?>
+		<input type="hidden" name="<?php echo josSpoofValue(); ?>" value="1" />
 		</form>
 		<?php
 	}

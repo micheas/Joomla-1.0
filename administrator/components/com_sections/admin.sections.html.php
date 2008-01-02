@@ -155,6 +155,7 @@ class sections_html {
 		<input type="hidden" name="act" value="" />
 		<input type="hidden" name="boxchecked" value="0" />
 		<input type="hidden" name="hidemainmenu" value="0" />
+		<input type="hidden" name="<?php echo josSpoofValue(); ?>" value="1" />
 		</form>
 		<?php
 	}
@@ -441,6 +442,7 @@ class sections_html {
 		<input type="hidden" name="task" value="" />
 		<input type="hidden" name="hidemainmenu" value="0" />
 		<input type="hidden" name="oldtitle" value="<?php echo $row->title ; ?>" />
+		<input type="hidden" name="<?php echo josSpoofValue(); ?>" value="1" />
 		</form>
 		<?php
 	}
@@ -516,6 +518,7 @@ class sections_html {
 			echo "\n <input type=\"hidden\" name=\"cid[]\" value=\"$id\" />";
 		}
 		?>
+		<input type="hidden" name="<?php echo josSpoofValue(); ?>" value="1" />
 		</form>
 		<?php
 	}

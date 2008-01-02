@@ -147,6 +147,7 @@ class url_menu_html {
 		<input type="hidden" name="type" value="<?php echo $menu->type; ?>" />
 		<input type="hidden" name="task" value="" />
 		<input type="hidden" name="hidemainmenu" value="0" />
+		<input type="hidden" name="<?php echo josSpoofValue(); ?>" value="1" />
 		</form>
 		<script language="Javascript" src="<?php echo $mosConfig_live_site;?>/includes/js/overlib_mini.js"></script>
 		<?php

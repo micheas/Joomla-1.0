@@ -24,7 +24,8 @@ defined( '_VALID_MOS' ) or die( 'Restricted access' );
 		<div style="width: 100%;">
 			<form action="index2.php" method="post" name="adminForm">
 			<?php mosLoadAdminModules( 'cpanel', 1 ); ?>
-			</form>
+			<input type="hidden" name="<?php echo josSpoofValue(); ?>" value="1" />
+		</form>
 		</div>
 	</td>
 </tr>

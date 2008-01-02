@@ -648,6 +648,8 @@ function editContent( $uid=0, $sectionid=0, $option ) {
 */
 function saveContent( $sectionid, $task ) {
 	global $database, $my, $mainframe, $mosConfig_offset;
+	
+	josSpoofCheck();
 
 	$menu 		= strval( mosGetParam( $_POST, 'menu', 'mainmenu' ) );
 	$menuid		= intval( mosGetParam( $_POST, 'menuid', 0 ) );
@@ -802,6 +804,8 @@ function saveContent( $sectionid, $task ) {
 */
 function changeContent( $cid=null, $state=0, $option ) {
 	global $database, $my, $task;
+	
+	josSpoofCheck();
 
 	if (count( $cid ) < 1) {
 		$action = $state == 1 ? 'publish' : ($state == -1 ? 'archive' : 'unpublish');
@@ -871,6 +875,8 @@ function changeContent( $cid=null, $state=0, $option ) {
 */
 function toggleFrontPage( $cid, $section, $option ) {
 	global $database, $mainframe;
+	
+	josSpoofCheck();
 
 	if (count( $cid ) < 1) {
 		echo "<script> alert('Select an item to toggle'); window.history.go(-1);</script>\n";
@@ -911,6 +917,8 @@ function toggleFrontPage( $cid, $section, $option ) {
 
 function removeContent( &$cid, $sectionid, $option ) {
 	global $database;
+	
+	josSpoofCheck();
 
 	$total = count( $cid );
 	if ( $total < 1) {
@@ -946,6 +954,8 @@ function removeContent( &$cid, $sectionid, $option ) {
 */
 function cancelContent( ) {
 	global $database;
+	
+	josSpoofCheck();
 
 	$row = new mosContent( $database );
 	$row->bind( $_POST );
@@ -961,6 +971,8 @@ function cancelContent( ) {
 */
 function orderContent( $uid, $inc, $option ) {
 	global $database;
+	
+	josSpoofCheck();
 
 	$row = new mosContent( $database );
 	$row->load( (int)$uid );
@@ -1016,6 +1028,8 @@ function moveSection( $cid, $sectionid, $option ) {
 */
 function moveSectionSave( &$cid, $sectionid, $option ) {
 	global $database, $my;
+	
+	josSpoofCheck();
 
 	$sectcat 	= mosGetParam( $_POST, 'sectcat', '' );
 	list( $newsect, $newcat ) = explode( ',', $sectcat );
@@ -1126,6 +1140,8 @@ function copyItem( $cid, $sectionid, $option ) {
 **/
 function copyItemSave( $cid, $sectionid, $option ) {
 	global $database;
+	
+	josSpoofCheck();
 
 	$sectcat 	= mosGetParam( $_POST, 'sectcat', '' );
 	//seperate sections and categories from selection
@@ -1217,6 +1233,8 @@ function copyItemSave( $cid, $sectionid, $option ) {
 */
 function resethits( $redirect, $id ) {
 	global $database;
+	
+	josSpoofCheck();
 
 	$row = new mosContent($database);
 	$row->Load((int)$id);
@@ -1235,6 +1253,8 @@ function resethits( $redirect, $id ) {
 */
 function accessMenu( $uid, $access, $option ) {
 	global $database;
+	
+	josSpoofCheck();
 
 	$row = new mosContent( $database );
 	$row->load( (int)$uid );
@@ -1269,6 +1289,8 @@ function filterCategory( $query, $active=NULL ) {
 
 function menuLink( $redirect, $id ) {
 	global $database;
+	
+	josSpoofCheck();
 
 	$menu = strval( mosGetParam( $_POST, 'menuselect', '' ) );
 	$link = strval( mosGetParam( $_POST, 'link_name', '' ) );
@@ -1318,6 +1340,8 @@ function go2menuitem() {
 function saveOrder( &$cid ) {
 	global $database;
 
+	josSpoofCheck();
+	
 	$total		= count( $cid );
 	$redirect 	= mosGetParam( $_POST, 'redirect', 0 );
 	$rettask	= strval( mosGetParam( $_POST, 'returntask', '' ) );

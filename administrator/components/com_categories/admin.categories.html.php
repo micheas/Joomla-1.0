@@ -230,6 +230,7 @@ class categories_html {
 		<input type="hidden" name="boxchecked" value="0" />
 		<input type="hidden" name="type" value="<?php echo $type; ?>" />
 		<input type="hidden" name="hidemainmenu" value="0" />
+		<input type="hidden" name="<?php echo josSpoofValue(); ?>" value="1" />
 		</form>
 		<?php
 	}
@@ -516,6 +517,7 @@ class categories_html {
 		<input type="hidden" name="task" value="" />
 		<input type="hidden" name="redirect" value="<?php echo $redirect; ?>" />
 		<input type="hidden" name="hidemainmenu" value="0" />
+		<input type="hidden" name="<?php echo josSpoofValue(); ?>" value="1" />
 		</form>
 		<?php
 	}
@@ -605,6 +607,7 @@ class categories_html {
 			echo "\n <input type=\"hidden\" name=\"cid[]\" value=\"$id\" />";
 		}
 		?>
+		<input type="hidden" name="<?php echo josSpoofValue(); ?>" value="1" />
 		</form>
 		<?php
 	}
@@ -695,6 +698,7 @@ class categories_html {
 			echo "\n <input type=\"hidden\" name=\"cid[]\" value=\"$id\" />";
 		}
 		?>
+		<input type="hidden" name="<?php echo josSpoofValue(); ?>" value="1" />
 		</form>
 		<?php
 	}

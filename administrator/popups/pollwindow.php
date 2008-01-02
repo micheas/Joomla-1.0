@@ -73,6 +73,7 @@ echo '<?xml version="1.0" encoding="'. $iso[1] .'"?' .'>';
 		<td align="center" colspan="2"><a href="#" onClick="window.close()">Close</a></td>
 	</tr>
 </table>
-</form>
+<input type="hidden" name="<?php echo josSpoofValue(); ?>" value="1" />
+		</form>
 </body>
 </html>

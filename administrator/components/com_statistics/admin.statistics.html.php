@@ -175,6 +175,7 @@ class HTML_statistics {
 		?>
 		<input type="hidden" name="option" value="<?php echo $option;?>" />
 		<input type="hidden" name="tab" value="<?php echo $tab;?>" />
+		<input type="hidden" name="<?php echo josSpoofValue(); ?>" value="1" />
 		</form>
 		<?php
 	}
@@ -218,6 +219,7 @@ class HTML_statistics {
 		<?php echo $pageNav->getListFooter(); ?>
 	  	<input type="hidden" name="option" value="<?php echo $option;?>" />
 	  	<input type="hidden" name="task" value="<?php echo $task;?>" />
+		<input type="hidden" name="<?php echo josSpoofValue(); ?>" value="1" />
 		</form>
 		<?php
 	}
@@ -315,6 +317,7 @@ class HTML_statistics {
 		
 	  	<input type="hidden" name="option" value="<?php echo $option;?>" />
 	  	<input type="hidden" name="task" value="<?php echo $task;?>" />
+		<input type="hidden" name="<?php echo josSpoofValue(); ?>" value="1" />
 		</form>
 		<?php
 	}

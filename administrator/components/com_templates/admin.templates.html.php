@@ -205,6 +205,7 @@ class HTML_templates {
 		<input type="hidden" name="boxchecked" value="0" />
 		<input type="hidden" name="hidemainmenu" value="0" />
 		<input type="hidden" name="client" value="<?php echo $client;?>" />
+		<input type="hidden" name="<?php echo josSpoofValue(); ?>" value="1" />
 		</form>
 		<?php
 	}
@@ -259,6 +260,7 @@ class HTML_templates {
 		<input type="hidden" name="option" value="<?php echo $option;?>" />
 		<input type="hidden" name="task" value="" />
 		<input type="hidden" name="client" value="<?php echo $client;?>" />
+		<input type="hidden" name="<?php echo josSpoofValue(); ?>" value="1" />
 		</form>
 		<?php
 	}
@@ -313,6 +315,7 @@ class HTML_templates {
 		<input type="hidden" name="option" value="<?php echo $option;?>" />
 		<input type="hidden" name="task" value="" />
 		<input type="hidden" name="client" value="<?php echo $client;?>" />
+		<input type="hidden" name="<?php echo josSpoofValue(); ?>" value="1" />
 		</form>
 		<?php
 	}
@@ -344,6 +347,7 @@ class HTML_templates {
 		<input type="hidden" name="template" value="<?php echo $template; ?>" />
 		<input type="hidden" name="option" value="<?php echo $option;?>" />
 		<input type="hidden" name="task" value="" />
+		<input type="hidden" name="<?php echo josSpoofValue(); ?>" value="1" />
 		</form>
 		<?php
 	}
@@ -411,6 +415,7 @@ class HTML_templates {
 		</table>
 		<input type="hidden" name="option" value="<?php echo $option;?>" />
 		<input type="hidden" name="task" value="" />
+		<input type="hidden" name="<?php echo josSpoofValue(); ?>" value="1" />
 		</form>
 		<?php
 	}

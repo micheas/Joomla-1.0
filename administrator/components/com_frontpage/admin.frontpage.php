@@ -182,6 +182,8 @@ function viewFrontPage( $option ) {
 */
 function changeFrontPage( $cid=null, $state=0, $option ) {
 	global $database, $my;
+	
+	josSpoofCheck();
 
 	if (count( $cid ) < 1) {
 		$action = $state == 1 ? 'publish' : ($state == -1 ? 'archive' : 'unpublish');
@@ -216,6 +218,8 @@ function changeFrontPage( $cid=null, $state=0, $option ) {
 
 function removeFrontPage( &$cid, $option ) {
 	global $database;
+	
+	josSpoofCheck();
 
 	if (!is_array( $cid ) || count( $cid ) < 1) {
 		echo "<script> alert('Select an item to delete'); window.history.go(-1);</script>\n";
@@ -249,6 +253,8 @@ function removeFrontPage( &$cid, $option ) {
 */
 function orderFrontPage( $uid, $inc, $option ) {
 	global $database;
+	
+	josSpoofCheck();
 
 	$fp = new mosFrontPage( $database );
 	$fp->load( (int)$uid );
@@ -267,6 +273,8 @@ function orderFrontPage( $uid, $inc, $option ) {
 */
 function accessMenu( $uid, $access ) {
 	global $database;
+	
+	josSpoofCheck();
 
 	$row = new mosContent( $database );
 	$row->load( (int)$uid );
@@ -287,6 +295,8 @@ function accessMenu( $uid, $access ) {
 
 function saveOrder( &$cid ) {
 	global $database;
+	
+	josSpoofCheck();
 
 	$total		= count( $cid );
 	$order 		= josGetArrayInts( 'order' );

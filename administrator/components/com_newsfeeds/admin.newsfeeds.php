@@ -164,6 +164,8 @@ function editNewsFeed( $id, $option ) {
 */
 function saveNewsFeed( $option ) {
 	global $database, $my;
+	
+	josSpoofCheck();
 
 	$row = new mosNewsFeed( $database );
 	if (!$row->bind( $_POST )) {
@@ -196,6 +198,8 @@ function saveNewsFeed( $option ) {
 */
 function publishNewsFeeds( $cid, $publish, $option ) {
 	global $database, $my;
+
+	josSpoofCheck();
 
 	if (count( $cid ) < 1) {
 		$action = $publish ? 'publish' : 'unpublish';
@@ -232,6 +236,8 @@ function publishNewsFeeds( $cid, $publish, $option ) {
 */
 function removeNewsFeeds( &$cid, $option ) {
 	global $database;
+	
+	josSpoofCheck();
 
 	if (!is_array( $cid ) || count( $cid ) < 1) {
 		echo "<script> alert('Select an item to delete'); window.history.go(-1);</script>\n";
@@ -259,6 +265,8 @@ function removeNewsFeeds( &$cid, $option ) {
 */
 function cancelNewsFeed( $option ) {
 	global $database;
+	
+	josSpoofCheck();
 
 	$row = new mosNewsFeed( $database );
 	$row->bind( $_POST );
@@ -274,6 +282,8 @@ function cancelNewsFeed( $option ) {
 */
 function orderNewsFeed( $id, $inc, $option ) {
 	global $database;
+	
+	josSpoofCheck();
 
 	$limit 		= intval( mosGetParam( $_REQUEST, 'limit', 0 ) );
 	$limitstart = intval( mosGetParam( $_REQUEST, 'limitstart', 0 ) );

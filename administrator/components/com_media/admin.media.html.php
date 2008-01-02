@@ -123,6 +123,7 @@ class HTML_Media {
 		<input type="hidden" name="option" value="com_media" />
 		<input type="hidden" name="task" value="" />
 		<input type="hidden" name="cb1" id="cb1" value="0" />
+		<input type="hidden" name="<?php echo josSpoofValue(); ?>" value="1" />
 		</form>
 		<?php
 	}

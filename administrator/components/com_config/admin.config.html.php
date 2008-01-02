@@ -843,6 +843,7 @@ class HTML_config {
 		<input type="hidden" name="config_live_site" value="<?php echo $row->config_live_site; ?>"/>
 		<input type="hidden" name="config_secret" value="<?php echo $row->config_secret; ?>"/>
 	  	<input type="hidden" name="task" value=""/>
+		<input type="hidden" name="<?php echo josSpoofValue(); ?>" value="1" />
 		</form>
 		<script  type="text/javascript" src="<?php echo $mosConfig_live_site;?>/includes/js/overlib_mini.js"></script>
 		<?php

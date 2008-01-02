@@ -89,6 +89,9 @@ switch ($task) {
  * @param string The relative folder path to the file
  */
 function delete_file( $listdir ) {
+
+	josSpoofCheck();
+
 	$delFile = makeSafe( mosGetParam( $_REQUEST, 'delFile', '' ) );
 	$fullPath = COM_MEDIA_BASE . $listdir . DIRECTORY_SEPARATOR . stripslashes( $delFile );
 
@@ -98,6 +101,9 @@ function delete_file( $listdir ) {
 }
 
 function create_folder($dirPath) {
+
+	josSpoofCheck();
+
 	$folder_name = mosGetParam( $_POST, 'foldername', '' );
 
 	if(strlen($folder_name) >0) {
@@ -117,6 +123,9 @@ function create_folder($dirPath) {
 }
 
 function delete_folder($listdir) {
+
+	josSpoofCheck();
+
 	$delFolder = mosGetParam( $_REQUEST, 'delFolder', '' );
 
 	$del_html 	= COM_MEDIA_BASE . $listdir . $delFolder . DIRECTORY_SEPARATOR . 'index.html';
@@ -139,6 +148,9 @@ function delete_folder($listdir) {
 }
 
 function upload() {
+
+	josSpoofCheck();
+
 	if (isset($_FILES['upload']) && is_array($_FILES['upload']) && isset($_POST['dirPath'])) {
 		$dirPathPost 	= $_POST['dirPath'];
 		$file 			= $_FILES['upload'];
@@ -161,6 +173,8 @@ function upload() {
 
 function do_upload($file, $dest_dir) {
 	global $clearUploads;
+
+	josSpoofCheck();
 
 	if (empty($file['name'])) {
 		mosRedirect( "index2.php?option=com_media&listdir=".$_POST['dirPath'], "Upload file not selected" );

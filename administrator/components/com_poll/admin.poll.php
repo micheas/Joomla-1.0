@@ -148,6 +148,8 @@ function editPoll( $uid=0, $option='com_poll' ) {
 
 function savePoll( $option ) {
 	global $database, $my;
+	
+	josSpoofCheck();
 
 	// save the poll parent information
 	$row = new mosPoll( $database );
@@ -216,6 +218,9 @@ function savePoll( $option ) {
 
 function removePoll( $cid, $option ) {
 	global $database;
+	
+	josSpoofCheck();
+	
 	$msg = '';
 	for ($i=0, $n=count($cid); $i < $n; $i++) {
 		$poll = new mosPoll( $database );
@@ -234,6 +239,8 @@ function removePoll( $cid, $option ) {
 */
 function publishPolls( $cid=null, $publish=1, $option ) {
 	global $database, $my;
+	
+	josSpoofCheck();
 
 	if (!is_array( $cid ) || count( $cid ) < 1) {
 		$action = $publish ? 'publish' : 'unpublish';
@@ -263,6 +270,9 @@ function publishPolls( $cid=null, $publish=1, $option ) {
 }
 
 function cancelPoll( $option ) {
+	
+	josSpoofCheck();
+
 	global $database;
 	$row = new mosPoll( $database );
 	$row->bind( $_POST );

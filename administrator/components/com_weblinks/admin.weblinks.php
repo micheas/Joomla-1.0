@@ -185,6 +185,8 @@ function editWeblink( $option, $id ) {
 */
 function saveWeblink( $option ) {
 	global $database, $my;
+	
+	josSpoofCheck();
 
 	$row = new mosWeblink( $database );
 	if (!$row->bind( $_POST )) {
@@ -223,6 +225,8 @@ function saveWeblink( $option ) {
 */
 function removeWeblinks( $cid, $option ) {
 	global $database;
+	
+	josSpoofCheck();
 
 	if (!is_array( $cid ) || count( $cid ) < 1) {
 		echo "<script> alert('Select an item to delete'); window.history.go(-1);</script>\n";
@@ -251,6 +255,8 @@ function removeWeblinks( $cid, $option ) {
 */
 function publishWeblinks( $cid=null, $publish=1,  $option ) {
 	global $database, $my;
+	
+	josSpoofCheck();
 
 	if (!is_array( $cid ) || count( $cid ) < 1) {
 		$action = $publish ? 'publish' : 'unpublish';
@@ -283,6 +289,9 @@ function publishWeblinks( $cid=null, $publish=1,  $option ) {
 * @param integer The increment to reorder by
 */
 function orderWeblinks( $uid, $inc, $option ) {
+	
+	josSpoofCheck();
+	
 	global $database;
 	$row = new mosWeblink( $database );
 	$row->load( (int)$uid );
@@ -298,6 +307,9 @@ function orderWeblinks( $uid, $inc, $option ) {
 * @param string The current url option
 */
 function cancelWeblink( $option ) {
+	
+	josSpoofCheck();
+	
 	global $database;
 	$row = new mosWeblink( $database );
 	$row->bind( $_POST );

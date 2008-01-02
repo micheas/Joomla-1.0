@@ -101,6 +101,7 @@ class HTML_messages {
 		<input type="hidden" name="task" value="" />
 		<input type="hidden" name="boxchecked" value="0" />
 		<input type="hidden" name="hidemainmenu" value="0" />
+		<input type="hidden" name="<?php echo josSpoofValue(); ?>" value="1" />
 		</form>
 		<?php 
 	}
@@ -159,6 +160,7 @@ class HTML_messages {
 		
 		<input type="hidden" name="option" value="<?php echo $option; ?>">
 		<input type="hidden" name="task" value="">
+		<input type="hidden" name="<?php echo josSpoofValue(); ?>" value="1" />
 		</form>
 		<?php 
 	}
@@ -217,6 +219,7 @@ class HTML_messages {
 		<input type="hidden" name="userid" value="<?php echo $row->user_id_from; ?>" />
 		<input type="hidden" name="subject" value="<?php echo ( substr( $row->subject, 0, 4 ) != 'Re: ' ? 'Re: ' : '' ) . htmlspecialchars( $row->subject, ENT_QUOTES ); ?>" />
 		<input type="hidden" name="hidemainmenu" value="0" />
+		<input type="hidden" name="<?php echo josSpoofValue(); ?>" value="1" />
 		</form>
 		<?php 
 	}
@@ -284,6 +287,7 @@ class HTML_messages {
 		<input type="hidden" name="user_id_from" value="<?php echo $my->id; ?>">
 		<input type="hidden" name="option" value="<?php echo $option; ?>">
 		<input type="hidden" name="task" value="">
+		<input type="hidden" name="<?php echo josSpoofValue(); ?>" value="1" />
 		</form>
 		<?php 
 	}

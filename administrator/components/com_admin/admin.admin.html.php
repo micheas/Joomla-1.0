@@ -560,6 +560,7 @@ class HTML_admin_misc {
 		</table>
 
 		<input type="hidden" name="task" value="help" />
+		<input type="hidden" name="<?php echo josSpoofValue(); ?>" value="1" />
 		</form>
 		<?php
 	}

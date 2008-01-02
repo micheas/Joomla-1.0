@@ -169,7 +169,8 @@ echo '<?xml version="1.0" encoding="'. $iso[1] .'"?' .'>';
 </table>
 
 <input type="hidden" name="directory" value="<?php echo $directory;?>" />
-</form>
+<input type="hidden" name="<?php echo josSpoofValue(); ?>" value="1" />
+		</form>
 
 </body>
 </html>

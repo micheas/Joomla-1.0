@@ -479,6 +479,8 @@ function editCategory( $uid=0, $section='' ) {
 */
 function saveCategory( $task ) {
 	global $database;
+	
+	josSpoofCheck();
 
 	$menu 		= strval( mosGetParam( $_POST, 'menu', 'mainmenu' ) );
 	$menuid		= intval( mosGetParam( $_POST, 'menuid', 0 ) );
@@ -592,6 +594,8 @@ function saveCategory( $task ) {
 */
 function removeCategories( $section, $cid ) {
 	global $database, $mosConfig_dbprefix;
+	
+	josSpoofCheck();
 
 	if (count( $cid ) < 1) {
 		echo "<script> alert('Select a category to delete'); window.history.go(-1);</script>\n";
@@ -670,6 +674,8 @@ function removeCategories( $section, $cid ) {
 */
 function publishCategories( $section, $categoryid=null, $cid=null, $publish=1 ) {
 	global $database, $my;
+	
+	josSpoofCheck();
 
 	if (!is_array( $cid )) {
 		$cid = array();
@@ -718,6 +724,8 @@ function publishCategories( $section, $categoryid=null, $cid=null, $publish=1 ) 
 */
 function cancelCategory() {
 	global $database;
+	
+	josSpoofCheck();
 
 	$redirect = strval( mosGetParam( $_POST, 'redirect', '' ) );
 
@@ -734,6 +742,8 @@ function cancelCategory() {
 */
 function orderCategory( $uid, $inc ) {
 	global $database;
+	
+	josSpoofCheck();
 
 	$row = new mosCategory( $database );
 	$row->load( (int)$uid );
@@ -800,6 +810,8 @@ function moveCategorySelect( $option, $cid, $sectionOld ) {
 */
 function moveCategorySave( $cid, $sectionOld ) {
 	global $database;
+	
+	josSpoofCheck();
 
 	if (!is_array( $cid ) || count( $cid ) < 1) {
 		echo "<script> alert('Select an item to move'); window.history.go(-1);</script>\n";
@@ -902,6 +914,8 @@ function copyCategorySelect( $option, $cid, $sectionOld ) {
 */
 function copyCategorySave( $cid, $sectionOld ) {
 	global $database;
+	
+	josSpoofCheck();
 
 	$sectionMove 	= intval( mosGetParam( $_REQUEST, 'sectionmove', '' ) );
 	if ( !$sectionMove ) {
@@ -997,6 +1011,8 @@ function accessMenu( $uid, $access, $section ) {
 
 function menuLink( $id ) {
 	global $database;
+	
+	josSpoofCheck();
 
 	$category = new mosCategory( $database );
 	$category->bind( $_POST );
@@ -1077,6 +1093,8 @@ function menuLink( $id ) {
 
 function saveOrder( &$cid, $section ) {
 	global $database;
+	
+	josSpoofCheck();
 
 	$total		= count( $cid );
 	$order 		= josGetArrayInts( 'order' );

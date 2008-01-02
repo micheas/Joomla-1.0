@@ -189,6 +189,8 @@ function editContact( $id, $option ) {
 */
 function saveContact( $option ) {
 	global $database;
+	
+	josSpoofCheck();
 
 	$row = new mosContact( $database );
 	if (!$row->bind( $_POST )) {
@@ -239,6 +241,8 @@ function saveContact( $option ) {
 */
 function removeContacts( &$cid, $option ) {
 	global $database;
+	
+	josSpoofCheck();
 
 	if (count( $cid )) {
 		mosArrayToInts( $cid );
@@ -263,6 +267,8 @@ function removeContacts( &$cid, $option ) {
 */
 function changeContact( $cid=null, $state=0, $option ) {
 	global $database, $my;
+	
+	josSpoofCheck();
 
 	if (!is_array( $cid ) || count( $cid ) < 1) {
 		$action = $publish ? 'publish' : 'unpublish';
@@ -313,6 +319,8 @@ function orderContacts( $uid, $inc, $option ) {
 */
 function cancelContact() {
 	global $database;
+	
+	josSpoofCheck();
 
 	$row = new mosContact( $database );
 	$row->bind( $_POST );

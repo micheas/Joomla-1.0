@@ -275,6 +275,8 @@ function editUser( $uid='0', $option='users' ) {
 function saveUser( $task ) {
 	global $database, $my, $acl;
 	global $mosConfig_live_site, $mosConfig_mailfrom, $mosConfig_fromname, $mosConfig_sitename;
+	
+	josSpoofCheck();
 
 	$userIdPosted = mosGetParam($_POST, 'id');
 	if ($userIdPosted) {
@@ -497,6 +499,8 @@ function cancelUser( $option ) {
 
 function removeUsers( $cid, $option ) {
 	global $database, $acl, $my;
+	
+	josSpoofCheck();
 
 	if (!is_array( $cid ) || count( $cid ) < 1) {
 		echo "<script> alert('Select an item to delete'); window.history.go(-1);</script>\n";
@@ -599,6 +603,8 @@ function removeUsers( $cid, $option ) {
 */
 function changeUserBlock( $cid=null, $block=1, $option ) {
 	global $database;
+	
+	josSpoofCheck();
 
 	$action = $block ? 'block' : 'unblock';
 
@@ -676,6 +682,8 @@ function changeUserBlock( $cid=null, $block=1, $option ) {
 */
 function logoutUser( $cid=null, $option, $task ) {
 	global $database, $my;
+	
+	josSpoofCheck();
 
 	if ( is_array( $cid ) ) {
 		if (count( $cid ) < 1) {

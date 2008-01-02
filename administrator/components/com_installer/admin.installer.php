@@ -75,6 +75,9 @@ if (array_key_exists ( $element, $classMap )) {
 * @param string The element name
 */
 function uploadPackage( $installerClass, $option, $element, $client ) {
+
+	josSpoofCheck();
+
 	$installer = new $installerClass();
 
 	// Check if file uploads are enabled
@@ -125,6 +128,9 @@ function uploadPackage( $installerClass, $option, $element, $client ) {
 * @param string The URL option
 */
 function installFromDirectory( $installerClass, $option, $element, $client ) {
+
+	josSpoofCheck();
+
 	$userfile = mosGetParam( $_REQUEST, 'userfile', '' );
 
 	if (!$userfile) {
@@ -146,6 +152,9 @@ function installFromDirectory( $installerClass, $option, $element, $client ) {
 * @param
 */
 function removeElement( $installerClass, $option, $element, $client ) {
+
+	josSpoofCheck();
+
 	$cid = mosGetParam( $_REQUEST, 'cid', array(0) );
 	if (!is_array( $cid )) {
 		$cid = array(0);
@@ -167,6 +176,9 @@ function removeElement( $installerClass, $option, $element, $client ) {
 * @param string The message to return
 */
 function uploadFile( $filename, $userfile_name, &$msg ) {
+
+	josSpoofCheck();
+
 	global $mosConfig_absolute_path;
 	$baseDir = mosPathName( $mosConfig_absolute_path . '/media' );
 

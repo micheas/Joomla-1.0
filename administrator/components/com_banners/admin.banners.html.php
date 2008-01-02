@@ -136,6 +136,7 @@ class HTML_banners {
 		<input type="hidden" name="task" value="" />
 		<input type="hidden" name="boxchecked" value="0" />
 		<input type="hidden" name="hidemainmenu" value="0" />
+		<input type="hidden" name="<?php echo josSpoofValue(); ?>" value="1" />
 		</form>
 		<?php
 	}
@@ -299,6 +300,7 @@ class HTML_banners {
 		<input type="hidden" name="clicks" value="<?php echo $_row->clicks; ?>" />
 		<input type="hidden" name="task" value="" />
 		<input type="hidden" name="impmade" value="<?php echo $_row->impmade; ?>" />
+		<input type="hidden" name="<?php echo josSpoofValue(); ?>" value="1" />
 		</form>
 		<?php
 	}
@@ -396,6 +398,7 @@ class HTML_bannerClient {
 		<input type="hidden" name="task" value="listclients" />
 		<input type="hidden" name="boxchecked" value="0" />
 		<input type="hidden" name="hidemainmenu" value="0" />
+		<input type="hidden" name="<?php echo josSpoofValue(); ?>" value="1" />
 		</form>
 		<?php
 	}
@@ -483,6 +486,7 @@ class HTML_bannerClient {
 		<input type="hidden" name="option" value="<?php echo $option; ?>" />
 		<input type="hidden" name="cid" value="<?php echo $row->cid; ?>" />
 		<input type="hidden" name="task" value="" />
+		<input type="hidden" name="<?php echo josSpoofValue(); ?>" value="1" />
 		</form>
 		<?php
 	}

@@ -185,6 +185,8 @@ function viewModules( $option, $client ) {
 */
 function copyModule( $option, $uid, $client ) {
 	global $database, $my;
+	
+	josSpoofCheck();
 
 	$row = new mosModule( $database );
 	// load the row from the db table
@@ -236,6 +238,8 @@ function copyModule( $option, $uid, $client ) {
 */
 function saveModule( $option, $client, $task ) {
 	global $database;
+	
+	josSpoofCheck();
 
 	$params = mosGetParam( $_POST, 'params', '' );
 	if (is_array( $params )) {
@@ -462,6 +466,8 @@ function editModule( $option, $uid, $client ) {
 */
 function removeModule( &$cid, $option, $client ) {
 	global $database, $my;
+	
+	josSpoofCheck();
 
 	if (count( $cid ) < 1) {
 		echo "<script> alert('Select a module to delete'); window.history.go(-1);</script>\n";
@@ -541,6 +547,8 @@ function removeModule( &$cid, $option, $client ) {
 */
 function publishModule( $cid=null, $publish=1, $option, $client ) {
 	global $database, $my;
+	
+	josSpoofCheck();
 
 	if (count( $cid ) < 1) {
 		$action = $publish ? 'publish' : 'unpublish';
@@ -577,6 +585,8 @@ function publishModule( $cid=null, $publish=1, $option, $client ) {
 */
 function cancelModule( $option, $client ) {
 	global $database;
+	
+	josSpoofCheck();
 
 	$row = new mosModule( $database );
 	// ignore array elements
@@ -593,6 +603,8 @@ function cancelModule( $option, $client ) {
 */
 function orderModule( $uid, $inc, $option ) {
 	global $database;
+	
+	josSpoofCheck();
 
 	$client = strval( mosGetParam( $_POST, 'client', '' ) );
 
@@ -622,6 +634,8 @@ function orderModule( $uid, $inc, $option ) {
 */
 function accessMenu( $uid, $access, $option, $client ) {
 	global $database;
+	
+	josSpoofCheck();
 
 	switch ( $access ) {
 		case 'accesspublic':
@@ -655,6 +669,8 @@ function accessMenu( $uid, $access, $option, $client ) {
 
 function saveOrder( &$cid, $client ) {
 	global $database;
+	
+	josSpoofCheck();
 
 	$total		= count( $cid );
 	$order 		= josGetArrayInts( 'order' );

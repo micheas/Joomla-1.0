@@ -6025,8 +6025,12 @@ function mosBackTrace() {
 	}
 }
 
-function josSpoofCheck( $header=NULL, $alt=NULL ) {
-	$validate 	= mosGetParam( $_POST, josSpoofValue($alt), 0 );
+function josSpoofCheck( $header=NULL, $alt=NULL , $request = false) {
+	if($request) {
+		$validate 	= mosGetParam( $_REQUEST, josSpoofValue($alt), 0 );
+	} else {
+		$validate 	= mosGetParam( $_POST, josSpoofValue($alt), 0 );
+	}
 
 	// probably a spoofing attack
 	if (!$validate) {

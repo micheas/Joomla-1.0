@@ -100,10 +100,11 @@ if ($mosConfig_debug) {
 	}
 }
 
-doGzip();
-
 // if task action is 'save' or 'apply' redo session check
 if ( $task == 'save' || $task == 'apply' ) {
 	$mainframe->initSessionAdmin( $option, '' );
 }
+
+doGzip();
+
 ?>

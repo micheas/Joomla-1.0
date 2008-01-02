@@ -37,6 +37,10 @@ code fixes.
 - -> Removed
 ! -> Note
 
+02-Jan-2008 Anthony Ferrara
+ # Fixed delete issue with com_media in backend spoof check
+ ^ added request param to josSpoofCheck to check $_REQUEST instead of $_POST
+
 10-Aug-2007 Rob Schley
  * SECURITY A4 [LOW Level]: XSS issue in com_search
  # Fixed [topic,193707] Joomla! 1.0.13 Admin session dies for certain $task values

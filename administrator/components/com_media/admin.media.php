@@ -90,7 +90,7 @@ switch ($task) {
  */
 function delete_file( $listdir ) {
 
-	josSpoofCheck();
+	josSpoofCheck(null, null, true);
 
 	$delFile = makeSafe( mosGetParam( $_REQUEST, 'delFile', '' ) );
 	$fullPath = COM_MEDIA_BASE . $listdir . DIRECTORY_SEPARATOR . stripslashes( $delFile );
@@ -124,7 +124,7 @@ function create_folder($dirPath) {
 
 function delete_folder($listdir) {
 
-	josSpoofCheck();
+	josSpoofCheck(null, null, true);
 
 	$delFolder = mosGetParam( $_REQUEST, 'delFolder', '' );
 

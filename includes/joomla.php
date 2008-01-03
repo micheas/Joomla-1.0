@@ -6025,11 +6025,18 @@ function mosBackTrace() {
 	}
 }
 
-function josSpoofCheck( $header=NULL, $alt=NULL , $request = false) {
-	if($request) {
-		$validate 	= mosGetParam( $_REQUEST, josSpoofValue($alt), 0 );
-	} else {
-		$validate 	= mosGetParam( $_POST, josSpoofValue($alt), 0 );
+function josSpoofCheck( $header=NULL, $alt=NULL , $method = 'post') {
+	switch(strtolower($method)) {
+		case "get":
+			$validate 	= mosGetParam( $_GET, josSpoofValue($alt), 0 );
+			break;
+		case "request":
+			$validate 	= mosGetParam( $_REQUEST, josSpoofValue($alt), 0 );
+			break;
+		case "post":
+		default:
+			$validate 	= mosGetParam( $_POST, josSpoofValue($alt), 0 );
+			break;
 	}
 
 	// probably a spoofing attack

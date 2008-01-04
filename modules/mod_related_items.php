@@ -57,7 +57,7 @@ if ($option == 'com_content' && $task == 'view' && $id) {
 			;
 			$database->setQuery( $query );
 			$temp = $database->loadObjectList();
-			
+
 			$related = array();
 			if (count($temp)) {
 				foreach ($temp as $row ) {
@@ -67,13 +67,13 @@ if ($option == 'com_content' && $task == 'view' && $id) {
 				}
 			}
 			unset($temp);
-			
+
 			if ( count( $related ) ) {
 				?>
 				<ul>
 					<?php
 					foreach ($related as $item) {
-						if ($option="com_content" && $task="view") {
+						if ($option == 'com_content' && $task == 'view') {
 							$Itemid = $mainframe->getItemid($item->id);
 						}
 						$href = sefRelToAbs( "index.php?option=com_content&amp;task=view&amp;id=$item->id&amp;Itemid=$Itemid" );

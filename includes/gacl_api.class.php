@@ -1467,8 +1467,9 @@ class gacl_api extends gacl {
 		$value = $object[1];
 
 		// Get ids of acl referencing the Object (if any)
-		$this->db->setQuery( "SELECT acl_id FROM $object_map_table WHERE value=" . $this->db->Quote( $value ) . " AND section_value=" . $this->db->Quote( $section_value ) );
-		$acl_ids = $this->db->loadResultArray();
+		//$this->db->setQuery( "SELECT acl_id FROM $object_map_table WHERE value=" . $this->db->Quote( $value ) . " AND section_value=" . $this->db->Quote( $section_value ) );
+		//$acl_ids = $this->db->loadResultArray();
+		$acl_ids = array();
 
 		if ($erase) {
 			// We were asked to erase all acl referencing it

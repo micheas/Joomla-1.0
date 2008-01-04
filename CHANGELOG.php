@@ -45,6 +45,7 @@ code fixes.
  # Fixed [#8381] too many argument in com_search page header parameter
  # Fixed [#5318] mosPageNav::writePagesLinks adds trailing space to _PN_NEXT href
  # Fixed [#8599] Invalid Redirect URL of content_item_link menu item
+ # Fixed [#7242] ACL: SQL errror when deleting user in joomla in backend (actually in mosUser::delete( $id ); )
 
 02-Jan-2008 Anthony Ferrara
  # Fixed delete issue with com_media in backend spoof check

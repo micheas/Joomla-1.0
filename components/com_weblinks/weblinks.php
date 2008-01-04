@@ -104,7 +104,7 @@ function listWeblinks( $catid ) {
 	;
 	$database->setQuery( $query );
 	$categories = $database->loadObjectList();
-	
+
 	// Parameters
 	$menu = $mainframe->get( 'menu' );
 	$params = new mosParameters( $menu->params );
@@ -173,7 +173,7 @@ function showItem ( $id ) {
 
 	$link = new mosWeblink($database);
 	$link->load((int)$id);
-	
+
 	/*
 	* Check if link is published
 	*/
@@ -181,10 +181,10 @@ function showItem ( $id ) {
 		mosNotAuth();
 		return;
 	}
-	
+
 	$cat = new mosCategory($database);
 	$cat->load((int)$link->catid);
-	
+
 	/*
 	* Check if category is published
 	*/
@@ -195,8 +195,8 @@ function showItem ( $id ) {
 	/*
 	* check whether category access level allows access
 	*/
-	if ( $cat->access > $my->gid ) {	
-		mosNotAuth();  
+	if ( $cat->access > $my->gid ) {
+		mosNotAuth();
 		return;
 	}
 
@@ -211,9 +211,9 @@ function showItem ( $id ) {
 	if ( $link->url ) {
 		// redirects to url if matching id found
 		mosRedirect ( $link->url );
-	} else {		
+	} else {
 		// redirects to weblink category page if no matching id found
-		listWeblinks( $catid );
+		listWeblinks( $cat->id );
 	}
 }
 
@@ -224,7 +224,7 @@ function editWebLink( $id, $option ) {
 		mosNotAuth();
 		return;
 	}
-		
+
 	// security check to see if link exists in a menu
 	$link = 'index.php?option=com_weblinks&task=new';
 	$query = "SELECT id"
@@ -234,11 +234,11 @@ function editWebLink( $id, $option ) {
 	;
 	$database->setQuery( $query );
 	$exists = $database->loadResult();
-	if ( !$exists ) {						
+	if ( !$exists ) {
 		mosNotAuth();
 		return;
-	}		
-	
+	}
+
 	$row = new mosWeblink( $database );
 	// load the row from the db table
 	$row->load( (int)$id );
@@ -300,14 +300,14 @@ function saveWeblink( $option ) {
 	;
 	$database->setQuery( $query );
 	$exists = $database->loadResult();
-	if ( !$exists ) {						
+	if ( !$exists ) {
 		mosNotAuth();
 		return;
-	}		
-	
+	}
+
 	// simple spoof check security
-	josSpoofCheck();	
-	
+	josSpoofCheck();
+
 	$row = new mosWeblink( $database );
 	if (!$row->bind( $_POST, 'published' )) {
 		echo "<script> alert('".$row->getError()."'); window.history.go(-1); </script>\n";
@@ -317,7 +317,7 @@ function saveWeblink( $option ) {
 	// sanitise id field
 	// $row->id = (int) $row->id;
 	// until full edit capabilities are given for weblinks - limit saving to new weblinks only
-	$row->id = 0;	
+	$row->id = 0;
 
 	$isNew = $row->id < 1;
 
@@ -336,7 +336,7 @@ function saveWeblink( $option ) {
 	// admin users gid
 	$gid = 25;
 
-	// list of admins	
+	// list of admins
 	$query = "SELECT email, name"
 	. "\n FROM #__users"
 	. "\n WHERE gid = " . (int) $gid
@@ -348,13 +348,13 @@ function saveWeblink( $option ) {
 		return;
 	}
 	$adminRows = $database->loadObjectList();
-	
+
 	// send email notification to admins
-	foreach($adminRows as $adminRow) {			
+	foreach($adminRows as $adminRow) {
 		mosSendAdminMail($adminRow->name, $adminRow->email, '', 'Weblink', $row->title, $my->username );
 	}
 
 	$msg 	= $isNew ? _THANK_SUB : '';
-	mosRedirect( 'index.php', $msg ); 
+	mosRedirect( 'index.php', $msg );
 }
 ?>

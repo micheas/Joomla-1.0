@@ -39,6 +39,7 @@ code fixes.
 
 04-Jan-2008 Andrew Eddie
  # Fixed bad &amp;'s in wrapper.xml, mosimage.xml, mod_wrapper.xml and mospaging.xml
+ # Fixed minor bug in com_weblinks where link empty
 
 02-Jan-2008 Anthony Ferrara
  # Fixed delete issue with com_media in backend spoof check

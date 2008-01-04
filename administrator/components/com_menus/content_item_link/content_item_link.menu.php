@@ -17,6 +17,8 @@ defined( '_VALID_MOS' ) or die( 'Restricted access' );
 
 mosAdminMenus::menuItem( $type );
 
+$scid 	= mosGetParam( $_POST, 'scid', '' );
+
 switch ( $task ) {
 	case 'content_item_link':
 		// this is the new item, ie, the same name as the menu `type`

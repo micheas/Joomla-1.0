@@ -44,6 +44,7 @@ code fixes.
  # Fixed [#7650] Problem with if statement (?) in mod_related_items
  # Fixed [#8381] too many argument in com_search page header parameter
  # Fixed [#5318] mosPageNav::writePagesLinks adds trailing space to _PN_NEXT href
+ # Fixed [#8599] Invalid Redirect URL of content_item_link menu item
 
 02-Jan-2008 Anthony Ferrara
  # Fixed delete issue with com_media in backend spoof check

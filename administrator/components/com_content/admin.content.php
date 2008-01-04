@@ -648,7 +648,7 @@ function editContent( $uid=0, $sectionid=0, $option ) {
 */
 function saveContent( $sectionid, $task ) {
 	global $database, $my, $mainframe, $mosConfig_offset;
-	
+
 	josSpoofCheck();
 
 	$menu 		= strval( mosGetParam( $_POST, 'menu', 'mainmenu' ) );
@@ -804,7 +804,7 @@ function saveContent( $sectionid, $task ) {
 */
 function changeContent( $cid=null, $state=0, $option ) {
 	global $database, $my, $task;
-	
+
 	josSpoofCheck();
 
 	if (count( $cid ) < 1) {
@@ -875,7 +875,7 @@ function changeContent( $cid=null, $state=0, $option ) {
 */
 function toggleFrontPage( $cid, $section, $option ) {
 	global $database, $mainframe;
-	
+
 	josSpoofCheck();
 
 	if (count( $cid ) < 1) {
@@ -917,7 +917,7 @@ function toggleFrontPage( $cid, $section, $option ) {
 
 function removeContent( &$cid, $sectionid, $option ) {
 	global $database;
-	
+
 	josSpoofCheck();
 
 	$total = count( $cid );
@@ -954,7 +954,7 @@ function removeContent( &$cid, $sectionid, $option ) {
 */
 function cancelContent( ) {
 	global $database;
-	
+
 	josSpoofCheck();
 
 	$row = new mosContent( $database );
@@ -971,7 +971,7 @@ function cancelContent( ) {
 */
 function orderContent( $uid, $inc, $option ) {
 	global $database;
-	
+
 	josSpoofCheck();
 
 	$row = new mosContent( $database );
@@ -998,7 +998,7 @@ function moveSection( $cid, $sectionid, $option ) {
 	}
 
 	//seperate contentids
-	mosArrayToInts( $cids );
+	mosArrayToInts( $cid );
 	$cids = 'a.id=' . implode( ' OR a.id=', $cid );
 	// Content Items query
 	$query = 	"SELECT a.title"
@@ -1028,7 +1028,7 @@ function moveSection( $cid, $sectionid, $option ) {
 */
 function moveSectionSave( &$cid, $sectionid, $option ) {
 	global $database, $my;
-	
+
 	josSpoofCheck();
 
 	$sectcat 	= mosGetParam( $_POST, 'sectcat', '' );
@@ -1068,7 +1068,7 @@ function moveSectionSave( &$cid, $sectionid, $option ) {
 		$row->updateOrder( "catid = " . (int) $row->catid . " AND state >= 0" );
 	}
 
-	mosArrayToInts( $cids );
+	mosArrayToInts( $cid );
 	$cids = 'id=' . implode( ' OR id=', $cid );
 	$query = "UPDATE #__content SET sectionid = " . (int) $newsect . ", catid = " . (int) $newcat
 	. "\n WHERE ( $cids )"
@@ -1108,7 +1108,7 @@ function copyItem( $cid, $sectionid, $option ) {
 	}
 
 	//seperate contentids
-	mosArrayToInts( $cids );
+	mosArrayToInts( $cid );
 	$cids = 'a.id=' . implode( ' OR a.id=', $cid );
 	## Content Items query
 	$query = "SELECT a.title"
@@ -1140,7 +1140,7 @@ function copyItem( $cid, $sectionid, $option ) {
 **/
 function copyItemSave( $cid, $sectionid, $option ) {
 	global $database;
-	
+
 	josSpoofCheck();
 
 	$sectcat 	= mosGetParam( $_POST, 'sectcat', '' );
@@ -1233,7 +1233,7 @@ function copyItemSave( $cid, $sectionid, $option ) {
 */
 function resethits( $redirect, $id ) {
 	global $database;
-	
+
 	josSpoofCheck();
 
 	$row = new mosContent($database);
@@ -1253,7 +1253,7 @@ function resethits( $redirect, $id ) {
 */
 function accessMenu( $uid, $access, $option ) {
 	global $database;
-	
+
 	josSpoofCheck();
 
 	$row = new mosContent( $database );
@@ -1289,7 +1289,7 @@ function filterCategory( $query, $active=NULL ) {
 
 function menuLink( $redirect, $id ) {
 	global $database;
-	
+
 	josSpoofCheck();
 
 	$menu = strval( mosGetParam( $_POST, 'menuselect', '' ) );
@@ -1341,7 +1341,7 @@ function saveOrder( &$cid ) {
 	global $database;
 
 	josSpoofCheck();
-	
+
 	$total		= count( $cid );
 	$redirect 	= mosGetParam( $_POST, 'redirect', 0 );
 	$rettask	= strval( mosGetParam( $_POST, 'returntask', '' ) );

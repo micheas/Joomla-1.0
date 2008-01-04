@@ -58,7 +58,7 @@ function viewSearch() {
 		$params = new mosParameters( $menu->params );
 		$params->def( 'page_title', 1 );
 		$params->def( 'pageclass_sfx', '' );
-		$params->def( 'header', $menu->name, _SEARCH_TITLE );
+		$params->def( 'header', $menu->name );
 		$params->def( 'back_button', $mainframe->getCfg( 'back_button' ) );
 	} else {
 		$params = new mosParameters('');

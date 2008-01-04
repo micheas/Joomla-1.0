@@ -42,6 +42,7 @@ code fixes.
  # Fixed minor bug in com_weblinks where link empty
  * SECURITY [LOW level]: Fixed multiple typos in backend com_content making array integer check ineffective
  # Fixed [#7650] Problem with if statement (?) in mod_related_items
+ # Fixed [#8381] too many argument in com_search page header parameter
 
 02-Jan-2008 Anthony Ferrara
  # Fixed delete issue with com_media in backend spoof check

@@ -24,7 +24,7 @@
 		</param>
 		<param name="header" type="text" size="30" default="" label="Page Title" description="Text to display at the top of the page. If left blank, the Menu name will be used instead" />
 		<param name="@spacer" type="spacer" default="" label="" description="" />
-		<param name="scrolling" type="radio" default="auto" label="Scroll Bars" description="Show/Hide Horizontal & Vertical scroll bars.">
+		<param name="scrolling" type="radio" default="auto" label="Scroll Bars" description="Show/Hide Horizontal and Vertical scroll bars.">
 			<option value="no">No</option>
 			<option value="yes">Yes</option>
 			<option value="auto">Auto</option>

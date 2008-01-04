@@ -133,6 +133,7 @@ function showMenu( $option ) {
 	$database->setQuery( $query );
 	$trash = $database->loadObjectList();
 
+	$menus = array();
 	for( $i = 0; $i < $total; $i++ ) {
 		// adds published count
 		foreach ( $published as $count ) {
@@ -202,7 +203,7 @@ function saveMenu() {
 	global $database;
 
 	josSpoofCheck();
-	
+
 	$menutype 		= stripslashes( strval( mosGetParam( $_POST, 'menutype', '' ) ) );
 	$old_menutype 	= stripslashes( strval( mosGetParam( $_POST, 'old_menutype', '' ) ) );
 	$new			= intval( mosGetParam( $_POST, 'new', 1 ) );
@@ -220,7 +221,7 @@ function saveMenu() {
 		echo "<script> alert('The menu name cannot contain a \''); window.history.go(-1); </script>\n";
 		exit;
 	}
-	
+
 	// check for unique menutype for new menus
 	$query = "SELECT params"
 	. "\n FROM #__modules"
@@ -389,7 +390,7 @@ function deleteConfirm( $option, $type ) {
 */
 function deleteMenu( $option, $cid, $type ) {
 	global $database;
-	
+
 	josSpoofCheck();
 
 	if ( $type == 'mainmenu' ) {
@@ -445,7 +446,7 @@ function deleteMenu( $option, $cid, $type ) {
 
 	// clean any existing cache files
 	mosCache::cleanCache( 'com_content' );
-	
+
 	$msg = 'Menu Deleted';
 	mosRedirect( 'index2.php?option=' . $option, $msg );
 }
@@ -475,7 +476,7 @@ function copyConfirm( $option, $type ) {
 */
 function copyMenu( $option, $cid, $type ) {
 	global $database;
-	
+
 	josSpoofCheck();
 
 	$menu_name 		= stripslashes( strval( mosGetParam( $_POST, 'menu_name', 'New Menu' ) ) );
@@ -553,7 +554,7 @@ function copyMenu( $option, $cid, $type ) {
 
 	// clean any existing cache files
 	mosCache::cleanCache( 'com_content' );
-	
+
 	$msg = 'Copy of Menu `'. $type .'` created, consisting of '. $total .' items';
 	mosRedirect( 'index2.php?option=' . $option, $msg );
 }

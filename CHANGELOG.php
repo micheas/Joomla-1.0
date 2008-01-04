@@ -38,9 +38,10 @@ code fixes.
 ! -> Note
 
 04-Jan-2008 Andrew Eddie
+ * SECURITY [LOW level]: Fixed multiple typos in backend com_content making array integer check ineffective
+ * SECURITY: Fix XSS attack in search results pages
  # Fixed bad &amp;'s in wrapper.xml, mosimage.xml, mod_wrapper.xml and mospaging.xml
  # Fixed minor bug in com_weblinks where link empty
- * SECURITY [LOW level]: Fixed multiple typos in backend com_content making array integer check ineffective
  # Fixed [#7650] Problem with if statement (?) in mod_related_items
  # Fixed [#8381] too many argument in com_search page header parameter
  # Fixed [#5318] mosPageNav::writePagesLinks adds trailing space to _PN_NEXT href

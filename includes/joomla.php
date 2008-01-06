@@ -6025,7 +6025,8 @@ function mosBackTrace() {
 	}
 }
 
-function josSpoofCheck( $header=NULL, $alt=NULL , $method = 'post') {
+function josSpoofCheck( $header=NULL, $alt=NULL , $method = 'post')
+{
 	switch(strtolower($method)) {
 		case "get":
 			$validate 	= mosGetParam( $_GET, josSpoofValue($alt), 0 );
@@ -6079,7 +6080,8 @@ function josSpoofCheck( $header=NULL, $alt=NULL , $method = 'post') {
 	}
 }
 
-function _josSpoofCheck( $array, $badStrings ) {
+function _josSpoofCheck( $array, $badStrings )
+{
 	// Loop through each $array value and test if it contains
 	// one of the $badStrings
 	foreach( $array as $v ) {
@@ -6103,8 +6105,9 @@ function _josSpoofCheck( $array, $badStrings ) {
  * @return	string	Hashed var name
  * @static
  */
-function josSpoofValue($alt=NULL) {
-	global $mainframe;
+function josSpoofValue($alt=NULL)
+{
+	global $mainframe, $my;
 
 	if ($alt) {
 		if ( $alt == 1 ) {
@@ -6117,7 +6120,7 @@ function josSpoofValue($alt=NULL) {
 	}
 	// the prefix ensures that the hash is non-numeric
 	// otherwise it will be intercepted by globals.php
-	$validate 	= 'j' . mosHash( $mainframe->getCfg( 'db' ) . $random );
+	$validate 	= 'j' . mosHash( $mainframe->getCfg( 'db' ) . $random . $my->id );
 
 	return $validate;
 }

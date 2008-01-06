@@ -37,6 +37,9 @@ code fixes.
 - -> Removed
 ! -> Note
 
+07-Jan-2008 Andrew Eddie
+ # Fixed where spoof values where same for anonymous and logged in users
+
 04-Jan-2008 Andrew Eddie
  * SECURITY [LOW level]: Fixed multiple typos in backend com_content making array integer check ineffective
  * SECURITY: Fix XSS attack in search results pages

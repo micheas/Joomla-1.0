@@ -60,6 +60,10 @@ if (isset( $mainframe->_head['custom'] ))
 		<?php mosLoadAdminModule( 'fullmenu' );?>
 	</td>
 	<td class="menubackgr" align="right">
+		<a href="<?php echo $mosConfig_live_site;?>" target="_blank">
+			Preview</a>
+	</td>
+	<td class="menubackgr" align="right">
 		<div id="wrapper1">
 			<?php mosLoadAdminModules( 'header', 2 );?>
 		</div>

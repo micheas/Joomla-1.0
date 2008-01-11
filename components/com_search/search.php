@@ -90,13 +90,13 @@ function viewSearch() {
 	}
 
 	if ($searchphrase != 'exact') {
-		$aterms = explode( ' ', JString::strtolower( $searchword ) );
+		$aterms = explode( ' ', strtolower( $searchword ) );
 
 		$search_ignore = array();
 
 		// filter out search terms that are too small
 		foreach( $aterms AS $aterm ) {
-			if (JString::strlen( $aterm ) < 3) {
+			if (strlen( $aterm ) < 3) {
 				$search_ignore[] = $aterm;
 			}
 		}

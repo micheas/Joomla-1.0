@@ -102,10 +102,12 @@ function viewSearch() {
 		}
 		$pruned = array_diff( $aterms, $search_ignore );
 		$pruned = array_unique( $pruned );
-		$searchword = implode( ' ', $pruned );		
+		$searchword = implode( ' ', $pruned );
+		if (trim( $searchword ) == '') {
+			$restriction = 1;
+		}		
 	}
 
-	$search_ignore = array();
 	@include "$mosConfig_absolute_path/language/$mosConfig_lang.ignore.php";
 
 	$orders = array();

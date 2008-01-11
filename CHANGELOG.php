@@ -37,6 +37,11 @@ code fixes.
 - -> Removed
 ! -> Note
 
+11-Jan-2008 Ian MacLennan
+ # Fixed bug in search where small words were not being filtered out properly
+ # Fixed problem in search with regex using too many resources (related to above)
+ # Fixed 1.0 version of [#8404] Incorrect highlighting of search terms (as a byproduct)
+
 07-Jan-2008 Andrew Eddie
  # Fixed where spoof values where same for anonymous and logged in users
  + Added "preview" link in admin template (similar to what is in version 1.5)

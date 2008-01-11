@@ -71,6 +71,9 @@ function viewSearch() {
 	// html output
 	search_html::openhtml( $params );
 
+	$searchphrase = mosGetParam( $_REQUEST, 'searchphrase', 'any' );
+	$searchphrase = preg_replace( '/[^a-z]/', '', strtolower( $searchphrase ) );
+
 	$searchword = strval( mosGetParam( $_REQUEST, 'searchword', '' ) );
 	$searchword = trim( stripslashes( $searchword ) );
 
@@ -84,6 +87,22 @@ function viewSearch() {
 	if ( $searchword && strlen( $searchword ) < 3 ) {
 		$searchword 	= '';
 		$restriction 	= 1;
+	}
+
+	if ($searchphrase != 'exact') {
+		$aterms = explode( ' ', JString::strtolower( $searchword ) );
+
+		$search_ignore = array();
+
+		// filter out search terms that are too small
+		foreach( $aterms AS $aterm ) {
+			if (JString::strlen( $aterm ) < 3) {
+				$search_ignore[] = $aterm;
+			}
+		}
+		$pruned = array_diff( $aterms, $search_ignore );
+		$pruned = array_unique( $pruned );
+		$searchword = implode( ' ', $pruned );		
 	}
 
 	$search_ignore = array();
@@ -100,8 +119,6 @@ function viewSearch() {
 	$lists = array();
 	$lists['ordering'] = mosHTML::selectList( $orders, 'ordering', 'id="search_ordering" class="inputbox"', 'value', 'text', $ordering );
 
-	$searchphrase = mosGetParam( $_REQUEST, 'searchphrase', 'any' );
-	$searchphrase = preg_replace( '/[^a-z]/', '', strtolower( $searchphrase ) );
 	$searchphrases = array();
 
 	$phrase = new stdClass();
@@ -174,9 +191,13 @@ function viewSearch() {
 
 			$text = mosPrepareSearchContent( $text, 200, $needle );
 
-		  	foreach ($searchwords as $hlword) {
-				$text = preg_replace( '/' . preg_quote( $hlword, '/' ) . '/i', '<span class="highlight">\0</span>', $text );
+		  	foreach ($searchwords as $k=>$hlword) {
+		  		$searchwords[$k] = htmlspecialchars( stripslashes( $hlword ) );
 			}
+
+			$searchRegex = implode( '|', $searchwords );
+			
+			$text = eregi_replace( '('.$searchRegex.')', '<span class="highlight">\0</span>', $text );
 
 			if ( strpos( $rows[$i]->href, 'http' ) == false ) {
 				$url = parse_url( $rows[$i]->href );

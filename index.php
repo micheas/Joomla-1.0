@@ -142,6 +142,10 @@ include_once( $mosConfig_absolute_path .'/language/' . $mosConfig_lang . '.php' 
 // frontend login & logout controls
 $return 	= strval( mosGetParam( $_REQUEST, 'return', NULL ) );
 $message 	= intval( mosGetParam( $_POST, 'message', 0 ) );
+
+// Get the information about the current user from the sessions table
+$my = $mainframe->getUser();
+
 if ($option == 'login') {
 	$mainframe->login();
 
@@ -203,9 +207,6 @@ if ($option == 'login') {
 		mosErrorAlert( _ALERT_ENABLED );
 	}
 }
-
-/** get the information about the current user from the sessions table */
-$my = $mainframe->getUser();
 
 // detect first visit
 $mainframe->detect();

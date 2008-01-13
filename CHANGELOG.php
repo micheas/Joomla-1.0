@@ -37,6 +37,8 @@ code fixes.
 - -> Removed
 ! -> Note
 
+--------------- 1.0.14 RC1 Released -- [13-January-2008 23:00 UTC] ---------------------
+
 11-Jan-2008 Ian MacLennan
  # Fixed bug in search where small words were not being filtered out properly
  # Fixed problem in search with regex using too many resources (related to above)

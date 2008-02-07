@@ -3043,7 +3043,7 @@ function mosGetParam( &$arr, $name, $def=null, $mask=0 ) {
 				}
 				$return = $noHtmlFilter->process( $return );
 
-				if (empty($return) && is_numeric($def)) {
+				if (!empty($return) && is_numeric($def)) {
 				// if value is defined and default value is numeric set variable type to integer
 					$return = intval($return);
 				}

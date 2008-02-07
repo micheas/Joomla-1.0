@@ -261,6 +261,9 @@ function mosMakePath($base, $path='', $mode = NULL) {
 	// convert windows paths
 	$path = str_replace( '\\', '/', $path );
 	$path = str_replace( '//', '/', $path );
+	// ensure a clean join with a single slash
+	$path = ltrim( $path, '/' );
+	$base = rtrim( $base, '/' ).'/';
 
 	// check if dir exists
 	if (file_exists( $base . $path )) return true;
@@ -290,7 +293,10 @@ function mosMakePath($base, $path='', $mode = NULL) {
 	} else {
 		$path = $base;
 		for ($i = 0; $i < $n; $i++) {
-			$path .= $parts[$i] . '/';
+			// don't add if part is empty
+			if ($parts[$i]) {
+				$path .= $parts[$i] . '/';
+			}
 			if (!file_exists( $path )) {
 				if (!@mkdir(substr($path,0,-1),$mode)) {
 					$ret = false;

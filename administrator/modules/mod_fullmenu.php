@@ -163,7 +163,7 @@ if (!defined( '_JOS_FULLMENU_MODULE' )) {
 				],
 	<?php
 		// Components Sub-Menu
-		if ($installComponents) {
+		if ($installComponents | $editAllComponents) {
 	?>			_cmSplit,
 				[null,'Components',null,null,'Component Management',
 	<?php
@@ -358,7 +358,7 @@ if (!defined( '_JOS_FULLMENU_MODULE' )) {
 				],
 			<?php
 		/* Components Sub-Menu */
-				if ( $installComponents) {
+				if ( $installComponents | $editAllComponents) {
 					?>
 					_cmSplit,
 					[null,'<?php echo 'Components'; ?>',null,null,'<?php echo $text; ?>'

@@ -712,7 +712,7 @@ function copyMenuSave( $option, $cid, $menu, $menutype ) {
 		$curr->load( $id );
 		$curr->id = NULL;
 		if ( !$curr->store() ) {
-			echo "<script> alert('".$curr->getError()."'); window.history.go(-1); </script>\n";
+			mosErrorAlert( $curr->getError() );
 			exit();
 		}
 		$cidref[] = array($id, $curr->id);
@@ -733,7 +733,7 @@ function copyMenuSave( $option, $cid, $menu, $menutype ) {
 		$curr->menutype = $menu;
 		$curr->ordering = '9999';
 		if ( !$curr->store() ) {
-			echo "<script> alert('".$curr->getError()."'); window.history.go(-1); </script>\n";
+			mosErrorAlert( $curr->getError() );
 			exit();
 		}
 		$curr->updateOrder( 'menutype = ' . $database->Quote( $curr->menutype ) . ' AND parent = ' . (int) $curr->parent );

@@ -39,6 +39,7 @@ code fixes.
 
 07-Feb-2008 Andrew Eddie
  # Fixed [#7276] mosMakePath sometimes leaves trailing / in the end of the path given to mkdir()
+ # Fixed [#8844] Unescaped special characters with database::getEscaped()
 
 --------------- 1.0.14 RC1 Released -- [13-January-2008 23:00 UTC] ---------------------
 

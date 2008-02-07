@@ -121,30 +121,43 @@ class database {
 	function getErrorMsg() {
 		return str_replace( array( "\n", "'" ), array( '\n', "\'" ), $this->_errorMsg );
 	}
+
 	/**
-	* Get a database escaped string
-	* @return string
-	*/
-	function getEscaped( $text ) {
-		/*
-		* Use the appropriate escape string depending upon which version of php
-		* you are running
-		*/
+	 * Get a database escaped string
+	 *
+	 * @param	string	The string to be escaped
+	 * @param	boolean	Optional parameter to provide extra escaping
+	 * @return	string
+	 * @access	public
+	 * @abstract
+	 */
+	function getEscaped( $text, $extra = false ) {
+		// Use the appropriate escape string depending upon which version of php
+		// you are running
 		if (version_compare(phpversion(), '4.3.0', '<')) {
 			$string = mysql_escape_string($text);
 		} else 	{
 			$string = mysql_real_escape_string($text, $this->_resource);
 		}
-
+		if ($extra) {
+			$string = addcslashes( $string, '%_' );
+		}
 		return $string;
 	}
+
 	/**
-	* Get a quoted database escaped string
-	* @return string
-	*/
-	function Quote( $text ) {
-		return '\'' . $this->getEscaped( $text ) . '\'';
+	 * Get a quoted database escaped string
+	 *
+	 * @param	string	A string
+	 * @param	boolean	Default true to escape string, false to leave the string unchanged
+	 * @return	string
+	 * @access public
+	 */
+	function Quote( $text, $escaped = true )
+	{
+		return '\''.($escaped ? $this->getEscaped( $text ) : $text).'\'';
 	}
+
 	/**
 	 * Quote an identifier name (field, table, etc)
 	 * @param string The name

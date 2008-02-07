@@ -89,8 +89,8 @@ class database {
 		$this->_table_prefix = $table_prefix;
 		$this->_ticker = 0;
 		$this->_log = array();
-		
-		$this->setSQLMode();		
+
+		$this->setSQLMode();
 	}
 	/**
 	 * @param int
@@ -110,20 +110,37 @@ class database {
 	function getErrorMsg() {
 		return str_replace( array( "\n", "'" ), array( '\n', "\'" ), $this->_errorMsg );
 	}
+
 	/**
-	* Get a database escaped string
-	* @return string
-	*/
-	function getEscaped( $text ) {
-		return mysqli_real_escape_string( $this->_resource, $text );
+	 * Get a database escaped string
+	 *
+	 * @param	string	The string to be escaped
+	 * @param	boolean	Optional parameter to provide extra escaping
+	 * @return	string
+	 * @access	public
+	 * @abstract
+	 */
+	function getEscaped( $text, $extra = false ) {
+		$string = mysqli_real_escape_string( $this->_resource, $text );
+		if ($extra) {
+			$string = addcslashes( $string, '%_' );
+		}
+		return $string;
 	}
+
 	/**
 	* Get a quoted database escaped string
-	* @return string
+	*
+	* @param	string	A string
+	* @param	boolean	Default true to escape string, false to leave the string unchanged
+	* @return	string
+	* @access public
 	*/
-	function Quote( $text ) {
-		return '\'' . $this->getEscaped( $text ) . '\'';
+	function Quote( $text, $escaped = true )
+	{
+		return '\''.($escaped ? $this->getEscaped( $text ) : $text).'\'';
 	}
+
 	/**
 	 * Quote an identifier name (field, table, etc)
 	 * @param string The name
@@ -156,7 +173,7 @@ class database {
 			case 'datetime':
 				if (empty( $value )) {
 					$value = $this->_nullDate;
-				} 
+				}
 				$result = $this->Quote( $value );
 				break;
 
@@ -164,7 +181,7 @@ class database {
 			case 'double':
 				$result = (double) $value;
 				break;
-				
+
 			case 'int':
 			case 'tinyint':
 			case 'tinyint unsigned':
@@ -760,7 +777,7 @@ class mosDBTable {
 		if ($this->_schema == null) {
 			$this->_setSchema();
 		}
-		return $this->_schema; 
+		return $this->_schema;
 	}
 
 	/**
@@ -858,13 +875,13 @@ class mosDBTable {
 	*/
 	function load( $oid=null ) {
 		$k = $this->_tbl_key;
-		
+
 		if ($oid !== null) {
 			$this->$k = $oid;
 		}
-		
+
 		$oid = $this->$k;
-		
+
 		if ($oid === null) {
 			return false;
 		}
@@ -877,13 +894,13 @@ class mosDBTable {
 		}
 
 		$this->reset();
-		
+
 		$query = "SELECT *"
 		. "\n FROM $this->_tbl"
 		. "\n WHERE $this->_tbl_key = " . $this->_db->Quote( $oid )
 		;
 		$this->_db->setQuery( $query );
-		
+
 		return $this->_db->loadObject( $this );
 	}
 
@@ -1206,7 +1223,7 @@ class mosDBTable {
 			$this->_error = "WARNING: ".strtolower(get_class( $this ))." does not support checkin.";
 			return false;
 		}
-		
+
 		$k 			= $this->_tbl_key;
 		$nullDate 	= $this->_db->getNullDate();
 
@@ -1310,7 +1327,7 @@ class mosDBTable {
 		if (!$this->checkin()) {
 			return false;
 		}
-		
+
 		if ($order_filter) {
 			$filter_value = $this->$order_filter;
 			$this->updateOrder( $order_filter ? "`$order_filter` = " . $this->_db->Quote( $filter_value ) : '' );

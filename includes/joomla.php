@@ -3711,10 +3711,10 @@ function mosMenuCheck( $Itemid, $menu_option, $task, $gid ) {
 		. "\n WHERE id = " . (int) $Itemid
 		;
 	} else {
-		$dblink = "index.php?option=" . $database->getEscaped( $menu_option );
+		$dblink = "index.php?option=" . $database->getEscaped( $menu_option, true );
 
 		if ($task != '') {
-			$dblink	.= "&task=" . $database->getEscaped( $task );
+			$dblink	.= "&task=" . $database->getEscaped( $task, true );
 		}
 
 		$query = "SELECT *"

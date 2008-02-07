@@ -37,7 +37,7 @@ if ($option == 'com_content' && $task == 'view' && $id) {
 		foreach ($keys as $key) {
 			$key = trim( $key );
 			if ($key) {
-				$likes[] = $database->getEscaped( $key );
+				$likes[] = $database->getEscaped( $key, true );
 			}
 		}
 

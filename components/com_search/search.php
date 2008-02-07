@@ -105,7 +105,7 @@ function viewSearch() {
 		$searchword = implode( ' ', $pruned );
 		if (trim( $searchword ) == '') {
 			$restriction = 1;
-		}		
+		}
 	}
 
 	@include "$mosConfig_absolute_path/language/$mosConfig_lang.ignore.php";
@@ -170,7 +170,7 @@ function viewSearch() {
 		mosLogSearch( $searchword );
 
 		$_MAMBOTS->loadBotGroup( 'search' );
-		$results 	= $_MAMBOTS->trigger( 'onSearch', array( $database->getEscaped( $searchword ), $searchphrase, $ordering ) );
+		$results 	= $_MAMBOTS->trigger( 'onSearch', array( $database->getEscaped( $searchword, true ), $searchphrase, $ordering ) );
 		$totalRows 	= 0;
 
 		$rows = array();
@@ -198,7 +198,7 @@ function viewSearch() {
 			}
 
 			$searchRegex = implode( '|', $searchwords );
-			
+
 			$text = eregi_replace( '('.$searchRegex.')', '<span class="highlight">\0</span>', $text );
 
 			if ( strpos( $rows[$i]->href, 'http' ) == false ) {

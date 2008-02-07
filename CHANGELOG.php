@@ -43,6 +43,7 @@ code fixes.
  # Fixed [#7608] XSS attack with case sensitive flaw in input filter
  # Fixed [#6122] mosGetParam numeric check bug
  # Fixed [#6021] Backend full menu ACL corrections
+ # Fixed [#9197] Wrong variable name in admin.menus.php
 
 --------------- 1.0.14 RC1 Released -- [13-January-2008 23:00 UTC] ---------------------
 

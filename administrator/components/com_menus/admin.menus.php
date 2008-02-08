@@ -262,7 +262,7 @@ function viewMenuItems( $menutype, $option ) {
 function addMenuItem( &$cid, $menutype, $option, $task ) {
 	global $mosConfig_absolute_path;
 
-	josSpoofCheck();
+	josSpoofCheck(null, null, 'request');
 
 	$types 	= array();
 

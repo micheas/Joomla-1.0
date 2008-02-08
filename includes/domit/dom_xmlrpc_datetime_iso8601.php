@@ -11,7 +11,7 @@
 //All rights reserved
 //*******************************************************************
 //Licensed under the GNU General Public License (GPL)
-//http://www.gnu.org/copyleft/gpl.html
+//http://www.gnu.org/licenses/gpl-2.0.html
 //*******************************************************************
 
 class dom_xmlrpc_datetime_iso8601 {

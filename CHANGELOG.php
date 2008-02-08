@@ -37,6 +37,14 @@ code fixes.
 - -> Removed
 ! -> Note
 
+09-Feb-2008 Wilco Jansen
+ # Fixed [9249] Unable to delete mambots
+ # Fixed [6072] GPL url points to version "latest" (v3) instead of V2 in all files
+ # Fixed [9013] Missing $mainframe in popups
+ # Fixed [9413] Not authorized error in forced logout
+ # Fixed [9321] Menu Name at menu manager is missing
+ ! Thanks Jens-Christian Skibakk for providing patches
+
 07-Feb-2008 Andrew Eddie
  # Fixed [#7276] mosMakePath sometimes leaves trailing / in the end of the path given to mkdir()
  # Fixed [#8844] Unescaped special characters with database::getEscaped()

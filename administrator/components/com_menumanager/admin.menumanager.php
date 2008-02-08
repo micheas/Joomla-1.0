@@ -4,7 +4,7 @@
 * @package Joomla
 * @subpackage Menus
 * @copyright Copyright (C) 2005 Open Source Matters. All rights reserved.
-* @license http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
+* @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL, see LICENSE.php
 * Joomla! is free software. This version may have been modified pursuant
 * to the GNU General Public License, and as distributed it includes or
 * is derivative of works licensed under the GNU General Public License or
@@ -83,6 +83,7 @@ function showMenu( $option ) {
 	$menuTypes 	= mosAdminMenus::menutypes();
 	$total		= count( $menuTypes );
 	$i			= 0;
+	$menus  = array();
 	foreach ( $menuTypes as $a ) {
 		$menus[$i]->type 		= $a;
 
@@ -133,7 +134,6 @@ function showMenu( $option ) {
 	$database->setQuery( $query );
 	$trash = $database->loadObjectList();
 
-	$menus = array();
 	for( $i = 0; $i < $total; $i++ ) {
 		// adds published count
 		foreach ( $published as $count ) {

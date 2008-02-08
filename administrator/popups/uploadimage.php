@@ -62,6 +62,9 @@ switch ($option) {
 		break;
 }
 
+// mainframe is an API workhorse, lots of 'core' interaction routines
+$mainframe = new mosMainFrame( $database, $option, $mosConfig_absolute_path, true );
+
 $directory	= mosGetParam( $_REQUEST, 'directory', '');
 $css 		= mosGetParam( $_REQUEST, 't','');
 

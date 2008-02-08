@@ -4,7 +4,7 @@
 * @package Joomla
 * @subpackage Newsfeeds
 * @copyright Copyright (C) 2005 Open Source Matters. All rights reserved.
-* @license http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
+* @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL, see LICENSE.php
 * modified by brian & rob
 * Joomla! is free software. This version may have been modified pursuant
 * to the GNU General Public License, and as distributed it includes or

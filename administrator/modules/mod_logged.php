@@ -85,7 +85,7 @@ foreach ( $rows as $row ) {
 		if ( $acl->acl_check( 'administration', 'manage', 'users', $my->usertype, 'components', 'com_users' ) ) {
 			?>
 			<td>
-			<a href="index2.php?option=com_users&task=flogout&id=<?php echo $row->userid; ?>">
+			<a href="index2.php?option=com_users&task=flogout&id=<?php echo $row->userid; ?>&<?php echo josSpoofValue(); ?>=1">
 			<img src="images/publish_x.png" width="12" height="12" border="0" alt="Logout" Title="Force Logout User" />
 			</a>
 			</td>

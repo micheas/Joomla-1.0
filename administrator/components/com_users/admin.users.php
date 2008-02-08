@@ -4,7 +4,7 @@
 * @package Joomla
 * @subpackage Users
 * @copyright Copyright (C) 2005 Open Source Matters. All rights reserved.
-* @license http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
+* @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL, see LICENSE.php
 * Joomla! is free software. This version may have been modified pursuant
 * to the GNU General Public License, and as distributed it includes or
 * is derivative of works licensed under the GNU General Public License or
@@ -683,7 +683,7 @@ function changeUserBlock( $cid=null, $block=1, $option ) {
 function logoutUser( $cid=null, $option, $task ) {
 	global $database, $my;
 	
-	josSpoofCheck();
+	josSpoofCheck(null, null, 'request');
 
 	if ( is_array( $cid ) ) {
 		if (count( $cid ) < 1) {

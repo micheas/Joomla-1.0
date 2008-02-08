@@ -289,7 +289,7 @@ function removeTemplate( $cid, $option, $client ) {
 	$database->setQuery( $query );
 	$database->query();
 
-	mosRedirect( 'index2.php?option=com_installer&element=template&client='. $client .'&task=remove&cid[]='. $cid );
+	mosRedirect( 'index2.php?option=com_installer&element=template&client='. $client .'&task=remove&cid[]='. $cid . '&' . josSpoofValue() . '=1');
 }
 
 function editTemplateSource( $p_tname, $option, $client ) {

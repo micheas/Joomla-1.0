@@ -204,7 +204,7 @@ function removeLanguage( $cid, $option, $client = 'admin' ) {
 	unlink($xml_path);
 	*/
 
-	mosRedirect( 'index2.php?option=com_installer&element=language&client='. $client .'&task=remove&cid[]='. $cid );
+	mosRedirect( 'index2.php?option=com_installer&element=language&client='. $client .'&task=remove&cid[]='. $cid . '&' . josSpoofValue() . '=1' );
 
 }
 

@@ -93,7 +93,7 @@ class mosInstallerTemplate extends mosInstaller {
 	function uninstall( $id, $option, $client=0 ) {
 		global $database, $mosConfig_absolute_path;
 
-		josSpoofCheck();
+		josSpoofCheck(null, null, 'request');
 
 		// Delete directories
 		$path = $mosConfig_absolute_path

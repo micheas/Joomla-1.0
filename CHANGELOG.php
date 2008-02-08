@@ -43,6 +43,7 @@ code fixes.
  # Fixed [9013] Missing $mainframe in popups
  # Fixed [9413] Not authorized error in forced logout
  # Fixed [9321] Menu Name at menu manager is missing
+ # Fixed [9250]  Unable to uninstall Template and languages
  ! Thanks Jens-Christian Skibakk for providing patches
 
 07-Feb-2008 Andrew Eddie

@@ -26,15 +26,15 @@ class joomlaVersion {
 	/** @var string Development Status */
 	var $DEV_STATUS = 'Stable';
 	/** @var int Sub Release Level */
-	var $DEV_LEVEL 	= '14 RC1';
+	var $DEV_LEVEL 	= '14';
 	/** @var int build Number */
 	var $BUILD	 	= '$Revision$';
 	/** @var string Codename */
 	var $CODENAME 	= 'Daybreak';
 	/** @var string Date */
-	var $RELDATE 	= '13 January 2008';
+	var $RELDATE 	= '11 February 2008';
 	/** @var string Time */
-	var $RELTIME 	= '22:00';
+	var $RELTIME 	= '00:00';
 	/** @var string Timezone */
 	var $RELTZ 		= 'UTC';
 	/** @var string Copyright Text */
@@ -46,7 +46,7 @@ class joomlaVersion {
 	/** @var string Whether site has restricted functionality mostly used for demo sites: 0 is default */
 	var $RESTRICT	= 0;
 	/** @var string Whether site is still in development phase (disables checks for /installation folder) - should be set to 0 for package release: 0 is default */
-	var $SVN		= 1;
+	var $SVN		= 0;
 
 
 	/**

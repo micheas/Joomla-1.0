@@ -37,6 +37,14 @@ code fixes.
 - -> Removed
 ! -> Note
 
+
+--------------- 1.0.15 Stable Released -- [?? 23:00 UTC] ---------------------
+
+06-Feb-2008 Andrew Eddie
+* SECURITY [HIGH level]: Fixed remote file inclusion vulnerability
+
+--------------- 1.0.14 Stable Released -- [11-February-2008 23:00 UTC] ---------------------
+
 09-Feb-2008 Wilco Jansen
  # Fixed [9249] Unable to delete mambots
  # Fixed [6072] GPL url points to version "latest" (v3) instead of V2 in all files

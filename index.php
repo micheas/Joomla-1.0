@@ -22,7 +22,7 @@ if (!file_exists( 'configuration.php' ) || filesize( 'configuration.php' ) < 10)
 }
 
 require( 'globals.php' );
-require_once( 'configuration.php' );
+require( 'configuration.php' );
 
 // SSL check - $http_host returns <live site url>:<port number if it is 443>
 $http_host = explode(':', $_SERVER['HTTP_HOST'] );

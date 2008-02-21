@@ -38,7 +38,7 @@ code fixes.
 ! -> Note
 
 
---------------- 1.0.15 Stable Released -- [?? 23:00 UTC] ---------------------
+--------------- 1.0.15 Stable Released -- [22-February-2008 23:00 UTC] ---------------------
 
 06-Feb-2008 Andrew Eddie
 * SECURITY [HIGH level]: Fixed remote file inclusion vulnerability

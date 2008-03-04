@@ -37,6 +37,8 @@ code fixes.
 - -> Removed
 ! -> Note
 
+04-Mar-2008 Andrew Eddie
+ # Fixed [#5722] Preview Icon in mosToolBar not showing
 
 --------------- 1.0.15 Stable Released -- [22-February-2008 23:00 UTC] ---------------------
 

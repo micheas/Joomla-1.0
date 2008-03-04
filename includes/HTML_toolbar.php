@@ -255,7 +255,7 @@ class mosToolBar {
 		$database->setQuery( $sql );
 		$cur_template = $database->loadResult();
 
-		$image = mosAdminMenus::ImageCheck( 'preview_f2.png', 'images/', NULL, NULL, 'Preview', 'preview', 1 );
+		$image = mosAdminMenus::ImageCheck( 'preview_f2.png', '/images/', NULL, NULL, 'Preview', 'preview', 1 );
 		?>
 		<td>
 			<a class="toolbar" href="#" onclick="window.open('popups/<?php echo $popup;?>.php?t=<?php echo $cur_template; ?>', 'win1', 'status=no,toolbar=no,scrollbars=yes,titlebar=no,menubar=no,resizable=yes,width=640,height=480,directories=no,location=no');" >

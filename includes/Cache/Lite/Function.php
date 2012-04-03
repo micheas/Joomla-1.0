@@ -72,6 +72,10 @@ class Cache_Lite_Function extends Cache_Lite
 	function call()
 	{
 		$arguments = func_get_args();
+		$numargs = func_num_args();
+		for ($i=1; $i < $numargs; $i++){
+			$arguments[$i] = &$arguments[$i];
+		}
 		$id = serialize($arguments); // Generate a cache id
 		if (!$this->_fileNameProtection) {
 			$id = md5($id);

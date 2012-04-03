@@ -37,6 +37,13 @@ code fixes.
 - -> Removed
 ! -> Note
 
+--------------- 1.0.16 Unofficial UnStable Released -- [02-April-2012 23:00 UTC] ---------------------
+02-Apr-2012 Micheas Herman
+
+ ^ updated tinymce to support current browsers
+ # made two small fixes to support php 5.3 and 5.4 -- 
+ !   -- note php error level needs to be set to display off if using php greater than 5.2
+
 04-Mar-2008 Andrew Eddie
  # Fixed [#5722] Preview Icon in mosToolBar not showing
 

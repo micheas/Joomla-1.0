@@ -70,7 +70,7 @@ function botTinymceEditorInit() {
 	// emotions
 	$smilies			=  $params->def( 'smilies', 			1 );
 	// flash
-	$flash				=  $params->def( 'flash', 				1 );
+	$flash				=  $params->def( 'flash', 				0 );
 	// table
 	$table				=  $params->def( 'table', 				1 );
 	// horizontal line
@@ -295,10 +295,10 @@ return <<<EOD
 		base_url = tinyMCE.settings['document_base_url'];
 		var vHTML = content;
 		if (true == true){
-			vHTML = tinyMCE.regexpReplace(vHTML, 'href\s*=\s*"?'+base_url+'', 'href="', 'gi');
-			vHTML = tinyMCE.regexpReplace(vHTML, 'src\s*=\s*"?'+base_url+'', 'src="', 'gi');
-			vHTML = tinyMCE.regexpReplace(vHTML, 'mce_real_src\s*=\s*"?', '', 'gi');
-			vHTML = tinyMCE.regexpReplace(vHTML, 'mce_real_href\s*=\s*"?', '', 'gi');
+			//vHTML = string.replace('href\s*=\s*"?'+base_url+'', 'href="');
+			//vHTML = string.replace('src\s*=\s*"?'+base_url+'', 'src="');
+			//vHTML = string.replace('mce_real_src\s*=\s*"?', '');
+			//vHTML = string.replace('mce_real_href\s*=\s*"?', '');
 		}
 		return vHTML;
 	}	

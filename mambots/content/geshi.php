@@ -80,4 +80,4 @@ function botGeshi_replacer( &$matches ) {
 
 	return $text;
 }
-?>
+

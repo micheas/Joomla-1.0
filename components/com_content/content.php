@@ -2600,4 +2600,4 @@ function votingQuery( $active=NULL ) {
 
 	return $results;
 }
-?>
+

@@ -130,4 +130,4 @@ class mosBanner extends mosDBTable {
 		return true;
 	}
 }
-?>
+

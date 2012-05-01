@@ -164,4 +164,4 @@ if (!defined( '_ADMIN_OFFLINE' ) || defined( '_INSTALL_CHECK' )) {
 	<?php
 	exit( 0 );
 }
-?>
+

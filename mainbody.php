@@ -16,4 +16,4 @@ defined( '_VALID_MOS' ) or die( 'Restricted access' );
 
 // This file simply supports backwards compatibility
 mosMainBody();
-?>
+

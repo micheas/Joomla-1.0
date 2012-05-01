@@ -96,4 +96,4 @@ if ($numrows){
 } else {
 	echo "&nbsp;";
 }
-?>
+

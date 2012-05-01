@@ -833,7 +833,14 @@ class mosMainFrame {
 						$now 	= time();
 
 						$file 	= $this->getPath( 'com_xml', 'com_users' );
-						$params =& new mosParameters( $my->params, $file, 'component' );
+            if (version_compare(PHP_VERSION, '5.2.0') >= 0) {
+						  $params = new mosParameters( $my->params, $file, 'component' );
+            } else {
+              $errorlevel = error_reporting();
+              error_reporting(0);
+						  $params =& new mosParameters( $my->params, $file, 'component' );
+              error_reporting($errorlevel);
+            }
 
 						// return to expired page functionality
 						$params->set( 'expired', 		$link );

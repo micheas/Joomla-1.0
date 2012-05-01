@@ -198,10 +198,10 @@ class HTML_admin_misc {
 							Magic Quotes:
 						</td>
 						<td style="font-weight: bold;">
-							<?php echo HTML_admin_misc::get_php_setting('magic_quotes_gpc',1,1); ?>
+							<?php echo HTML_admin_misc::get_php_setting('magic_quotes_gpc',1,0); ?>
 						</td>
 						<td>
-							<?php $img = (!(ini_get('magic_quotes_gpc')) ? 'publish_x.png' : 'tick.png'); ?>
+							<?php $img = ((ini_get('magic_quotes_gpc')) ? 'publish_x.png' : 'tick.png'); ?>
 							<img src="../images/<?php echo $img; ?>" />
 						</td>
 					</tr>
@@ -649,4 +649,4 @@ function getHelpTOC( $helpsearch ) {
 	asort( $toc );
 	return $toc;
 }
-?>
+

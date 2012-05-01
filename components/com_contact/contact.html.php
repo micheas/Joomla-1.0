@@ -722,4 +722,4 @@ class HTML_contact {
 		mosHTML::BackButton ( $params );
 	}
 }
-?>
+

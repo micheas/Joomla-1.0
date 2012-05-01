@@ -529,4 +529,4 @@ function vCard( $id ) {
 		return;
 	}
 }
-?>
+

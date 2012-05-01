@@ -156,4 +156,4 @@ class MambovCard extends vCard {
 		return $text;
 	}
 }
-?>
+

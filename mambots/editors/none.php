@@ -83,4 +83,4 @@ function botNoEditorEditorArea( $name, $content, $hiddenField, $width, $height, 
 <br />$buttons
 EOD;
 }
-?>
+

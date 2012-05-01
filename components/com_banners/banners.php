@@ -126,4 +126,4 @@ function clickbanner( $bid ) {
 	}
 	mosRedirect( $clickurl );
 }
-?>
+

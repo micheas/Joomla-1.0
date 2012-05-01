@@ -322,8 +322,8 @@ function mosMainBody_Admin() {
 function josSecurityCheck($width='95%') {
 	$wrongSettingsTexts = array();
 
-	if ( ini_get('magic_quotes_gpc') != '1' ) {
-		$wrongSettingsTexts[] = 'PHP magic_quotes_gpc setting is `OFF` instead of `ON`';
+	if ( ini_get('magic_quotes_gpc') != '0' ) {
+		$wrongSettingsTexts[] = 'PHP magic_quotes_gpc setting is `ON` instead of `OFF`';
 	}
 	if ( ini_get('register_globals') == '1' ) {
 		$wrongSettingsTexts[] = 'PHP register_globals setting is `ON` instead of `OFF`';
@@ -332,11 +332,19 @@ function josSecurityCheck($width='95%') {
 		$wrongSettingsTexts[] = 'Joomla! &quot;Register Globals Emulation&quot; setting is `ON`. &nbsp; To disable Register Globals Emulation, navigate to Site -> Global Configuration -> Server, select `OFF`, and save.<br /><span style="font-weight: normal; font-style: italic; color: #666;">Register Globals Emulation is `ON` by default for backward compatibility.</span>';
 	}
 
-	if ( count($wrongSettingsTexts) ) {
-		?>
+?>
 		<div style="clear: both; margin: 3px; margin-top: 10px; padding: 5px 15px; display: block; float: left; border: 1px solid #cc0000; background: #ffffcc; text-align: left; width: <?php echo $width;?>;">
 			<p style="color: #CC0000;">
-				Following PHP Server Settings are not optimal for <strong>Security</strong> and it is recommended to change them:
+				As of July 2009 this version of Joomla is no longer supported by the <a href="http://www.joomla.org">Joomla!</a> project.
+			</p>
+			<p style="color: #CC0000;">
+				You should consider one of two options: a) migrate your site to Joomla! 2.5, Drupal 7, or another current platform; b) convert your site to a static site.
+			</p>
+    <?php
+	if ( count($wrongSettingsTexts) ) {
+		?>
+			<p style="color: #CC0000;">
+				The following PHP Server Settings are not optimal for <strong>Security</strong> and it is recommended to change them:
 			</p>
 			<ul style="margin: 0px; padding: 0px; padding-left: 15px; list-style: none;" >
 				<?php
@@ -358,4 +366,3 @@ function josSecurityCheck($width='95%') {
 		<?php
 	}
 }
-?>

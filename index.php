@@ -278,4 +278,4 @@ if ($mosConfig_debug) {
 }
 
 doGzip();
-?>
+

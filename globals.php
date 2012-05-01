@@ -143,4 +143,4 @@ if (RG_EMULATION == 0) {
 	}
 }
 
-?>
+

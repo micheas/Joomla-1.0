@@ -89,9 +89,9 @@ if (!defined( '_ADMIN_OFFLINE' ) || defined( '_INSTALL_CHECK' )) {
 		<link rel="stylesheet" href="<?php echo $mosConfig_live_site; ?>/templates/<?php echo $cur_template; ?>/css/offline.css" type="text/css" />
 <?php
 	}
-?>
 
-<?php
+
+
 	// favourites icon
 	if ( !$mosConfig_favicon ) {
 		$mosConfig_favicon = 'favicon.ico';

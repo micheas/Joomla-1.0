@@ -27,6 +27,8 @@ Joomla! 1.0, including beta and release candidate versions.
 Our thanks to all those people who've contributed bug reports and
 code fixes.
 
+The change log is available at: https://github.com/micheas/Joomla-1.0/commits/master
+
 
 3. Legend
 ---------

@@ -153,4 +153,3 @@ class url_menu_html {
 		<?php
 	}
 }
-?>

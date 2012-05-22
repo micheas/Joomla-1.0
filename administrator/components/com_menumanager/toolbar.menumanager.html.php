@@ -73,4 +73,3 @@ class TOOLBAR_menumanager {
 	}
 
 }
-?>

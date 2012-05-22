@@ -77,4 +77,3 @@ class weblink_category_table_menu {
 		weblink_category_table_menu_html::editCategory( $menu, $lists, $params, $option );
 	}
 }
-?>

@@ -66,4 +66,3 @@ class content_section_menu {
 		content_section_menu_html::editSection( $menu, $lists, $params, $option );
 	}
 }
-?>

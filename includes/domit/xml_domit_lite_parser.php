@@ -1900,4 +1900,3 @@ class DOMIT_Lite_Parser {
 	} //defaultDataElement
 } //DOMIT_Lite_Parser
 
-?>

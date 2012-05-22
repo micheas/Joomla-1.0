@@ -168,4 +168,3 @@ class HTML_registration {
 		<?php
 	}
 }
-?>

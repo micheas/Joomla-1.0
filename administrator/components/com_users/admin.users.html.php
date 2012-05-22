@@ -446,4 +446,3 @@ class HTML_users {
 		<?php
 	}
 }
-?>

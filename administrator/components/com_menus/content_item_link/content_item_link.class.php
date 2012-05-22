@@ -139,4 +139,3 @@ class content_item_link_menu {
 		mosRedirect( 'index2.php?option=com_content&task=edit&id='. $id );
 	}
 }
-?>

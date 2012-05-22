@@ -43,4 +43,3 @@ switch ($task) {
 		TOOLBAR_content::_DEFAULT();
 		break;
 }
-?>

@@ -437,4 +437,3 @@ class HTML_modules {
 	}
 
 }
-?>

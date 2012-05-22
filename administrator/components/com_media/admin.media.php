@@ -373,4 +373,3 @@ function rm_all_dir($dir) {
 		rmdir($dir);
 	}
 }
-?>

@@ -68,4 +68,3 @@ class url_menu {
 		url_menu_html::edit( $menu, $lists, $params, $option );
 	}
 }
-?>

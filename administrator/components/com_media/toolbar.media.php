@@ -22,4 +22,3 @@ switch ( $task ) {
 		TOOLBAR_media::_DEFAULT();
 		break;
 }
-?>

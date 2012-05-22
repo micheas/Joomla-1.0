@@ -140,4 +140,3 @@ function parseAttributes($attrText, $convertEntities = true, $definedEntities = 
 
 	return $attrArray;
 } //parseAttributes
-?>

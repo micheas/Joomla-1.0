@@ -82,4 +82,3 @@ class components_menu {
 		components_menu_html::edit( $menu, $components, $lists, $params, $option );
 	}
 }
-?>

@@ -32,4 +32,3 @@ switch ($task) {
 		TOOLBAR_Trash::_DEFAULT();
 		break;
 }
-?>

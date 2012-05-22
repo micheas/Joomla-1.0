@@ -28,4 +28,3 @@ switch ( $task ) {
 		TOOLBAR_contact::_DEFAULT();
 		break;
 }
-?>

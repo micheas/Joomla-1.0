@@ -148,4 +148,3 @@ class content_blog_section {
 	}
 
 }
-?>

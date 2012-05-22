@@ -181,4 +181,3 @@ class dom_xmlrpc_utilities {
 	} //getInverseTranslationTable
 } //dom_xmlrpc_utilities
 
-?>

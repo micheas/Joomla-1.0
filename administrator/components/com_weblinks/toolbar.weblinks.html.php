@@ -53,4 +53,3 @@ class TOOLBAR_weblinks {
 		mosMenuBar::endTable();
 	}
 }
-?>

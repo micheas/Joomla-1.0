@@ -1216,4 +1216,3 @@ class HTML_content {
 		<?php
 	}
 }
-?>

@@ -168,4 +168,3 @@ class content_item_link_menu_html {
 		<?php
 	}
 }
-?>

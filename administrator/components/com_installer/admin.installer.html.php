@@ -140,4 +140,3 @@ class HTML_installer {
 		<?php
 	}
 }
-?>

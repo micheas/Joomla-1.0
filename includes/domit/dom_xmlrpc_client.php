@@ -269,4 +269,3 @@ class XMLRPC_Client_Exception {
 } //XMLRPC_Client_Exception
 
 
-?>

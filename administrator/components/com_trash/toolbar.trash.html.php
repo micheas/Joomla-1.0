@@ -45,4 +45,3 @@ class TOOLBAR_Trash {
 	}
 
 }
-?>

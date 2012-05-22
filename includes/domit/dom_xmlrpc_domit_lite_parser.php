@@ -154,4 +154,3 @@ class dom_xmlrpc_domit_lite_document extends DOMIT_Lite_Document {
 		}
 	} //getParamType
 } //dom_xmlrpc_domit_lite_document
-?>

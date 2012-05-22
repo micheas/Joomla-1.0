@@ -110,4 +110,3 @@ class HTTPExceptions {
 	} //setErrorLog
 } //HTTPExceptions
 
-?>

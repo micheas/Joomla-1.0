@@ -66,4 +66,3 @@ function botVoting( &$row, &$params, $page=0 ) {
 	}
 	return $html;
 }
-?>

@@ -1044,4 +1044,3 @@ class DOMIT_XPath {
 		}
 	} //initSearch
 } //DOMIT_XPath
-?>

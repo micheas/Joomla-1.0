@@ -260,4 +260,3 @@ function saveLanguageSource( $option ) {
 		mosRedirect( "index2.php?option=$option&mosmsg=Operation failed: Failed to open file for writing." );
 	}
 }
-?>

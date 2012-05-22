@@ -144,4 +144,3 @@ if (!function_exists('stripos')) {
 function clone($object) {
       return $object;
 }
-?>

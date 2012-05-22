@@ -44,4 +44,3 @@ class mosUserParameters extends mosParameters {
 		return mosHTML::selectList( $editors, ''. $control_name .'['. $name .']', 'class="inputbox"', 'value', 'text', $value );
 	}
 }
-?>

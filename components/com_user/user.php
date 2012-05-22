@@ -282,4 +282,3 @@ function CheckIn( $userid, $access, $option ){
 	</table>
 	<?php
 }
-?>

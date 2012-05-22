@@ -99,4 +99,4 @@ class TOOLBAR_bannerClient {
 		mosMenuBar::endTable();
 	}
 }
-?>
+

@@ -38,4 +38,4 @@ switch ($task) {
 		TOOLBAR_banners::_DEFAULT();
 		break;
 }
-?>
+

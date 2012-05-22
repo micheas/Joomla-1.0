@@ -75,4 +75,3 @@ class TOOLBAR_sections {
 		mosMenuBar::endTable();
 	}
 }
-?>

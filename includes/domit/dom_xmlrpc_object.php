@@ -24,4 +24,3 @@ class dom_xmlrpc_object {
 		return $this->myObject;
 	} //getObject
 } //dom_xmlrpc_object
-?>

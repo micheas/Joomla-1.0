@@ -22,4 +22,3 @@ switch ( $task ) {
 		TOOLBAR_syndicate::_DEFAULT();
 		break;
 }
-?>

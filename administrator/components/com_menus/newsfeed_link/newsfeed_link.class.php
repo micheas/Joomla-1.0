@@ -111,4 +111,3 @@ class newsfeed_link_menu {
 		newsfeed_link_menu_html::edit( $menu, $lists, $params, $option, $newsfeeds );
 	}
 }
-?>

@@ -433,4 +433,3 @@ function saveconfig( $task ) {
 		mosRedirect( 'index2.php', 'An Error Has Occurred! Unable to open config file to write!' );
 	}
 }
-?>

@@ -36,4 +36,3 @@ class TOOLBAR_media {
 		mosMenuBar::endTable();
 	}
 }
-?>

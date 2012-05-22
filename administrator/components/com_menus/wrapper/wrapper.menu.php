@@ -32,4 +32,3 @@ switch ( $task ) {
 		wrapper_menu::saveMenu( $option, $task );
 		break;
 }
-?>

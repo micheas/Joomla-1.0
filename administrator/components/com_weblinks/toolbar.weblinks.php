@@ -28,4 +28,3 @@ switch ($task) {
 		TOOLBAR_weblinks::_DEFAULT();
 		break;
 }
-?>

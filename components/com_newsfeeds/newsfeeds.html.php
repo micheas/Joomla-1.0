@@ -397,4 +397,3 @@ class HTML_newsfeed {
 		mosHTML::BackButton ( $params );
 	}
 }
-?>

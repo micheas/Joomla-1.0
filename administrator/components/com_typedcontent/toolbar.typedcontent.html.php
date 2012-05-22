@@ -52,4 +52,3 @@ class TOOLBAR_typedcontent {
 		mosMenuBar::endTable();
 	}
 }
-?>

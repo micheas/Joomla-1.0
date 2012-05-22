@@ -43,4 +43,3 @@ class TOOLBAR_installer
 		mosMenuBar::endTable();
 	}
 }
-?>

@@ -384,4 +384,4 @@ function removeBannerClients( $cid, $option ) {
 	}
 	mosRedirect("index2.php?option=$option&task=listclients");
 }
-?>
+

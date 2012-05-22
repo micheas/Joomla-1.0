@@ -32,4 +32,3 @@ switch ($task) {
 		content_blog_section::saveMenu( $option, $task );
 		break;
 }
-?>

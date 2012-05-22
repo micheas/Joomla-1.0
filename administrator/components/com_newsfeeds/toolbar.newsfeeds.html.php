@@ -63,4 +63,3 @@ class TOOLBAR_newsfeeds  {
 		mosMenuBar::endTable();
 	}
 }
-?>

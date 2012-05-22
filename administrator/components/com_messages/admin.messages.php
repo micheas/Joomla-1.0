@@ -256,4 +256,3 @@ function removeMessage( $cid, $option ) {
 
 	mosRedirect( "index2.php?option=$option&limit=$limit&limitstart=$limitstart" );
 }
-?>

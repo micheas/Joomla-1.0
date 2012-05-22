@@ -48,4 +48,3 @@ switch ($task) {
 		TOOLBAR_modules::_DEFAULT();
 		break;
 }
-?>

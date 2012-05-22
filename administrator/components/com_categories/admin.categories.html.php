@@ -704,4 +704,3 @@ class categories_html {
 	}
 
 }
-?>

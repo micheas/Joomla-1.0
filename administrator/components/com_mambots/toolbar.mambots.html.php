@@ -58,4 +58,3 @@ class TOOLBAR_modules {
 		mosMenuBar::endTable();
 	}
 }
-?>

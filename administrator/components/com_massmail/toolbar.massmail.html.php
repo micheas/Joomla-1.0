@@ -33,4 +33,3 @@ class TOOLBAR_massmail {
 		mosMenuBar::endTable();
 	}
 }
-?>

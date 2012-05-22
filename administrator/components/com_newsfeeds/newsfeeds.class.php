@@ -50,4 +50,3 @@ class mosNewsFeed extends mosDBTable {
 		$this->mosDBTable( '#__newsfeeds', 'id', $db );
 	}
 }
-?>

@@ -56,4 +56,3 @@ switch ($task) {
 		TOOLBAR_poll::_DEFAULT();
 		break;
 }
-?>

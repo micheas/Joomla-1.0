@@ -28,4 +28,3 @@ switch ($task) {
 		TOOLBAR_typedcontent::_DEFAULT();
 		break;
 }
-?>

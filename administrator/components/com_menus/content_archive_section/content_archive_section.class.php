@@ -65,4 +65,3 @@ class content_archive_section_menu {
 		content_archive_section_menu_html::editSection( $menu, $lists, $params, $option );
 	}
 }
-?>

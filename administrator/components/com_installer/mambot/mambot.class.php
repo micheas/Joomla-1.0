@@ -199,4 +199,3 @@ class mosInstallerMambot extends mosInstaller {
 		return true;
 	}
 }
-?>

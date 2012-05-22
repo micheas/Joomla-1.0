@@ -22,4 +22,3 @@ switch ($task){
 		TOOLBAR_checkin::_DEFAULT();
 		break;
 }
-?>

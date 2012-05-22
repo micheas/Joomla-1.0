@@ -56,4 +56,3 @@ class TOOLBAR_users {
 		mosMenuBar::endTable();
 	}
 }
-?>

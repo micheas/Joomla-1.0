@@ -115,4 +115,3 @@ function showInstalledModules( $_option ) {
 
 	HTML_module::showInstalledModules( $rows, $_option, $xmlfile, $lists );
 }
-?>

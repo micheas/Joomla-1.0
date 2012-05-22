@@ -212,4 +212,3 @@ function showSearches( $option, $task, $showResults=null ) {
 
 	HTML_statistics::showSearches( $rows, $pageNav, $option, $task, $showResults );
 }
-?>

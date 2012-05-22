@@ -221,4 +221,3 @@ class mosInstallerModule extends mosInstaller {
 
 	}
 }
-?>

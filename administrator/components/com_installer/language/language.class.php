@@ -110,4 +110,3 @@ class mosInstallerLanguage extends mosInstaller {
 	}
 
 }
-?>

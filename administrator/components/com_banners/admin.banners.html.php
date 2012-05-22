@@ -491,4 +491,4 @@ class HTML_bannerClient {
 		<?php
 	}
 }
-?>
+

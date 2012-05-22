@@ -49,4 +49,3 @@ class TOOLBAR_languages {
 		mosMenuBar::endTable();
 	}
 }
-?>

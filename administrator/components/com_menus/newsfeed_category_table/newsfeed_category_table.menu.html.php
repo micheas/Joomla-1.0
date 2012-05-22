@@ -179,4 +179,3 @@ class newsfeed_category_table_menu_html {
 		<?php
 	}
 }
-?>

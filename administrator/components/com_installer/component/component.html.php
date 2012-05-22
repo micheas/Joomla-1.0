@@ -113,4 +113,3 @@ class HTML_component {
 		<?php
 	}
 }
-?>

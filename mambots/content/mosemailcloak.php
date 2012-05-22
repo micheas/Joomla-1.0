@@ -146,4 +146,3 @@ function botMosEmailCloak_searchPattern ( $link, $text ) {
 	
 	return $pattern;
 }
-?>

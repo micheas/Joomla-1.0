@@ -361,4 +361,3 @@ $BrowsersHashIcon = array (
 // Gecko except Netscape (Mozilla, Firebird (was Phoenix), Galeon, AmiZilla, Dino, and few others)
 // Opera (Opera 6/7)
 // KHTML (Konqueror, Safari)
-?>

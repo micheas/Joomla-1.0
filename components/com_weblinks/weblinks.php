@@ -130,6 +130,9 @@ function listWeblinks( $catid ) {
 	}
 
 	// page description
+  if(!isset($currentcat)) {
+    $currentcat = new stdClass();
+  }
 	$currentcat->descrip = '';
 	if( ( @$currentcat->description ) != '' ) {
 		$currentcat->descrip = $currentcat->description;

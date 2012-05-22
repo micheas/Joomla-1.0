@@ -4999,6 +4999,9 @@ class mosAdminMenus {
 		$menuselect = array();
 		for( $i = 0; $i < $total; $i++ ) {
 			$params = mosParseParams( $menus[$i]->params );
+      if (!isset($menuselect[$i])) {
+        $menuselect[$i] = new stdClass();
+      }
 			$menuselect[$i]->value 	= $params->menutype;
 			$menuselect[$i]->text 	= $params->menutype;
 		}

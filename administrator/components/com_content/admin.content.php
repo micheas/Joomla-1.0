@@ -154,6 +154,9 @@ function viewContent( $sectionid, $option ) {
 		if ($filter_sectionid > 0) {
 			$filter = "\n WHERE cc.section = '" . (int) $filter_sectionid . "'";
 		}
+    if (!isset($section)) {
+      $section = new stdClass;
+    }
 		$section->title = 'All Content Items';
 		$section->id = 0;
 	} else {

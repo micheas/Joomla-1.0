@@ -81,4 +81,3 @@ class HTML_syndicate {
 		<?php
 	}
 }
-?>

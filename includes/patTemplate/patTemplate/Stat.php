@@ -64,4 +64,3 @@ class patTemplate_Stat extends patTemplate_Module
 		$this->_options		=	$options;
 	}
 }
-?>

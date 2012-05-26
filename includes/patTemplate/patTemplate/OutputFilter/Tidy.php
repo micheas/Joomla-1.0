@@ -73,4 +73,3 @@ class patTemplate_OutputFilter_Tidy extends patTemplate_OutputFilter
 		return $data;
 	}
 }
-?>

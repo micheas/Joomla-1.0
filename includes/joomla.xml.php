@@ -529,4 +529,3 @@ class mosEmpty {
 		return 1;
 	}
 }
-?>

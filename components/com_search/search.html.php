@@ -231,4 +231,3 @@ class search_html {
 		<?php
 	}
 }
-?>

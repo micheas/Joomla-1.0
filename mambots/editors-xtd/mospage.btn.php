@@ -38,4 +38,3 @@ function botMosPageButton() {
 
 	return $button;
 }
-?>

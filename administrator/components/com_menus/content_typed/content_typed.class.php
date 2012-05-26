@@ -112,4 +112,3 @@ class content_typed_menu {
 		mosRedirect( 'index2.php?option=com_typedcontent&task=edit&id='. $id );
 	}
 }
-?>

@@ -162,4 +162,3 @@ class contact_item_link_menu_html {
 	}
 
 }
-?>

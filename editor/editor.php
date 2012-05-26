@@ -76,4 +76,3 @@ if (!defined( '_JOS_EDITOR_INCLUDED' )) {
 	}
 	define( '_JOS_EDITOR_INCLUDED', 1 );
 }
-?>

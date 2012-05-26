@@ -89,4 +89,3 @@ class component_item_link_menu {
 		component_item_link_menu_html::edit( $menu, $lists, $params, $option );
 	}
 }
-?>

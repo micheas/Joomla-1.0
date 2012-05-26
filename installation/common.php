@@ -90,4 +90,3 @@ function mosChmodRecursive($path, $filemode=NULL, $dirmode=NULL)
 	return $ret;
 } // mosChmodRecursive
 
-?>

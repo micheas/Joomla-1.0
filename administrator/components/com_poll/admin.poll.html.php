@@ -225,4 +225,3 @@ class HTML_poll {
 	}
 
 }
-?>

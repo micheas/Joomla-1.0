@@ -839,4 +839,3 @@ class SAXY_Parser extends SAXY_Parser_Base {
 	} //xml_error_string
 
 } //SAXY_Parser
-?>

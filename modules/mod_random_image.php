@@ -97,4 +97,3 @@ if (is_dir($abspath_folder)) {
 	  	<?php
 	}
 }
-?>

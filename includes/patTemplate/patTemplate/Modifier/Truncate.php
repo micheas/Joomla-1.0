@@ -82,4 +82,3 @@ class patTemplate_Modifier_Truncate extends patTemplate_Modifier
         return $decode ? htmlspecialchars( $value, ENT_QUOTES ) : $value;
 	}
 }
-?>

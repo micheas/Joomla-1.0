@@ -30,4 +30,3 @@ class mosTemplatePosition extends mosDBTable {
 		$this->mosDBTable( '#__template_positions', 'id', $database );
 	}
 }
-?>

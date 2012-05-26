@@ -164,4 +164,3 @@ class wrapper_menu_html {
 		<?php
 	}
 }
-?>

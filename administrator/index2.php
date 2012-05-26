@@ -107,4 +107,3 @@ if ( $task == 'save' || $task == 'apply' ) {
 
 doGzip();
 
-?>

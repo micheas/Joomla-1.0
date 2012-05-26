@@ -62,4 +62,3 @@ function showWrap( $option ) {
 
 	HTML_wrapper::displayWrap( $row, $params, $menu );
 }
-?>

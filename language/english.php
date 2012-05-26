@@ -564,4 +564,3 @@ Message:
 /** includes/pdf.php */
 DEFINE('_PDF_GENERATED','Generated:');
 DEFINE('_PDF_POWERED','Powered by Joomla!');
-?>

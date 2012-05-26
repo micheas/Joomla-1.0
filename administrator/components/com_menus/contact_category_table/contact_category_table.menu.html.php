@@ -179,4 +179,3 @@ class contact_category_table_menu_html {
 		<?php
 	}
 }
-?>

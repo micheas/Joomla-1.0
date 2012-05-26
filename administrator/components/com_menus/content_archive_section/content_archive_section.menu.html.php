@@ -168,4 +168,3 @@ class content_archive_section_menu_html {
 		<?php
 	}
 }
-?>

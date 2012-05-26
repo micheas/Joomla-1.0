@@ -48,4 +48,3 @@ class dom_xmlrpc_fault {
 	} //getFaultStringltCode
 } //dom_xmlrpc_fault
 
-?>

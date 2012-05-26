@@ -121,4 +121,3 @@ class mosInstallerTemplate extends mosInstaller {
 		return "index2.php?option=com_templates&client=$client";
 	}
 }
-?>

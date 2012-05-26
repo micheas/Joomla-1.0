@@ -60,4 +60,3 @@ class TOOLBAR_messages {
 		mosMenuBar::endTable();
 	}
 }
-?>

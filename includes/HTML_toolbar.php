@@ -401,4 +401,3 @@ class mosToolBar {
 		<?php
 	}
 }
-?>

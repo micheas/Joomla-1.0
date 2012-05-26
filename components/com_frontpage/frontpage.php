@@ -17,4 +17,3 @@ defined( '_VALID_MOS' ) or die( 'Restricted access' );
 
 // code handling has been shifted into content.php
 require_once( $mosConfig_absolute_path .'/components/com_content/content.php' );
-?>

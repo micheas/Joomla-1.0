@@ -115,4 +115,3 @@ function botSearchNewsfeedslinks( $text, $phrase='', $ordering='' ) {
 	
 	return $rows;
 }
-?>

@@ -173,4 +173,3 @@ if (!defined( '_JOS_POLL_MODULE' )) {
 }
 
 show_poll_vote_form( $Itemid, $params );
-?>

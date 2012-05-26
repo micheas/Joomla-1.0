@@ -38,4 +38,3 @@ switch ( $task ) {
 		content_item_link_menu::redirect( $scid );
 		break;
 }
-?>

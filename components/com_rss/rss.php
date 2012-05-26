@@ -304,4 +304,3 @@ function feedFrontpage( $showFeed ) {
 	// save feed file
 	$rss->saveFeed( $info[ 'feed' ], $info[ 'file' ], $showFeed );
 }
-?>

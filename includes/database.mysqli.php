@@ -1318,4 +1318,3 @@ class mosDBTable {
 		return $xml;
 	}
 }
-?>

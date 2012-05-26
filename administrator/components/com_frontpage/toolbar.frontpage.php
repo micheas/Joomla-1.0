@@ -23,4 +23,3 @@ switch ($task) {
 		TOOLBAR_FrontPage::_DEFAULT();
 		break;
 }
-?>

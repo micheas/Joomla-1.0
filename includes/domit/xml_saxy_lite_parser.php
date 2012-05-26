@@ -236,4 +236,3 @@ class SAXY_Lite_Parser extends SAXY_Parser_Base {
 		return "";
 	} //xml_error_string
 } //SAXY_Lite_Parser
-?>

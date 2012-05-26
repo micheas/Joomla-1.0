@@ -131,4 +131,3 @@ class HTML_mambot {
 		}
 	}
 }
-?>

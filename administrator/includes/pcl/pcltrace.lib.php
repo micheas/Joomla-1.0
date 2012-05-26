@@ -459,4 +459,3 @@ echo $p_entry["message"]." [".$p_entry["file"].", ".$p_entry["line"]."]<br>";
 
 // ----- End of double include look
 }
-?>

@@ -24,4 +24,3 @@ switch ($task) {
 		break;
 
 }
-?>

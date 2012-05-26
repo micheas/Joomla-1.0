@@ -84,4 +84,3 @@ switch ($task) {
 		}
 		break;
 }
-?>

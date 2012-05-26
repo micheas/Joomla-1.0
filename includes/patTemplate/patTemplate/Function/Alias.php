@@ -51,4 +51,3 @@ class patTemplate_Function_Alias extends patTemplate_Function
 		return '';
 	}
 }
-?>

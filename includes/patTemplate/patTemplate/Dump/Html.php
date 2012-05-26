@@ -652,4 +652,3 @@ class patTemplate_Dump_Html extends patTemplate_Dump
 		echo '</html>';
 	}
 }
-?>

@@ -73,4 +73,3 @@ class JCache_Lite_Function {
 		return  $this->_cache->clean( $group );
 	}
 }
-?>

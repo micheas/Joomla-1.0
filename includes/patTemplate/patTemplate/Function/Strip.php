@@ -42,4 +42,3 @@ class patTemplate_Function_Strip extends patTemplate_Function
 		return preg_replace( '/\s+/m', ' ', $content );
 	}
 }
-?>

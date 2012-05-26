@@ -71,4 +71,3 @@ class DOMIT_cache {
 		return unlink($name);
 	} //removeFromCache
 } //DOMIT_cache
-?>

@@ -47,4 +47,3 @@ class php_file_utilities {
 		}
 	} //putDataToFile
 } //php_file_utilities
-?>

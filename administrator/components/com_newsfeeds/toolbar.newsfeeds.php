@@ -31,4 +31,3 @@ switch ($task) {
 		TOOLBAR_newsfeeds::_DEFAULT();
 		break;
 }
-?>

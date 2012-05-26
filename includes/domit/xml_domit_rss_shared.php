@@ -1023,4 +1023,3 @@ class xml_domit_rss_exception {
 	} //setErrorLog
 } //xml_domit_rss_exception
 
-?>

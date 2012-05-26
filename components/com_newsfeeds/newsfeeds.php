@@ -230,4 +230,3 @@ function showFeed( $feedid ) {
 
 	HTML_newsfeed::showNewsfeeds( $newsfeed, $LitePath, $cacheDir, $params );
 }
-?>

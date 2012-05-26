@@ -169,4 +169,3 @@ class content_menu_html {
 		<?php
 	}
 }
-?>

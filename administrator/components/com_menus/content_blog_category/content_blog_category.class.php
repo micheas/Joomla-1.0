@@ -150,4 +150,3 @@ class content_blog_category {
 		}
 	}
 }
-?>

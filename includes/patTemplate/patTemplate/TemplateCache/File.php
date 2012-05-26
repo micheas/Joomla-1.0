@@ -112,4 +112,3 @@ class patTemplate_TemplateCache_File extends patTemplate_TemplateCache
 		return $this->getParam( 'cacheFolder' ) . '/' . $this->getParam( 'prefix' ).$key . '.cache';
 	}
 }
-?>

@@ -33,4 +33,3 @@ switch ($task) {
 		saveMenu( $option, $task );
 		break;
 }
-?>

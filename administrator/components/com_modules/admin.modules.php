@@ -710,4 +710,3 @@ function saveOrder( &$cid, $client ) {
 	$msg 	= 'New ordering saved';
 	mosRedirect( 'index2.php?option=com_modules&client='. $client, $msg );
 } // saveOrder
-?>

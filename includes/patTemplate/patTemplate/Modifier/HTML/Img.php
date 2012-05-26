@@ -57,4 +57,3 @@ class patTemplate_Modifier_HTML_Img extends patTemplate_Modifier
 		return $string;
 	}
 }
-?>

@@ -360,4 +360,3 @@ function saveWeblink( $option ) {
 	$msg 	= $isNew ? _THANK_SUB : '';
 	mosRedirect( 'index.php', $msg );
 }
-?>

@@ -50,4 +50,3 @@ if ( $session_id != md5( $my->id.$my->username.$my->usertype.$logintime ) ) {
 	mosRedirect( 'index.php' );
 	die;
 }
-?>

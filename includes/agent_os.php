@@ -80,4 +80,3 @@ $osAlias = array (
 'gnu' 				=> 'GNU/Linux',
 'unix' 				=> 'Unknown Unix system'
 );
-?>

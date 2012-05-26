@@ -113,4 +113,3 @@ class patTemplate_Function_Call extends patTemplate_Function
 		return $this->_tmpl->getParsedTemplate( $tmpl );
 	}
 }
-?>

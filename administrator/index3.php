@@ -105,4 +105,3 @@ if ($path = $mainframe->getPath( 'admin' )) {
 doGzip();
 
 
-?>

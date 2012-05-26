@@ -100,4 +100,3 @@ class patTemplate_OutputFilter_Gzip extends patTemplate_OutputFilter
 		return  $str;
 	}
 }
-?>

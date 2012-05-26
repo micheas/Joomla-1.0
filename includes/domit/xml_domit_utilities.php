@@ -381,4 +381,3 @@ class DOMIT_Utilities {
 
 	} //parseAttributes
 } //DOMIT_Utilities
-?>

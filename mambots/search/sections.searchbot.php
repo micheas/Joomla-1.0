@@ -101,4 +101,3 @@ function botSearchSections( $text, $phrase='', $ordering='' ) {
 	
 	return $rows;
 }
-?>

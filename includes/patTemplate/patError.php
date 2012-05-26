@@ -294,4 +294,3 @@ class patError
 		return $this->line;
     }
 }
-?>

@@ -201,4 +201,3 @@ function uploadFile( $filename, $userfile_name, &$msg ) {
 	}
 	return false;
 }
-?>

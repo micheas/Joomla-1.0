@@ -32,4 +32,3 @@ class TOOLBAR_config {
 		mosMenuBar::endTable();
 	}
 }
-?>

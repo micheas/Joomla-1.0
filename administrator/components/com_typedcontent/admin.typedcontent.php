@@ -666,4 +666,3 @@ function saveOrder( &$cid ) {
 	$msg 	= 'New ordering saved';
 	mosRedirect( 'index2.php?option=com_typedcontent', $msg );
 } // saveOrder
-?>

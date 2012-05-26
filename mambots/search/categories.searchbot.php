@@ -107,4 +107,3 @@ function botSearchCategories( $text, $phrase='', $ordering='' ) {
 
 	return $rows;
 }
-?>

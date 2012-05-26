@@ -95,4 +95,3 @@ function showInstalledMambots( $_option ) {
 
 	HTML_mambot::showInstalledMambots($rows, $_option, $id, $xmlfile );
 }
-?>

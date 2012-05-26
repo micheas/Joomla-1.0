@@ -326,4 +326,3 @@ function cancelContact() {
 	$row->checkin();
 	mosRedirect('index2.php?option=com_contact');
 }
-?>

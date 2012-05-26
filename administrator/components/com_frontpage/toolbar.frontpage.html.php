@@ -34,4 +34,3 @@ class TOOLBAR_FrontPage {
 		mosMenuBar::endTable();
 	}
 }
-?>

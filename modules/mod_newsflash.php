@@ -109,4 +109,3 @@ if ( $numrows ) {
 			break;
 	}
 }
-?>

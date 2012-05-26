@@ -454,4 +454,3 @@ class DOMIT_NamedNodeMap_Attr extends DOMIT_NamedNodeMap {
 	} //toString
 } //DOMIT_NamedNodeMap_Attr
 
-?>

@@ -264,4 +264,3 @@ class DOMIT_DOMImplementation {
 	} //createDocumentType
 } //DOMIT_DOMImplementation
 
-?>

@@ -32,4 +32,3 @@ class MENU_Default {
 		mosMenuBar::endTable();
 	}
 }
-?>

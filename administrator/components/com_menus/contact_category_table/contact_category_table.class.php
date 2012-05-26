@@ -77,4 +77,3 @@ class contact_category_table_menu {
 		contact_category_table_menu_html::editCategory( $menu, $lists, $params, $option );
 	}
 }
-?>

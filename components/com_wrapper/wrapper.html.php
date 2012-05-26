@@ -66,4 +66,3 @@ class HTML_wrapper {
 		mosHTML::BackButton ( $params );
 	}
 }
-?>

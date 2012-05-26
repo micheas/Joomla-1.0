@@ -28,4 +28,3 @@ switch ( $task ) {
 		TOOLBAR_users::_DEFAULT();
 		break;
 }
-?>

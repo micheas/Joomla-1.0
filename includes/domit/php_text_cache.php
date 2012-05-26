@@ -189,4 +189,3 @@ class php_text_cache extends php_http_connector {
 	} //fromFile
 } //php_text_cache
 
-?>

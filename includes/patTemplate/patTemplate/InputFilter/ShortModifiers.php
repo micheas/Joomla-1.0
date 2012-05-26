@@ -114,4 +114,3 @@ class patTemplate_InputFilter_ShortModifiers extends patTemplate_InputFilter
 		return $data;
 	}
 }
-?>

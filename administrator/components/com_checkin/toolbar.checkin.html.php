@@ -29,4 +29,3 @@ class TOOLBAR_checkin {
 		mosMenuBar::endTable();
 	}
 }
-?>

@@ -31,4 +31,3 @@ class TOOLBAR_syndicate {
 		mosMenuBar::endTable();
 	}
 }
-?>

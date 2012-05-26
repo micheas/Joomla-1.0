@@ -813,4 +813,3 @@ function getGIDSParents($gid) {
 
 	return $array;
 }
-?>

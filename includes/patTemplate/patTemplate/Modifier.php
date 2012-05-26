@@ -39,4 +39,3 @@ class patTemplate_Modifier extends patTemplate_Module
 		return $value;
 	}
 }
-?>

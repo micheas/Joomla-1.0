@@ -460,4 +460,3 @@ class HTML_menusections {
 		<?php
 	}
 }
-?>

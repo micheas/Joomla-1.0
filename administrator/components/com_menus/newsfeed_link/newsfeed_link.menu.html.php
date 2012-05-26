@@ -161,4 +161,3 @@ class newsfeed_link_menu_html {
 		<?php
 	}
 }
-?>

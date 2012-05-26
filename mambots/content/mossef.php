@@ -98,5 +98,4 @@ function botMosSef_replacer( &$matches ) {
 		return $original;
 	}
 }
-?>
 	

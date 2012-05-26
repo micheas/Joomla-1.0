@@ -479,4 +479,3 @@ class patTemplate_Compiler extends patTemplate
 												);
 	}
 }
-?>

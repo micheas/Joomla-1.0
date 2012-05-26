@@ -314,4 +314,3 @@ function restoreTrash( $cid, $option ) {
 	$msg = $total. " Item(s) successfully Restored";
 	mosRedirect( "index2.php?option=$option&mosmsg=". $msg ."" );
 }
-?>

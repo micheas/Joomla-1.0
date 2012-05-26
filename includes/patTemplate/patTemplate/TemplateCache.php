@@ -77,4 +77,3 @@ class patTemplate_TemplateCache extends patTemplate_Module
 		return	md5( $input . serialize( $options ) );
 	}
 }
-?>

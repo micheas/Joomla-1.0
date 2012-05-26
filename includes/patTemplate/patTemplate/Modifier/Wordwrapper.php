@@ -68,4 +68,3 @@ class patTemplate_Modifier_Wordwrapper extends patTemplate_Modifier
 		return $value;
 	}
 }
-?>

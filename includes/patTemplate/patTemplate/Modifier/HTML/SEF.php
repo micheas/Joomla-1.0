@@ -31,4 +31,3 @@ class patTemplate_Modifier_SEF extends patTemplate_Modifier
 		}
 	}
 }
-?>

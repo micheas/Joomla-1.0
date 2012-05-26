@@ -42,4 +42,3 @@ class TOOLBAR_admin {
 		mosMenuBar::endTable();
 	}
 }
-?>

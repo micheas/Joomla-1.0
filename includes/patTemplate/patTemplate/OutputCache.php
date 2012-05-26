@@ -38,4 +38,3 @@
 class patTemplate_OutputCache extends patTemplate_Module
 {
 }
-?>

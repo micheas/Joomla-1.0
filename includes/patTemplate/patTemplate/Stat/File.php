@@ -45,4 +45,3 @@ class patTemplate_Stat_File extends patTemplate_Stat
 		return @filemtime( $fullPath );
 	}
 }
-?>

@@ -37,4 +37,3 @@ class patTemplate_Modifier_Translate extends patTemplate_Modifier
 		}
 	}
 }
-?>

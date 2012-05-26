@@ -35,4 +35,3 @@ switch ($task) {
 		TOOLBAR_menumanager::_DEFAULT();
 		break;
 }
-?>

@@ -6159,4 +6159,3 @@ function josHashPassword($password)
 
 /** @global mosPlugin $_MAMBOTS */
 $_MAMBOTS = new mosMambotHandler();
-?>

@@ -249,4 +249,3 @@ class mosConfig {
 			$this->config_live_site = $mosConfig_live_site;
 	}
 }
-?>

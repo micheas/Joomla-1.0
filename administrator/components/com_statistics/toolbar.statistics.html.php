@@ -26,4 +26,3 @@ class TOOLBAR_statistics {
 		mosMenuBar::endTable();
 	}
 }
-?>

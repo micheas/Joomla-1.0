@@ -65,4 +65,3 @@ class submit_content_menu {
 		submit_content_menu_html::edit( $menu, $lists, $params, $option );
 	}
 }
-?>

@@ -36,4 +36,3 @@ class patTemplate_Reader_String extends patTemplate_Reader
 		return	$templates;
 	}
 }
-?>

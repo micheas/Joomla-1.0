@@ -82,4 +82,3 @@ class patTemplate_Function_Globalvar extends patTemplate_Function
 		return '';
 	}
 }
-?>

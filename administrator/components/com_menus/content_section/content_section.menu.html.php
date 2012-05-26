@@ -166,4 +166,3 @@ class content_section_menu_html {
 		<?php
 	}
 }
-?>

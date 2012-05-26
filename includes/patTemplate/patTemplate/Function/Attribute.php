@@ -51,4 +51,3 @@ class patTemplate_Function_Attribute extends patTemplate_Function
 		return '';
 	}
 }
-?>

@@ -180,4 +180,3 @@ class content_category_menu_html {
 		<?php
 	}
 }
-?>

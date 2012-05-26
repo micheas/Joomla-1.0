@@ -106,4 +106,3 @@ class HTML_massmail {
 		<?php
 	}
 }
-?>

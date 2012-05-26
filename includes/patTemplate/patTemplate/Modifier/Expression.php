@@ -57,4 +57,3 @@ class patTemplate_Modifier_Expression extends patTemplate_Modifier
 		return str_replace( '$self', $value, $params['false'] );
 	}
 }
-?>

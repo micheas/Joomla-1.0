@@ -80,4 +80,3 @@ class TOOLBAR_poll {
 		mosMenuBar::endTable();
 	}
 }
-?>

@@ -217,4 +217,3 @@ $data_arr['voters']=null;
 		<?php
 	}
 }
-?>

@@ -180,4 +180,3 @@ class weblink_category_table_menu_html {
 		<?php
 	}
 }
-?>

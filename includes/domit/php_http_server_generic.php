@@ -190,4 +190,3 @@ class php_http_server_generic {
 //$httpServer = new php_http_server_generic(); //or instance of a subclass
 //$httpServer->receive();
 
-?>

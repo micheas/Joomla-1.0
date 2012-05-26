@@ -35,4 +35,3 @@ class dom_xmlrpc_struct {
 		return $this->numericAssociativeArray;
 	} //getStruct
 } //dom_xmlrpc_struct
-?>

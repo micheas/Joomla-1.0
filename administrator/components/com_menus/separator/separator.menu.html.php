@@ -133,4 +133,3 @@ class separator_menu_html {
 		<?php
 	}
 }
-?>

@@ -231,4 +231,3 @@ class nodetools {
 	} //nodeExists
 } //nodetools
 
-?>

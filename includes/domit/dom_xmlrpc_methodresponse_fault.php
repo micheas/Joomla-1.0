@@ -112,4 +112,3 @@ METHODRESPONSE_FAULT;
 	} //toXML
 } //dom_xmlrpc_methodresponse_fault
 
-?>

@@ -36,4 +36,3 @@ switch ($task){
 		TOOLBAR_categories::_DEFAULT();
 		break;
 }
-?>

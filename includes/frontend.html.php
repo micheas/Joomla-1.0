@@ -434,4 +434,3 @@ class modules_html {
 		}
 	}
 }
-?>

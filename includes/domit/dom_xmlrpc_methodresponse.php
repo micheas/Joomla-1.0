@@ -63,4 +63,3 @@ METHODRESPONSE;
 	} //toXML
 } //dom_xmlrpc_methodresponse
 
-?>

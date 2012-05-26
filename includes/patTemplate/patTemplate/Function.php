@@ -71,4 +71,3 @@ class patTemplate_Function extends patTemplate_Module
 	{
 	}
 }
-?>

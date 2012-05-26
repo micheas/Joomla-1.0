@@ -308,4 +308,3 @@ function mosShowHead() {
 	<link rel="shortcut icon" href="<?php echo $icon;?>" />
 	<?php
 }
-?>

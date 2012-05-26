@@ -46,4 +46,3 @@ class patTemplate_Function_Joomla extends patTemplate_Function
 		return false;
 	}
 }
-?>

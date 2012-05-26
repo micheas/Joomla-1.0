@@ -98,4 +98,3 @@ class mosWeblink extends mosDBTable {
 		return true;
 	}
 }
-?>

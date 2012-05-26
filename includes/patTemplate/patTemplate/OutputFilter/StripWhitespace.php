@@ -48,4 +48,3 @@ class patTemplate_OutputFilter_StripWhitespace extends patTemplate_OutputFilter
 		return $data;
 	}
 }
-?>

@@ -413,4 +413,3 @@ switch ( $params->get( 'menu_style', 'vert_indent' ) ) {
 		mosShowVIMenu( $params );
 		break;
 }
-?>

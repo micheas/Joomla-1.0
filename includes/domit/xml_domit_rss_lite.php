@@ -241,4 +241,3 @@ class xml_domit_rss_item_lite extends xml_domit_rss_elementindexer {
 	} //getDescription
 } //xml_domit_rss_item_lite
 
-?>

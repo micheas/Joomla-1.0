@@ -1118,4 +1118,3 @@ class xml_domit_rss_skiphours extends xml_domit_rss_elementindexer {
 	} //getSkipHour
 } //xml_domit_rss_skiphours
 
-?>

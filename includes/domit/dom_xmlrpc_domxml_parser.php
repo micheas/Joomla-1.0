@@ -260,4 +260,3 @@ class dom_xmlrpc_domxml_document {
 	} //toNormalizedString
 
 } //dom_xmlrpc_domit_document
-?>

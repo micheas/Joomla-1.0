@@ -148,4 +148,3 @@ class dom_xmlrpc_parser {
 	} //dataElement
 } //dom_xmlrpc_parser
 
-?>

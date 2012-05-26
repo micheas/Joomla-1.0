@@ -67,4 +67,3 @@ class patTemplate_Function_Img extends patTemplate_Function {
 		return $imgstr;
 	}
 }
-?>

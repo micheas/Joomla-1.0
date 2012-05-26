@@ -331,4 +331,3 @@ if (!defined( '_JOS_PATHWAY' )) {
 
 	showPathway( $Itemid );
 }
-?>

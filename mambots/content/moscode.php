@@ -77,4 +77,3 @@ function botMosCode_replacer( &$matches ) {
 
 	return $text;
 }
-?>

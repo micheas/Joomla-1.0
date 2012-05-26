@@ -91,4 +91,3 @@ if ($option == 'com_content' && $task == 'view' && $id) {
 		}
 	}
 }
-?>

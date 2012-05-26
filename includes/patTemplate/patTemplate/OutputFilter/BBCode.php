@@ -112,4 +112,3 @@ class patTemplate_OutputFilter_BBCode extends patTemplate_OutputFilter
 		return true;
 	}
 }
-?>

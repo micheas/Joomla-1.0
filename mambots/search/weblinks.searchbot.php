@@ -124,4 +124,3 @@ function botSearchWeblinks( $text, $phrase='', $ordering='' ) {
 	
 	return $rows;
 }
-?>

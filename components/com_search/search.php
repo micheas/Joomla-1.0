@@ -275,4 +275,3 @@ function mosLogSearch( $search_term ) {
 		}
 	}
 }
-?>

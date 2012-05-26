@@ -99,4 +99,3 @@ class dom_xmlrpc_base64 {
 		return $this->stringData;
 	} //getEncoded
 } //dom_xmlrpc_base64
-?>

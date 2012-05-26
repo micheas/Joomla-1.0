@@ -3676,4 +3676,3 @@ class DOMIT_Parser {
 
 } //DOMIT_Parser
 
-?>

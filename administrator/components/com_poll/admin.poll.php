@@ -279,4 +279,3 @@ function cancelPoll( $option ) {
 	$row->checkin();
 	mosRedirect( 'index2.php?option='. $option );
 }
-?>

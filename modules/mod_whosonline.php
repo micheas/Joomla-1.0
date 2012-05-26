@@ -95,4 +95,3 @@ if ($showmode > 0) {
 }
 
 echo $output;
-?>

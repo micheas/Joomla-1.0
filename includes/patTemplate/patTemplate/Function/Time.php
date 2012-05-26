@@ -57,4 +57,3 @@ class patTemplate_Function_Time extends patTemplate_Function
 		return date( $params['format'], $params['time'] );
 	}
 }
-?>

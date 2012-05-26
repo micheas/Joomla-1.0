@@ -566,4 +566,3 @@ function copyMenu( $option, $cid, $type ) {
 function cancelMenu( $option ) {
 	mosRedirect( 'index2.php?option=' . $option . '&task=view' );
 }
-?>

@@ -11,4 +11,3 @@
 /** The file system path to the domit library */
 define('DOMIT_INCLUDE_PATH', (dirname(__FILE__) . "/"));
 require_once(DOMIT_INCLUDE_PATH . 'xml_domit_parser.php');
-?>

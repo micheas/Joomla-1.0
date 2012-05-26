@@ -47,4 +47,3 @@ class patTemplate_Modifier_Dateformat extends patTemplate_Modifier
 		return strftime($params['format'], $value);
 	}
 }
-?>

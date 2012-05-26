@@ -69,4 +69,3 @@ class separator_menu {
 		separator_menu_html::edit( $menu, $lists, $params, $option );
 	}
 }
-?>

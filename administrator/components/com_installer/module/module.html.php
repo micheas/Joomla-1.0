@@ -118,4 +118,3 @@ class HTML_module {
 		<?php
 	}
 }
-?>

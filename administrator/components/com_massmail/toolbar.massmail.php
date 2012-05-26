@@ -22,4 +22,3 @@ switch ( $task ) {
 		TOOLBAR_massmail::_DEFAULT();
 		break;
 }
-?>

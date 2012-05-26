@@ -91,4 +91,3 @@ class TOOLBAR_content {
 		mosMenuBar::endTable();
 	}
 }
-?>

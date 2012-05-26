@@ -38,4 +38,3 @@ function botMosImageButton() {
 
 	return $button;
 }
-?>

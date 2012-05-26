@@ -106,4 +106,3 @@ class mosMessage extends mosDBTable {
 		return false;
 	}
 }
-?>

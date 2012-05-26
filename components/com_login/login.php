@@ -65,4 +65,3 @@ if ( $my->id ) {
 } else {
 	loginHTML::loginpage( $params, $image_login );
 }
-?>

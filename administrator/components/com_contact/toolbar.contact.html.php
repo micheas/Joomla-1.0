@@ -56,4 +56,3 @@ class TOOLBAR_contact {
 		mosMenuBar::endTable();
 	}
 }
-?>

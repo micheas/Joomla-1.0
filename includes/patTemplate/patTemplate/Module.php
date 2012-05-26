@@ -84,4 +84,3 @@ class patTemplate_Module
 		return false;
 	}
 }
-?>

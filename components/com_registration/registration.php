@@ -282,4 +282,3 @@ function activate( $option ) {
 		echo _REG_ACTIVATE_NOT_FOUND;
 	}
 }
-?>

@@ -91,4 +91,3 @@ class domit_doctor {
 		return $xmlText;
 	} //evaluateCharacter
 } //domit_doctor
-?>

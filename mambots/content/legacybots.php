@@ -39,4 +39,3 @@ function botLegacyBots( $published, &$row, &$params, $page=0 ) {
 		require $mosConfig_absolute_path ."/mambots/$bot";
 	}
 }
-?>

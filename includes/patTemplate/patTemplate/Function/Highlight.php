@@ -58,4 +58,3 @@ class patTemplate_Function_Highlight extends patTemplate_Function
 		return $highlighter->highlight(trim($content));
 	}
 }
-?>

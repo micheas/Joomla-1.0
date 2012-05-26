@@ -358,4 +358,3 @@ class mosInstallerComponent extends mosInstaller {
 		return $uninstallret;
 	}
 }
-?>

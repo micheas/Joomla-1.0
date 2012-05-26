@@ -166,4 +166,3 @@ class content_blog_section_html {
 		<?php
 	}
 }
-?>

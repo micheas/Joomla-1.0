@@ -275,4 +275,3 @@ class HTML_newsfeeds {
 	<?php
 	}
 }
-?>

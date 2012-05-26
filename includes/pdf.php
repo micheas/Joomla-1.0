@@ -209,4 +209,3 @@ function AuthorDateLine( &$row, &$params ) {
 }
 
 dofreePDF();
-?>

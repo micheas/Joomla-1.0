@@ -801,4 +801,3 @@ class HTML_typedcontent {
 		<?php
 	}
 }
-?>

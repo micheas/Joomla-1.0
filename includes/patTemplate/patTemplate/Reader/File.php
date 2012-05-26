@@ -168,4 +168,3 @@ class patTemplate_Reader_File extends patTemplate_Reader
 		return $content;
 	}
 }
-?>

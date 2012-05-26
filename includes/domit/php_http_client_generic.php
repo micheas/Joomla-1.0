@@ -758,4 +758,3 @@ class php_http_response {
 	} //setUnformattedHeader
 } //php_http_response
 
-?>

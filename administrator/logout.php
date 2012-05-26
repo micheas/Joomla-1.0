@@ -57,4 +57,3 @@ session_destroy();
 
 // return to site homepage
 mosRedirect( '../index.php' );
-?>

@@ -64,4 +64,3 @@ class dom_xmlrpc_datetime_iso8601 {
 	} //getDateTime_php
 } //dom_xmlrpc_datetime_iso8601
 
-?>

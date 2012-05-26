@@ -50,4 +50,3 @@ class patTemplate_InputFilter_StripComments extends patTemplate_InputFilter
 		return $data;
 	}
 }
-?>

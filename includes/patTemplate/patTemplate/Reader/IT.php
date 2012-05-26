@@ -227,4 +227,3 @@ class patTemplate_Reader_IT extends patTemplate_Reader
 		return	$content;
 	}
 }
-?>

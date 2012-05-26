@@ -78,4 +78,3 @@ define('DOM_XMLRPC_OBJECT_MARSHALLING_SERIALIZED', 'serialized');
 define('DOM_XMLRPC_PHPOBJECT', '__phpobject__');
 /** Sertialized PHP Object marshalling */
 define('DOM_XMLRPC_SERIALIZED', '__serialized__');
-?>

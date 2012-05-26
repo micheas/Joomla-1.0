@@ -1395,4 +1395,3 @@ function saveOrder( &$cid ) {
 			break;
 	} // switch
 } // saveOrder
-?>

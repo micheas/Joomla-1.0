@@ -420,4 +420,3 @@ class HTML_templates {
 		<?php
 	}
 }
-?>

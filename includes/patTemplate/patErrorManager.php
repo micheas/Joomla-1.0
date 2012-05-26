@@ -695,4 +695,3 @@ class patErrorManager
 		return $result;
     }
 }
-?>

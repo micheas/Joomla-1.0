@@ -159,4 +159,3 @@ class HTML_languages {
 	}
 
 }
-?>

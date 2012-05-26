@@ -204,4 +204,3 @@ function pollresult( $uid ) {
 
 	poll_html::showResults( $poll, $votes, $first_vote, $last_vote, $pollist, $params );
 }
-?>

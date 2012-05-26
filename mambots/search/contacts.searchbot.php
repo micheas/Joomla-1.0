@@ -104,4 +104,3 @@ function botSearchContacts( $text, $phrase='', $ordering='' ) {
 	
 	return $rows;
 }
-?>

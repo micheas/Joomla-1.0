@@ -75,4 +75,3 @@ class php_http_proxy extends php_http_client_generic {
 	} //get_custom
 } //php_http_proxy
 
-?>

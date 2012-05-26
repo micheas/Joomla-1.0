@@ -84,4 +84,3 @@ class patTemplate_Modifier_Surround extends patTemplate_Modifier
 		return $value;
 	}
 }
-?>

@@ -131,4 +131,3 @@ class patTemplate_Function_Translate extends patTemplate_Function
 		return $text;
 	}
 }
-?>

@@ -251,4 +251,3 @@ function botMosImage_replacer( &$matches ) {
 
 	return @$GLOBALS['botMosImageArray'][$i];
 }
-?>

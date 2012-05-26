@@ -316,4 +316,3 @@ function cancelWeblink( $option ) {
 	$row->checkin();
 	mosRedirect( "index2.php?option=$option" );
 }
-?>

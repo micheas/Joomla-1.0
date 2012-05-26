@@ -59,4 +59,3 @@ class patTemplate_OutputFilter_PdfLatex extends patTemplate_OutputFilter
 		return $pdf;
 	}
 }
-?>

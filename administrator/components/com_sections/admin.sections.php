@@ -827,4 +827,3 @@ function recursive_listdir( $base ) {
 	}
 	return $dirlist;
 }
-?>

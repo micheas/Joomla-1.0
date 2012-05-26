@@ -22,4 +22,3 @@ switch ( $task ) {
 		TOOLBAR_config::_DEFAULT();
 		break;
 }
-?>

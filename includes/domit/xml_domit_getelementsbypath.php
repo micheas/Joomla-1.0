@@ -275,4 +275,3 @@ class DOMIT_GetElementsByAttributePath {
 		}
 	} //parsePattern
 } //DOMIT_GetElementsByAttributePath
-?>

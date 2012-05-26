@@ -40,4 +40,3 @@ if ($option != '') {
 	$html .= '</div>';
 	echo $html;
 }
-?>

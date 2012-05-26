@@ -110,4 +110,3 @@ function loadPosition( $position, $style=-2 ) {
 
 	return $modules;
 }
-?>

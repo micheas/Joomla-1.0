@@ -32,4 +32,3 @@ class mosFrontPage extends mosDBTable {
 		$this->mosDBTable( '#__content_frontpage', 'content_id', $db );
 	}
 }
-?>

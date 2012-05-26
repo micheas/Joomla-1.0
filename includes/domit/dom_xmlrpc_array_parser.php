@@ -142,4 +142,3 @@ class dom_xmlrpc_array_parser extends dom_xmlrpc_parser {
 	} //addValue
 } //dom_xmlrpc_array_parser
 
-?>

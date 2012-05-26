@@ -344,4 +344,3 @@ function botTinymceEditorEditorArea( $name, $content, $hiddenField, $width, $hei
 <br />$buttons
 EOD;
 }
-?>

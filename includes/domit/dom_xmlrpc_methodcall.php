@@ -108,4 +108,3 @@ METHODCALL;
 		return $this->toString();
 	} //toXML
 } //dom_xmlrpc_methodcall
-?>

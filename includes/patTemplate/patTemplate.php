@@ -2702,4 +2702,3 @@ class patFactory {
 		return $tmpl;
 	}
 }
-?>

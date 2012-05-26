@@ -854,4 +854,3 @@ function josMenuChildrenRecurse( $mitems, $parents, $list, $maxlevel=20, $level=
 
 	return $list;
 }
-?>

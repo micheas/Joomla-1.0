@@ -44,4 +44,3 @@ class patTemplate_Function_Phphighlight extends patTemplate_Function
 		return $content;
 	}
 }
-?>

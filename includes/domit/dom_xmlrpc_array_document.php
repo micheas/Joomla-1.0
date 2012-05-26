@@ -140,4 +140,3 @@ class dom_xmlrpc_array_document {
 	} //toNormalizedString
 } //dom_xmlrpc_array_document
 
-?>

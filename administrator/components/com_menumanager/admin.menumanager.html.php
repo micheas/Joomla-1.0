@@ -448,4 +448,3 @@ class HTML_menumanager {
 		<?php
 	}
 }
-?>

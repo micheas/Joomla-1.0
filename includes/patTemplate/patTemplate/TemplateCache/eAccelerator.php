@@ -77,4 +77,3 @@ class patTemplate_TemplateCache_eAccelerator extends patTemplate_TemplateCache
 		 return true;
 	}
 }
-?>

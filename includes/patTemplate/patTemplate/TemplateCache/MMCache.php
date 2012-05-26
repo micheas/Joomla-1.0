@@ -78,4 +78,3 @@ class patTemplate_TemplateCache_MMCache extends patTemplate_TemplateCache
 		return true;
    }
 }
-?>

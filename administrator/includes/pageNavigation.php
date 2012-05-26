@@ -254,4 +254,3 @@ class mosPageNav {
 		$tmpl->addVar( $name, 'PAGE_COUNTER', $this->getPagesCounter() );
 	}
 }
-?>

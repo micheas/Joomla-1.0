@@ -1566,4 +1566,3 @@ class patTemplate_Reader extends patTemplate_Module
 		return null;
 	}
 }
-?>

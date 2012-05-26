@@ -271,4 +271,3 @@ class HTML_trash {
 	}
 
 }
-?>

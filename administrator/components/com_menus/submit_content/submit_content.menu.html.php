@@ -178,4 +178,3 @@ class submit_content_menu_html {
 		<?php
 	}
 }
-?>

@@ -632,4 +632,3 @@ $httpServer->receive(); //will grab $HTTP_RAW_POST_DATA
 $httpServer = new dom_xmlrpc_server($methods, $postData);
 */
 
-?>

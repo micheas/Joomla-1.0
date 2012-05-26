@@ -158,4 +158,3 @@ class patTemplate_Reader_DB extends patTemplate_Reader
 		return $content;
 	}
 }
-?>

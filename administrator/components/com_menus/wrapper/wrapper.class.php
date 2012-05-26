@@ -111,4 +111,3 @@ class wrapper_menu {
 		}
 	}
 }
-?>

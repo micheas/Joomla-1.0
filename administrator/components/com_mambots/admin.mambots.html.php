@@ -307,4 +307,3 @@ class HTML_modules {
 		<?php
 	}
 }
-?>

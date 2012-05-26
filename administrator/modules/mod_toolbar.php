@@ -19,4 +19,3 @@ require_once( $mosConfig_absolute_path .'/administrator/includes/menubar.html.ph
 if ($path = $mainframe->getPath( 'toolbar' )) {
 	include_once( $path );
 }
-?>

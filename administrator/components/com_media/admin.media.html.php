@@ -491,4 +491,3 @@ class HTML_Media {
 		<?php
 	}
 }
-?>

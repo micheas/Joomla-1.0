@@ -396,4 +396,3 @@ class dom_xmlrpc_builder {
 	} //createDateTimeISO
 
 } //dom_xmlrpc_builder
-?>

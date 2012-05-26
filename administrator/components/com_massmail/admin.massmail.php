@@ -114,4 +114,3 @@ function sendMail() {
 	$msg = 'E-mail sent to '. count( $rows ) .' users';
 	mosRedirect( 'index2.php?option=com_massmail', $msg );
 }
-?>

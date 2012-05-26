@@ -556,4 +556,3 @@ function sefRelToAbs( $string ) {
 		return $string;
 	}
 }
-?>

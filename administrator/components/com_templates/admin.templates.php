@@ -544,4 +544,3 @@ function savePositions( $option ) {
 	}
 	mosRedirect( 'index2.php?option='. $option .'&task=positions', 'Positions saved' );
 }
-?>

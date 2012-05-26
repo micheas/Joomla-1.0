@@ -1822,4 +1822,3 @@ class mosAroGroup extends mosDBTable {
 	}
 }
 
-?>

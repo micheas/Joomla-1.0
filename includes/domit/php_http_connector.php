@@ -74,4 +74,3 @@ class php_http_connector {
 	} //setProxyAuthorization
 } //php_http_connector
 
-?>

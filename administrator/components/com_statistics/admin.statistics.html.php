@@ -322,4 +322,3 @@ class HTML_statistics {
 		<?php
 	}
 }
-?>

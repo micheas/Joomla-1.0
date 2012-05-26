@@ -44,4 +44,3 @@ class patTemplate_Modifier_QuoteLatex extends patTemplate_Modifier
 		return strtr($value, $this->_chars);
 	}
 }
-?>

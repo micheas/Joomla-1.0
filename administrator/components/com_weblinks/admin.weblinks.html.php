@@ -270,4 +270,3 @@ class HTML_weblinks {
 		<?php
 	}
 }
-?>

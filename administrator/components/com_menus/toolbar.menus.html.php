@@ -111,4 +111,3 @@ class TOOLBAR_menus {
 		mosMenuBar::endTable();
 	}
 }
-?>

@@ -47,4 +47,3 @@ class php_http_status_codes {
 	} //getCodeString
 } //class php_http_status_codes
 
-?>

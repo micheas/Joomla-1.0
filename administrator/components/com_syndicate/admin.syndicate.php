@@ -107,4 +107,3 @@ function saveSyndicate( $option ) {
 function cancelSyndicate(){
 	mosRedirect( 'index2.php' );
 }
-?>

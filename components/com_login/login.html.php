@@ -184,4 +184,3 @@ class loginHTML {
 		<?php
 	}
 }
-?>

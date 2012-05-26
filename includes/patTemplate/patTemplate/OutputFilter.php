@@ -41,4 +41,3 @@ class patTemplate_OutputFilter extends patTemplate_Module
 		return $data;
 	}
 }
-?>

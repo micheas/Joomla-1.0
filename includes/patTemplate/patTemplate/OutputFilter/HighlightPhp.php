@@ -45,4 +45,3 @@ class patTemplate_OutputFilter_HighlightPhp extends patTemplate_OutputFilter
 		return highlight_string($data, true);
 	}
 }
-?>

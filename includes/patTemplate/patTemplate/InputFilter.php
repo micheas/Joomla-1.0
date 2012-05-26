@@ -39,4 +39,3 @@ class patTemplate_InputFilter extends patTemplate_Module
 		return $data;
 	}
 }
-?>

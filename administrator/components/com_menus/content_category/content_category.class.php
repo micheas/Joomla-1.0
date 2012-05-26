@@ -66,4 +66,3 @@ class content_category_menu {
 		content_category_menu_html::editCategory( $menu, $lists, $params, $option );
 	}
 }
-?>

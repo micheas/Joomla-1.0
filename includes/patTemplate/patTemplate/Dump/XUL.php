@@ -223,4 +223,3 @@ class patTemplate_Dump_XUL extends patTemplate_Dump
 		}
 	}
 }
-?>

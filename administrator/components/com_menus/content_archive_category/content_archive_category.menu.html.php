@@ -166,4 +166,3 @@ class content_archive_category_menu_html {
 		<?php
 	}
 }
-?>

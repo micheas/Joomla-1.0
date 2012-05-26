@@ -174,4 +174,3 @@ class components_menu_html {
 		<?php
 	}
 }
-?>

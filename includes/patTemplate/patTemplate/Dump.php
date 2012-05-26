@@ -154,4 +154,3 @@ class patTemplate_Dump extends patTemplate_Module
 		return array_unique( $vars );
 	}
 }
-?>

@@ -109,4 +109,3 @@ class contact_item_link_menu {
 		contact_item_link_menu_html::edit( $menu, $lists, $params, $option, $contacts );
 	}
 }
-?>

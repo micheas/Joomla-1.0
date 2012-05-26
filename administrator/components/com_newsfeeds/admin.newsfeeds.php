@@ -295,4 +295,3 @@ function orderNewsFeed( $id, $inc, $option ) {
 
 	mosRedirect( 'index2.php?option='. $option );
 }
-?>

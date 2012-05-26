@@ -290,4 +290,3 @@ class SAXY_Parser_Base {
 	} //fireCDataSectionEvent
 } //SAXY_Parser_Base
 
-?>

@@ -375,4 +375,3 @@ function writableCell( $folder, $relative=1, $text='' ) {
 	}
 	echo '</tr>';
 }
-?>

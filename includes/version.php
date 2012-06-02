@@ -26,7 +26,7 @@ class joomlaVersion {
 	/** @var string Development Status */
 	var $DEV_STATUS = 'Stable';
 	/** @var int Sub Release Level */
-	var $DEV_LEVEL 	= '16';
+	var $DEV_LEVEL 	= '16-CDTi';
 	/** @var int build Number */
 	var $BUILD	 	= '$Revision$';
 	/** @var string Codename */
@@ -40,7 +40,7 @@ class joomlaVersion {
 	/** @var string Copyright Text */
 	var $COPYRIGHT 	= "Copyright &copy; 2005 - 2007 Open Source Matters. All rights reserved.";
 	/** @var string URL */
-	var $URL 		= '<a href="http://www.joomla.org">Joomla!</a> is Free Software released under the GNU/GPL License.<br />This is <a href="https://github.com/micheas/Joomla-1.0">an unofficial fork</a> maintained by <a href="http://www.micheas.com">Micheas Herman</a>. <br /><strong>Opensource Matters no longer supports this version of Joomla!</strong>';
+	var $URL 		= '<a href="http://www.joomla.org">Joomla!</a> is Free Software released under the GNU/GPL License.<br />';
 	/** @var string Whether site is a production = 1 or demo site = 0: 1 is default */
 	var $SITE 		= 1;
 	/** @var string Whether site has restricted functionality mostly used for demo sites: 0 is default */

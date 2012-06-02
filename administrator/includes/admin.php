@@ -333,16 +333,10 @@ function josSecurityCheck($width='95%') {
 	}
 
 ?>
-		<div style="clear: both; margin: 3px; margin-top: 10px; padding: 5px 15px; display: block; float: left; border: 1px solid #cc0000; background: #ffffcc; text-align: left; width: <?php echo $width;?>;">
-			<p style="color: #CC0000;">
-				As of July 2009 this version of Joomla is no longer supported by the <a href="http://www.joomla.org">Joomla!</a> project.
-			</p>
-			<p style="color: #CC0000;">
-				You should consider one of two options: a) migrate your site to Joomla! 2.5, Drupal 7, or another current platform; b) convert your site to a static site.
-			</p>
     <?php
 	if ( count($wrongSettingsTexts) ) {
 		?>
+		<div style="clear: both; margin: 3px; margin-top: 10px; padding: 5px 15px; display: block; float: left; border: 1px solid #cc0000; background: #ffffcc; text-align: left; width: <?php echo $width;?>;">
 			<p style="color: #CC0000;">
 				The following PHP Server Settings are not optimal for <strong>Security</strong> and it is recommended to change them:
 			</p>

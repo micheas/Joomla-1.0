@@ -19,6 +19,6 @@ global $_VERSION;
 // NOTE - You may change this file to suit your site needs
 ?>
 <div style="text-align: center; padding: 1.5em;">
-	&copy; 2005 &ndash; <?php echo mosCurrentDate( '%Y' ) ?> <a href="http://www.cdtinternet.co.uk">CDTi</a>
+	&copy; 2005 &ndash; <?php echo mosCurrentDate( '%Y' )  . ' ' . $GLOBALS['mosConfig_sitename']; ?>
 </div>
 

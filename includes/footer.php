@@ -22,3 +22,6 @@ global $_VERSION;
 	&copy; 2005 &ndash; <?php echo mosCurrentDate( '%Y' )  . ' ' . $GLOBALS['mosConfig_sitename']; ?>
 </div>
 
+<div align="center">
+	<?php echo $_VERSION->URL; ?>
+</div>

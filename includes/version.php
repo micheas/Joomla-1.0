@@ -38,7 +38,7 @@ class joomlaVersion {
 	/** @var string Timezone */
 	var $RELTZ 		= 'UTC';
 	/** @var string Copyright Text */
-	var $COPYRIGHT 	= "Copyright &copy; 2005 - 2007 Open Source Matters. All rights reserved.";
+	var $COPYRIGHT 	= "Copyright (C) 2005 - 2007 Open Source Matters. All rights reserved.";
 	/** @var string URL */
 	var $URL 		= '<a href="http://www.joomla.org">Joomla!</a> is Free Software released under the GNU/GPL License.<br />This is <a href="https://github.com/micheas/Joomla-1.0">an unofficial fork</a> maintained by <a href="http://www.micheas.com">Micheas Herman</a>. <br /><strong>Opensource Matters no longer supports this version of Joomla!</strong>';
 	/** @var string Whether site is a production = 1 or demo site = 0: 1 is default */
@@ -46,7 +46,7 @@ class joomlaVersion {
 	/** @var string Whether site has restricted functionality mostly used for demo sites: 0 is default */
 	var $RESTRICT	= 0;
 	/** @var string Whether site is still in development phase (disables checks for /installation folder) - should be set to 0 for package release: 0 is default */
-	var $SVN		= 0;
+	var $SVN		= 1;
 
 
 	/**

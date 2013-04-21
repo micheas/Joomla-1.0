@@ -22,7 +22,7 @@ CREATE TABLE `#__banner` (
   `custombannercode` text,
   PRIMARY KEY  (`bid`),
   KEY `viewbanner` (`showBanner`)
-) TYPE=MyISAM AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 
 #
 # Table structure for table `#__bannerclient`
@@ -38,7 +38,7 @@ CREATE TABLE `#__bannerclient` (
   `checked_out_time` time default NULL,
   `editor` varchar(50) default NULL,
   PRIMARY KEY  (`cid`)
-) TYPE=MyISAM;
+) ENGINE=MyISAM;
 
 #
 # Table structure for table `#__bannerfinish`
@@ -55,7 +55,7 @@ CREATE TABLE `#__bannerfinish` (
   `datestart` datetime default NULL,
   `dateend` datetime default NULL,
   PRIMARY KEY  (`bid`)
-) TYPE=MyISAM;
+) ENGINE=MyISAM;
 
 #
 # Table structure for table `#__categories`
@@ -83,7 +83,7 @@ CREATE TABLE `#__categories` (
   KEY `idx_section` (`section`),
   KEY `idx_access` (`access`),
   KEY `idx_checkout` (`checked_out`)
-) TYPE=MyISAM;
+) ENGINE=MyISAM;
 
 #
 # Table structure for table `#__components`
@@ -103,7 +103,7 @@ CREATE TABLE `#__components` (
   `iscore` tinyint(4) NOT NULL default '0',
   `params` text NOT NULL,
   PRIMARY KEY  (`id`)
-) TYPE=MyISAM;
+) ENGINE=MyISAM;
 
 #
 # Dumping data for table `#__components`
@@ -158,7 +158,7 @@ CREATE TABLE `#__contact_details` (
   `catid` int(11) NOT NULL default '0',
   `access` tinyint(3) unsigned NOT NULL default '0',
   PRIMARY KEY  (`id`)
-) TYPE=MyISAM;
+) ENGINE=MyISAM;
 
 #
 # Table structure for table `#__content`
@@ -200,7 +200,7 @@ CREATE TABLE `#__content` (
   KEY `idx_state` (`state`),
   KEY `idx_catid` (`catid`),
   KEY `idx_mask` (`mask`)
-) TYPE=MyISAM;
+) ENGINE=MyISAM;
 
 #
 # Table structure for table `#__content_frontpage`
@@ -210,7 +210,7 @@ CREATE TABLE `#__content_frontpage` (
   `content_id` int(11) NOT NULL default '0',
   `ordering` int(11) NOT NULL default '0',
   PRIMARY KEY  (`content_id`)
-) TYPE=MyISAM;
+) ENGINE=MyISAM;
 
 #
 # Table structure for table `#__content_rating`
@@ -222,7 +222,7 @@ CREATE TABLE `#__content_rating` (
   `rating_count` int(11) unsigned NOT NULL default '0',
   `lastip` varchar(50) NOT NULL default '',
   PRIMARY KEY  (`content_id`)
-) TYPE=MyISAM;
+) ENGINE=MyISAM;
 
 #
 # Table structure for table `#__core_log_items`
@@ -234,7 +234,7 @@ CREATE TABLE `#__core_log_items` (
   `item_table` varchar(50) NOT NULL default '',
   `item_id` int(11) unsigned NOT NULL default '0',
   `hits` int(11) unsigned NOT NULL default '0'
-) TYPE=MyISAM;
+) ENGINE=MyISAM;
 
 #
 # Table structure for table `#__core_log_searches`
@@ -244,7 +244,7 @@ CREATE TABLE `#__core_log_items` (
 CREATE TABLE `#__core_log_searches` (
   `search_term` varchar(128) NOT NULL default '',
   `hits` int(11) unsigned NOT NULL default '0'
-) TYPE=MyISAM;
+) ENGINE=MyISAM;
 
 #
 # Table structure for table `#__groups`
@@ -254,7 +254,7 @@ CREATE TABLE `#__groups` (
   `id` tinyint(3) unsigned NOT NULL default '0',
   `name` varchar(50) NOT NULL default '',
   PRIMARY KEY  (`id`)
-) TYPE=MyISAM;
+) ENGINE=MyISAM;
 
 #
 # Dumping data for table `#__groups`
@@ -284,7 +284,7 @@ CREATE TABLE `#__mambots` (
   `params` text NOT NULL,
   PRIMARY KEY  (`id`),
   KEY `idx_folder` (`published`,`client_id`,`access`,`folder`)
-) TYPE=MyISAM;
+) ENGINE=MyISAM;
 
 INSERT INTO `#__mambots` VALUES (1,'MOS Image','mosimage','content',0,-10000,1,1,0,0,'0000-00-00 00:00:00','');
 INSERT INTO `#__mambots` VALUES (2,'MOS Pagination','mospaging','content',0,10000,1,1,0,0,'0000-00-00 00:00:00','');
@@ -332,7 +332,7 @@ CREATE TABLE `#__menu` (
   PRIMARY KEY  (`id`),
   KEY `componentid` (`componentid`,`menutype`,`published`,`access`),
   KEY `menutype` (`menutype`)
-) TYPE=MyISAM;
+) ENGINE=MyISAM;
 
 INSERT INTO `#__menu` VALUES (1, 'mainmenu', 'Home', 'index.php?option=com_frontpage', 'components', 1, 0, 10, 0, 1, 0, '0000-00-00 00:00:00', 0, 0, 0, 3, 'leading=1\r\nintro=2\r\nlink=1\r\nimage=1\r\npage_title=0\r\nheader=Welcome to the Frontpage\r\norderby_sec=front\r\nprint=0\r\npdf=0\r\nemail=0\r\nback_button=0');
 # --------------------------------------------------------
@@ -352,7 +352,7 @@ CREATE TABLE `#__messages` (
   `subject` varchar(230) NOT NULL default '',
   `message` text NOT NULL,
   PRIMARY KEY  (`message_id`)
-) TYPE=MyISAM;
+) ENGINE=MyISAM;
 
 #
 # Table structure for table `#__messages_cfg`
@@ -363,7 +363,7 @@ CREATE TABLE `#__messages_cfg` (
   `cfg_name` varchar(100) NOT NULL default '',
   `cfg_value` varchar(255) NOT NULL default '',
   UNIQUE `idx_user_var_name` (`user_id`,`cfg_name`)
-) TYPE=MyISAM;
+) ENGINE=MyISAM;
 
 #
 # Table structure for table `#__modules`
@@ -388,7 +388,7 @@ CREATE TABLE `#__modules` (
   PRIMARY KEY  (`id`),
   KEY `published` (`published`,`access`),
   KEY `newsfeeds` (`module`,`published`)
-) TYPE=MyISAM;
+) ENGINE=MyISAM;
 
 #
 # Dumping data for table `#__modules`
@@ -437,7 +437,7 @@ CREATE TABLE `#__modules_menu` (
   `moduleid` int(11) NOT NULL default '0',
   `menuid` int(11) NOT NULL default '0',
   PRIMARY KEY  (`moduleid`,`menuid`)
-) TYPE=MyISAM;
+) ENGINE=MyISAM;
 
 #
 # Dumping data for table `#__modules_menu`
@@ -486,7 +486,7 @@ CREATE TABLE `#__newsfeeds` (
   `ordering` int(11) NOT NULL default '0',
   PRIMARY KEY  (`id`),
   KEY `published` (`published`)
-) TYPE=MyISAM;
+) ENGINE=MyISAM;
 
 #
 # Table structure for table `#__poll_data`
@@ -499,7 +499,7 @@ CREATE TABLE `#__poll_data` (
   `hits` int(11) NOT NULL default '0',
   PRIMARY KEY  (`id`),
   KEY `pollid` (`pollid`,`text`(1))
-) TYPE=MyISAM;
+) ENGINE=MyISAM;
 
 #
 # Table structure for table `#__poll_date`
@@ -512,7 +512,7 @@ CREATE TABLE `#__poll_date` (
   `poll_id` int(11) NOT NULL default '0',
   PRIMARY KEY  (`id`),
   KEY `poll_id` (`poll_id`)
-) TYPE=MyISAM;
+) ENGINE=MyISAM;
 
 #
 # Table structure for table `#__polls`
@@ -528,7 +528,7 @@ CREATE TABLE `#__polls` (
   `access` int(11) NOT NULL default '0',
   `lag` int(11) NOT NULL default '0',
   PRIMARY KEY  (`id`)
-) TYPE=MyISAM;
+) ENGINE=MyISAM;
 
 #
 # Table structure for table `#__poll_menu`
@@ -538,7 +538,7 @@ CREATE TABLE `#__poll_menu` (
   `pollid` int(11) NOT NULL default '0',
   `menuid` int(11) NOT NULL default '0',
   PRIMARY KEY  (`pollid`,`menuid`)
-) TYPE=MyISAM;
+) ENGINE=MyISAM;
 
 #
 # Table structure for table `#__sections`
@@ -561,7 +561,7 @@ CREATE TABLE `#__sections` (
   `params` text NOT NULL,
   PRIMARY KEY  (`id`),
   KEY `idx_scope` (`scope`)
-) TYPE=MyISAM;
+) ENGINE=MyISAM;
 
 #
 # Table structure for table `#__session`
@@ -577,7 +577,7 @@ CREATE TABLE `#__session` (
   `gid` tinyint(3) unsigned NOT NULL default '0',
   PRIMARY KEY  (`session_id`),
   KEY `whosonline` (`guest`,`usertype`)
-) TYPE=MyISAM;
+) ENGINE=MyISAM;
 
 #
 # Table structure for table `#__stats_agents`
@@ -587,7 +587,7 @@ CREATE TABLE `#__stats_agents` (
   `agent` varchar(255) NOT NULL default '',
   `type` tinyint(1) unsigned NOT NULL default '0',
   `hits` int(11) unsigned NOT NULL default '1'
-) TYPE=MyISAM;
+) ENGINE=MyISAM;
 
 #
 # Table structure for table `#__templates_menu`
@@ -598,7 +598,7 @@ CREATE TABLE `#__templates_menu` (
   `menuid` int(11) NOT NULL default '0',
   `client_id` tinyint(4) NOT NULL default '0',
   PRIMARY KEY  (`template`,`menuid`)
-) TYPE=MyISAM;
+) ENGINE=MyISAM;
 
 # Dumping data for table `#__templates_menu`
 
@@ -616,7 +616,7 @@ CREATE TABLE `#__template_positions` (
   `position` varchar(10) NOT NULL default '',
   `description` varchar(255) NOT NULL default '',
   PRIMARY KEY  (`id`)
-) TYPE=MyISAM;
+) ENGINE=MyISAM;
 
 #
 # Dumping data for table `#__template_positions`
@@ -672,7 +672,7 @@ CREATE TABLE `#__users` (
   PRIMARY KEY  (`id`),
   KEY `usertype` (`usertype`),
   KEY `idx_name` (`name`)
-) TYPE=MyISAM;
+) ENGINE=MyISAM;
 
 #
 # Table structure for table `#__usertypes`
@@ -683,7 +683,7 @@ CREATE TABLE `#__usertypes` (
   `name` varchar(50) NOT NULL default '',
   `mask` varchar(11) NOT NULL default '',
   PRIMARY KEY  (`id`)
-) TYPE=MyISAM;
+) ENGINE=MyISAM;
 
 #
 # Dumping data for table `#__usertypes`
@@ -720,7 +720,7 @@ CREATE TABLE `#__weblinks` (
   `params` text NOT NULL,
   PRIMARY KEY  (`id`),
   KEY `catid` (`catid`,`published`,`archived`)
-) TYPE=MyISAM;
+) ENGINE=MyISAM;
 
 #
 # Table structure for table `#__core_acl_aro`
@@ -736,7 +736,7 @@ CREATE TABLE `#__core_acl_aro` (
   PRIMARY KEY  (`aro_id`),
   UNIQUE KEY `#__gacl_section_value_value_aro` (`section_value`(100),`value`(100)),
   KEY `#__gacl_hidden_aro` (`hidden`)
-) TYPE=MyISAM;
+) ENGINE=MyISAM;
 
 #
 # Table structure for table `#__core_acl_aro_groups`
@@ -751,7 +751,7 @@ CREATE TABLE `#__core_acl_aro_groups` (
   KEY `parent_id_aro_groups` (`parent_id`),
   KEY `#__gacl_parent_id_aro_groups` (`parent_id`),
   KEY `#__gacl_lft_rgt_aro_groups` (`lft`,`rgt`)
-) TYPE=MyISAM;
+) ENGINE=MyISAM;
 
 #
 # Dumping data for table `#__core_acl_aro_groups`
@@ -776,7 +776,7 @@ CREATE TABLE `#__core_acl_groups_aro_map` (
   `section_value` varchar(240) NOT NULL default '',
   `aro_id` int(11) NOT NULL default '0',
   UNIQUE KEY `group_id_aro_id_groups_aro_map` (`group_id`,`section_value`,`aro_id`)
-) TYPE=MyISAM;
+) ENGINE=MyISAM;
 
 #
 # Table structure for table `#__core_acl_aro_sections`
@@ -792,6 +792,6 @@ CREATE TABLE `#__core_acl_aro_sections` (
   UNIQUE KEY `#__gacl_value_aro_sections` (`value`),
   KEY `hidden_aro_sections` (`hidden`),
   KEY `#__gacl_hidden_aro_sections` (`hidden`)
-) TYPE=MyISAM;
+) ENGINE=MyISAM;
 
 INSERT INTO `#__core_acl_aro_sections` VALUES (10,'users',1,'Users',0);

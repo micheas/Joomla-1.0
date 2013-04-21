@@ -169,8 +169,8 @@ function view() {
 				<?php
 				$wrongSettingsTexts = array();
 
-				if ( ini_get('magic_quotes_gpc') != '1' ) {
-					$wrongSettingsTexts[] = 'PHP magic_quotes_gpc setting is `OFF` instead of `ON`';
+				if ( ini_get('magic_quotes_gpc') != '0' ) {
+					$wrongSettingsTexts[] = 'PHP magic_quotes_gpc setting is `ON` instead of `OFF`';
 				}
 				if ( ini_get('register_globals') == '1' ) {
 					$wrongSettingsTexts[] = 'PHP register_globals setting is `ON` instead of `OFF`';
@@ -254,7 +254,7 @@ function view() {
 						$php_recommended_settings = array(array ('Safe Mode','safe_mode','OFF'),
 							array ('Display Errors','display_errors','ON'),
 							array ('File Uploads','file_uploads','ON'),
-							array ('Magic Quotes GPC','magic_quotes_gpc','ON'),
+							array ('Magic Quotes GPC','magic_quotes_gpc','OFF'),
 							array ('Magic Quotes Runtime','magic_quotes_runtime','OFF'),
 							array ('Register Globals','register_globals','OFF'),
 							array ('Output Buffering','output_buffering','OFF'),

@@ -126,8 +126,9 @@ function db_err($step, $alert) {
 /**
  * @param object
  * @param string File name
+ * @param string directory of files
  */
-function populate_db( &$database, $sqlfile='mambo.sql') {
+function populate_db( &$database, $sqlfile='joomla.sql' ) {
 	global $errors;
 
 	$mqr = @get_magic_quotes_runtime();
@@ -151,35 +152,22 @@ function populate_db( &$database, $sqlfile='mambo.sql') {
  * @param string
  */
 function split_sql($sql) {
-	$sql = trim($sql);
-	$sql = ereg_replace("\n#[^\n]*\n", "\n", $sql);
+  $sql = preg_replace('/(^|\r|\n)#.*/','', $sql);
+  $sql = trim(preg_replace('/([^;])(\r|\n)/','${1} ', $sql));
+  if ($sql == FALSE) { // keep errors the same as when using ereg_replace
+    $sql = 0;
+  }
 
-	$buffer = array();
 	$ret = array();
 	$in_string = false;
 
-	for($i=0; $i<strlen($sql)-1; $i++) {
-		if($sql[$i] == ";" && !$in_string) {
-			$ret[] = substr($sql, 0, $i);
-			$sql = substr($sql, $i + 1);
-			$i = 0;
-		}
-
-		if($in_string && ($sql[$i] == $in_string) && $buffer[1] != "\\") {
-			$in_string = false;
-		}
-		elseif(!$in_string && ($sql[$i] == '"' || $sql[$i] == "'") && (!isset($buffer[0]) || $buffer[0] != "\\")) {
-			$in_string = $sql[$i];
-		}
-		if(isset($buffer[1])) {
-			$buffer[0] = $buffer[1];
-		}
-		$buffer[1] = $sql[$i];
-	}
-
-	if(!empty($sql)) {
-		$ret[] = $sql;
-	}
+	$ret = explode("\n", $sql);
+  $l = count($ret);
+  $i = 0;
+  while ($i < $l) {
+    $ret[$i] = trim($ret[$i]);
+    $i++;
+  }
 	return($ret);
 }
 
@@ -203,7 +191,7 @@ function check() {
 	if ( f.sitename.value == '' ) {
 		alert('Please enter a Site Name');
 		f.sitename.focus();
-		formValid = false
+		formValid = fals
 	}
 	return formValid;
 }

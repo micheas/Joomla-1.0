@@ -191,7 +191,7 @@ function check() {
 	if ( f.sitename.value == '' ) {
 		alert('Please enter a Site Name');
 		f.sitename.focus();
-		formValid = fals
+		formValid = false
 	}
 	return formValid;
 }

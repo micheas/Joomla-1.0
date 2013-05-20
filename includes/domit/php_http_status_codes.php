@@ -13,10 +13,12 @@
 //Licensed under the GNU General Public License (GPL)
 //http://www.gnu.org/licenses/gpl-2.0.html
 //*******************************************************************
-class php_http_status_codes {
+class php_http_status_codes
+{
 	var $codes;
 
-	function php_http_status_codes() {
+	function php_http_status_codes()
+	{
 		$this->codes = array(
 			200 => 'OK',
 			201 => 'CREATED',
@@ -38,11 +40,13 @@ class php_http_status_codes {
 			503 => 'Gateway timeout');
 	} //php_http_status_codes
 
-	function getCodes() {
+	function getCodes()
+	{
 		return $this->codes;
 	} //getCodes
 
-	function getCodeString($code) {
+	function getCodeString($code)
+	{
 		return $this->codes[$code];
 	} //getCodeString
 } //class php_http_status_codes

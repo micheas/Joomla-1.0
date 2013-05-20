@@ -7,9 +7,9 @@
  * A modifier is used to modify a variable when it's parsed
  * into the template.
  *
- * @package		patTemplate
- * @subpackage	Modifiers
- * @author		Stephan Schmidt <schst@php.net>
+ * @package        patTemplate
+ * @subpackage     Modifiers
+ * @author         Stephan Schmidt <schst@php.net>
  */
 
 /**
@@ -21,20 +21,22 @@
  * into the template.
  *
  * @abstract
- * @package		patTemplate
- * @subpackage	Modifiers
- * @author		Stephan Schmidt <schst@php.net>
+ * @package        patTemplate
+ * @subpackage     Modifiers
+ * @author         Stephan Schmidt <schst@php.net>
  */
 class patTemplate_Modifier extends patTemplate_Module
 {
-   /**
-	* modify the value
-	*
-	* @access	public
-	* @param	string		value
-	* @return	string		modified value
-	*/
-	function modify( $value, $params = array() )
+	/**
+	 * modify the value
+	 *
+	 * @access    public
+	 *
+	 * @param    string        value
+	 *
+	 * @return    string        modified value
+	 */
+	function modify($value, $params = array())
 	{
 		return $value;
 	}

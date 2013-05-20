@@ -1,51 +1,58 @@
 <?php
 /**
-* dom_xmlrpc_object_parser handles SAX events to convert a DOM XML-RPC XML string into a PHP array
-*
-* Will generate PHP objects instead of structs if directed
-* @package dom-xmlrpc
-* @copyright (C) 2004 John Heinstein. All rights reserved
-* @license http://www.gnu.org/copyleft/lesser.html LGPL License
-* @author John Heinstein <johnkarl@nbnet.nb.ca>
-* @link http://www.engageinteractive.com/dom_xmlrpc/ DOM XML-RPC Home Page
-* DOM XML-RPC is Free Software
-**/
+ * dom_xmlrpc_object_parser handles SAX events to convert a DOM XML-RPC XML string into a PHP array
+ *
+ * Will generate PHP objects instead of structs if directed
+ * @package   dom-xmlrpc
+ * @copyright (C) 2004 John Heinstein. All rights reserved
+ * @license   http://www.gnu.org/copyleft/lesser.html LGPL License
+ * @author    John Heinstein <johnkarl@nbnet.nb.ca>
+ * @link      http://www.engageinteractive.com/dom_xmlrpc/ DOM XML-RPC Home Page
+ *            DOM XML-RPC is Free Software
+ **/
 
-if (!defined('DOM_XMLRPC_INCLUDE_PATH')) {
+if (!defined('DOM_XMLRPC_INCLUDE_PATH'))
+{
 	define('DOM_XMLRPC_INCLUDE_PATH', (dirname(__FILE__) . "/"));
 }
 
 require_once(DOM_XMLRPC_INCLUDE_PATH . 'dom_xmlrpc_parser.php');
 
 /**
-* Handles SAX events to convert a DOM XML-RPC XML string into a PHP array
-*
-* Will generate PHP objects instead of structs if directed
-* @package dom-xmlrpc
-* @author John Heinstein <johnkarl@nbnet.nb.ca>
-*/
-class dom_xmlrpc_object_parser extends dom_xmlrpc_parser {
+ * Handles SAX events to convert a DOM XML-RPC XML string into a PHP array
+ *
+ * Will generate PHP objects instead of structs if directed
+ * @package dom-xmlrpc
+ * @author  John Heinstein <johnkarl@nbnet.nb.ca>
+ */
+class dom_xmlrpc_object_parser extends dom_xmlrpc_parser
+{
 	/** @var boolean If true, objects will be tested for */
 	var $testingForObject = false; //when a struct is encountered, turn this on
 	/** @var object Handler for PHP objects */
 	var $objectDefinitionHandler = null; //fired when a __phpobject__ definition is required
 
 	/**
-	* Constructor
-	* @param object Reference to a handler for PHP objects
-	*/
-	function dom_xmlrpc_object_parser(&$objectDefinitionHandler) {
+	 * Constructor
+	 *
+	 * @param object Reference to a handler for PHP objects
+	 */
+	function dom_xmlrpc_object_parser(&$objectDefinitionHandler)
+	{
 		$this->objectDefinitionHandler =& $objectDefinitionHandler;
 	} //dom_xmlrpc_object_parser
 
 	/**
-	* Handles start element events
-	* @param object A reference to the SAX parser
-	* @param string The name of the start element tag
-	* @param array An array of attributes (never used by XML-RPC spec)
-	*/
-	function startElement($parser, $name, $attrs) {
-		switch($name) {
+	 * Handles start element events
+	 *
+	 * @param object A reference to the SAX parser
+	 * @param string The name of the start element tag
+	 * @param array  An array of attributes (never used by XML-RPC spec)
+	 */
+	function startElement($parser, $name, $attrs)
+	{
+		switch ($name)
+		{
 			case DOM_XMLRPC_TYPE_METHODCALL:
 			case DOM_XMLRPC_TYPE_METHODRESPONSE:
 			case DOM_XMLRPC_TYPE_FAULT:
@@ -61,25 +68,28 @@ class dom_xmlrpc_object_parser extends dom_xmlrpc_parser {
 	} //startElement
 
 	/**
-	* Handles end element events
-	* @param object A reference to the SAX parser
-	* @param string The name of the end element tag
-	*/
-	function endElement($parser, $name) {
-		switch($name) {
+	 * Handles end element events
+	 *
+	 * @param object A reference to the SAX parser
+	 * @param string The name of the end element tag
+	 */
+	function endElement($parser, $name)
+	{
+		switch ($name)
+		{
 			case DOM_XMLRPC_TYPE_STRING:
 				//$this->addValue(html_entity_decode($this->charContainer, ENT_QUOTES));
 				$this->addValue($this->charContainer);
 				break;
 			case DOM_XMLRPC_TYPE_I4:
 			case DOM_XMLRPC_TYPE_INT:
-				$this->addValue((int)($this->charContainer));
+				$this->addValue((int) ($this->charContainer));
 				break;
 			case DOM_XMLRPC_TYPE_DOUBLE:
 				$this->addValue(floatval($this->charContainer));
 				break;
 			case DOM_XMLRPC_TYPE_BOOLEAN:
-				$this->addValue((bool)(trim($this->charContainer)));
+				$this->addValue((bool) (trim($this->charContainer)));
 				break;
 			case DOM_XMLRPC_TYPE_BASE64:
 				require_once(DOM_XMLRPC_INCLUDE_PATH . 'dom_xmlrpc_base64.php');
@@ -113,8 +123,9 @@ class dom_xmlrpc_object_parser extends dom_xmlrpc_parser {
 				$this->lastStructName[] = $cn;
 				$this->charContainer = '';
 
-				if ($this->testingForObject && ($cn == DOM_XMLRPC_PHPOBJECT)) {
-			    	$this->lastArrayType[(count($this->lastArray) - 1)] = DOM_XMLRPC_PHPOBJECT;
+				if ($this->testingForObject && ($cn == DOM_XMLRPC_PHPOBJECT))
+				{
+					$this->lastArrayType[(count($this->lastArray) - 1)] = DOM_XMLRPC_PHPOBJECT;
 				}
 
 				$this->testingForObject = false;
@@ -124,22 +135,27 @@ class dom_xmlrpc_object_parser extends dom_xmlrpc_parser {
 				$this->charContainer = '';
 				break;
 		}
-	}    //endElement
+	} //endElement
 
 	/**
-	* Adds an XML-RPC value to the results array
-	* @param mixed The value
-	*/
-	function addValue($value) {
+	 * Adds an XML-RPC value to the results array
+	 *
+	 * @param mixed The value
+	 */
+	function addValue($value)
+	{
 		$upper = count($this->lastArray) - 1;
 
-		if ($upper > -1) {
+		if ($upper > -1)
+		{
 			$lastArrayType = $this->lastArrayType[$upper];
 
-			if ($lastArrayType == DOM_XMLRPC_TYPE_STRUCT) {
+			if ($lastArrayType == DOM_XMLRPC_TYPE_STRUCT)
+			{
 				$currentName = $this->lastStructName[(count($this->lastStructName) - 1)];
 
-				switch ($currentName) {
+				switch ($currentName)
+				{
 					case DOM_XMLRPC_NODEVALUE_FAULTCODE:
 						$this->arrayDocument->faultCode = $value;
 						break;
@@ -153,37 +169,44 @@ class dom_xmlrpc_object_parser extends dom_xmlrpc_parser {
 						$this->lastArray[$upper][$currentName] = $value;
 				}
 			}
-			else if ($lastArrayType == DOM_XMLRPC_PHPOBJECT) {
+			else if ($lastArrayType == DOM_XMLRPC_PHPOBJECT)
+			{
 				$currentName = $this->lastStructName[(count($this->lastStructName) - 1)];
 
-				if ($currentName == DOM_XMLRPC_PHPOBJECT) {
+				if ($currentName == DOM_XMLRPC_PHPOBJECT)
+				{
 					//import class and instantiate new object
 					call_user_func($this->objectDefinitionHandler, $value);
-			    	$this->lastArray[$upper] = new $value;
+					$this->lastArray[$upper] = new $value;
 				}
-				else {
-					if ($currentName == DOM_XMLRPC_SERIALIZED) {
+				else
+				{
+					if ($currentName == DOM_XMLRPC_SERIALIZED)
+					{
 						//could also check for this...
 						//if (is_object($value) && (get_class($value) == 'dom_xmlrpc_base64')) {
 						//unserialize object
 						$serialized =& $value->getBinary();
-					    $this->lastArray[$upper] =& unserialize($serialized);
+						$this->lastArray[$upper] =& unserialize($serialized);
 					}
-					else {
+					else
+					{
 						//add property to object
 						$myObj =& $this->lastArray[$upper];
-		    			$myObj->$currentName =& $value;
+						$myObj->$currentName =& $value;
 					}
 				}
 			}
-			else {
+			else
+			{
 				//indexed array item
 				$this->lastArray[$upper][] =& $value;
 			}
 		}
-		else {
+		else
+		{
 			//at root level, add value as a new param
-			array_push($this->arrayDocument->params,  $value);
+			array_push($this->arrayDocument->params, $value);
 		}
 
 		$this->charContainer = '';

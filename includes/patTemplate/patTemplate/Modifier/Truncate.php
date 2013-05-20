@@ -29,56 +29,70 @@
 class patTemplate_Modifier_Truncate extends patTemplate_Modifier
 {
 
-   /**
-	* modify the value
-	*
-	* @access  public
-	* @param  string    value
-	* @return  string    modified value
-	*/
+	/**
+	 * modify the value
+	 *
+	 * @access  public
+	 *
+	 * @param  string    value
+	 *
+	 * @return  string    modified value
+	 */
 	function modify($value, $params = array())
 	{
 		// length
-		if (!isset( $params['length'])) {
+		if (!isset($params['length']))
+		{
 			return $value;
 		}
 		settype($params['length'], 'integer');
 
-    	$decode = isset( $params['htmlsafe'] );
-   		if (function_exists( 'html_entity_decode' ) && $decode) {
-	    	$value = html_entity_decode( $value );
-    	}
+		$decode = isset($params['htmlsafe']);
+		if (function_exists('html_entity_decode') && $decode)
+		{
+			$value = html_entity_decode($value);
+		}
 
-        // start
-		if (isset($params['start'])) {
-			settype( $params['start'], 'integer' );
-		} else {
+		// start
+		if (isset($params['start']))
+		{
+			settype($params['start'], 'integer');
+		}
+		else
+		{
 			$params['start'] = 0;
 		}
 
 		// prefix
-		if (isset($params['prefix'])) {
+		if (isset($params['prefix']))
+		{
 			$prefix = ($params['start'] == 0 ? '' : $params['prefix']);
-		} else {
+		}
+		else
+		{
 			$prefix = '';
 		}
 
 		// suffix
-		if (isset($params['suffix'])) {
+		if (isset($params['suffix']))
+		{
 			$suffix = $params['suffix'];
-		} else {
+		}
+		else
+		{
 			$suffix = '';
 		}
 
 		$initial_len = strlen($value);
 		$value = substr($value, $params['start'], $params['length']);
 
-		if ($initial_len <= strlen($value)) {
+		if ($initial_len <= strlen($value))
+		{
 			$suffix = '';
 		}
 
-        $value = $prefix.$value.$suffix;
+		$value = $prefix . $value . $suffix;
 
-        return $decode ? htmlspecialchars( $value, ENT_QUOTES ) : $value;
+		return $decode ? htmlspecialchars($value, ENT_QUOTES) : $value;
 	}
 }

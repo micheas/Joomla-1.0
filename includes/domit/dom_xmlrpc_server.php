@@ -1,15 +1,16 @@
 <?php
 /**
-* dom_xmlrpc_server provides basic XML-RPC server functionality
-* @package dom-xmlrpc
-* @copyright (C) 2004 John Heinstein. All rights reserved
-* @license http://www.gnu.org/copyleft/lesser.html LGPL License
-* @author John Heinstein <johnkarl@nbnet.nb.ca>
-* @link http://www.engageinteractive.com/dom_xmlrpc/ DOM XML-RPC Home Page
-* DOM XML-RPC is Free Software
-**/
+ * dom_xmlrpc_server provides basic XML-RPC server functionality
+ * @package   dom-xmlrpc
+ * @copyright (C) 2004 John Heinstein. All rights reserved
+ * @license   http://www.gnu.org/copyleft/lesser.html LGPL License
+ * @author    John Heinstein <johnkarl@nbnet.nb.ca>
+ * @link      http://www.engageinteractive.com/dom_xmlrpc/ DOM XML-RPC Home Page
+ *            DOM XML-RPC is Free Software
+ **/
 
-if (!defined('DOM_XMLRPC_INCLUDE_PATH')) {
+if (!defined('DOM_XMLRPC_INCLUDE_PATH'))
+{
 	define('DOM_XMLRPC_INCLUDE_PATH', (dirname(__FILE__) . "/"));
 }
 
@@ -40,12 +41,13 @@ require_once(DOM_XMLRPC_INCLUDE_PATH . 'php_http_server_generic.php');
 require_once(DOM_XMLRPC_INCLUDE_PATH . 'dom_xmlrpc_constants.php');
 
 /**
-* Provides basic XML-RPC server functionality
-*
-* @package dom-xmlrpc
-* @author John Heinstein <johnkarl@nbnet.nb.ca>
-*/
-class dom_xmlrpc_server extends php_http_server_generic {
+ * Provides basic XML-RPC server functionality
+ *
+ * @package dom-xmlrpc
+ * @author  John Heinstein <johnkarl@nbnet.nb.ca>
+ */
+class dom_xmlrpc_server extends php_http_server_generic
+{
 	/** @var object A reference to a method mapping class */
 	var $methodmapper;
 	/** @var boolean True if params array is to be tokenized */
@@ -54,7 +56,7 @@ class dom_xmlrpc_server extends php_http_server_generic {
 	var $serverError = -1;
 	/** @var string Server error string */
 	var $serverErrorString = '';
-	/** @var object A reference to the handler for missing methods  */
+	/** @var object A reference to the handler for missing methods */
 	var $methodNotFoundHandler = null;
 	/** @var boolean True if object awareness is enabled */
 	var $objectAwareness = false;
@@ -64,11 +66,13 @@ class dom_xmlrpc_server extends php_http_server_generic {
 	var $multiresponse = array();
 
 	/**
-	* Constructor
-	* @param object A reference to a mapping of custom method handlers
-	* @param boolean True if onPost is to be immediately called
-	*/
-	function dom_xmlrpc_server($customMethods = null, $postData = null) {
+	 * Constructor
+	 *
+	 * @param object  A reference to a mapping of custom method handlers
+	 * @param boolean True if onPost is to be immediately called
+	 */
+	function dom_xmlrpc_server($customMethods = null, $postData = null)
+	{
 		$this->php_http_server_generic();
 		$this->setHTTPEvents();
 		$this->setHeaders();
@@ -81,17 +85,19 @@ class dom_xmlrpc_server extends php_http_server_generic {
 	} //dom_xmlrpc_server
 
 	/**
-	* Sets the headers for the client connection
-	*/
-	function setHeaders() {
+	 * Sets the headers for the client connection
+	 */
+	function setHeaders()
+	{
 		$this->setHeader('Content-Type', 'text/xml');
 		$this->setHeader('Server', 'DOM XML-RPC Server/0.1');
 	} //setHeaders
 
 	/**
-	* Sets the default HTTP event handling
-	*/
-	function setHTTPEvents() {
+	 * Sets the default HTTP event handling
+	 */
+	function setHTTPEvents()
+	{
 		$this->setHTTPEvent('onPost', array(&$this, 'onPost'));
 
 		$defaultHandler = array(&$this, 'onWrongRequestMethod');
@@ -101,83 +107,96 @@ class dom_xmlrpc_server extends php_http_server_generic {
 	} //setHTTPEvents
 
 	/**
-	* Adds the default XML-RPC system methods to the method map
-	*/
-	function addSystemMethods() {
+	 * Adds the default XML-RPC system methods to the method map
+	 */
+	function addSystemMethods()
+	{
 		$this->methodmapper->addMethod(new dom_xmlrpc_method(array(
-									'name' => 'system.listMethods',
-									'method' => array(&$this, 'listMethods'),
-									'help' => 'Lists available server methods.',
-									'signature' => array(DOM_XMLRPC_TYPE_ARRAY))));
+			'name' => 'system.listMethods',
+			'method' => array(&$this, 'listMethods'),
+			'help' => 'Lists available server methods.',
+			'signature' => array(DOM_XMLRPC_TYPE_ARRAY))));
 
 		$this->methodmapper->addMethod(new dom_xmlrpc_method(array(
-									'name' => 'system.methodSignature',
-									'method' => array(&$this, 'methodSignature'),
-									'help' => 'Returns signature of specified method.',
-									'signature' => array(DOM_XMLRPC_TYPE_ARRAY,DOM_XMLRPC_TYPE_STRING))));
+			'name' => 'system.methodSignature',
+			'method' => array(&$this, 'methodSignature'),
+			'help' => 'Returns signature of specified method.',
+			'signature' => array(DOM_XMLRPC_TYPE_ARRAY, DOM_XMLRPC_TYPE_STRING))));
 
 		$this->methodmapper->addMethod(new dom_xmlrpc_method(array(
-									'name' => 'system.methodHelp',
-									'method' => array(&$this, 'methodHelp'),
-									'help' => 'Returns help for the specified method.',
-									'signature' => array(DOM_XMLRPC_TYPE_STRING,DOM_XMLRPC_TYPE_STRING))));
+			'name' => 'system.methodHelp',
+			'method' => array(&$this, 'methodHelp'),
+			'help' => 'Returns help for the specified method.',
+			'signature' => array(DOM_XMLRPC_TYPE_STRING, DOM_XMLRPC_TYPE_STRING))));
 
 		$this->methodmapper->addMethod(new dom_xmlrpc_method(array(
-									'name' => 'system.getCapabilities',
-									'method' => array(&$this, 'getCapabilities'),
-									'help' => 'Returns an array of supported server specifications.',
-									'signature' => array(DOM_XMLRPC_TYPE_ARRAY))));
+			'name' => 'system.getCapabilities',
+			'method' => array(&$this, 'getCapabilities'),
+			'help' => 'Returns an array of supported server specifications.',
+			'signature' => array(DOM_XMLRPC_TYPE_ARRAY))));
 
 		$this->methodmapper->addMethod(new dom_xmlrpc_method(array(
-									'name' => 'system.multicall',
-									'method' => array(&$this, 'multicall'),
-									'help' => 'Handles multiple, asynchronous XML-RPC calls bundled into a single request.',
-									'signature' => array(DOM_XMLRPC_TYPE_ARRAY,DOM_XMLRPC_TYPE_ARRAY))));
+			'name' => 'system.multicall',
+			'method' => array(&$this, 'multicall'),
+			'help' => 'Handles multiple, asynchronous XML-RPC calls bundled into a single request.',
+			'signature' => array(DOM_XMLRPC_TYPE_ARRAY, DOM_XMLRPC_TYPE_ARRAY))));
 	} //addSystemMethods
 
 	/**
-	* Adds user defined methods to the method map
-	* @param object A map of custom methods
-	*/
-	function addCustomMethods($customMethods) {
-		foreach ($customMethods as $key => $value) {
+	 * Adds user defined methods to the method map
+	 *
+	 * @param object A map of custom methods
+	 */
+	function addCustomMethods($customMethods)
+	{
+		foreach ($customMethods as $key => $value)
+		{
 			$this->methodmapper->addMethod($customMethods[$key]);
 		}
 	} //addCustomMethods
 
 	/**
-	* Adds user defined methods to the method map
-	* @param array An array of custom methods
-	*/
-	function addMethods($methodsArray) {
-		foreach ($methodsArray as $key => $value) {
+	 * Adds user defined methods to the method map
+	 *
+	 * @param array An array of custom methods
+	 */
+	function addMethods($methodsArray)
+	{
+		foreach ($methodsArray as $key => $value)
+		{
 			$this->methodmapper->addMethod($methodsArray[$key]);
 		}
 	} //addMethods
 
 	/**
-	* Adds a single user defined method to the method map
-	* @param array An array of custom methods
-	*/
-	function addMethod($method) {
+	 * Adds a single user defined method to the method map
+	 *
+	 * @param array An array of custom methods
+	 */
+	function addMethod($method)
+	{
 		//expects an associative array
 		$this->methodmapper->addMethod($method);
 	} //addMethod
 
 	/**
-	* Adds a map of user defined method to the method map
-	* @param object A map of custom methods
-	* @param array A list of method names
-	*/
-	function addMappedMethods(&$methodmap, $methodNameList) {
+	 * Adds a map of user defined method to the method map
+	 *
+	 * @param object A map of custom methods
+	 * @param array  A list of method names
+	 */
+	function addMappedMethods(&$methodmap, $methodNameList)
+	{
 		$this->methodmapper->addMappedMethods($methodmap, $methodNameList);
 	} //addMethodMap
 
 	/**
-	* Specifies whether params should be tokenized
-	* @param boolean True if params should be tokenized
-	*/
-	function tokenizeParams($truthVal) {
+	 * Specifies whether params should be tokenized
+	 *
+	 * @param boolean True if params should be tokenized
+	 */
+	function tokenizeParams($truthVal)
+	{
 		//if true, params array will be split
 		//into individual parameters
 		$this->tokenizeParamsArray = $truthVal;
@@ -188,84 +207,102 @@ class dom_xmlrpc_server extends php_http_server_generic {
 	//****************************system methods******************************
 
 	/**
-	* XML-RPC defined method: lists all available methods
-	* @return array A list of method names
-	*/
-	function listMethods() {
+	 * XML-RPC defined method: lists all available methods
+	 * @return array A list of method names
+	 */
+	function listMethods()
+	{
 		return $this->methodmapper->getMethodNames();
 	} //listMethods
 
 	/**
-	* XML-RPC defined method: returns the signature of the specified method
-	* @param string The method name
-	* @return array The method signature
-	*/
-	function methodSignature($name) {
+	 * XML-RPC defined method: returns the signature of the specified method
+	 *
+	 * @param string The method name
+	 *
+	 * @return array The method signature
+	 */
+	function methodSignature($name)
+	{
 		$myMethod =& $this->methodmapper->getMethod($name);
 		return $myMethod->signature;
 	} //methodSignature
 
 	/**
-	* XML-RPC defined method: returns help on the specified method
-	* @param string The method name
-	* @return string Help on the method
-	*/
-	function methodHelp($name) {
+	 * XML-RPC defined method: returns help on the specified method
+	 *
+	 * @param string The method name
+	 *
+	 * @return string Help on the method
+	 */
+	function methodHelp($name)
+	{
 		$myMethod =& $this->methodmapper->getMethod($name);
 		return $myMethod->help;
 	} //methodHelp
 
 	/**
-	* XML-RPC defined method: delineates what XML-RPC services are provided by the server
-	* @return array The XML-RPC services provided by the server
-	*/
-	function getCapabilities() {
+	 * XML-RPC defined method: delineates what XML-RPC services are provided by the server
+	 * @return array The XML-RPC services provided by the server
+	 */
+	function getCapabilities()
+	{
 		$capabilities = array('xmlrpc' => array(
-									'specUrl' => 'http://www.xmlrpc.com/spec',
-									'specVersion' => 1),
-							 'introspect' => array(
-									'specUrl' => 'http://xmlrpc.usefulinc.com/doc/reserved.html',
-									'specVersion' => 1),
-							 'system.multicall' => array(
-									'specUrl' => 'http://www.xmlrpc.com/discuss/msgReader$1208',
-									'specVersion' => 1),
-							 'faults_interop' => array(
-									'specUrl' => 'http://xmlrpc-epi.sourceforge.net/specs/rfc.fault_codes.php',
-									'specVersion' => 3));
+			'specUrl' => 'http://www.xmlrpc.com/spec',
+			'specVersion' => 1),
+			'introspect' => array(
+				'specUrl' => 'http://xmlrpc.usefulinc.com/doc/reserved.html',
+				'specVersion' => 1),
+			'system.multicall' => array(
+				'specUrl' => 'http://www.xmlrpc.com/discuss/msgReader$1208',
+				'specVersion' => 1),
+			'faults_interop' => array(
+				'specUrl' => 'http://xmlrpc-epi.sourceforge.net/specs/rfc.fault_codes.php',
+				'specVersion' => 3));
 		return $capabilities;
 	} //getCapabilities
 
 	/**
-	* Handles multiple method calls in a single request
-	* @param array An array of method calls
-	* @return array An array of method responses
-	*/
-	function &multicall(&$myArray) {
+	 * Handles multiple method calls in a single request
+	 *
+	 * @param array An array of method calls
+	 *
+	 * @return array An array of method responses
+	 */
+	function &multicall(&$myArray)
+	{
 		//call each method and store each result
 		//in $this->multiresponse
-		foreach ($myArray as $key => $value) {
+		foreach ($myArray as $key => $value)
+		{
 			$currCall =& $myArray[$key];
 			$methodName = $currCall[DOM_XMLRPC_TYPE_METHODNAME];
 			$method =& $this->methodmapper->getMethod($methodName);
 			$params = $currCall[DOM_XMLRPC_TYPE_PARAMS];
 
-			if (!($method == null)) {
-				if ($this->tokenizeParamsArray) {
+			if (!($method == null))
+			{
+				if ($this->tokenizeParamsArray)
+				{
 					$this->multiresponse[] =& call_user_func_array($method->method, $params); //should I worry about < PHP 4.04?
 				}
-				else {
-					if (count($params) == 1) {
+				else
+				{
+					if (count($params) == 1)
+					{
 						//if only one param, send $params[0]
 						//rather than than $params
 						$this->multiresponse[] =& call_user_func($method->method, $params[0]);
 					}
-					else {
+					else
+					{
 						//send the entire array
 						$this->multiresponse[] =& call_user_func($method->method, $params);
 					}
 				}
 			}
-			else { //method doesn't exist
+			else
+			{ //method doesn't exist
 				////return $this->handleMethodNotFound($methodName, $params);
 			}
 		}
@@ -277,10 +314,12 @@ class dom_xmlrpc_server extends php_http_server_generic {
 	//************************************************************************
 
 	/**
-	* Handles the POSTing of data to the server
-	* @param string The POST data
-	*/
-	function onPost($postData) {
+	 * Handles the POSTing of data to the server
+	 *
+	 * @param string The POST data
+	 */
+	function onPost($postData)
+	{
 		global $HTTP_RAW_POST_DATA;
 
 		if ($postData == null) $postData = $HTTP_RAW_POST_DATA;
@@ -288,29 +327,38 @@ class dom_xmlrpc_server extends php_http_server_generic {
 	} //onPost
 
 	/**
-	* Invokes the method(s) in the XML request
-	* @param string The XML text of the request
-	* @return mixed The method response
-	*/
-	function &invokeMethod($xmlText) {
+	 * Invokes the method(s) in the XML request
+	 *
+	 * @param string The XML text of the request
+	 *
+	 * @return mixed The method response
+	 */
+	function &invokeMethod($xmlText)
+	{
 		$xmlrpcdoc = $this->parseRequest($xmlText);
 
-		if (!$this->isError()) {
+		if (!$this->isError())
+		{
 			$methodName = $xmlrpcdoc->getMethodName();
 			$method =& $this->methodmapper->getMethod($methodName);
 			$params =& $xmlrpcdoc->getParams();
 
-			if (!($method == null)) {
-				if ($this->tokenizeParamsArray) {
+			if (!($method == null))
+			{
+				if ($this->tokenizeParamsArray)
+				{
 					$response =& call_user_func_array($method->method, $params); //should I worry about < PHP 4.04?
 				}
-				else {
-					if (count($params) == 1) {
+				else
+				{
+					if (count($params) == 1)
+					{
 						//if only one param, send $params[0]
 						//rather than than $params
 						$response =& call_user_func($method->method, $params[0]);
 					}
-					else {
+					else
+					{
 						//send the entire array
 						$response =& call_user_func($method->method, $params);
 					}
@@ -318,26 +366,32 @@ class dom_xmlrpc_server extends php_http_server_generic {
 
 				return $this->buildResponse($response);
 			}
-			else { //method doesn't exist
+			else
+			{ //method doesn't exist
 				return $this->handleMethodNotFound($methodName, $params);
 			}
 		}
 	} //invokeMethod
 
 	/**
-	* Default handler for a missing method
-	* @param string The method name
-	* @param mixed The method params
-	* @return mixed A fault or user defined data
-	*/
-	function &handleMethodNotFound($methodName, &$params) {
-		if ($this->methodNotFoundHandler == null) {
-		    //raise exception, method doesn't exist
+	 * Default handler for a missing method
+	 *
+	 * @param string The method name
+	 * @param mixed  The method params
+	 *
+	 * @return mixed A fault or user defined data
+	 */
+	function &handleMethodNotFound($methodName, &$params)
+	{
+		if ($this->methodNotFoundHandler == null)
+		{
+			//raise exception, method doesn't exist
 			$this->serverError = DOM_XMLRPC_SERVER_ERROR_REQUESTED_METHOD_NOT_FOUND;
 			$this->serverErrorString = 'DOM XML-RPC Server Error - Requested method not found.';
 			return $this->raiseFault();
 		}
-		else {
+		else
+		{
 			//fire the custom event; pass in a reference to the server
 			//so that a fault can be generated as with default handler above
 			return call_user_func($this->methodNotFoundHandler, $this, $methodName, $params);
@@ -345,35 +399,45 @@ class dom_xmlrpc_server extends php_http_server_generic {
 	} //handleMethodNotFound
 
 	/**
-	* Sets the handler for a missing method
-	* @param object A reference to the method not found handler
-	*/
-	function setMethodNotFoundHandler($method) {
+	 * Sets the handler for a missing method
+	 *
+	 * @param object A reference to the method not found handler
+	 */
+	function setMethodNotFoundHandler($method)
+	{
 		$this->methodNotFoundHandler =& $method;
 	} //setMethodNotFoundHandler
 
 	/**
-	* Builds a method response or fault
-	* @param object A reference to the method response data
-	* @return mixed The method response or fault
-	*/
-	function &buildResponse(&$response) {
+	 * Builds a method response or fault
+	 *
+	 * @param object A reference to the method response data
+	 *
+	 * @return mixed The method response or fault
+	 */
+	function &buildResponse(&$response)
+	{
 		require_once(DOM_XMLRPC_INCLUDE_PATH . 'dom_xmlrpc_fault.php');
 
-		if (is_object($response) && (get_class($response) == 'dom_xmlrpc_fault')) {
+		if (is_object($response) && (get_class($response) == 'dom_xmlrpc_fault'))
+		{
 			return $this->buildFault($response);
 		}
-		else {
+		else
+		{
 			return $this->buildMethodResponse($response);
 		}
 	} //buildResponse
 
 	/**
-	* Builds a method response
-	* @param object A reference to the method response data
-	* @return mixed The method response
-	*/
-	function buildMethodResponse($response) {
+	 * Builds a method response
+	 *
+	 * @param object A reference to the method response data
+	 *
+	 * @return mixed The method response
+	 */
+	function buildMethodResponse($response)
+	{
 		require_once(DOM_XMLRPC_INCLUDE_PATH . 'dom_xmlrpc_methodresponse.php');
 		$methodResponse = new dom_xmlrpc_methodresponse($response);
 
@@ -381,18 +445,20 @@ class dom_xmlrpc_server extends php_http_server_generic {
 	} //buildMethodResponse
 
 	/**
-	* Determines whether an error has occurred
-	* @return boolean True if an error has occurred
-	*/
-	function isError() {
+	 * Determines whether an error has occurred
+	 * @return boolean True if an error has occurred
+	 */
+	function isError()
+	{
 		return ($this->serverError != -1);
 	} //isError
 
 	/**
-	* Raises an XML-RPC fault
-	* @return object An XML-RPC fault
-	*/
-	function &raiseFault() {
+	 * Raises an XML-RPC fault
+	 * @return object An XML-RPC fault
+	 */
+	function &raiseFault()
+	{
 		require_once(DOM_XMLRPC_INCLUDE_PATH . 'dom_xmlrpc_fault.php');
 
 		$fault = new dom_xmlrpc_fault($this->serverError, $this->serverErrorString);
@@ -400,11 +466,14 @@ class dom_xmlrpc_server extends php_http_server_generic {
 	} //raiseFault
 
 	/**
-	* Builds an XML-RPC fault
-	* @param object A reference to the method response data
-	* @return mixed The XML-RPC fault
-	*/
-	function buildFault($response) {
+	 * Builds an XML-RPC fault
+	 *
+	 * @param object A reference to the method response data
+	 *
+	 * @return mixed The XML-RPC fault
+	 */
+	function buildFault($response)
+	{
 		require_once(DOM_XMLRPC_INCLUDE_PATH . 'dom_xmlrpc_methodresponse_fault.php');
 		$fault = new dom_xmlrpc_methodresponse_fault($response);
 
@@ -412,40 +481,51 @@ class dom_xmlrpc_server extends php_http_server_generic {
 	} //buildFault
 
 	/**
-	* Sets object awareness to the specified value
-	* @param boolean True if object awareness is to be enabled
-	*/
-	function setObjectAwareness($truthVal) {
+	 * Sets object awareness to the specified value
+	 *
+	 * @param boolean True if object awareness is to be enabled
+	 */
+	function setObjectAwareness($truthVal)
+	{
 		$this->objectAwareness = $truthVal;
 	} //setObjectAwareness
 
 	/**
-	* Sets the handler for object handling
-	* @param object The handler for object handling
-	*/
-	function setObjectDefinitionHandler($handler) {
+	 * Sets the handler for object handling
+	 *
+	 * @param object The handler for object handling
+	 */
+	function setObjectDefinitionHandler($handler)
+	{
 		$this->objectDefinitionHandler =& $handler;
 	} //setObjectDefinitionHandler
 
 	/**
-	* Parses the method request
-	* @param string The text of the method request
-	* @return mixed The method response document
-	*/
-	function &parseRequest($xmlText) {
-		if ($this->objectAwareness) {
-		    require_once(DOM_XMLRPC_INCLUDE_PATH . 'dom_xmlrpc_object_parser.php');
+	 * Parses the method request
+	 *
+	 * @param string The text of the method request
+	 *
+	 * @return mixed The method response document
+	 */
+	function &parseRequest($xmlText)
+	{
+		if ($this->objectAwareness)
+		{
+			require_once(DOM_XMLRPC_INCLUDE_PATH . 'dom_xmlrpc_object_parser.php');
 			$parser = new dom_xmlrpc_object_parser($this->objectDefinitionHandler);
 		}
-		else {
+		else
+		{
 			require_once(DOM_XMLRPC_INCLUDE_PATH . 'dom_xmlrpc_array_parser.php');
 			$parser = new dom_xmlrpc_array_parser();
 		}
 
-		if ($parser->parseXML($xmlText, false)) {
+		if ($parser->parseXML($xmlText, false))
+		{
 			return $parser->getArrayDocument();
 		}
-		else {
+		else
+		{
 			//raise exception, parsing error
 			$this->serverError = DOM_XMLRPC_PARSE_ERROR_NOT_WELL_FORMED;
 			$this->serverErrorString = 'DOM XML-RPC Parse Error - XML document not well formed.';
@@ -454,13 +534,14 @@ class dom_xmlrpc_server extends php_http_server_generic {
 	} //parseRequest
 
 	/**
-	* Raises fault if POST is not used for method request
-	*/
-	function onWrongRequestMethod() {
+	 * Raises fault if POST is not used for method request
+	 */
+	function onWrongRequestMethod()
+	{
 		//raise exception, POST method not used
 		$this->serverError = DOM_XMLRPC_SERVER_ERROR_INTERNAL_XMLRPC;
 		$this->serverErrorString = 'DOM XML-RPC Server Error - ' .
-				'Only POST method is allowed by the XML-RPC specification.';
+			'Only POST method is allowed by the XML-RPC specification.';
 
 		$this->respond($this->raiseFault());
 	} //onWrongRequestMethod
@@ -468,30 +549,37 @@ class dom_xmlrpc_server extends php_http_server_generic {
 
 
 /**
-* Represents an XML-RPC server method
-*
-* @package dom-xmlrpc
-* @author John Heinstein <johnkarl@nbnet.nb.ca>
-*/
-class dom_xmlrpc_methods {
+ * Represents an XML-RPC server method
+ *
+ * @package dom-xmlrpc
+ * @author  John Heinstein <johnkarl@nbnet.nb.ca>
+ */
+class dom_xmlrpc_methods
+{
 	/** @var array A list of methods */
 	var $methods = array();
 
 	/**
-	* Adds a method to the method array
-	* @param object The method to be added
-	*/
-	function addMethod(&$method) {
+	 * Adds a method to the method array
+	 *
+	 * @param object The method to be added
+	 */
+	function addMethod(&$method)
+	{
 		$this->methods[$method->name] =& $method;
 	} //addMethod
 
 	/**
-	* Retrieves a method from the method array
-	* @param string The name of the method
-	* @return object A reference to the requested method
-	*/
-	function &getMethod($name) {
-		if (isset($this->methods[$name])) {
+	 * Retrieves a method from the method array
+	 *
+	 * @param string The name of the method
+	 *
+	 * @return object A reference to the requested method
+	 */
+	function &getMethod($name)
+	{
+		if (isset($this->methods[$name]))
+		{
 			return $this->methods[$name];
 		}
 
@@ -499,61 +587,73 @@ class dom_xmlrpc_methods {
 	} //getMethod
 
 	/**
-	* Retrieves a list of methods in the method array
-	* @return array A list of methods in the method array
-	*/
-	function getMethodNames() {
+	 * Retrieves a list of methods in the method array
+	 * @return array A list of methods in the method array
+	 */
+	function getMethodNames()
+	{
 		return array_keys($this->methods);
 	} //getMethodNames
 } //dom_xmlrpc_methods
 
 /**
-* Represents a map of methods available to the server
-*
-* @package dom-xmlrpc
-* @author John Heinstein <johnkarl@nbnet.nb.ca>
-*/
-class dom_xmlrpc_methodmapper {
+ * Represents a map of methods available to the server
+ *
+ * @package dom-xmlrpc
+ * @author  John Heinstein <johnkarl@nbnet.nb.ca>
+ */
+class dom_xmlrpc_methodmapper
+{
 	/** @var array The method map */
 	var $mappedmethods = array();
 	/** @var array A dom_xmlrpc_methods instance */
 	var $unmappedmethods;
 
 	/**
-	* Constructor: Instantiates a new methodmapper
-	*/
-	function dom_xmlrpc_methodmapper() {
+	 * Constructor: Instantiates a new methodmapper
+	 */
+	function dom_xmlrpc_methodmapper()
+	{
 		$this->unmappedmethods = new dom_xmlrpc_methods();
 	} //dom_xmlrpc_methodmapper
 
 	/**
-	* Adds a method to the method map
-	* @param object The method to be added
-	*/
-	function addMethod(&$method) {
+	 * Adds a method to the method map
+	 *
+	 * @param object The method to be added
+	 */
+	function addMethod(&$method)
+	{
 		$this->unmappedmethods->addMethod($method);
 		$this->mappedmethods[$method->name] =& $this->unmappedmethods;
 	} //addMethod
 
 	/**
-	* Adds a method map to the method map
-	* @param object The method map to be added
-	*/
-	function addMappedMethods(&$methodmap, $methodNameList) {
+	 * Adds a method map to the method map
+	 *
+	 * @param object The method map to be added
+	 */
+	function addMappedMethods(&$methodmap, $methodNameList)
+	{
 		$total = count($methodNameList);
 
-		for ($i = 0; $i < $total; $i++) {
+		for ($i = 0; $i < $total; $i++)
+		{
 			$this->mappedmethods[$methodNameList[$i]] =& $methodmap;
 		}
 	} //addMappedMethods
 
 	/**
-	* Retrieves a method from the method map
-	* @param string The name of the method
-	* @return object A reference to the requested method
-	*/
-	function &getMethod($name) {
-		if (isset($this->mappedmethods[$name])) {
+	 * Retrieves a method from the method map
+	 *
+	 * @param string The name of the method
+	 *
+	 * @return object A reference to the requested method
+	 */
+	function &getMethod($name)
+	{
+		if (isset($this->mappedmethods[$name]))
+		{
 			$methodmap =& $this->mappedmethods[$name];
 			return $methodmap->getMethod($name);
 		}
@@ -562,21 +662,23 @@ class dom_xmlrpc_methodmapper {
 	} //getMethod
 
 	/**
-	* Retrieves a list of methods in the method array
-	* @return array A list of methods in the method array
-	*/
-	function getMethodNames() {
+	 * Retrieves a list of methods in the method array
+	 * @return array A list of methods in the method array
+	 */
+	function getMethodNames()
+	{
 		return array_keys($this->mappedmethods);
 	} //getMethodNames
 } //dom_xmlrpc_methodmapper
 
 /**
-* Represents a server method
-*
-* @package dom-xmlrpc
-* @author John Heinstein <johnkarl@nbnet.nb.ca>
-*/
-class dom_xmlrpc_method {
+ * Represents a server method
+ *
+ * @package dom-xmlrpc
+ * @author  John Heinstein <johnkarl@nbnet.nb.ca>
+ */
+class dom_xmlrpc_method
+{
 	/** @var string The method name */
 	var $name;
 	/** @var object A reference to the metho */
@@ -587,36 +689,44 @@ class dom_xmlrpc_method {
 	var $signature = '';
 
 	/**
-	* Constructor: Instantiates a custom method
-	* @param array A method name, reference, signature, and help
-	*/
-	function dom_xmlrpc_method($paramArray) {
+	 * Constructor: Instantiates a custom method
+	 *
+	 * @param array A method name, reference, signature, and help
+	 */
+	function dom_xmlrpc_method($paramArray)
+	{
 		$this->name = $paramArray['name'];
 		$this->method =& $paramArray['method'];
 
-		if (isset($paramArray['help'])) {
+		if (isset($paramArray['help']))
+		{
 			$this->help = $paramArray['help'];
 		}
 
-		if (isset($paramArray['signature'])) {
+		if (isset($paramArray['signature']))
+		{
 			$this->signature = $paramArray['signature'];
 		}
 	} //dom_xmlrpc_method
 } //dom_xmlrpc_method
 
 /**
-* Abstract class for a method map
-*
-* @package dom-xmlrpc
-* @author John Heinstein <johnkarl@nbnet.nb.ca>
-*/
-class dom_xmlrpc_methodmap {
+ * Abstract class for a method map
+ *
+ * @package dom-xmlrpc
+ * @author  John Heinstein <johnkarl@nbnet.nb.ca>
+ */
+class dom_xmlrpc_methodmap
+{
 	/**
-	* Retrieves a method from the method array
-	* @param string The name of the method
-	* @return object A reference to the requested method
-	*/
-	function &getMethod($methodName) {
+	 * Retrieves a method from the method array
+	 *
+	 * @param string The name of the method
+	 *
+	 * @return object A reference to the requested method
+	 */
+	function &getMethod($methodName)
+	{
 		//override this method
 	} //getMethod
 } //dom_xmlrpc_methodmap

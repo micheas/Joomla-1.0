@@ -1,25 +1,33 @@
 <?php
 
-if (!defined('PHP_TEXT_CACHE_INCLUDE_PATH')) {
+if (!defined('PHP_TEXT_CACHE_INCLUDE_PATH'))
+{
 	define('PHP_TEXT_CACHE_INCLUDE_PATH', (dirname(__FILE__) . "/"));
 }
 
-class php_file_utilities {
+class php_file_utilities
+{
 	/**
-	* Retrieves binary or text data from the specified file
-	* @param string The file path
-	* @param string The attributes for the read operation ('r' or 'rb' or 'rt')
-	* @return mixed he text or binary data contained in the file
-	*/
-	function &getDataFromFile($filename, $readAttributes, $readSize = 8192) {
+	 * Retrieves binary or text data from the specified file
+	 *
+	 * @param string The file path
+	 * @param string The attributes for the read operation ('r' or 'rb' or 'rt')
+	 *
+	 * @return mixed he text or binary data contained in the file
+	 */
+	function &getDataFromFile($filename, $readAttributes, $readSize = 8192)
+	{
 		$fileContents = null;
 		$fileHandle = @fopen($filename, $readAttributes);
 
-		if($fileHandle){
-			do {
+		if ($fileHandle)
+		{
+			do
+			{
 				$data = fread($fileHandle, $readSize);
 
-				if (strlen($data) == 0) {
+				if (strlen($data) == 0)
+				{
 					break;
 				}
 
@@ -33,15 +41,18 @@ class php_file_utilities {
 	} //getDataFromFile
 
 	/**
-	* Writes the specified binary or text data to a file
-	* @param string The file path
-	* @param mixed The data to be written
-	* @param string The attributes for the write operation ('w' or 'wb')
-	*/
-	function putDataToFile($fileName, &$data, $writeAttributes) {
+	 * Writes the specified binary or text data to a file
+	 *
+	 * @param string The file path
+	 * @param mixed  The data to be written
+	 * @param string The attributes for the write operation ('w' or 'wb')
+	 */
+	function putDataToFile($fileName, &$data, $writeAttributes)
+	{
 		$fileHandle = @fopen($fileName, $writeAttributes);
 
-		if ($fileHandle) {
+		if ($fileHandle)
+		{
 			fwrite($fileHandle, $data);
 			fclose($fileHandle);
 		}

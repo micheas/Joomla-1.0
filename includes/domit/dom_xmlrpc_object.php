@@ -13,14 +13,17 @@
 //Licensed under the GNU General Public License (GPL)
 //http://www.gnu.org/licenses/gpl-2.0.html
 //*******************************************************************
-class dom_xmlrpc_object {
+class dom_xmlrpc_object
+{
 	var $myObject;
 
-	function dom_xmlrpc_object($myObject) {
+	function dom_xmlrpc_object($myObject)
+	{
 		$this->myObject =& $myObject;
 	} //dom_xmlrpc_object
 
-	function &getObject() {
+	function &getObject()
+	{
 		return $this->myObject;
 	} //getObject
 } //dom_xmlrpc_object

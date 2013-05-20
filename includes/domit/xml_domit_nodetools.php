@@ -1,13 +1,13 @@
 <?php
 /**
-* nodetools is a class of miscellaneous XML helper methods
-* @package domit-xmlparser
-* @copyright (C) 2004 John Heinstein. All rights reserved
-* @license http://www.gnu.org/copyleft/lesser.html LGPL License
-* @author John Heinstein <johnkarl@nbnet.nb.ca>
-* @link http://www.engageinteractive.com/domit/ DOMIT! Home Page
-* DOMIT! is Free Software
-**/
+ * nodetools is a class of miscellaneous XML helper methods
+ * @package   domit-xmlparser
+ * @copyright (C) 2004 John Heinstein. All rights reserved
+ * @license   http://www.gnu.org/copyleft/lesser.html LGPL License
+ * @author    John Heinstein <johnkarl@nbnet.nb.ca>
+ * @link      http://www.engageinteractive.com/domit/ DOMIT! Home Page
+ *            DOMIT! is Free Software
+ **/
 
 /** attribute parse state, just before parsing an attribute */
 define('DOMIT_ATTRIBUTEPARSER_STATE_ATTR_NONE', 0);
@@ -17,24 +17,28 @@ define('DOMIT_ATTRIBUTEPARSER_STATE_ATTR_KEY', 1);
 define('DOMIT_ATTRIBUTEPARSER_STATE_ATTR_VALUE', 2);
 
 /**
-*@global Array Translation table for predefined XML entities
-*/
+ * @global Array Translation table for predefined XML entities
+ */
 $GLOBALS['DOMIT_PREDEFINED_ENTITIES'] = array('&' => '&amp;', '<' => '&lt;', '>' => '&gt;',
-											'"' => '&quot;', "'" => '&apos;');
+	'"' => '&quot;', "'" => '&apos;');
 
-											/**
-* A class of miscellaneous XML helper methods
-*
-* @package domit-xmlparser
-* @author John Heinstein <johnkarl@nbnet.nb.ca>
-*/
-class nodetools {
+/**
+ * A class of miscellaneous XML helper methods
+ *
+ * @package domit-xmlparser
+ * @author  John Heinstein <johnkarl@nbnet.nb.ca>
+ */
+class nodetools
+{
 	/**
-	* Parses the attributes string into an array of key / value pairs
-	* @param string The attribute text
-	* @return Array An array of key / value pairs
-	*/
-	function parseAttributes($attrText, $convertEntities = true, $definedEntities = null) {
+	 * Parses the attributes string into an array of key / value pairs
+	 *
+	 * @param string The attribute text
+	 *
+	 * @return Array An array of key / value pairs
+	 */
+	function parseAttributes($attrText, $convertEntities = true, $definedEntities = null)
+	{
 		$attrText = trim($attrText);
 		$attrArray = array();
 		$maybeEntity = false;
@@ -47,21 +51,27 @@ class nodetools {
 
 		if ($definedEntities == null) $defineEntities = array();
 
-		for ($i = 0; $i < $total; $i++) {
+		for ($i = 0; $i < $total; $i++)
+		{
 			$currentChar = $attrText{$i};
 
-			if ($currentState == DOMIT_ATTRIBUTEPARSER_STATE_ATTR_NONE) {
-				if (trim($currentChar != '')) {
+			if ($currentState == DOMIT_ATTRIBUTEPARSER_STATE_ATTR_NONE)
+			{
+				if (trim($currentChar != ''))
+				{
 					$currentState = DOMIT_ATTRIBUTEPARSER_STATE_ATTR_KEY;
 				}
 			}
 
-			switch ($currentChar) {
+			switch ($currentChar)
+			{
 				case "\t":
-					if ($currentState == DOMIT_ATTRIBUTEPARSER_STATE_ATTR_VALUE) {
+					if ($currentState == DOMIT_ATTRIBUTEPARSER_STATE_ATTR_VALUE)
+					{
 						$valueDump .= $currentChar;
 					}
-					else {
+					else
+					{
 						$currentChar = '';
 					}
 					break;
@@ -73,10 +83,12 @@ class nodetools {
 					break;
 
 				case '=':
-					if ($currentState == DOMIT_ATTRIBUTEPARSER_STATE_ATTR_VALUE) {
+					if ($currentState == DOMIT_ATTRIBUTEPARSER_STATE_ATTR_VALUE)
+					{
 						$valueDump .= $currentChar;
 					}
-					else {
+					else
+					{
 						$currentState = DOMIT_ATTRIBUTEPARSER_STATE_ATTR_VALUE;
 						$quoteType = '';
 						$maybeEntity = false;
@@ -84,14 +96,19 @@ class nodetools {
 					break;
 
 				case '"':
-					if ($currentState == DOMIT_ATTRIBUTEPARSER_STATE_ATTR_VALUE) {
-						if ($quoteType == '') {
+					if ($currentState == DOMIT_ATTRIBUTEPARSER_STATE_ATTR_VALUE)
+					{
+						if ($quoteType == '')
+						{
 							$quoteType = '"';
 						}
-						else {
-							if ($quoteType == $currentChar) {
-								if ($convertEntities && $maybeEntity) {
-								    $valueDump = strtr($valueDump, DOMIT_PREDEFINED_ENTITIES);
+						else
+						{
+							if ($quoteType == $currentChar)
+							{
+								if ($convertEntities && $maybeEntity)
+								{
+									$valueDump = strtr($valueDump, DOMIT_PREDEFINED_ENTITIES);
 									$valueDump = strtr($valueDump, $definedEntities);
 								}
 
@@ -99,7 +116,8 @@ class nodetools {
 								$keyDump = $valueDump = $quoteType = '';
 								$currentState = DOMIT_ATTRIBUTEPARSER_STATE_ATTR_NONE;
 							}
-							else {
+							else
+							{
 								$valueDump .= $currentChar;
 							}
 						}
@@ -107,14 +125,19 @@ class nodetools {
 					break;
 
 				case "'":
-					if ($currentState == DOMIT_ATTRIBUTEPARSER_STATE_ATTR_VALUE) {
-						if ($quoteType == '') {
+					if ($currentState == DOMIT_ATTRIBUTEPARSER_STATE_ATTR_VALUE)
+					{
+						if ($quoteType == '')
+						{
 							$quoteType = "'";
 						}
-						else {
-							if ($quoteType == $currentChar) {
-								if ($convertEntities && $maybeEntity) {
-								    $valueDump = strtr($valueDump, $predefinedEntities);
+						else
+						{
+							if ($quoteType == $currentChar)
+							{
+								if ($convertEntities && $maybeEntity)
+								{
+									$valueDump = strtr($valueDump, $predefinedEntities);
 									$valueDump = strtr($valueDump, $definedEntities);
 								}
 
@@ -122,7 +145,8 @@ class nodetools {
 								$keyDump = $valueDump = $quoteType = '';
 								$currentState = DOMIT_ATTRIBUTEPARSER_STATE_ATTR_NONE;
 							}
-							else {
+							else
+							{
 								$valueDump .= $currentChar;
 							}
 						}
@@ -136,10 +160,12 @@ class nodetools {
 					break;
 
 				default:
-					if ($currentState == DOMIT_ATTRIBUTEPARSER_STATE_ATTR_KEY) {
+					if ($currentState == DOMIT_ATTRIBUTEPARSER_STATE_ATTR_KEY)
+					{
 						$keyDump .= $currentChar;
 					}
-					else {
+					else
+					{
 						$valueDump .= $currentChar;
 					}
 			}
@@ -149,11 +175,14 @@ class nodetools {
 	} //parseAttributes
 
 	/**
-	* Move a node to the previous index in the childNodes array
-	* @param Object The node to be moved
-	*/
-	function moveUp(&$node) {
-		if (($node->previousSibling != null) && ($node->parentNode != null)) {
+	 * Move a node to the previous index in the childNodes array
+	 *
+	 * @param Object The node to be moved
+	 */
+	function moveUp(&$node)
+	{
+		if (($node->previousSibling != null) && ($node->parentNode != null))
+		{
 			$parent =& $node->parentNode;
 			$previous =& $node->previousSibling;
 
@@ -163,18 +192,23 @@ class nodetools {
 	} //moveUp
 
 	/**
-	* Move a node to the next index in the childNodes array
-	* @param Object The node to be moved
-	*/
-	function moveDown(&$node) {
-		if (($node->nextSibling != null) && ($node->parentNode != null)) {
+	 * Move a node to the next index in the childNodes array
+	 *
+	 * @param Object The node to be moved
+	 */
+	function moveDown(&$node)
+	{
+		if (($node->nextSibling != null) && ($node->parentNode != null))
+		{
 			$parent =& $node->parentNode;
 
-			if ($node->nextSibling->nextSibling == null) {
+			if ($node->nextSibling->nextSibling == null)
+			{
 				$node =& $parent->removeChild($node);
 				$parent->appendChild($node);
 			}
-			else {
+			else
+			{
 				$insertionPoint =& $node->nextSibling->nextSibling;
 				$node =& $parent->removeChild($node);
 				$parent->insertBefore($node, $insertionPoint);
@@ -183,12 +217,15 @@ class nodetools {
 	} //moveDown
 
 	/**
-	* Checks if a node exists on the given path; if so, returns the node, otherwise false
-	* @param Object The calling node
-	* @param string The path
-	* @return mixed The found node, or false
-	*/
-	function &nodeExists(&$callingNode, $path) {
+	 * Checks if a node exists on the given path; if so, returns the node, otherwise false
+	 *
+	 * @param Object The calling node
+	 * @param string The path
+	 *
+	 * @return mixed The found node, or false
+	 */
+	function &nodeExists(&$callingNode, $path)
+	{
 		$foundNode =& $callingNode->getElementsByPath($path, 1);
 
 		if ($foundNode == null) return false;
@@ -196,25 +233,32 @@ class nodetools {
 	} //nodeExists
 
 	/**
-	* Generates a heirarchy of nodes based on a path expression
-	* @param string The path expression
-	* @param string The value of a text node to be appended to the last element
-	* @return object The generated nodes
-	*/
-	function &fromPath(&$xmldoc, $path, $text = null) {
+	 * Generates a heirarchy of nodes based on a path expression
+	 *
+	 * @param string The path expression
+	 * @param string The value of a text node to be appended to the last element
+	 *
+	 * @return object The generated nodes
+	 */
+	function &fromPath(&$xmldoc, $path, $text = null)
+	{
 		$pathSegments = explode('/', $path);
 		$parent = null;
 		$lastNode = null;
 		$total = count($pathSegments);
 
-		for ($i = 0; $i < $total; $i++) {
-			if ($pathSegments[$i] != '') {
+		for ($i = 0; $i < $total; $i++)
+		{
+			if ($pathSegments[$i] != '')
+			{
 				$currNode =& $xmldoc->createElement($pathSegments[$i]);
 
-				if ($parent == null) {
+				if ($parent == null)
+				{
 					$parent =& $currNode;
 				}
-				else {
+				else
+				{
 					$lastNode->appendChild($currNode);
 				}
 
@@ -222,7 +266,8 @@ class nodetools {
 			}
 		}
 
-		if ($text != null) {
+		if ($text != null)
+		{
 			$currNode =& $xmldoc->createTextNode($text);
 			$lastNode->appendChild($currNode);
 		}

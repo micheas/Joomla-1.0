@@ -4,34 +4,40 @@
  */
 
 // no direct access
-defined( '_VALID_MOS' ) or die( 'Restricted access' );
+defined('_VALID_MOS') or die('Restricted access');
 
 /**
  * Replace file_get_contents()
  *
- * @category	PHP
- * @package	 PHP_Compat
- * @link		http://php.net/function.file_get_contents
- * @author	  Aidan Lister <aidan@php.net>
- * @version	 $Revision$
- * @internal	resource_context is not supported
- * @since		PHP 5
- * @require	 PHP 4.0.1 (trigger_error)
+ * @category     PHP
+ * @package      PHP_Compat
+ * @link         http://php.net/function.file_get_contents
+ * @author       Aidan Lister <aidan@php.net>
+ * @version      $Revision$
+ * @internal     resource_context is not supported
+ * @since        PHP 5
+ * @require     PHP 4.0.1 (trigger_error)
  */
-if (!function_exists('file_get_contents')) {
+if (!function_exists('file_get_contents'))
+{
 	function file_get_contents($filename, $incpath = false, $resource_context = null)
 	{
-		if (false === $fh = fopen($filename, 'rb', $incpath)) {
+		if (false === $fh = fopen($filename, 'rb', $incpath))
+		{
 			trigger_error('file_get_contents() failed to open stream: No such file or directory', E_USER_WARNING);
 			return false;
 		}
 
 		clearstatcache();
-		if ($fsize = @filesize($filename)) {
+		if ($fsize = @filesize($filename))
+		{
 			$data = fread($fh, $fsize);
-		} else {
+		}
+		else
+		{
 			$data = '';
-			while (!feof($fh)) {
+			while (!feof($fh))
+			{
 				$data .= fread($fh, 8192);
 			}
 		}
@@ -40,11 +46,13 @@ if (!function_exists('file_get_contents')) {
 		return $data;
 	}
 }
-if (!defined('FILE_USE_INCLUDE_PATH')) {
+if (!defined('FILE_USE_INCLUDE_PATH'))
+{
 	define('FILE_USE_INCLUDE_PATH', 1);
 }
 
-if (!defined('FILE_APPEND')) {
+if (!defined('FILE_APPEND'))
+{
 	define('FILE_APPEND', 8);
 }
 
@@ -52,25 +60,28 @@ if (!defined('FILE_APPEND')) {
 /**
  * Replace file_put_contents()
  *
- * @category	PHP
- * @package	 PHP_Compat
- * @link		http://php.net/function.file_put_contents
- * @author	  Aidan Lister <aidan@php.net>
- * @version	 $Revision$
- * @internal	resource_context is not supported
- * @since		PHP 5
- * @require	 PHP 4.0.1 (trigger_error)
+ * @category     PHP
+ * @package      PHP_Compat
+ * @link         http://php.net/function.file_put_contents
+ * @author       Aidan Lister <aidan@php.net>
+ * @version      $Revision$
+ * @internal     resource_context is not supported
+ * @since        PHP 5
+ * @require     PHP 4.0.1 (trigger_error)
  */
-if (!function_exists('file_put_contents')) {
+if (!function_exists('file_put_contents'))
+{
 	function file_put_contents($filename, $content, $flags = null, $resource_context = null)
 	{
 		// If $content is an array, convert it to a string
-		if (is_array($content)) {
+		if (is_array($content))
+		{
 			$content = implode('', $content);
 		}
 
 		// If we don't have a string, throw an error
-		if (!is_scalar($content)) {
+		if (!is_scalar($content))
+		{
 			trigger_error('file_put_contents() The 2nd parameter should be either a string or an array', E_USER_WARNING);
 			return false;
 		}
@@ -80,26 +91,28 @@ if (!function_exists('file_put_contents')) {
 
 		// Check what mode we are using
 		$mode = ($flags & FILE_APPEND) ?
-					$mode = 'a' :
-					$mode = 'w';
+			$mode = 'a' :
+			$mode = 'w';
 
 		// Check if we're using the include path
 		$use_inc_path = ($flags & FILE_USE_INCLUDE_PATH) ?
-					true :
-					false;
+			true :
+			false;
 
 		// Open the file for writing
-		if (($fh = @fopen($filename, $mode, $use_inc_path)) === false) {
+		if (($fh = @fopen($filename, $mode, $use_inc_path)) === false)
+		{
 			trigger_error('file_put_contents() failed to open stream: Permission denied', E_USER_WARNING);
 			return false;
 		}
 
 		// Write to the file
 		$bytes = 0;
-		if (($bytes = @fwrite($fh, $content)) === false) {
+		if (($bytes = @fwrite($fh, $content)) === false)
+		{
 			$errormsg = sprintf('file_put_contents() Failed to write %d bytes to %s',
-							$length,
-							$filename);
+				$length,
+				$filename);
 			trigger_error($errormsg, E_USER_WARNING);
 			return false;
 		}
@@ -108,10 +121,11 @@ if (!function_exists('file_put_contents')) {
 		@fclose($fh);
 
 		// Check all the data was written
-		if ($bytes != $length) {
+		if ($bytes != $length)
+		{
 			$errormsg = sprintf('file_put_contents() Only %d of %d bytes written, possibly out of free disk space.',
-							$bytes,
-							$length);
+				$bytes,
+				$length);
 			trigger_error($errormsg, E_USER_WARNING);
 			return false;
 		}
@@ -123,21 +137,22 @@ if (!function_exists('file_put_contents')) {
 /**
  * Add functionanlity of html_entity_decode() to PHP under 4.3
  *
- * @category	PHP
- * @package	 PHP_Compat
- * @link		http://php.net/function.html_entity_decode
- * @since		PHP 4.3
- * @require	 PHP 4.0.1 
+ * @category     PHP
+ * @package      PHP_Compat
+ * @link         http://php.net/function.html_entity_decode
+ * @since        PHP 4.3
+ * @require     PHP 4.0.1
  */
-if (!function_exists('html_entity_decode')) {
+if (!function_exists('html_entity_decode'))
+{
 	function html_entity_decode($string)
 	{
-   		// Replace numeric
-   		$string = preg_replace('~&#x([0-9a-f]+);~ei', 'chr(hexdec("\\1"))', $string);
-   		$string = preg_replace('~&#([0-9]+);~e', 'chr(\\1)', $string);
-   		
-   		$trans_tbl = get_html_translation_table(HTML_ENTITIES);
-   		$trans_tbl = array_flip($trans_tbl);
-   		return strtr($string, $trans_tbl);
+		// Replace numeric
+		$string = preg_replace('~&#x([0-9a-f]+);~ei', 'chr(hexdec("\\1"))', $string);
+		$string = preg_replace('~&#([0-9]+);~e', 'chr(\\1)', $string);
+
+		$trans_tbl = get_html_translation_table(HTML_ENTITIES);
+		$trans_tbl = array_flip($trans_tbl);
+		return strtr($string, $trans_tbl);
 	}
 }

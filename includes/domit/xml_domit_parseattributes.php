@@ -1,13 +1,13 @@
 <?php
 /**
-* parseAttributes is a function for parsing attribute and attribute-like strings
-* @package domit-xmlparser
-* @copyright (C) 2004 John Heinstein. All rights reserved
-* @license http://www.gnu.org/copyleft/lesser.html LGPL License
-* @author John Heinstein <johnkarl@nbnet.nb.ca>
-* @link http://www.engageinteractive.com/domit/ DOMIT! Home Page
-* DOMIT! is Free Software
-**/
+ * parseAttributes is a function for parsing attribute and attribute-like strings
+ * @package   domit-xmlparser
+ * @copyright (C) 2004 John Heinstein. All rights reserved
+ * @license   http://www.gnu.org/copyleft/lesser.html LGPL License
+ * @author    John Heinstein <johnkarl@nbnet.nb.ca>
+ * @link      http://www.engageinteractive.com/domit/ DOMIT! Home Page
+ *            DOMIT! is Free Software
+ **/
 
 /** attribute parse state, just before parsing an attribute */
 define('DOMIT_ATTRIBUTEPARSER_STATE_ATTR_NONE', 0);
@@ -17,17 +17,20 @@ define('DOMIT_ATTRIBUTEPARSER_STATE_ATTR_KEY', 1);
 define('DOMIT_ATTRIBUTEPARSER_STATE_ATTR_VALUE', 2);
 
 /**
-*@global Array Translation table for predefined XML entities
-*/
+ * @global Array Translation table for predefined XML entities
+ */
 $GLOBALS['DOMIT_PREDEFINED_ENTITIES'] = array('&' => '&amp;', '<' => '&lt;', '>' => '&gt;',
-											'"' => '&quot;', "'" => '&apos;');
+	'"' => '&quot;', "'" => '&apos;');
 
 /**
-* Parses the attributes string into an array of key / value pairs
-* @param string The attribute text
-* @return Array An array of key / value pairs
-*/
-function parseAttributes($attrText, $convertEntities = true, $definedEntities = null) {
+ * Parses the attributes string into an array of key / value pairs
+ *
+ * @param string The attribute text
+ *
+ * @return Array An array of key / value pairs
+ */
+function parseAttributes($attrText, $convertEntities = true, $definedEntities = null)
+{
 	$attrText = trim($attrText);
 	$attrArray = array();
 	$maybeEntity = false;
@@ -40,21 +43,27 @@ function parseAttributes($attrText, $convertEntities = true, $definedEntities = 
 
 	if ($definedEntities == null) $defineEntities = array();
 
-	for ($i = 0; $i < $total; $i++) {
+	for ($i = 0; $i < $total; $i++)
+	{
 		$currentChar = $attrText{$i};
 
-		if ($currentState == DOMIT_ATTRIBUTEPARSER_STATE_ATTR_NONE) {
-			if (trim($currentChar != '')) {
+		if ($currentState == DOMIT_ATTRIBUTEPARSER_STATE_ATTR_NONE)
+		{
+			if (trim($currentChar != ''))
+			{
 				$currentState = DOMIT_ATTRIBUTEPARSER_STATE_ATTR_KEY;
 			}
 		}
 
-		switch ($currentChar) {
+		switch ($currentChar)
+		{
 			case "\t":
-				if ($currentState == DOMIT_ATTRIBUTEPARSER_STATE_ATTR_VALUE) {
+				if ($currentState == DOMIT_ATTRIBUTEPARSER_STATE_ATTR_VALUE)
+				{
 					$valueDump .= $currentChar;
 				}
-				else {
+				else
+				{
 					$currentChar = '';
 				}
 				break;
@@ -66,10 +75,12 @@ function parseAttributes($attrText, $convertEntities = true, $definedEntities = 
 				break;
 
 			case '=':
-				if ($currentState == DOMIT_ATTRIBUTEPARSER_STATE_ATTR_VALUE) {
+				if ($currentState == DOMIT_ATTRIBUTEPARSER_STATE_ATTR_VALUE)
+				{
 					$valueDump .= $currentChar;
 				}
-				else {
+				else
+				{
 					$currentState = DOMIT_ATTRIBUTEPARSER_STATE_ATTR_VALUE;
 					$quoteType = '';
 					$maybeEntity = false;
@@ -77,14 +88,19 @@ function parseAttributes($attrText, $convertEntities = true, $definedEntities = 
 				break;
 
 			case '"':
-				if ($currentState == DOMIT_ATTRIBUTEPARSER_STATE_ATTR_VALUE) {
-					if ($quoteType == '') {
+				if ($currentState == DOMIT_ATTRIBUTEPARSER_STATE_ATTR_VALUE)
+				{
+					if ($quoteType == '')
+					{
 						$quoteType = '"';
 					}
-					else {
-						if ($quoteType == $currentChar) {
-							if ($convertEntities && $maybeEntity) {
-							    $valueDump = strtr($valueDump, DOMIT_PREDEFINED_ENTITIES);
+					else
+					{
+						if ($quoteType == $currentChar)
+						{
+							if ($convertEntities && $maybeEntity)
+							{
+								$valueDump = strtr($valueDump, DOMIT_PREDEFINED_ENTITIES);
 								$valueDump = strtr($valueDump, $definedEntities);
 							}
 
@@ -92,7 +108,8 @@ function parseAttributes($attrText, $convertEntities = true, $definedEntities = 
 							$keyDump = $valueDump = $quoteType = '';
 							$currentState = DOMIT_ATTRIBUTEPARSER_STATE_ATTR_NONE;
 						}
-						else {
+						else
+						{
 							$valueDump .= $currentChar;
 						}
 					}
@@ -100,14 +117,19 @@ function parseAttributes($attrText, $convertEntities = true, $definedEntities = 
 				break;
 
 			case "'":
-				if ($currentState == DOMIT_ATTRIBUTEPARSER_STATE_ATTR_VALUE) {
-					if ($quoteType == '') {
+				if ($currentState == DOMIT_ATTRIBUTEPARSER_STATE_ATTR_VALUE)
+				{
+					if ($quoteType == '')
+					{
 						$quoteType = "'";
 					}
-					else {
-						if ($quoteType == $currentChar) {
-							if ($convertEntities && $maybeEntity) {
-							    $valueDump = strtr($valueDump, $predefinedEntities);
+					else
+					{
+						if ($quoteType == $currentChar)
+						{
+							if ($convertEntities && $maybeEntity)
+							{
+								$valueDump = strtr($valueDump, $predefinedEntities);
 								$valueDump = strtr($valueDump, $definedEntities);
 							}
 
@@ -115,7 +137,8 @@ function parseAttributes($attrText, $convertEntities = true, $definedEntities = 
 							$keyDump = $valueDump = $quoteType = '';
 							$currentState = DOMIT_ATTRIBUTEPARSER_STATE_ATTR_NONE;
 						}
-						else {
+						else
+						{
 							$valueDump .= $currentChar;
 						}
 					}
@@ -129,10 +152,12 @@ function parseAttributes($attrText, $convertEntities = true, $definedEntities = 
 				break;
 
 			default:
-				if ($currentState == DOMIT_ATTRIBUTEPARSER_STATE_ATTR_KEY) {
+				if ($currentState == DOMIT_ATTRIBUTEPARSER_STATE_ATTR_KEY)
+				{
 					$keyDump .= $currentChar;
 				}
-				else {
+				else
+				{
 					$valueDump .= $currentChar;
 				}
 		}

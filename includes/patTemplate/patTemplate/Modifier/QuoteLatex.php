@@ -4,9 +4,9 @@
  *
  * $Id$
  *
- * @package		patTemplate
- * @subpackage	Modifiers
- * @author		Stephan Schmidt <schst@php.net>
+ * @package        patTemplate
+ * @subpackage     Modifiers
+ * @author         Stephan Schmidt <schst@php.net>
  */
 
 /**
@@ -14,10 +14,10 @@
  *
  * This is useful when creating PDF documents with patTemplate
  *
- * @package		patTemplate
- * @subpackage	Modifiers
- * @author		Stephan Schmidt <schst@php.net>
- * @link		http://www.php.net/manual/en/function.strftime.php
+ * @package        patTemplate
+ * @subpackage     Modifiers
+ * @author         Stephan Schmidt <schst@php.net>
+ * @link           http://www.php.net/manual/en/function.strftime.php
  */
 class patTemplate_Modifier_QuoteLatex extends patTemplate_Modifier
 {
@@ -26,20 +26,22 @@ class patTemplate_Modifier_QuoteLatex extends patTemplate_Modifier
 	 *
 	 */
 	var $_chars = array(
-						'%' => '\%',
-						'&' => '\&',
-						'_' => '\_',
-						'$' => '\$'
-					);
+		'%' => '\%',
+		'&' => '\&',
+		'_' => '\_',
+		'$' => '\$'
+	);
 
-   /**
-	* modify the value
-	*
-	* @access	public
-	* @param	string		value
-	* @return	string		modified value
-	*/
-	function modify( $value, $params = array() )
+	/**
+	 * modify the value
+	 *
+	 * @access    public
+	 *
+	 * @param    string        value
+	 *
+	 * @return    string        modified value
+	 */
+	function modify($value, $params = array())
 	{
 		return strtr($value, $this->_chars);
 	}

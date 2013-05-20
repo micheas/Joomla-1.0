@@ -9,8 +9,8 @@
     <copyright>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</copyright>
     <license>LGPL</license>
     <description>This loads a basic text entry field</description>
-	<files>
-		<filename mambot="none">none.php</filename>
-	</files>
-	<params/>
+    <files>
+        <filename mambot="none">none.php</filename>
+    </files>
+    <params/>
 </mosinstall>

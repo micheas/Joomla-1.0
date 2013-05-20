@@ -1,36 +1,41 @@
 <?php
 /**
-* dom_xmlrpc_array_parser handles SAX events to convert a DOM XML-RPC XML string into a PHP array
-* @package dom-xmlrpc
-* @copyright (C) 2004 John Heinstein. All rights reserved
-* @license http://www.gnu.org/copyleft/lesser.html LGPL License
-* @author John Heinstein <johnkarl@nbnet.nb.ca>
-* @link http://www.engageinteractive.com/dom_xmlrpc/ DOM XML-RPC Home Page
-* DOM XML-RPC is Free Software
-**/
+ * dom_xmlrpc_array_parser handles SAX events to convert a DOM XML-RPC XML string into a PHP array
+ * @package   dom-xmlrpc
+ * @copyright (C) 2004 John Heinstein. All rights reserved
+ * @license   http://www.gnu.org/copyleft/lesser.html LGPL License
+ * @author    John Heinstein <johnkarl@nbnet.nb.ca>
+ * @link      http://www.engageinteractive.com/dom_xmlrpc/ DOM XML-RPC Home Page
+ *            DOM XML-RPC is Free Software
+ **/
 
-if (!defined('DOM_XMLRPC_INCLUDE_PATH')) {
+if (!defined('DOM_XMLRPC_INCLUDE_PATH'))
+{
 	define('DOM_XMLRPC_INCLUDE_PATH', (dirname(__FILE__) . "/"));
 }
 
 require_once(DOM_XMLRPC_INCLUDE_PATH . 'dom_xmlrpc_parser.php');
 
 /**
-* Handles SAX events to convert a DOM XML-RPC XML string into a PHP array
-*
-* @package dom-xmlrpc
-* @author John Heinstein <johnkarl@nbnet.nb.ca>
-*/
-class dom_xmlrpc_array_parser extends dom_xmlrpc_parser {
+ * Handles SAX events to convert a DOM XML-RPC XML string into a PHP array
+ *
+ * @package dom-xmlrpc
+ * @author  John Heinstein <johnkarl@nbnet.nb.ca>
+ */
+class dom_xmlrpc_array_parser extends dom_xmlrpc_parser
+{
 
 	/**
-	* Handles start element events
-	* @param object A reference to the SAX parser
-	* @param string The name of the start element tag
-	* @param array An array of attributes (never used by XML-RPC spec)
-	*/
-	function startElement($parser, $name, $attrs) {
-		switch($name) {
+	 * Handles start element events
+	 *
+	 * @param object A reference to the SAX parser
+	 * @param string The name of the start element tag
+	 * @param array  An array of attributes (never used by XML-RPC spec)
+	 */
+	function startElement($parser, $name, $attrs)
+	{
+		switch ($name)
+		{
 			case DOM_XMLRPC_TYPE_METHODCALL:
 			case DOM_XMLRPC_TYPE_METHODRESPONSE:
 			case DOM_XMLRPC_TYPE_FAULT:
@@ -45,25 +50,28 @@ class dom_xmlrpc_array_parser extends dom_xmlrpc_parser {
 	} //startElement
 
 	/**
-	* Handles end element events
-	* @param object A reference to the SAX parser
-	* @param string The name of the end element tag
-	*/
-	function endElement($parser, $name) {
-		switch($name) {
+	 * Handles end element events
+	 *
+	 * @param object A reference to the SAX parser
+	 * @param string The name of the end element tag
+	 */
+	function endElement($parser, $name)
+	{
+		switch ($name)
+		{
 			case DOM_XMLRPC_TYPE_STRING:
 				//$this->addValue(html_entity_decode($this->charContainer, ENT_QUOTES));
 				$this->addValue($this->charContainer);
 				break;
 			case DOM_XMLRPC_TYPE_I4:
 			case DOM_XMLRPC_TYPE_INT:
-				$this->addValue((int)($this->charContainer));
+				$this->addValue((int) ($this->charContainer));
 				break;
 			case DOM_XMLRPC_TYPE_DOUBLE:
 				$this->addValue(floatval($this->charContainer));
 				break;
 			case DOM_XMLRPC_TYPE_BOOLEAN:
-				$this->addValue((bool)(trim($this->charContainer)));
+				$this->addValue((bool) (trim($this->charContainer)));
 				break;
 			case DOM_XMLRPC_TYPE_BASE64:
 				require_once(DOM_XMLRPC_INCLUDE_PATH . 'dom_xmlrpc_base64.php');
@@ -101,20 +109,25 @@ class dom_xmlrpc_array_parser extends dom_xmlrpc_parser {
 				$this->charContainer = '';
 				break;
 		}
-	}    //endElement
+	} //endElement
 
 	/**
-	* Adds an XML-RPC value to the results array
-	* @param mixed The value
-	*/
-	function addValue($value) {
+	 * Adds an XML-RPC value to the results array
+	 *
+	 * @param mixed The value
+	 */
+	function addValue($value)
+	{
 		$upper = count($this->lastArray) - 1;
 
-		if ($upper > -1) {
-			if ($this->lastArrayType[$upper] == DOM_XMLRPC_TYPE_STRUCT) {
+		if ($upper > -1)
+		{
+			if ($this->lastArrayType[$upper] == DOM_XMLRPC_TYPE_STRUCT)
+			{
 				$currentName = $this->lastStructName[(count($this->lastStructName) - 1)];
 
-				switch ($currentName) {
+				switch ($currentName)
+				{
 					case DOM_XMLRPC_NODEVALUE_FAULTCODE:
 						$this->arrayDocument->faultCode = $value;
 						break;
@@ -129,12 +142,14 @@ class dom_xmlrpc_array_parser extends dom_xmlrpc_parser {
 						break;
 				}
 			}
-			else {
+			else
+			{
 				//indexed array item
 				$this->lastArray[$upper][] = $value;
 			}
 		}
-		else {
+		else
+		{
 			array_push($this->arrayDocument->params, $value);
 		}
 

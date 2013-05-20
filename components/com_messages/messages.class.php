@@ -1,105 +1,114 @@
 <?php
 /**
-* @version $Id$
-* @package Joomla
-* @subpackage Messages
-* @copyright Copyright (C) 2005 Open Source Matters. All rights reserved.
-* @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL, see LICENSE.php
-* Joomla! is free software. This version may have been modified pursuant
-* to the GNU General Public License, and as distributed it includes or
-* is derivative of works licensed under the GNU General Public License or
-* other free or open source software licenses.
-* See COPYRIGHT.php for copyright notices and details.
-*/
+ * @version    $Id$
+ * @package    Joomla
+ * @subpackage Messages
+ * @copyright  Copyright (C) 2005 Open Source Matters. All rights reserved.
+ * @license    http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL, see LICENSE.php
+ *             Joomla! is free software. This version may have been modified pursuant
+ *             to the GNU General Public License, and as distributed it includes or
+ *             is derivative of works licensed under the GNU General Public License or
+ *             other free or open source software licenses.
+ *             See COPYRIGHT.php for copyright notices and details.
+ */
 
 // no direct access
-defined( '_VALID_MOS' ) or die( 'Restricted access' );
+defined('_VALID_MOS') or die('Restricted access');
 
 /**
-* @package Joomla
-* @subpackage Messages
-*/
-class mosMessage extends mosDBTable {
+ * @package    Joomla
+ * @subpackage Messages
+ */
+class mosMessage extends mosDBTable
+{
 	/** @var int Primary key */
-	var $message_id		= null;
+	var $message_id = null;
 	/** @var int */
-	var $user_id_from	= null;
+	var $user_id_from = null;
 	/** @var int */
-	var $user_id_to		= null;
+	var $user_id_to = null;
 	/** @var int */
-	var $folder_id		= null;
+	var $folder_id = null;
 	/** @var datetime */
-	var $date_time		= null;
+	var $date_time = null;
 	/** @var int */
-	var $state			= null;
+	var $state = null;
 	/** @var int */
-	var $priority		= null;
+	var $priority = null;
 	/** @var string */
-	var $subject		= null;
+	var $subject = null;
 	/** @var text */
-	var $message		= null;
+	var $message = null;
 
 	/**
-	* @param database A database connector object
-	*/
-	function mosMessage( &$db ) {
-		$this->mosDBTable( '#__messages', 'message_id', $db );
+	 * @param database A database connector object
+	 */
+	function mosMessage(&$db)
+	{
+		$this->mosDBTable('#__messages', 'message_id', $db);
 	}
 
 	/**
-	* Validation and filtering
-	*/
-	function check() {
+	 * Validation and filtering
+	 */
+	function check()
+	{
 		// filter malicious code
-		$this->filter( );
-		
+		$this->filter();
+
 		return true;
 	}
-	
-	function send( $from_id=null, $to_id=null, $subject=null, $message=null ) {
+
+	function send($from_id = null, $to_id = null, $subject = null, $message = null)
+	{
 		global $database, $mosConfig_mailfrom, $mosConfig_fromname;
 
-		if (is_object( $this )) {
-			$from_id 	= $from_id ? $from_id : $this->user_id_from;
-			$to_id 		= $to_id ? $to_id : $this->user_id_to;
-			$subject 	= $subject ? $subject : $this->subject;
-			$message 	= $message ? $message : $this->message;
+		if (is_object($this))
+		{
+			$from_id = $from_id ? $from_id : $this->user_id_from;
+			$to_id = $to_id ? $to_id : $this->user_id_to;
+			$subject = $subject ? $subject : $this->subject;
+			$message = $message ? $message : $this->message;
 		}
 
 		$query = "SELECT cfg_name, cfg_value"
-		. "\n FROM #__messages_cfg"
-		. "\n WHERE user_id = " . (int) $to_id
-		;
-		$database->setQuery( $query );
-		$config = $database->loadObjectList( 'cfg_name' );
+			. "\n FROM #__messages_cfg"
+			. "\n WHERE user_id = " . (int) $to_id;
+		$database->setQuery($query);
+		$config = $database->loadObjectList('cfg_name');
 		$locked = @$config['lock']->cfg_value;
 		$domail = @$config['mail_on_new']->cfg_value;
 
-		if (!$locked) {
+		if (!$locked)
+		{
 
 			$this->user_id_from = $from_id;
-			$this->user_id_to 	= $to_id;
-			$this->subject 		= $subject;
-			$this->message 		= $message;
-			$this->date_time 	= date( 'Y-m-d H:i:s' );
+			$this->user_id_to = $to_id;
+			$this->subject = $subject;
+			$this->message = $message;
+			$this->date_time = date('Y-m-d H:i:s');
 
-			if ($this->store()) {
-				if ($domail) {
+			if ($this->store())
+			{
+				if ($domail)
+				{
 					$query = "SELECT email"
-					. "\n FROM #__users"
-					. "\n WHERE id = " . (int) $to_id
-					;
-					$database->setQuery( $query );
+						. "\n FROM #__users"
+						. "\n WHERE id = " . (int) $to_id;
+					$database->setQuery($query);
 					$recipient = $database->loadResult();
-					$subject 	= _NEW_MESSAGE;
-					$msg 		= _NEW_MESSAGE;
+					$subject = _NEW_MESSAGE;
+					$msg = _NEW_MESSAGE;
 
-					mosMail( $mosConfig_mailfrom, $mosConfig_fromname, $recipient, $subject, $msg );
+					mosMail($mosConfig_mailfrom, $mosConfig_fromname, $recipient, $subject, $msg);
 				}
 				return true;
 			}
-		} else {
-			if (is_object( $this )) {
+		}
+		else
+		{
+			if (is_object($this))
+			{
 				$this->_error = _MESSAGE_FAILED;
 			}
 		}

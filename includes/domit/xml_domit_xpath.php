@@ -1,15 +1,16 @@
 <?php
 /**
-* @package domit-xmlparser
-* @subpackage domit-xmlparser-main
-* @copyright (C) 2004 John Heinstein. All rights reserved
-* @license http://www.gnu.org/copyleft/lesser.html LGPL License
-* @author John Heinstein <johnkarl@nbnet.nb.ca>
-* @link http://www.engageinteractive.com/domit/ DOMIT! Home Page
-* DOMIT! is Free Software
-**/
+ * @package    domit-xmlparser
+ * @subpackage domit-xmlparser-main
+ * @copyright  (C) 2004 John Heinstein. All rights reserved
+ * @license    http://www.gnu.org/copyleft/lesser.html LGPL License
+ * @author     John Heinstein <johnkarl@nbnet.nb.ca>
+ * @link       http://www.engageinteractive.com/domit/ DOMIT! Home Page
+ *             DOMIT! is Free Software
+ **/
 
-if (!defined('DOMIT_INCLUDE_PATH')) {
+if (!defined('DOMIT_INCLUDE_PATH'))
+{
 	define('DOMIT_INCLUDE_PATH', (dirname(__FILE__) . "/"));
 }
 
@@ -29,10 +30,11 @@ define('DOMIT_XPATH_SEARCH_VARIABLE', 2);
 
 
 /**
-* DOMIT! XPath is an XPath parser.
-*/
-class DOMIT_XPath {
-    /** @var Object The node from which the search is called */
+ * DOMIT! XPath is an XPath parser.
+ */
+class DOMIT_XPath
+{
+	/** @var Object The node from which the search is called */
 	var $callingNode;
 	/** @var Object The node that is the current parent of the search */
 	var $searchType;
@@ -46,41 +48,45 @@ class DOMIT_XPath {
 	var $currChar;
 	/** @var string The current pattern segment being parsed */
 	var $currentSegment;
-	/** @var array A temporary node container for caching node references at the pattern level*/
+	/** @var array A temporary node container for caching node references at the pattern level */
 	var $globalNodeContainer;
 	/** @var array A temporary node container for caching node references at the pattern segment level */
 	var $localNodeContainer;
 	/** @var array Normalization table for XPath syntax */
 	var $normalizationTable = array('child::' => '', 'self::' => '.',
-							'attribute::' => '@', 'descendant::' => '*//',
-							"\t" => ' ', "\x0B" => ' ');
+		'attribute::' => '@', 'descendant::' => '*//',
+		"\t" => ' ', "\x0B" => ' ');
 	/** @var array A second-pass normalization table for XPath syntax */
 	var $normalizationTable2 = array(' =' => '=', '= ' => '=', ' <' => '<',
-							' >' => '>', '< ' => '<', '> ' => '>',
-							' !' => '!', '( ' => '(',
-							' )' => ')', ' ]' => ']', '] ' => ']',
-							' [' => '[', '[ ' => '[', ' /' => '/',
-							'/ ' => '/', '"' => "'");
+		' >' => '>', '< ' => '<', '> ' => '>',
+		' !' => '!', '( ' => '(',
+		' )' => ')', ' ]' => ']', '] ' => ']',
+		' [' => '[', '[ ' => '[', ' /' => '/',
+		'/ ' => '/', '"' => "'");
 	/** @var array A third-pass normalization table for XPath syntax */
 	var $normalizationTable3 = array('position()=' => '',
-							'/descendant-or-self::node()/' => "//", 'self::node()' => '.',
-							'parent::node()' => '..');
+		'/descendant-or-self::node()/' => "//", 'self::node()' => '.',
+		'parent::node()' => '..');
 
 	/**
-	* Constructor - creates an empty DOMIT_NodeList to store matching nodes
-	*/
-	function DOMIT_XPath() {
+	 * Constructor - creates an empty DOMIT_NodeList to store matching nodes
+	 */
+	function DOMIT_XPath()
+	{
 		require_once(DOMIT_INCLUDE_PATH . 'xml_domit_nodemaps.php');
 		$this->nodeList = new DOMIT_NodeList();
 	} //DOMIT_XPath
 
 	/**
-	* Parses the supplied "path"-based pattern
-	* @param Object The node from which the search is called
-	* @param string The pattern
-	* @return Object The NodeList containing matching nodes
-	*/
-	function &parsePattern(&$node, $pattern, $nodeIndex = 0) {
+	 * Parses the supplied "path"-based pattern
+	 *
+	 * @param Object The node from which the search is called
+	 * @param string The pattern
+	 *
+	 * @return Object The NodeList containing matching nodes
+	 */
+	function &parsePattern(&$node, $pattern, $nodeIndex = 0)
+	{
 		$this->callingNode =& $node;
 		$pattern = $this->normalize(trim($pattern));
 
@@ -89,7 +95,8 @@ class DOMIT_XPath {
 		$total = count($this->arPathSegments);
 
 		//whole pattern level
-		for ($i = 0; $i < $total; $i++) {
+		for ($i = 0; $i < $total; $i++)
+		{
 			$outerArray =& $this->arPathSegments[$i];
 			$this->initSearch($outerArray);
 
@@ -97,26 +104,33 @@ class DOMIT_XPath {
 			$isInitialMatchAttempt = true;
 
 			//variable path segment level
-			for ($j = 0; $j < $outerTotal; $j++) {
+			for ($j = 0; $j < $outerTotal; $j++)
+			{
 				$innerArray =& $outerArray[$j];
 				$innerTotal = count($innerArray);
 
-				if (!$isInitialMatchAttempt) {
+				if (!$isInitialMatchAttempt)
+				{
 					$this->searchType = DOMIT_XPATH_SEARCH_VARIABLE;
 				}
 
 				//pattern segment level
-				for ($k = 0; $k < $innerTotal; $k++) {
+				for ($k = 0; $k < $innerTotal; $k++)
+				{
 					$currentPattern = $innerArray[$k];
 
-					if (($k == 0) && ($currentPattern == null)) {
-						if ($innerTotal == 1) {
+					if (($k == 0) && ($currentPattern == null))
+					{
+						if ($innerTotal == 1)
+						{
 							$isInitialMatchAttempt = false;
 						}
 						//else just skip current step and don't alter searchType
 					}
-					else {
-						if (!$isInitialMatchAttempt && ($k > 0)) {
+					else
+					{
+						if (!$isInitialMatchAttempt && ($k > 0))
+						{
 							$this->searchType = DOMIT_XPATH_SEARCH_RELATIVE;
 						}
 
@@ -128,18 +142,23 @@ class DOMIT_XPath {
 			}
 		}
 
-		if ($nodeIndex > 0) {
-			if ($nodeIndex <= count($this->globalNodeContainer)) {
+		if ($nodeIndex > 0)
+		{
+			if ($nodeIndex <= count($this->globalNodeContainer))
+			{
 				return $this->globalNodeContainer[($nodeIndex - 1)];
 			}
-			else {
+			else
+			{
 				$null = null;
 				return $null;
 			}
 		}
 
-		if (count($this->globalNodeContainer) != 0) {
-			foreach ($this->globalNodeContainer as $key =>$value) {
+		if (count($this->globalNodeContainer) != 0)
+		{
+			foreach ($this->globalNodeContainer as $key => $value)
+			{
 				$currNode =& $this->globalNodeContainer[$key];
 				$this->nodeList->appendNode($currNode);
 			}
@@ -149,28 +168,33 @@ class DOMIT_XPath {
 	} //parsePattern
 
 	/**
-	* Generates a new globalNodeContainer of matches
-	*/
-	function processPatternSegment() {
+	 * Generates a new globalNodeContainer of matches
+	 */
+	function processPatternSegment()
+	{
 		$total = strlen($this->currentSegment);
 		$this->charContainer = '';
 		$this->localNodeContainer = array();
 
-		for ($i = 0; $i < $total; $i++) {
+		for ($i = 0; $i < $total; $i++)
+		{
 			$this->currChar = $this->currentSegment{$i};
 
-			switch ($this->currChar) {
+			switch ($this->currChar)
+			{
 				case '@':
 					$this->selectAttribute(substr($this->currentSegment, ($this->currChar + 1)));
 					$this->updateNodeContainers();
 					return;
-					//break;
+				//break;
 
 				case '*':
-					if ($i == ($total - 1)) {
+					if ($i == ($total - 1))
+					{
 						$this->selectNamedChild('*');
 					}
-					else {
+					else
+					{
 						$this->charContainer .= $this->currChar;
 					}
 					break;
@@ -178,11 +202,14 @@ class DOMIT_XPath {
 				case '.':
 					$this->charContainer .= $this->currChar;
 
-					if ($i == ($total - 1)) {
-						if ($this->charContainer == '..') {
+					if ($i == ($total - 1))
+					{
+						if ($this->charContainer == '..')
+						{
 							$this->selectParent();
 						}
-						else {
+						else
+						{
 							return;
 						}
 					}
@@ -195,9 +222,9 @@ class DOMIT_XPath {
 
 				case '[':
 					$this->parsePredicate($this->charContainer,
-									substr($this->currentSegment, ($i + 1)));
+						substr($this->currentSegment, ($i + 1)));
 					return;
-					//break;
+				//break;
 
 				default:
 					$this->charContainer .= $this->currChar;
@@ -205,7 +232,8 @@ class DOMIT_XPath {
 			}
 		}
 
-		if ($this->charContainer != '') {
+		if ($this->charContainer != '')
+		{
 			$this->selectNamedChild($this->charContainer);
 		}
 
@@ -213,42 +241,51 @@ class DOMIT_XPath {
 	} //processPatternSegment
 
 	/**
-	* Replaces the global node container with the local node container
-	*/
-	function updateNodeContainers() {
+	 * Replaces the global node container with the local node container
+	 */
+	function updateNodeContainers()
+	{
 		$this->globalNodeContainer =& $this->localNodeContainer;
 		unset($this->localNodeContainer);
 	} //updateNodeContainers
 
 
 	/**
-	* Parses a predicate expression [...]
-	* @param string The pattern segment containing the node expression
-	* @param string The pattern segment containing the predicate expression
-	*/
-	function parsePredicate($nodeName, $patternSegment) {
+	 * Parses a predicate expression [...]
+	 *
+	 * @param string The pattern segment containing the node expression
+	 * @param string The pattern segment containing the predicate expression
+	 */
+	function parsePredicate($nodeName, $patternSegment)
+	{
 		$arPredicates =& explode('][', $patternSegment);
 
 		$total = count($arPredicates);
 
 		$lastIndex = $total - 1;
 		$arPredicates[$lastIndex] = substr($arPredicates[$lastIndex],
-										0, (strlen($arPredicates[$lastIndex]) - 1));
+			0, (strlen($arPredicates[$lastIndex]) - 1));
 
-		for ($i = 0; $i < $total; $i++) {
+		for ($i = 0; $i < $total; $i++)
+		{
 			$isRecursive = ($this->searchType == DOMIT_XPATH_SEARCH_VARIABLE) ? true : false;
 			$currPredicate = $arPredicates[$i];
 
-			if (is_numeric($currPredicate)) {
-				if ($i == 0) {
+			if (is_numeric($currPredicate))
+			{
+				if ($i == 0)
+				{
 					$this->filterByIndex($nodeName, intval($currPredicate), $isRecursive);
 				}
-				else {
+				else
+				{
 					$this->refilterByIndex(intval($currPredicate));
 				}
 			}
-			else {
-				if ($i == 0) {
+			else
+			{
+				if ($i == 0)
+				{
 					$this->selectNamedChild($nodeName);
 					$this->updateNodeContainers();
 				}
@@ -264,24 +301,30 @@ class DOMIT_XPath {
 	} //parsePredicate
 
 	/**
-	* Converts the predicate into PHP evaluable code
-	* @param string The predicate
-	* @return string The converted PHP expression
-	*/
-	function predicateToPHP($predicate) {
+	 * Converts the predicate into PHP evaluable code
+	 *
+	 * @param string The predicate
+	 *
+	 * @return string The converted PHP expression
+	 */
+	function predicateToPHP($predicate)
+	{
 		$phpExpression = $predicate;
 		$currChar = '';
 		$charContainer = '';
 		$totalChars = strlen($predicate);
 
-		for ($i = 0; $i < $totalChars; $i++) {
+		for ($i = 0; $i < $totalChars; $i++)
+		{
 			$currChar = substr($predicate, $i, 1);
 
-			switch ($currChar) {
+			switch ($currChar)
+			{
 				case '(':
 				case ')':
 				case ' ':
-					if ($charContainer != '') {
+					if ($charContainer != '')
+					{
 						$convertedPredicate = $this->expressionToPHP($charContainer);
 						$phpExpression = str_replace($charContainer, $convertedPredicate, $phpExpression);
 						$charContainer = '';
@@ -294,7 +337,8 @@ class DOMIT_XPath {
 			}
 		}
 
-		if ($charContainer != '') {
+		if ($charContainer != '')
+		{
 			$convertedPredicate = $this->expressionToPHP($charContainer);
 			$phpExpression = str_replace($charContainer, $convertedPredicate, $phpExpression);
 		}
@@ -304,120 +348,143 @@ class DOMIT_XPath {
 
 
 	/**
-	* Converts the predicate expression into a PHP expression
-	* @param string The predicate expression
-	* @return string The converted PHP expression
-	*/
-	function expressionToPHP($expression) {
-		if ($expression == 'and') {
+	 * Converts the predicate expression into a PHP expression
+	 *
+	 * @param string The predicate expression
+	 *
+	 * @return string The converted PHP expression
+	 */
+	function expressionToPHP($expression)
+	{
+		if ($expression == 'and')
+		{
 			$expression = '&&';
 		}
-		else if ($expression == 'or') {
+		else if ($expression == 'or')
+		{
 			$expression = '||';
 		}
-		else if ($expression == 'not') {
+		else if ($expression == 'not')
+		{
 			$expression = '!';
 		}
-		else {
+		else
+		{
 			$expression = trim($expression);
 
-			if (strpos($expression, '@') !== false) {
-				if (strpos($expression, '>=') !== false) {
+			if (strpos($expression, '@') !== false)
+			{
+				if (strpos($expression, '>=') !== false)
+				{
 					$expression = str_replace('@', ('floatval($' . "contextNode->getAttribute('"), $expression);
 					$expression = str_replace('>=', "')) >= floatval(", $expression);
 					if (!is_numeric($expression)) $expression = str_replace('floatval', '', $expression);
 					$expression .= ')';
 				}
-				else if (strpos($expression, '<=') !== false) {
+				else if (strpos($expression, '<=') !== false)
+				{
 					$expression = str_replace('@', ('floatval($' . "contextNode->getAttribute('"), $expression);
 					$expression = str_replace('<=', "')) <= floatval(", $expression);
 					if (!is_numeric($expression)) $expression = str_replace('floatval', '', $expression);
 					$expression .= ')';
 				}
-				else if (strpos($expression, '!=') !== false) {
+				else if (strpos($expression, '!=') !== false)
+				{
 					$expression = str_replace('@', ('$' . "contextNode->getAttribute('"), $expression);
 					$expression = str_replace('!=', "') != ", $expression);
 				}
-				else if (strpos($expression, '=') !== false) {
+				else if (strpos($expression, '=') !== false)
+				{
 					$expression = str_replace('@', ('$' . "contextNode->getAttribute('"), $expression);
 					$expression = str_replace('=', "') == ", $expression);
 				}
-				else if (strpos($expression, '>') !== false) {
+				else if (strpos($expression, '>') !== false)
+				{
 					$expression = str_replace('>', "')) > floatval(", $expression); //reverse so > doesn't get replaced
 					$expression = str_replace('@', ('floatval($' . "contextNode->getAttribute('"), $expression);
 					if (!is_numeric($expression)) $expression = str_replace('floatval', '', $expression);
 					$expression .= ')';
 				}
-				else if (strpos($expression, '<') !== false) {
+				else if (strpos($expression, '<') !== false)
+				{
 					$expression = str_replace('@', ('floatval($' . "contextNode->getAttribute('"), $expression);
 					$expression = str_replace('<', "')) < floatval(", $expression);
 					if (!is_numeric($expression)) $expression = str_replace('floatval', '', $expression);
 					$expression .= ')';
 				}
-				else {
+				else
+				{
 					$expression = str_replace('@', ('$' . "contextNode->hasAttribute('"), $expression);
-					$expression.= "')";
+					$expression .= "')";
 				}
 			}
-			else {
-				if (strpos($expression, '>=') !== false) {
+			else
+			{
+				if (strpos($expression, '>=') !== false)
+				{
 					$signPos = strpos($expression, '>=');
 					$elementName = trim(substr($expression, 0, $signPos));
 					$elementValue = trim(substr($expression, ($signPos + 2)));
 
 					$expression = '$' . "this->hasNamedChildElementGreaterThanOrEqualToValue(" .
-									'$' . "contextNode, '" . $elementName . "', " .
-									$elementValue . ')';
+						'$' . "contextNode, '" . $elementName . "', " .
+						$elementValue . ')';
 				}
-				else if (strpos($expression, '<=') !== false) {
+				else if (strpos($expression, '<=') !== false)
+				{
 					$signPos = strpos($expression, '>=');
 					$elementName = trim(substr($expression, 0, $signPos));
 					$elementValue = trim(substr($expression, ($signPos + 2)));
 
 					$expression = '$' . "this->hasNamedChildElementLessThanOrEqualToValue(" .
-									'$' . "contextNode, '" . $elementName . "', " .
-									$elementValue . ')';
+						'$' . "contextNode, '" . $elementName . "', " .
+						$elementValue . ')';
 				}
-				else if (strpos($expression, '!=') !== false) {
+				else if (strpos($expression, '!=') !== false)
+				{
 					$signPos = strpos($expression, '>=');
 					$elementName = trim(substr($expression, 0, $signPos));
 					$elementValue = trim(substr($expression, ($signPos + 2)));
 
 					$expression = '$' . "this->hasNamedChildElementNotEqualToValue(" .
-									'$' . "contextNode, '" . $elementName . "', " .
-									$elementValue . ')';
+						'$' . "contextNode, '" . $elementName . "', " .
+						$elementValue . ')';
 				}
-				else if (strpos($expression, '=') !== false) {
+				else if (strpos($expression, '=') !== false)
+				{
 					$signPos = strpos($expression, '=');
 					$elementName = trim(substr($expression, 0, $signPos));
 					$elementValue = trim(substr($expression, ($signPos + 1)));
 
 					$expression = '$' . "this->hasNamedChildElementEqualToValue(" .
-									'$' . "contextNode, '" . $elementName . "', " .
-									$elementValue . ')';
+						'$' . "contextNode, '" . $elementName . "', " .
+						$elementValue . ')';
 
 				}
-				else if (strpos($expression, '>') !== false) {
+				else if (strpos($expression, '>') !== false)
+				{
 					$signPos = strpos($expression, '=');
 					$elementName = trim(substr($expression, 0, $signPos));
 					$elementValue = trim(substr($expression, ($signPos + 1)));
 
 					$expression = '$' . "this->hasNamedChildElementGreaterThanValue(" .
-									'$' . "contextNode, '" . $elementName . "', " .
-									$elementValue . ')';
+						'$' . "contextNode, '" . $elementName . "', " .
+						$elementValue . ')';
 				}
-				else if (strpos($expression, '<') !== false) {
+				else if (strpos($expression, '<') !== false)
+				{
 					$signPos = strpos($expression, '=');
 					$elementName = trim(substr($expression, 0, $signPos));
 					$elementValue = trim(substr($expression, ($signPos + 1)));
 
 					$expression = '$' . "this->hasNamedChildElementLessThanValue(" .
-									'$' . "contextNode, '" . $elementName . "', " .
-									$elementValue . ')';
+						'$' . "contextNode, '" . $elementName . "', " .
+						$elementValue . ')';
 				}
-				else {
+				else
+				{
 					$expression = '$' . "this->hasNamedChildElement(" .
-									'$' . "contextNode, '" . $expression . "')";
+						'$' . "contextNode, '" . $expression . "')";
 				}
 			}
 		}
@@ -426,17 +493,22 @@ class DOMIT_XPath {
 	} //expressionToPHP
 
 	/**
-	* Selects nodes that match the predicate expression
-	* @param string The predicate expression, formatted as a PHP expression
-	*/
-	function filterByPHPExpression($expression) {
-		if (count($this->globalNodeContainer) != 0) {
-			foreach ($this->globalNodeContainer as $key =>$value) {
+	 * Selects nodes that match the predicate expression
+	 *
+	 * @param string The predicate expression, formatted as a PHP expression
+	 */
+	function filterByPHPExpression($expression)
+	{
+		if (count($this->globalNodeContainer) != 0)
+		{
+			foreach ($this->globalNodeContainer as $key => $value)
+			{
 				$contextNode =& $this->globalNodeContainer[$key];
 
-				if ($contextNode->nodeType == DOMIT_ELEMENT_NODE) {
+				if ($contextNode->nodeType == DOMIT_ELEMENT_NODE)
+				{
 					$evaluatedExpression = 'if (' . $expression . ") $" .
-									'this->localNodeContainer[] =& $' . 'contextNode;';
+						'this->localNodeContainer[] =& $' . 'contextNode;';
 					eval($evaluatedExpression);
 				}
 			}
@@ -444,18 +516,23 @@ class DOMIT_XPath {
 	} //filterByPHPExpression
 
 	/**
-	* Selects nodes with child elements that match the specified name
-	* @param object The parent node of the child elements to match
-	* @param string The tag name to match on
-	* @return boolean True if a matching child element exists
-	*/
-	function hasNamedChildElement(&$parentNode, $nodeName) {
+	 * Selects nodes with child elements that match the specified name
+	 *
+	 * @param object The parent node of the child elements to match
+	 * @param string The tag name to match on
+	 *
+	 * @return boolean True if a matching child element exists
+	 */
+	function hasNamedChildElement(&$parentNode, $nodeName)
+	{
 		$total = $parentNode->childCount;
 
-		for ($i = 0; $i < $total; $i++) {
+		for ($i = 0; $i < $total; $i++)
+		{
 			$currNode =& $parentNode->childNodes[$i];
 
-			if (($currNode->nodeType == DOMIT_ELEMENT_NODE) && ($currNode->nodeName == $nodeName)) {
+			if (($currNode->nodeType == DOMIT_ELEMENT_NODE) && ($currNode->nodeName == $nodeName))
+			{
 				return true;
 			}
 		}
@@ -464,20 +541,26 @@ class DOMIT_XPath {
 	} //hasNamedChildElement
 
 	/**
-	* Selects nodes with child elements that match the specified name and text value
-	* @param object The parent node of the child elements to match
-	* @param string The tag name to match on
-	* @param string The text string to match on
-	* @return boolean True if a matching child element exists
-	*/
-	function hasNamedChildElementEqualToValue(&$parentNode, $nodeName, $nodeValue) {
+	 * Selects nodes with child elements that match the specified name and text value
+	 *
+	 * @param object The parent node of the child elements to match
+	 * @param string The tag name to match on
+	 * @param string The text string to match on
+	 *
+	 * @return boolean True if a matching child element exists
+	 */
+	function hasNamedChildElementEqualToValue(&$parentNode, $nodeName, $nodeValue)
+	{
 		$total = $parentNode->childCount;
 
-		for ($i = 0; $i < $total; $i++) {
+		for ($i = 0; $i < $total; $i++)
+		{
 			$currNode =& $parentNode->childNodes[$i];
 
 			if (($currNode->nodeType == DOMIT_ELEMENT_NODE) &&
-				($currNode->nodeName == $nodeName) && ($currNode->getText() == $nodeValue)) {
+				($currNode->nodeName == $nodeName) && ($currNode->getText() == $nodeValue)
+			)
+			{
 				return true;
 			}
 		}
@@ -486,28 +569,40 @@ class DOMIT_XPath {
 	} //hasNamedChildElementEqualToValue
 
 	/**
-	* Selects nodes with child elements that are greater than or equal to the specified name and value
-	* @param object The parent node of the child elements to match
-	* @param string The tag name to match on
-	* @param string The text string to match on
-	* @return boolean True if a matching child element exists
-	*/
-	function hasNamedChildElementGreaterThanOrEqualToValue(&$parentNode, $nodeName, $nodeValue) {
+	 * Selects nodes with child elements that are greater than or equal to the specified name and value
+	 *
+	 * @param object The parent node of the child elements to match
+	 * @param string The tag name to match on
+	 * @param string The text string to match on
+	 *
+	 * @return boolean True if a matching child element exists
+	 */
+	function hasNamedChildElementGreaterThanOrEqualToValue(&$parentNode, $nodeName, $nodeValue)
+	{
 		$isNumeric = false;
 
-		if (is_numeric($nodeValue)) {
+		if (is_numeric($nodeValue))
+		{
 			$isNumeric = true;
 			$nodeValue = floatval($nodeValue);
 		}
 
 		$total = $parentNode->childCount;
 
-		for ($i = 0; $i < $total; $i++) {
+		for ($i = 0; $i < $total; $i++)
+		{
 			$currNode =& $parentNode->childNodes[$i];
 
-			if (($currNode->nodeType == DOMIT_ELEMENT_NODE) && ($currNode->nodeName == $nodeName)) {
-				if ($isNumeric) {$compareVal = floatval($currNode->getText());}
-				else {$compareVal = $currNode->getText();}
+			if (($currNode->nodeType == DOMIT_ELEMENT_NODE) && ($currNode->nodeName == $nodeName))
+			{
+				if ($isNumeric)
+				{
+					$compareVal = floatval($currNode->getText());
+				}
+				else
+				{
+					$compareVal = $currNode->getText();
+				}
 				if ($compareVal >= $nodeValue) return true;
 			}
 		}
@@ -517,28 +612,40 @@ class DOMIT_XPath {
 
 
 	/**
-	* Selects nodes with child elements that are less than or equal to the specified name and value
-	* @param object The parent node of the child elements to match
-	* @param string The tag name to match on
-	* @param string The text string to match on
-	* @return boolean True if a matching child element exists
-	*/
-	function hasNamedChildElementLessThanOrEqualToValue(&$parentNode, $nodeName, $nodeValue) {
+	 * Selects nodes with child elements that are less than or equal to the specified name and value
+	 *
+	 * @param object The parent node of the child elements to match
+	 * @param string The tag name to match on
+	 * @param string The text string to match on
+	 *
+	 * @return boolean True if a matching child element exists
+	 */
+	function hasNamedChildElementLessThanOrEqualToValue(&$parentNode, $nodeName, $nodeValue)
+	{
 		$isNumeric = false;
 
-		if (is_numeric($nodeValue)) {
+		if (is_numeric($nodeValue))
+		{
 			$isNumeric = true;
 			$nodeValue = floatval($nodeValue);
 		}
 
 		$total = $parentNode->childCount;
 
-		for ($i = 0; $i < $total; $i++) {
+		for ($i = 0; $i < $total; $i++)
+		{
 			$currNode =& $parentNode->childNodes[$i];
 
-			if (($currNode->nodeType == DOMIT_ELEMENT_NODE) && ($currNode->nodeName == $nodeName)) {
-				if ($isNumeric) {$compareVal = floatval($currNode->getText());}
-				else {$compareVal = $currNode->getText();}
+			if (($currNode->nodeType == DOMIT_ELEMENT_NODE) && ($currNode->nodeName == $nodeName))
+			{
+				if ($isNumeric)
+				{
+					$compareVal = floatval($currNode->getText());
+				}
+				else
+				{
+					$compareVal = $currNode->getText();
+				}
 				if ($compareVal <= $nodeValue) return true;
 			}
 		}
@@ -547,28 +654,40 @@ class DOMIT_XPath {
 	} //hasNamedChildElementLessThanOrEqualToValue
 
 	/**
-	* Selects nodes with child elements that are not equal to the specified name and value
-	* @param object The parent node of the child elements to match
-	* @param string The tag name to match on
-	* @param string The text string to match on
-	* @return boolean True if a matching child element exists
-	*/
-	function hasNamedChildElementNotEqualToValue(&$parentNode, $nodeName, $nodeValue) {
+	 * Selects nodes with child elements that are not equal to the specified name and value
+	 *
+	 * @param object The parent node of the child elements to match
+	 * @param string The tag name to match on
+	 * @param string The text string to match on
+	 *
+	 * @return boolean True if a matching child element exists
+	 */
+	function hasNamedChildElementNotEqualToValue(&$parentNode, $nodeName, $nodeValue)
+	{
 		$isNumeric = false;
 
-		if (is_numeric($nodeValue)) {
+		if (is_numeric($nodeValue))
+		{
 			$isNumeric = true;
 			$nodeValue = floatval($nodeValue);
 		}
 
 		$total = $parentNode->childCount;
 
-		for ($i = 0; $i < $total; $i++) {
+		for ($i = 0; $i < $total; $i++)
+		{
 			$currNode =& $parentNode->childNodes[$i];
 
-			if (($currNode->nodeType == DOMIT_ELEMENT_NODE) && ($currNode->nodeName == $nodeName)) {
-				if ($isNumeric) {$compareVal = floatval($currNode->getText());}
-				else {$compareVal = $currNode->getText();}
+			if (($currNode->nodeType == DOMIT_ELEMENT_NODE) && ($currNode->nodeName == $nodeName))
+			{
+				if ($isNumeric)
+				{
+					$compareVal = floatval($currNode->getText());
+				}
+				else
+				{
+					$compareVal = $currNode->getText();
+				}
 				if ($compareVal != $nodeValue) return true;
 			}
 		}
@@ -576,29 +695,41 @@ class DOMIT_XPath {
 		return false;
 	} //hasNamedChildElementNotEqualToValue
 
-		/**
-	* Selects nodes with child elements that are greater than the specified name and value
-	* @param object The parent node of the child elements to match
-	* @param string The tag name to match on
-	* @param string The text string to match on
-	* @return boolean True if a matching child element exists
-	*/
-	function hasNamedChildElementGreaterThanValue(&$parentNode, $nodeName, $nodeValue) {
+	/**
+	 * Selects nodes with child elements that are greater than the specified name and value
+	 *
+	 * @param object The parent node of the child elements to match
+	 * @param string The tag name to match on
+	 * @param string The text string to match on
+	 *
+	 * @return boolean True if a matching child element exists
+	 */
+	function hasNamedChildElementGreaterThanValue(&$parentNode, $nodeName, $nodeValue)
+	{
 		$isNumeric = false;
 
-		if (is_numeric($nodeValue)) {
+		if (is_numeric($nodeValue))
+		{
 			$isNumeric = true;
 			$nodeValue = floatval($nodeValue);
 		}
 
 		$total = $parentNode->childCount;
 
-		for ($i = 0; $i < $total; $i++) {
+		for ($i = 0; $i < $total; $i++)
+		{
 			$currNode =& $parentNode->childNodes[$i];
 
-			if (($currNode->nodeType == DOMIT_ELEMENT_NODE) && ($currNode->nodeName == $nodeName)) {
-				if ($isNumeric) {$compareVal = floatval($currNode->getText());}
-				else {$compareVal = $currNode->getText();}
+			if (($currNode->nodeType == DOMIT_ELEMENT_NODE) && ($currNode->nodeName == $nodeName))
+			{
+				if ($isNumeric)
+				{
+					$compareVal = floatval($currNode->getText());
+				}
+				else
+				{
+					$compareVal = $currNode->getText();
+				}
 				if ($compareVal > $nodeValue) return true;
 			}
 		}
@@ -608,28 +739,40 @@ class DOMIT_XPath {
 
 
 	/**
-	* Selects nodes with child elements that are less than the specified name and value
-	* @param object The parent node of the child elements to match
-	* @param string The tag name to match on
-	* @param string The text string to match on
-	* @return boolean True if a matching child element exists
-	*/
-	function hasNamedChildElementLessThanValue(&$parentNode, $nodeName, $nodeValue) {
+	 * Selects nodes with child elements that are less than the specified name and value
+	 *
+	 * @param object The parent node of the child elements to match
+	 * @param string The tag name to match on
+	 * @param string The text string to match on
+	 *
+	 * @return boolean True if a matching child element exists
+	 */
+	function hasNamedChildElementLessThanValue(&$parentNode, $nodeName, $nodeValue)
+	{
 		$isNumeric = false;
 
-		if (is_numeric($nodeValue)) {
+		if (is_numeric($nodeValue))
+		{
 			$isNumeric = true;
 			$nodeValue = floatval($nodeValue);
 		}
 
 		$total = $parentNode->childCount;
 
-		for ($i = 0; $i < $total; $i++) {
+		for ($i = 0; $i < $total; $i++)
+		{
 			$currNode =& $parentNode->childNodes[$i];
 
-			if (($currNode->nodeType == DOMIT_ELEMENT_NODE) && ($currNode->nodeName == $nodeName)) {
-				if ($isNumeric) {$compareVal = floatval($currNode->getText());}
-				else {$compareVal = $currNode->getText();}
+			if (($currNode->nodeType == DOMIT_ELEMENT_NODE) && ($currNode->nodeName == $nodeName))
+			{
+				if ($isNumeric)
+				{
+					$compareVal = floatval($currNode->getText());
+				}
+				else
+				{
+					$compareVal = $currNode->getText();
+				}
 				if ($compareVal < $nodeValue) return true;
 			}
 		}
@@ -638,27 +781,34 @@ class DOMIT_XPath {
 	} //hasNamedChildElementLessThanValue
 
 	/**
-	* Selects named elements of the specified index
-	* @param string The pattern segment containing the node expression
-	* @param int The index (base 1) of the matching node
-	* @param boolean True if the selection is to be performed recursively
-	*/
-	function refilterByIndex($index) {
-		if ($index > 1) {
-			if (count($this->globalNodeContainer) != 0) {
+	 * Selects named elements of the specified index
+	 *
+	 * @param string  The pattern segment containing the node expression
+	 * @param int     The index (base 1) of the matching node
+	 * @param boolean True if the selection is to be performed recursively
+	 */
+	function refilterByIndex($index)
+	{
+		if ($index > 1)
+		{
+			if (count($this->globalNodeContainer) != 0)
+			{
 				$counter = 0;
 				$lastParentID = null;
 
-				foreach ($this->globalNodeContainer as $key =>$value) {
+				foreach ($this->globalNodeContainer as $key => $value)
+				{
 					$currNode =& $this->globalNodeContainer[$key];
 
-					if (($lastParentID != null) && ($currNode->parentNode->uid != $lastParentID)) {
+					if (($lastParentID != null) && ($currNode->parentNode->uid != $lastParentID))
+					{
 						$counter = 0;
 					}
 
 					$counter++;
 
-					if (($counter == $index) && ($currNode->parentNode->uid == $lastParentID)) {
+					if (($counter == $index) && ($currNode->parentNode->uid == $lastParentID))
+					{
 						$this->localNodeContainer[] =& $currNode;
 					}
 
@@ -666,21 +816,26 @@ class DOMIT_XPath {
 				}
 			}
 		}
-		else {
+		else
+		{
 			$this->localNodeContainer =& $this->globalNodeContainer;
 		}
 	} //refilterByIndex
 
 
 	/**
-	* Selects named elements of the specified index
-	* @param string The pattern segment containing the node expression
-	* @param int The index (base 1) of the matching node
-	* @param boolean True if the selection is to be performed recursively
-	*/
-	function filterByIndex($nodeName, $index, $deep) {
-		if (count($this->globalNodeContainer) != 0) {
-			foreach ($this->globalNodeContainer as $key =>$value) {
+	 * Selects named elements of the specified index
+	 *
+	 * @param string  The pattern segment containing the node expression
+	 * @param int     The index (base 1) of the matching node
+	 * @param boolean True if the selection is to be performed recursively
+	 */
+	function filterByIndex($nodeName, $index, $deep)
+	{
+		if (count($this->globalNodeContainer) != 0)
+		{
+			foreach ($this->globalNodeContainer as $key => $value)
+			{
 				$currNode =& $this->globalNodeContainer[$key];
 				$this->_filterByIndex($currNode, $nodeName, $index, $deep);
 			}
@@ -688,30 +843,38 @@ class DOMIT_XPath {
 	} //filterByIndex
 
 	/**
-	* Selects named elements of the specified index
-	* @param object The context node
-	* @param string The pattern segment containing the node expression
-	* @param int The index (base 1) of the matching node
-	* @param boolean True if the selection is to be performed recursively
-	*/
-	function _filterByIndex(&$contextNode, $nodeName, $index, $deep) {
+	 * Selects named elements of the specified index
+	 *
+	 * @param object  The context node
+	 * @param string  The pattern segment containing the node expression
+	 * @param int     The index (base 1) of the matching node
+	 * @param boolean True if the selection is to be performed recursively
+	 */
+	function _filterByIndex(&$contextNode, $nodeName, $index, $deep)
+	{
 		if (($contextNode->nodeType == DOMIT_ELEMENT_NODE) ||
-			($contextNode->nodeType == DOMIT_DOCUMENT_NODE)) {
+			($contextNode->nodeType == DOMIT_DOCUMENT_NODE)
+		)
+		{
 			$total = $contextNode->childCount;
 			$nodeCounter = 0;
 
-			for ($i = 0; $i < $total; $i++) {
+			for ($i = 0; $i < $total; $i++)
+			{
 				$currChildNode =& $contextNode->childNodes[$i];
 
-				if ($currChildNode->nodeName == $nodeName) {
+				if ($currChildNode->nodeName == $nodeName)
+				{
 					$nodeCounter++;
 
-					if ($nodeCounter == $index) {
+					if ($nodeCounter == $index)
+					{
 						$this->localNodeContainer[] =& $currChildNode;
 					}
 				}
 
-				if ($deep) {
+				if ($deep)
+				{
 					$this->_filterByIndex($currChildNode, $nodeName, $index, $deep);
 				}
 			}
@@ -719,14 +882,18 @@ class DOMIT_XPath {
 	} //_filterByIndex
 
 	/**
-	* Selects named elements with the specified named child
-	* @param string The pattern segment containing the node expression
-	* @param string The tag name of the matching child
-	* @param boolean True if the selection is to be performed recursively
-	*/
-	function filterByChildName($nodeName, $childName, $deep) {
-		if (count($this->globalNodeContainer) != 0) {
-			foreach ($this->globalNodeContainer as $key =>$value) {
+	 * Selects named elements with the specified named child
+	 *
+	 * @param string  The pattern segment containing the node expression
+	 * @param string  The tag name of the matching child
+	 * @param boolean True if the selection is to be performed recursively
+	 */
+	function filterByChildName($nodeName, $childName, $deep)
+	{
+		if (count($this->globalNodeContainer) != 0)
+		{
+			foreach ($this->globalNodeContainer as $key => $value)
+			{
 				$currNode =& $this->globalNodeContainer[$key];
 				$this->_filterByChildName($currNode, $nodeName, $childName, $deep);
 			}
@@ -734,34 +901,44 @@ class DOMIT_XPath {
 	} //filterByChildName
 
 	/**
-	* Selects named elements with the specified named child
-	* @param object The context node
-	* @param string The pattern segment containing the node expression
-	* @param string The tag name of the matching child
-	* @param boolean True if the selection is to be performed recursively
-	*/
-	function _filterByChildName(&$contextNode, $nodeName, $childName, $deep) {
+	 * Selects named elements with the specified named child
+	 *
+	 * @param object  The context node
+	 * @param string  The pattern segment containing the node expression
+	 * @param string  The tag name of the matching child
+	 * @param boolean True if the selection is to be performed recursively
+	 */
+	function _filterByChildName(&$contextNode, $nodeName, $childName, $deep)
+	{
 		if (($contextNode->nodeType == DOMIT_ELEMENT_NODE) ||
-			($contextNode->nodeType == DOMIT_DOCUMENT_NODE)) {
+			($contextNode->nodeType == DOMIT_DOCUMENT_NODE)
+		)
+		{
 			$total = $contextNode->childCount;
 
-			for ($i = 0; $i < $total; $i++) {
+			for ($i = 0; $i < $total; $i++)
+			{
 				$currChildNode =& $contextNode->childNodes[$i];
 
 				if (($currChildNode->nodeName == $nodeName) &&
-					($currChildNode->nodeType == DOMIT_ELEMENT_NODE)) {
+					($currChildNode->nodeType == DOMIT_ELEMENT_NODE)
+				)
+				{
 					$total2 = $currChildNode->childCount;
 
-					for ($j = 0; $j < $total2; $j++) {
+					for ($j = 0; $j < $total2; $j++)
+					{
 						$currChildChildNode =& $currChildNode->childNodes[$j];
 
-						if ($currChildChildNode->nodeName == $childName) {
+						if ($currChildChildNode->nodeName == $childName)
+						{
 							$this->localNodeContainer[] =& $currChildNode;
 						}
 					}
 				}
 
-				if ($deep) {
+				if ($deep)
+				{
 					$this->_filterByChildName($currChildNode, $nodeName, $childName, $deep);
 				}
 			}
@@ -769,12 +946,16 @@ class DOMIT_XPath {
 	} //_filterByChildName
 
 	/**
-	* Selects named attributes of the current context nodes
-	* @param string The attribute name, or * to match all attributes
-	*/
-	function selectAttribute($attrName) {
-		if (count($this->globalNodeContainer) != 0) {
-			foreach ($this->globalNodeContainer as $key =>$value) {
+	 * Selects named attributes of the current context nodes
+	 *
+	 * @param string The attribute name, or * to match all attributes
+	 */
+	function selectAttribute($attrName)
+	{
+		if (count($this->globalNodeContainer) != 0)
+		{
+			foreach ($this->globalNodeContainer as $key => $value)
+			{
 				$currNode =& $this->globalNodeContainer[$key];
 
 				$isRecursive = ($this->searchType == DOMIT_XPATH_SEARCH_VARIABLE) ? true : false;
@@ -786,35 +967,46 @@ class DOMIT_XPath {
 	} //selectAttribute
 
 	/**
-	* Selects all attributes of the context nodes
-	* @param object The context node
-	* @param string The attribute name, or * to match all attributes
-	* @param boolean True if the selection is to be performed recursively
-	*/
-	function _selectAttribute(&$contextNode, $attrName, $deep) {
+	 * Selects all attributes of the context nodes
+	 *
+	 * @param object  The context node
+	 * @param string  The attribute name, or * to match all attributes
+	 * @param boolean True if the selection is to be performed recursively
+	 */
+	function _selectAttribute(&$contextNode, $attrName, $deep)
+	{
 		if (($contextNode->nodeType == DOMIT_ELEMENT_NODE) ||
-				($contextNode->nodeType == DOMIT_DOCUMENT_NODE)) {
+			($contextNode->nodeType == DOMIT_DOCUMENT_NODE)
+		)
+		{
 			$total = $contextNode->childCount;
 
-			for ($i = 0; $i < $total; $i++) {
+			for ($i = 0; $i < $total; $i++)
+			{
 				$currNode =& $contextNode->childNodes[$i];
 
-				if ($currNode->nodeType == DOMIT_ELEMENT_NODE) {
-					if ($attrName == '*') {
+				if ($currNode->nodeType == DOMIT_ELEMENT_NODE)
+				{
+					if ($attrName == '*')
+					{
 						$total2 = $currNode->attributes->getLength();
 
-						for ($j = 0; $j < $total2; $j++) {
+						for ($j = 0; $j < $total2; $j++)
+						{
 							$this->localNodeContainer[] =& $currNode->attributes->item($j);
 						}
 					}
-					else {
-						if ($currNode->hasAttribute($attrName)) {
+					else
+					{
+						if ($currNode->hasAttribute($attrName))
+						{
 							$this->localNodeContainer[] =& $currNode->getAttributeNode($attrName);
 						}
 					}
 				}
 
-				if ($deep) {
+				if ($deep)
+				{
 					$this->_selectAttribute($currNode, $attrName, $deep);
 				}
 			}
@@ -823,12 +1015,16 @@ class DOMIT_XPath {
 
 
 	/**
-	* Selects all child nodes of the current context nodes
-	* @param string The element name
-	*/
-	function selectNamedChild($tagName) {
-		if (count($this->globalNodeContainer) != 0) {
-			foreach ($this->globalNodeContainer as $key =>$value) {
+	 * Selects all child nodes of the current context nodes
+	 *
+	 * @param string The element name
+	 */
+	function selectNamedChild($tagName)
+	{
+		if (count($this->globalNodeContainer) != 0)
+		{
+			foreach ($this->globalNodeContainer as $key => $value)
+			{
 				$currNode =& $this->globalNodeContainer[$key];
 
 				$isRecursive = ($this->searchType == DOMIT_XPATH_SEARCH_VARIABLE) ? true : false;
@@ -840,26 +1036,35 @@ class DOMIT_XPath {
 	} //selectNamedChild
 
 	/**
-	* Selects all child nodes of the context node
-	* @param object The context node
-	* @param string The element name
-	* @param boolean True if the selection is to be performed recursively
-	*/
-	function _selectNamedChild(&$contextNode, $tagName, $deep = false) {
+	 * Selects all child nodes of the context node
+	 *
+	 * @param object  The context node
+	 * @param string  The element name
+	 * @param boolean True if the selection is to be performed recursively
+	 */
+	function _selectNamedChild(&$contextNode, $tagName, $deep = false)
+	{
 		if (($contextNode->nodeType == DOMIT_ELEMENT_NODE) ||
-			($contextNode->nodeType == DOMIT_DOCUMENT_NODE)) {
+			($contextNode->nodeType == DOMIT_DOCUMENT_NODE)
+		)
+		{
 			$total = $contextNode->childCount;
 
-			for ($i = 0; $i < $total; $i++) {
+			for ($i = 0; $i < $total; $i++)
+			{
 				$currChildNode =& $contextNode->childNodes[$i];
 
 				if (($currChildNode->nodeType == DOMIT_ELEMENT_NODE) ||
-					($currChildNode->nodeType == DOMIT_DOCUMENT_NODE)) {
-					if (($tagName == '*') || ($tagName == $currChildNode->nodeName)) {
+					($currChildNode->nodeType == DOMIT_DOCUMENT_NODE)
+				)
+				{
+					if (($tagName == '*') || ($tagName == $currChildNode->nodeName))
+					{
 						$this->localNodeContainer[] =& $currChildNode;
 					}
 
-					if ($deep) {
+					if ($deep)
+					{
 						$this->_selectNamedChild($currChildNode, $tagName, $deep);
 					}
 				}
@@ -868,11 +1073,14 @@ class DOMIT_XPath {
 	} //_selectNamedChild
 
 	/**
-	* Selects parent node of the current context nodes
-	*/
-	function selectParent() {
-		if (count($this->globalNodeContainer) != 0) {
-			foreach ($this->globalNodeContainer as $key =>$value) {
+	 * Selects parent node of the current context nodes
+	 */
+	function selectParent()
+	{
+		if (count($this->globalNodeContainer) != 0)
+		{
+			foreach ($this->globalNodeContainer as $key => $value)
+			{
 				$currNode =& $this->globalNodeContainer[$key];
 
 				$isRecursive = ($this->searchType == DOMIT_XPATH_SEARCH_VARIABLE) ? true : false;
@@ -884,26 +1092,35 @@ class DOMIT_XPath {
 	} //selectParent
 
 	/**
-	* Selects parent node of the current context nodes
-	* @param object The context node
-	* @param boolean True if the selection is to be performed recursively
-	*/
-	function _selectParent(&$contextNode, $deep = false) {
-		if ($contextNode->nodeType == DOMIT_ELEMENT_NODE) {
-			if ($contextNode->parentNode != null) {
+	 * Selects parent node of the current context nodes
+	 *
+	 * @param object  The context node
+	 * @param boolean True if the selection is to be performed recursively
+	 */
+	function _selectParent(&$contextNode, $deep = false)
+	{
+		if ($contextNode->nodeType == DOMIT_ELEMENT_NODE)
+		{
+			if ($contextNode->parentNode != null)
+			{
 				$this->localNodeContainer[] =& $contextNode->parentNode;
 			}
 		}
 
-		if ($deep) {
+		if ($deep)
+		{
 			if (($contextNode->nodeType == DOMIT_ELEMENT_NODE) ||
-				($contextNode->nodeType == DOMIT_DOCUMENT_NODE)) {
+				($contextNode->nodeType == DOMIT_DOCUMENT_NODE)
+			)
+			{
 				$total = $contextNode->childCount;
 
-				for ($i = 0; $i < $total; $i++) {
+				for ($i = 0; $i < $total; $i++)
+				{
 					$currNode =& $contextNode->childNodes[$i];
 
-					if ($currNode->nodeType == DOMIT_ELEMENT_NODE) {
+					if ($currNode->nodeType == DOMIT_ELEMENT_NODE)
+					{
 						$this->_selectParent($contextNode, $deep);
 					}
 				}
@@ -912,20 +1129,26 @@ class DOMIT_XPath {
 	} //_selectParent
 
 	/**
-	* Selects any nodes of the current context nodes which match the given function
-	*/
-	function selectNodesByFunction() {
+	 * Selects any nodes of the current context nodes which match the given function
+	 */
+	function selectNodesByFunction()
+	{
 		$doProcess = false;
 		$targetNodeType = -1;
 
-		switch (strtolower(trim($this->charContainer))) {
+		switch (strtolower(trim($this->charContainer)))
+		{
 			case 'last()':
-				if (count($this->globalNodeContainer) != 0) {
-					foreach ($this->globalNodeContainer as $key =>$value) {
+				if (count($this->globalNodeContainer) != 0)
+				{
+					foreach ($this->globalNodeContainer as $key => $value)
+					{
 						$currNode =& $this->globalNodeContainer[$key];
 
-						if ($currNode->nodeType == DOMIT_ELEMENT_NODE) {
-							if ($currNode->lastChild != null) {
+						if ($currNode->nodeType == DOMIT_ELEMENT_NODE)
+						{
+							if ($currNode->lastChild != null)
+							{
 								$this->localNodeContainer[] =& $currNode->lastChild;
 							}
 						}
@@ -949,16 +1172,22 @@ class DOMIT_XPath {
 				break;
 		}
 
-		if ($doProcess) {
-			if (count($this->globalNodeContainer) != 0) {
-				foreach ($this->globalNodeContainer as $key =>$value) {
+		if ($doProcess)
+		{
+			if (count($this->globalNodeContainer) != 0)
+			{
+				foreach ($this->globalNodeContainer as $key => $value)
+				{
 					$currNode =& $this->globalNodeContainer[$key];
 
-					if ($currNode->nodeType == DOMIT_ELEMENT_NODE) {
+					if ($currNode->nodeType == DOMIT_ELEMENT_NODE)
+					{
 						$total = $currNode->childCount;
 
-						for ($j = 0; $j < $total; $j++) {
-							if ($currNode->childNodes[$j]->nodeType == $targetNodeType) {
+						for ($j = 0; $j < $total; $j++)
+						{
+							if ($currNode->childNodes[$j]->nodeType == $targetNodeType)
+							{
 								$this->localNodeContainer[] =& $currNode->childNodes[$j];
 							}
 						}
@@ -971,37 +1200,45 @@ class DOMIT_XPath {
 	} //selectNodesByFunction
 
 	/**
-	* Splits the supplied pattern into searchable segments
-	* @param string The pattern
-	*/
-	function splitPattern($pattern) {
+	 * Splits the supplied pattern into searchable segments
+	 *
+	 * @param string The pattern
+	 */
+	function splitPattern($pattern)
+	{
 		//split multiple patterns if they exist (e.g. pattern1 | pattern2 | pattern3)
 		$this->arPathSegments =& explode(DOMIT_XPATH_SEPARATOR_OR, $pattern);
 
 		//split each pattern by relative path dividers (i.e., '//')
 		$total = count($this->arPathSegments);
 
-		for ($i = 0; $i < $total; $i++) {
+		for ($i = 0; $i < $total; $i++)
+		{
 			$this->arPathSegments[$i] =& explode(DOMIT_XPATH_SEPARATOR_RELATIVE, trim($this->arPathSegments[$i]));
 
 			$currArray =& $this->arPathSegments[$i];
 			$total2 = count($currArray);
 
-			for ($j = 0; $j < $total2; $j++) {
+			for ($j = 0; $j < $total2; $j++)
+			{
 				$currArray[$j] =& explode(DOMIT_XPATH_SEPARATOR_ABSOLUTE, $currArray[$j]);
 			}
 		}
 	} //splitPattern
 
 	/**
-	* Converts long XPath syntax into abbreviated XPath syntax
-	* @param string The pattern
-	* @return string The normalized pattern
-	*/
-	function normalize($pattern) {
+	 * Converts long XPath syntax into abbreviated XPath syntax
+	 *
+	 * @param string The pattern
+	 *
+	 * @return string The normalized pattern
+	 */
+	function normalize($pattern)
+	{
 		$pattern = strtr($pattern, $this->normalizationTable);
 
-		while (strpos($pattern, '  ') !== false) {
+		while (strpos($pattern, '  ') !== false)
+		{
 			$pattern = str_replace('  ', ' ', $pattern);
 		}
 
@@ -1012,33 +1249,42 @@ class DOMIT_XPath {
 	} //normalize
 
 	/**
-	* Initializes the contextNode and searchType
-	* @param array The current array of path segments
-	* @return int The index of the first array item to begin the search at
-	*/
-	function initSearch(&$currArPathSegments) {
+	 * Initializes the contextNode and searchType
+	 *
+	 * @param array The current array of path segments
+	 *
+	 * @return int The index of the first array item to begin the search at
+	 */
+	function initSearch(&$currArPathSegments)
+	{
 		$this->globalNodeContainer = array();
 
-		if (is_null($currArPathSegments[0])) {
-			if (count($currArPathSegments) == 1) {
+		if (is_null($currArPathSegments[0]))
+		{
+			if (count($currArPathSegments) == 1)
+			{
 				//variable path
 				$this->searchType = DOMIT_XPATH_SEARCH_VARIABLE;
 				$this->globalNodeContainer[] =& $this->callingNode->ownerDocument;
 			}
-			else {
+			else
+			{
 				//absolute path
 				$this->searchType = DOMIT_XPATH_SEARCH_ABSOLUTE;
 				$this->globalNodeContainer[] =& $this->callingNode->ownerDocument;
 			}
 		}
-		else {
+		else
+		{
 			//relative path
 			$this->searchType = DOMIT_XPATH_SEARCH_RELATIVE;
 
-			if ($this->callingNode->uid != $this->callingNode->ownerDocument->uid) {
+			if ($this->callingNode->uid != $this->callingNode->ownerDocument->uid)
+			{
 				$this->globalNodeContainer[] =& $this->callingNode;
 			}
-			else {
+			else
+			{
 				$this->globalNodeContainer[] =& $this->callingNode->ownerDocument;
 			}
 		}

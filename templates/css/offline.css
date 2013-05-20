@@ -10,21 +10,21 @@
  */
 
 .outline {
-  border: 1px solid #cccccc;
-  background: #ffffff;
-  padding: 2px;
+    border: 1px solid #CCC;
+    background: #FFF;
+    padding: 2px;
 }
 
 body {
-	margin: 15px;
-	height: 100%;
-	padding: 0px;
-	font-family: Arial, Helvetica, Sans Serif;
-	font-size: 11px;
-	color: #333333;
-	background: #ffffff;
+    margin: 15px;
+    height: 100%;
+    padding: 0;
+    font-family: Arial, Helvetica, Sans Serif, sans-serif;
+    font-size: 11px;
+    color: #333;
+    background: #FFF;
 }
 
 .err {
-	color: #bbb;
+    color: #BBB;
 }

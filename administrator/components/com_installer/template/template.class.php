@@ -1,123 +1,147 @@
 <?php
 /**
-* @version $Id$
-* @package Joomla
-* @copyright Copyright (C) 2005 Open Source Matters. All rights reserved.
-* @subpackage Installer
-* @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL, see LICENSE.php
-* Joomla! is free software. This version may have been modified pursuant
-* to the GNU General Public License, and as distributed it includes or
-* is derivative of works licensed under the GNU General Public License or
-* other free or open source software licenses.
-* See COPYRIGHT.php for copyright notices and details.
-*/
+ * @version    $Id$
+ * @package    Joomla
+ * @copyright  Copyright (C) 2005 Open Source Matters. All rights reserved.
+ * @subpackage Installer
+ * @license    http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL, see LICENSE.php
+ *             Joomla! is free software. This version may have been modified pursuant
+ *             to the GNU General Public License, and as distributed it includes or
+ *             is derivative of works licensed under the GNU General Public License or
+ *             other free or open source software licenses.
+ *             See COPYRIGHT.php for copyright notices and details.
+ */
 
 // no direct access
-defined( '_VALID_MOS' ) or die( 'Restricted access' );
+defined('_VALID_MOS') or die('Restricted access');
 
 // ensure user has access to this function
-if (!$acl->acl_check( 'administration', 'manage', 'users', $GLOBALS['my']->usertype, 'components', 'com_templates' )) {
-	mosRedirect( 'index2.php', _NOT_AUTH );
+if (!$acl->acl_check('administration', 'manage', 'users', $GLOBALS['my']->usertype, 'components', 'com_templates'))
+{
+	mosRedirect('index2.php', _NOT_AUTH);
 }
 
 /**
-* Template installer
-* @package Joomla
-* @subpackage Installer
-*/
-class mosInstallerTemplate extends mosInstaller {
+ * Template installer
+ * @package    Joomla
+ * @subpackage Installer
+ */
+class mosInstallerTemplate extends mosInstaller
+{
 	/**
-	* Custom install method
-	* @param boolean True if installing from directory
-	*/
-	function install( $p_fromdir = null ) {
-		
-		josSpoofCheck();
-	
-		global $mosConfig_absolute_path,$database;
+	 * Custom install method
+	 *
+	 * @param boolean True if installing from directory
+	 */
+	function install($p_fromdir = null)
+	{
 
-		if (!$this->preInstallCheck( $p_fromdir, 'template' )) {
+		josSpoofCheck();
+
+		global $mosConfig_absolute_path, $database;
+
+		if (!$this->preInstallCheck($p_fromdir, 'template'))
+		{
 			return false;
 		}
 
-		$xmlDoc 	=& $this->xmlDoc();
+		$xmlDoc =& $this->xmlDoc();
 		$mosinstall =& $xmlDoc->documentElement;
 
 		$client = '';
-		if ($mosinstall->getAttribute( 'client' )) {
-			$validClients = array( 'administrator' );
-			if (!in_array( $mosinstall->getAttribute( 'client' ), $validClients )) {
-				$this->setError( 1, 'Unknown client type ['.$mosinstall->getAttribute( 'client' ).']' );
+		if ($mosinstall->getAttribute('client'))
+		{
+			$validClients = array('administrator');
+			if (!in_array($mosinstall->getAttribute('client'), $validClients))
+			{
+				$this->setError(1, 'Unknown client type [' . $mosinstall->getAttribute('client') . ']');
 				return false;
 			}
 			$client = 'admin';
 		}
 
 		// Set some vars
-		$e = &$mosinstall->getElementsByPath( 'name', 1 );
+		$e = & $mosinstall->getElementsByPath('name', 1);
 		$this->elementName($e->getText());
-		$this->elementDir( mosPathName( $mosConfig_absolute_path
-		. ($client == 'admin' ? '/administrator' : '')
-		. '/templates/' . strtolower(str_replace(" ","_",$this->elementName())))
+		$this->elementDir(mosPathName($mosConfig_absolute_path
+				. ($client == 'admin' ? '/administrator' : '')
+				. '/templates/' . strtolower(str_replace(" ", "_", $this->elementName())))
 		);
 
-		if (!file_exists( $this->elementDir() ) && !mosMakePath( $this->elementDir() )) {
-			$this->setError(1, 'Failed to create directory "' . $this->elementDir() . '"' );
+		if (!file_exists($this->elementDir()) && !mosMakePath($this->elementDir()))
+		{
+			$this->setError(1, 'Failed to create directory "' . $this->elementDir() . '"');
 			return false;
 		}
 
-		if ($this->parseFiles( 'files' ) === false) {
+		if ($this->parseFiles('files') === false)
+		{
 			return false;
 		}
-		if ($this->parseFiles( 'images' ) === false) {
+		if ($this->parseFiles('images') === false)
+		{
 			return false;
 		}
-		if ($this->parseFiles( 'css' ) === false) {
+		if ($this->parseFiles('css') === false)
+		{
 			return false;
 		}
-		if ($this->parseFiles( 'media' ) === false) {
+		if ($this->parseFiles('media') === false)
+		{
 			return false;
 		}
-		if ($e = &$mosinstall->getElementsByPath( 'description', 1 )) {
-			$this->setError( 0, $this->elementName() . '<p>' . $e->getText() . '</p>' );
+		if ($e = & $mosinstall->getElementsByPath('description', 1))
+		{
+			$this->setError(0, $this->elementName() . '<p>' . $e->getText() . '</p>');
 		}
 
 		return $this->copySetupFile('front');
 	}
+
 	/**
-	* Custom install method
-	* @param int The id of the module
-	* @param string The URL option
-	* @param int The client id
-	*/
-	function uninstall( $id, $option, $client=0 ) {
+	 * Custom install method
+	 *
+	 * @param int    The id of the module
+	 * @param string The URL option
+	 * @param int    The client id
+	 */
+	function uninstall($id, $option, $client = 0)
+	{
 		global $database, $mosConfig_absolute_path;
 
 		josSpoofCheck(null, null, 'request');
 
 		// Delete directories
 		$path = $mosConfig_absolute_path
-		. ($client == 'admin' ? '/administrator' : '' )
-		. '/templates/' . $id;
+			. ($client == 'admin' ? '/administrator' : '')
+			. '/templates/' . $id;
 
-		$id = str_replace( '..', '', $id );
-		if (trim( $id )) {
-			if (is_dir( $path )) {
-				return deldir( mosPathName( $path ) );
-			} else {
-				HTML_installer::showInstallMessage( 'Directory does not exist, cannot remove files', 'Uninstall -  error',
-					$this->returnTo( $option, 'template', $client ) );
+		$id = str_replace('..', '', $id);
+		if (trim($id))
+		{
+			if (is_dir($path))
+			{
+				return deldir(mosPathName($path));
 			}
-		} else {
-			HTML_installer::showInstallMessage( 'Template id is empty, cannot remove files', 'Uninstall -  error',
-				$this->returnTo( $option, 'template', $client ) );
+			else
+			{
+				HTML_installer::showInstallMessage('Directory does not exist, cannot remove files', 'Uninstall -  error',
+					$this->returnTo($option, 'template', $client));
+			}
+		}
+		else
+		{
+			HTML_installer::showInstallMessage('Template id is empty, cannot remove files', 'Uninstall -  error',
+				$this->returnTo($option, 'template', $client));
 			exit();
 		}
 	}
+
 	/**
-	* return to method
-	*/
-	function returnTo( $option, $element, $client ) {
+	 * return to method
+	 */
+	function returnTo($option, $element, $client)
+	{
 		return "index2.php?option=com_templates&client=$client";
 	}
 }

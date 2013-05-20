@@ -1,13 +1,13 @@
 <?php
 /**
-* Constants for DOM XML-RPC
-* @package dom-xmlrpc
-* @copyright (C) 2004 John Heinstein. All rights reserved
-* @license http://www.gnu.org/copyleft/lesser.html LGPL License
-* @author John Heinstein <johnkarl@nbnet.nb.ca>
-* @link http://www.engageinteractive.com/dom_xmlrpc/ DOM XML-RPC Home Page
-* DOM XML-RPC is Free Software
-**/
+ * Constants for DOM XML-RPC
+ * @package   dom-xmlrpc
+ * @copyright (C) 2004 John Heinstein. All rights reserved
+ * @license   http://www.gnu.org/copyleft/lesser.html LGPL License
+ * @author    John Heinstein <johnkarl@nbnet.nb.ca>
+ * @link      http://www.engageinteractive.com/dom_xmlrpc/ DOM XML-RPC Home Page
+ *            DOM XML-RPC is Free Software
+ **/
 
 /** An XML-RPC item  tag*/
 define('DOM_XMLRPC_TYPE_ITEM', 'item');

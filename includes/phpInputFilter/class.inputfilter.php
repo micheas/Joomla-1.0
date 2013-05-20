@@ -1,18 +1,18 @@
 <?php
 /**
- *  @class: InputFilter (PHP4 & PHP5, with comments)
+ * @class: InputFilter (PHP4 & PHP5, with comments)
  * @project: PHP Input Filter
  * @date: 10-05-2005
- * @version: 1.2.2_php4/php5
- * @author: Daniel Morris
+ * @version  : 1.2.2_php4/php5
+ * @author   : Daniel Morris
  * @contributors: Gianpaolo Racca, Ghislain Picard, Marco Wandschneider, Chris
- * Tobin and Andrew Eddie.
+ *           Tobin and Andrew Eddie.
  *
  * Modification by Louis Landry
  *
  * @copyright: Daniel Morris
  * @email: dan@rootcube.com
- * @license: GNU General Public License (GPL)
+ * @license  : GNU General Public License (GPL)
  */
 class InputFilter
 {
@@ -23,21 +23,22 @@ class InputFilter
 	var $attrMethod; // default = 0
 
 	var $xssAuto; // default = 1
-	var $tagBlacklist = array ('applet', 'body', 'bgsound', 'base', 'basefont', 'embed', 'frame', 'frameset', 'head', 'html', 'id', 'iframe', 'ilayer', 'layer', 'link', 'meta', 'name', 'object', 'script', 'style', 'title', 'xml');
-	var $attrBlacklist = array ('action', 'background', 'codebase', 'dynsrc', 'lowsrc'); // also will strip ALL event handlers
+	var $tagBlacklist = array('applet', 'body', 'bgsound', 'base', 'basefont', 'embed', 'frame', 'frameset', 'head', 'html', 'id', 'iframe', 'ilayer', 'layer', 'link', 'meta', 'name', 'object', 'script', 'style', 'title', 'xml');
+	var $attrBlacklist = array('action', 'background', 'codebase', 'dynsrc', 'lowsrc'); // also will strip ALL event handlers
 
 	/**
 	 * Constructor for inputFilter class. Only first parameter is required.
 	 *
-	 * @access	protected
-	 * @param	array	$tagsArray	list of user-defined tags
-	 * @param	array	$attrArray	list of user-defined attributes
-	 * @param	int		$tagsMethod	WhiteList method = 0, BlackList method = 1
-	 * @param	int		$attrMethod	WhiteList method = 0, BlackList method = 1
-	 * @param	int		$xssAuto	Only auto clean essentials = 0, Allow clean
-	 * blacklisted tags/attr = 1
+	 * @access    protected
+	 *
+	 * @param    array      $tagsArray     list of user-defined tags
+	 * @param    array      $attrArray     list of user-defined attributes
+	 * @param    int        $tagsMethod    WhiteList method = 0, BlackList method = 1
+	 * @param    int        $attrMethod    WhiteList method = 0, BlackList method = 1
+	 * @param    int        $xssAuto       Only auto clean essentials = 0, Allow clean
+	 *                                     blacklisted tags/attr = 1
 	 */
-	function inputFilter($tagsArray = array (), $attrArray = array (), $tagsMethod = 0, $attrMethod = 0, $xssAuto = 1)
+	function inputFilter($tagsArray = array(), $attrArray = array(), $tagsMethod = 0, $attrMethod = 0, $xssAuto = 1)
 	{
 		/*
 		 * Make sure user defined arrays are in lowercase
@@ -48,20 +49,22 @@ class InputFilter
 		/*
 		 * Assign member variables
 		 */
-		$this->tagsArray	= $tagsArray;
-		$this->attrArray	= $attrArray;
-		$this->tagsMethod	= $tagsMethod;
-		$this->attrMethod	= $attrMethod;
-		$this->xssAuto		= $xssAuto;
+		$this->tagsArray = $tagsArray;
+		$this->attrArray = $attrArray;
+		$this->tagsMethod = $tagsMethod;
+		$this->attrMethod = $attrMethod;
+		$this->xssAuto = $xssAuto;
 	}
 
 	/**
 	 * Method to be called by another php script. Processes for XSS and
 	 * specified bad code.
 	 *
-	 * @access	public
-	 * @param	mixed	$source	Input string/array-of-string to be 'cleaned'
-	 * @return mixed	$source	'cleaned' version of input parameter
+	 * @access    public
+	 *
+	 * @param    mixed    $source    Input string/array-of-string to be 'cleaned'
+	 *
+	 * @return mixed    $source    'cleaned' version of input parameter
 	 */
 	function process($source)
 	{
@@ -79,7 +82,8 @@ class InputFilter
 				}
 			}
 			return $source;
-		} else
+		}
+		else
 			/*
 			 * Or a string?
 			 */
@@ -87,7 +91,8 @@ class InputFilter
 			{
 				// filter source for XSS and other 'bad' code etc.
 				return $this->remove($this->decode($source));
-			} else
+			}
+			else
 			{
 				/*
 				 * Not an array or string.. return the passed parameter
@@ -99,9 +104,11 @@ class InputFilter
 	/**
 	 * Internal method to iteratively remove all unwanted tags and attributes
 	 *
-	 * @access	protected
-	 * @param	string	$source	Input string to be 'cleaned'
-	 * @return	string	$source	'cleaned' version of input parameter
+	 * @access    protected
+	 *
+	 * @param    string    $source    Input string to be 'cleaned'
+	 *
+	 * @return    string    $source    'cleaned' version of input parameter
 	 */
 	function remove($source)
 	{
@@ -112,7 +119,7 @@ class InputFilter
 		while ($source != $this->filterTags($source))
 		{
 			$source = $this->filterTags($source);
-			$loopCounter ++;
+			$loopCounter++;
 		}
 		return $source;
 	}
@@ -120,9 +127,11 @@ class InputFilter
 	/**
 	 * Internal method to strip a string of certain tags
 	 *
-	 * @access	protected
-	 * @param	string	$source	Input string to be 'cleaned'
-	 * @return	string	$source	'cleaned' version of input parameter
+	 * @access    protected
+	 *
+	 * @param    string    $source    Input string to be 'cleaned'
+	 *
+	 * @return    string    $source    'cleaned' version of input parameter
 	 */
 	function filterTags($source)
 	{
@@ -130,13 +139,13 @@ class InputFilter
 		 * In the beginning we don't really have a tag, so everything is
 		 * postTag
 		 */
-		$preTag		= null;
-		$postTag	= $source;
+		$preTag = null;
+		$postTag = $source;
 
 		/*
 		 * Is there a tag? If so it will certainly start with a '<'
 		 */
-		$tagOpen_start	= strpos($source, '<');
+		$tagOpen_start = strpos($source, '<');
 
 		while ($tagOpen_start !== false)
 		{
@@ -144,18 +153,18 @@ class InputFilter
 			/*
 			 * Get some information about the tag we are processing
 			 */
-			$preTag		   .= substr($postTag, 0, $tagOpen_start);
-			$postTag		= substr($postTag, $tagOpen_start);
-			$fromTagOpen	= substr($postTag, 1);
-			$tagOpen_end	= strpos($fromTagOpen, '>');
+			$preTag .= substr($postTag, 0, $tagOpen_start);
+			$postTag = substr($postTag, $tagOpen_start);
+			$fromTagOpen = substr($postTag, 1);
+			$tagOpen_end = strpos($fromTagOpen, '>');
 
 			/*
 			 * Let's catch any non-terminated tags and skip over them
 			 */
 			if ($tagOpen_end === false)
 			{
-				$postTag		= substr($postTag, $tagOpen_start +1);
-				$tagOpen_start	= strpos($postTag, '<');
+				$postTag = substr($postTag, $tagOpen_start + 1);
+				$tagOpen_start = strpos($postTag, '<');
 				continue;
 			}
 
@@ -163,12 +172,12 @@ class InputFilter
 			 * Do we have a nested tag?
 			 */
 			$tagOpen_nested = strpos($fromTagOpen, '<');
-			$tagOpen_nested_end	= strpos(substr($postTag, $tagOpen_end), '>');
+			$tagOpen_nested_end = strpos(substr($postTag, $tagOpen_end), '>');
 			if (($tagOpen_nested !== false) && ($tagOpen_nested < $tagOpen_end))
 			{
-				$preTag		   .= substr($postTag, 0, ($tagOpen_nested +1));
-				$postTag		= substr($postTag, ($tagOpen_nested +1));
-				$tagOpen_start	= strpos($postTag, '<');
+				$preTag .= substr($postTag, 0, ($tagOpen_nested + 1));
+				$postTag = substr($postTag, ($tagOpen_nested + 1));
+				$tagOpen_start = strpos($postTag, '<');
 				continue;
 			}
 
@@ -176,12 +185,12 @@ class InputFilter
 			/*
 			 * Lets get some information about our tag and setup attribute pairs
 			 */
-			$tagOpen_nested	= (strpos($fromTagOpen, '<') + $tagOpen_start +1);
-			$currentTag		= substr($fromTagOpen, 0, $tagOpen_end);
-			$tagLength		= strlen($currentTag);
-			$tagLeft		= $currentTag;
-			$attrSet		= array ();
-			$currentSpace	= strpos($tagLeft, ' ');
+			$tagOpen_nested = (strpos($fromTagOpen, '<') + $tagOpen_start + 1);
+			$currentTag = substr($fromTagOpen, 0, $tagOpen_end);
+			$tagLength = strlen($currentTag);
+			$tagLeft = $currentTag;
+			$attrSet = array();
+			$currentSpace = strpos($tagLeft, ' ');
 
 			/*
 			 * Are we an open tag or a close tag?
@@ -189,14 +198,15 @@ class InputFilter
 			if (substr($currentTag, 0, 1) == "/")
 			{
 				// Close Tag
-				$isCloseTag		= true;
-				list ($tagName)	= explode(' ', $currentTag);
-				$tagName		= substr($tagName, 1);
-			} else
+				$isCloseTag = true;
+				list ($tagName) = explode(' ', $currentTag);
+				$tagName = substr($tagName, 1);
+			}
+			else
 			{
 				// Open Tag
-				$isCloseTag		= false;
-				list ($tagName)	= explode(' ', $currentTag);
+				$isCloseTag = false;
+				list ($tagName) = explode(' ', $currentTag);
 			}
 
 			/*
@@ -206,8 +216,8 @@ class InputFilter
 			 */
 			if ((!preg_match("/^[a-z][a-z0-9]*$/i", $tagName)) || (!$tagName) || ((in_array(strtolower($tagName), $this->tagBlacklist)) && ($this->xssAuto)))
 			{
-				$postTag		= substr($postTag, ($tagLength +2));
-				$tagOpen_start	= strpos($postTag, '<');
+				$postTag = substr($postTag, ($tagLength + 2));
+				$tagOpen_start = strpos($postTag, '<');
 				// Strip tag
 				continue;
 			}
@@ -218,10 +228,10 @@ class InputFilter
 			 */
 			while ($currentSpace !== false)
 			{
-				$fromSpace		= substr($tagLeft, ($currentSpace +1));
-				$nextSpace		= strpos($fromSpace, ' ');
-				$openQuotes		= strpos($fromSpace, '"');
-				$closeQuotes	= strpos(substr($fromSpace, ($openQuotes +1)), '"') + $openQuotes +1;
+				$fromSpace = substr($tagLeft, ($currentSpace + 1));
+				$nextSpace = strpos($fromSpace, ' ');
+				$openQuotes = strpos($fromSpace, '"');
+				$closeQuotes = strpos(substr($fromSpace, ($openQuotes + 1)), '"') + $openQuotes + 1;
 
 				/*
 				 * Do we have an attribute to process? [check for equal sign]
@@ -233,14 +243,16 @@ class InputFilter
 					 * grab the substring from the closing quote, otherwise grab
 					 * till the next space
 					 */
-					if (($openQuotes !== false) && (strpos(substr($fromSpace, ($openQuotes +1)), '"') !== false))
+					if (($openQuotes !== false) && (strpos(substr($fromSpace, ($openQuotes + 1)), '"') !== false))
 					{
-						$attr = substr($fromSpace, 0, ($closeQuotes +1));
-					} else
+						$attr = substr($fromSpace, 0, ($closeQuotes + 1));
+					}
+					else
 					{
 						$attr = substr($fromSpace, 0, $nextSpace);
 					}
-				} else
+				}
+				else
 				{
 					/*
 					 * No more equal signs so add any extra text in the tag into
@@ -263,8 +275,8 @@ class InputFilter
 				/*
 				 * Move search point and continue iteration
 				 */
-				$tagLeft		= substr($fromSpace, strlen($attr));
-				$currentSpace	= strpos($tagLeft, ' ');
+				$tagLeft = substr($fromSpace, strlen($attr));
+				$currentSpace = strpos($tagLeft, ' ');
 			}
 
 			/*
@@ -284,34 +296,36 @@ class InputFilter
 				{
 					// Open or Single tag
 					$attrSet = $this->filterAttr($attrSet);
-					$preTag .= '<'.$tagName;
-					for ($i = 0; $i < count($attrSet); $i ++)
+					$preTag .= '<' . $tagName;
+					for ($i = 0; $i < count($attrSet); $i++)
 					{
-						$preTag .= ' '.$attrSet[$i];
+						$preTag .= ' ' . $attrSet[$i];
 					}
 
 					/*
 					 * Reformat single tags to XHTML
 					 */
-					if (strpos($fromTagOpen, "</".$tagName))
+					if (strpos($fromTagOpen, "</" . $tagName))
 					{
 						$preTag .= '>';
-					} else
+					}
+					else
 					{
 						$preTag .= ' />';
 					}
-				} else
+				}
+				else
 				{
 					// Closing Tag
-					$preTag .= '</'.$tagName.'>';
+					$preTag .= '</' . $tagName . '>';
 				}
 			}
 
 			/*
 			 * Find next tag's start and continue iteration
 			 */
-			$postTag		= substr($postTag, ($tagLength +2));
-			$tagOpen_start	= strpos($postTag, '<');
+			$postTag = substr($postTag, ($tagLength + 2));
+			$tagOpen_start = strpos($postTag, '<');
 			//print "T: $preTag\n";
 		}
 
@@ -328,21 +342,23 @@ class InputFilter
 	/**
 	 * Internal method to strip a tag of certain attributes
 	 *
-	 * @access	protected
-	 * @param	array	$attrSet	Array of attribute pairs to filter
-	 * @return	array	$newSet		Filtered array of attribute pairs
+	 * @access    protected
+	 *
+	 * @param    array    $attrSet    Array of attribute pairs to filter
+	 *
+	 * @return    array    $newSet        Filtered array of attribute pairs
 	 */
 	function filterAttr($attrSet)
 	{
 		/*
 		 * Initialize variables
 		 */
-		$newSet = array ();
+		$newSet = array();
 
 		/*
 		 * Iterate through attribute pairs
 		 */
-		for ($i = 0; $i < count($attrSet); $i ++)
+		for ($i = 0; $i < count($attrSet); $i++)
 		{
 			/*
 			 * Skip blank spaces
@@ -410,7 +426,7 @@ class InputFilter
 				 */
 				if ($attrSubSet[1])
 				{
-					$newSet[] = $attrSubSet[0].'="'.$attrSubSet[1].'"';
+					$newSet[] = $attrSubSet[0] . '="' . $attrSubSet[1] . '"';
 				}
 				elseif ($attrSubSet[1] == "0")
 				{
@@ -418,10 +434,11 @@ class InputFilter
 					 * Special Case
 					 * Is the value 0?
 					 */
-					$newSet[] = $attrSubSet[0].'="0"';
-				} else
+					$newSet[] = $attrSubSet[0] . '="0"';
+				}
+				else
 				{
-					$newSet[] = $attrSubSet[0].'="'.$attrSubSet[0].'"';
+					$newSet[] = $attrSubSet[0] . '="' . $attrSubSet[0] . '"';
 				}
 			}
 		}
@@ -431,9 +448,11 @@ class InputFilter
 	/**
 	 * Function to determine if contents of an attribute is safe
 	 *
-	 * @access	protected
-	 * @param	array	$attrSubSet	A 2 element array for attributes name,value
-	 * @return	boolean True if bad code is detected
+	 * @access    protected
+	 *
+	 * @param    array    $attrSubSet    A 2 element array for attributes name,value
+	 *
+	 * @return    boolean True if bad code is detected
 	 */
 	function badAttributeValue($attrSubSet)
 	{
@@ -445,9 +464,11 @@ class InputFilter
 	/**
 	 * Try to convert to plaintext
 	 *
-	 * @access	protected
-	 * @param	string	$source
-	 * @return	string	Plaintext string
+	 * @access    protected
+	 *
+	 * @param    string    $source
+	 *
+	 * @return    string    Plaintext string
 	 */
 	function decode($source)
 	{
@@ -463,10 +484,12 @@ class InputFilter
 	/**
 	 * Method to be called by another php script. Processes for SQL injection
 	 *
-	 * @access	public
-	 * @param	mixed		$source	input string/array-of-string to be 'cleaned'
-	 * @param	resource	$connection - An open MySQL connection
-	 * @return	string		'cleaned' version of input parameter
+	 * @access    public
+	 *
+	 * @param    mixed        $source     input string/array-of-string to be 'cleaned'
+	 * @param    resource     $connection - An open MySQL connection
+	 *
+	 * @return    string        'cleaned' version of input parameter
 	 */
 	function safeSQL($source, & $connection)
 	{
@@ -483,7 +506,8 @@ class InputFilter
 			}
 			return $source;
 			// clean this string
-		} else
+		}
+		else
 			if (is_string($source))
 			{
 				// filter source for SQL injection
@@ -492,7 +516,8 @@ class InputFilter
 					return $this->quoteSmart($this->decode($source), $connection);
 				}
 				// return parameter as given
-			} else
+			}
+			else
 			{
 				return $source;
 			}
@@ -501,13 +526,15 @@ class InputFilter
 	/**
 	 * Method to escape a string
 	 *
-	 * @author	Chris Tobin
-	 * @author	Daniel Morris
+	 * @author    Chris Tobin
+	 * @author    Daniel Morris
 	 *
-	 * @access	protected
-	 * @param	string		$source
-	 * @param	resource	$connection		An open MySQL connection
-	 * @return	string		Escaped string
+	 * @access    protected
+	 *
+	 * @param    string        $source
+	 * @param    resource      $connection        An open MySQL connection
+	 *
+	 * @return    string        Escaped string
 	 */
 	function quoteSmart($source, & $connection)
 	{
@@ -527,22 +554,28 @@ class InputFilter
 	}
 
 	/**
-	 * @author	Chris Tobin
-	 * @author	Daniel Morris
+	 * @author    Chris Tobin
+	 * @author    Daniel Morris
 	 *
-	 * @access	protected
-	 * @param	string		$source
-	 * @param	resource	$connection		An open MySQL connection
-	 * @return	string		Escaped string
+	 * @access    protected
+	 *
+	 * @param    string        $source
+	 * @param    resource      $connection        An open MySQL connection
+	 *
+	 * @return    string        Escaped string
 	 */
-	function escapeString($string, & $connection) {
+	function escapeString($string, & $connection)
+	{
 		/*
 		 * Use the appropriate escape string depending upon which version of php
 		 * you are running
 		 */
-		if (version_compare(phpversion(), '4.3.0', '<')) {
+		if (version_compare(phpversion(), '4.3.0', '<'))
+		{
 			$string = mysql_escape_string($string);
-		} else 	{
+		}
+		else
+		{
 			$string = mysql_real_escape_string($string);
 		}
 

@@ -4,9 +4,9 @@
  *
  * $Id$
  *
- * @package		patTemplate
- * @subpackage	Filters
- * @author		Stephan Schmidt <schst@php.net>
+ * @package        patTemplate
+ * @subpackage     Filters
+ * @author         Stephan Schmidt <schst@php.net>
  */
 
 /**
@@ -14,42 +14,44 @@
  *
  * $Id$
  *
- * @package		patTemplate
- * @subpackage	Filters
- * @author		Stephan Schmidt <schst@php.net>
+ * @package        patTemplate
+ * @subpackage     Filters
+ * @author         Stephan Schmidt <schst@php.net>
  */
 class patTemplate_OutputFilter_PdfLatex extends patTemplate_OutputFilter
 {
-   /**
-	* filter name
-	*
-	* This has to be set in the final
-	* filter classes.
-	*
-	* @var	string
-	*/
-	var	$_name	=	'PdfLatex';
+	/**
+	 * filter name
+	 *
+	 * This has to be set in the final
+	 * filter classes.
+	 *
+	 * @var    string
+	 */
+	var $_name = 'PdfLatex';
 
 	var $_params = array(
-						   'cacheFolder' => './'
-					   );
+		'cacheFolder' => './'
+	);
 
-   /**
-	* tidy the data
-	*
-	* @access	public
-	* @param	string		data
-	* @return	string		compressed data
-	*/
-	function apply( $data )
+	/**
+	 * tidy the data
+	 *
+	 * @access    public
+	 *
+	 * @param    string        data
+	 *
+	 * @return    string        compressed data
+	 */
+	function apply($data)
 	{
 		$cacheFolder = $this->getParam('cacheFolder');
-		$texFile	 = tempnam($cacheFolder, 'pt_tex_');
+		$texFile = tempnam($cacheFolder, 'pt_tex_');
 		$fp = fopen($texFile, 'w');
 		fwrite($fp, $data);
 		fclose($fp);
 
-		$command = 'pdflatex '.$texFile;
+		$command = 'pdflatex ' . $texFile;
 		exec($command);
 		exec($command);
 

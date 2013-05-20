@@ -1,42 +1,49 @@
 <?php
 /**
-* @version $Id$
-* @package Joomla
-* @subpackage Weblinks
-* @copyright Copyright (C) 2005 Open Source Matters. All rights reserved.
-* @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL, see LICENSE.php
-* Joomla! is free software. This version may have been modified pursuant
-* to the GNU General Public License, and as distributed it includes or
-* is derivative of works licensed under the GNU General Public License or
-* other free or open source software licenses.
-* See COPYRIGHT.php for copyright notices and details.
-*/
+ * @version    $Id$
+ * @package    Joomla
+ * @subpackage Weblinks
+ * @copyright  Copyright (C) 2005 Open Source Matters. All rights reserved.
+ * @license    http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL, see LICENSE.php
+ *             Joomla! is free software. This version may have been modified pursuant
+ *             to the GNU General Public License, and as distributed it includes or
+ *             is derivative of works licensed under the GNU General Public License or
+ *             other free or open source software licenses.
+ *             See COPYRIGHT.php for copyright notices and details.
+ */
 
 // no direct access
-defined( '_VALID_MOS' ) or die( 'Restricted access' );
+defined('_VALID_MOS') or die('Restricted access');
 
 /**
-* @package Joomla
-* @subpackage Weblinks
-*/
-class TOOLBAR_weblinks {
-	function _EDIT() {
+ * @package    Joomla
+ * @subpackage Weblinks
+ */
+class TOOLBAR_weblinks
+{
+	function _EDIT()
+	{
 		global $id;
 
 		mosMenuBar::startTable();
 		mosMenuBar::save();
 		mosMenuBar::spacer();
-		if ( $id ) {
+		if ($id)
+		{
 			// for existing content items the button is renamed `close`
-			mosMenuBar::cancel( 'cancel', 'Close' );
-		} else {
+			mosMenuBar::cancel('cancel', 'Close');
+		}
+		else
+		{
 			mosMenuBar::cancel();
 		}
 		mosMenuBar::spacer();
-		mosMenuBar::help( 'screen.weblink.edit' );
+		mosMenuBar::help('screen.weblink.edit');
 		mosMenuBar::endTable();
 	}
-	function _DEFAULT() {
+
+	function _DEFAULT()
+	{
 		mosMenuBar::startTable();
 		mosMenuBar::spacer();
 		mosMenuBar::publishList();
@@ -49,7 +56,7 @@ class TOOLBAR_weblinks {
 		mosMenuBar::spacer();
 		mosMenuBar::addNewX();
 		mosMenuBar::spacer();
-		mosMenuBar::help( 'screen.weblink' );
+		mosMenuBar::help('screen.weblink');
 		mosMenuBar::endTable();
 	}
 }

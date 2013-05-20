@@ -1,14 +1,15 @@
 <?php
 /**
-* @package domit-xmlparser
-* @version 1.01
-* @copyright (C) 2004 John Heinstein. All rights reserved
-* @author John Heinstein <johnkarl@nbnet.nb.ca>
-* @link http://www.engageinteractive.com/domit/ DOMIT! Home Page
-* DOMIT! is Free Software
-**/
+ * @package   domit-xmlparser
+ * @version   1.01
+ * @copyright (C) 2004 John Heinstein. All rights reserved
+ * @author    John Heinstein <johnkarl@nbnet.nb.ca>
+ * @link      http://www.engageinteractive.com/domit/ DOMIT! Home Page
+ *            DOMIT! is Free Software
+ **/
 
-if (!defined('DOMIT_INCLUDE_PATH')) {
+if (!defined('DOMIT_INCLUDE_PATH'))
+{
 	/* Path to DOMIT! files */
 	define('DOMIT_INCLUDE_PATH', (dirname(__FILE__) . "/"));
 }
@@ -89,88 +90,101 @@ define('DOMIT_ONERROR_DIE', 2);
 
 
 /**
-*@global Object Instance of the UIDGenerator class
-*/
+ * @global Object Instance of the UIDGenerator class
+ */
 $GLOBALS['uidFactory'] = new UIDGenerator();
 
 require_once(DOMIT_INCLUDE_PATH . 'xml_domit_nodemaps.php');
 
 /**
-* Generates unique ids for each node
-*
-* @package domit-xmlparser
-* @author John Heinstein <johnkarl@nbnet.nb.ca>
-*/
-class UIDGenerator {
+ * Generates unique ids for each node
+ *
+ * @package domit-xmlparser
+ * @author  John Heinstein <johnkarl@nbnet.nb.ca>
+ */
+class UIDGenerator
+{
 	/** @var int A seed value for generating uids */
 	var $seed;
 	/** @var int A tally of the number of uids generated */
 	var $counter = 0;
 
 	/**
-	* UIDGenerator constructor
-	*/
-	function UIDGenerator() {
+	 * UIDGenerator constructor
+	 */
+	function UIDGenerator()
+	{
 		$this->seed = 'node' . time();
 	} //UIDGenerator
 
 	/**
-	* Generates a unique id
-	* @return uid
-	*/
-	function generateUID() {
+	 * Generates a unique id
+	 * @return uid
+	 */
+	function generateUID()
+	{
 		return ($this->seed . $this->counter++);
 	} //generateUID
 } //UIDGenerator
 
 /**
-* @global object Reference to custom error handler for DOMException class
-*/
+ * @global object Reference to custom error handler for DOMException class
+ */
 $GLOBALS['DOMIT_DOMException_errorHandler'] = null;
 /**
-* @global int Error mode; specifies whether to die on error or simply return
-*/
+ * @global int Error mode; specifies whether to die on error or simply return
+ */
 $GLOBALS['DOMIT_DOMException_mode'] = DOMIT_ONERROR_CONTINUE;
 /**
-* @global string Log file for errors
-*/
+ * @global string Log file for errors
+ */
 $GLOBALS['DOMIT_DOMException_log'] = null;
 
 /**
-* A DOMIT! exception handling class
-*
-* @package domit-xmlparser
-* @author John Heinstein <johnkarl@nbnet.nb.ca>
-*/
-class DOMIT_DOMException {
+ * A DOMIT! exception handling class
+ *
+ * @package domit-xmlparser
+ * @author  John Heinstein <johnkarl@nbnet.nb.ca>
+ */
+class DOMIT_DOMException
+{
 	/**
-	* Raises the specified exception
-	* @param int The error number
-	* @param string A string explanation of the error
-	*/
-	function raiseException($errorNum, $errorString) {
-		if ($GLOBALS['DOMIT_DOMException_errorHandler'] != null) {
+	 * Raises the specified exception
+	 *
+	 * @param int    The error number
+	 * @param string A string explanation of the error
+	 */
+	function raiseException($errorNum, $errorString)
+	{
+		if ($GLOBALS['DOMIT_DOMException_errorHandler'] != null)
+		{
 			call_user_func($GLOBALS['DOMIT_DOMException_errorHandler'], $errorNum, $errorString);
 		}
-		else {
-			$errorMessageText = $errorNum  . ' ' . $errorString;
+		else
+		{
+			$errorMessageText = $errorNum . ' ' . $errorString;
 			$errorMessage = 'Error: ' . $errorMessageText;
 
 			if ((!isset($GLOBALS['DOMIT_ERROR_FORMATTING_HTML'])) ||
-				($GLOBALS['DOMIT_ERROR_FORMATTING_HTML'] == true)) {
-					$errorMessage = "<p><pre>" . $errorMessage . "</pre></p>";
+				($GLOBALS['DOMIT_ERROR_FORMATTING_HTML'] == true)
+			)
+			{
+				$errorMessage = "<p><pre>" . $errorMessage . "</pre></p>";
 			}
 
 			//log error to file
 			if ((isset($GLOBALS['DOMIT_DOMException_log'])) &&
-				($GLOBALS['DOMIT_DOMException_log'] != null)) {
-					require_once(DOMIT_INCLUDE_PATH . 'php_file_utilities.php');
-					$logItem = "\n" . date('Y-m-d H:i:s') . 'DOMIT! Error ' . $errorMessageText;
-					php_file_utilities::putDataToFile($GLOBALS['DOMIT_DOMException_log'],
-										$logItem, 'a');
+				($GLOBALS['DOMIT_DOMException_log'] != null)
+			)
+			{
+				require_once(DOMIT_INCLUDE_PATH . 'php_file_utilities.php');
+				$logItem = "\n" . date('Y-m-d H:i:s') . 'DOMIT! Error ' . $errorMessageText;
+				php_file_utilities::putDataToFile($GLOBALS['DOMIT_DOMException_log'],
+					$logItem, 'a');
 			}
 
-			switch ($GLOBALS['DOMIT_DOMException_mode']) {
+			switch ($GLOBALS['DOMIT_DOMException_mode'])
+			{
 				case DOMIT_ONERROR_CONTINUE:
 					return;
 					break;
@@ -183,46 +197,58 @@ class DOMIT_DOMException {
 	} //raiseException
 
 	/**
-	* custom handler for DOM errors
-	* @param object A reference to the custom error handler
-	*/
-	function setErrorHandler($method) {
+	 * custom handler for DOM errors
+	 *
+	 * @param object A reference to the custom error handler
+	 */
+	function setErrorHandler($method)
+	{
 		$GLOBALS['DOMIT_DOMException_errorHandler'] =& $method;
 	} //setErrorHandler
 
 	/**
-	* Set error mode
-	* @param int The DOM error mode
-	*/
-	function setErrorMode($mode) {
+	 * Set error mode
+	 *
+	 * @param int The DOM error mode
+	 */
+	function setErrorMode($mode)
+	{
 		$GLOBALS['DOMIT_DOMException_mode'] = $mode;
 	} //setErrorMode
 
 	/**
-	* Set error mode
-	* @param boolean True if errors should be logged
-	* @param string Absolute or relative path to log file
-	*/
-	function setErrorLog($doLogErrors, $logfile) {
-		if ($doLogErrors) {
+	 * Set error mode
+	 *
+	 * @param boolean True if errors should be logged
+	 * @param string  Absolute or relative path to log file
+	 */
+	function setErrorLog($doLogErrors, $logfile)
+	{
+		if ($doLogErrors)
+		{
 			$GLOBALS['DOMIT_DOMException_log'] = $logfile;
 		}
-		else {
+		else
+		{
 			$GLOBALS['DOMIT_DOMException_log'] = null;
 		}
 	} //setErrorLog
 } //DOMIT_DOMException
 
 /**
-* A class representing the DOM Implementation node
-*
-* @package domit-xmlparser
-* @author John Heinstein <johnkarl@nbnet.nb.ca>
-*/
-class DOMIT_DOMImplementation {
-	function hasFeature($feature, $version = null) {
-		if (strtoupper($feature) == 'XML') {
-			if (($version == '1.0') || ($version == '2.0') || ($version == null)) {
+ * A class representing the DOM Implementation node
+ *
+ * @package domit-xmlparser
+ * @author  John Heinstein <johnkarl@nbnet.nb.ca>
+ */
+class DOMIT_DOMImplementation
+{
+	function hasFeature($feature, $version = null)
+	{
+		if (strtoupper($feature) == 'XML')
+		{
+			if (($version == '1.0') || ($version == '2.0') || ($version == null))
+			{
 				return true;
 			}
 		}
@@ -231,19 +257,23 @@ class DOMIT_DOMImplementation {
 	} //hasFeature
 
 	/**
-	* Creates a new DOMIT_Document node and appends a documentElement with the specified info
-	* @param string The namespaceURI of the documentElement
-	* @param string The $qualifiedName of the documentElement
-	* @param Object A document type node
-	* @return Object The new document fragment node
-	*/
-	function &createDocument($namespaceURI, $qualifiedName, &$docType) {
+	 * Creates a new DOMIT_Document node and appends a documentElement with the specified info
+	 *
+	 * @param string The namespaceURI of the documentElement
+	 * @param string The $qualifiedName of the documentElement
+	 * @param Object A document type node
+	 *
+	 * @return Object The new document fragment node
+	 */
+	function &createDocument($namespaceURI, $qualifiedName, &$docType)
+	{
 		$xmldoc = new DOMIT_Document();
 		$documentElement =& $xmldoc->createElementNS($namespaceURI, $qualifiedName);
 
 		$xmldoc->setDocumentElement($documentElement);
 
-		if ($docType != null) {
+		if ($docType != null)
+		{
 			$xmldoc->doctype =& $docType;
 		}
 
@@ -251,13 +281,16 @@ class DOMIT_DOMImplementation {
 	} //createDocument
 
 	/**
-	* Creates a new DOMIT_DocumentType node (not yet implemented!)
-	* @param string The $qualifiedName
-	* @param string The $publicID
-	* @param string The $systemID
-	* @return Object The new document type node
-	*/
-	function &createDocumentType($qualifiedName, $publicID, $systemID) {
+	 * Creates a new DOMIT_DocumentType node (not yet implemented!)
+	 *
+	 * @param string The $qualifiedName
+	 * @param string The $publicID
+	 * @param string The $systemID
+	 *
+	 * @return Object The new document type node
+	 */
+	function &createDocumentType($qualifiedName, $publicID, $systemID)
+	{
 		//not yet implemented
 		DOMIT_DOMException::raiseException(DOMIT_NOT_SUPPORTED_ERROR,
 			('Method createDocumentType is not yet implemented.'));

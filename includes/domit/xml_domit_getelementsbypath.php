@@ -1,14 +1,15 @@
 <?php
 /**
-* @package domit-xmlparser
-* @copyright (C) 2004 John Heinstein. All rights reserved
-* @license http://www.gnu.org/copyleft/lesser.html LGPL License
-* @author John Heinstein <johnkarl@nbnet.nb.ca>
-* @link http://www.engageinteractive.com/domit/ DOMIT! Home Page
-* DOMIT! is Free Software
-**/
+ * @package   domit-xmlparser
+ * @copyright (C) 2004 John Heinstein. All rights reserved
+ * @license   http://www.gnu.org/copyleft/lesser.html LGPL License
+ * @author    John Heinstein <johnkarl@nbnet.nb.ca>
+ * @link      http://www.engageinteractive.com/domit/ DOMIT! Home Page
+ *            DOMIT! is Free Software
+ **/
 
-if (!defined('DOMIT_INCLUDE_PATH')) {
+if (!defined('DOMIT_INCLUDE_PATH'))
+{
 	define('DOMIT_INCLUDE_PATH', (dirname(__FILE__) . "/"));
 }
 
@@ -22,10 +23,11 @@ define('GET_ELEMENTS_BY_PATH_SEARCH_RELATIVE', 1);
 define('GET_ELEMENTS_BY_PATH_SEARCH_VARIABLE', 2);
 
 /**
-* getElementsByPath is a simple utility for path-based access to nodes in a DOMIT! document.
-*/
-class DOMIT_GetElementsByPath {
-    /** @var Object The node from which the search is called */
+ * getElementsByPath is a simple utility for path-based access to nodes in a DOMIT! document.
+ */
+class DOMIT_GetElementsByPath
+{
+	/** @var Object The node from which the search is called */
 	var $callingNode;
 	/** @var int The type of search to be performed, i.e., relative, absolute, or variable */
 	var $searchType;
@@ -41,21 +43,25 @@ class DOMIT_GetElementsByPath {
 	var $abortSearch = false;
 
 	/**
-	* Constructor - creates an empty DOMIT_NodeList to store matching nodes
-	*/
-	function DOMIT_GetElementsByPath() {
+	 * Constructor - creates an empty DOMIT_NodeList to store matching nodes
+	 */
+	function DOMIT_GetElementsByPath()
+	{
 		require_once(DOMIT_INCLUDE_PATH . 'xml_domit_nodemaps.php');
 		$this->nodeList = new DOMIT_NodeList();
 	} //DOMIT_GetElementsByPath
 
 	/**
-	* Parses the supplied "path"-based pattern
-	* @param Object The node from which the search is called
-	* @param string The pattern
-	* @param int The node level of the current search
-	* @return Object The NodeList containing matching nodes
-	*/
-	function &parsePattern(&$node, $pattern, $nodeIndex = 0) {
+	 * Parses the supplied "path"-based pattern
+	 *
+	 * @param Object The node from which the search is called
+	 * @param string The pattern
+	 * @param int    The node level of the current search
+	 *
+	 * @return Object The NodeList containing matching nodes
+	 */
+	function &parsePattern(&$node, $pattern, $nodeIndex = 0)
+	{
 		$this->callingNode =& $node;
 		$pattern = trim($pattern);
 
@@ -66,37 +72,49 @@ class DOMIT_GetElementsByPath {
 		$this->targetIndex = $nodeIndex;
 		$totalSegments = count($this->arPathSegments);
 
-		if ($totalSegments > 0) {
-			if ($this->searchType == GET_ELEMENTS_BY_PATH_SEARCH_VARIABLE) {
+		if ($totalSegments > 0)
+		{
+			if ($this->searchType == GET_ELEMENTS_BY_PATH_SEARCH_VARIABLE)
+			{
 				$arContextNodes =& $this->contextNode->ownerDocument->getElementsByTagName($this->arPathSegments[0]);
 				$totalContextNodes = $arContextNodes->getLength();
 
-				for ($i = 0; $i < $totalContextNodes; $i++) {
+				for ($i = 0; $i < $totalContextNodes; $i++)
+				{
 					$this->selectNamedChild($arContextNodes->item($i), 1);
 				}
 			}
-			else {
-				if ($this->searchType == GET_ELEMENTS_BY_PATH_SEARCH_ABSOLUTE) {
-					if ($this->contextNode->nodeName == $this->arPathSegments[0]) {
-						if (count($this->arPathSegments) == 1) {
+			else
+			{
+				if ($this->searchType == GET_ELEMENTS_BY_PATH_SEARCH_ABSOLUTE)
+				{
+					if ($this->contextNode->nodeName == $this->arPathSegments[0])
+					{
+						if (count($this->arPathSegments) == 1)
+						{
 							$this->nodeList->appendNode($this->contextNode);
 						}
-						else {
+						else
+						{
 							$this->selectNamedChild($this->contextNode, 1);
 						}
 					}
 				}
-				else if ($this->searchType == GET_ELEMENTS_BY_PATH_SEARCH_RELATIVE) {
+				else if ($this->searchType == GET_ELEMENTS_BY_PATH_SEARCH_RELATIVE)
+				{
 					$this->selectNamedChild($this->contextNode, 0);
 				}
 			}
 		}
 
-		if ($nodeIndex > 0) {
-			if ($nodeIndex <= $this->nodeList->getLength()) {
+		if ($nodeIndex > 0)
+		{
+			if ($nodeIndex <= $this->nodeList->getLength())
+			{
 				return $this->nodeList->item(($nodeIndex - 1));
 			}
-			else {
+			else
+			{
 				$null = null;
 				return $null;
 			}
@@ -106,24 +124,30 @@ class DOMIT_GetElementsByPath {
 	} //parsePattern
 
 	/**
-	* Determines the type of search to be performed: absolute, relative, or variable
-	* @param string The pattern
-	*/
-	function determineSearchType($pattern) {
+	 * Determines the type of search to be performed: absolute, relative, or variable
+	 *
+	 * @param string The pattern
+	 */
+	function determineSearchType($pattern)
+	{
 		$firstChar = $pattern{0};
 
-		if ($firstChar != GET_ELEMENTS_BY_PATH_SEPARATOR) {
+		if ($firstChar != GET_ELEMENTS_BY_PATH_SEPARATOR)
+		{
 			//relative path
 			$this->searchType = GET_ELEMENTS_BY_PATH_SEARCH_RELATIVE;
 		}
-		else {
+		else
+		{
 			$secondChar = $pattern{1};
 
-			if ($secondChar != GET_ELEMENTS_BY_PATH_SEPARATOR) {
+			if ($secondChar != GET_ELEMENTS_BY_PATH_SEPARATOR)
+			{
 				//absolute path
 				$this->searchType = GET_ELEMENTS_BY_PATH_SEARCH_ABSOLUTE;
 			}
-			else {
+			else
+			{
 				//variable path
 				$this->searchType = GET_ELEMENTS_BY_PATH_SEARCH_VARIABLE;
 			}
@@ -132,19 +156,23 @@ class DOMIT_GetElementsByPath {
 
 
 	/**
-	* Sets the context node, i.e., the node from which the search begins
-	*/
-	function setContextNode() {
-		switch($this->searchType) {
+	 * Sets the context node, i.e., the node from which the search begins
+	 */
+	function setContextNode()
+	{
+		switch ($this->searchType)
+		{
 			case GET_ELEMENTS_BY_PATH_SEARCH_ABSOLUTE:
 				$this->contextNode =& $this->callingNode->ownerDocument->documentElement;
 				break;
 
 			case GET_ELEMENTS_BY_PATH_SEARCH_RELATIVE:
-				if ($this->callingNode->uid != $this->callingNode->ownerDocument->uid) {
+				if ($this->callingNode->uid != $this->callingNode->ownerDocument->uid)
+				{
 					$this->contextNode =& $this->callingNode;
 				}
-				else {
+				else
+				{
 					$this->contextNode =& $this->callingNode->ownerDocument->documentElement;
 				}
 				break;
@@ -156,11 +184,14 @@ class DOMIT_GetElementsByPath {
 	} //setContextNode
 
 	/**
-	* Splits the supplied pattern into searchable segments
-	* @param string The pattern
-	*/
-	function splitPattern($pattern) {
-		switch($this->searchType) {
+	 * Splits the supplied pattern into searchable segments
+	 *
+	 * @param string The pattern
+	 */
+	function splitPattern($pattern)
+	{
+		switch ($this->searchType)
+		{
 			case GET_ELEMENTS_BY_PATH_SEARCH_ABSOLUTE:
 				$lastIndex = 1;
 				break;
@@ -178,28 +209,36 @@ class DOMIT_GetElementsByPath {
 	} //splitPattern
 
 	/**
-	* Matches the current path segment against the child nodes of the current context node
-	* @param Object The context node
-	* @param int The index in the arPathSegments array of the current path segment
-	*/
-	function selectNamedChild(&$node, $pIndex) {
-		if (!$this->abortSearch) {
-			if ($pIndex < count($this->arPathSegments)) { //not at last path segment
+	 * Matches the current path segment against the child nodes of the current context node
+	 *
+	 * @param Object The context node
+	 * @param int    The index in the arPathSegments array of the current path segment
+	 */
+	function selectNamedChild(&$node, $pIndex)
+	{
+		if (!$this->abortSearch)
+		{
+			if ($pIndex < count($this->arPathSegments))
+			{ //not at last path segment
 				$name = $this->arPathSegments[$pIndex];
 				$numChildren = $node->childCount;
 
-				for ($i = 0; $i < $numChildren; $i++) {
+				for ($i = 0; $i < $numChildren; $i++)
+				{
 					$currentChild =& $node->childNodes[$i];
 
-					if ($currentChild->nodeName == $name) {
+					if ($currentChild->nodeName == $name)
+					{
 						$this->selectNamedChild($currentChild, ($pIndex + 1));
 					}
 				}
 			}
-			else {
+			else
+			{
 				$this->nodeList->appendNode($node);
 
-				if ($this->targetIndex == $this->nodeList->getLength()) {
+				if ($this->targetIndex == $this->nodeList->getLength())
+				{
 					$this->abortSearch = true;
 				}
 			}
@@ -208,33 +247,37 @@ class DOMIT_GetElementsByPath {
 } //DOMIT_GetElementsByPath
 
 
-
 /**
-* getElementsByAttributePath is a temporary utility requested by a DOMIT! user for path-based access to attributes in a DOMIT! document.
-* This class may be absent from future versions of DOMIT!
-*/
-class DOMIT_GetElementsByAttributePath {
-    /** @var Object A DOMIT_NodeList of matching attribute nodes */
+ * getElementsByAttributePath is a temporary utility requested by a DOMIT! user for path-based access to attributes in a DOMIT! document.
+ * This class may be absent from future versions of DOMIT!
+ */
+class DOMIT_GetElementsByAttributePath
+{
+	/** @var Object A DOMIT_NodeList of matching attribute nodes */
 	var $nodeList;
 
-    /**
-	* Constructor - creates an empty DOMIT_NodeList to store matching nodes
-	*/
-	function DOMIT_GetElementsByAttributePath() {
+	/**
+	 * Constructor - creates an empty DOMIT_NodeList to store matching nodes
+	 */
+	function DOMIT_GetElementsByAttributePath()
+	{
 		require_once(DOMIT_INCLUDE_PATH . 'xml_domit_nodemaps.php');
 		$this->nodeList = new DOMIT_NodeList();
 	} //DOMIT_GetElementsByAttributePath
 
 	/**
-	* Matches the current path segment against the child nodes of the current context node
-	* @param Object The context node
-	* @param string The pattern
-	* @param int The index of the current path segment
-	*/
-	function &parsePattern(&$node, $pattern, $nodeIndex = 0) {
+	 * Matches the current path segment against the child nodes of the current context node
+	 *
+	 * @param Object The context node
+	 * @param string The pattern
+	 * @param int    The index of the current path segment
+	 */
+	function &parsePattern(&$node, $pattern, $nodeIndex = 0)
+	{
 		$beginSquareBrackets = strpos($pattern, '[');
 
-		if ($beginSquareBrackets != 0) {
+		if ($beginSquareBrackets != 0)
+		{
 			$path = substr($pattern, 0, $beginSquareBrackets);
 
 			$attrPattern = substr($pattern, (strpos($pattern, '@') + 1));
@@ -250,25 +293,32 @@ class DOMIT_GetElementsByAttributePath {
 
 			$total = $myResponse->getLength();
 
-			for ($i = 0; $i < $total; $i++) {
+			for ($i = 0; $i < $total; $i++)
+			{
 				$currNode =& $myResponse->item($i);
 
-				if ($currNode->hasAttribute($key)) {
-					if ($currNode->getAttribute($key) == $value) {
+				if ($currNode->hasAttribute($key))
+				{
+					if ($currNode->getAttribute($key) == $value)
+					{
 						$this->nodeList->appendNode($currNode);
 					}
 				}
 			}
 		}
 
-		if ($nodeIndex == 0) {
+		if ($nodeIndex == 0)
+		{
 			return $this->nodeList;
 		}
-		else {
-			if ($nodeIndex <= $this->nodeList->getLength()) {
+		else
+		{
+			if ($nodeIndex <= $this->nodeList->getLength())
+			{
 				return $this->nodeList->item(($nodeIndex - 1));
 			}
-			else {
+			else
+			{
 				$this->nodeList = new DOMIT_NodeList();
 				return $this->nodeList;
 			}

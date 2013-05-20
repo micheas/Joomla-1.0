@@ -1,25 +1,26 @@
 <?php
 /**
-* @version $Id$
-* @package Joomla
-* @subpackage Templates
-* @copyright Copyright (C) 2005 Open Source Matters. All rights reserved.
-* @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL, see LICENSE.php
-* Joomla! is free software. This version may have been modified pursuant
-* to the GNU General Public License, and as distributed it includes or
-* is derivative of works licensed under the GNU General Public License or
-* other free or open source software licenses.
-* See COPYRIGHT.php for copyright notices and details.
-*/
+ * @version    $Id$
+ * @package    Joomla
+ * @subpackage Templates
+ * @copyright  Copyright (C) 2005 Open Source Matters. All rights reserved.
+ * @license    http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL, see LICENSE.php
+ *             Joomla! is free software. This version may have been modified pursuant
+ *             to the GNU General Public License, and as distributed it includes or
+ *             is derivative of works licensed under the GNU General Public License or
+ *             other free or open source software licenses.
+ *             See COPYRIGHT.php for copyright notices and details.
+ */
 
 // no direct access
-defined( '_VALID_MOS' ) or die( 'Restricted access' );
+defined('_VALID_MOS') or die('Restricted access');
 
-require_once( $mainframe->getPath( 'toolbar_html' ) );
+require_once($mainframe->getPath('toolbar_html'));
 
-$client = strval( mosGetParam( $_REQUEST, 'client', '' ) );
+$client = strval(mosGetParam($_REQUEST, 'client', ''));
 
-switch ($task) {
+switch ($task)
+{
 
 	case 'view':
 		TOOLBAR_templates::_VIEW();

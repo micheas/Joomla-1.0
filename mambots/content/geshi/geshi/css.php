@@ -50,7 +50,7 @@
  ************************************************************************************/
 
 
-$language_data = array (
+$language_data = array(
 	'LANG_NAME' => 'CSS',
 	'COMMENT_SINGLE' => array(1 => '@'),
 	'COMMENT_MULTI' => array('/*' => '*/'),
@@ -65,9 +65,9 @@ $language_data = array (
 			'border-bottom-width', 'border-left-color', 'border-left-style',
 			'border-left-width', 'border-right', 'border-right-color',
 			'border-right-style', 'border-right-width', 'border-top-color',
-			'border-top-style', 'border-top-width','border-bottom', 'border-collapse',
+			'border-top-style', 'border-top-width', 'border-bottom', 'border-collapse',
 			'border-left', 'border-width', 'border-color', 'border-spacing',
-			'border-style', 'border-top', 'border',  'caption-side',
+			'border-style', 'border-top', 'border', 'caption-side',
 			'clear', 'clip', 'color', 'content', 'counter-increment', 'counter-reset',
 			'cue-after', 'cue-before', 'cue', 'cursor', 'direction', 'display',
 			'elevation', 'empty-cells', 'float', 'font-family', 'font-size',
@@ -80,18 +80,18 @@ $language_data = array (
 			'outline-width', 'overflow', 'padding-bottom', 'padding-left',
 			'padding-right', 'padding-top', 'padding', 'page', 'page-break-after',
 			'page-break-before', 'page-break-inside', 'pause-after', 'pause-before',
-			'pause', 'pitch', 'pitch-range',  'play-during', 'position', 'quotes',
+			'pause', 'pitch', 'pitch-range', 'play-during', 'position', 'quotes',
 			'richness', 'right', 'size', 'speak-header', 'speak-numeral', 'speak-punctuation',
 			'speak', 'speech-rate', 'stress', 'table-layout', 'text-align', 'text-decoration',
 			'text-indent', 'text-shadow', 'text-transform', 'top', 'unicode-bidi',
 			'vertical-align', 'visibility', 'voice-family', 'volume', 'white-space', 'widows',
 			'width', 'word-spacing', 'z-index', 'bottom', 'left'
-			),
+		),
 		2 => array(
 			'above', 'absolute', 'always', 'armenian', 'aural', 'auto', 'avoid',
 			'baseline', 'behind', 'below', 'bidi-override', 'blink', 'block', 'bold', 'bolder', 'both',
-			'capitalize', 'center-left', 'center-right', 'center', 'circle', 'cjk-ideographic', 
-            'close-quote', 'collapse', 'condensed', 'continuous', 'crop', 'crosshair', 'cross', 'cursive',
+			'capitalize', 'center-left', 'center-right', 'center', 'circle', 'cjk-ideographic',
+			'close-quote', 'collapse', 'condensed', 'continuous', 'crop', 'crosshair', 'cross', 'cursive',
 			'dashed', 'decimal-leading-zero', 'decimal', 'default', 'digits', 'disc', 'dotted', 'double',
 			'e-resize', 'embed', 'extra-condensed', 'extra-expanded', 'expanded',
 			'fantasy', 'far-left', 'far-right', 'faster', 'fast', 'fixed', 'fuchsia',
@@ -112,66 +112,61 @@ $language_data = array (
 			'w-resize', 'wait', 'white', 'wider',
 			'x-fast', 'x-high', 'x-large', 'x-loud', 'x-low', 'x-small', 'x-soft', 'xx-large', 'xx-small',
 			'yellow', 'yes'
-			)
-		),
+		)
+	),
 	'SYMBOLS' => array(
 		'(', ')', '{', '}', ':', ';'
-		),
+	),
 	'CASE_SENSITIVE' => array(
 		GESHI_COMMENTS => false,
 		1 => true,
 		2 => true
-		),
+	),
 	'STYLES' => array(
 		'KEYWORDS' => array(
 			1 => 'color: #000000; font-weight: bold;',
 			2 => 'color: #993333;'
-			),
+		),
 		'COMMENTS' => array(
 			1 => 'color: #a1a100;',
 			'MULTI' => 'color: #808080; font-style: italic;'
-			),
+		),
 		'ESCAPE_CHAR' => array(
 			0 => 'color: #000099; font-weight: bold;'
-			),
+		),
 		'BRACKETS' => array(
 			0 => 'color: #66cc66;'
-			),
+		),
 		'STRINGS' => array(
 			0 => 'color: #ff0000;'
-			),
+		),
 		'NUMBERS' => array(
 			0 => 'color: #cc66cc;'
-			),
-		'METHODS' => array(
-			),
+		),
+		'METHODS' => array(),
 		'SYMBOLS' => array(
 			0 => 'color: #66cc66;'
-			),
-		'SCRIPT' => array(
-			),
+		),
+		'SCRIPT' => array(),
 		'REGEXPS' => array(
 			0 => 'color: #cc00cc;',
 			1 => 'color: #6666ff;',
 			2 => 'color: #3333ff;',
-			)
-		),
+		)
+	),
 	'URLS' => array(
 		1 => '',
 		2 => ''
-		),
+	),
 	'OOLANG' => false,
-	'OBJECT_SPLITTERS' => array(
-		),
+	'OBJECT_SPLITTERS' => array(),
 	'REGEXPS' => array(
 		0 => '\#[a-zA-Z0-9\-]+\s+\{',
 		1 => '\.[a-zA-Z0-9\-]+\s',
 		2 => ':[a-zA-Z0-9\-]+\s'
-		),
+	),
 	'STRICT_MODE_APPLIES' => GESHI_NEVER,
-	'SCRIPT_DELIMITERS' => array(
-		),
-	'HIGHLIGHT_STRICT_BLOCK' => array(
-		)
+	'SCRIPT_DELIMITERS' => array(),
+	'HIGHLIGHT_STRICT_BLOCK' => array()
 );
 

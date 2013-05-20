@@ -1,35 +1,41 @@
 <?php
 /**
-* DOMIT node maps are structures for storing and accessing collections of DOMIT_Nodes.
-* @package domit-xmlparser
-* @copyright (C) 2004 John Heinstein. All rights reserved
-* @license http://www.gnu.org/copyleft/lesser.html LGPL License
-* @author John Heinstein <johnkarl@nbnet.nb.ca>
-* @link http://www.engageinteractive.com/domit/ DOMIT! Home Page
-* DOMIT! is Free Software
-**/
+ * DOMIT node maps are structures for storing and accessing collections of DOMIT_Nodes.
+ * @package   domit-xmlparser
+ * @copyright (C) 2004 John Heinstein. All rights reserved
+ * @license   http://www.gnu.org/copyleft/lesser.html LGPL License
+ * @author    John Heinstein <johnkarl@nbnet.nb.ca>
+ * @link      http://www.engageinteractive.com/domit/ DOMIT! Home Page
+ *            DOMIT! is Free Software
+ **/
 
-if (!defined('DOMIT_INCLUDE_PATH')) {
+if (!defined('DOMIT_INCLUDE_PATH'))
+{
 	define('DOMIT_INCLUDE_PATH', (dirname(__FILE__) . "/"));
 }
 
 /**
-* A DOM NodeList implementation
-*
-* @package domit-xmlparser
-* @author John Heinstein <johnkarl@nbnet.nb.ca>
-*/
-class DOMIT_NodeList {
+ * A DOM NodeList implementation
+ *
+ * @package domit-xmlparser
+ * @author  John Heinstein <johnkarl@nbnet.nb.ca>
+ */
+class DOMIT_NodeList
+{
 	/** @var Array A container for the nodes in the list */
 	var $arNodeList = array();
 
 	/**
-	* Return the node at the specified index
-	* @param int The index of the requested node
-	* @return Object A reference to the requested node, or null
-	*/
-	function &item($index) {
-		if ($index < $this->getLength()) {
+	 * Return the node at the specified index
+	 *
+	 * @param int The index of the requested node
+	 *
+	 * @return Object A reference to the requested node, or null
+	 */
+	function &item($index)
+	{
+		if ($index < $this->getLength())
+		{
 			return $this->arNodeList[$index];
 		}
 
@@ -38,45 +44,56 @@ class DOMIT_NodeList {
 	} //item
 
 	/**
-	* Returns the number of nodes in the list
-	* @return int The number of nodes in the list
-	*/
-	function getLength() {
+	 * Returns the number of nodes in the list
+	 * @return int The number of nodes in the list
+	 */
+	function getLength()
+	{
 		return count($this->arNodeList);
 	} //getLength
 
 	/**
-	* Appends a node to the list
-	* @return Object The appended node
-	*/
-	function &appendNode(&$node) {
+	 * Appends a node to the list
+	 * @return Object The appended node
+	 */
+	function &appendNode(&$node)
+	{
 		$this->arNodeList[] =& $node;
 		return $node;
 	} //appendNode
 
 	/**
-	* Removes the specified node from the list
-	* @param Object A reference to the node to be removed
-	* @return Object A reference to the removed node
-	*/
-	function &removeNode(&$node) {
+	 * Removes the specified node from the list
+	 *
+	 * @param Object A reference to the node to be removed
+	 *
+	 * @return Object A reference to the removed node
+	 */
+	function &removeNode(&$node)
+	{
 		$total = $this->getLength();
 		$returnNode = null;
 		$found = false;
 
-		for ($i = 0; $i < $total; $i++) {
-			if (!$found) {
-				if ($node->uid == $this->arNodeList[$i]->uid) {
+		for ($i = 0; $i < $total; $i++)
+		{
+			if (!$found)
+			{
+				if ($node->uid == $this->arNodeList[$i]->uid)
+				{
 					$found = true;
-					$returnNode=& $node;
+					$returnNode =& $node;
 				}
 			}
 
-			if ($found) {
-				if ($i == ($total - 1)) {
+			if ($found)
+			{
+				if ($i == ($total - 1))
+				{
 					unset($this->arNodeList[$i]);
 				}
-				else {
+				else
+				{
 					$this->arNodeList[$i] =& $this->arNodeList[($i + 1)];
 				}
 			}
@@ -86,34 +103,42 @@ class DOMIT_NodeList {
 	} //$removeNode
 
 	/**
-	* Formats a string for presentation as HTML
-	* @param string The string to be formatted
-	* @param boolean True if the string is to be sent directly to output
-	* @return string The HTML formatted string
-	*/
-	function forHTML($str, $doPrint = false) {
+	 * Formats a string for presentation as HTML
+	 *
+	 * @param string  The string to be formatted
+	 * @param boolean True if the string is to be sent directly to output
+	 *
+	 * @return string The HTML formatted string
+	 */
+	function forHTML($str, $doPrint = false)
+	{
 		require_once(DOMIT_INCLUDE_PATH . 'xml_domit_utilities.php');
 		return DOMIT_Utilities::forHTML($str, $doPrint);
 	} //forHTML
 
 	/**
-	* Generates an array representation of the node and its children
-	* @return Array A representation of the node and its children
-	*/
-	function toArray() {
+	 * Generates an array representation of the node and its children
+	 * @return Array A representation of the node and its children
+	 */
+	function toArray()
+	{
 		return $this->arNodeList;
 	} //toArray
 
 	/**
-	* Copies a node and/or its children
-	* @param boolean True if all child nodes are also to be cloned
-	* @return Object A copy of the node and/or its children
-	*/
-	function &createClone($deep = false) {
+	 * Copies a node and/or its children
+	 *
+	 * @param boolean True if all child nodes are also to be cloned
+	 *
+	 * @return Object A copy of the node and/or its children
+	 */
+	function &createClone($deep = false)
+	{
 		$className = get_class($this);
 		$clone = new $className();
 
-		foreach ($this->arNodeList as $key => $value) {
+		foreach ($this->arNodeList as $key => $value)
+		{
 			$currNode =& $this->arNodeList[$key];
 			$clone->arNodeList[$key] =& $currNode->cloneNode($deep);
 		}
@@ -122,15 +147,19 @@ class DOMIT_NodeList {
 	} //createClone
 
 	/**
-	* Generates a string representation of the node and its children
-	* @param boolean True if HTML readable output is desired
-	* @param boolean True if illegal xml characters in text nodes and attributes should be converted to entities
-	* @return string The string representation
-	*/
-	function toString($htmlSafe = false, $subEntities=false) {
+	 * Generates a string representation of the node and its children
+	 *
+	 * @param boolean True if HTML readable output is desired
+	 * @param boolean True if illegal xml characters in text nodes and attributes should be converted to entities
+	 *
+	 * @return string The string representation
+	 */
+	function toString($htmlSafe = false, $subEntities = false)
+	{
 		$result = '';
 
-		foreach ($this->arNodeList as $key => $value) {
+		foreach ($this->arNodeList as $key => $value)
+		{
 			$currNode =& $this->arNodeList[$key];
 			$result .= $currNode->toString(false, $subEntities);
 		}
@@ -141,15 +170,19 @@ class DOMIT_NodeList {
 	} //toString
 
 	/**
-	* Generates a normalized (formatted for readability) representation of the node collection
-	* @param boolean True if HTML readable output is desired
-	* @param boolean True if illegal xml characters in text nodes and attributes should be converted to entities
-	* @return string The string representation
-	*/
-	function toNormalizedString($htmlSafe = false, $subEntities=false) {
+	 * Generates a normalized (formatted for readability) representation of the node collection
+	 *
+	 * @param boolean True if HTML readable output is desired
+	 * @param boolean True if illegal xml characters in text nodes and attributes should be converted to entities
+	 *
+	 * @return string The string representation
+	 */
+	function toNormalizedString($htmlSafe = false, $subEntities = false)
+	{
 		$result = '';
 
-		foreach ($this->arNodeList as $key => $value) {
+		foreach ($this->arNodeList as $key => $value)
+		{
 			$currNode =& $this->arNodeList[$key];
 			$result .= $currNode->toNormalizedString(false, $subEntities);
 		}
@@ -161,12 +194,13 @@ class DOMIT_NodeList {
 } //DOMIT_NodeList
 
 /**
-* A DOM NamedNodeMap implementation
-*
-* @package domit-xmlparser
-* @author John Heinstein <johnkarl@nbnet.nb.ca>
-*/
-class DOMIT_NamedNodeMap {
+ * A DOM NamedNodeMap implementation
+ *
+ * @package domit-xmlparser
+ * @author  John Heinstein <johnkarl@nbnet.nb.ca>
+ */
+class DOMIT_NamedNodeMap
+{
 	/** @var Array A container for the nodes in the map */
 	var $arNodeMap = array();
 	/** @var Array A numerical index to the keys of the mapped nodes */
@@ -175,12 +209,16 @@ class DOMIT_NamedNodeMap {
 	var $isDirty = true;
 
 	/**
-	* Gets a node with the specifed name
-	* @param string The name of the node
-	* @return mixed A reference to the requested node, or null
-	*/
-	function &getNamedItem($name) {
-		if (isset($this->arNodeMap[$name])) {
+	 * Gets a node with the specifed name
+	 *
+	 * @param string The name of the node
+	 *
+	 * @return mixed A reference to the requested node, or null
+	 */
+	function &getNamedItem($name)
+	{
+		if (isset($this->arNodeMap[$name]))
+		{
 			return $this->arNodeMap[$name];
 		}
 
@@ -189,31 +227,38 @@ class DOMIT_NamedNodeMap {
 	} //getNamedItem
 
 	/**
-	* Reindexes the numerical index for the named node map
-	*/
-	function reindexNodeMap() {
-	    $this->indexedNodeMap = array();
+	 * Reindexes the numerical index for the named node map
+	 */
+	function reindexNodeMap()
+	{
+		$this->indexedNodeMap = array();
 
-	    foreach ($this->arNodeMap as $key => $value) {
-	        $this->indexedNodeMap[] = $key;
-	    }
+		foreach ($this->arNodeMap as $key => $value)
+		{
+			$this->indexedNodeMap[] = $key;
+		}
 
-	    $this->isDirty = false;
+		$this->isDirty = false;
 	} //reindexNodeMap
 
 	/**
-	* Assigns a node to the list
-	* @param Object A reference to the node to be assigned
-	* @return Object A reference to the assigned node
-	*/
-	function &setNamedItem(&$arg) {
+	 * Assigns a node to the list
+	 *
+	 * @param Object A reference to the node to be assigned
+	 *
+	 * @return Object A reference to the assigned node
+	 */
+	function &setNamedItem(&$arg)
+	{
 		$returnNode = null;
 
-		if (isset($this->arNodeMap[$arg->nodeName])) {
+		if (isset($this->arNodeMap[$arg->nodeName]))
+		{
 			$returnNode =& $this->arNodeMap[$arg->nodeName];
 		}
-		else {
-		    $this->isDirty = true;
+		else
+		{
+			$this->isDirty = true;
 		}
 
 		$this->arNodeMap[$arg->nodeName] =& $arg;
@@ -221,14 +266,18 @@ class DOMIT_NamedNodeMap {
 	} //setNamedItem
 
 	/**
-	* Removes a node from the list, by name
-	* @param string The name of the node to be removed
-	* @return mixed A reference to the removed node, or null
-	*/
-	function &removeNamedItem($name) {
+	 * Removes a node from the list, by name
+	 *
+	 * @param string The name of the node to be removed
+	 *
+	 * @return mixed A reference to the removed node, or null
+	 */
+	function &removeNamedItem($name)
+	{
 		$returnNode = null;
 
-		if (isset($this->arNodeMap[$name])) {
+		if (isset($this->arNodeMap[$name]))
+		{
 			$returnNode =& $this->arNodeMap[$name];
 			unset($this->arNodeMap[$name]);
 			$this->isDirty = true;
@@ -238,27 +287,33 @@ class DOMIT_NamedNodeMap {
 	} //removeNamedItem
 
 	/**
-	* Gets a node with the specifed name, taking into account namespaces
-	* @param string The namespaceURI of the node
-	* @param string The localName of the node
-	* @return mixed A reference to the requested node, or null
-	*/
-	function &getNamedItemNS($namespaceURI, $localName) {
-	    $key = $this->getKeyNS($namespaceURI, $localName);
+	 * Gets a node with the specifed name, taking into account namespaces
+	 *
+	 * @param string The namespaceURI of the node
+	 * @param string The localName of the node
+	 *
+	 * @return mixed A reference to the requested node, or null
+	 */
+	function &getNamedItemNS($namespaceURI, $localName)
+	{
+		$key = $this->getKeyNS($namespaceURI, $localName);
 
 		//check for explicit namespaces
-		if (isset($this->arNodeMap[$key])) {
+		if (isset($this->arNodeMap[$key]))
+		{
 			return $this->arNodeMap[$key];
 		}
 
 		//check for implicit namespaces too
 		//URI will be on element, but not attribute
-		if (isset($this->arNodeMap[$localName])) {
+		if (isset($this->arNodeMap[$localName]))
+		{
 			//get element namespace
 			$firstAttr =& $this->item(1);
 			$ownerElem =& $firstAttr->ownerElement;
 
-			if ($namespaceURI == $ownerElem->namespaceURI) {
+			if ($namespaceURI == $ownerElem->namespaceURI)
+			{
 				return $this->arNodeMap[$localName];
 			}
 		}
@@ -268,19 +323,24 @@ class DOMIT_NamedNodeMap {
 	} //getNamedItemNS
 
 	/**
-	* Assigns a node to the list, using its namespaceURI and localName
-	* @param Object A reference to the node to be assigned
-	* @return Object A reference to the assigned node
-	*/
-	function &setNamedItemNS(&$arg) {
+	 * Assigns a node to the list, using its namespaceURI and localName
+	 *
+	 * @param Object A reference to the node to be assigned
+	 *
+	 * @return Object A reference to the assigned node
+	 */
+	function &setNamedItemNS(&$arg)
+	{
 		$returnNode = null;
 		$key = $this->getKeyNS($arg->namespaceURI, $arg->localName);
 
-		if (isset($this->arNodeMap[$key])) {
+		if (isset($this->arNodeMap[$key]))
+		{
 			$returnNode =& $this->arNodeMap[$key];
 		}
-		else {
-		    $this->isDirty = true;
+		else
+		{
+			$this->isDirty = true;
 		}
 
 		$this->arNodeMap[$key] =& $arg;
@@ -288,16 +348,20 @@ class DOMIT_NamedNodeMap {
 	} //setNamedItemNS
 
 	/**
-	* Removes a node from the list, by name, by local name and namespace URI
-	* @param string The namespaceURI of the node to be removed
-	* @param string The localName of the node to be removed
-	* @return mixed A reference to the removed node, or null
-	*/
-	function &removeNamedItemNS($namespaceURI, $localName) {
+	 * Removes a node from the list, by name, by local name and namespace URI
+	 *
+	 * @param string The namespaceURI of the node to be removed
+	 * @param string The localName of the node to be removed
+	 *
+	 * @return mixed A reference to the removed node, or null
+	 */
+	function &removeNamedItemNS($namespaceURI, $localName)
+	{
 		$returnNode = null;
 		$key = $this->getKeyNS($namespaceURI, $localName);
 
-		if (isset($this->arNodeMap[$key])) {
+		if (isset($this->arNodeMap[$key]))
+		{
 			$returnNode =& $this->arNodeMap[$key];
 			unset($this->arNodeMap[$key]);
 			$this->isDirty = true;
@@ -307,66 +371,82 @@ class DOMIT_NamedNodeMap {
 	} //removeNamedItemNS
 
 	/**
-	* Returns the key of the NamedNodeMap, given the namespaceURI and localName
-	* @param string The namespaceURI of the node to be removed
-	* @param string The localName of the node to be removed
-	* @return string The key of the NamedNodeMap
-	*/
-	function getKeyNS($namespaceURI, $localName) {
-	    if ($namespaceURI != '') {
-	    	return $namespaceURI . ":" . $localName;
-	    }
+	 * Returns the key of the NamedNodeMap, given the namespaceURI and localName
+	 *
+	 * @param string The namespaceURI of the node to be removed
+	 * @param string The localName of the node to be removed
+	 *
+	 * @return string The key of the NamedNodeMap
+	 */
+	function getKeyNS($namespaceURI, $localName)
+	{
+		if ($namespaceURI != '')
+		{
+			return $namespaceURI . ":" . $localName;
+		}
 
 		return $localName;
 	} //getKeyNS
 
 	/**
-	* Return the node at the specified index
-	* @param int The index of the requested node
-	* @return mixed A reference to the requested node, or null
-	*/
-	function &item($index) {
-  		if ($this->isDirty) $this->reindexNodeMap();
-  		return $this->arNodeMap[$this->indexedNodeMap[$index]];
+	 * Return the node at the specified index
+	 *
+	 * @param int The index of the requested node
+	 *
+	 * @return mixed A reference to the requested node, or null
+	 */
+	function &item($index)
+	{
+		if ($this->isDirty) $this->reindexNodeMap();
+		return $this->arNodeMap[$this->indexedNodeMap[$index]];
 	} //item
 
 	/**
-	* Returns the number of nodes in the map
-	* @return int The number of nodes in the map
-	*/
-	function getLength() {
+	 * Returns the number of nodes in the map
+	 * @return int The number of nodes in the map
+	 */
+	function getLength()
+	{
 		return count($this->arNodeMap);
 	} //getLength
 
 	/**
-	* Formats a string for presentation as HTML
-	* @param string The string to be formatted
-	* @param boolean True if the string is to be sent directly to output
-	* @return string The HTML formatted string
-	*/
-	function forHTML($str, $doPrint = false) {
+	 * Formats a string for presentation as HTML
+	 *
+	 * @param string  The string to be formatted
+	 * @param boolean True if the string is to be sent directly to output
+	 *
+	 * @return string The HTML formatted string
+	 */
+	function forHTML($str, $doPrint = false)
+	{
 		require_once(DOMIT_INCLUDE_PATH . 'xml_domit_utilities.php');
 		return DOMIT_Utilities::forHTML($str, $doPrint);
 	} //forHTML
 
 	/**
-	* Generates an array representation of the node and its children
-	* @return Array A representation of the node and its children
-	*/
-	function toArray() {
+	 * Generates an array representation of the node and its children
+	 * @return Array A representation of the node and its children
+	 */
+	function toArray()
+	{
 		return $this->arNodeMap;
 	} //toArray
 
 	/**
-	* Copies a node and/or its children
-	* @param boolean True if all child nodes are also to be cloned
-	* @return Object A copy of the node and/or its children
-	*/
-	function &createClone($deep = false) {
+	 * Copies a node and/or its children
+	 *
+	 * @param boolean True if all child nodes are also to be cloned
+	 *
+	 * @return Object A copy of the node and/or its children
+	 */
+	function &createClone($deep = false)
+	{
 		$className = get_class($this);
 		$clone = new $className();
 
-		foreach ($this->arNodeMap as $key => $value) {
+		foreach ($this->arNodeMap as $key => $value)
+		{
 			$currNode =& $this->arNodeMap[$key];
 			$clone->arNodeMap[$key] =& $currNode->cloneNode($deep);
 		}
@@ -375,15 +455,19 @@ class DOMIT_NamedNodeMap {
 	} //createClone
 
 	/**
-	* Generates a string representation of the node and its children
-	* @param boolean True if HTML readable output is desired
-	* @param boolean True if illegal xml characters in text nodes and attributes should be converted to entities
-	* @return string The string representation
-	*/
-	function toString($htmlSafe = false, $subEntities=false) {
+	 * Generates a string representation of the node and its children
+	 *
+	 * @param boolean True if HTML readable output is desired
+	 * @param boolean True if illegal xml characters in text nodes and attributes should be converted to entities
+	 *
+	 * @return string The string representation
+	 */
+	function toString($htmlSafe = false, $subEntities = false)
+	{
 		$result = '';
 
-		foreach ($this->arNodeMap as $key => $value) {
+		foreach ($this->arNodeMap as $key => $value)
+		{
 			$currNode =& $this->arNodeMap[$key];
 			$result .= $currNode->toString(false, $subEntities);
 		}
@@ -394,15 +478,19 @@ class DOMIT_NamedNodeMap {
 	} //toString
 
 	/**
-	* Generates a normalized (formatted for readability) representation of the node collection
-	* @param boolean True if HTML readable output is desired
-	* @param boolean True if illegal xml characters in text nodes and attributes should be converted to entities
-	* @return string The string representation
-	*/
-	function toNormalizedString($htmlSafe = false, $subEntities=false) {
+	 * Generates a normalized (formatted for readability) representation of the node collection
+	 *
+	 * @param boolean True if HTML readable output is desired
+	 * @param boolean True if illegal xml characters in text nodes and attributes should be converted to entities
+	 *
+	 * @return string The string representation
+	 */
+	function toNormalizedString($htmlSafe = false, $subEntities = false)
+	{
 		$result = '';
 
-		foreach ($this->arNodeMap as $key => $value) {
+		foreach ($this->arNodeMap as $key => $value)
+		{
 			$currNode =& $this->arNodeMap[$key];
 			$result .= $currNode->toNormalizedString(false, $subEntities);
 		}
@@ -414,20 +502,23 @@ class DOMIT_NamedNodeMap {
 } //DOMIT_NamedNodeMap
 
 /**
-* A NamedNodeMap with specialized funtionality for Attribute nodes
-*
-* @package domit-xmlparser
-* @author John Heinstein <johnkarl@nbnet.nb.ca>
-*/
-class DOMIT_NamedNodeMap_Attr extends DOMIT_NamedNodeMap {
+ * A NamedNodeMap with specialized funtionality for Attribute nodes
+ *
+ * @package domit-xmlparser
+ * @author  John Heinstein <johnkarl@nbnet.nb.ca>
+ */
+class DOMIT_NamedNodeMap_Attr extends DOMIT_NamedNodeMap
+{
 	/**
-	* Generates an array representation of the node and its children
-	* @return Array A representation of the node and its children
-	*/
-	function toArray() {
+	 * Generates an array representation of the node and its children
+	 * @return Array A representation of the node and its children
+	 */
+	function toArray()
+	{
 		$arReturn = array();
 
-		foreach ($this->arNodeMap as $key => $value) {
+		foreach ($this->arNodeMap as $key => $value)
+		{
 			$arReturn[$key] = $this->arNodeMap[$key]->getValue();
 		}
 
@@ -435,15 +526,19 @@ class DOMIT_NamedNodeMap_Attr extends DOMIT_NamedNodeMap {
 	} //toArray
 
 	/**
-	* Generates a string representation of the node and its children
-	* @param boolean True if HTML readable output is desired
-	* @param boolean True if illegal xml characters in text nodes and attributes should be converted to entities
-	* @return string The string representation
-	*/
-	function toString($htmlSafe = false, $subEntities=false) {
+	 * Generates a string representation of the node and its children
+	 *
+	 * @param boolean True if HTML readable output is desired
+	 * @param boolean True if illegal xml characters in text nodes and attributes should be converted to entities
+	 *
+	 * @return string The string representation
+	 */
+	function toString($htmlSafe = false, $subEntities = false)
+	{
 		$result = '';
 
-		foreach ($this->arNodeMap as $key => $value) {
+		foreach ($this->arNodeMap as $key => $value)
+		{
 			$currNode =& $this->arNodeMap[$key];
 			$result .= $currNode->toString(false, $subEntities);
 		}

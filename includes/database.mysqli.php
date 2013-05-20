@@ -1,86 +1,95 @@
 <?php
 /**
-* @version $Id$
-* @package Joomla
-* @subpackage Database
-* @copyright Copyright (C) 2005 Open Source Matters. All rights reserved.
-* @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL, see LICENSE.php
-* Joomla! is free software. This version may have been modified pursuant
-* to the GNU General Public License, and as distributed it includes or
-* is derivative of works licensed under the GNU General Public License or
-* other free or open source software licenses.
-* See COPYRIGHT.php for copyright notices and details.
-*/
+ * @version    $Id$
+ * @package    Joomla
+ * @subpackage Database
+ * @copyright  Copyright (C) 2005 Open Source Matters. All rights reserved.
+ * @license    http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL, see LICENSE.php
+ *             Joomla! is free software. This version may have been modified pursuant
+ *             to the GNU General Public License, and as distributed it includes or
+ *             is derivative of works licensed under the GNU General Public License or
+ *             other free or open source software licenses.
+ *             See COPYRIGHT.php for copyright notices and details.
+ */
 
 // no direct access
-defined( '_VALID_MOS' ) or die( 'Restricted access' );
+defined('_VALID_MOS') or die('Restricted access');
 
 /**
-* Database connector class
-* @subpackage Database
-* @package Joomla
-*/
-class database {
+ * Database connector class
+ * @subpackage Database
+ * @package    Joomla
+ */
+class database
+{
 	/** @var string Internal variable to hold the query sql */
-	var $_sql			= '';
+	var $_sql = '';
 	/** @var int Internal variable to hold the database error number */
-	var $_errorNum		= 0;
+	var $_errorNum = 0;
 	/** @var string Internal variable to hold the database error message */
-	var $_errorMsg		= '';
+	var $_errorMsg = '';
 	/** @var string Internal variable to hold the prefix used on all database tables */
-	var $_table_prefix	= '';
+	var $_table_prefix = '';
 	/** @var Internal variable to hold the connector resource */
-	var $_resource		= '';
+	var $_resource = '';
 	/** @var Internal variable to hold the last query cursor */
-	var $_cursor		= null;
+	var $_cursor = null;
 	/** @var boolean Debug option */
-	var $_debug			= 0;
+	var $_debug = 0;
 	/** @var int The limit for the query */
-	var $_limit			= 0;
+	var $_limit = 0;
 	/** @var int The for offset for the limit */
-	var $_offset		= 0;
+	var $_offset = 0;
 	/** @var int A counter for the number of queries performed by the object instance */
-	var $_ticker		= 0;
+	var $_ticker = 0;
 	/** @var array A log of queries */
-	var $_log			= null;
+	var $_log = null;
 	/** @var string The null/zero date string */
-	var $_nullDate		= '0000-00-00 00:00:00';
+	var $_nullDate = '0000-00-00 00:00:00';
 	/** @var string Quote for named objects */
-	var $_nameQuote		= '`';
+	var $_nameQuote = '`';
 
 	/**
-	* Database object constructor
-	* @param string Database host
-	* @param string Database user name
-	* @param string Database user password
-	* @param string Database name
-	* @param string Common prefix for all tables
-	* @param boolean If true and there is an error, go offline
-	*/
-	function database( $host='localhost', $user, $pass, $db='', $table_prefix='', $goOffline=true ) {
+	 * Database object constructor
+	 *
+	 * @param string  Database host
+	 * @param string  Database user name
+	 * @param string  Database user password
+	 * @param string  Database name
+	 * @param string  Common prefix for all tables
+	 * @param boolean If true and there is an error, go offline
+	 */
+	function database($host = 'localhost', $user, $pass, $db = '', $table_prefix = '', $goOffline = true)
+	{
 		// perform a number of fatality checks, then die gracefully
-		if (!function_exists( 'mysqli_connect' )) {
+		if (!function_exists('mysqli_connect'))
+		{
 			$mosSystemError = 1;
-			if ($goOffline) {
-				$basePath = dirname( __FILE__ );
+			if ($goOffline)
+			{
+				$basePath = dirname(__FILE__);
 				include $basePath . '/../configuration.php';
 				include $basePath . '/../offline.php';
 				exit();
 			}
 		}
-		if (!($this->_resource = @mysqli_connect( $host, $user, $pass ))) {
+		if (!($this->_resource = @mysqli_connect($host, $user, $pass)))
+		{
 			$mosSystemError = 2;
-			if ($goOffline) {
-				$basePath = dirname( __FILE__ );
+			if ($goOffline)
+			{
+				$basePath = dirname(__FILE__);
 				include $basePath . '/../configuration.php';
 				include $basePath . '/../offline.php';
 				exit();
 			}
 		}
-		if ($db != '' && !mysqli_select_db($this->_resource, $db)) {
+		if ($db != '' && !mysqli_select_db($this->_resource, $db))
+		{
 			$mosSystemError = 3;
-			if ($goOffline) {
-				$basePath = dirname( __FILE__ );
+			if ($goOffline)
+			{
+				$basePath = dirname(__FILE__);
 				include $basePath . '/../configuration.php';
 				include $basePath . '/../offline.php';
 				exit();
@@ -90,95 +99,117 @@ class database {
 		$this->_ticker = 0;
 		$this->_log = array();
 	}
+
 	/**
 	 * @param int
 	 */
-	function debug( $level ) {
-		$this->_debug = intval( $level );
+	function debug($level)
+	{
+		$this->_debug = intval($level);
 	}
+
 	/**
 	 * @return int The error number for the most recent query
 	 */
-	function getErrorNum() {
+	function getErrorNum()
+	{
 		return $this->_errorNum;
 	}
+
 	/**
-	* @return string The error message for the most recent query
-	*/
-	function getErrorMsg() {
-		return str_replace( array( "\n", "'" ), array( '\n', "\'" ), $this->_errorMsg );
+	 * @return string The error message for the most recent query
+	 */
+	function getErrorMsg()
+	{
+		return str_replace(array("\n", "'"), array('\n', "\'"), $this->_errorMsg);
 	}
 
 	/**
 	 * Get a database escaped string
 	 *
-	 * @param	string	The string to be escaped
-	 * @param	boolean	Optional parameter to provide extra escaping
-	 * @return	string
-	 * @access	public
+	 * @param    string     The string to be escaped
+	 * @param    boolean    Optional parameter to provide extra escaping
+	 *
+	 * @return    string
+	 * @access    public
 	 * @abstract
 	 */
-	function getEscaped( $text, $extra = false ) {
-		$string = mysqli_real_escape_string( $this->_resource, $text );
-		if ($extra) {
-			$string = addcslashes( $string, '%_' );
+	function getEscaped($text, $extra = false)
+	{
+		$string = mysqli_real_escape_string($this->_resource, $text);
+		if ($extra)
+		{
+			$string = addcslashes($string, '%_');
 		}
 		return $string;
 	}
 
 	/**
-	* Get a quoted database escaped string
-	*
-	* @param	string	A string
-	* @param	boolean	Default true to escape string, false to leave the string unchanged
-	* @return	string
-	* @access public
-	*/
-	function Quote( $text, $escaped = true )
+	 * Get a quoted database escaped string
+	 *
+	 * @param    string     A string
+	 * @param    boolean    Default true to escape string, false to leave the string unchanged
+	 *
+	 * @return    string
+	 * @access public
+	 */
+	function Quote($text, $escaped = true)
 	{
-		return '\''.($escaped ? $this->getEscaped( $text ) : $text).'\'';
+		return '\'' . ($escaped ? $this->getEscaped($text) : $text) . '\'';
 	}
 
 	/**
 	 * Quote an identifier name (field, table, etc)
+	 *
 	 * @param string The name
+	 *
 	 * @return string The quoted name
 	 */
-	function NameQuote( $s ) {
+	function NameQuote($s)
+	{
 		$q = $this->_nameQuote;
-		if (strlen( $q ) == 1) {
+		if (strlen($q) == 1)
+		{
 			return $q . $s . $q;
-		} else {
+		}
+		else
+		{
 			return $q{0} . $s . $q{1};
 		}
 	}
+
 	/**
 	 * @return string The database prefix
 	 */
-	function getPrefix() {
+	function getPrefix()
+	{
 		return $this->_table_prefix;
 	}
+
 	/**
 	 * @return string Quoted null/zero date string
 	 */
-	function getNullDate() {
+	function getNullDate()
+	{
 		return $this->_nullDate;
 	}
+
 	/**
-	* Sets the SQL query string for later execution.
-	*
-	* This function replaces a string identifier <var>$prefix</var> with the
-	* string held is the <var>_table_prefix</var> class variable.
-	*
-	* @param string The SQL query
-	* @param string The offset to start selection
-	* @param string The number of results to return
-	* @param string The common table prefix
-	*/
-	function setQuery( $sql, $offset = 0, $limit = 0, $prefix='#__' ) {
-		$this->_sql = $this->replacePrefix( $sql, $prefix );
-		$this->_limit = intval( $limit );
-		$this->_offset = intval( $offset );
+	 * Sets the SQL query string for later execution.
+	 *
+	 * This function replaces a string identifier <var>$prefix</var> with the
+	 * string held is the <var>_table_prefix</var> class variable.
+	 *
+	 * @param string The SQL query
+	 * @param string The offset to start selection
+	 * @param string The number of results to return
+	 * @param string The common table prefix
+	 */
+	function setQuery($sql, $offset = 0, $limit = 0, $prefix = '#__')
+	{
+		$this->_sql = $this->replacePrefix($sql, $prefix);
+		$this->_limit = intval($limit);
+		$this->_offset = intval($offset);
 	}
 
 	/**
@@ -187,108 +218,134 @@ class database {
 	 *
 	 * @param string The SQL query
 	 * @param string The common table prefix
+	 *
 	 * @author thede, David McKinnis
 	 */
-	function replacePrefix( $sql, $prefix='#__' ) {
-		$sql = trim( $sql );
+	function replacePrefix($sql, $prefix = '#__')
+	{
+		$sql = trim($sql);
 
 		$escaped = false;
 		$quoteChar = '';
 
-		$n = strlen( $sql );
+		$n = strlen($sql);
 
 		$startPos = 0;
 		$literal = '';
-		while ($startPos < $n) {
+		while ($startPos < $n)
+		{
 			$ip = strpos($sql, $prefix, $startPos);
-			if ($ip === false) {
+			if ($ip === false)
+			{
 				break;
 			}
 
-			$j = strpos( $sql, "'", $startPos );
-			$k = strpos( $sql, '"', $startPos );
-			if (($k !== FALSE) && (($k < $j) || ($j === FALSE))) {
-				$quoteChar	= '"';
-				$j			= $k;
-			} else {
-				$quoteChar	= "'";
+			$j = strpos($sql, "'", $startPos);
+			$k = strpos($sql, '"', $startPos);
+			if (($k !== FALSE) && (($k < $j) || ($j === FALSE)))
+			{
+				$quoteChar = '"';
+				$j = $k;
+			}
+			else
+			{
+				$quoteChar = "'";
 			}
 
-			if ($j === false) {
+			if ($j === false)
+			{
 				$j = $n;
 			}
 
-			$literal .= str_replace( $prefix, $this->_table_prefix, substr( $sql, $startPos, $j - $startPos ) );
+			$literal .= str_replace($prefix, $this->_table_prefix, substr($sql, $startPos, $j - $startPos));
 			$startPos = $j;
 
 			$j = $startPos + 1;
 
-			if ($j >= $n) {
+			if ($j >= $n)
+			{
 				break;
 			}
 
 			// quote comes first, find end of quote
-			while (TRUE) {
-				$k = strpos( $sql, $quoteChar, $j );
+			while (TRUE)
+			{
+				$k = strpos($sql, $quoteChar, $j);
 				$escaped = false;
-				if ($k === false) {
+				if ($k === false)
+				{
 					break;
 				}
 				$l = $k - 1;
-				while ($l >= 0 && $sql{$l} == '\\') {
+				while ($l >= 0 && $sql{$l} == '\\')
+				{
 					$l--;
 					$escaped = !$escaped;
 				}
-				if ($escaped) {
-					$j	= $k+1;
+				if ($escaped)
+				{
+					$j = $k + 1;
 					continue;
 				}
 				break;
 			}
-			if ($k === FALSE) {
+			if ($k === FALSE)
+			{
 				// error in the query - no end quote; ignore it
 				break;
 			}
-			$literal .= substr( $sql, $startPos, $k - $startPos + 1 );
-			$startPos = $k+1;
+			$literal .= substr($sql, $startPos, $k - $startPos + 1);
+			$startPos = $k + 1;
 		}
-		if ($startPos < $n) {
-			$literal .= substr( $sql, $startPos, $n - $startPos );
+		if ($startPos < $n)
+		{
+			$literal .= substr($sql, $startPos, $n - $startPos);
 		}
 		return $literal;
 	}
+
 	/**
-	* @return string The current value of the internal SQL vairable
-	*/
-	function getQuery() {
-		return "<pre>" . htmlspecialchars( $this->_sql ) . "</pre>";
+	 * @return string The current value of the internal SQL vairable
+	 */
+	function getQuery()
+	{
+		return "<pre>" . htmlspecialchars($this->_sql) . "</pre>";
 	}
+
 	/**
-	* Execute the query
-	* @return mixed A database resource if successful, FALSE if not.
-	*/
-	function query() {
+	 * Execute the query
+	 * @return mixed A database resource if successful, FALSE if not.
+	 */
+	function query()
+	{
 		global $mosConfig_debug;
-		if ($this->_limit > 0 || $this->_offset > 0) {
+		if ($this->_limit > 0 || $this->_offset > 0)
+		{
 			$this->_sql .= "\nLIMIT $this->_offset, $this->_limit";
 		}
-		if ($this->_debug) {
+		if ($this->_debug)
+		{
 			$this->_ticker++;
-	  		$this->_log[] = $this->_sql;
+			$this->_log[] = $this->_sql;
 		}
 		$this->_errorNum = 0;
 		$this->_errorMsg = '';
-		$this->_cursor = mysqli_query( $this->_resource, $this->_sql );
-		if (!$this->_cursor) {
-			$this->_errorNum = mysqli_errno( $this->_resource );
-			$this->_errorMsg = mysqli_error( $this->_resource ) . " SQL=$this->_sql";
-			if ($this->_debug) {
-				trigger_error( mysqli_error( $this->_resource ), E_USER_NOTICE );
+		$this->_cursor = mysqli_query($this->_resource, $this->_sql);
+		if (!$this->_cursor)
+		{
+			$this->_errorNum = mysqli_errno($this->_resource);
+			$this->_errorMsg = mysqli_error($this->_resource) . " SQL=$this->_sql";
+			if ($this->_debug)
+			{
+				trigger_error(mysqli_error($this->_resource), E_USER_NOTICE);
 				//echo "<pre>" . $this->_sql . "</pre>\n";
-				if (function_exists( 'debug_backtrace' )) {
-					foreach( debug_backtrace() as $back) {
-						if (@$back['file']) {
-							echo '<br />'.$back['file'].':'.$back['line'];
+				if (function_exists('debug_backtrace'))
+				{
+					foreach (debug_backtrace() as $back)
+					{
+						if (@$back['file'])
+						{
+							echo '<br />' . $back['file'] . ':' . $back['line'];
 						}
 					}
 				}
@@ -301,35 +358,47 @@ class database {
 	/**
 	 * @return int The number of affected rows in the previous operation
 	 */
-	function getAffectedRows() {
-		return mysqli_affected_rows( $this->_resource );
+	function getAffectedRows()
+	{
+		return mysqli_affected_rows($this->_resource);
 	}
 
-	function query_batch( $abort_on_error=true, $p_transaction_safe = false) {
+	function query_batch($abort_on_error = true, $p_transaction_safe = false)
+	{
 		$this->_errorNum = 0;
 		$this->_errorMsg = '';
-		if ($p_transaction_safe) {
+		if ($p_transaction_safe)
+		{
 			$si = mysqli_get_server_info();
-			preg_match_all( "/(\d+)\.(\d+)\.(\d+)/i", $si, $m );
-			if ($m[1] >= 4) {
+			preg_match_all("/(\d+)\.(\d+)\.(\d+)/i", $si, $m);
+			if ($m[1] >= 4)
+			{
 				$this->_sql = 'START TRANSACTION;' . $this->_sql . '; COMMIT;';
-			} else if ($m[2] >= 23 && $m[3] >= 19) {
+			}
+			else if ($m[2] >= 23 && $m[3] >= 19)
+			{
 				$this->_sql = 'BEGIN WORK;' . $this->_sql . '; COMMIT;';
-			} else if ($m[2] >= 23 && $m[3] >= 17) {
+			}
+			else if ($m[2] >= 23 && $m[3] >= 17)
+			{
 				$this->_sql = 'BEGIN;' . $this->_sql . '; COMMIT;';
 			}
 		}
-		$query_split = preg_split ("/[;]+/", $this->_sql);
+		$query_split = preg_split("/[;]+/", $this->_sql);
 		$error = 0;
-		foreach ($query_split as $command_line) {
-			$command_line = trim( $command_line );
-			if ($command_line != '') {
-				$this->_cursor = mysqli_query( $command_line, $this->_resource );
-				if (!$this->_cursor) {
+		foreach ($query_split as $command_line)
+		{
+			$command_line = trim($command_line);
+			if ($command_line != '')
+			{
+				$this->_cursor = mysqli_query($command_line, $this->_resource);
+				if (!$this->_cursor)
+				{
 					$error = 1;
-					$this->_errorNum .= mysqli_errno( $this->_resource ) . ' ';
-					$this->_errorMsg .= mysqli_error( $this->_resource )." SQL=$command_line <br />";
-					if ($abort_on_error) {
+					$this->_errorNum .= mysqli_errno($this->_resource) . ' ';
+					$this->_errorMsg .= mysqli_error($this->_resource) . " SQL=$command_line <br />";
+					if ($abort_on_error)
+					{
 						return $this->_cursor;
 					}
 				}
@@ -339,313 +408,405 @@ class database {
 	}
 
 	/**
-	* Diagnostic function
-	*/
-	function explain() {
+	 * Diagnostic function
+	 */
+	function explain()
+	{
 		$temp = $this->_sql;
 		$this->_sql = "EXPLAIN $this->_sql";
 		$this->query();
 
-		if (!($cur = $this->query())) {
+		if (!($cur = $this->query()))
+		{
 			return null;
 		}
 		$first = true;
 
 		$buf = "<table cellspacing=\"1\" cellpadding=\"2\" border=\"0\" bgcolor=\"#000000\" align=\"center\">";
 		$buf .= $this->getQuery();
-		while ($row = mysqli_fetch_assoc( $cur )) {
-			if ($first) {
+		while ($row = mysqli_fetch_assoc($cur))
+		{
+			if ($first)
+			{
 				$buf .= "<tr>";
-				foreach ($row as $k=>$v) {
+				foreach ($row as $k => $v)
+				{
 					$buf .= "<th bgcolor=\"#ffffff\">$k</th>";
 				}
 				$buf .= "</tr>";
 				$first = false;
 			}
 			$buf .= "<tr>";
-			foreach ($row as $k=>$v) {
+			foreach ($row as $k => $v)
+			{
 				$buf .= "<td bgcolor=\"#ffffff\">$v</td>";
 			}
 			$buf .= "</tr>";
 		}
 		$buf .= "</table><br />&nbsp;";
-		mysqli_free_result( $cur );
+		mysqli_free_result($cur);
 
 		$this->_sql = $temp;
 
 		return "<div style=\"background-color:#FFFFCC\" align=\"left\">$buf</div>";
 	}
+
 	/**
-	* @return int The number of rows returned from the most recent query.
-	*/
-	function getNumRows( $cur=null ) {
-		return mysqli_num_rows( $cur ? $cur : $this->_cursor );
+	 * @return int The number of rows returned from the most recent query.
+	 */
+	function getNumRows($cur = null)
+	{
+		return mysqli_num_rows($cur ? $cur : $this->_cursor);
 	}
 
 	/**
-	* This method loads the first field of the first row returned by the query.
-	*
-	* @return The value returned in the query or null if the query failed.
-	*/
-	function loadResult() {
-		if (!($cur = $this->query())) {
+	 * This method loads the first field of the first row returned by the query.
+	 *
+	 * @return The value returned in the query or null if the query failed.
+	 */
+	function loadResult()
+	{
+		if (!($cur = $this->query()))
+		{
 			return null;
 		}
 		$ret = null;
-		if ($row = mysqli_fetch_row( $cur )) {
+		if ($row = mysqli_fetch_row($cur))
+		{
 			$ret = $row[0];
 		}
-		mysqli_free_result( $cur );
+		mysqli_free_result($cur);
 		return $ret;
 	}
+
 	/**
-	* Load an array of single field results into an array
-	*/
-	function loadResultArray($numinarray = 0) {
-		if (!($cur = $this->query())) {
+	 * Load an array of single field results into an array
+	 */
+	function loadResultArray($numinarray = 0)
+	{
+		if (!($cur = $this->query()))
+		{
 			return null;
 		}
 		$array = array();
-		while ($row = mysqli_fetch_row( $cur )) {
+		while ($row = mysqli_fetch_row($cur))
+		{
 			$array[] = $row[$numinarray];
 		}
-		mysqli_free_result( $cur );
+		mysqli_free_result($cur);
 		return $array;
 	}
+
 	/**
-	* Load a assoc list of database rows
-	* @param string The field name of a primary key
-	* @return array If <var>key</var> is empty as sequential list of returned records.
-	*/
-	function loadAssocList( $key='' ) {
-		if (!($cur = $this->query())) {
+	 * Load a assoc list of database rows
+	 *
+	 * @param string The field name of a primary key
+	 *
+	 * @return array If <var>key</var> is empty as sequential list of returned records.
+	 */
+	function loadAssocList($key = '')
+	{
+		if (!($cur = $this->query()))
+		{
 			return null;
 		}
 		$array = array();
-		while ($row = mysqli_fetch_assoc( $cur )) {
-			if ($key) {
+		while ($row = mysqli_fetch_assoc($cur))
+		{
+			if ($key)
+			{
 				$array[$row[$key]] = $row;
-			} else {
+			}
+			else
+			{
 				$array[] = $row;
 			}
 		}
-		mysqli_free_result( $cur );
+		mysqli_free_result($cur);
 		return $array;
 	}
+
 	/**
-	* This global function loads the first row of a query into an object
-	*
-	* If an object is passed to this function, the returned row is bound to the existing elements of <var>object</var>.
-	* If <var>object</var> has a value of null, then all of the returned query fields returned in the object.
-	* @param string The SQL query
-	* @param object The address of variable
-	*/
-	function loadObject( &$object ) {
-		if ($object != null) {
-			if (!($cur = $this->query())) {
+	 * This global function loads the first row of a query into an object
+	 *
+	 * If an object is passed to this function, the returned row is bound to the existing elements of <var>object</var>.
+	 * If <var>object</var> has a value of null, then all of the returned query fields returned in the object.
+	 *
+	 * @param string The SQL query
+	 * @param object The address of variable
+	 */
+	function loadObject(&$object)
+	{
+		if ($object != null)
+		{
+			if (!($cur = $this->query()))
+			{
 				return false;
 			}
-			if ($array = mysqli_fetch_assoc( $cur )) {
-				mysqli_free_result( $cur );
-				mosBindArrayToObject( $array, $object, null, null, false );
+			if ($array = mysqli_fetch_assoc($cur))
+			{
+				mysqli_free_result($cur);
+				mosBindArrayToObject($array, $object, null, null, false);
 				return true;
-			} else {
+			}
+			else
+			{
 				return false;
 			}
-		} else {
-			if ($cur = $this->query()) {
-				if ($object = mysqli_fetch_object( $cur )) {
-					mysqli_free_result( $cur );
+		}
+		else
+		{
+			if ($cur = $this->query())
+			{
+				if ($object = mysqli_fetch_object($cur))
+				{
+					mysqli_free_result($cur);
 					return true;
-				} else {
+				}
+				else
+				{
 					$object = null;
 					return false;
 				}
-			} else {
+			}
+			else
+			{
 				return false;
 			}
 		}
 	}
+
 	/**
-	* Load a list of database objects
-	* @param string The field name of a primary key
-	* @return array If <var>key</var> is empty as sequential list of returned records.
-	* If <var>key</var> is not empty then the returned array is indexed by the value
-	* the database key.  Returns <var>null</var> if the query fails.
-	*/
-	function loadObjectList( $key='' ) {
-		if (!($cur = $this->query())) {
+	 * Load a list of database objects
+	 *
+	 * @param string The field name of a primary key
+	 *
+	 * @return array If <var>key</var> is empty as sequential list of returned records.
+	 * If <var>key</var> is not empty then the returned array is indexed by the value
+	 * the database key.  Returns <var>null</var> if the query fails.
+	 */
+	function loadObjectList($key = '')
+	{
+		if (!($cur = $this->query()))
+		{
 			return null;
 		}
 		$array = array();
-		while ($row = mysqli_fetch_object( $cur )) {
-			if ($key) {
+		while ($row = mysqli_fetch_object($cur))
+		{
+			if ($key)
+			{
 				$array[$row->$key] = $row;
-			} else {
+			}
+			else
+			{
 				$array[] = $row;
 			}
 		}
-		mysqli_free_result( $cur );
+		mysqli_free_result($cur);
 		return $array;
 	}
+
 	/**
-	* @return The first row of the query.
-	*/
-	function loadRow() {
-		if (!($cur = $this->query())) {
+	 * @return The first row of the query.
+	 */
+	function loadRow()
+	{
+		if (!($cur = $this->query()))
+		{
 			return null;
 		}
 		$ret = null;
-		if ($row = mysqli_fetch_row( $cur )) {
+		if ($row = mysqli_fetch_row($cur))
+		{
 			$ret = $row;
 		}
-		mysqli_free_result( $cur );
+		mysqli_free_result($cur);
 		return $ret;
 	}
+
 	/**
-	* Load a list of database rows (numeric column indexing)
-	* @param string The field name of a primary key
-	* @return array If <var>key</var> is empty as sequential list of returned records.
-	* If <var>key</var> is not empty then the returned array is indexed by the value
-	* the database key.  Returns <var>null</var> if the query fails.
-	*/
-	function loadRowList( $key='' ) {
-		if (!($cur = $this->query())) {
+	 * Load a list of database rows (numeric column indexing)
+	 *
+	 * @param string The field name of a primary key
+	 *
+	 * @return array If <var>key</var> is empty as sequential list of returned records.
+	 * If <var>key</var> is not empty then the returned array is indexed by the value
+	 * the database key.  Returns <var>null</var> if the query fails.
+	 */
+	function loadRowList($key = '')
+	{
+		if (!($cur = $this->query()))
+		{
 			return null;
 		}
 		$array = array();
-		while ($row = mysqli_fetch_row( $cur )) {
-			if ($key) {
+		while ($row = mysqli_fetch_row($cur))
+		{
+			if ($key)
+			{
 				$array[$row[$key]] = $row;
-			} else {
+			}
+			else
+			{
 				$array[] = $row;
 			}
 		}
-		mysqli_free_result( $cur );
+		mysqli_free_result($cur);
 		return $array;
 	}
+
 	/**
-	* Document::db_insertObject()
-	*
-	* { Description }
-	*
-	* @param string $table This is expected to be a valid (and safe!) table name
-	* @param [type] $keyName
-	* @param [type] $verbose
-	*/
-	function insertObject( $table, &$object, $keyName = NULL, $verbose=false ) {
+	 * Document::db_insertObject()
+	 *
+	 * { Description }
+	 *
+	 * @param string $table This is expected to be a valid (and safe!) table name
+	 * @param [type] $keyName
+	 * @param [type] $verbose
+	 */
+	function insertObject($table, &$object, $keyName = NULL, $verbose = false)
+	{
 		$fmtsql = "INSERT INTO $table ( %s ) VALUES ( %s ) ";
 		$fields = array();
-		foreach (get_object_vars( $object ) as $k => $v) {
-			if (is_array($v) or is_object($v) or $v === NULL) {
+		foreach (get_object_vars($object) as $k => $v)
+		{
+			if (is_array($v) or is_object($v) or $v === NULL)
+			{
 				continue;
 			}
-			if ($k[0] == '_') { // internal field
+			if ($k[0] == '_')
+			{ // internal field
 				continue;
 			}
-			$fields[] = $this->NameQuote( $k );
-			$values[] = $this->Quote( $v );
+			$fields[] = $this->NameQuote($k);
+			$values[] = $this->Quote($v);
 		}
-		$this->setQuery( sprintf( $fmtsql, implode( ",", $fields ) ,  implode( ",", $values ) ) );
+		$this->setQuery(sprintf($fmtsql, implode(",", $fields), implode(",", $values)));
 		($verbose) && print "$sql<br />\n";
-		if (!$this->query()) {
+		if (!$this->query())
+		{
 			return false;
 		}
-		$id = mysqli_insert_id( $this->_resource );
+		$id = mysqli_insert_id($this->_resource);
 		($verbose) && print "id=[$id]<br />\n";
-		if ($keyName && $id) {
+		if ($keyName && $id)
+		{
 			$object->$keyName = $id;
 		}
 		return true;
 	}
 
 	/**
-	* Document::db_updateObject()
-	*
-	* { Description }
-	*
-	* @param string $table This is expected to be a valid (and safe!) table name
-	* @param [type] $updateNulls
-	*/
-	function updateObject( $table, &$object, $keyName, $updateNulls=true ) {
+	 * Document::db_updateObject()
+	 *
+	 * { Description }
+	 *
+	 * @param string $table This is expected to be a valid (and safe!) table name
+	 * @param [type] $updateNulls
+	 */
+	function updateObject($table, &$object, $keyName, $updateNulls = true)
+	{
 		$fmtsql = "UPDATE $table SET %s WHERE %s";
 		$tmp = array();
-		foreach (get_object_vars( $object ) as $k => $v) {
-			if( is_array($v) or is_object($v) or $k[0] == '_' ) { // internal or NA field
+		foreach (get_object_vars($object) as $k => $v)
+		{
+			if (is_array($v) or is_object($v) or $k[0] == '_')
+			{ // internal or NA field
 				continue;
 			}
-			if( $k == $keyName ) { // PK not to be updated
-				$where = $keyName . '=' . $this->Quote( $v );
+			if ($k == $keyName)
+			{ // PK not to be updated
+				$where = $keyName . '=' . $this->Quote($v);
 				continue;
 			}
-			if ($v === NULL && !$updateNulls) {
+			if ($v === NULL && !$updateNulls)
+			{
 				continue;
 			}
-			if( $v == '' ) {
+			if ($v == '')
+			{
 				$val = "''";
-			} else {
-				$val = $this->Quote( $v );
 			}
-			$tmp[] = $this->NameQuote( $k ) . '=' . $val;
+			else
+			{
+				$val = $this->Quote($v);
+			}
+			$tmp[] = $this->NameQuote($k) . '=' . $val;
 		}
-		$this->setQuery( sprintf( $fmtsql, implode( ",", $tmp ) , $where ) );
+		$this->setQuery(sprintf($fmtsql, implode(",", $tmp), $where));
 		return $this->query();
 	}
 
 	/**
-	* @param boolean If TRUE, displays the last SQL statement sent to the database
-	* @return string A standised error message
-	*/
-	function stderr( $showSQL = false ) {
+	 * @param boolean If TRUE, displays the last SQL statement sent to the database
+	 *
+	 * @return string A standised error message
+	 */
+	function stderr($showSQL = false)
+	{
 		return "DB function failed with error number $this->_errorNum"
-		."<br /><font color=\"red\">$this->_errorMsg</font>"
-		.($showSQL ? "<br />SQL = <pre>$this->_sql</pre>" : '');
+			. "<br /><font color=\"red\">$this->_errorMsg</font>"
+			. ($showSQL ? "<br />SQL = <pre>$this->_sql</pre>" : '');
 	}
 
-	function insertid() {
-		return mysqli_insert_id( $this->_resource );
+	function insertid()
+	{
+		return mysqli_insert_id($this->_resource);
 	}
 
-	function getVersion() {
-		return mysqli_get_server_info( $this->_resource );
+	function getVersion()
+	{
+		return mysqli_get_server_info($this->_resource);
 	}
 
 	/**
 	 * @return array A list of all the tables in the database
 	 */
-	function getTableList() {
-		$this->setQuery( 'SHOW TABLES' );
+	function getTableList()
+	{
+		$this->setQuery('SHOW TABLES');
 		return $this->loadResultArray();
 	}
+
 	/**
 	 * @param array A list of valid (and safe!) table names
+	 *
 	 * @return array A list the create SQL for the tables
 	 */
-	function getTableCreate( $tables ) {
+	function getTableCreate($tables)
+	{
 		$result = array();
 
-		foreach ($tables as $tblval) {
-			$this->setQuery( 'SHOW CREATE table ' . $this->getEscaped( $tblval ) );
+		foreach ($tables as $tblval)
+		{
+			$this->setQuery('SHOW CREATE table ' . $this->getEscaped($tblval));
 			$rows = $this->loadRowList();
-			foreach ($rows as $row) {
+			foreach ($rows as $row)
+			{
 				$result[$tblval] = $row[1];
 			}
 		}
 
 		return $result;
 	}
+
 	/**
 	 * @param array A list of valid (and safe!) table names
+	 *
 	 * @return array An array of fields by table
 	 */
-	function getTableFields( $tables ) {
+	function getTableFields($tables)
+	{
 		$result = array();
 
-		foreach ($tables as $tblval) {
-			$this->setQuery( 'SHOW FIELDS FROM ' . $tblval );
+		foreach ($tables as $tblval)
+		{
+			$this->setQuery('SHOW FIELDS FROM ' . $tblval);
 			$fields = $this->loadObjectList();
-			foreach ($fields as $field) {
-				$result[$tblval][$field->Field] = preg_replace("/[(0-9)]/",'', $field->Type );
+			foreach ($fields as $field)
+			{
+				$result[$tblval][$field->Field] = preg_replace("/[(0-9)]/", '', $field->Type);
 			}
 		}
 
@@ -653,42 +814,46 @@ class database {
 	}
 
 	/**
-	* Fudge method for ADOdb compatibility
-	*/
-	function GenID( $foo1=null, $foo2=null ) {
+	 * Fudge method for ADOdb compatibility
+	 */
+	function GenID($foo1 = null, $foo2 = null)
+	{
 		return '0';
 	}
 }
 
 /**
-* mosDBTable Abstract Class.
-* @abstract
-* @package Joomla
-* @subpackage Database
-*
-* Parent classes to all database derived objects.  Customisation will generally
-* not involve tampering with this object.
-* @package Joomla
-* @author Andrew Eddie <eddieajau@users.sourceforge.net
-*/
-class mosDBTable {
+ * mosDBTable Abstract Class.
+ * @abstract
+ * @package    Joomla
+ * @subpackage Database
+ *
+ * Parent classes to all database derived objects.  Customisation will generally
+ * not involve tampering with this object.
+ * @package    Joomla
+ * @author     Andrew Eddie <eddieajau@users.sourceforge.net
+ */
+class mosDBTable
+{
 	/** @var string Name of the table in the db schema relating to child class */
-	var $_tbl 		= '';
+	var $_tbl = '';
 	/** @var string Name of the primary key field in the table */
-	var $_tbl_key 	= '';
+	var $_tbl_key = '';
 	/** @var string Error message */
-	var $_error 	= '';
+	var $_error = '';
 	/** @var mosDatabase Database connector */
-	var $_db 		= null;
+	var $_db = null;
 
 	/**
-	*	Object constructor to set table and key field
-	*
-	*	Can be overloaded/supplemented by the child class
-	*	@param string $table name of the table in the db schema relating to child class
-	*	@param string $key name of the primary key field in the table
-	*/
-	function mosDBTable( $table, $key, &$db ) {
+	 *    Object constructor to set table and key field
+	 *
+	 *    Can be overloaded/supplemented by the child class
+	 *
+	 * @param string $table name of the table in the db schema relating to child class
+	 * @param string $key   name of the primary key field in the table
+	 */
+	function mosDBTable($table, $key, &$db)
+	{
 		$this->_tbl = $table;
 		$this->_tbl_key = $key;
 		$this->_db =& $db;
@@ -698,109 +863,146 @@ class mosDBTable {
 	 * Returns an array of public properties
 	 * @return array
 	 */
-	function getPublicProperties() {
+	function getPublicProperties()
+	{
 		static $cache = null;
-		if (is_null( $cache )) {
+		if (is_null($cache))
+		{
 			$cache = array();
-			foreach (get_class_vars( get_class( $this ) ) as $key=>$val) {
-				if (substr( $key, 0, 1 ) != '_') {
+			foreach (get_class_vars(get_class($this)) as $key => $val)
+			{
+				if (substr($key, 0, 1) != '_')
+				{
 					$cache[] = $key;
 				}
 			}
 		}
 		return $cache;
 	}
+
 	/**
 	 * Filters public properties
 	 * @access protected
+	 *
 	 * @param array List of fields to ignore
 	 */
-	function filter( $ignoreList=null ) {
-		$ignore = is_array( $ignoreList );
+	function filter($ignoreList = null)
+	{
+		$ignore = is_array($ignoreList);
 
 		$iFilter = new InputFilter();
-		foreach ($this->getPublicProperties() as $k) {
-			if ($ignore && in_array( $k, $ignoreList ) ) {
+		foreach ($this->getPublicProperties() as $k)
+		{
+			if ($ignore && in_array($k, $ignoreList))
+			{
 				continue;
 			}
-			$this->$k = $iFilter->process( $this->$k );
+			$this->$k = $iFilter->process($this->$k);
 		}
 	}
+
 	/**
-	 *	@return string Returns the error message
+	 * @return string Returns the error message
 	 */
-	function getError() {
+	function getError()
+	{
 		return $this->_error;
 	}
+
 	/**
-	* Gets the value of the class variable
-	* @param string The name of the class variable
-	* @return mixed The value of the class var (or null if no var of that name exists)
-	*/
-	function get( $_property ) {
-		if(isset( $this->$_property )) {
+	 * Gets the value of the class variable
+	 *
+	 * @param string The name of the class variable
+	 *
+	 * @return mixed The value of the class var (or null if no var of that name exists)
+	 */
+	function get($_property)
+	{
+		if (isset($this->$_property))
+		{
 			return $this->$_property;
-		} else {
+		}
+		else
+		{
 			return null;
 		}
 	}
 
 	/**
-	* Set the value of the class variable
-	* @param string The name of the class variable
-	* @param mixed The value to assign to the variable
-	*/
-	function set( $_property, $_value ) {
+	 * Set the value of the class variable
+	 *
+	 * @param string The name of the class variable
+	 * @param mixed  The value to assign to the variable
+	 */
+	function set($_property, $_value)
+	{
 		$this->$_property = $_value;
 	}
 
 	/**
 	 * Resets public properties
+	 *
 	 * @param mixed The value to set all properties to, default is null
 	 */
-	function reset( $value=null ) {
+	function reset($value = null)
+	{
 		$keys = $this->getPublicProperties();
-		foreach ($keys as $k) {
+		foreach ($keys as $k)
+		{
 			$this->$k = $value;
 		}
 	}
+
 	/**
-	*	binds a named array/hash to this object
-	*
-	*	can be overloaded/supplemented by the child class
-	*	@param array $hash named array
-	*	@return null|string	null is operation was satisfactory, otherwise returns an error
-	*/
-	function bind( $array, $ignore='' ) {
-		if (!is_array( $array )) {
-			$this->_error = strtolower(get_class( $this ))."::bind failed.";
+	 *    binds a named array/hash to this object
+	 *
+	 *    can be overloaded/supplemented by the child class
+	 *
+	 * @param array $hash named array
+	 *
+	 * @return null|string    null is operation was satisfactory, otherwise returns an error
+	 */
+	function bind($array, $ignore = '')
+	{
+		if (!is_array($array))
+		{
+			$this->_error = strtolower(get_class($this)) . "::bind failed.";
 			return false;
-		} else {
-			return mosBindArrayToObject( $array, $this, $ignore );
+		}
+		else
+		{
+			return mosBindArrayToObject($array, $this, $ignore);
 		}
 	}
 
 	/**
-	*	binds an array/hash to this object
-	*	@param int $oid optional argument, if not specifed then the value of current key is used
-	*	@return any result from the database operation
-	*/
-	function load( $oid=null ) {
+	 *    binds an array/hash to this object
+	 *
+	 * @param int $oid optional argument, if not specifed then the value of current key is used
+	 *
+	 * @return any result from the database operation
+	 */
+	function load($oid = null)
+	{
 		$k = $this->_tbl_key;
 
-		if ($oid !== null) {
+		if ($oid !== null)
+		{
 			$this->$k = $oid;
 		}
 
 		$oid = $this->$k;
 
-		if ($oid === null) {
+		if ($oid === null)
+		{
 			return false;
 		}
 		//Note: Prior to PHP 4.2.0, Uninitialized class variables will not be reported by get_class_vars().
 		$class_vars = get_class_vars(get_class($this));
-		foreach ($class_vars as $name => $value) {
-			if (($name != $k) and ($name != "_db") and ($name != "_tbl") and ($name != "_tbl_key")) {
+		foreach ($class_vars as $name => $value)
+		{
+			if (($name != $k) and ($name != "_db") and ($name != "_tbl") and ($name != "_tbl_key"))
+			{
 				$this->$name = $value;
 			}
 		}
@@ -808,244 +1010,289 @@ class mosDBTable {
 		$this->reset();
 
 		$query = "SELECT *"
-		. "\n FROM $this->_tbl"
-		. "\n WHERE $this->_tbl_key = " . $this->_db->Quote( $oid )
-		;
-		$this->_db->setQuery( $query );
+			. "\n FROM $this->_tbl"
+			. "\n WHERE $this->_tbl_key = " . $this->_db->Quote($oid);
+		$this->_db->setQuery($query);
 
-		return $this->_db->loadObject( $this );
+		return $this->_db->loadObject($this);
 	}
 
 	/**
-	*	generic check method
-	*
-	*	can be overloaded/supplemented by the child class
-	*	@return boolean True if the object is ok
-	*/
-	function check() {
+	 *    generic check method
+	 *
+	 *    can be overloaded/supplemented by the child class
+	 * @return boolean True if the object is ok
+	 */
+	function check()
+	{
 		return true;
 	}
 
 	/**
-	* Inserts a new row if id is zero or updates an existing row in the database table
-	*
-	* Can be overloaded/supplemented by the child class
-	* @param boolean If false, null object variables are not updated
-	* @return null|string null if successful otherwise returns and error message
-	*/
-	function store( $updateNulls=false ) {
+	 * Inserts a new row if id is zero or updates an existing row in the database table
+	 *
+	 * Can be overloaded/supplemented by the child class
+	 *
+	 * @param boolean If false, null object variables are not updated
+	 *
+	 * @return null|string null if successful otherwise returns and error message
+	 */
+	function store($updateNulls = false)
+	{
 		$k = $this->_tbl_key;
 
-		if ($this->$k) {
-			$ret = $this->_db->updateObject( $this->_tbl, $this, $this->_tbl_key, $updateNulls );
-		} else {
-			$ret = $this->_db->insertObject( $this->_tbl, $this, $this->_tbl_key );
+		if ($this->$k)
+		{
+			$ret = $this->_db->updateObject($this->_tbl, $this, $this->_tbl_key, $updateNulls);
 		}
-		if( !$ret ) {
-			$this->_error = strtolower(get_class( $this ))."::store failed <br />" . $this->_db->getErrorMsg();
+		else
+		{
+			$ret = $this->_db->insertObject($this->_tbl, $this, $this->_tbl_key);
+		}
+		if (!$ret)
+		{
+			$this->_error = strtolower(get_class($this)) . "::store failed <br />" . $this->_db->getErrorMsg();
 			return false;
-		} else {
+		}
+		else
+		{
 			return true;
 		}
 	}
+
 	/**
-	* @param string $where This is expected to be a valid (and safe!) SQL expression
-	*/
-	function move( $dirn, $where='' ) {
+	 * @param string $where This is expected to be a valid (and safe!) SQL expression
+	 */
+	function move($dirn, $where = '')
+	{
 		$k = $this->_tbl_key;
 
 		$sql = "SELECT $this->_tbl_key, ordering FROM $this->_tbl";
 
-		if ($dirn < 0) {
+		if ($dirn < 0)
+		{
 			$sql .= "\n WHERE ordering < " . (int) $this->ordering;
 			$sql .= ($where ? "\n	AND $where" : '');
 			$sql .= "\n ORDER BY ordering DESC";
 			$sql .= "\n LIMIT 1";
-		} else if ($dirn > 0) {
+		}
+		else if ($dirn > 0)
+		{
 			$sql .= "\n WHERE ordering > " . (int) $this->ordering;
 			$sql .= ($where ? "\n	AND $where" : '');
 			$sql .= "\n ORDER BY ordering";
 			$sql .= "\n LIMIT 1";
-		} else {
+		}
+		else
+		{
 			$sql .= "\nWHERE ordering = " . (int) $this->ordering;
 			$sql .= ($where ? "\n AND $where" : '');
 			$sql .= "\n ORDER BY ordering";
 			$sql .= "\n LIMIT 1";
 		}
 
-		$this->_db->setQuery( $sql );
+		$this->_db->setQuery($sql);
 //echo 'A: ' . $this->_db->getQuery();
 
 
 		$row = null;
-		if ($this->_db->loadObject( $row )) {
+		if ($this->_db->loadObject($row))
+		{
 			$query = "UPDATE $this->_tbl"
-			. "\n SET ordering = " . (int) $row->ordering
-			. "\n WHERE $this->_tbl_key = " . $this->_db->Quote( $this->$k )
-			;
-			$this->_db->setQuery( $query );
+				. "\n SET ordering = " . (int) $row->ordering
+				. "\n WHERE $this->_tbl_key = " . $this->_db->Quote($this->$k);
+			$this->_db->setQuery($query);
 
-			if (!$this->_db->query()) {
+			if (!$this->_db->query())
+			{
 				$err = $this->_db->getErrorMsg();
-				die( $err );
+				die($err);
 			}
 //echo 'B: ' . $this->_db->getQuery();
 
 			$query = "UPDATE $this->_tbl"
-			. "\n SET ordering = " . (int) $this->ordering
-			. "\n WHERE $this->_tbl_key = " . $this->_db->Quote( $row->$k )
-			;
-			$this->_db->setQuery( $query );
+				. "\n SET ordering = " . (int) $this->ordering
+				. "\n WHERE $this->_tbl_key = " . $this->_db->Quote($row->$k);
+			$this->_db->setQuery($query);
 //echo 'C: ' . $this->_db->getQuery();
 
-			if (!$this->_db->query()) {
+			if (!$this->_db->query())
+			{
 				$err = $this->_db->getErrorMsg();
-				die( $err );
+				die($err);
 			}
 
 			$this->ordering = $row->ordering;
-		} else {
+		}
+		else
+		{
 			$query = "UPDATE $this->_tbl"
-			. "\n SET ordering = " . (int) $this->ordering
-			. "\n WHERE $this->_tbl_key = " . $this->_db->Quote( $this->$k )
-			;
-			$this->_db->setQuery( $query );
+				. "\n SET ordering = " . (int) $this->ordering
+				. "\n WHERE $this->_tbl_key = " . $this->_db->Quote($this->$k);
+			$this->_db->setQuery($query);
 //echo 'D: ' . $this->_db->getQuery();
 
 
-			if (!$this->_db->query()) {
+			if (!$this->_db->query())
+			{
 				$err = $this->_db->getErrorMsg();
-				die( $err );
+				die($err);
 			}
 		}
 	}
+
 	/**
-	* Compacts the ordering sequence of the selected records
-	* @param string Additional where query to limit ordering to a particular subset of records. This is expected to be a valid (and safe!) SQL expression
-	*/
-	function updateOrder( $where='' ) {
+	 * Compacts the ordering sequence of the selected records
+	 *
+	 * @param string Additional where query to limit ordering to a particular subset of records. This is expected to be a valid (and safe!) SQL expression
+	 */
+	function updateOrder($where = '')
+	{
 		$k = $this->_tbl_key;
 
-		if (!array_key_exists( 'ordering', get_class_vars( strtolower(get_class( $this )) ) )) {
-			$this->_error = "WARNING: ".strtolower(get_class( $this ))." does not support ordering.";
+		if (!array_key_exists('ordering', get_class_vars(strtolower(get_class($this)))))
+		{
+			$this->_error = "WARNING: " . strtolower(get_class($this)) . " does not support ordering.";
 			return false;
 		}
 
-		if ($this->_tbl == "#__content_frontpage") {
+		if ($this->_tbl == "#__content_frontpage")
+		{
 			$order2 = ", content_id DESC";
-		} else {
+		}
+		else
+		{
 			$order2 = '';
 		}
 
 		$query = "SELECT $this->_tbl_key, ordering"
-		. "\n FROM $this->_tbl"
-		. ( $where ? "\n WHERE $where" : '' )
-		. "\n ORDER BY ordering$order2 "
-		;
-		$this->_db->setQuery( $query );
-		if (!($orders = $this->_db->loadObjectList())) {
+			. "\n FROM $this->_tbl"
+			. ($where ? "\n WHERE $where" : '')
+			. "\n ORDER BY ordering$order2 ";
+		$this->_db->setQuery($query);
+		if (!($orders = $this->_db->loadObjectList()))
+		{
 			$this->_error = $this->_db->getErrorMsg();
 			return false;
 		}
 		// first pass, compact the ordering numbers
-		for ($i=0, $n=count( $orders ); $i < $n; $i++) {
-			if ($orders[$i]->ordering >= 0) {
-				$orders[$i]->ordering = $i+1;
+		for ($i = 0, $n = count($orders); $i < $n; $i++)
+		{
+			if ($orders[$i]->ordering >= 0)
+			{
+				$orders[$i]->ordering = $i + 1;
 			}
 		}
 
 		$shift = 0;
-		$n=count( $orders );
-		for ($i=0; $i < $n; $i++) {
+		$n = count($orders);
+		for ($i = 0; $i < $n; $i++)
+		{
 			//echo "i=$i id=".$orders[$i]->$k." order=".$orders[$i]->ordering;
-			if ($orders[$i]->$k == $this->$k) {
+			if ($orders[$i]->$k == $this->$k)
+			{
 				// place 'this' record in the desired location
-				$orders[$i]->ordering = min( $this->ordering, $n );
+				$orders[$i]->ordering = min($this->ordering, $n);
 				$shift = 1;
-			} else if ($orders[$i]->ordering >= $this->ordering && $this->ordering > 0) {
+			}
+			else if ($orders[$i]->ordering >= $this->ordering && $this->ordering > 0)
+			{
 				$orders[$i]->ordering++;
 			}
 		}
-	//echo '<pre>';print_r($orders);echo '</pre>';
+		//echo '<pre>';print_r($orders);echo '</pre>';
 		// compact once more until I can find a better algorithm
-		for ($i=0, $n=count( $orders ); $i < $n; $i++) {
-			if ($orders[$i]->ordering >= 0) {
-				$orders[$i]->ordering = $i+1;
+		for ($i = 0, $n = count($orders); $i < $n; $i++)
+		{
+			if ($orders[$i]->ordering >= 0)
+			{
+				$orders[$i]->ordering = $i + 1;
 				$query = "UPDATE $this->_tbl"
-				. "\n SET ordering = " . (int) $orders[$i]->ordering
-				. "\n WHERE $k = " . $this->_db->Quote( $orders[$i]->$k )
-				;
-				$this->_db->setQuery( $query);
+					. "\n SET ordering = " . (int) $orders[$i]->ordering
+					. "\n WHERE $k = " . $this->_db->Quote($orders[$i]->$k);
+				$this->_db->setQuery($query);
 				$this->_db->query();
-	//echo '<br />'.$this->_db->getQuery();
+				//echo '<br />'.$this->_db->getQuery();
 			}
 		}
 
 		// if we didn't reorder the current record, make it last
-		if ($shift == 0) {
-			$order = $n+1;
+		if ($shift == 0)
+		{
+			$order = $n + 1;
 			$query = "UPDATE $this->_tbl"
-			. "\n SET ordering = " . (int) $order
-			. "\n WHERE $k = " . $this->_db->Quote( $this->$k )
-			;
-			$this->_db->setQuery( $query );
+				. "\n SET ordering = " . (int) $order
+				. "\n WHERE $k = " . $this->_db->Quote($this->$k);
+			$this->_db->setQuery($query);
 			$this->_db->query();
-	//echo '<br />'.$this->_db->getQuery();
+			//echo '<br />'.$this->_db->getQuery();
 		}
 		return true;
 	}
+
 	/**
-	*	Generic check for whether dependancies exist for this object in the db schema
-	*
-	*	can be overloaded/supplemented by the child class
-	*	@param string $msg Error message returned
-	*	@param int Optional key index
-	*	@param array Optional array to compiles standard joins: format [label=>'Label',name=>'table name',idfield=>'field',joinfield=>'field']. This is expected to hold only valid (and safe!) SQL expressions
-	*	@return true|false
-	*/
-	function canDelete( $oid=null, $joins=null ) {
+	 *    Generic check for whether dependancies exist for this object in the db schema
+	 *
+	 *    can be overloaded/supplemented by the child class
+	 *
+	 * @param string $msg  Error message returned
+	 * @param        int   Optional key index
+	 * @param        array Optional array to compiles standard joins: format [label=>'Label',name=>'table name',idfield=>'field',joinfield=>'field']. This is expected to hold only valid (and safe!) SQL expressions
+	 *
+	 * @return true|false
+	 */
+	function canDelete($oid = null, $joins = null)
+	{
 		$k = $this->_tbl_key;
-		if ($oid) {
+		if ($oid)
+		{
 			$this->$k = $oid;
 		}
-		if (is_array( $joins )) {
+		if (is_array($joins))
+		{
 			$select = $k;
 			$join = '';
-			foreach( $joins as $table ) {
-				$tblName = $this->getEscaped( $table['name'] );
-				$idField = $this->getEscaped( $table['idfield'] );
-				$jnField = $this->getEscaped( $table['joinfield'] );
-				$select .= ",\n COUNT(DISTINCT `$tblName`.`$idField`) AS `count_".substr($tblName, 3)."_$idField`";
+			foreach ($joins as $table)
+			{
+				$tblName = $this->getEscaped($table['name']);
+				$idField = $this->getEscaped($table['idfield']);
+				$jnField = $this->getEscaped($table['joinfield']);
+				$select .= ",\n COUNT(DISTINCT `$tblName`.`$idField`) AS `count_" . substr($tblName, 3) . "_$idField`";
 				$join .= "\n LEFT JOIN `$tblName` ON `$tblName`.`$jnField` = `$this->_tbl`.`$k`";
 			}
 
 			$query = "SELECT $select"
-			. "\n FROM `$this->_tbl`"
-			. $join
-			. "\n WHERE `$this->_tbl`.`$k` = ". (int) $this->$k
-			. "\n GROUP BY `$this->_tbl`.`$k`"
-			;
-			$this->_db->setQuery( $query );
+				. "\n FROM `$this->_tbl`"
+				. $join
+				. "\n WHERE `$this->_tbl`.`$k` = " . (int) $this->$k
+				. "\n GROUP BY `$this->_tbl`.`$k`";
+			$this->_db->setQuery($query);
 
 			$obj = null;
-			if (!$this->_db->loadObject($obj)) {
+			if (!$this->_db->loadObject($obj))
+			{
 				$this->_error = $this->_db->getErrorMsg();
 				return false;
 			}
 			$msg = array();
-			foreach( $joins as $table ) {
-				$tblName = $this->getEscaped( $table['name'] );
-				$idField = $this->getEscaped( $table['idfield'] );
-				$k = 'count_'.substr($tblName, 3).'_'.$idField;
-				if ($obj->$k) {
+			foreach ($joins as $table)
+			{
+				$tblName = $this->getEscaped($table['name']);
+				$idField = $this->getEscaped($table['idfield']);
+				$k = 'count_' . substr($tblName, 3) . '_' . $idField;
+				if ($obj->$k)
+				{
 					$msg[] = $table['label'];
 				}
 			}
 
-			if (count( $msg )) {
-				$this->_error = "noDeleteRecord" . ": " . implode( ', ', $msg );
+			if (count($msg))
+			{
+				$this->_error = "noDeleteRecord" . ": " . implode(', ', $msg);
 				return false;
-			} else {
+			}
+			else
+			{
 				return true;
 			}
 		}
@@ -1054,29 +1301,33 @@ class mosDBTable {
 	}
 
 	/**
-	*	Default delete method
-	*
-	*	can be overloaded/supplemented by the child class
-	*	@return true if successful otherwise returns and error message
-	*/
-	function delete( $oid=null ) {
+	 *    Default delete method
+	 *
+	 *    can be overloaded/supplemented by the child class
+	 * @return true if successful otherwise returns and error message
+	 */
+	function delete($oid = null)
+	{
 		//if (!$this->canDelete( $msg )) {
 		//	return $msg;
 		//}
 
 		$k = $this->_tbl_key;
-		if ($oid) {
-			$this->$k = intval( $oid );
+		if ($oid)
+		{
+			$this->$k = intval($oid);
 		}
 
 		$query = "DELETE FROM $this->_tbl"
-		. "\n WHERE $this->_tbl_key = " . $this->_db->Quote( $this->$k )
-		;
-		$this->_db->setQuery( $query );
+			. "\n WHERE $this->_tbl_key = " . $this->_db->Quote($this->$k);
+		$this->_db->setQuery($query);
 
-		if ($this->_db->query()) {
+		if ($this->_db->query())
+		{
 			return true;
-		} else {
+		}
+		else
+		{
 			$this->_error = $this->_db->getErrorMsg();
 			return false;
 		}
@@ -1084,39 +1335,44 @@ class mosDBTable {
 
 	/**
 	 * Checks out an object
+	 *
 	 * @param int User id
 	 * @param int Object id
 	 */
-	function checkout( $user_id, $oid=null ) {
-		if (!array_key_exists( 'checked_out', get_class_vars( strtolower(get_class( $this )) ) )) {
-			$this->_error = "WARNING: ".strtolower(get_class( $this ))." does not support checkouts.";
+	function checkout($user_id, $oid = null)
+	{
+		if (!array_key_exists('checked_out', get_class_vars(strtolower(get_class($this)))))
+		{
+			$this->_error = "WARNING: " . strtolower(get_class($this)) . " does not support checkouts.";
 			return false;
 		}
 		$k = $this->_tbl_key;
-		if ($oid !== null) {
+		if ($oid !== null)
+		{
 			$this->$k = $oid;
 		}
 
-		$time = date( 'Y-m-d H:i:s' );
-		if (intval( $user_id )) {
-			$user_id = intval( $user_id );
+		$time = date('Y-m-d H:i:s');
+		if (intval($user_id))
+		{
+			$user_id = intval($user_id);
 			// new way of storing editor, by id
 			$query = "UPDATE $this->_tbl"
-			. "\n SET checked_out = $user_id, checked_out_time = " . $this->_db->Quote( $time )
-			. "\n WHERE $this->_tbl_key = " . $this->_db->Quote( $this->$k )
-			;
-			$this->_db->setQuery( $query );
+				. "\n SET checked_out = $user_id, checked_out_time = " . $this->_db->Quote($time)
+				. "\n WHERE $this->_tbl_key = " . $this->_db->Quote($this->$k);
+			$this->_db->setQuery($query);
 
-            $this->checked_out = $user_id;
-            $this->checked_out_time = $time;
-		} else {
-			$user_id = $this->_db->Quote( $user_id );
+			$this->checked_out = $user_id;
+			$this->checked_out_time = $time;
+		}
+		else
+		{
+			$user_id = $this->_db->Quote($user_id);
 			// old way of storing editor, by name
 			$query = "UPDATE $this->_tbl"
-			. "\n SET checked_out = 1, checked_out_time = " . $this->_db->Quote( $time ) . ", editor = $user_id"
-			. "\n WHERE $this->_tbl_key = " . $this->_db->Quote( $this->$k )
-			;
-			$this->_db->setQuery( $query );
+				. "\n SET checked_out = 1, checked_out_time = " . $this->_db->Quote($time) . ", editor = $user_id"
+				. "\n WHERE $this->_tbl_key = " . $this->_db->Quote($this->$k);
+			$this->_db->setQuery($query);
 
 			$this->checked_out = 1;
 			$this->checked_out_time = $time;
@@ -1128,29 +1384,33 @@ class mosDBTable {
 
 	/**
 	 * Checks in an object
+	 *
 	 * @param int Object id
 	 */
-	function checkin( $oid=null ) {
-		if (!array_key_exists( 'checked_out', get_class_vars( strtolower(get_class( $this )) ) )) {
-			$this->_error = "WARNING: ".strtolower(get_class( $this ))." does not support checkin.";
+	function checkin($oid = null)
+	{
+		if (!array_key_exists('checked_out', get_class_vars(strtolower(get_class($this)))))
+		{
+			$this->_error = "WARNING: " . strtolower(get_class($this)) . " does not support checkin.";
 			return false;
 		}
 
-		$k 			= $this->_tbl_key;
-		$nullDate 	= $this->_db->getNullDate();
+		$k = $this->_tbl_key;
+		$nullDate = $this->_db->getNullDate();
 
-		if ($oid !== null) {
-			$this->$k = intval( $oid );
+		if ($oid !== null)
+		{
+			$this->$k = intval($oid);
 		}
-		if ($this->$k == NULL) {
+		if ($this->$k == NULL)
+		{
 			return false;
 		}
 
 		$query = "UPDATE $this->_tbl"
-		. "\n SET checked_out = 0, checked_out_time = " . $this->_db->Quote( $nullDate )
-		. "\n WHERE $this->_tbl_key = " . $this->_db->Quote( $this->$k )
-		;
-		$this->_db->setQuery( $query );
+			. "\n SET checked_out = 0, checked_out_time = " . $this->_db->Quote($nullDate)
+			. "\n WHERE $this->_tbl_key = " . $this->_db->Quote($this->$k);
+		$this->_db->setQuery($query);
 
 		$this->checked_out = 0;
 		$this->checked_out_time = '';
@@ -1160,47 +1420,50 @@ class mosDBTable {
 
 	/**
 	 * Increments the hit counter for an object
+	 *
 	 * @param int Object id
 	 */
-	function hit( $oid=null ) {
+	function hit($oid = null)
+	{
 		global $mosConfig_enable_log_items;
 
 		$k = $this->_tbl_key;
-		if ($oid !== null) {
-			$this->$k = intval( $oid );
+		if ($oid !== null)
+		{
+			$this->$k = intval($oid);
 		}
 
 		$query = "UPDATE $this->_tbl"
-		. "\n SET hits = ( hits + 1 )"
-		. "\n WHERE $this->_tbl_key = " . $this->_db->Quote( $this->id )
-		;
-		$this->_db->setQuery( $query );
+			. "\n SET hits = ( hits + 1 )"
+			. "\n WHERE $this->_tbl_key = " . $this->_db->Quote($this->id);
+		$this->_db->setQuery($query);
 		$this->_db->query();
 
-		if (@$mosConfig_enable_log_items) {
-			$now = date( 'Y-m-d' );
+		if (@$mosConfig_enable_log_items)
+		{
+			$now = date('Y-m-d');
 			$query = "SELECT hits"
-			. "\n FROM #__core_log_items"
-			. "\n WHERE time_stamp = " . $this->_db->Quote( $now )
-			. "\n AND item_table = " . $this->_db->Quote( $this->_tbl )
-			. "\n AND item_id = " . $this->_db->Quote( $this->$k )
-			;
-			$this->_db->setQuery( $query );
-			$hits = intval( $this->_db->loadResult() );
-			if ($hits) {
+				. "\n FROM #__core_log_items"
+				. "\n WHERE time_stamp = " . $this->_db->Quote($now)
+				. "\n AND item_table = " . $this->_db->Quote($this->_tbl)
+				. "\n AND item_id = " . $this->_db->Quote($this->$k);
+			$this->_db->setQuery($query);
+			$hits = intval($this->_db->loadResult());
+			if ($hits)
+			{
 				$query = "UPDATE #__core_log_items"
-				. "\n SET hits = ( hits + 1 )"
-				. "\n WHERE time_stamp = " . $this->_db->Quote( $now )
-				. "\n AND item_table = " . $this->_db->Quote( $this->_tbl )
-				. "\n AND item_id = " . $this->_db->Quote( $this->$k )
-				;
-				$this->_db->setQuery( $query );
+					. "\n SET hits = ( hits + 1 )"
+					. "\n WHERE time_stamp = " . $this->_db->Quote($now)
+					. "\n AND item_table = " . $this->_db->Quote($this->_tbl)
+					. "\n AND item_id = " . $this->_db->Quote($this->$k);
+				$this->_db->setQuery($query);
 				$this->_db->query();
-			} else {
+			}
+			else
+			{
 				$query = "INSERT INTO #__core_log_items"
-				. "\n VALUES ( " . $this->_db->Quote( $now ) . ", " . $this->_db->Quote( $this->_tbl ) . ", " . $this->_db->Quote( $this->$k ) . ", 1 )"
-				;
-				$this->_db->setQuery( $query );
+					. "\n VALUES ( " . $this->_db->Quote($now) . ", " . $this->_db->Quote($this->_tbl) . ", " . $this->_db->Quote($this->$k) . ", 1 )";
+				$this->_db->setQuery($query);
 				$this->_db->query();
 			}
 		}
@@ -1208,41 +1471,55 @@ class mosDBTable {
 
 	/**
 	 * Tests if item is checked out
+	 *
 	 * @param int A user id
+	 *
 	 * @return boolean
 	 */
-	function isCheckedOut( $user_id=0 ) {
-		if ($user_id) {
+	function isCheckedOut($user_id = 0)
+	{
+		if ($user_id)
+		{
 			return ($this->checked_out && $this->checked_out != $user_id);
-		} else {
+		}
+		else
+		{
 			return $this->checked_out;
 		}
 	}
 
 	/**
-	* Generic save function
-	* @param array Source array for binding to class vars
-	* @param string Filter for the order updating. This is expected to be a valid (and safe!) SQL expression
-	* @returns TRUE if completely successful, FALSE if partially or not succesful
-	* NOTE: Filter will be deprecated in verion 1.1
-	*/
-	function save( $source, $order_filter='' ) {
-		if (!$this->bind( $source )) {
+	 * Generic save function
+	 *
+	 * @param array  Source array for binding to class vars
+	 * @param string Filter for the order updating. This is expected to be a valid (and safe!) SQL expression
+	 *
+	 * @returns TRUE if completely successful, FALSE if partially or not succesful
+	 * NOTE: Filter will be deprecated in verion 1.1
+	 */
+	function save($source, $order_filter = '')
+	{
+		if (!$this->bind($source))
+		{
 			return false;
 		}
-		if (!$this->check()) {
+		if (!$this->check())
+		{
 			return false;
 		}
-		if (!$this->store()) {
+		if (!$this->store())
+		{
 			return false;
 		}
-		if (!$this->checkin()) {
+		if (!$this->checkin())
+		{
 			return false;
 		}
 
-		if ($order_filter) {
+		if ($order_filter)
+		{
 			$filter_value = $this->$order_filter;
-			$this->updateOrder( $order_filter ? "`$order_filter` = " . $this->_db->Quote( $filter_value ) : '' );
+			$this->updateOrder($order_filter ? "`$order_filter` = " . $this->_db->Quote($filter_value) : '');
 		}
 		$this->_error = '';
 		return true;
@@ -1251,64 +1528,76 @@ class mosDBTable {
 	/**
 	 * @deprecated As of 1.0.3, replaced by publish
 	 */
-	function publish_array( $cid=null, $publish=1, $user_id=0 ) {
-		$this->publish( $cid, $publish, $user_id );
+	function publish_array($cid = null, $publish = 1, $user_id = 0)
+	{
+		$this->publish($cid, $publish, $user_id);
 	}
 
 	/**
 	 * Generic Publish/Unpublish function
-	 * @param	array	An array of id numbers
-	 * @param	integer	0 if unpublishing, 1 if publishing
-	 * @param	integer	The id of the user performnig the operation
-	 * @since	1.0.4
+	 *
+	 * @param    array      An array of id numbers
+	 * @param    integer    0 if unpublishing, 1 if publishing
+	 * @param    integer    The id of the user performnig the operation
+	 *
+	 * @since    1.0.4
 	 */
-	function publish( $cid=null, $publish=1, $user_id=0 ) {
-		mosArrayToInts( $cid, array() );
-		$user_id	= (int) $user_id;
-		$publish	= (int) $publish;
-		$k			= $this->_tbl_key;
+	function publish($cid = null, $publish = 1, $user_id = 0)
+	{
+		mosArrayToInts($cid, array());
+		$user_id = (int) $user_id;
+		$publish = (int) $publish;
+		$k = $this->_tbl_key;
 
-		if (count( $cid ) < 1) {
+		if (count($cid) < 1)
+		{
 			$this->_error = "No items selected.";
 			return false;
 		}
 
-		$cids = $this->_tbl_key . '=' . implode( ' OR ' . $this->_tbl_key . '=', $cid );
+		$cids = $this->_tbl_key . '=' . implode(' OR ' . $this->_tbl_key . '=', $cid);
 
 		$query = "UPDATE $this->_tbl"
-		. "\n SET published = " . (int) $publish
-		. "\n WHERE ($cids)"
-		. "\n AND (checked_out = 0 OR checked_out = " . (int) $user_id . ")"
-		;
-		$this->_db->setQuery( $query );
-		if (!$this->_db->query()) {
+			. "\n SET published = " . (int) $publish
+			. "\n WHERE ($cids)"
+			. "\n AND (checked_out = 0 OR checked_out = " . (int) $user_id . ")";
+		$this->_db->setQuery($query);
+		if (!$this->_db->query())
+		{
 			$this->_error = $this->_db->getErrorMsg();
 			return false;
 		}
 
-		if (count( $cid ) == 1) {
-			$this->checkin( $cid[0] );
+		if (count($cid) == 1)
+		{
+			$this->checkin($cid[0]);
 		}
 		$this->_error = '';
 		return true;
 	}
 
 	/**
-	* Export item list to xml
-	* @param boolean Map foreign keys to text values
-	*/
-	function toXML( $mapKeysToText=false ) {
+	 * Export item list to xml
+	 *
+	 * @param boolean Map foreign keys to text values
+	 */
+	function toXML($mapKeysToText = false)
+	{
 		$xml = '<record table="' . $this->_tbl . '"';
 
-		if ($mapKeysToText) {
+		if ($mapKeysToText)
+		{
 			$xml .= ' mapkeystotext="true"';
 		}
 		$xml .= '>';
-		foreach (get_object_vars( $this ) as $k => $v) {
-			if (is_array($v) or is_object($v) or $v === NULL) {
+		foreach (get_object_vars($this) as $k => $v)
+		{
+			if (is_array($v) or is_object($v) or $v === NULL)
+			{
 				continue;
 			}
-			if ($k[0] == '_') { // internal field
+			if ($k[0] == '_')
+			{ // internal field
 				continue;
 			}
 			$xml .= '<' . $k . '><![CDATA[' . $v . ']]></' . $k . '>';

@@ -1,24 +1,25 @@
 <?php
 /**
-* @version $Id$
-* @package Joomla
-* @subpackage Menus
-* @copyright Copyright (C) 2005 Open Source Matters. All rights reserved.
-* @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL, see LICENSE.php
-* Joomla! is free software. This version may have been modified pursuant
-* to the GNU General Public License, and as distributed it includes or
-* is derivative of works licensed under the GNU General Public License or
-* other free or open source software licenses.
-* See COPYRIGHT.php for copyright notices and details.
-*/
+ * @version    $Id$
+ * @package    Joomla
+ * @subpackage Menus
+ * @copyright  Copyright (C) 2005 Open Source Matters. All rights reserved.
+ * @license    http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL, see LICENSE.php
+ *             Joomla! is free software. This version may have been modified pursuant
+ *             to the GNU General Public License, and as distributed it includes or
+ *             is derivative of works licensed under the GNU General Public License or
+ *             other free or open source software licenses.
+ *             See COPYRIGHT.php for copyright notices and details.
+ */
 
 // no direct access
-defined( '_VALID_MOS' ) or die( 'Restricted access' );
+defined('_VALID_MOS') or die('Restricted access');
 
-require_once( $mainframe->getPath( 'toolbar_html' ) );
-require_once( $mainframe->getPath( 'toolbar_default' ) );
+require_once($mainframe->getPath('toolbar_html'));
+require_once($mainframe->getPath('toolbar_default'));
 
-switch ($task) {
+switch ($task)
+{
 	case 'new':
 		TOOLBAR_menus::_NEW();
 		break;
@@ -32,54 +33,74 @@ switch ($task) {
 		break;
 
 	case 'edit':
-		$cid 	= josGetArrayInts( 'cid' );
-		$path 	= $mosConfig_absolute_path .'/administrator/components/com_menus/';
+		$cid = josGetArrayInts('cid');
+		$path = $mosConfig_absolute_path . '/administrator/components/com_menus/';
 
-		if ( $cid[0] ) {
+		if ($cid[0])
+		{
 			$query = "SELECT type"
-			. "\n FROM #__menu"
-			. "\n WHERE id = " . (int) $cid[0]
-			;
-			$database->setQuery( $query );
+				. "\n FROM #__menu"
+				. "\n WHERE id = " . (int) $cid[0];
+			$database->setQuery($query);
 			$type = $database->loadResult();
-			$item_path  = $path . $type .'/'. $type .'.menubar.php';
+			$item_path = $path . $type . '/' . $type . '.menubar.php';
 
-			if ( $type ) {
-				if ( file_exists( $item_path  ) ) {
-					require_once( $item_path  );
-				} else {
+			if ($type)
+			{
+				if (file_exists($item_path))
+				{
+					require_once($item_path);
+				}
+				else
+				{
 					TOOLBAR_menus::_EDIT();
 				}
-			} else {
+			}
+			else
+			{
 				echo $database->stderr();
 			}
-		} else {
-			$type 		= strval( mosGetParam( $_REQUEST, 'type', null ) );
-			$item_path  = $path . $type .'/'. $type .'.menubar.php';
+		}
+		else
+		{
+			$type = strval(mosGetParam($_REQUEST, 'type', null));
+			$item_path = $path . $type . '/' . $type . '.menubar.php';
 
-			if ( $type ) {
-				if ( file_exists( $item_path ) ) {
-					require_once( $item_path  );
-				} else {
+			if ($type)
+			{
+				if (file_exists($item_path))
+				{
+					require_once($item_path);
+				}
+				else
+				{
 					TOOLBAR_menus::_EDIT();
 				}
-			} else {
+			}
+			else
+			{
 				TOOLBAR_menus::_EDIT();
 			}
 		}
 		break;
 
 	default:
-		$type 		= strval( mosGetParam( $_REQUEST, 'type' ) );
-		$item_path  = $path . $type .'/'. $type .'.menubar.php';
+		$type = strval(mosGetParam($_REQUEST, 'type'));
+		$item_path = $path . $type . '/' . $type . '.menubar.php';
 
-		if ( $type ) {
-			if ( file_exists( $item_path ) ) {
-				require_once( $item_path );
-			} else {
+		if ($type)
+		{
+			if (file_exists($item_path))
+			{
+				require_once($item_path);
+			}
+			else
+			{
 				TOOLBAR_menus::_DEFAULT();
 			}
-		} else {
+		}
+		else
+		{
 			TOOLBAR_menus::_DEFAULT();
 		}
 		break;

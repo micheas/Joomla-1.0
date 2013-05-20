@@ -1,21 +1,24 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <mosinstall type="menu" version="1.0.0">
-	<name>Link - Content Item</name>
-	<group>Content|Link</group>
-	<author>Joomla! Project</author>
-	<creationDate>July 2004</creationDate>
-	<copyright>(C) 2005 Open Source Matters. All rights reserved.</copyright>
-	<license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
-	<authorEmail>admin@joomla.org</authorEmail>
-	<authorUrl>www.joomla.org</authorUrl>
-	<version>1.0.0</version>
-	<description>Creates a link to a published Content Item in full view</description>
-	<params>
-		<param name="menu_image" type="imagelist" directory="/images/stories" hide_default="1" default="" label="Menu Image" description="A small image to be placed to the left or right of your menu item, images must be in images/stories/" />
-		<param name="@spacer" type="spacer" default="" label="" description="" />
-		<param name="unique_itemid" type="radio" default="0" label="Unique Itemid" description="Use a unique Itemid for the link">
-			<option value="0">No</option>
-			<option value="1">Yes</option>
-		</param>
-	</params>
+    <name>Link - Content Item</name>
+    <group>Content|Link</group>
+    <author>Joomla! Project</author>
+    <creationDate>July 2004</creationDate>
+    <copyright>(C) 2005 Open Source Matters. All rights reserved.</copyright>
+    <license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
+    <authorEmail>admin@joomla.org</authorEmail>
+    <authorUrl>www.joomla.org</authorUrl>
+    <version>1.0.0</version>
+    <description>Creates a link to a published Content Item in full view</description>
+    <params>
+        <param name="menu_image" type="imagelist" directory="/images/stories" hide_default="1" default=""
+               label="Menu Image"
+               description="A small image to be placed to the left or right of your menu item, images must be in images/stories/"/>
+        <param name="@spacer" type="spacer" default="" label="" description=""/>
+        <param name="unique_itemid" type="radio" default="0" label="Unique Itemid"
+               description="Use a unique Itemid for the link">
+            <option value="0">No</option>
+            <option value="1">Yes</option>
+        </param>
+    </params>
 </mosinstall>

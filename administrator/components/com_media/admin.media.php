@@ -35,7 +35,9 @@ require_once($mainframe->getPath('admin_html'));
  */
 function makeSafe($file)
 {
-	return str_replace('..', '', urldecode($file));
+	$file = rtrim($file, '.');
+	$regex = array('#(\.){2,}#', '#[^A-Za-z0-9\.\_\- ]#', '#^\.#');
+	return preg_replace($regex, '', $file);
 }
 
 $cid = josGetArrayInts('cid');

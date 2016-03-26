@@ -176,8 +176,12 @@ function populate_db(&$database, $sqlfile = 'joomla.sql')
  */
 function split_sql($sql)
 {
-	$sql = preg_replace('/(^|\r|\n)#.*/', '', $sql);
-	$sql = trim(preg_replace('/([^;])(\r|\n)/', '${1} ', $sql));
+	$sql = preg_replace('/(^|\r|\r\n|\n)#.*/', '', $sql);
+	$sql = preg_replace('/[\n\r]/','', $sql);
+	
+	//Fix for installation with wamp2.5+PHP5.5.12+MySQL5.6.17 by @lamplis
+	$sql = trim(preg_replace('/[;]/', "${1};\n\r", $sql)); 
+	
 	if ($sql == FALSE)
 	{ // keep errors the same as when using ereg_replace
 		$sql = 0;

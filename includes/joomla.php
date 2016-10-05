@@ -1014,7 +1014,7 @@ class mosMainFrame
 						{
 							$errorlevel = error_reporting();
 							error_reporting(0);
-							$params =& new mosParameters($my->params, $file, 'component');
+							$params = new mosParameters($my->params, $file, 'component');
 							error_reporting($errorlevel);
 						}
 

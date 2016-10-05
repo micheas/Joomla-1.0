@@ -57,7 +57,7 @@ class patTemplate_Function_Highlight extends patTemplate_Function
 			$params['numbers'] = constant($params['numbers']);
 		}
 
-		$renderer = & new Text_Highlighter_Renderer_HTML($params);
+		$renderer = new Text_Highlighter_Renderer_HTML($params);
 		$highlighter = & Text_Highlighter::factory($type);
 		$highlighter->setRenderer($renderer);
 		return $highlighter->highlight(trim($content));

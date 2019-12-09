@@ -475,9 +475,9 @@ class InputFilter
 		// url decode
 		$source = html_entity_decode($source, ENT_QUOTES, "ISO-8859-1");
 		// convert decimal
-		$source = preg_replace('/&#(\d+);/me', "chr(\\1)", $source); // decimal notation
+		$source = preg_replace_callback('/&#(\d+);/m',function($m) { return chr($m[1]); }, $source); // decimal notation
 		// convert hex
-		$source = preg_replace('/&#x([a-f0-9]+);/mei', "chr(0x\\1)", $source); // hex notation
+		$source = preg_replace_callback('/&#x([a-f0-9]+);/mi',function($m) { return chr($m[1]); }, $source); // hex notation
 		return $source;
 	}
 

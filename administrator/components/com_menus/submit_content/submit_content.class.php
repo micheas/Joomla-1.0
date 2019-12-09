@@ -66,7 +66,7 @@ class submit_content_menu
 		$lists['link'] = mosAdminMenus::Link($menu, $uid);
 
 		// get params definitions
-		$params =& new mosParameters($menu->params, $mainframe->getPath('menu_xml', $menu->type), 'menu');
+		$params =new mosParameters($menu->params, $mainframe->getPath('menu_xml', $menu->type), 'menu');
 
 		submit_content_menu_html::edit($menu, $lists, $params, $option);
 	}

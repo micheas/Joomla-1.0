@@ -2099,7 +2099,8 @@ class DOMIT_Lite_Parser
 		//seem to work consistently across versions of PHP and Expat
 		if (!$this->xmlDoc->preserveWhitespace)
 		{
-			$xmlText = eregi_replace('>' . "[[:space:]]+" . '<', '><', $xmlText);
+			//$xmlText = eregi_replace('>' . "[[:space:]]+" . '<', '><', $xmlText);
+			$xmlText = preg_replace('/>[[:space:]]+</i', '><', $xmlText);
 		}
 
 		$success = xml_parse($parser, $xmlText);

@@ -88,7 +88,7 @@ function userEdit($option, $uid, $submitvalue)
 	$row->username = trim($row->username);
 
 	$file = $mainframe->getPath('com_xml', 'com_users');
-	$params =& new mosUserParameters($row->params, $file, 'component');
+	$params =new mosUserParameters($row->params, $file, 'component');
 
 	HTML_user::userEdit($row, $option, $submitvalue, $params);
 }

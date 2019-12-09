@@ -29,7 +29,8 @@ if ($option != '')
 	{
 		$html .= " / ";
 		// try to miss edit functions
-		if ($task != '' && !eregi('edit', $task))
+		//if ($task != '' && !eregi('edit', $task))
+		if ($task != '' && !preg_match('/edit/i', $task))
 		{
 			$html .= "<a href=\"index2.php?option=$option\">$option</a>";
 		}
